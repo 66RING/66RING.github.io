@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Redis学习笔记基本认识 Redis 是单线程的, 也就是说在处理不当会导致阻塞 不要使用长命令, 如: keys *    特性 高速 内存中进行的   &lt;++&gt; &lt;++&gt; &lt;++&gt; &lt;++&gt; &lt;++&gt; &lt;++&gt;  通用命令get   command desc T(n)    keys [pattern] 根据通配符号检索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 学习笔记">
+<meta property="og:url" content="http://yoursite.com/2020/03/18/universe/Redis_study_note/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Redis学习笔记基本认识 Redis 是单线程的, 也就是说在处理不当会导致阻塞 不要使用长命令, 如: keys *    特性 高速 内存中进行的   &lt;++&gt; &lt;++&gt; &lt;++&gt; &lt;++&gt; &lt;++&gt; &lt;++&gt;  通用命令get   command desc T(n)    keys [pattern] 根据通配符号检索">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-15T04:01:54.072Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="redis">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/18/universe/Redis_study_note/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Redis 学习笔记 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/18/universe/Redis_study_note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redis 学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-18 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-18T00:00:00+08:00">2020-03-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-15 12:01:54" itemprop="dateModified" datetime="2020-04-15T12:01:54+08:00">2020-04-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Redis学习笔记"><a href="#Redis学习笔记" class="headerlink" title="Redis学习笔记"></a>Redis学习笔记</h1><h2 id="基本认识"><a href="#基本认识" class="headerlink" title="基本认识"></a>基本认识</h2><ul>
+<li>Redis 是单线程的, 也就是说在处理不当会导致阻塞<ul>
+<li>不要使用长命令, 如: keys *</li>
+</ul>
+</li>
+</ul>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<li>高速<ul>
+<li>内存中进行的</li>
+</ul>
+</li>
+<li>&lt;++&gt;</li>
+<li>&lt;++&gt;</li>
+<li>&lt;++&gt;</li>
+<li>&lt;++&gt;</li>
+<li>&lt;++&gt;</li>
+<li>&lt;++&gt;</li>
+</ul>
+<h2 id="通用命令"><a href="#通用命令" class="headerlink" title="通用命令"></a>通用命令</h2><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><table>
+<thead>
+<tr>
+<th>command</th>
+<th>desc</th>
+<th>T(n)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>keys [pattern]</td>
+<td>根据通配符号检索key</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>get key</td>
+<td>获取value</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>mget key1 key2…</td>
+<td>批量获取value</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>getset key newvalue</td>
+<td>set key newvalue并反会旧的value</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>append key value</td>
+<td>追加</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>strlen key</td>
+<td>长度</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><table>
+<thead>
+<tr>
+<th>command</th>
+<th>desc</th>
+<th>T(n)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set key value</td>
+<td>设置 key value</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>mset key1 value1 key2 value2…</td>
+<td>批量设置 key value</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>setnx key value</td>
+<td>如果key不存在,设置 key value</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>set key value xx</td>
+<td>如果key存在,设置 key value</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>dbsize</td>
+<td>计算key总数</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>exists key</td>
+<td>判断存在</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>del key [key …]</td>
+<td>删除</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>expire key seconds</td>
+<td>key在seconds秒后过期</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>ttl key</td>
+<td>查看过期时间, -1没设置过期, -2已过期</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>persist key</td>
+<td>去掉过期时间</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>type key</td>
+<td>返回类型</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><table>
+<thead>
+<tr>
+<th>command</th>
+<th>desc</th>
+<th>T(n)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>getrange key start end</td>
+<td>获取字符串指定下标所有值</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>setrange key index value</td>
+<td>设置指定下标对应值</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<h3 id="数"><a href="#数" class="headerlink" title="数"></a>数</h3><table>
+<thead>
+<tr>
+<th>command</th>
+<th>desc</th>
+<th>T(n)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>incr key</td>
+<td>自增1</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>decr key</td>
+<td>自减1</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>incrby key k</td>
+<td>自增k</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>decrby key k</td>
+<td>自减k</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>incrbyfloat key float</td>
+<td>自增float</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<h3 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h3><p>结构: key -&gt; (field -&gt; value)</p>
+<p>hash的所有命令都是h开头的<br>| command             | desc                         | T(n) |<br>|———————|——————————|——|<br>| hget                | &lt;++&gt;                         | &lt;++&gt; |<br>| hset                | &lt;++&gt;                         | &lt;++&gt; |<br>| hdel                | &lt;++&gt;                         | &lt;++&gt; |<br>| hexists key field   | &lt;++&gt;                         | &lt;++&gt; |<br>| hlen key            | count field                  | &lt;++&gt; |<br>| hmget               | &lt;++&gt;                         | &lt;++&gt; |<br>| hmset               | &lt;++&gt;                         | &lt;++&gt; |<br>| hincrby key value k | incrby k                     | &lt;++&gt; |<br>| hgetall             | get all (field,value) by key | O(n) |<br>| hvals key           | get all values by key        | &lt;++&gt; |<br>| hkeys key           | get all fields by key        | &lt;++&gt; |</p>
+<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>结构: key -&gt; [list]</p>
+<p>list的所有命令都是l开头的<br>| command                                 | desc                                                    | T(n)   |<br>|—————————————–|———————————————————|——–|<br>| rpush key value1 value2 …             | 从列表右端插入                                          | O(1-n) |<br>| lpush key value1 value2 …             | 从列表左端插入                                          | O(1-n) |<br>| linsert key before/after value newvalue | 在指定的value前/后插入newvalue                          | O(n)   |<br>| lpop key                                | 从列表左边弹出                                          | O(1)   |<br>| lrem key count value                    | 从左边删除count个value, 删除重复元素, count&lt;0从右边删除 | O(n)   |<br>| ltrim key start end                     | 裁剪出制定范围的元素                                    | O(n)   |<br>| lrange key start end(包含end)           | 获取指定范围的元素                                      | O(n)   |<br>| lindex key index                        | 索引取出                                                | O(n)   |<br>| llen key                                |                                                         | O(1)   |<br>| lset key index newvalue                 | 按照索引修改指                                          | &lt;++&gt;   |</p>
+<h3 id="无序集合"><a href="#无序集合" class="headerlink" title="无序集合"></a>无序集合</h3><p>结构: key -&gt; set</p>
+<ul>
+<li>无需</li>
+<li>无重复</li>
+<li>支持集合间操作</li>
+</ul>
+<p>set所有命令s开头<br>| command                             | desc                     | T(n) |<br>|————————————-|————————–|——|<br>| sadd set element                    | insert element           | O(1) |<br>| srem set element                    | delete element           | O(1) |<br>| scard set                           | count element inside set | &lt;++&gt; |<br>| sismenber set                       | check if exists          | &lt;++&gt; |<br>| srandmember set count               | 随机取出count个          | &lt;++&gt; |<br>| spop set                            | 随机弹出1个              | &lt;++&gt; |<br>| smembers set                        | get all element          | &lt;++&gt; |<br>| sdiff set1 set2                     | 差集                     | &lt;++&gt; |<br>| sinter set1 set2                    | 交集                     | &lt;++&gt; |<br>| sunion set1 set2                    | 并集                     | &lt;++&gt; |<br>| sdiff/sinter/sunion + store destkey | 把结果保存到destkey中    | &lt;++&gt; |</p>
+<h3 id="有序集合"><a href="#有序集合" class="headerlink" title="有序集合"></a>有序集合</h3><p>结构: key -&gt; (score -&gt; element)</p>
+<ul>
+<li>element不可重复</li>
+<li>顺序由score定</li>
+</ul>
+<p>有序set所有命令z开头<br>| command                             | desc                                 | T(n)           |<br>|————————————-|————————————–|—————-|<br>| zadd key score element              | &lt;++&gt;                                 | $O(\log n)$    |<br>| zrem key element                    | &lt;++&gt;                                 | &lt;++&gt;           |<br>| zscore key element                  | get score by element                 | O(1)           |<br>| zincrby key increScore element      | 给element增加指定分数                | &lt;++&gt;           |<br>| zcard key                           |                                      | 返回个数       |<br>| zrank                               | 获取排名                             | &lt;++&gt;           |<br>| zrange key start end [withscores]   | 获取范围withscores选项是是否打印分值 | $O(\log(n)+m)$ |<br>| zrangebyscore key minScore maxScore | &lt;++&gt;                                 | &lt;++&gt;           |<br>| zcount key minScore maxScore        | &lt;++&gt;                                 | &lt;++&gt;           |<br>| zremrangebyrank key start end       | &lt;++&gt;                                 | &lt;++&gt;           |<br>| zremrangebyscore key start end      | &lt;++&gt;                                 | &lt;++&gt;           |</p>
+<h3 id="慢查询"><a href="#慢查询" class="headerlink" title="慢查询"></a>慢查询</h3><p>生命周期</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">client-&gt;command queue: command</span><br><span class="line">Note right of command queue: Execute one command</span><br><span class="line">command queue--&gt;client: result</span><br></pre></td></tr></table></figure>
+
+<p>慢查询发生在执行命令的过程, 如<code>keys *</code>就会发生慢查询, 通过配置慢查询来防止阻塞</p>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>config set slowlog-max-len value</td>
+<td>慢查询队列的最大长度为value</td>
+</tr>
+<tr>
+<td>config set slowlog-log-slower-than value</td>
+<td>把慢于value微妙的命令放入慢查询队列, 一般设置1微妙</td>
+</tr>
+<tr>
+<td>slowlog get [n]</td>
+<td>获取慢查询队列</td>
+</tr>
+<tr>
+<td>slowlog len</td>
+<td>获取慢查询队列条数</td>
+</tr>
+<tr>
+<td>slowlog reset</td>
+<td>清空</td>
+</tr>
+</tbody></table>
+<h3 id="流水线-Pipline"><a href="#流水线-Pipline" class="headerlink" title="流水线 Pipline"></a>流水线 Pipline</h3><p>网络通信时间 = 网络时间+命令时间</p>
+<p>因为redis很快, 通信时间大多数时候受限于网络时间, 而且如果让redis同时mget, mset或者n次set是不行的, 这意味着就需要多次请求, 就会耗费很多时间</p>
+<p>流水线的作用就是把一批命令批量打包, 发送到服务端, 然后按顺序反回, 这样n次网络时间就缩短为1次了</p>
+<h3 id="发布订阅"><a href="#发布订阅" class="headerlink" title="发布订阅"></a>发布订阅</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">发布者publisher-&gt;频道redis server: 发布消息</span><br><span class="line">频道channle--&gt;订阅者subscribers: 订阅消息给订阅者1</span><br><span class="line">频道channle--&gt;订阅者subscribers: 订阅消息给订阅者2</span><br><span class="line">频道channle--&gt;订阅者subscribers: 订阅消息给订阅者3</span><br><span class="line">Note right of 订阅者subscribers: 每个订阅了频道的人都会收到消息</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>publish channel message</td>
+<td>发送message到channel, 返回订阅者数</td>
+</tr>
+<tr>
+<td>subscribe [channel] #一个或多个</td>
+<td>订阅</td>
+</tr>
+<tr>
+<td>unsubscribe [channel] #一个或多个</td>
+<td>取消订阅</td>
+</tr>
+</tbody></table>
+<p><strong>消息队列</strong> 类似发布订阅, 只是只有一个订阅者能收到, 类似强红包</p>
+<h3 id="位图Bitmap"><a href="#位图Bitmap" class="headerlink" title="位图Bitmap"></a>位图Bitmap</h3><p>redis中对位进行操作, 字符串其实就是字符数组嘛, 每个字符又是一段二进制编码</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>setbit key offset value</td>
+<td>设置, value只能是0,1</td>
+</tr>
+<tr>
+<td>getbit key offset</td>
+<td></td>
+</tr>
+<tr>
+<td>bitcount key [start end]</td>
+<td>获取指定范围1的个数</td>
+</tr>
+<tr>
+<td>btop op destkey key [key…]</td>
+<td>将多个位图进行交并非异或等操作, 把结果保存到destkey中</td>
+</tr>
+<tr>
+<td>bitpos key tagetBit [start] [end]</td>
+<td>计算位图指定范围(start, end单位是字节)第一个偏移量对应的值等于targetBit的位置</td>
+</tr>
+</tbody></table>
+<h3 id="HyperLogLog"><a href="#HyperLogLog" class="headerlink" title="HyperLogLog"></a>HyperLogLog</h3><p>用极小的空间完成独立用户的统计</p>
+<ul>
+<li>有错误率</li>
+<li>不能取单条数据</li>
+</ul>
+<p>本质结构还是string<br>| API                                      | desc                      |<br>|——————————————|—————————|<br>| pfadd key element [element..]            | 向hyperloglog添加元素     |<br>| pfcount key [key..]                      | 计算hyperloglog的独立总数 |<br>| pfmerge destkey sourcekey [sourcekey…] | 合并多个hyperloglog       |</p>
+<h3 id="地理信息定位GEO"><a href="#地理信息定位GEO" class="headerlink" title="地理信息定位GEO"></a>地理信息定位GEO</h3><p>存储经纬度, 计算两地距离, 范围计算等</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>geo key longitude latitude member […]</td>
+<td>添加地理位置信息</td>
+</tr>
+<tr>
+<td>geopos key member […]</td>
+<td>获取信息</td>
+</tr>
+<tr>
+<td>geodist member1 member2</td>
+<td>算距离</td>
+</tr>
+<tr>
+<td>georadius</td>
+<td>范围</td>
+</tr>
+</tbody></table>
+<h2 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h2><p>由于Redis是将数据保存在内存中的, 所以需要持久化来异步的保存到磁盘上</p>
+<h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><p>生成快照, 保存到硬盘中实现持久化</p>
+<p>自动保存默认配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">save 900 1    # 如果900秒内改变了1条内容就自动保存</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br><span class="line">dbfilename dump.db  # 默认保存的文件</span><br><span class="line">dir .&#x2F;</span><br><span class="line">stop-writes-on-bgsave-error yes</span><br><span class="line">rdbcompression yes</span><br><span class="line">rdbchecksum yes  # 检验</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>desc</th>
+<th>T(n)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>save</td>
+<td>保存, 会造成阻塞</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>bgsave</td>
+<td>异步保存, 通过子进程来生成RDB, 也会阻塞(发生在fork中), 但非常快</td>
+<td>O(n)</td>
+</tr>
+</tbody></table>
+<h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p>RDB的问题</p>
+<ul>
+<li>耗时, 耗性能<ul>
+<li>生成快照会把整个文件保存到硬盘</li>
+</ul>
+</li>
+<li>不可控, 丢失数据<ul>
+<li>不论是自动保存还是手动保存, 都不可避免因宕机导致的数据丢失</li>
+</ul>
+</li>
+</ul>
+<p>AOF 类似写日志的形式保存每条redis命令, 恢复再根据这些命令恢复</p>
+<p>AOF也不是直接把数据写道硬盘中, 那样很慢, 而是将数据写道缓冲区, 再根据策略写到硬盘</p>
+<p>AOF的三种策略(默认)</p>
+<ul>
+<li>always<ul>
+<li>每条命令都写到硬盘, I/O开销很大</li>
+</ul>
+</li>
+<li>everysec<ul>
+<li>每秒到写到硬盘, 有可能丢失1秒数据</li>
+</ul>
+</li>
+<li>no<ul>
+<li>操作系统决定什么时候写就什么时候写</li>
+</ul>
+</li>
+</ul>
+<h4 id="AOF重写"><a href="#AOF重写" class="headerlink" title="AOF重写"></a>AOF重写</h4><p>如set同一个key多次只保留最后一次的内容, 不保留过期的命令等等…</p>
+<p>AOF重写实现的两种方式</p>
+<ul>
+<li>bgrewriteaof<ul>
+<li>类似bgsave, 在子进程中进行</li>
+</ul>
+</li>
+<li>使用重写配置<ul>
+<li>配置<ul>
+<li><code>auto-aof-rewrite-min-size</code>: AOF文件重写需要的尺寸</li>
+<li><code>auto-aof-rewrite-percentage</code>: AOF文件重写需要的增长率</li>
+</ul>
+</li>
+<li>统计<ul>
+<li><code>aof_current_size</code>: AOF当前尺寸(字节)</li>
+<li><code>aof_base_size</code>: AOF上次启动和重写的尺寸</li>
+<li>配合配置就可以在一定时机重写</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>可用AOF配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">appendonly yes</span><br><span class="line">appendfilename &quot;appendonly-$&#123;port&#125;.aof&quot;</span><br><span class="line">appendsync everysec</span><br><span class="line">dir .&#x2F;bigdiskpath</span><br><span class="line">no-appendfsync-on-rewrite yes</span><br><span class="line">auto-aof-rewite-percentage 100</span><br><span class="line">auto-aof-rewite-min-size 64mb</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="RDB和AOF选择"><a href="#RDB和AOF选择" class="headerlink" title="RDB和AOF选择"></a>RDB和AOF选择</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>ROD</th>
+<th>AOF</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动优先级</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>体积</td>
+<td>小</td>
+<td>大</td>
+</tr>
+<tr>
+<td>恢复速度</td>
+<td>快</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>数据安全性</td>
+<td>丢失数据</td>
+<td>有策略据定</td>
+</tr>
+<tr>
+<td>轻重</td>
+<td>重</td>
+<td>轻</td>
+</tr>
+</tbody></table>
+<h2 id="Redis复制原理"><a href="#Redis复制原理" class="headerlink" title="Redis复制原理"></a>Redis复制原理</h2><h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><p>单机运行redis可能面临许多风险, I/O瓶颈, 宕机风险, qbs瓶颈. 等等问题</p>
+<p>使用redis的主从复制就能很方便是实现一个高可用的分布式数据库</p>
+<ul>
+<li>一个master可以有多个slave</li>
+<li>一个slave只能有一个master</li>
+<li>数据流向是单向的, master到slave</li>
+</ul>
+<p>redis中从节点slave相当于主节点master的备份, 当master中<code>set key value</code>后, 从节点也进行的同样的操作</p>
+<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><ul>
+<li>命令实现: <ul>
+<li><code>redis-6380&gt; slaveof 127.0.0.1 6379</code>6380成为6379的从复制</li>
+<li>取消复制<code>slaveof no one</code>, 不成为任何人的从节点</li>
+</ul>
+</li>
+<li>修改配置文件<ul>
+<li><code>slave of ip port</code></li>
+<li><code>slave-read-only yes</code>, 从节点不做任何写的操作, 保证和主节点数据一样</li>
+</ul>
+</li>
+</ul>
+<h3 id="全量复制"><a href="#全量复制" class="headerlink" title="全量复制"></a>全量复制</h3><p>Redis的主从复制是异步操作, 也就是说同步过程中, 主节点可以发生改变, redis有机制能够保证同步过程发生的改变也同步到从节点中. 也就是全量复制</p>
+<p><strong>全量复制过程</strong></p>
+<ul>
+<li>从主节点复制, 生成rdb文件</li>
+<li>redis内部会记录复制期间主节点的变化</li>
+<li>复制完成后比叫主从节点的偏移量来查看主节点是否有变化, 并将变化同步到从节点中</li>
+</ul>
+<p><strong>全量复制开销</strong></p>
+<ul>
+<li>bgsave时间</li>
+<li>RDB文件网络传输时间</li>
+<li>从节点清空时间</li>
+<li>从节点加载RDB文件时间</li>
+<li>可能的AOF重写时间</li>
+</ul>
+<h3 id="部分复制"><a href="#部分复制" class="headerlink" title="部分复制"></a>部分复制</h3><p>如果全量复制期间发生网络抖动等原因导致复制到从节点数据丢失或不完整, 再次进行全量复制显然是不合理的, 因为前面看到全量复制开销很大. 这时就有了部分复制</p>
+<p>在全量复制开始时, 主节点会进行复制缓冲区命令. 当网络抖动结束后, 从节点再次尝试连接主节点, 并将自己的偏移量offset和runid发送给主节点<br>如果从节点的偏移量和主节点的偏移量小于某值(缓冲区内), 就会发生部分复制, 从从节点的offset开始复制, 发送给从节点.<br>否则就全量复制.</p>
+<h3 id="故障处理"><a href="#故障处理" class="headerlink" title="故障处理"></a>故障处理</h3><ul>
+<li>slave故障<ul>
+<li>使用别的slave暂时代替</li>
+</ul>
+</li>
+<li>master故障<ul>
+<li>让slave成为新的master</li>
+</ul>
+</li>
+</ul>
+<h3 id="主从复制常见问题"><a href="#主从复制常见问题" class="headerlink" title="主从复制常见问题"></a>主从复制常见问题</h3><ul>
+<li>读写分离<ul>
+<li>用master写, 读的流量分摊到各个slave</li>
+<li>可能问题:<ul>
+<li>复制数据延迟</li>
+<li>读到过期数据</li>
+<li>从节点故障</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>配置不一致<ul>
+<li>如maxmamory不一致导致数据丢失</li>
+<li>如数据结构优化参数导致内存不一致</li>
+</ul>
+</li>
+<li>规避全量复制<ul>
+<li>第一次全量复制不可避免<ul>
+<li>小主节点, 或者低峰值的时候进行</li>
+</ul>
+</li>
+<li>节点运行ID不匹配<ul>
+<li>主节点重启(运行ID变化)</li>
+<li>故障转移</li>
+</ul>
+</li>
+<li>复制积压缓冲区不足<ul>
+<li>部分复制</li>
+<li>增大复制换缓冲区配置<code>rel_backlog_size</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>复制风暴(主节点挂载了很多子节点, 当主节点宕机重启后, ID发生变化, 所有从节点都进行一次全量复制)<ul>
+<li>单节点复制风暴<ul>
+<li>分摊从节点到从节点的链式结构, 可以减轻主节点的压力, 当时结果复杂, 维护难度加大</li>
+</ul>
+</li>
+<li>单机复制风暴, 单机器上都是主节点<ul>
+<li>主节点分散多机器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Redis-Sentinel"><a href="#Redis-Sentinel" class="headerlink" title="Redis Sentinel"></a>Redis Sentinel</h2><p>Redis Sentinel是redis的一个高可用实现, 解决故障节点的检测和完美迁移的一个客户端</p>
+<h3 id="Redis-Sentinel框架"><a href="#Redis-Sentinel框架" class="headerlink" title="Redis Sentinel框架"></a>Redis Sentinel框架</h3><p>sentinel会对每个redis进行监控, 用户使用redis不再是直接使用redis, 而是通过sentinel间接使用redis.<br>当发生故障进行故障转移后, 客户端不再关心哪个redis成为了master, 只用关心sentinel告诉我们的结果. </p>
+<p>Redis Sentinel其实是个sentinel集合, sentinel实现故障转移的过程如下:</p>
+<ul>
+<li>多个sentinel发现并确认master有问题</li>
+<li>选举出一个sentinel作为领导</li>
+<li>选出一个slave作为master</li>
+<li>通知其余slave成为新master的slave</li>
+<li>告知客户端主从变化</li>
+<li>当老的master复活后, 使其成为新master的slave</li>
+</ul>
+<p>Redis Sentinel可以监控多套master和slave, 使用master-name的配置作为标识和说明</p>
+<h3 id="Redis-Sentinel原理"><a href="#Redis-Sentinel原理" class="headerlink" title="Redis Sentinel原理"></a>Redis Sentinel原理</h3><p>Redis Sentinel内部会运行三个定时任务</p>
+<ul>
+<li>每10秒每个sentinal对master和slave执行info<ul>
+<li>发现slave节点</li>
+<li>确认主从关系</li>
+</ul>
+</li>
+<li>每2秒每个sentinel通过master节点的channel交换信息(发布订阅)<ul>
+<li>通过 __sentinel__:hello频道交互</li>
+<li>交互节点的”看法”(失败判定)和自身信息</li>
+</ul>
+</li>
+<li>每1秒每个sentinel对其他sentinel和redis执行ping<ul>
+<li>心跳检测, 失败判定</li>
+</ul>
+</li>
+</ul>
+<h4 id="主观下线和客观下线"><a href="#主观下线和客观下线" class="headerlink" title="主观下线和客观下线"></a>主观下线和客观下线</h4><p>每个sentinel对节点的判定可能不同(受网络影响等等), 所以一个节点的判定是不真实的, 根据单个节点进行的主观下线也是不合理的.<br>所以下线操作要根据多个节点投票来决定, 称之为客观下线.</p>
+<p><code>sentinel monitor &lt;masterName&gt; &lt;ip&gt; &lt;port&gt; &lt;quorum&gt;</code>quorum就是投票通过的判定, 多为奇数</p>
+<h4 id="领导者选举"><a href="#领导者选举" class="headerlink" title="领导者选举"></a>领导者选举</h4><p>领导者选举使用raft算法</p>
+<ul>
+<li>选举: 通过sentinel is-master-down-by-addr命令都希望成为领导者<ul>
+<li>每个主管下线的sentinel节点向其他sentinel节点发送该命令, 希望将它设置为领导者</li>
+<li>收到命令的sentinel如果没有同意过其他sentinel节点发送的命令, 就会同意该请求, 否则拒绝</li>
+<li>如果当前sentinal节点发现自己的票数超过sentinel集合半数且超过quorum, 则它成为领导者</li>
+<li>如果此过程有多个sentinel节点成为领导者, 那么将等待一段时间再次进行选举</li>
+</ul>
+</li>
+</ul>
+<h4 id="故障转移-sentinel领导者完成"><a href="#故障转移-sentinel领导者完成" class="headerlink" title="故障转移(sentinel领导者完成)"></a>故障转移(sentinel领导者完成)</h4><ul>
+<li>从slave节点选出”合适的”节点作为新的master</li>
+<li>对上面的slave节点执行<code>slaveof no one</code>让其成为master</li>
+<li>向剩余的slave节点发送命令, 让它们成为新的master节点的slave, 复制规则和<code>parallel-syncs</code>参数有关</li>
+<li>更新对原来master节点的配置为slave, 并保持这对其”关注”, 当其恢复后命令它去复制新的master节点</li>
+</ul>
+<p><strong>slave节点的选择</strong> </p>
+<ul>
+<li>选择<code>slave-priority</code>(节点优先级)最高的slave节点, 如果存在则返回, 不存在进行下一步选择<ul>
+<li>默认优先级的一样的, 可以根据机器配置高低手动配置</li>
+</ul>
+</li>
+<li>选择复制偏移量最大的slave节点(越大说明越接近主节点, 越完整), 不存在则进行下一步</li>
+<li>选择runId最小的slave节点</li>
+</ul>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li>配置开启主节点</li>
+<li>配置开启sentinel监控主节点(<strong>sentinel是特殊的redis</strong>)</li>
+<li>实际应该用多机器</li>
+<li>详细配置节点</li>
+</ul>
+<p>配置开启主从节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">port $&#123;port&#125;</span><br><span class="line">daemonize yes</span><br><span class="line">pidfile &#x2F;path&#x2F;to&#x2F;pidfile.pid</span><br><span class="line">logfile &quot;logfile.log&quot;</span><br><span class="line">dir &quot;&#x2F;dir&#x2F;to&quot;</span><br><span class="line"></span><br><span class="line"># 从节点</span><br><span class="line">slaveof ip port</span><br></pre></td></tr></table></figure>
+
+<p>sentinel主要配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">port $&#123;port&#125;</span><br><span class="line">daemonize yes</span><br><span class="line">dir &quot;path&#x2F;to&#x2F;dir&quot;</span><br><span class="line">logfile &quot;$&#123;port&#125;.log&quot;</span><br><span class="line"></span><br><span class="line">sentinel monitor master-name ip port 2  # 自定一个mastername, 2表示当两个sentinel认为这个主节点出问题时, 故障转移</span><br><span class="line">sentinel down-after-milliseconds master-name 30000  # 类似于ping的时间</span><br><span class="line">sentinel parallel-syncs master-name 1  # 允许老slave同时对新master进行复制的个数</span><br><span class="line">sentinel failover-timeout master-name 180000</span><br></pre></td></tr></table></figure>
+
+<p>启动Redis Sentinel</p>
+<ul>
+<li><code>redis-sentinel [config file]</code></li>
+<li>或者<code>redis-server --sentinel [config file]</code></li>
+</ul>
+<h3 id="客户端结合sentinel实现高可用"><a href="#客户端结合sentinel实现高可用" class="headerlink" title="客户端结合sentinel实现高可用"></a>客户端结合sentinel实现高可用</h3><p>sentinel实现的高可用, 如果客户端没有实现高可用, 对sentinel的感知不高, 那也并不是高可用的</p>
+<ul>
+<li>客户端遍历sentinel节点集合, 获取一个可用的sentinel节点</li>
+<li>通过sentinal获取master节点<code>sentinel get-master-addr-by-name master-name</code></li>
+<li><code>role</code>或者<code>role replication</code>验证是否是真的master节点</li>
+<li>当master节点发生变化, 通知客户端(发布订阅的模式)</li>
+</ul>
+<p>各语言API有所不同</p>
+<h4 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h4><p>主节点挂掉后, sentinel服务可以方便的帮我们完成故障迁移. 如果slave节点挂掉后, 我们应该通过一定的手段让客户端迁移, 不让故障节点影响到客户端.</p>
+<p>三个迁移判断:</p>
+<ul>
+<li>切换主节点时(从节点晋升为主节点)</li>
+<li>写换从节点时(主节点下降为从节点)</li>
+<li>主观下线时</li>
+</ul>
+<p>客户端配合sentinel实现起来还是比较复杂的, 后面的集群更适合进行这样的读写分离</p>
+<h3 id="主动下线"><a href="#主动下线" class="headerlink" title="主动下线"></a>主动下线</h3><p>有时候设备更新等原因, 需要关闭/重启/迁移服务器等等. 运维人员可以手动下线服务器的节点.<br><code>sentinel failover &lt;masterName&gt;</code> 手动让主机点下线, 然后sentinel会让它故障转移.</p>
+<h3 id="节点上线"><a href="#节点上线" class="headerlink" title="节点上线"></a>节点上线</h3><ul>
+<li>主节点: <code>sentinel failover &lt;masterName&gt;</code> 让重启的主节点重新成为主节点</li>
+<li>从节点: <code>slaveof</code>即可, sentinel节点可以感知</li>
+<li>sentinel节点: 参考其他sentinel节点启动即可, 订阅发布</li>
+</ul>
+<h2 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h2><h3 id="呼唤集群"><a href="#呼唤集群" class="headerlink" title="呼唤集群"></a>呼唤集群</h3><p>为什么需要呼唤</p>
+<ul>
+<li>并发量: OPS<ul>
+<li>Redis官方数据每秒可以执行10万行, 但是如果业务要求100万/每秒呢</li>
+</ul>
+</li>
+<li>数据量<ul>
+<li>一般的计算机内存16~256G, 但是如果业务要求500G呢</li>
+</ul>
+</li>
+<li>流量<ul>
+<li>单机流量是千兆网卡, 但是业务要求万兆呢</li>
+</ul>
+</li>
+</ul>
+<p>分布式就是结局这些问题的好方法, 集群就相当于机柜. 规模化需求.</p>
+<h3 id="数据分布"><a href="#数据分布" class="headerlink" title="数据分布"></a>数据分布</h3><p>全量分布 =&gt; 一定的分区规则 =&gt; 子集N</p>
+<ul>
+<li>顺序分区<ul>
+<li>数据分散度易倾斜</li>
+<li>键值业务相关<ul>
+<li>如按日期的顺序分区</li>
+</ul>
+</li>
+<li>可顺序访问</li>
+<li>不支持批量操作</li>
+</ul>
+</li>
+<li>哈希分区<ul>
+<li>数据分散度高</li>
+<li>键值与业务无关</li>
+<li>无法顺序访问</li>
+<li>支持批量操作</li>
+</ul>
+</li>
+</ul>
+<h4 id="哈希分布"><a href="#哈希分布" class="headerlink" title="哈希分布"></a>哈希分布</h4><ul>
+<li>节点取余分区<ul>
+<li>扩容时, 迁移率高</li>
+<li>使用多倍扩容可以优化</li>
+</ul>
+</li>
+<li>一致性哈希分区<ul>
+<li>让节点分布在一个token环上(首尾相连的数组), 举行哈希运算后先后检索</li>
+<li>节点伸缩时, 只影响附近的节点, 迁移量较小</li>
+<li>伸缩时建议翻倍伸缩, 保证负载均衡</li>
+</ul>
+</li>
+<li>虚拟槽分区<ul>
+<li>Redis Cluster的分区方式, Redis Cluster有16384个节点, 开槽是对16384进行平均</li>
+<li>按一定的范围划分虚拟槽, 每个节点对应一个槽, 任取一个节点计算key哈希运算的结果, 如果结果是是自己管辖的范围, 则通过redis cluster的节点通信告知目标节点</li>
+</ul>
+</li>
+</ul>
+<h3 id="集群搭建"><a href="#集群搭建" class="headerlink" title="集群搭建"></a>集群搭建</h3><p>Redis Cluster架构</p>
+<ul>
+<li>节点<ul>
+<li><code>cluster-enabled: yes</code>以集群模式启动节点</li>
+</ul>
+</li>
+<li>meet<ul>
+<li>有一个节点向其他节点发送”meet”, 节点收到后回复</li>
+<li>内部机制让于同一个节点”meet”的节点们能互通</li>
+</ul>
+</li>
+<li>指派槽<ul>
+<li>负载均衡</li>
+</ul>
+</li>
+<li>复制<ul>
+<li>保证高可用</li>
+</ul>
+</li>
+</ul>
+<h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><h4 id="原生命令安装"><a href="#原生命令安装" class="headerlink" title="原生命令安装"></a>原生命令安装</h4><ul>
+<li>配置开启节点<ul>
+<li><code>port ${port}</code></li>
+<li><code>daemonize yes</code></li>
+<li><code>dir &quot;/path/to/&quot;</code></li>
+<li><code>dbfilename &quot;dump-${port}.rdb&quot;</code></li>
+<li><code>logfile &quot;${port}.log&quot;</code></li>
+<li><code>cluster-enabled yes</code>  是cluser节点</li>
+<li><code>cluster-config-file nodes-${port}.conf</code> 为当前节点单独选择配置文件</li>
+<li><code>cluster-node-timeout 15000</code></li>
+<li><code>cluster-require-full-coverage yes</code>  当集群中所有节点可以用时才提供服务, 默认是yes, 不符合高可用</li>
+</ul>
+</li>
+<li>节点握手: meet<ul>
+<li><code>cluster meet ip port</code></li>
+</ul>
+</li>
+<li>指派槽<ul>
+<li><code>cluster addslots slot [slot...]</code></li>
+</ul>
+</li>
+<li>主从关系分配实现高可用<ul>
+<li><code>cluster replicate node-id</code> node-id是值集群节点的id, 不是runid</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用Ruby安装脚本"><a href="#使用Ruby安装脚本" class="headerlink" title="使用Ruby安装脚本"></a>使用Ruby安装脚本</h4><h3 id="集群伸缩"><a href="#集群伸缩" class="headerlink" title="集群伸缩"></a>集群伸缩</h3><p>集群搭建 = 虚拟槽和数据在节点之间移动</p>
+<h4 id="集群扩容"><a href="#集群扩容" class="headerlink" title="集群扩容"></a>集群扩容</h4><ul>
+<li>准备新集群节点</li>
+<li>加入集群<ul>
+<li><code>cluster meet ip port</code></li>
+</ul>
+</li>
+<li>迁移槽和数据<ul>
+<li>迁移计划: 槽的规划</li>
+<li>迁移数据<ul>
+<li>对目标节点发送: <code>cluster setslot {slot} importing {sourceNodeId}</code>, 让目标节点准备导入槽的数据</li>
+<li>对源节点发送: <code>cluster setslot {slot} migraing {targetNodeId}</code>, 让源节点准备迁出槽数据 </li>
+<li>源节点循环执行: <code>cluster getkeysinslot {slot} {count}</code>, 每次获取count个属于槽的键</li>
+<li>在源节点上执行: <code>migrate {targetIp} {targetPort} key 0 {timeout}</code>, 把指定key迁移, 0是值数据库0, redis中只有db0</li>
+<li>重复执行3-4直到槽下所有的键数据迁移到目标节点</li>
+<li>向集群内所有主节点发送<code>cluster setslot {slot} node {targetNodeId}</code>, 通知槽分配给目标节点</li>
+</ul>
+</li>
+<li>添加从节点</li>
+</ul>
+</li>
+</ul>
+<h4 id="集群缩容"><a href="#集群缩容" class="headerlink" title="集群缩容"></a>集群缩容</h4><ul>
+<li>下线迁移槽<ul>
+<li>因为节点是互通的, 下线一个节点就要让所有节点忘记它</li>
+</ul>
+</li>
+<li>忘记节点<ul>
+<li><code>redis-cli cluster forget {downNodeId}</code>, 有效时间60s, 60秒, 如果有一个节点没有忘记downNodeId的话就会恢复</li>
+</ul>
+</li>
+<li>关闭节点</li>
+</ul>
+<h3 id="客户端路由"><a href="#客户端路由" class="headerlink" title="客户端路由"></a>客户端路由</h3><h4 id="moved重定向"><a href="#moved重定向" class="headerlink" title="moved重定向"></a>moved重定向</h4><p>客户端向某个发送键命令, 哈希计算后发现这条命令的的槽是当前节点控制的, 则执行. 否则回复moved异常. 包含槽 ip:port<br>客户端收到moved异常后, 再(如果不是集群模式的话, -c)手动向对应节点发送信息.</p>
+<h4 id="ask重定向"><a href="#ask重定向" class="headerlink" title="ask重定向"></a>ask重定向</h4><p>因为槽迁移的比较慢的, 如果发送命令后返回了moved异常, 但当我们对目标节点再次发送命令后, 发现节点已经迁移了. 这就比较尴尬.</p>
+<p>ask重定向就能解决这一问题. 客户端发送键命令到源节点, 但是发现节点此时正在做槽迁移, 那就会返回ask转向异常.<br>当我们收到ask转向异常后, 我们向目标节点发送<code>Asking</code>命令, 再发送要执行的命令</p>
+<ul>
+<li>moved: 槽在确定节点中</li>
+<li>ask: 槽在迁移中, 不确定在哪个节点</li>
+</ul>
+<h4 id="smart客户端-追求性能"><a href="#smart客户端-追求性能" class="headerlink" title="smart客户端: 追求性能"></a>smart客户端: 追求性能</h4><h3 id="批量操作"><a href="#批量操作" class="headerlink" title="批量操作"></a>批量操作</h3><p>当分布到多个节点后要怎么一次对所有节点进行操作呢?</p>
+<ul>
+<li>串行mget<ul>
+<li>效率底</li>
+<li>n次网络时间</li>
+</ul>
+</li>
+<li>串行IO<ul>
+<li>在本地算出key的槽, 然后根据redis的的分组, 把key集中到一起再去访问redis对应的node(pipline)</li>
+<li>nodes次网络时间</li>
+</ul>
+</li>
+<li>并行IO<ul>
+<li>多线程地执行串行IO</li>
+</ul>
+</li>
+<li>hash_tag<ul>
+<li>性能最高但读写增加tag维护成本, tag分布容易倾斜</li>
+</ul>
+</li>
+</ul>
+<h3 id="Redis-Cluster的故障转移"><a href="#Redis-Cluster的故障转移" class="headerlink" title="Redis Cluster的故障转移"></a>Redis Cluster的故障转移</h3><h4 id="故障发现"><a href="#故障发现" class="headerlink" title="故障发现"></a>故障发现</h4><p>节点间ping/pong, 原理类似sentinel</p>
+<ul>
+<li>主管下线</li>
+<li>客观下线</li>
+</ul>
+<h4 id="故障恢复"><a href="#故障恢复" class="headerlink" title="故障恢复"></a>故障恢复</h4><ul>
+<li>检查资格<ul>
+<li>检查slave成为主节点的资格</li>
+</ul>
+</li>
+<li>选举</li>
+<li>替换主节点</li>
+</ul>
+<h2 id="缓存的设计"><a href="#缓存的设计" class="headerlink" title="缓存的设计"></a>缓存的设计</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">request-&gt;cache: request</span><br><span class="line">cache--&gt;request: response</span><br><span class="line">cache-&gt;storage: request</span><br><span class="line">storage-&gt;cache: response</span><br><span class="line">storage--&gt;request: response</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>收益<ul>
+<li>加速读写</li>
+<li>降低后端负担<ul>
+<li>如降低后端MySQL负担</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>成本<ul>
+<li>数据不一致: 缓存层和数据层有时间窗口不一致, 和更新策略有关<ul>
+<li>如数据库更新了, 缓存没更新</li>
+</ul>
+</li>
+<li>代码维护成本</li>
+<li>运维成本</li>
+</ul>
+</li>
+</ul>
+<h3 id="缓存更新策略"><a href="#缓存更新策略" class="headerlink" title="缓存更新策略"></a>缓存更新策略</h3><ul>
+<li>LRU/LFU/FIFO算法剔除: 如maxmemory-policy</li>
+<li>超时剔除: 如expire</li>
+<li>主动更新: 开发控制生命周期</li>
+</ul>
+<p>随机应变</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>一致性</th>
+<th>维护成本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LRU/LFU/FIFO算法剔除</td>
+<td>最差</td>
+<td>低</td>
+</tr>
+<tr>
+<td>超时剔除</td>
+<td>较差</td>
+<td>低</td>
+</tr>
+<tr>
+<td>主动更新</td>
+<td>强</td>
+<td>高</td>
+</tr>
+</tbody></table>
+<p>建议</p>
+<ul>
+<li>低一致性: 最大内存和淘汰策略</li>
+<li>高一致性: 超时剔除和主动更新结合, 最大内存和淘汰策略兜底</li>
+</ul>
+<h3 id="缓存粒度控制"><a href="#缓存粒度控制" class="headerlink" title="缓存粒度控制"></a>缓存粒度控制</h3><p>三个角度</p>
+<ul>
+<li>通用性: 全量属性更好</li>
+<li>占用空间: 部分属性更好</li>
+<li>代码维护: 表面上全量属性更好</li>
+</ul>
+<h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><p>当大量请求不命中时, 及请求的数据不存在, 那缓存相当于没有作用, 还得每次从存储层读取遍历, 增大存储曾负载</p>
+<p>原因</p>
+<ul>
+<li>业务代码自身问题</li>
+<li>恶意攻击, 爬虫等</li>
+</ul>
+<p>如何发现</p>
+<ul>
+<li>业务的相应时间</li>
+<li>业务本身问题</li>
+<li>相关指标</li>
+</ul>
+<p>解决方法</p>
+<ul>
+<li>缓存空对象<ul>
+<li>两个问题<ul>
+<li>需要更多的键</li>
+<li>缓存层和存储层”短期”不一致</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>布隆过滤器拦截<ul>
+<li>用较小的内存实现过滤</li>
+<li>也要根据实际情况使用</li>
+</ul>
+</li>
+</ul>
+<h3 id="无底洞问题"><a href="#无底洞问题" class="headerlink" title="无底洞问题"></a>无底洞问题</h3><p>加机器反而性能下降. 如当节点个数很多时, 客户端向节点发送批量操作命令(如mget), 那么这么多的节点就会导致网络时间非超明显</p>
+<p>问题关键点</p>
+<ul>
+<li>更多的机器!=更高的性能</li>
+<li>批量接口需求(mget, mset等)</li>
+<li>数据增长与水平扩展需求</li>
+</ul>
+<p>优化IO的几种方法</p>
+<ul>
+<li>命令本身优化: 如慢查询keys, hgetall bigkey</li>
+<li>减少网络通信次数<ul>
+<li>数据库不同而不同</li>
+</ul>
+</li>
+<li>降低接入成本: 如客户端长连接/连接池, NIO等</li>
+</ul>
+<h3 id="热点key重建"><a href="#热点key重建" class="headerlink" title="热点key重建"></a>热点key重建</h3><p>缓存重建的时间到了, 但这时有个热点key, 热点key性能消耗很大, 会导致重建的时间变长</p>
+<p>三个目标:</p>
+<ul>
+<li>减少重建缓存的次数<ul>
+<li>由于网络延迟等原因, 当地一个请求发现需要重建缓存时, 进行重建换成, 但这个热点key会有很多请求在统一时间发送, 会有很多重建缓存的命令</li>
+</ul>
+</li>
+<li>数据尽可能一致</li>
+<li>减少潜在风险</li>
+</ul>
+<h4 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h4><ul>
+<li>互斥锁(mutex key)<ul>
+<li>重建一次只能接收一个命令, 其他重建命令要等待重建完成<ul>
+<li>但是会存在等待时间, 浪费内存</li>
+<li>代码复杂度增加</li>
+<li>存在锁死风险</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>永不过期<ul>
+<li>缓存上不设置过期时间, 但不代表它不会更新</li>
+<li>功能层面(逻辑过期), 会使用一个线程后台的更新缓存, 这样就不存在等待时间的问题<ul>
+<li>但是这样会导致数据不一致</li>
+<li>逻辑过期时间维护成本和内存成本增加</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Redis云平台CacheCloud"><a href="#Redis云平台CacheCloud" class="headerlink" title="Redis云平台CacheCloud"></a>Redis云平台CacheCloud</h2><p>当节点数量很多时, 运维就会遇到问题.</p>
+<ul>
+<li>发布构建繁琐, 私搭乱搭</li>
+<li>节点&amp;机器等运维成本</li>
+<li>监控报警初级</li>
+</ul>
+<p>可以自己写脚本, 当然网上也有很多开源项目</p>
+<p>CacheCloud开源项目能够:</p>
+<ul>
+<li>一键开启Redis</li>
+<li>机器, 应用, 实例监控和报警</li>
+<li>客户端: 透明使用, 性能上报</li>
+<li>可视化运维</li>
+<li>已存在Redis直接接入和数据迁移</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/redis/" rel="tag"># redis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/02/universe/typescript/" rel="prev" title="TypeScript">
+      <i class="fa fa-chevron-left"></i> TypeScript
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/25/Major/computer_network/" rel="next" title="自顶向下计算机网络">
+      自顶向下计算机网络 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis学习笔记"><span class="nav-number">1.</span> <span class="nav-text">Redis学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本认识"><span class="nav-number">1.1.</span> <span class="nav-text">基本认识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特性"><span class="nav-number">1.1.1.</span> <span class="nav-text">特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用命令"><span class="nav-number">1.2.</span> <span class="nav-text">通用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get"><span class="nav-number">1.2.1.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">1.2.2.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">1.2.3.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数"><span class="nav-number">1.2.4.</span> <span class="nav-text">数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希"><span class="nav-number">1.2.5.</span> <span class="nav-text">哈希</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表"><span class="nav-number">1.2.6.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无序集合"><span class="nav-number">1.2.7.</span> <span class="nav-text">无序集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有序集合"><span class="nav-number">1.2.8.</span> <span class="nav-text">有序集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#慢查询"><span class="nav-number">1.2.9.</span> <span class="nav-text">慢查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流水线-Pipline"><span class="nav-number">1.2.10.</span> <span class="nav-text">流水线 Pipline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布订阅"><span class="nav-number">1.2.11.</span> <span class="nav-text">发布订阅</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位图Bitmap"><span class="nav-number">1.2.12.</span> <span class="nav-text">位图Bitmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HyperLogLog"><span class="nav-number">1.2.13.</span> <span class="nav-text">HyperLogLog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地理信息定位GEO"><span class="nav-number">1.2.14.</span> <span class="nav-text">地理信息定位GEO</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持久化"><span class="nav-number">1.3.</span> <span class="nav-text">持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RDB"><span class="nav-number">1.3.1.</span> <span class="nav-text">RDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOF"><span class="nav-number">1.3.2.</span> <span class="nav-text">AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AOF重写"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">AOF重写</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RDB和AOF选择"><span class="nav-number">1.3.3.</span> <span class="nav-text">RDB和AOF选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis复制原理"><span class="nav-number">1.4.</span> <span class="nav-text">Redis复制原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主从复制"><span class="nav-number">1.4.1.</span> <span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方式"><span class="nav-number">1.4.2.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全量复制"><span class="nav-number">1.4.3.</span> <span class="nav-text">全量复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部分复制"><span class="nav-number">1.4.4.</span> <span class="nav-text">部分复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#故障处理"><span class="nav-number">1.4.5.</span> <span class="nav-text">故障处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主从复制常见问题"><span class="nav-number">1.4.6.</span> <span class="nav-text">主从复制常见问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Sentinel"><span class="nav-number">1.5.</span> <span class="nav-text">Redis Sentinel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-Sentinel框架"><span class="nav-number">1.5.1.</span> <span class="nav-text">Redis Sentinel框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-Sentinel原理"><span class="nav-number">1.5.2.</span> <span class="nav-text">Redis Sentinel原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主观下线和客观下线"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">主观下线和客观下线</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#领导者选举"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">领导者选举</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#故障转移-sentinel领导者完成"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">故障转移(sentinel领导者完成)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.5.3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端结合sentinel实现高可用"><span class="nav-number">1.5.4.</span> <span class="nav-text">客户端结合sentinel实现高可用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读写分离"><span class="nav-number">1.5.4.1.</span> <span class="nav-text">读写分离</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主动下线"><span class="nav-number">1.5.5.</span> <span class="nav-text">主动下线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点上线"><span class="nav-number">1.5.6.</span> <span class="nav-text">节点上线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Cluster"><span class="nav-number">1.6.</span> <span class="nav-text">Redis Cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#呼唤集群"><span class="nav-number">1.6.1.</span> <span class="nav-text">呼唤集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据分布"><span class="nav-number">1.6.2.</span> <span class="nav-text">数据分布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#哈希分布"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">哈希分布</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群搭建"><span class="nav-number">1.6.3.</span> <span class="nav-text">集群搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-1"><span class="nav-number">1.6.4.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原生命令安装"><span class="nav-number">1.6.4.1.</span> <span class="nav-text">原生命令安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Ruby安装脚本"><span class="nav-number">1.6.4.2.</span> <span class="nav-text">使用Ruby安装脚本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群伸缩"><span class="nav-number">1.6.5.</span> <span class="nav-text">集群伸缩</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#集群扩容"><span class="nav-number">1.6.5.1.</span> <span class="nav-text">集群扩容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群缩容"><span class="nav-number">1.6.5.2.</span> <span class="nav-text">集群缩容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端路由"><span class="nav-number">1.6.6.</span> <span class="nav-text">客户端路由</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#moved重定向"><span class="nav-number">1.6.6.1.</span> <span class="nav-text">moved重定向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ask重定向"><span class="nav-number">1.6.6.2.</span> <span class="nav-text">ask重定向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#smart客户端-追求性能"><span class="nav-number">1.6.6.3.</span> <span class="nav-text">smart客户端: 追求性能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量操作"><span class="nav-number">1.6.7.</span> <span class="nav-text">批量操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-Cluster的故障转移"><span class="nav-number">1.6.8.</span> <span class="nav-text">Redis Cluster的故障转移</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#故障发现"><span class="nav-number">1.6.8.1.</span> <span class="nav-text">故障发现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#故障恢复"><span class="nav-number">1.6.8.2.</span> <span class="nav-text">故障恢复</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存的设计"><span class="nav-number">1.7.</span> <span class="nav-text">缓存的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存更新策略"><span class="nav-number">1.7.1.</span> <span class="nav-text">缓存更新策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存粒度控制"><span class="nav-number">1.7.2.</span> <span class="nav-text">缓存粒度控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存穿透"><span class="nav-number">1.7.3.</span> <span class="nav-text">缓存穿透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无底洞问题"><span class="nav-number">1.7.4.</span> <span class="nav-text">无底洞问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#热点key重建"><span class="nav-number">1.7.5.</span> <span class="nav-text">热点key重建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解决思路"><span class="nav-number">1.7.5.1.</span> <span class="nav-text">解决思路</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis云平台CacheCloud"><span class="nav-number">1.8.</span> <span class="nav-text">Redis云平台CacheCloud</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

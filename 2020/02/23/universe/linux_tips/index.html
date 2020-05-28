@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Command lineshebanga shebang is the interpreter of this script. like this 1#!&#x2F;bin&#x2F;sh  Redirection   command function    a &gt; b a’s std output override into b   a &gt;&gt; b a’s std output appand int">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux command line">
+<meta property="og:url" content="http://yoursite.com/2020/02/23/universe/linux_tips/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Command lineshebanga shebang is the interpreter of this script. like this 1#!&#x2F;bin&#x2F;sh  Redirection   command function    a &gt; b a’s std output override into b   a &gt;&gt; b a’s std output appand int">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-20T09:24:53.027Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/23/universe/linux_tips/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>linux command line | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/23/universe/linux_tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux command line
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-23 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-23T00:00:00+08:00">2020-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-20 17:24:53" itemprop="dateModified" datetime="2020-05-20T17:24:53+08:00">2020-05-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Command-line"><a href="#Command-line" class="headerlink" title="Command line"></a>Command line</h1><h2 id="shebang"><a href="#shebang" class="headerlink" title="shebang"></a>shebang</h2><p>a shebang is the interpreter of this script. like this</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Redirection"><a href="#Redirection" class="headerlink" title="Redirection"></a>Redirection</h2><table>
+<thead>
+<tr>
+<th>command</th>
+<th>function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a &gt; b</td>
+<td>a’s std output override into b</td>
+</tr>
+<tr>
+<td>a &gt;&gt; b</td>
+<td>a’s std output appand into b</td>
+</tr>
+<tr>
+<td>a &lt; b</td>
+<td>b as a’s input</td>
+</tr>
+<tr>
+<td>a &lt;&lt; b</td>
+<td>here document</td>
+</tr>
+<tr>
+<td>a &lt;&lt;&lt; b</td>
+<td>here</td>
+</tr>
+</tbody></table>
+<h3 id="Here-document"><a href="#Here-document" class="headerlink" title="Here document"></a>Here document</h3><p>A block as input</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> &lt;&lt; token</span><br><span class="line">    text</span><br><span class="line">token</span><br><span class="line"></span><br><span class="line">example:</span><br><span class="line"><span class="built_in">echo</span> &lt;&lt; __EOF__</span><br><span class="line">halo</span><br><span class="line">__EOF__</span><br><span class="line"></span><br><span class="line">$ halo</span><br></pre></td></tr></table></figure>
+
+<h3 id="Here"><a href="#Here" class="headerlink" title="Here"></a>Here</h3><p>a bit like <em>here document</em>, a line as input.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">read</span> ans1 ans2 ans3 &lt;&lt;&lt; <span class="string">"a1 a2 a3"</span></span><br><span class="line"></span><br><span class="line">a1 a2 a3 as input to <span class="built_in">read</span> process</span><br></pre></td></tr></table></figure>
+
+<h2 id="Useful-commands"><a href="#Useful-commands" class="headerlink" title="Useful commands"></a>Useful commands</h2><h3 id="Grep"><a href="#Grep" class="headerlink" title="Grep"></a>Grep</h3><p><code>grep [option] file1 file2...</code></p>
+<p>The most commonly used<br>| options  | description                    |<br>|———-|——————————–|<br>| -i       | –ignore-case                  |<br>| -v       | –revert-mathch                |<br>| -c       | –count                        |<br>| -l       | –file-with-match              |<br>| -L       | –file-without-math            |<br>| -n       | –line-number                  |<br>| -h       | no filename in multi file mode |<br>| -a/-text | do not ignore binary data      |<br>| -e       | –regexp                       |<br>| -f       | specify regexp file            |</p>
+<h3 id="Sed"><a href="#Sed" class="headerlink" title="Sed"></a>Sed</h3><p>sed can deal with text file with script-command or script-file.</p>
+<p><code>sed [options][target-file]</code></p>
+<table>
+<thead>
+<tr>
+<th>options</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-e</td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+</tbody></table>
+<p>script action</p>
+<table>
+<thead>
+<tr>
+<th>action</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a\</td>
+<td>add a new line or lines next to current line</td>
+</tr>
+<tr>
+<td>c\</td>
+<td>replace current line with some text</td>
+</tr>
+<tr>
+<td>d</td>
+<td>delete line</td>
+</tr>
+<tr>
+<td>i\</td>
+<td>insert text befor curent line</td>
+</tr>
+<tr>
+<td>h</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>H</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>g</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>G</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>I</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>p</td>
+<td>print line</td>
+</tr>
+<tr>
+<td>n</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>q</td>
+<td>quit sed</td>
+</tr>
+<tr>
+<td>r</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>!</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>s</td>
+<td>replace string with other string</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+</tbody></table>
+<p>replace identifier</p>
+<table>
+<thead>
+<tr>
+<th>options</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>g</td>
+<td>global replace in this line</td>
+</tr>
+<tr>
+<td>p</td>
+<td>print line</td>
+</tr>
+<tr>
+<td>w</td>
+<td>write line into file</td>
+</tr>
+<tr>
+<td>x</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>y</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Cut"><a href="#Cut" class="headerlink" title="Cut"></a>Cut</h3><table>
+<thead>
+<tr>
+<th>options</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+</tbody></table>
+<h2 id="Regular-Expressions"><a href="#Regular-Expressions" class="headerlink" title="Regular Expressions"></a>Regular Expressions</h2><h3 id="Literals"><a href="#Literals" class="headerlink" title="Literals"></a>Literals</h3><table>
+<thead>
+<tr>
+<th>pattern</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.</td>
+<td>match any char</td>
+</tr>
+<tr>
+<td>char</td>
+<td>literaly a char</td>
+</tr>
+</tbody></table>
+<h3 id="Metacharacters"><a href="#Metacharacters" class="headerlink" title="Metacharacters"></a>Metacharacters</h3><h4 id="Anchors"><a href="#Anchors" class="headerlink" title="Anchors"></a>Anchors</h4><table>
+<thead>
+<tr>
+<th>pattern</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>^</td>
+<td>found at the begin of line</td>
+</tr>
+<tr>
+<td>$</td>
+<td>found at the end of line</td>
+</tr>
+</tbody></table>
+<h4 id="Quantifiers"><a href="#Quantifiers" class="headerlink" title="Quantifiers"></a>Quantifiers</h4><table>
+<thead>
+<tr>
+<th>pattern</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>?</td>
+<td>match <strong>an element</strong> zero or one time</td>
+</tr>
+<tr>
+<td>*</td>
+<td>match <strong>an element</strong> zero or more times</td>
+</tr>
+<tr>
+<td>+</td>
+<td>match <strong>an element</strong> one or more times</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>match <strong>an element</strong> a specific number of times</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>match <strong>an element</strong> if it occurs n or more times</td>
+</tr>
+<tr>
+<td>{,n}</td>
+<td>match <strong>an element</strong> if it occurs no more than n times</td>
+</tr>
+</tbody></table>
+<p>A quantifiers is after <strong>an element</strong>, such as <code>.*</code> means match any char with any lengh equivalent any string.</p>
+<p>An element can like this <code>[A_Z]</code>and this<code>[:digit:]</code>. We can see the pattern before a quantifiers as a whole.</p>
+<h4 id="Bracket-Expressions-and-Character-Classes"><a href="#Bracket-Expressions-and-Character-Classes" class="headerlink" title="Bracket Expressions and Character Classes"></a>Bracket Expressions and Character Classes</h4><ul>
+<li><p>Bracket Expressions</p>
+<ul>
+<li>specify a set of characters to be match<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ grep -h <span class="string">'[bg]zip'</span> test.txt</span><br><span class="line">bzip2</span><br><span class="line">bzip123</span><br><span class="line">gzip</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Negation</p>
+<ul>
+<li>If the first char in a bracket expression is a caret(^), the <strong>remaining char</strong> are taken to be a set of chars that must not be present at the given char position.<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ grep -h <span class="string">'[^bg]zip'</span> test.txt</span><br><span class="line">bunzip</span><br><span class="line">gunzip</span><br><span class="line">funzip</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Character Classes</p>
+<ul>
+<li>A set of characters range<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ grep -h <span class="string">'[^ABCDEF]'</span> test.txt</span><br><span class="line">or you can</span><br><span class="line">$ grep -h <span class="string">'[^A-F]'</span> test.txt</span><br><span class="line"></span><br><span class="line">Here are more expressions</span><br><span class="line">$ grep -h <span class="string">'[A-Fa-z0-9]'</span> test.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>POSIX Character Class</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>char</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[:alnum:]</td>
+<td>alphanumeric characters.equivalent to[A-Za-z0-9]</td>
+</tr>
+<tr>
+<td>[:word:]</td>
+<td>same as alnum, with the addition of the underscore char(_)</td>
+</tr>
+<tr>
+<td>[:alpha:]</td>
+<td>[A-Za-z]</td>
+</tr>
+<tr>
+<td>[:blank:]</td>
+<td>space and tab char</td>
+</tr>
+<tr>
+<td>[:digit:]</td>
+<td>number 0 through 9</td>
+</tr>
+<tr>
+<td>[:lower:]</td>
+<td>the lowercase letters</td>
+</tr>
+<tr>
+<td>[:upper:]</td>
+<td>the uppercase letters</td>
+</tr>
+<tr>
+<td>[:space:]</td>
+<td>[\t\r\n\v\f]</td>
+</tr>
+<tr>
+<td>[:xdigit:]</td>
+<td>chars used to express hexadecimal numbers.[0-9a-fA-F]</td>
+</tr>
+</tbody></table>
+<h2 id="Flow-control"><a href="#Flow-control" class="headerlink" title="Flow control"></a>Flow control</h2><h3 id="if-statements"><a href="#if-statements" class="headerlink" title="if statements"></a>if statements</h3><h4 id="File-Expressions"><a href="#File-Expressions" class="headerlink" title="File Expressions"></a>File Expressions</h4><table>
+<thead>
+<tr>
+<th>command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>f1 -ef f2</td>
+<td>f1 and f2 have the same indoe number</td>
+</tr>
+<tr>
+<td>f1 -nt f2</td>
+<td>f1 newer than f2</td>
+</tr>
+<tr>
+<td>f1 -ot f2</td>
+<td>f1 older than f2</td>
+</tr>
+<tr>
+<td>-d f1</td>
+<td>f1 exists an is a directory</td>
+</tr>
+<tr>
+<td>-e f1</td>
+<td>f1 exists</td>
+</tr>
+<tr>
+<td>-f f1</td>
+<td>f1 is a regular file</td>
+</tr>
+</tbody></table>
+<h4 id="String-Expressions"><a href="#String-Expressions" class="headerlink" title="String Expressions"></a>String Expressions</h4><table>
+<thead>
+<tr>
+<th>command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>string</td>
+<td>string is not null</td>
+</tr>
+<tr>
+<td>-n string</td>
+<td>the lenth of string is greater than zero</td>
+</tr>
+<tr>
+<td>-z string</td>
+<td>the lenth of string is zero</td>
+</tr>
+<tr>
+<td>s1 = s2 or s1 == s2</td>
+<td>equal</td>
+</tr>
+<tr>
+<td>s1 !=s2</td>
+<td>not equal</td>
+</tr>
+<tr>
+<td>s1 &gt; s2</td>
+<td>s1 sorts after s2</td>
+</tr>
+<tr>
+<td>s1 &lt; s2</td>
+<td>s1 sortf before s2</td>
+</tr>
+</tbody></table>
+<h4 id="Integer-Expressions"><a href="#Integer-Expressions" class="headerlink" title="Integer Expressions"></a>Integer Expressions</h4><table>
+<thead>
+<tr>
+<th>command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int1 -eq int2</td>
+<td>equal</td>
+</tr>
+<tr>
+<td>int1 -ne int2</td>
+<td>not equal</td>
+</tr>
+<tr>
+<td>-le</td>
+<td>less or equal</td>
+</tr>
+<tr>
+<td>-lt</td>
+<td>less than</td>
+</tr>
+<tr>
+<td>-ge</td>
+<td>greater or equal</td>
+</tr>
+<tr>
+<td>-gt</td>
+<td>greater</td>
+</tr>
+</tbody></table>
+<h4 id="A-More-Modern-Version-of-test"><a href="#A-More-Modern-Version-of-test" class="headerlink" title="A More Modern Version of test"></a>A More Modern Version of test</h4><ul>
+<li><strong>Designed of string</strong><ul>
+<li><code>[[ command ]]</code></li>
+</ul>
+</li>
+</ul>
+<p>and here is a new feature:<br><code>string1 =~ regex</code>. This return true if string1 matched by the extended regular expression</p>
+<ul>
+<li><strong>Designed of Integer</strong><ul>
+<li>`(( command ))</li>
+<li>integer only</li>
+</ul>
+</li>
+</ul>
+<h3 id="case"><a href="#case" class="headerlink" title="case"></a>case</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> word <span class="keyword">in</span></span><br><span class="line">    [pattern [| pattern]...) commands ;;]...</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$num</span> <span class="keyword">in</span></span><br><span class="line">    0) <span class="built_in">echo</span> <span class="string">"zero"</span></span><br><span class="line">        ;;  <span class="comment"># ;; break and out of case</span></span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="pattern"><a href="#pattern" class="headerlink" title="pattern"></a>pattern</h4><table>
+<thead>
+<tr>
+<th>pattern</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a)</td>
+<td>matches if word equals a</td>
+</tr>
+<tr>
+<td>[[:alpha:]]</td>
+<td>matches if word is a single alphabetic</td>
+</tr>
+<tr>
+<td>???)</td>
+<td>matches if word is exactly three characters long</td>
+</tr>
+<tr>
+<td>*.txt</td>
+<td>matches if word ends with .txt</td>
+</tr>
+<tr>
+<td>*)</td>
+<td>matches any value.</td>
+</tr>
+</tbody></table>
+<h3 id="for-while-until"><a href="#for-while-until" class="headerlink" title="for/while/until"></a>for/while/until</h3><ul>
+<li>for <ul>
+<li><code>for variable in words; do commands done</code></li>
+<li><code>for (( expression1; expression2; expression3 )); do commands done</code></li>
+</ul>
+</li>
+<li>while <ul>
+<li><code>while commands; do commands; done</code></li>
+<li>while commands is true continue</li>
+</ul>
+</li>
+<li>until <ul>
+<li><code>until commands; do commands; done</code></li>
+<li>while commands is false continue</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/10/Major/compuer_organization/" rel="prev" title="Computer Organization">
+      <i class="fa fa-chevron-left"></i> Computer Organization
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/25/universe/linux%E5%93%B2%E5%AD%A6%E8%AE%B0%E5%BD%95/" rel="next" title="Linux哲学记录">
+      Linux哲学记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Command-line"><span class="nav-number">1.</span> <span class="nav-text">Command line</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shebang"><span class="nav-number">1.1.</span> <span class="nav-text">shebang</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redirection"><span class="nav-number">1.2.</span> <span class="nav-text">Redirection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Here-document"><span class="nav-number">1.2.1.</span> <span class="nav-text">Here document</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Here"><span class="nav-number">1.2.2.</span> <span class="nav-text">Here</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Useful-commands"><span class="nav-number">1.3.</span> <span class="nav-text">Useful commands</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Grep"><span class="nav-number">1.3.1.</span> <span class="nav-text">Grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sed"><span class="nav-number">1.3.2.</span> <span class="nav-text">Sed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cut"><span class="nav-number">1.3.3.</span> <span class="nav-text">Cut</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Regular-Expressions"><span class="nav-number">1.4.</span> <span class="nav-text">Regular Expressions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Literals"><span class="nav-number">1.4.1.</span> <span class="nav-text">Literals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metacharacters"><span class="nav-number">1.4.2.</span> <span class="nav-text">Metacharacters</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Anchors"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">Anchors</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Quantifiers"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">Quantifiers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bracket-Expressions-and-Character-Classes"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">Bracket Expressions and Character Classes</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flow-control"><span class="nav-number">1.5.</span> <span class="nav-text">Flow control</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if-statements"><span class="nav-number">1.5.1.</span> <span class="nav-text">if statements</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#File-Expressions"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">File Expressions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String-Expressions"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">String Expressions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Integer-Expressions"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">Integer Expressions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-More-Modern-Version-of-test"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">A More Modern Version of test</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case"><span class="nav-number">1.5.2.</span> <span class="nav-text">case</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pattern"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">pattern</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-while-until"><span class="nav-number">1.5.3.</span> <span class="nav-text">for&#x2F;while&#x2F;until</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
