@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Pipenv manualInstall1pip install pipenv   UsageQuick Start 123456cd     myprojectpipenv install  # create virtual environmentpipenv install request  #  or install modulepipenv --venv  # show location">
+  <meta name="description" content="Emacs细节 major mode和minor mode 打开一个文件时会有默认的mode激活，这个默认的mode就是major mode minor mode在配置文件中，状态栏不会显示，c-h m显示打开的minor mode   org mode标签TODO&#x2F;DONE c-t&#x2F;c-s    Emacs基本操作 M for meta, Alt or Command(MAC)  S for s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pipenv usage">
-<meta property="og:url" content="http://yoursite.com/2019/01/03/universe/pipenv_manual/index.html">
+<meta property="og:title" content="emacs快速入门">
+<meta property="og:url" content="http://yoursite.com/2020/05/29/universe/Emacs_in_action/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Pipenv manualInstall1pip install pipenv   UsageQuick Start 123456cd     myprojectpipenv install  # create virtual environmentpipenv install request  #  or install modulepipenv --venv  # show location">
+<meta property="og:description" content="Emacs细节 major mode和minor mode 打开一个文件时会有默认的mode激活，这个默认的mode就是major mode minor mode在配置文件中，状态栏不会显示，c-h m显示打开的minor mode   org mode标签TODO&#x2F;DONE c-t&#x2F;c-s    Emacs基本操作 M for meta, Alt or Command(MAC)  S for s">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-01-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-15T04:01:36.899Z">
+<meta property="article:published_time" content="2020-05-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-30T03:16:55.757Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="python, pipenv, tools">
+<meta property="article:tag" content="emacs, linux, editor">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2019/01/03/universe/pipenv_manual/">
+<link rel="canonical" href="http://yoursite.com/2020/05/29/universe/Emacs_in_action/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>pipenv usage | Hexo</title>
+  <title>emacs快速入门 | Hexo</title>
   
 
 
@@ -151,7 +151,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/03/universe/pipenv_manual/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/29/universe/Emacs_in_action/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -164,7 +164,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          pipenv usage
+          emacs快速入门
         </h1>
 
         <div class="post-meta">
@@ -174,14 +174,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-01-03 00:00:00" itemprop="dateCreated datePublished" datetime="2019-01-03T00:00:00+08:00">2019-01-03</time>
+              <time title="Created: 2020-05-29 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-29T00:00:00+08:00">2020-05-29</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-15 12:01:36" itemprop="dateModified" datetime="2020-04-15T12:01:36+08:00">2020-04-15</time>
+                <time title="Modified: 2020-05-30 11:16:55" itemprop="dateModified" datetime="2020-05-30T11:16:55+08:00">2020-05-30</time>
               </span>
 
           
@@ -195,47 +195,260 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Pipenv-manual"><a href="#Pipenv-manual" class="headerlink" title="Pipenv manual"></a>Pipenv manual</h1><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pipenv</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>Quick Start</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd     myproject</span><br><span class="line">pipenv install  # create virtual environment</span><br><span class="line">pipenv install request  #  or install module</span><br><span class="line">pipenv --venv  # show location of this virtual environmenfuzzy findert</span><br><span class="line">pipenv --py    # show location of this python interpreter</span><br><span class="line">pipenv shell  # activate</span><br></pre></td></tr></table></figure>
-
-<p>Create a new project using Python 3.7, specifically</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv --python 3.7</span><br></pre></td></tr></table></figure>
-
-<p>Remove project virtualenv (inferred from current directory):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv --rm</span><br></pre></td></tr></table></figure>
-
-<p>Install all dependencies for a project (including dev):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --dev</span><br></pre></td></tr></table></figure>
-
-<p>Create a lockfile containing pre-releases:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv lock --pre</span><br></pre></td></tr></table></figure>
-
-<p>Show a graph of your installed dependencies:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv graph</span><br></pre></td></tr></table></figure>
-
-<p>Check your installed dependencies for security vulnerabilities:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv check</span><br></pre></td></tr></table></figure>
-
-<p>Install a local setup.py into your virtual environment/Pipfile:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install -e .</span><br></pre></td></tr></table></figure>
-
-<p>Use a lower-level pip command:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run pip freeze</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Activate"><a href="#Activate" class="headerlink" title="Activate"></a>Activate</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipenv shell</span><br><span class="line">python --version</span><br></pre></td></tr></table></figure>
-
-<h2 id="Use-pypi-mirror"><a href="#Use-pypi-mirror" class="headerlink" title="Use pypi-mirror"></a>Use pypi-mirror</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --pypi-mirror https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple</span><br></pre></td></tr></table></figure>
-
-<p>OR edit Pipfile</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[[source]]</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&quot;</span><br><span class="line">verify_ssl &#x3D; true</span><br><span class="line">name &#x3D; &quot;pypi&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-
+        <h2 id="Emacs细节"><a href="#Emacs细节" class="headerlink" title="Emacs细节"></a>Emacs细节</h2><ul>
+<li>major mode和minor mode<ul>
+<li>打开一个文件时会有默认的mode激活，这个默认的mode就是major mode</li>
+<li>minor mode在配置文件中，状态栏不会显示，<code>c-h m</code>显示打开的minor mode</li>
+</ul>
+</li>
+<li>org mode标签TODO/DONE<ul>
+<li><code>c-t/c-s</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Emacs基本操作"><a href="#Emacs基本操作" class="headerlink" title="Emacs基本操作"></a>Emacs基本操作</h2><ul>
+<li><p>M for meta, Alt or Command(MAC)</p>
+</li>
+<li><p>S for shift</p>
+</li>
+<li><p>C for control</p>
+</li>
+<li><p>s for super</p>
+</li>
+<li><p>Move</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>c-f</td>
+<td>forward</td>
+</tr>
+<tr>
+<td>c-b</td>
+<td>backward</td>
+</tr>
+<tr>
+<td>c-p</td>
+<td>previous</td>
+</tr>
+<tr>
+<td>c-n</td>
+<td>next</td>
+</tr>
+<tr>
+<td>c-a</td>
+<td>ahead</td>
+</tr>
+<tr>
+<td>c-e</td>
+<td>end</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>Action</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>c-w</td>
+<td>cut</td>
+</tr>
+<tr>
+<td>m-w</td>
+<td>copy</td>
+</tr>
+<tr>
+<td>c-y</td>
+<td>yank(paste)</td>
+</tr>
+<tr>
+<td>m-&lt;</td>
+<td>begin of file</td>
+</tr>
+<tr>
+<td>m-&gt;</td>
+<td>end of file</td>
+</tr>
+<tr>
+<td>c-k</td>
+<td>del to end of line(kill)</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>Edit</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C-g</td>
+<td>中断所有操作</td>
+</tr>
+<tr>
+<td>C-x C-f</td>
+<td>打开文件</td>
+</tr>
+<tr>
+<td>C-x C-s</td>
+<td>save</td>
+</tr>
+<tr>
+<td>C-h key/var/func</td>
+<td>help for key/var/func</td>
+</tr>
+<tr>
+<td>C-x C-e</td>
+<td>执行表达式，根据括号范围决定运行的指令</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>Search</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>c-s</td>
+<td>search below</td>
+</tr>
+<tr>
+<td>c-r</td>
+<td>search above</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2 id="Elisp"><a href="#Elisp" class="headerlink" title="Elisp"></a>Elisp</h2><p>括号括起来是表达式，表达式第一个参数是函数，后面是参数。如</p>
+<ul>
+<li><code>(+ 2 2)</code>，+的函数，结果是2+2</li>
+</ul>
+<p>括号也起到了代码块的作用</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>(setq var [value])</td>
+<td>定义变量（赋值）</td>
+</tr>
+<tr>
+<td>(message var)</td>
+<td>格式化输出，同C</td>
+</tr>
+<tr>
+<td>(defun func)</td>
+<td>定义函数</td>
+</tr>
+<tr>
+<td>(interactive)</td>
+<td>声明函数是交互式的函数，<M-x>可以找到这个函数</td>
+</tr>
+<tr>
+<td>(global-set-ket (kbd “<key>“) ‘func)</td>
+<td>定义快捷键</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+<tr>
+<td>&lt;++&gt;</td>
+<td>&lt;++&gt;</td>
+</tr>
+</tbody></table>
 
     </div>
 
@@ -245,7 +458,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/python-pipenv-tools/" rel="tag"># python, pipenv, tools</a>
+              <a href="/tags/emacs-linux-editor/" rel="tag"># emacs, linux, editor</a>
           </div>
 
         
@@ -253,11 +466,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2019/01/26/Major/cpp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="c++学习笔记">
-      c++学习笔记 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/05/21/universe/hacker_in_action/" rel="prev" title="黑客攻防系统实战学习">
+      <i class="fa fa-chevron-left"></i> 黑客攻防系统实战学习
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -316,7 +529,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pipenv-manual"><span class="nav-number">1.</span> <span class="nav-text">Pipenv manual</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install"><span class="nav-number">1.1.</span> <span class="nav-text">Install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage"><span class="nav-number">1.2.</span> <span class="nav-text">Usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activate"><span class="nav-number">1.3.</span> <span class="nav-text">Activate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-pypi-mirror"><span class="nav-number">1.4.</span> <span class="nav-text">Use pypi-mirror</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Emacs细节"><span class="nav-number">1.</span> <span class="nav-text">Emacs细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Emacs基本操作"><span class="nav-number">2.</span> <span class="nav-text">Emacs基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elisp"><span class="nav-number">3.</span> <span class="nav-text">Elisp</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
