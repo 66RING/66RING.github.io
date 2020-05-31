@@ -2114,7 +2114,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-20 17:24:53" itemprop="dateModified" datetime="2020-05-20T17:24:53+08:00">2020-05-20</time>
+                <time title="Modified: 2020-05-31 18:28:29" itemprop="dateModified" datetime="2020-05-31T18:28:29+08:00">2020-05-31</time>
               </span>
 
           
@@ -2128,7 +2128,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Command-line"><a href="#Command-line" class="headerlink" title="Command line"></a>Command line</h1><h2 id="shebang"><a href="#shebang" class="headerlink" title="shebang"></a>shebang</h2><p>a shebang is the interpreter of this script. like this</p>
+          <h1 id="Command-line"><a href="#Command-line" class="headerlink" title="Command line"></a>Command line</h1><h2 id="Some-Ussful-tips"><a href="#Some-Ussful-tips" class="headerlink" title="Some Ussful tips"></a>Some Ussful tips</h2><ul>
+<li><code>#</code> can delete a sub-string <strong>from the very beginning</strong> , like <code>var=apple; echo ${var#app}</code>, which will print <code>le</code>. <ul>
+<li><code>#</code>, delete a few things as posible</li>
+<li><code>##</code>, (greedy)delete a more things as posible</li>
+<li><code>%</code>, use like <code>#</code>, but it delete from the end<ul>
+<li><code>echo ${var%el}</code>, print app</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="shebang"><a href="#shebang" class="headerlink" title="shebang"></a>shebang</h2><p>a shebang is the interpreter of this script. like this</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="Redirection"><a href="#Redirection" class="headerlink" title="Redirection"></a>Redirection</h2><table>

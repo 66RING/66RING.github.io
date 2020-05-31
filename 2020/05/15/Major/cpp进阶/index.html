@@ -28,7 +28,7 @@
 <meta property="og:description" content="叫什么呢关键字decltype(c++11)关键字decltype(x)用于自动检测x的类型，并作为关键字。使用方法如下 1234567int x;decltype(x) y;   &#x2F;&#x2F; 声明y，其中y的类型取决于xdecltype(x+y) xpy;   &#x2F;&#x2F; 格式如下decltype(expression) var;  &#x2F;&#x2F; expression可以是函数调用   另一种函数声明语法(c++1">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-30T10:30:32.994Z">
+<meta property="article:modified_time" content="2020-05-31T12:15:20.415Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-30 18:30:32" itemprop="dateModified" datetime="2020-05-30T18:30:32+08:00">2020-05-30</time>
+                <time title="Modified: 2020-05-31 20:15:20" itemprop="dateModified" datetime="2020-05-31T20:15:20+08:00">2020-05-31</time>
               </span>
 
           
@@ -422,6 +422,29 @@
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li><p>将源代码中的函数调用解释为执行特定的函数代码块被称为函数名联编(binding)</p>
+<ul>
+<li>在编译过程中进行联编被称为静态联编或早联编</li>
+<li>在程序运行时进行联编称为动态联编或晚联编(如多态)</li>
+</ul>
+</li>
+<li><p>访问控制：protected</p>
+<ul>
+<li>protected与private类似，区别之在基类和派生类之间才会表现出来</li>
+<li>对外界来说protected成员的行为与private相似;但对于派生类来说protected成员的行为与公有成员相似</li>
+</ul>
+</li>
+<li><p><strong>抽象基类(abstract base class, ABC)</strong></p>
+<ul>
+<li>将类的共性抽象出来，放到一个ABC类中，然后再用ABC类派生有这些共性的类<ul>
+<li>这么做便可以使用基类指针(配合虚函数)数组同时管理多个类的对象了</li>
+</ul>
+</li>
+<li>C++通过使用纯虚函数提供未实现的函数。纯虚函数声明的结尾处为=0，原型中的=0是虚函数成为纯虚函数：<code>virtual void func(int arg) = 0;</code></li>
+<li>当类声明中包含纯虚函数时，不能创建该类的对象，只能作为基类。成为真正的ABC至少包含一个纯虚函数</li>
+<li>C++允许在基类中定义(只是不能创建对象)</li>
 </ul>
 </li>
 </ul>

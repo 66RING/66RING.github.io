@@ -918,7 +918,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-27 13:51:14" itemprop="dateModified" datetime="2020-05-27T13:51:14+08:00">2020-05-27</time>
+                <time title="Modified: 2020-05-30 20:12:32" itemprop="dateModified" datetime="2020-05-30T20:12:32+08:00">2020-05-30</time>
               </span>
 
           
@@ -946,6 +946,7 @@
 </ul>
 <h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><p>通常，涉及连续子数组问题的时候，我们使用前缀和来解决。</p>
 <p>我们令$P[i] = A[0] + A[1] + … + A[i]$。那么每个连续子数组的和sum(i,j)就可以写成$P[j] - P[i-1]（其中 0 &lt; i &lt; j;0 &lt; i &lt; j）$的形式。</p>
+<h2 id="哨兵"><a href="#哨兵" class="headerlink" title="哨兵"></a>哨兵</h2><p>使用哨兵能简化我们的讨论，去掉不必要的分类讨论。如在链表中使用虚拟的头和尾，省去了分类讨论。</p>
 
       
     </div>
@@ -996,7 +997,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-30 18:30:32" itemprop="dateModified" datetime="2020-05-30T18:30:32+08:00">2020-05-30</time>
+                <time title="Modified: 2020-05-31 20:15:20" itemprop="dateModified" datetime="2020-05-31T20:15:20+08:00">2020-05-31</time>
               </span>
 
           
@@ -1237,6 +1238,29 @@
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li><p>将源代码中的函数调用解释为执行特定的函数代码块被称为函数名联编(binding)</p>
+<ul>
+<li>在编译过程中进行联编被称为静态联编或早联编</li>
+<li>在程序运行时进行联编称为动态联编或晚联编(如多态)</li>
+</ul>
+</li>
+<li><p>访问控制：protected</p>
+<ul>
+<li>protected与private类似，区别之在基类和派生类之间才会表现出来</li>
+<li>对外界来说protected成员的行为与private相似;但对于派生类来说protected成员的行为与公有成员相似</li>
+</ul>
+</li>
+<li><p><strong>抽象基类(abstract base class, ABC)</strong></p>
+<ul>
+<li>将类的共性抽象出来，放到一个ABC类中，然后再用ABC类派生有这些共性的类<ul>
+<li>这么做便可以使用基类指针(配合虚函数)数组同时管理多个类的对象了</li>
+</ul>
+</li>
+<li>C++通过使用纯虚函数提供未实现的函数。纯虚函数声明的结尾处为=0，原型中的=0是虚函数成为纯虚函数：<code>virtual void func(int arg) = 0;</code></li>
+<li>当类声明中包含纯虚函数时，不能创建该类的对象，只能作为基类。成为真正的ABC至少包含一个纯虚函数</li>
+<li>C++允许在基类中定义(只是不能创建对象)</li>
 </ul>
 </li>
 </ul>
