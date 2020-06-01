@@ -997,7 +997,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-31 20:15:20" itemprop="dateModified" datetime="2020-05-31T20:15:20+08:00">2020-05-31</time>
+                <time title="Modified: 2020-06-01 12:28:21" itemprop="dateModified" datetime="2020-06-01T12:28:21+08:00">2020-06-01</time>
               </span>
 
           
@@ -1194,7 +1194,11 @@
 </ul>
 </li>
 <li>private指出Base是一个私有基类<ul>
-<li>基类的成员在派生类中中都为私有</li>
+<li>基类的成员在派生类中中都(公有、保护私有成员)为私有</li>
+</ul>
+</li>
+<li>保护继承<ul>
+<li>基类的公有、保护私有成员在派生类中中都为保护成员</li>
 </ul>
 </li>
 </ul>
@@ -1261,6 +1265,37 @@
 <li>C++通过使用纯虚函数提供未实现的函数。纯虚函数声明的结尾处为=0，原型中的=0是虚函数成为纯虚函数：<code>virtual void func(int arg) = 0;</code></li>
 <li>当类声明中包含纯虚函数时，不能创建该类的对象，只能作为基类。成为真正的ABC至少包含一个纯虚函数</li>
 <li>C++允许在基类中定义(只是不能创建对象)</li>
+</ul>
+</li>
+</ul>
+<h2 id="C-中代码重用"><a href="#C-中代码重用" class="headerlink" title="C++中代码重用"></a>C++中代码重用</h2><ul>
+<li><p>包含对象成员的类</p>
+<ul>
+<li>has-a</li>
+<li>有一些类为表示类中的组建提供了方便，用这些类作为成员以就不需要重复的定义<ul>
+<li>如<code>valarray&lt;T&gt;</code>类，类似<code>vector&lt;T&gt;</code>，但valarray提供的算数支持更多，如max、sum。如果类的成员需要算数数组就可用valarray，而不用重新定义数组和sum、max等类方法，因为valarray对象成员包含了这些方法</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>使用using重新定义访问权限</p>
+<ul>
+<li>使用保护派生或私有派生时，要让基类的方法在派生类外面可用的一种方法是将函数调用包装在另一个函数调用中，即使用using来指出派生类可以使用特定的基类成员</li>
+</ul>
+</li>
+<li><p>多重继承<code>class Son: public Dad, private Mom{...};</code></p>
+<ul>
+<li><strong>虚基类</strong>：使得从多个类(它们的基类相同)派生出的对象只继承一个基类对象，而不是重复的两个<ul>
+<li><code>class Singer: virtual public Worker{...};</code></li>
+<li><code>class Waiter: public virtual Worker{...};</code></li>
+<li><code>class SingerWaiter: public Singer, public Waiter{...};</code>，SingerWaiter对象将只包含worker对象的副本，而不是引入各自(Singer、Waiter)的Worker对象副本</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>类也有模板类、同样的类成员、友元也是，定义方法同模板函数</p>
+<ul>
+<li>有模板类就会有隐式实例化、显式实例化和显式具体化，同模板函数</li>
 </ul>
 </li>
 </ul>

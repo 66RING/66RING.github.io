@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Vim实用技巧杂项   操作 描述    o 切换高亮中光标所在的端点   . 重复执行上一步操作   % 它代表当前文件中的所有行   % 可以在一组开, 闭括号间跳转   m{mark} 当前位置标记为{mark}以便以后跳转   &#96;{mark} 跳到{mark}标记处   qa 录制宏到寄存器a   qA 往寄存器a中追加操作   查找   操作 描述    * 向下查找光标停靠的词语">
+  <meta name="description" content="Vim实用技巧Coolest vim command杂项   操作 描述    o 切换高亮中光标所在的端点   . 重复执行上一步操作   % 它代表当前文件中的所有行   % 可以在一组开, 闭括号间跳转   m{mark} 当前位置标记为{mark}以便以后跳转   &#96;{mark} 跳到{mark}标记处   qa 录制宏到寄存器a   qA 往寄存器a中追加操作   i&#x2F;d{ i for">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vim实用技巧">
 <meta property="og:url" content="http://yoursite.com/2020/02/26/universe/vim_in_action/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Vim实用技巧杂项   操作 描述    o 切换高亮中光标所在的端点   . 重复执行上一步操作   % 它代表当前文件中的所有行   % 可以在一组开, 闭括号间跳转   m{mark} 当前位置标记为{mark}以便以后跳转   &#96;{mark} 跳到{mark}标记处   qa 录制宏到寄存器a   qA 往寄存器a中追加操作   查找   操作 描述    * 向下查找光标停靠的词语">
+<meta property="og:description" content="Vim实用技巧Coolest vim command杂项   操作 描述    o 切换高亮中光标所在的端点   . 重复执行上一步操作   % 它代表当前文件中的所有行   % 可以在一组开, 闭括号间跳转   m{mark} 当前位置标记为{mark}以便以后跳转   &#96;{mark} 跳到{mark}标记处   qa 录制宏到寄存器a   qA 往寄存器a中追加操作   i&#x2F;d{ i for">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-24T12:34:52.295Z">
+<meta property="article:modified_time" content="2020-06-01T02:05:26.554Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="vim">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-24 20:34:52" itemprop="dateModified" datetime="2020-05-24T20:34:52+08:00">2020-05-24</time>
+                <time title="Modified: 2020-06-01 10:05:26" itemprop="dateModified" datetime="2020-06-01T10:05:26+08:00">2020-06-01</time>
               </span>
 
           
@@ -195,7 +195,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Vim实用技巧"><a href="#Vim实用技巧" class="headerlink" title="Vim实用技巧"></a>Vim实用技巧</h1><h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><table>
+        <h1 id="Vim实用技巧"><a href="#Vim实用技巧" class="headerlink" title="Vim实用技巧"></a>Vim实用技巧</h1><h2 id="Coolest-vim-command"><a href="#Coolest-vim-command" class="headerlink" title="Coolest vim command"></a>Coolest vim command</h2><h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><table>
 <thead>
 <tr>
 <th>操作</th>
@@ -233,6 +233,14 @@
 <tr>
 <td>qA</td>
 <td>往寄存器a中追加操作</td>
+</tr>
+<tr>
+<td>i/d{</td>
+<td>i for inside, a for around, 就可以用di/da等操作</td>
+</tr>
+<tr>
+<td>=i{</td>
+<td>=格式化?(缩进), inside {}</td>
 </tr>
 </tbody></table>
 <h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><table>
@@ -637,7 +645,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vim实用技巧"><span class="nav-number">1.</span> <span class="nav-text">Vim实用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#杂项"><span class="nav-number">1.1.</span> <span class="nav-text">杂项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找"><span class="nav-number">1.2.</span> <span class="nav-text">查找</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#按正则表达式查找"><span class="nav-number">1.2.1.</span> <span class="nav-text">按正则表达式查找</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作符-动作-操作"><span class="nav-number">1.3.</span> <span class="nav-text">操作符 + 动作 &#x3D; 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#操作符"><span class="nav-number">1.3.1.</span> <span class="nav-text">操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动作"><span class="nav-number">1.3.2.</span> <span class="nav-text">动作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">2.0.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寄存器"><span class="nav-number">2.1.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell命令"><span class="nav-number">2.2.</span> <span class="nav-text">Shell命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分屏操作"><span class="nav-number">2.3.</span> <span class="nav-text">分屏操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地址"><span class="nav-number">2.4.</span> <span class="nav-text">地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宏"><span class="nav-number">2.5.</span> <span class="nav-text">宏</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vim实用技巧"><span class="nav-number">1.</span> <span class="nav-text">Vim实用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Coolest-vim-command"><span class="nav-number">1.1.</span> <span class="nav-text">Coolest vim command</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杂项"><span class="nav-number">1.2.</span> <span class="nav-text">杂项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找"><span class="nav-number">1.3.</span> <span class="nav-text">查找</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#按正则表达式查找"><span class="nav-number">1.3.1.</span> <span class="nav-text">按正则表达式查找</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作符-动作-操作"><span class="nav-number">1.4.</span> <span class="nav-text">操作符 + 动作 &#x3D; 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#操作符"><span class="nav-number">1.4.1.</span> <span class="nav-text">操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动作"><span class="nav-number">1.4.2.</span> <span class="nav-text">动作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">2.0.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寄存器"><span class="nav-number">2.1.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell命令"><span class="nav-number">2.2.</span> <span class="nav-text">Shell命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分屏操作"><span class="nav-number">2.3.</span> <span class="nav-text">分屏操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地址"><span class="nav-number">2.4.</span> <span class="nav-text">地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宏"><span class="nav-number">2.5.</span> <span class="nav-text">宏</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
