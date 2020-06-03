@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="第二章2.2 浮点数的表示 单精度IEEE754格式 真值变二进制数 二进制数移位变成$(-1)^S \times{2^e} \times {1.M}$ $E &#x3D; e + 01111111$ 加上偏移量127得到E   根据公式得到S,E,M后按照格式保存    Representation of dataOverflow of ComplementIf a complement calculat">
+  <meta name="description" content="简介 从纯文本的程序到可执行的编码，以hello.c为例 预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾 编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序 汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。 链接：hell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer Organization">
 <meta property="og:url" content="http://yoursite.com/2019/12/10/Major/compuer_organization/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="第二章2.2 浮点数的表示 单精度IEEE754格式 真值变二进制数 二进制数移位变成$(-1)^S \times{2^e} \times {1.M}$ $E &#x3D; e + 01111111$ 加上偏移量127得到E   根据公式得到S,E,M后按照格式保存    Representation of dataOverflow of ComplementIf a complement calculat">
+<meta property="og:description" content="简介 从纯文本的程序到可执行的编码，以hello.c为例 预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾 编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序 汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。 链接：hell">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-02T10:32:09.625Z">
+<meta property="article:modified_time" content="2020-06-03T09:24:55.809Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="cs">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-02 18:32:09" itemprop="dateModified" datetime="2020-05-02T18:32:09+08:00">2020-05-02</time>
+                <time title="Modified: 2020-06-03 17:24:55" itemprop="dateModified" datetime="2020-06-03T17:24:55+08:00">2020-06-03</time>
               </span>
 
           
@@ -195,50 +195,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><h3 id="2-2-浮点数的表示"><a href="#2-2-浮点数的表示" class="headerlink" title="2.2 浮点数的表示"></a>2.2 浮点数的表示</h3><ul>
-<li>单精度IEEE754格式<ul>
-<li>真值变二进制数</li>
-<li>二进制数移位变成$(-1)^S \times{2^e} \times {1.M}$<ul>
-<li>$E = e + 01111111$ 加上偏移量127得到E</li>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>从纯文本的程序到可执行的编码，以<code>hello.c</code>为例<ul>
+<li>预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾</li>
+<li>编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序</li>
+<li>汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。</li>
+<li>链接：hello程序可能会用到许多函数，如printf。printf函数存在与一个名为printf.o的单独编译的与编译好了的目标文件中，这个文件需要以某种形式合并到我们的hello.o程序中。链接器就负责处理这种合并</li>
 </ul>
 </li>
-<li>根据公式得到S,E,M后按照格式保存</li>
 </ul>
-</li>
-</ul>
-<h3 id="Representation-of-data"><a href="#Representation-of-data" class="headerlink" title="Representation of data"></a>Representation of data</h3><h4 id="Overflow-of-Complement"><a href="#Overflow-of-Complement" class="headerlink" title="Overflow of Complement"></a>Overflow of Complement</h4><p>If a complement calculations run out of scope, it overflow. So we need to be careful.</p>
-<h2 id="Part-3"><a href="#Part-3" class="headerlink" title="Part.3"></a>Part.3</h2><h3 id="Cpu-Subsystem"><a href="#Cpu-Subsystem" class="headerlink" title="Cpu Subsystem"></a>Cpu Subsystem</h3><p>Major component</p>
 <ul>
-<li>Temporal parts</li>
-<li>Control unit<ul>
-<li>logic controler</li>
-<li>program controler</li>
+<li>虚拟内存：虚拟内存是一个抽象概念，它为每个进程提供一个假象，即每个进程都在单独的使用主存。每个进程看到的内存都是一致的，称为虚拟地址空间</li>
+<li>虚拟地址空间的结构：<ul>
+<li>程序代码和数据</li>
+<li>堆：代码和数据区在进程一开始运行时就被指定了大小，与此不同，当调用像malloc和free这样的函数时，堆可以在运行时动态伸缩</li>
+<li>共享库：大约在地址空间的中间部分是一块用来存放像C标准这样的共享库的代码和数据的区域</li>
+<li>栈</li>
+<li>内核虚拟内存：地址空间的顶部区域是为内核保留的。不允许任何程序的读写</li>
 </ul>
 </li>
-<li>Cache, to balance cpu(hight speed) and register(low speed)</li>
-<li>Register(heap)<ul>
-<li>general register</li>
-<li>temporary register</li>
-<li>IR(instruction register)</li>
-<li>PC(process counter)</li>
-<li>PSW(program status register)</li>
-<li>MAR(address register)</li>
-<li>MBR(binary register)</li>
-<li>SP(stack pointer)</li>
-</ul>
-</li>
-<li>Arithmetic unit</li>
-</ul>
-<p>Control mode</p>
-<ul>
-<li>Synchronous</li>
-<li>Asynchronous</li>
-</ul>
-<p>Instruction type</p>
-<ul>
-<li>CISC(Complex Instruction Set Computing)</li>
-<li>RISC(Reduced Instruction Set Computing)</li>
-<li>CISC-&gt;RISC</li>
 </ul>
 
     </div>
@@ -323,7 +298,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第二章"><span class="nav-number">1.</span> <span class="nav-text">第二章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-浮点数的表示"><span class="nav-number">1.1.</span> <span class="nav-text">2.2 浮点数的表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Representation-of-data"><span class="nav-number">1.2.</span> <span class="nav-text">Representation of data</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Overflow-of-Complement"><span class="nav-number">1.2.1.</span> <span class="nav-text">Overflow of Complement</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-3"><span class="nav-number">2.</span> <span class="nav-text">Part.3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cpu-Subsystem"><span class="nav-number">2.1.</span> <span class="nav-text">Cpu Subsystem</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
