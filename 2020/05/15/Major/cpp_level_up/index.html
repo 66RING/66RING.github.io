@@ -23,17 +23,17 @@
   <meta name="description" content="叫什么呢关键字decltype(c++11)关键字decltype(x)用于自动检测x的类型，并作为关键字。使用方法如下 1234567int x;decltype(x) y;   &#x2F;&#x2F; 声明y，其中y的类型取决于xdecltype(x+y) xpy;   &#x2F;&#x2F; 格式如下decltype(expression) var;  &#x2F;&#x2F; expression可以是函数调用   另一种函数声明语法(c++1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++进阶">
-<meta property="og:url" content="http://yoursite.com/2020/05/15/Major/cpp%E8%BF%9B%E9%98%B6/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/05/15/Major/cpp_level_up/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="叫什么呢关键字decltype(c++11)关键字decltype(x)用于自动检测x的类型，并作为关键字。使用方法如下 1234567int x;decltype(x) y;   &#x2F;&#x2F; 声明y，其中y的类型取决于xdecltype(x+y) xpy;   &#x2F;&#x2F; 格式如下decltype(expression) var;  &#x2F;&#x2F; expression可以是函数调用   另一种函数声明语法(c++1">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-03T09:52:44.923Z">
+<meta property="article:modified_time" content="2020-06-05T13:31:49.503Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/05/15/Major/cpp%E8%BF%9B%E9%98%B6/">
+<link rel="canonical" href="http://yoursite.com/2020/05/15/Major/cpp_level_up/">
 
 
 <script id="page-configurations">
@@ -151,7 +151,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/15/Major/cpp%E8%BF%9B%E9%98%B6/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/15/Major/cpp_level_up/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 17:52:44" itemprop="dateModified" datetime="2020-06-03T17:52:44+08:00">2020-06-03</time>
+                <time title="Modified: 2020-06-05 21:31:49" itemprop="dateModified" datetime="2020-06-05T21:31:49+08:00">2020-06-05</time>
               </span>
 
           
@@ -506,6 +506,89 @@
 </ul>
 </li>
 </ul>
+<h3 id="RTTI"><a href="#RTTI" class="headerlink" title="RTTI"></a>RTTI</h3><p>RTTI是运行阶段类型识别(Runtime Type Identification)的简称。</p>
+<ul>
+<li>C++有3个支持的RTTI元素<ul>
+<li>dynamic_cast：如果可能的话，将使用一个指向基类的指针来生成一个指向派生类的指针;否则返回空指针</li>
+<li>typeid：返回一个指出对象的类型的值</li>
+<li>type_info：存储了有关特定类型的信息</li>
+</ul>
+</li>
+<li>只能将RTTI用于包含虚函数的类层次结构，原因在与只有对于这种层次结构，才应该将派生类对象的地址赋给基类指针<ul>
+<li>因为如果使用虚方法关键字virtual，程序将根据引用或指针指向的对象的类型选择方法，就算使用基类指针接收，也会选择引用或指针指向的对象方法</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>dynamic_cast:<ul>
+<li><code>dynamic_cast&lt;Type *&gt;(ps)</code>，ps指向一个对象</li>
+<li>如果ps的类型可以安全的转换为<code>Type*</code>，运算符返回对象的地址;否则返回空指针</li>
+<li>因此可以安全地<code>Base* pb = dynamic_cast&lt;Base *&gt;(ps)</code></li>
+</ul>
+</li>
+<li>typeid和type_info<ul>
+<li><code>typeid</code>运算符接收类名或者一个对象，返回一个对type_info的的引用</li>
+<li>type_info是在头文件typeinfo中定义的一个类。type_info重载了==和!=运算符，以便可以对类进行对比<ul>
+<li><code>typeid(Base) == typeid(*pg)</code>如果pg是空指针将发生异常，异常类型是exception类派生来的</li>
+<li>type_info的实现随厂商而异，但包含一个<code>name()</code>成员，该函数返回一个随实现而异的字符串，通常是类的名称</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="标准模板库"><a href="#标准模板库" class="headerlink" title="标准模板库"></a>标准模板库</h2><h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><h4 id="string类输入"><a href="#string类输入" class="headerlink" title="string类输入"></a>string类输入</h4><ul>
+<li>对于类，有3中输入方式。<code>char str[100]</code><ul>
+<li><code>cin &gt;&gt; str</code>，读一个词</li>
+<li><code>cin.getline(str, 100);</code>，读一行，去掉<code>\n</code>，有一个可选参数用来指定使用哪个字符来确定输入边界</li>
+<li><code>cin.get(info, 100)</code>，读一行，保留<code>\n</code></li>
+</ul>
+</li>
+<li>对于string对象，有两种方式<ul>
+<li><code>cin &gt;&gt; str</code>，读一个词</li>
+<li><code>getline(cin, stuff)</code>，读一行，去掉<code>\n</code>，有一个可选参数用来指定使用哪个字符来确定输入边界</li>
+</ul>
+</li>
+</ul>
+<h3 id="智能指针模板类"><a href="#智能指针模板类" class="headerlink" title="智能指针模板类"></a>智能指针模板类</h3><p>智能指针是行为类似指针的 <strong>类对象</strong> ，这种对象还有其他功能。看下面代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="built_in">string</span>&amp; str)</span></span>&#123;</span><br><span class="line">    <span class="built_in">string</span>* ps = <span class="keyword">new</span> <span class="built_in">string</span>(str);</span><br><span class="line">    <span class="keyword">if</span>(hasException)&#123;</span><br><span class="line">        <span class="keyword">throw</span> exception();</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    str = ps;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意到这段代码分配了堆中的内存，但是没有释放，从而导致内存泄漏。</p>
+<ul>
+<li>那在结尾加delete不就行了？<ul>
+<li>这是中可能忘记的解决方案，存在隐患</li>
+</ul>
+</li>
+<li>就算加了delete如果出现异常，delete将不被执行，也导致内存泄漏</li>
+<li>因此如果它是一个对象，那在它过期的时候析构函数删除指向的内存就好了。由此得到了使用智能指针的解决方案</li>
+</ul>
+<h4 id="智能指针的使用"><a href="#智能指针的使用" class="headerlink" title="智能指针的使用"></a>智能指针的使用</h4><p><code>auto_ptr</code>,<code>unique_ptr</code>和<code>shared_ptr</code>都定义了类似指针的对象，可以将new获得(直接或间接)的地址赋给这种对象。当智能指针过期时，其析构函数将使用delete来释放内存。要创建智能指针对象，必须引入头文件memory。</p>
+<ul>
+<li>语法：<code>auto_ptr&lt;Type&gt; pointer(new Type)</code>(其他两种相同)</li>
+<li>所有智能指针类都有一个explicit构造函数，该构造函数将指针作为参数。因此不需要自动将指针转换为智能指针对象</li>
+</ul>
+<h4 id="智能指针的注意事项"><a href="#智能指针的注意事项" class="headerlink" title="智能指针的注意事项"></a>智能指针的注意事项</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">ps</span> <span class="params">(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">"hello"</span>))</span></span>;</span><br><span class="line"><span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt; pd;</span><br><span class="line">pd = ps;</span><br></pre></td></tr></table></figure>
+
+<p>如果ps和pd是常规指针，那这两个指针指向同一个string对象。这是不能接受的，因为程序将试图将同一个对象删除两次：ps过期时删除，pd过期时删除。要避免这个问题有如下方法：</p>
+<ul>
+<li>定义赋值运算符<ul>
+<li>使之执行深复制。这样两个指针指向不同的对象</li>
+</ul>
+</li>
+<li>建立所有权(ownership)概念<ul>
+<li>对于特定的对象，只能有一个智能指针可拥有它，这样只有拥有对象的指针能够删除该对象</li>
+<li><strong>auto_ptr和unique_ptr就是使用这种策略</strong> ，但是<code>unique_ptr</code>的策略更加严格</li>
+<li>当所有权转移，将不能通过原来的指针进行访问<ul>
+<li><code>auto_ptr</code>编译时不会检测所有权是否转移</li>
+<li>使用<code>unique_ptr</code>，将在编译阶段检测到所有权转移错误，因此<code>unique_ptr</code>比较安全</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>创建只能更高的指针，跟踪引用特定对象的智能指针<ul>
+<li>如，赋值时计数加1，过期时计数减1.当最后一个指针过期(计数减为0)时才调用delete，这是share_ptr采用的策略</li>
+</ul>
+</li>
+</ul>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
 
 
@@ -593,7 +676,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#叫什么呢"><span class="nav-number">1.</span> <span class="nav-text">叫什么呢</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关键字decltype-c-11"><span class="nav-number">1.1.</span> <span class="nav-text">关键字decltype(c++11)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#另一种函数声明语法-c-11后置返回类型"><span class="nav-number">1.1.1.</span> <span class="nav-text">另一种函数声明语法(c++11后置返回类型)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明符和限定符"><span class="nav-number">1.2.</span> <span class="nav-text">说明符和限定符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用new运算符初始化"><span class="nav-number">1.3.</span> <span class="nav-text">使用new运算符初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化结构体"><span class="nav-number">1.3.1.</span> <span class="nav-text">初始化结构体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定位new运算符"><span class="nav-number">1.3.2.</span> <span class="nav-text">定位new运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#名称空间"><span class="nav-number">1.4.</span> <span class="nav-text">名称空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象和类"><span class="nav-number">2.</span> <span class="nav-text">对象和类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数和析构函数"><span class="nav-number">2.1.</span> <span class="nav-text">构造函数和析构函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类和对象"><span class="nav-number">3.</span> <span class="nav-text">类和对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用类"><span class="nav-number">3.1.</span> <span class="nav-text">使用类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重载运算符"><span class="nav-number">3.1.1.</span> <span class="nav-text">重载运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#友元"><span class="nav-number">3.2.</span> <span class="nav-text">友元</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#友元成员函数"><span class="nav-number">3.2.1.</span> <span class="nav-text">友元成员函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态成员"><span class="nav-number">3.3.</span> <span class="nav-text">静态成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊成员函数"><span class="nav-number">3.4.</span> <span class="nav-text">特殊成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类继承"><span class="nav-number">3.5.</span> <span class="nav-text">类继承</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中代码重用"><span class="nav-number">4.</span> <span class="nav-text">C++中代码重用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友元、异常和其他"><span class="nav-number">5.</span> <span class="nav-text">友元、异常和其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#友元-1"><span class="nav-number">5.1.</span> <span class="nav-text">友元</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#友元类"><span class="nav-number">5.1.1.</span> <span class="nav-text">友元类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套类"><span class="nav-number">5.2.</span> <span class="nav-text">嵌套类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">5.3.</span> <span class="nav-text">异常</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">6.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">6.1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unordered-map"><span class="nav-number">6.2.</span> <span class="nav-text">unordered_map</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#叫什么呢"><span class="nav-number">1.</span> <span class="nav-text">叫什么呢</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关键字decltype-c-11"><span class="nav-number">1.1.</span> <span class="nav-text">关键字decltype(c++11)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#另一种函数声明语法-c-11后置返回类型"><span class="nav-number">1.1.1.</span> <span class="nav-text">另一种函数声明语法(c++11后置返回类型)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明符和限定符"><span class="nav-number">1.2.</span> <span class="nav-text">说明符和限定符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用new运算符初始化"><span class="nav-number">1.3.</span> <span class="nav-text">使用new运算符初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化结构体"><span class="nav-number">1.3.1.</span> <span class="nav-text">初始化结构体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定位new运算符"><span class="nav-number">1.3.2.</span> <span class="nav-text">定位new运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#名称空间"><span class="nav-number">1.4.</span> <span class="nav-text">名称空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象和类"><span class="nav-number">2.</span> <span class="nav-text">对象和类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数和析构函数"><span class="nav-number">2.1.</span> <span class="nav-text">构造函数和析构函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类和对象"><span class="nav-number">3.</span> <span class="nav-text">类和对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用类"><span class="nav-number">3.1.</span> <span class="nav-text">使用类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重载运算符"><span class="nav-number">3.1.1.</span> <span class="nav-text">重载运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#友元"><span class="nav-number">3.2.</span> <span class="nav-text">友元</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#友元成员函数"><span class="nav-number">3.2.1.</span> <span class="nav-text">友元成员函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态成员"><span class="nav-number">3.3.</span> <span class="nav-text">静态成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊成员函数"><span class="nav-number">3.4.</span> <span class="nav-text">特殊成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类继承"><span class="nav-number">3.5.</span> <span class="nav-text">类继承</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中代码重用"><span class="nav-number">4.</span> <span class="nav-text">C++中代码重用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友元、异常和其他"><span class="nav-number">5.</span> <span class="nav-text">友元、异常和其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#友元-1"><span class="nav-number">5.1.</span> <span class="nav-text">友元</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#友元类"><span class="nav-number">5.1.1.</span> <span class="nav-text">友元类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套类"><span class="nav-number">5.2.</span> <span class="nav-text">嵌套类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">5.3.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RTTI"><span class="nav-number">5.4.</span> <span class="nav-text">RTTI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准模板库"><span class="nav-number">6.</span> <span class="nav-text">标准模板库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#string"><span class="nav-number">6.1.</span> <span class="nav-text">string</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#string类输入"><span class="nav-number">6.1.1.</span> <span class="nav-text">string类输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#智能指针模板类"><span class="nav-number">6.2.</span> <span class="nav-text">智能指针模板类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#智能指针的使用"><span class="nav-number">6.2.1.</span> <span class="nav-text">智能指针的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#智能指针的注意事项"><span class="nav-number">6.2.2.</span> <span class="nav-text">智能指针的注意事项</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">7.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">7.1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unordered-map"><span class="nav-number">7.2.</span> <span class="nav-text">unordered_map</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
