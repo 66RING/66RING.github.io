@@ -2729,7 +2729,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 17:24:55" itemprop="dateModified" datetime="2020-06-03T17:24:55+08:00">2020-06-03</time>
+                <time title="Modified: 2020-06-06 20:59:53" itemprop="dateModified" datetime="2020-06-06T20:59:53+08:00">2020-06-06</time>
               </span>
 
           
@@ -2763,7 +2763,19 @@
 </ul>
 </li>
 </ul>
-
+<h2 id="程序结构和执行"><a href="#程序结构和执行" class="headerlink" title="程序结构和执行"></a>程序结构和执行</h2><h3 id="整数运算"><a href="#整数运算" class="headerlink" title="整数运算"></a>整数运算</h3><h4 id="无符号加法"><a href="#无符号加法" class="headerlink" title="无符号加法"></a>无符号加法</h4><p>考虑两个非负整数x和y，满足$0 \leq x, y&lt;2^w$。每个数都能表示为w为无符号数字。如果计算他们的和，我们就有一个可能的范围$0 \leq x+y \leq 2^{w+1} - 2$，表示这个和可能需要w+1位。对于固定精度的编程语言会发生溢出。</p>
+<p>我们为x和y定义运算$+^u_w, 其中0 \leq x, y &lt; 2^w$，该操作是把整数和x+y截断为w位得到的结果。这也可以被视为一种形式的模运算，对于x+y的位级表示，简单的丢弃任何权重大于$2^{w-1}$的位就可以计算出和模$2^w$。如考虑一个4位数字表示$x=12, y=9,x+y=21([10101])$如果丢掉最高位，我们的到[0101]，也就是十进制的5。也就和值21 mod 16 = 6一致。</p>
+<blockquote>
+<p>定义$+^u_w$:</p>
+<p>对于满足$0 \leq x, y &lt; 2^w$的x和y有</p>
+<p>$$<br>x+^u_w y =<br>\begin{cases}<br>x+y&amp; ,{x+y&lt;2^w}&amp; 正常\<br>x+y-2^w&amp; ,{2^w \leq x+y &lt; 2^{w+1}}&amp; 溢出<br>\end{cases}<br>$$</p>
+</blockquote>
+<p>如何判断是否发生了溢出：</p>
+<ul>
+<li>原理：对在范围$0 \leq x, y \leq UMax_w$中的x和y，令$s = x +^u_w y$。则对计算是，当且仅当s&lt;x(或等价地s&lt;y)时发生溢出</li>
+<li>推导：显然$x+y \geq x$，因此如果s没有溢出$s \geq x$。如果s发生溢出，有$s = x+y-2^w$，假设$y &lt; 2^w$，有$y-2^w &lt; 0$，因此$s = x+(y-2^w) &lt; x$</li>
+</ul>
+<h4 id="补码加法"><a href="#补码加法" class="headerlink" title="补码加法"></a>补码加法</h4>
       
     </div>
 

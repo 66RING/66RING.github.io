@@ -1000,7 +1000,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-05 21:31:49" itemprop="dateModified" datetime="2020-06-05T21:31:49+08:00">2020-06-05</time>
+                <time title="Modified: 2020-06-06 17:43:06" itemprop="dateModified" datetime="2020-06-06T17:43:06+08:00">2020-06-06</time>
               </span>
 
           
@@ -1405,6 +1405,46 @@
 </li>
 <li>创建只能更高的指针，跟踪引用特定对象的智能指针<ul>
 <li>如，赋值时计数加1，过期时计数减1.当最后一个指针过期(计数减为0)时才调用delete，这是share_ptr采用的策略</li>
+</ul>
+</li>
+</ul>
+<h3 id="标准模板库-Standard-Template-Library"><a href="#标准模板库-Standard-Template-Library" class="headerlink" title="标准模板库(Standard Template Library)"></a>标准模板库(Standard Template Library)</h3><p>STL容器是同质的，即存储的值的类型相同。</p>
+<h4 id="模板类vector"><a href="#模板类vector" class="headerlink" title="模板类vector"></a>模板类vector</h4><p>vector类提供了与前面将的valarray和Array类似的操作，即可以创造vector对象，将一个vector对象赋值给另一个vector对象，可以随机访问。</p>
+<h4 id="可对vector执行的操作"><a href="#可对vector执行的操作" class="headerlink" title="可对vector执行的操作"></a>可对vector执行的操作</h4><p>所有STL容器都提供了一些基本方法，如：<code>size(), swap(), begin()</code>等。其中<code>begin(), end()</code>返回第一个元素的迭代器和返回超过容量尾的迭代器。</p>
+<p>迭代器是一个广义的指针。事实上它可以是指针，也可以是一个可对其执行类似指针操作(如解除引用<code>operator*()</code>和递增<code>operator++()</code>)的对象。通过将指针广义化为迭代器，让STL能够为各种不同的容器类提供统一的接口。每个容器类都定义了一个合适的迭代器，该迭代器的类型是一个名为<code>iterator</code>的typedef，其作用域是整个类。如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//声明一个迭代器变量</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator pd;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; scores;</span><br><span class="line">pd = scores.<span class="built_in">begin</span>(); </span><br><span class="line"><span class="comment">//或者auto pd = scores.begin();</span></span><br><span class="line"></span><br><span class="line">*pd = <span class="number">2</span>;</span><br><span class="line">++pd;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如上，迭代器的行为就像指针</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>erase(iterator1, iterator2)</code>方法删除矢量中给定区间[iterator1, iterator2)的元素<ul>
+<li>它接受两个迭代器参数</li>
+</ul>
+</li>
+<li><code>insert()</code>与erase相反<ul>
+<li>它接受三个迭代器参数</li>
+<li>第一个参数指定了新元素的插入位置，第二个和第三个迭代器定义了被插入区间，该区间通常来自另一个容器对象</li>
+<li>拥有超尾元素使得在尾部附加元素非常简单</li>
+</ul>
+</li>
+</ul>
+<h4 id="对vector可执行的其他操作"><a href="#对vector可执行的其他操作" class="headerlink" title="对vector可执行的其他操作"></a>对vector可执行的其他操作</h4><p>STL从更广泛的角度定义了非成员函数来执行这些操作，即不是为每个容器类定义find()成员函数，而是定义了一个适用于所有容器类的非成员函数。这种设计省去了大量重复的工作。</p>
+<p>下面是3个代表性的STL函数：</p>
+<ul>
+<li><code>for_each()</code><ul>
+<li>接受3个参数，前两个是定义容器区间的迭代器，最后一个是指向函数的指针，被指向的函数应用于区间内的每个元素。被指向的函数不能修改容器元素的值</li>
+</ul>
+</li>
+<li><code>random_shuffle()</code><ul>
+<li>接受两个指定区间的迭代器参数，并随机排序该区间中的元素</li>
+<li>该函数要求容器类支持随机访问</li>
+</ul>
+</li>
+<li><code>sort()</code><ul>
+<li>有两个格式：<ul>
+<li>第一个版本接受两个定义区间的迭代器参数，并使用储存在容器中的类型元素定义的&lt;运算符，对区间中的元素进行操作，如果元素是用户定义的对象，要使用sort必须定义能够处理该类型的opertator&lt;()函数</li>
+<li>另一种格式的sort接受3个参数，前两个是指定区间的迭代器，最后一个是要使用的函数，而不是用opertator&lt;()。返回值可转换为bool，false表示两个参数的顺序不正确</li>
+</ul>
+</li>
+<li>该函数要求容器类支持随机访问</li>
 </ul>
 </li>
 </ul>
