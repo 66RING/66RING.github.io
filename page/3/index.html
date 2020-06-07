@@ -145,6 +145,313 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/26/Major/arithmetic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/26/Major/arithmetic/" class="post-title-link" itemprop="url">算法学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-26 00:00:00" itemprop="dateCreated datePublished" datetime="2019-11-26T00:00:00+08:00">2019-11-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-02 21:01:05" itemprop="dateModified" datetime="2020-06-02T21:01:05+08:00">2020-06-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><ul>
+<li>比较大小,如果符合条件(升序)就交换两个元素的位置  <ul>
+<li>每次执行N-1次</li>
+<li>严格大/小,保证了原序(稳定性)</li>
+<li>没次能保证最大/最小的元素会在最后</li>
+</ul>
+</li>
+<li>如果全程无交换,则说明有序了,跳出即可</li>
+<li>$T=O(x),x\in(N,N^2)$</li>
+</ul>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><ul>
+<li>每次抽取一个元素,然后从序列末尾开始进行比较</li>
+<li>若符合条件,往后移位,直到不符合条件跳出</li>
+<li>然后插入元素</li>
+</ul>
+<h4 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h4><p>对插入排序的改进,每次消除多个逆序对以达到加速的效果  </p>
+<ul>
+<li>按照一定增量序列,每次进行D排序 $D_N &gt; D_{N-1}…&gt;D_1$ ,这样一来一趟就有可能消除多个逆序对<ul>
+<li>按照$D_N &gt; D_{N-1}…&gt;D_1$进行排序,后一次会保持前一次的顺序,故可用</li>
+<li>但最终都要进行1排序</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(D=N/<span class="number">2</span>;D&gt;<span class="number">0</span>;D/=<span class="number">2</span>)&#123;  <span class="comment">// 希尔增量序列。Hibbard增量序列:Dk=2^k-1...等等</span></span><br><span class="line">    <span class="keyword">for</span>(p=D;p&lt;N;p++)&#123;  <span class="comment">// 插入排序</span></span><br><span class="line">        Tmp = A[p];</span><br><span class="line">        <span class="keyword">for</span>(i=p;i&gt;=D&amp;&amp;A[i-D]&gt;Tmp;i-=D)&#123;</span><br><span class="line">            A[i] = A[i-D];</span><br><span class="line">        &#125;</span><br><span class="line">        A[i] = Tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><h4 id="小-大顶堆"><a href="#小-大顶堆" class="headerlink" title="小/大顶堆"></a>小/大顶堆</h4><p>子节点比父节点小/大的二叉树  </p>
+<p><strong>构建方法</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 法一：上浮下沉法(小顶堆为例)</span></span><br><span class="line"><span class="comment">// 从第一个非叶子节点开始，以它为子树，先自下而上把小的节点上浮，到达子树根节点后自上而下把大的节点下沉</span></span><br><span class="line"><span class="comment">// 知道根节点结束</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=len/<span class="number">2</span><span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">        <span class="keyword">int</span> t = j;</span><br><span class="line">        <span class="keyword">while</span>((t+<span class="number">1</span>)*<span class="number">2</span>&lt;=len)&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="built_in">min</span> = (t+<span class="number">1</span>)*<span class="number">2</span><span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">min</span>+<span class="number">1</span>&lt;len)&#123;</span><br><span class="line">                <span class="keyword">if</span>(heap[<span class="built_in">min</span>+<span class="number">1</span>]&lt;heap[<span class="built_in">min</span>])&#123;</span><br><span class="line">                    <span class="built_in">min</span>++; </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(heap[<span class="built_in">min</span>]&lt;heap[t])&#123;</span><br><span class="line">                swop(<span class="built_in">min</span>,t,heap);</span><br><span class="line">                t = <span class="built_in">min</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 法二：插入法</span></span><br><span class="line"><span class="comment">// 从根节点出发，若父节点比插入元素大，则调整位置，如此循环，保证父节点小于子节点</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    heap[<span class="number">0</span>] = <span class="number">-1000</span>;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=len;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;temp);</span><br><span class="line">        <span class="keyword">int</span> j;</span><br><span class="line">        <span class="keyword">for</span>(j=i;heap[j/<span class="number">2</span>]&gt;temp;j/=<span class="number">2</span>)&#123;</span><br><span class="line">            heap[j] = heap[j/<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        heap[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="利用小-大顶堆排序"><a href="#利用小-大顶堆排序" class="headerlink" title="利用小/大顶堆排序"></a>利用小/大顶堆排序</h4><ul>
+<li>根据小/大顶堆的性质，可以确定顶部一定是最大或最小的元素</li>
+<li>交换根节点和最后一个节点，那么最后一个节点一定是最大/最小</li>
+<li>把最后的节点排除，剩下节点构成的子树再调整成小/大顶堆，重复以上步骤</li>
+</ul>
+<h3 id="快速排序算法"><a href="#快速排序算法" class="headerlink" title="快速排序算法"></a>快速排序算法</h3><p>通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列    </p>
+<ul>
+<li>先从数列中取出一个数作为主元<ul>
+<li>主元选不好会影响速度</li>
+<li>法1.选头,中,尾三个数的中位数做主元</li>
+</ul>
+</li>
+<li>分区过程，交替移动，将比这个数大的数全放到它的右边，小于或等于它的数全放到它的左边</li>
+<li>再对左右区间重复第二步，直到各区间只有一个数</li>
+</ul>
+<h3 id="擂台法"><a href="#擂台法" class="headerlink" title="擂台法"></a>擂台法</h3><ul>
+<li>适用于找最值</li>
+</ul>
+<h3 id="归并法"><a href="#归并法" class="headerlink" title="归并法"></a>归并法</h3><ul>
+<li>把两个有序的序列合并</li>
+<li>法1.递归的进行下去(有点类似快速排序)</li>
+<li>法2.每个元素看成一段序列,合并合并…</li>
+<li>$T=N\log{N}$</li>
+<li>缺点:需要开额外一份空间</li>
+</ul>
+<h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><h3 id="AOV-activity-on-vertex"><a href="#AOV-activity-on-vertex" class="headerlink" title="AOV(activity on vertex)"></a>AOV(activity on vertex)</h3><p>节点代表事件<br>若v到w连通,则v一定在w的前面  </p>
+<ul>
+<li>有向图</li>
+<li>有优先级限制<br>按照此法输出就是拓扑排序  </li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Queuezero Q;   <span class="comment">// 储存入度为零的,即前头没有限制了的</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;|V|;i++)&#123;    <span class="comment">// 记录最先的入度为0的节点</span></span><br><span class="line">    <span class="keyword">if</span>(indegree[V]==<span class="number">0</span>)&#123;</span><br><span class="line">        Enqueue(V,Q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span>(!isEmpty(Q))&#123;</span><br><span class="line">    V = Dequeue(Q);  <span class="comment">//cnt++,记录或者输出什么的(拓扑排序)</span></span><br><span class="line">    <span class="keyword">for</span>(V的每个邻接点W)&#123;</span><br><span class="line">        indegree(W)--;</span><br><span class="line">        <span class="keyword">if</span>(degree(w)==<span class="number">0</span>)&#123;</span><br><span class="line">            Enqueue(W,Q);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(cnt!=|V|)</span><br><span class="line">    图有回路,无法拓扑排序</span><br></pre></td></tr></table></figure>
+
+<h3 id="AOE-activity-on-edge"><a href="#AOE-activity-on-edge" class="headerlink" title="AOE(activity on edge)"></a>AOE(activity on edge)</h3><p>例:关键路径问题  </p>
+<h3 id="表排序"><a href="#表排序" class="headerlink" title="表排序"></a>表排序</h3><p>当移动的成本很高时(如移动一部电影)就用表来储存他的顺序</p>
+<ul>
+<li>table[N]指向N,故用table[N]进行访问\排序</li>
+</ul>
+<h3 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h3><p>基本原理:假如有10个数分别是0<del>9让你排序,那建立10个桶ar[10],根据情况0</del>9放到对应的桶了,最后顺序输出桶就是有序的了</p>
+<h4 id="LSD-Least-Significant-Digit-次位优先"><a href="#LSD-Least-Significant-Digit-次位优先" class="headerlink" title="LSD(Least Significant Digit)次位优先"></a>LSD(Least Significant Digit)次位优先</h4><p>排10个在0~999的整数难道要建1000个桶吗？</p>
+<ul>
+<li>根据低位到高位建通(实际情况肯更抽象)<ul>
+<li>这里是从个位到百位,没位置建10桶</li>
+<li>个位桶建装好后再遍历桶,装十位的桶,以此类推</li>
+<li>因为是遍历有序桶来填入新桶的,所以最后的桶只需按顺序输出就是有序了</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><h3 id="散列-hash-查找"><a href="#散列-hash-查找" class="headerlink" title="散列(hash)查找"></a>散列(hash)查找</h3><p>把关键词看成变量,通过哈希函数运算赋予地址</p>
+<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><p>关键词是数字时的常见方法</p>
+<ul>
+<li>折叠法</li>
+<li>平方取中法</li>
+<li>数字分析法</li>
+<li>除留余数法</li>
+</ul>
+<p>关键词是字符时的常见方法</p>
+<ul>
+<li>位移法(变成整数移位&lt;&lt;求余)</li>
+</ul>
+<p><strong>核心思想就是当一位改变时尽可能多的影响位数,避免浪费</strong></p>
+<h4 id="处理冲突"><a href="#处理冲突" class="headerlink" title="处理冲突"></a>处理冲突</h4><p>产生冲突就添加偏移量到别的位置  </p>
+<ul>
+<li>线性探测<ul>
+<li>偏移量是一增量序列: 1.2.3.4…</li>
+<li>容易产生聚集</li>
+</ul>
+</li>
+<li>平方探测<ul>
+<li>偏移量是一增量序列: 1^2.2^2.3^2.4^2…</li>
+<li>容易产生死循环<ul>
+<li>定理:散列表长是某个4k+3的素数时,一定能探测整个表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>双散列探测<ul>
+<li>$d_i = i\times h_2(kay)$</li>
+<li>$h_2(key)=p-(key mod p)$ 效果最好</li>
+</ul>
+</li>
+<li>再散列<ul>
+<li>装填因子太大是查找效率下降</li>
+<li>那就扩大散列表,在把原来的元素搬进去</li>
+</ul>
+</li>
+<li>分离链接法<ul>
+<li>有冲突的关键字都放在(同一个关键字的)一个链表中</li>
+</ul>
+</li>
+</ul>
+<p><strong>删除时不能直接删除,会影响后续的查找。正确的删除是标记为删除,新的元素来时再替换</strong></p>
+<h3 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h3><p><strong>要点：</strong> </p>
+<ul>
+<li>前缀表next(或者说match)函数的创建</li>
+</ul>
+<p>利用前缀表的原理：对于一个子串(如：ababc)，所有可能的前缀:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">a b</span><br><span class="line">a b a</span><br><span class="line">a b a b</span><br><span class="line">a b a b c</span><br></pre></td></tr></table></figure>
+
+<p>我们需要找出每种可能中最长的、非本身的公共前后缀，因为如果前后缀相同的话，当后缀失去匹配时，可从前缀结束的地方开始匹配，而不是从头开始。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a               null    0</span><br><span class="line">a b             null    0</span><br><span class="line">a b a           a       1</span><br><span class="line">a b a b         ab      2</span><br><span class="line">a b a b c       null    0  &lt;一般剔除字符串本身,在开头填-1</span><br><span class="line"></span><br><span class="line">这些最长公共前后缀的长度就构成了前缀表</span><br><span class="line"> a b a b c</span><br><span class="line">-1 0 0 1 2</span><br><span class="line">这样就表示了当，str[j]失去匹配时，从match[j](前缀结束的地方)尝试匹配</span><br></pre></td></tr></table></figure>
+
+<p><strong>前缀表如何创建</strong></p>
+<ul>
+<li>可将创建一个子串前缀表的问题划分为一系列子问题：<ul>
+<li>创建每种前缀的前缀表</li>
+<li>为每种前缀构造前缀表又是一个个子串匹配问题：前1为是否匹配(是否有公共后缀)、前2位是否匹配，…，前n位是否</li>
+<li>又因为从最短开始尝试，最短的又为次短的做了铺垫。最短串的KMP创建了次短所需的前缀表</li>
+</ul>
+</li>
+</ul>
+<p>对于ababc，可以划分为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">长的1,不需要前缀表辅助匹配。得到前缀表：</span><br><span class="line">[-1]</span><br><span class="line"></span><br><span class="line">a b</span><br><span class="line">对于ab，找最长公共前后缀。找前1位(a)时，相当与在串ab中找匹配的子串a，而子串a的前缀表已经由上一步得出，前2位ab是它本身，结束匹配。得</span><br><span class="line">[-1, 0]</span><br><span class="line"></span><br><span class="line">a b a</span><br><span class="line">对于aba，找最长公共前后缀。找前1位(a)时，相当与在串aba中找匹配的子串a，而子串a的前缀表已经由上一步得出，前2位同理。得</span><br><span class="line">[-1 0 1]</span><br><span class="line"></span><br><span class="line">a b a b</span><br><span class="line">a b a b c</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for(j&#x3D;1;j&lt;len;j++)&#123;</span><br><span class="line">    p &#x3D; m[j-1];</span><br><span class="line">    &#x2F;&#x2F;尝试利用前缀表找到匹配的公共前后缀</span><br><span class="line">    while(p&gt;&#x3D;0&amp;&amp;pattern[p+1]!&#x3D;pattern[j])&#123;</span><br><span class="line">        p &#x3D; m[p];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;如果下一位匹配，公共前后缀长的等于当前匹配的公共前后缀长度加1</span><br><span class="line">    &#x2F;&#x2F;否则不匹配</span><br><span class="line">    if(pattern[p+1]&#x3D;&#x3D;pattern[j])&#123;</span><br><span class="line">        m[j] &#x3D; p+1;</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        m[j] &#x3D; -1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<hr>
+<h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h3 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h3><ul>
+<li>左边孩子比根节点小</li>
+<li>右边孩子比根节点大</li>
+</ul>
+<p><strong>查找</strong>  </p>
+<ul>
+<li>左小右大，递归或循环  </li>
+</ul>
+<p><strong>插入</strong></p>
+<ul>
+<li>左小右大，递归或循环  </li>
+</ul>
+<p><strong>删除</strong></p>
+<ul>
+<li>没有孩子<ul>
+<li>直接插入</li>
+</ul>
+</li>
+<li>只有一个孩子<ul>
+<li>子承父业</li>
+</ul>
+</li>
+<li>有两个孩子<ul>
+<li>找到左子树的最大或右子树的最小替换被删除节点…有效降低树的高度</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BinTree <span class="title">Delete</span><span class="params">( BinTree BST, ElementType X )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    Position Tmp; </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>( !BST ) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"要删除的元素未找到"</span>); </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>( X &lt; BST-&gt;Data ) </span><br><span class="line">            BST-&gt;Left = Delete( BST-&gt;Left, X );   <span class="comment">/* 从左子树递归删除 */</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( X &gt; BST-&gt;Data ) </span><br><span class="line">            BST-&gt;Right = Delete( BST-&gt;Right, X ); <span class="comment">/* 从右子树递归删除 */</span></span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">/* BST就是要删除的结点 */</span></span><br><span class="line">            <span class="comment">/* 如果被删除结点有左右两个子结点 */</span> </span><br><span class="line">            <span class="keyword">if</span>( BST-&gt;Left &amp;&amp; BST-&gt;Right ) &#123;</span><br><span class="line">                <span class="comment">/* 从右子树中找最小的元素填充删除结点 */</span></span><br><span class="line">                Tmp = FindMin( BST-&gt;Right );</span><br><span class="line">                BST-&gt;Data = Tmp-&gt;Data;</span><br><span class="line">                <span class="comment">/* 从右子树中删除最小元素 */</span></span><br><span class="line">                BST-&gt;Right = Delete( BST-&gt;Right, BST-&gt;Data );</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">/* 被删除结点有一个或无子结点 */</span></span><br><span class="line">                Tmp = BST; </span><br><span class="line">                <span class="keyword">if</span>( !BST-&gt;Left )       <span class="comment">/* 只有右孩子或无子结点 */</span></span><br><span class="line">                    BST = BST-&gt;Right; </span><br><span class="line">                <span class="keyword">else</span>                   <span class="comment">/* 只有左孩子 */</span></span><br><span class="line">                    BST = BST-&gt;Left;</span><br><span class="line">                <span class="built_in">free</span>( Tmp );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> BST;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h3><h3 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h3><hr>
+<h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h2 id="DFS深度优先搜索"><a href="#DFS深度优先搜索" class="headerlink" title="DFS深度优先搜索"></a>DFS深度优先搜索</h2><ul>
+<li>从一节点出发<ul>
+<li>非连通图分而治之</li>
+</ul>
+</li>
+<li>依次从访问邻接点,直至所有邻接点都被访问<ul>
+<li>例:迷宫  </li>
+</ul>
+</li>
+</ul>
+<h2 id="BFS广度优先搜索"><a href="#BFS广度优先搜索" class="headerlink" title="BFS广度优先搜索"></a>BFS广度优先搜索</h2><ul>
+<li>从一节点出发</li>
+<li>把他所有的邻接点入队列,并检测目标节点</li>
+<li>依次把节点出队列,并递归的把他的邻接点入队列,直到访问所有点<ul>
+<li>例:树的层序遍历  </li>
+</ul>
+</li>
+</ul>
+<h3 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h3><p>若存在两点在同一个连通集合中，则这两点存在回路</p>
+<ul>
+<li>Find() 找根节点</li>
+<li>Union() 合并成集合</li>
+</ul>
+<h2 id="最短路问题"><a href="#最短路问题" class="headerlink" title="最短路问题"></a>最短路问题</h2><h3 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h3><p>解决单源路非递减顺序(没有负)最短路径问题</p>
+<ul>
+<li>对所有未检索的点进行标记:collected[v] = false</li>
+<li>从一点出发,记录所有邻接点,若邻接点加入后路径最短,则更新<ul>
+<li>类似BFS</li>
+</ul>
+</li>
+<li>所有邻接点访问完后colleceted[v]=true,从下一个未检索的点继续循环,直到检索所有节点</li>
+</ul>
+<h3 id="Floyd算法"><a href="#Floyd算法" class="headerlink" title="Floyd算法"></a>Floyd算法</h3><p>解决多源路非递减顺序最短路径问题   </p>
+<p>稠密图有优势  </p>
+<p>$T=O(V^3)$  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 核心</span></span><br><span class="line"><span class="comment">// 顶点i到顶点j,顶点间的最短路就在矩阵显示出来了</span></span><br><span class="line"><span class="keyword">for</span>(k = <span class="number">0</span>;k&lt;N;k++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;N;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;N;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(D[i][k]+D[k][j]&lt;D[i][j])&#123;</span><br><span class="line">                D[i][j] = D[i][k]+D[k][j];</span><br><span class="line">                path[i][j] = k;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h3><p>解决稠密图的最小生成树问题  </p>
+<ul>
+<li>从任意点出发</li>
+<li>寻找与这个整体相邻,且不构成回路的权最小点</li>
+<li>加入该整体,继续搜索,直至所有点都收录(生成树必须包含所有点)</li>
+</ul>
+<h3 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h3><p>解决稀疏图的最小生成树问题  </p>
+<p>$T=E\log{E}$  </p>
+<ul>
+<li>核心思想,每个顶点都是一棵树,把森林连成树</li>
+<li>找最短且不构成回路的边,又因为每个顶点都是一棵树,每个边都把森林连成树</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MST=&#123;&#125;;  <span class="comment">// 最小生成树</span></span><br><span class="line">E;   <span class="comment">// 边集</span></span><br><span class="line"><span class="keyword">while</span>(没够V<span class="number">-1</span>条边&amp;&amp;E没空)&#123;</span><br><span class="line">    findmin();  <span class="comment">// 找最小边  用最小堆</span></span><br><span class="line">    delet(E(v,w));  <span class="comment">// 把该边移除边集E</span></span><br><span class="line">    <span class="keyword">if</span>(E(v,w)加入MST不构成回路)   <span class="comment">// 并查集</span></span><br><span class="line">        join(E(v,w));  <span class="comment">// 加入并查集</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        单纯的删除</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(MST中边不够V<span class="number">-1</span>条)</span><br><span class="line">    生成树不存在</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h1 id="效率问题"><a href="#效率问题" class="headerlink" title="效率问题"></a>效率问题</h1><h3 id="联机算法"><a href="#联机算法" class="headerlink" title="联机算法"></a>联机算法</h3><p>在任意时刻，算法对要操作的数据只读入（扫描）一次，一旦被读入并处理，它就不需要在被记忆了。而在此处理过程中算法能对它已经读入的数据立即给出相应子序列问题的正确答案。具有这种特性的算法叫做联机算法（on-line algorithm。</p>
+<h3 id="分治算法"><a href="#分治算法" class="headerlink" title="分治算法"></a>分治算法</h3><p>在计算机科学中，分治法是一种很重要的算法。字面上的解释是“分而治之”，就是把一个复杂的问题分成两个或更多的相同或相似的子问题，再把子问题分成更小的子问题……直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。这个技巧是很多高效算法的基础，如排序算法(快速排序，归并排序)，傅立叶变换(快速傅立叶变换)……</p>
+<ul>
+<li>该问题的规模缩小到一定的程度就可以容易地解决</li>
+<li>该问题可以分解为若干个规模较小的相同问题，即该问题具有最优子结构性质</li>
+<li>利用该问题分解出的子问题的解可以合并为该问题的解</li>
+<li>该问题所分解出的各个子问题是相互独立的，即子问题之间不包含公共的子子问题</li>
+</ul>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/19/universe/tensorflow_learning/Tensorflow_learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1419,120 +1726,6 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/05/universe/Golang%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/05/universe/Golang%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Golang</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-05 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-05T00:00:00+08:00">2019-08-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-15 12:00:11" itemprop="dateModified" datetime="2020-04-15T12:00:11+08:00">2020-04-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>非零基础笔记，掌握c的基础上记录</p>
-<h3 id="GO-mod的使用"><a href="#GO-mod的使用" class="headerlink" title="GO mod的使用"></a>GO mod的使用</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> mod init</span><br><span class="line"><span class="keyword">go</span> mod tidy</span><br><span class="line"><span class="string">"当然要设置好代言"</span></span><br><span class="line"><span class="string">"https://goproxy.io"</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line">import &quot;fmt&quot; &#x2F;&#x2F;import了就必须使用</span><br><span class="line">&#x2F;&#x2F; 不用写；</span><br><span class="line">func main()&#123; &#x2F;&#x2F;这个括号不能换行</span><br><span class="line">		a :&#x3D; 10 &#x2F;&#x2F;:&#x3D;是自动识别类型的</span><br><span class="line">		b,c :&#x3D; 20,30</span><br><span class="line">		var b int &#x2F;&#x2F;var 变量名 类型</span><br><span class="line">		fmt.Println() &#x2F;&#x2F;自动换行</span><br><span class="line">		fmt.Printf() &#x2F;&#x2F;格式化输出，同c</span><br><span class="line">		 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量"></a>匿名变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i,_ :&#x3D; 10,20 &#x2F;&#x2F; _表示匿名变量 配合函数返回值才有优势  多返回值+占位</span><br></pre></td></tr></table></figure>
-
-<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const a int &#x3D; 10</span><br><span class="line">aonst b &#x3D; 20 &#x2F;&#x2F; 没有:&#x3D; ,也自动推到类型</span><br></pre></td></tr></table></figure>
-
-<h3 id="多个变量或常量到定义"><a href="#多个变量或常量到定义" class="headerlink" title="多个变量或常量到定义"></a>多个变量或常量到定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var(</span><br><span class="line">		a int</span><br><span class="line">		b float64</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">const(</span><br><span class="line">		a int &#x3D; 1</span><br><span class="line">		b float64 &#x3D;1.2 &#x2F;&#x2F;或者直接&#x3D;让它自动推到类型</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<h3 id="iota枚举"><a href="#iota枚举" class="headerlink" title="iota枚举"></a>iota枚举</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">const(</span><br><span class="line">		a &#x3D; iota</span><br><span class="line">		b &#x3D; iota</span><br><span class="line">		c &#x3D; iota</span><br><span class="line">)</span><br><span class="line">		1.iota常量自动生成器，每一行自动加一</span><br><span class="line">		2.iota给常量赋值</span><br><span class="line">		3iota遇到新的const时重置为0</span><br><span class="line">		4.可只写一个iota</span><br><span class="line">		const	(</span><br><span class="line">		  a &#x3D; iota</span><br><span class="line">		  b</span><br><span class="line">		  c</span><br><span class="line">		)</span><br><span class="line">		5.如果同一行，值都一样</span><br><span class="line">		const(</span><br><span class="line">				i &#x3D; iota</span><br><span class="line">				j1,j2,j3 &#x3D; iota,iota,iota  &#x2F;&#x2F;一样</span><br><span class="line">				k &#x3D; iota</span><br><span class="line">		)</span><br></pre></td></tr></table></figure>
-
-<h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type i int &#x2F;&#x2F;给int取个别名i</span><br><span class="line">  ^</span><br></pre></td></tr></table></figure>
-
-<h3 id="if特性"><a href="#if特性" class="headerlink" title="if特性"></a>if特性</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;支持初始化</span><br><span class="line">if a:&#x3D;0;a&lt;10&#123;</span><br><span class="line">		^			^	分号隔开</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="switch-case-fallthrough"><a href="#switch-case-fallthrough" class="headerlink" title="switch-case-fallthrough"></a>switch-case-fallthrough</h3><p>​                                ^跳出，相当于break<br>​        支持一个初始化语句,</p>
-<h3 id="range迭代"><a href="#range迭代" class="headerlink" title="range迭代"></a>range迭代</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str:&#x3D;&quot;abd&quot;</span><br><span class="line">for i,data :&#x3D; range str&#123; &#x2F;&#x2F;第一期是位置str[]，第二个是值</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func 函数名(a int,b string参数列表)(a1 type1,a2 type2返回类型)&#123;</span><br><span class="line">	函数体</span><br><span class="line">	return v1,v2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;不定参数列表</span><br><span class="line">func funcName(a ...int)&#123;</span><br><span class="line">							...int^不定参数类型，必须放在最后</span><br><span class="line">							像一个列表</span><br><span class="line">							可以for i,data :&#x3D;range a&#123;</span><br><span class="line">							</span><br><span class="line">							&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;常用写法</span><br><span class="line">func name()(res int)&#123;</span><br><span class="line">		res &#x3D; 666</span><br><span class="line">		return  &#x2F;&#x2F;有返回值必须返回嘛，所在go中可以这样写</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="函数也是一种数据类型"><a href="#函数也是一种数据类型" class="headerlink" title="函数也是一种数据类型"></a>函数也是一种数据类型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;故可以用type重命名</span><br><span class="line">type newname func(a,b int) int&#123;</span><br><span class="line">&#125;</span><br><span class="line">var a newname</span><br><span class="line">a &#x3D; (1,2)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;回调函数，例</span><br><span class="line">func cala(a,b int, fuc newname) int &#123;</span><br><span class="line">	fuc(a, b)</span><br><span class="line">&#125; &#x2F;&#x2F;                 ^多态了</span><br><span class="line">func main()&#123;</span><br><span class="line">	cala(1,2,add)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>###匿名函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">f1 :&#x3D; func()&#123; &#x2F;&#x2F;没有参数，闭包可捕获到外层到变量，影响到外面</span><br><span class="line">			&#x2F;&#x2F;不管变量到作用域，只要闭包还在使用他，变量就还在</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;匿名函数定义了就要有东西来接</span><br><span class="line">&#x2F;&#x2F;不然这么写</span><br><span class="line">func()&#123;</span><br><span class="line">&#125;()</span><br><span class="line">  ^这个括号表示传进去到参数，然后直接调用</span><br></pre></td></tr></table></figure>
-<p>###defer</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.延迟调用，函数结束前(那一刻)调用</span><br><span class="line">2.先写到后调用</span><br><span class="line">3.多个defer调用时，哪怕其中有个出了错，其他仍然会执行</span><br><span class="line">4.相当于先按顺序读，然后默默记住，再倒序输出</span><br></pre></td></tr></table></figure>
-<p>###获取命令行参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.导入包</span><br><span class="line">import &quot;os&quot;</span><br><span class="line"></span><br><span class="line">2.接收传入的参数 &#x2F;&#x2F;全都是以字符串形式</span><br><span class="line">str :&#x3D; os.Args  &lt;这个表示</span><br><span class="line">tips:可用不定参数接，可用range迭代接</span><br></pre></td></tr></table></figure>
-<p>###导入包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">同一个目录包名必须一样</span><br><span class="line">同一个目录调用别的文件的函数无需包名</span><br><span class="line">不同目录包名不一样</span><br><span class="line">调用的别的包的函数首字母必须大写</span><br><span class="line"></span><br><span class="line">1.除传统写法还可</span><br><span class="line">import(</span><br><span class="line">	&quot;&quot;</span><br><span class="line">	&quot;&quot;</span><br><span class="line">) </span><br><span class="line"></span><br><span class="line">2.起别名</span><br><span class="line">import 别名 &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">3.  .操作</span><br><span class="line">import . &quot;fmt&quot; &#x2F;&#x2F;调用函数无需通过包名</span><br><span class="line"></span><br><span class="line">4.忽略次包名</span><br><span class="line">import _ &quot;fmt&quot;</span><br><span class="line">这个操作时为了调用包中的init函数</span><br></pre></td></tr></table></figure>
-<p>###init函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">导入一个包就先执行一个包的init函数</span><br><span class="line">func init()&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">所以 import _ &quot;&quot; 操作的目的时调用init函数而不用其他函数</span><br></pre></td></tr></table></figure>
-
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;指定下标初始化</span><br><span class="line">d :&#x3D; [5]int&#123;2: 10,4: 2&#125;</span><br><span class="line">						^指定的下标</span><br><span class="line">						</span><br><span class="line">&#x2F;&#x2F;数组比较</span><br><span class="line">比较类型和每个元素</span><br><span class="line">&#x2F;&#x2F;同类型的数组可以赋值</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;数组做函数参数-&gt;拷贝，值传递</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;数组指针防止值传递^</span><br><span class="line">p *[7]int</span><br><span class="line">(*p)[0]  &lt;-注意写法</span><br></pre></td></tr></table></figure>
-
-<h3 id="随机数的使用"><a href="#随机数的使用" class="headerlink" title="随机数的使用"></a>随机数的使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. import</span><br><span class="line">2. 设置种子 &#x2F;&#x2F;种子参数一样产生的随机数一样</span><br></pre></td></tr></table></figure>
-
-<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">array :&#x3D; [...]int&#123;10, 20, 30, 0, 0&#125;</span><br><span class="line">slice :&#x3D; array[low:high:max]  &#x2F;&#x2F;切片</span><br><span class="line">low-&gt;起点</span><br><span class="line">high-&gt;终点 &#x2F;&#x2F;不包括</span><br><span class="line">长度&#x3D;high - low</span><br><span class="line">容量&#x3D;max - low  &#x2F;&#x2F;意义不明</span><br><span class="line"></span><br><span class="line">创建方式：</span><br><span class="line">1.传统方式</span><br><span class="line">	s1 :&#x3D; []int&#123;1,2,3&#125; &#x2F;&#x2F;自动推到类型同时初始化</span><br><span class="line">2.make函数</span><br><span class="line">	s2 :&#x3D; make([]int, len, cap)</span><br><span class="line">						^切片类型      ^默认不写和len一样</span><br><span class="line"></span><br><span class="line">切片操作</span><br><span class="line">类似python</span><br><span class="line">操作某个元素和数组操作一样</span><br><span class="line">append函数，向后追加，自动以两倍容量扩容</span><br><span class="line">copy函数，copy(目标切片， 原切切片)</span><br><span class="line"></span><br><span class="line">！！！切片做函数参数！！！</span><br><span class="line">引用传递，会影响到外面</span><br></pre></td></tr></table></figure>
-
-<h3 id="切片和数组的区别-amp-amp-关系"><a href="#切片和数组的区别-amp-amp-关系" class="headerlink" title="切片和数组的区别&amp;&amp;关系"></a>切片和数组的区别&amp;&amp;关系</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">数组长度固定，切片[]里面为空或...长度可以不固定</span><br><span class="line">a :&#x3D; [7]int&#123;&#125;</span><br><span class="line">s :&#x3D; []int&#123;&#125; &lt;-	切片</span><br><span class="line"></span><br><span class="line">对切片操作会影响到底层数组</span><br></pre></td></tr></table></figure>
-
-<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">格式： map[keyType]valueType</span><br><span class="line">创建方式</span><br><span class="line">1. var m1 map[int]string</span><br><span class="line"></span><br><span class="line">2. m2 :&#x3D; make(map[int]string) </span><br><span class="line"></span><br><span class="line">3. m2 :&#x3D; make(map[int]string, len) &#x2F;&#x2F;指定容量，自动扩容，提前分配提高效率</span><br></pre></td></tr></table></figure>
-
-<h3 id="int和string的转换"><a href="#int和string的转换" class="headerlink" title="int和string的转换"></a>int和string的转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#string到int  </span><br><span class="line">int,err:&#x3D;strconv.Atoi(string)  </span><br><span class="line">#string到int64  </span><br><span class="line">int64, err :&#x3D; strconv.ParseInt(string, 10, 64)  </span><br><span class="line">#int到string  </span><br><span class="line">string:&#x3D;strconv.Itoa(int)  </span><br><span class="line">#int64到string  </span><br><span class="line">string:&#x3D;strconv.FormatInt(int64,10) </span><br><span class="line"></span><br><span class="line">同类型之间转换，比如int64到int，直接int(int64)即可；</span><br></pre></td></tr></table></figure>
-
-<h3 id="接收复杂的类型一般自定义结构体"><a href="#接收复杂的类型一般自定义结构体" class="headerlink" title="接收复杂的类型一般自定义结构体"></a>接收复杂的类型一般自定义结构体</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">因为http只能传字符串，所以前端要传json的话要先把json转换成json字符串</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1602,12 +1795,12 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

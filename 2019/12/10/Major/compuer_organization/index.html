@@ -28,7 +28,7 @@
 <meta property="og:description" content="简介 从纯文本的程序到可执行的编码，以hello.c为例 预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾 编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序 汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。 链接：hell">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-06T12:59:53.330Z">
+<meta property="article:modified_time" content="2020-06-07T15:09:05.224Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="cs">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-06 20:59:53" itemprop="dateModified" datetime="2020-06-06T20:59:53+08:00">2020-06-06</time>
+                <time title="Modified: 2020-06-07 23:09:05" itemprop="dateModified" datetime="2020-06-07T23:09:05+08:00">2020-06-07</time>
               </span>
 
           
@@ -227,7 +227,45 @@
 <li>原理：对在范围$0 \leq x, y \leq UMax_w$中的x和y，令$s = x +^u_w y$。则对计算是，当且仅当s&lt;x(或等价地s&lt;y)时发生溢出</li>
 <li>推导：显然$x+y \geq x$，因此如果s没有溢出$s \geq x$。如果s发生溢出，有$s = x+y-2^w$，假设$y &lt; 2^w$，有$y-2^w &lt; 0$，因此$s = x+(y-2^w) &lt; x$</li>
 </ul>
-<h4 id="补码加法"><a href="#补码加法" class="headerlink" title="补码加法"></a>补码加法</h4>
+<h4 id="乘以常数"><a href="#乘以常数" class="headerlink" title="乘以常数"></a>乘以常数</h4><p>整数乘法指令相当慢，需要多个时钟周期，然而其他的整数运算(如加法、减法、位移)之需要1个时钟周期。因此编译器使用了一项重要的优化：试着用移位和加法运算的组合来代替乘以常数因子的乘法。</p>
+<p>如$x \times 14$，$14=2^3+2^2+2^1$，编译器将乘法重写为(x&lt;&lt;3)+(x&lt;&lt;2)+(x&lt;&lt;1)，将一个乘法代替为3个移位和2个加法。甚至还可以$14=2^4-2^1$。</p>
+<p>到这里，无符号数和补码的结果还是相同的</p>
+<h4 id="除以2的幂"><a href="#除以2的幂" class="headerlink" title="除以2的幂"></a>除以2的幂</h4><p>在大多数机器上，整数除法要比整数乘法更慢：需要30个或者更多的时钟周期。除以2的幂也可以通过用移位(左移)运算来实现。</p>
+<p>无符号和补码数分别使用逻辑移位和算数移位来达到目的：</p>
+<ul>
+<li>逻辑移位<ul>
+<li>移出的空位用0补上</li>
+</ul>
+</li>
+<li>算术移位<ul>
+<li>对于无符号型，算术移位等同于逻辑移位</li>
+<li>对于有符号型，算数左移等同于逻辑左移，算数右移补的是符号位</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>定义$\lfloor a \rfloor$为向下舍入，$\lceil a \rceil$为向上舍入。</p>
+</blockquote>
+<p>对于$x \geq 0$和$y&gt;0$，结果会是$\lfloor x/y \rfloor$，对于$x&lt;0$和$y&gt;0$，结果会是$\lceil x/y \rceil$。也就是说要向下舍入一个正值，而向上舍入一个负值。</p>
+<ul>
+<li>除以2的幂的无符号数除法<ul>
+<li>很简单，就直接右移，产生$\lfloor x/2^k \rfloor$</li>
+</ul>
+</li>
+<li>除以2的幂的补码，正值情况，向下舍入<ul>
+<li>也是直接右移，直接右移的结果是向下舍入的</li>
+</ul>
+</li>
+<li>除以2的幂的补码，负值情况，向上舍入<ul>
+<li>不能直接右移，因为直接右移导致结果向下舍入，而我们需要向上舍入</li>
+<li>执行算数右移前要加上一个适当的偏执量才能使得结果正确舍入</li>
+<li>表达式：(x+(1&lt;&lt;k)-1)&gt;&gt;k产生数值$\lceil x/2^k \rceil$</li>
+<li>偏置技术利用如下属性：对于整数x和y(y&gt;0)，$\lceil x/y \rceil=\lfloor (x+y-1)/y \rfloor$。这样就可以通过逻辑移位来的到向上取整的结果了</li>
+<li><strong>推导:</strong> $\lceil x/y \rceil=\lfloor (x+y-1)/y \rfloor$，设$x = qy+r$，其中$0 \leq r &lt; y$，得到(x+y-1)/y=q+(r+y-1)，因此$\lfloor (x+y-1)/y \rfloor = q + \lfloor (r+y-1)/y \rfloor$。当r=0时，后面一项等于0，当r&gt;0时，等于1。级通过给x增加一个偏移量y-1,然后再将除法向下舍入，当y整除x时，我们得到q，否则，得到q+1。</li>
+</ul>
+</li>
+</ul>
+
     </div>
 
     
@@ -310,7 +348,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#补码加法"><span class="nav-number">2.1.2.</span> <span class="nav-text">补码加法</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -324,12 +362,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
