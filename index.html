@@ -1155,7 +1155,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-07 20:39:42" itemprop="dateModified" datetime="2020-06-07T20:39:42+08:00">2020-06-07</time>
+                <time title="Modified: 2020-06-08 21:53:01" itemprop="dateModified" datetime="2020-06-08T21:53:01+08:00">2020-06-08</time>
               </span>
 
           
@@ -1169,7 +1169,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="叫什么呢"><a href="#叫什么呢" class="headerlink" title="叫什么呢"></a>叫什么呢</h2><h3 id="关键字decltype-c-11"><a href="#关键字decltype-c-11" class="headerlink" title="关键字decltype(c++11)"></a>关键字decltype(c++11)</h3><p>关键字decltype(x)用于自动检测x的类型，并作为关键字。使用方法如下</p>
+          <h2 id="C-补完计划"><a href="#C-补完计划" class="headerlink" title="C++补完计划"></a>C++补完计划</h2><h3 id="关键字decltype-c-11"><a href="#关键字decltype-c-11" class="headerlink" title="关键字decltype(c++11)"></a>关键字decltype(c++11)</h3><p>关键字decltype(x)用于自动检测x的类型，并作为关键字。使用方法如下</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">decltype</span>(x) y;   <span class="comment">// 声明y，其中y的类型取决于x</span></span><br><span class="line"><span class="keyword">decltype</span>(x+y) xpy;   </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 格式如下</span></span><br><span class="line"><span class="keyword">decltype</span>(expression) var;  <span class="comment">// expression可以是函数调用</span></span><br></pre></td></tr></table></figure>
 
 
@@ -1640,7 +1640,59 @@
 </ul>
 </li>
 </ul>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
+<h2 id="输入输出和文件"><a href="#输入输出和文件" class="headerlink" title="输入输出和文件"></a>输入输出和文件</h2><h3 id="流和缓冲区"><a href="#流和缓冲区" class="headerlink" title="流和缓冲区"></a>流和缓冲区</h3><p>输入流需要两个连接，每端各一个。文件端(文件端可以是文件也可以是设备)连接提供流的来源，程序端连接将流的流出部分转储到程序中。同样，输出的管理包括将输出流连接到程序以及将输出目标与流关联。</p>
+<p>缓冲区是用作中介的内存块，它是将信息从设备传输到程序或从程序传输给设备的临时储存工具。使用缓冲区可以高效地处理输入和输出。缓冲区帮助匹配两种不同的信息传输速率。C++程序通常在用户按下回车键时刷新入缓冲区，对键盘输入进行缓冲可以让用户将输入传输给程序之前返回并更正。</p>
+<h3 id="流、缓冲区和iostream文件"><a href="#流、缓冲区和iostream文件" class="headerlink" title="流、缓冲区和iostream文件"></a>流、缓冲区和iostream文件</h3><p>iostream文件中包含一些专门设计来实现、管理流和缓冲区的类。</p>
+<ul>
+<li>stream类<ul>
+<li>为缓冲区提供了内存，并提供了用于填充缓冲区、访问缓冲区内容、刷新缓冲区和管理缓冲区内存的类方法</li>
+</ul>
+</li>
+<li>ios_base类<ul>
+<li>表示流的一般特征，如是否可读取、是二进制流还是文本流等</li>
+<li>ios类基于ios_base，其中包括了一个指向streambuf对象的指针成员</li>
+</ul>
+</li>
+<li>ostream类<ul>
+<li>从ios类派生而来的，提供了输出方法</li>
+</ul>
+</li>
+<li>istream类<ul>
+<li>从ios类派生而来，提供了输入方法</li>
+</ul>
+</li>
+<li>这些工具必须使用适当的类对象，如ostream对象cout。创建这样的对象将打开一个流，自动创建缓冲区，并将其与流关联起来。</li>
+</ul>
+<p>iostream库管理了很多细节。如在程序中包含iostream文件将自动创建8个流对象(4个用于窄字符流、4个用于宽字符流)</p>
+<ul>
+<li>cin<ul>
+<li>标准输入流，默认情况下这个流被关联到标准输入设备</li>
+<li>wcin对象与此类似，但处理的是wchar_t类型</li>
+</ul>
+</li>
+<li>cout<ul>
+<li>标准输出流，默认情况下这个流被关联到标准输出设备</li>
+<li>wout对象与此类似，但处理的是wchar_t类型</li>
+</ul>
+</li>
+<li>cerr<ul>
+<li>标准错误流，可用于显示错误消息，默认情况下这个流被关联到标准输出设备</li>
+<li>这个流没有缓冲，直接被发送到屏幕</li>
+<li>werr对象与此类似，但处理的是wchar_t类型</li>
+</ul>
+</li>
+<li>clog<ul>
+<li>也是标准错误流，可用于显示错误消息，默认情况下这个流被关联到标准输出设备</li>
+<li>wlog对象与此类似，但处理的是wchar_t类型</li>
+</ul>
+</li>
+<li>对象代表流意味着什么？<ul>
+<li>当iostream文件为程序声明一个cout对象时，该对象将包含储存了与输出有关的信息和数据成员，如显示数据时使用的字段宽度、小数位数、显示整数时采用的计数方法以及描述用来处理输出流缓冲区的streambuf对象的地址</li>
+<li><code>cout &lt;&lt; &quot;hello&quot;;</code>这个语句通过将指向的streambuf对象将字符串”hello”中的字符放到cout管理的缓冲区中</li>
+</ul>
+</li>
+</ul>
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
 
 
 

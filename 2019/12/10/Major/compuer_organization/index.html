@@ -28,7 +28,7 @@
 <meta property="og:description" content="简介 从纯文本的程序到可执行的编码，以hello.c为例 预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾 编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序 汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。 链接：hell">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-07T15:09:05.224Z">
+<meta property="article:modified_time" content="2020-06-08T10:49:55.914Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="cs">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-07 23:09:05" itemprop="dateModified" datetime="2020-06-07T23:09:05+08:00">2020-06-07</time>
+                <time title="Modified: 2020-06-08 18:49:55" itemprop="dateModified" datetime="2020-06-08T18:49:55+08:00">2020-06-08</time>
               </span>
 
           
@@ -265,6 +265,241 @@
 </ul>
 </li>
 </ul>
+<h3 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h3><h4 id="IEEE浮点数表示"><a href="#IEEE浮点数表示" class="headerlink" title="IEEE浮点数表示"></a>IEEE浮点数表示</h4><p>定点表示法不能很有效地表示非常大的数字。我们希望通过给定x和y的值，来表示形如$x \times 2^y$的数。</p>
+<blockquote>
+<p>IEEE浮点数标准用$V = (-1)^s \times M \times 2^E$的形式来表示一个数：</p>
+<ul>
+<li>符号(sign)<ul>
+<li>s决定是负数(s=1)还是正数</li>
+</ul>
+</li>
+<li>尾数(significand) M<ul>
+<li>M是一个二进制小数，它的取值范围是[1, 2)或[0, 1)</li>
+<li>有n位小数字段$frac=f_{n-1}…f_0$编码尾数M，但编码出来的值也依赖于阶码字段是否等于0(规格化的和非规格化的)</li>
+</ul>
+</li>
+<li>阶码(exponent) E<ul>
+<li>E的作用是对浮点数加权，这个权重是2的E次幂</li>
+<li>由k位的阶码字段组成$exp=e_{k-1}…f_0$来编码阶码E</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>以下是两种常见的格式：单精度和双精度<ul>
+<li>单精度:s、exp、frac字段分别为1位、k=8位和n=23位，得到一个32位的表示</li>
+<li>双精度:s、exp、frac字段分别为1位、k=11位和n=52位，得到一个64位的表示</li>
+</ul>
+</li>
+<li>给定位的表示，根据exp的值，被编码的值可以分成三种不同的情况(最后一种情况有两种变种)<ul>
+<li>规格化的<ul>
+<li>exp字段既不全为0也不全为1</li>
+<li>阶码的值E=e-Bias，e是无符号数，而$Bias=2^{k-1}-1$的偏置值</li>
+<li>尾数M=1+f，f是frac字段描述的小数值$0 \leq f &lt; 1$</li>
+</ul>
+</li>
+<li>非规格化的值<ul>
+<li>exp字段全为0时</li>
+<li>阶码E=1-Bias</li>
+<li>尾数M=f</li>
+<li>注意和规格化的区别</li>
+</ul>
+</li>
+<li>特殊值<ul>
+<li>当exp全为1，frac字段全为0时，得到的值表示无穷</li>
+<li>当exp全为1，frac字段不全为0时，得到的值表示NaN(Not a Number)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>示例：假定用6位格式表示，k=3的阶码位和n=2的尾数位，如下</p>
+<table>
+<thead>
+<tr>
+<th>描述</th>
+<th>位表示</th>
+<th>e</th>
+<th>E</th>
+<th>$2^E$</th>
+<th>f</th>
+<th>M</th>
+<th>$2^E \times M$</th>
+<th>V</th>
+<th>十进制</th>
+<th>公式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0 0000 000</td>
+<td>0</td>
+<td>-6</td>
+<td>$\frac1{64}$</td>
+<td>$\frac08$</td>
+<td>$\frac08$</td>
+<td>$\frac0{512}$</td>
+<td>0</td>
+<td>0.0</td>
+<td>E=1-Bias</td>
+</tr>
+<tr>
+<td>最小非规格化数</td>
+<td>0 0000 001</td>
+<td>0</td>
+<td>-6</td>
+<td>$\frac1{64}$</td>
+<td>$\frac18$</td>
+<td>$\frac18$</td>
+<td>$\frac1{512}$</td>
+<td>$\frac1{512}$</td>
+<td>0.001953</td>
+<td>M=f</td>
+</tr>
+<tr>
+<td></td>
+<td>0 0000 010</td>
+<td>0</td>
+<td>-6</td>
+<td>$\frac1{64}$</td>
+<td>$\frac28$</td>
+<td>$\frac38$</td>
+<td>$\frac2{512}$</td>
+<td>$\frac1{256}$</td>
+<td>0.003906</td>
+<td></td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>..</td>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>最大非规格化数</td>
+<td>0 0000 111</td>
+<td>0</td>
+<td>-6</td>
+<td>$\frac1{64}$</td>
+<td>$\frac78$</td>
+<td>$\frac78$</td>
+<td>$\frac7{512}$</td>
+<td>$\frac7{512}$</td>
+<td>0.013672</td>
+<td></td>
+</tr>
+<tr>
+<td>——–</td>
+<td>——</td>
+<td>–</td>
+<td>–</td>
+<td>—</td>
+<td>—-</td>
+<td>—-</td>
+<td>——</td>
+<td>—–</td>
+<td>—–</td>
+<td></td>
+</tr>
+<tr>
+<td>最小规格化数</td>
+<td>0 0001 000</td>
+<td>1</td>
+<td>-6</td>
+<td>$\frac1{64}$</td>
+<td>$\frac08$</td>
+<td>$\frac88$</td>
+<td>$\frac8{512}$</td>
+<td>$\frac1{64}$</td>
+<td>0.015625</td>
+<td>E=e-Bias</td>
+</tr>
+<tr>
+<td></td>
+<td>0 0001 001</td>
+<td>1</td>
+<td>-6</td>
+<td>$\frac1{64}$</td>
+<td>$\frac18$</td>
+<td>$\frac98$</td>
+<td>$\frac9{512}$</td>
+<td>$\frac9{256}$</td>
+<td>0.017578</td>
+<td>M=1+f</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>..</td>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>0 1110 110</td>
+<td>14</td>
+<td>7</td>
+<td>128</td>
+<td>$\frac68$</td>
+<td>$\frac{14}8$</td>
+<td>$\frac{1792}8$</td>
+<td>224</td>
+<td>224</td>
+<td></td>
+</tr>
+<tr>
+<td>最大规格化数</td>
+<td>0 1110 111</td>
+<td>14</td>
+<td>7</td>
+<td>128</td>
+<td>$\frac78$</td>
+<td>$\frac{15}8$</td>
+<td>$\frac{1920}8$</td>
+<td>240</td>
+<td>240</td>
+<td></td>
+</tr>
+<tr>
+<td>——–</td>
+<td>——</td>
+<td>–</td>
+<td>–</td>
+<td>—</td>
+<td>—-</td>
+<td>—-</td>
+<td>——</td>
+<td>—–</td>
+<td>—–</td>
+<td></td>
+</tr>
+<tr>
+<td>无穷大</td>
+<td>0 1111 000</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>无穷</td>
+<td>-</td>
+<td></td>
+</tr>
+</tbody></table>
 
     </div>
 
@@ -348,7 +583,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数"><span class="nav-number">2.2.</span> <span class="nav-text">浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE浮点数表示"><span class="nav-number">2.2.1.</span> <span class="nav-text">IEEE浮点数表示</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
