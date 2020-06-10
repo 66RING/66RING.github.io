@@ -145,6 +145,100 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/universe/SQL%E6%B3%A8%E5%85%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/12/universe/SQL%E6%B3%A8%E5%85%A5/" class="post-title-link" itemprop="url">SQL注入</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-12T00:00:00+08:00">2020-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-22 12:18:58" itemprop="dateModified" datetime="2020-04-22T12:18:58+08:00">2020-04-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>利用SQL拼接的安全性，将一些恶意的SQL语句传到服务器中执行。<br>如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">网页端登录页面：</span><br><span class="line"></span><br><span class="line">    user: user</span><br><span class="line">password: ****</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">传入服务器中可能就是</span><br><span class="line">SELECT * FROM users WHERE id&#x3D;&#39;user&#39; and password&#x3D;&#39;1234&#39;</span><br></pre></td></tr></table></figure>
+
+<p>如果程序员没有进行过滤，则可能会发生这种情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">网页端登录页面：</span><br><span class="line"></span><br><span class="line">    user: admin&#39; or &#39;1&#x3D;1  # 单引号用来闭合SQL语句</span><br><span class="line">password: ****</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">传入服务器中就是</span><br><span class="line">SELECT * FROM users WHERE id&#x3D;&#39;admin&#39; or &#39;1&#x3D;1&#39; and password&#x3D;&#39;1234&#39;</span><br><span class="line">这样就注入了一个or true的语句，从而跳过password</span><br></pre></td></tr></table></figure>
+
+<p>SQL注入大同小异，但是每个数据库的SQL语句不一定相同，<br>当然现在SQL注入的门槛越来越高了。</p>
+<h2 id="注入分类"><a href="#注入分类" class="headerlink" title="注入分类"></a>注入分类</h2><ul>
+<li>根据注入点类型分类<ul>
+<li>数字型注入<ul>
+<li><code>www.xxx.com/log?id=1</code></li>
+<li><code>select * from table_name where id=1</code></li>
+</ul>
+</li>
+<li>字符型注入<ul>
+<li><code>www.xxx.com/log?user=ring</code></li>
+<li><code>select * from table_name where name=&#39;ring&#39;</code></li>
+<li>利用单引号闭合</li>
+</ul>
+</li>
+<li>搜索型注入</li>
+</ul>
+</li>
+<li>根据提交方式分类<ul>
+<li>get注入</li>
+<li>post注入</li>
+<li>cookie注入</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/25/Major/computer_network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -6177,375 +6271,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/10/Major/compuer_organization/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/10/Major/compuer_organization/" class="post-title-link" itemprop="url">Computer Organization</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2019-12-10T00:00:00+08:00">2019-12-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-08 18:49:55" itemprop="dateModified" datetime="2020-06-08T18:49:55+08:00">2020-06-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
-<li>从纯文本的程序到可执行的编码，以<code>hello.c</code>为例<ul>
-<li>预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾</li>
-<li>编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序</li>
-<li>汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。</li>
-<li>链接：hello程序可能会用到许多函数，如printf。printf函数存在与一个名为printf.o的单独编译的与编译好了的目标文件中，这个文件需要以某种形式合并到我们的hello.o程序中。链接器就负责处理这种合并</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>虚拟内存：虚拟内存是一个抽象概念，它为每个进程提供一个假象，即每个进程都在单独的使用主存。每个进程看到的内存都是一致的，称为虚拟地址空间</li>
-<li>虚拟地址空间的结构：<ul>
-<li>程序代码和数据</li>
-<li>堆：代码和数据区在进程一开始运行时就被指定了大小，与此不同，当调用像malloc和free这样的函数时，堆可以在运行时动态伸缩</li>
-<li>共享库：大约在地址空间的中间部分是一块用来存放像C标准这样的共享库的代码和数据的区域</li>
-<li>栈</li>
-<li>内核虚拟内存：地址空间的顶部区域是为内核保留的。不允许任何程序的读写</li>
-</ul>
-</li>
-</ul>
-<h2 id="程序结构和执行"><a href="#程序结构和执行" class="headerlink" title="程序结构和执行"></a>程序结构和执行</h2><h3 id="整数运算"><a href="#整数运算" class="headerlink" title="整数运算"></a>整数运算</h3><h4 id="无符号加法"><a href="#无符号加法" class="headerlink" title="无符号加法"></a>无符号加法</h4><p>考虑两个非负整数x和y，满足$0 \leq x, y&lt;2^w$。每个数都能表示为w为无符号数字。如果计算他们的和，我们就有一个可能的范围$0 \leq x+y \leq 2^{w+1} - 2$，表示这个和可能需要w+1位。对于固定精度的编程语言会发生溢出。</p>
-<p>我们为x和y定义运算$+^u_w, 其中0 \leq x, y &lt; 2^w$，该操作是把整数和x+y截断为w位得到的结果。这也可以被视为一种形式的模运算，对于x+y的位级表示，简单的丢弃任何权重大于$2^{w-1}$的位就可以计算出和模$2^w$。如考虑一个4位数字表示$x=12, y=9,x+y=21([10101])$如果丢掉最高位，我们的到[0101]，也就是十进制的5。也就和值21 mod 16 = 6一致。</p>
-<blockquote>
-<p>定义$+^u_w$:</p>
-<p>对于满足$0 \leq x, y &lt; 2^w$的x和y有</p>
-<p>$$<br>x+^u_w y =<br>\begin{cases}<br>x+y&amp; ,{x+y&lt;2^w}&amp; 正常\<br>x+y-2^w&amp; ,{2^w \leq x+y &lt; 2^{w+1}}&amp; 溢出<br>\end{cases}<br>$$</p>
-</blockquote>
-<p>如何判断是否发生了溢出：</p>
-<ul>
-<li>原理：对在范围$0 \leq x, y \leq UMax_w$中的x和y，令$s = x +^u_w y$。则对计算是，当且仅当s&lt;x(或等价地s&lt;y)时发生溢出</li>
-<li>推导：显然$x+y \geq x$，因此如果s没有溢出$s \geq x$。如果s发生溢出，有$s = x+y-2^w$，假设$y &lt; 2^w$，有$y-2^w &lt; 0$，因此$s = x+(y-2^w) &lt; x$</li>
-</ul>
-<h4 id="乘以常数"><a href="#乘以常数" class="headerlink" title="乘以常数"></a>乘以常数</h4><p>整数乘法指令相当慢，需要多个时钟周期，然而其他的整数运算(如加法、减法、位移)之需要1个时钟周期。因此编译器使用了一项重要的优化：试着用移位和加法运算的组合来代替乘以常数因子的乘法。</p>
-<p>如$x \times 14$，$14=2^3+2^2+2^1$，编译器将乘法重写为(x&lt;&lt;3)+(x&lt;&lt;2)+(x&lt;&lt;1)，将一个乘法代替为3个移位和2个加法。甚至还可以$14=2^4-2^1$。</p>
-<p>到这里，无符号数和补码的结果还是相同的</p>
-<h4 id="除以2的幂"><a href="#除以2的幂" class="headerlink" title="除以2的幂"></a>除以2的幂</h4><p>在大多数机器上，整数除法要比整数乘法更慢：需要30个或者更多的时钟周期。除以2的幂也可以通过用移位(左移)运算来实现。</p>
-<p>无符号和补码数分别使用逻辑移位和算数移位来达到目的：</p>
-<ul>
-<li>逻辑移位<ul>
-<li>移出的空位用0补上</li>
-</ul>
-</li>
-<li>算术移位<ul>
-<li>对于无符号型，算术移位等同于逻辑移位</li>
-<li>对于有符号型，算数左移等同于逻辑左移，算数右移补的是符号位</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>定义$\lfloor a \rfloor$为向下舍入，$\lceil a \rceil$为向上舍入。</p>
-</blockquote>
-<p>对于$x \geq 0$和$y&gt;0$，结果会是$\lfloor x/y \rfloor$，对于$x&lt;0$和$y&gt;0$，结果会是$\lceil x/y \rceil$。也就是说要向下舍入一个正值，而向上舍入一个负值。</p>
-<ul>
-<li>除以2的幂的无符号数除法<ul>
-<li>很简单，就直接右移，产生$\lfloor x/2^k \rfloor$</li>
-</ul>
-</li>
-<li>除以2的幂的补码，正值情况，向下舍入<ul>
-<li>也是直接右移，直接右移的结果是向下舍入的</li>
-</ul>
-</li>
-<li>除以2的幂的补码，负值情况，向上舍入<ul>
-<li>不能直接右移，因为直接右移导致结果向下舍入，而我们需要向上舍入</li>
-<li>执行算数右移前要加上一个适当的偏执量才能使得结果正确舍入</li>
-<li>表达式：(x+(1&lt;&lt;k)-1)&gt;&gt;k产生数值$\lceil x/2^k \rceil$</li>
-<li>偏置技术利用如下属性：对于整数x和y(y&gt;0)，$\lceil x/y \rceil=\lfloor (x+y-1)/y \rfloor$。这样就可以通过逻辑移位来的到向上取整的结果了</li>
-<li><strong>推导:</strong> $\lceil x/y \rceil=\lfloor (x+y-1)/y \rfloor$，设$x = qy+r$，其中$0 \leq r &lt; y$，得到(x+y-1)/y=q+(r+y-1)，因此$\lfloor (x+y-1)/y \rfloor = q + \lfloor (r+y-1)/y \rfloor$。当r=0时，后面一项等于0，当r&gt;0时，等于1。级通过给x增加一个偏移量y-1,然后再将除法向下舍入，当y整除x时，我们得到q，否则，得到q+1。</li>
-</ul>
-</li>
-</ul>
-<h3 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h3><h4 id="IEEE浮点数表示"><a href="#IEEE浮点数表示" class="headerlink" title="IEEE浮点数表示"></a>IEEE浮点数表示</h4><p>定点表示法不能很有效地表示非常大的数字。我们希望通过给定x和y的值，来表示形如$x \times 2^y$的数。</p>
-<blockquote>
-<p>IEEE浮点数标准用$V = (-1)^s \times M \times 2^E$的形式来表示一个数：</p>
-<ul>
-<li>符号(sign)<ul>
-<li>s决定是负数(s=1)还是正数</li>
-</ul>
-</li>
-<li>尾数(significand) M<ul>
-<li>M是一个二进制小数，它的取值范围是[1, 2)或[0, 1)</li>
-<li>有n位小数字段$frac=f_{n-1}…f_0$编码尾数M，但编码出来的值也依赖于阶码字段是否等于0(规格化的和非规格化的)</li>
-</ul>
-</li>
-<li>阶码(exponent) E<ul>
-<li>E的作用是对浮点数加权，这个权重是2的E次幂</li>
-<li>由k位的阶码字段组成$exp=e_{k-1}…f_0$来编码阶码E</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<ul>
-<li>以下是两种常见的格式：单精度和双精度<ul>
-<li>单精度:s、exp、frac字段分别为1位、k=8位和n=23位，得到一个32位的表示</li>
-<li>双精度:s、exp、frac字段分别为1位、k=11位和n=52位，得到一个64位的表示</li>
-</ul>
-</li>
-<li>给定位的表示，根据exp的值，被编码的值可以分成三种不同的情况(最后一种情况有两种变种)<ul>
-<li>规格化的<ul>
-<li>exp字段既不全为0也不全为1</li>
-<li>阶码的值E=e-Bias，e是无符号数，而$Bias=2^{k-1}-1$的偏置值</li>
-<li>尾数M=1+f，f是frac字段描述的小数值$0 \leq f &lt; 1$</li>
-</ul>
-</li>
-<li>非规格化的值<ul>
-<li>exp字段全为0时</li>
-<li>阶码E=1-Bias</li>
-<li>尾数M=f</li>
-<li>注意和规格化的区别</li>
-</ul>
-</li>
-<li>特殊值<ul>
-<li>当exp全为1，frac字段全为0时，得到的值表示无穷</li>
-<li>当exp全为1，frac字段不全为0时，得到的值表示NaN(Not a Number)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>示例：假定用6位格式表示，k=3的阶码位和n=2的尾数位，如下</p>
-<table>
-<thead>
-<tr>
-<th>描述</th>
-<th>位表示</th>
-<th>e</th>
-<th>E</th>
-<th>$2^E$</th>
-<th>f</th>
-<th>M</th>
-<th>$2^E \times M$</th>
-<th>V</th>
-<th>十进制</th>
-<th>公式</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0 0000 000</td>
-<td>0</td>
-<td>-6</td>
-<td>$\frac1{64}$</td>
-<td>$\frac08$</td>
-<td>$\frac08$</td>
-<td>$\frac0{512}$</td>
-<td>0</td>
-<td>0.0</td>
-<td>E=1-Bias</td>
-</tr>
-<tr>
-<td>最小非规格化数</td>
-<td>0 0000 001</td>
-<td>0</td>
-<td>-6</td>
-<td>$\frac1{64}$</td>
-<td>$\frac18$</td>
-<td>$\frac18$</td>
-<td>$\frac1{512}$</td>
-<td>$\frac1{512}$</td>
-<td>0.001953</td>
-<td>M=f</td>
-</tr>
-<tr>
-<td></td>
-<td>0 0000 010</td>
-<td>0</td>
-<td>-6</td>
-<td>$\frac1{64}$</td>
-<td>$\frac28$</td>
-<td>$\frac38$</td>
-<td>$\frac2{512}$</td>
-<td>$\frac1{256}$</td>
-<td>0.003906</td>
-<td></td>
-</tr>
-<tr>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>..</td>
-<td>…</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>最大非规格化数</td>
-<td>0 0000 111</td>
-<td>0</td>
-<td>-6</td>
-<td>$\frac1{64}$</td>
-<td>$\frac78$</td>
-<td>$\frac78$</td>
-<td>$\frac7{512}$</td>
-<td>$\frac7{512}$</td>
-<td>0.013672</td>
-<td></td>
-</tr>
-<tr>
-<td>——–</td>
-<td>——</td>
-<td>–</td>
-<td>–</td>
-<td>—</td>
-<td>—-</td>
-<td>—-</td>
-<td>——</td>
-<td>—–</td>
-<td>—–</td>
-<td></td>
-</tr>
-<tr>
-<td>最小规格化数</td>
-<td>0 0001 000</td>
-<td>1</td>
-<td>-6</td>
-<td>$\frac1{64}$</td>
-<td>$\frac08$</td>
-<td>$\frac88$</td>
-<td>$\frac8{512}$</td>
-<td>$\frac1{64}$</td>
-<td>0.015625</td>
-<td>E=e-Bias</td>
-</tr>
-<tr>
-<td></td>
-<td>0 0001 001</td>
-<td>1</td>
-<td>-6</td>
-<td>$\frac1{64}$</td>
-<td>$\frac18$</td>
-<td>$\frac98$</td>
-<td>$\frac9{512}$</td>
-<td>$\frac9{256}$</td>
-<td>0.017578</td>
-<td>M=1+f</td>
-</tr>
-<tr>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>..</td>
-<td>…</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>0 1110 110</td>
-<td>14</td>
-<td>7</td>
-<td>128</td>
-<td>$\frac68$</td>
-<td>$\frac{14}8$</td>
-<td>$\frac{1792}8$</td>
-<td>224</td>
-<td>224</td>
-<td></td>
-</tr>
-<tr>
-<td>最大规格化数</td>
-<td>0 1110 111</td>
-<td>14</td>
-<td>7</td>
-<td>128</td>
-<td>$\frac78$</td>
-<td>$\frac{15}8$</td>
-<td>$\frac{1920}8$</td>
-<td>240</td>
-<td>240</td>
-<td></td>
-</tr>
-<tr>
-<td>——–</td>
-<td>——</td>
-<td>–</td>
-<td>–</td>
-<td>—</td>
-<td>—-</td>
-<td>—-</td>
-<td>——</td>
-<td>—–</td>
-<td>—–</td>
-<td></td>
-</tr>
-<tr>
-<td>无穷大</td>
-<td>0 1111 000</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>无穷</td>
-<td>-</td>
-<td></td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -6615,12 +6340,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

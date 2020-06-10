@@ -145,6 +145,131 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/10/universe/att_vs_Intel_assembly_language/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/10/universe/att_vs_Intel_assembly_language/" class="post-title-link" itemprop="url">AT&T与Intel汇编语言的比较</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-06-10 00:00:00 / Modified: 17:09:11" itemprop="dateCreated datePublished" datetime="2020-06-10T00:00:00+08:00">2020-06-10</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>GCC采用的是AT&amp;T的汇编格式，也叫GAS(Gnu Assembler)格式;微软采用Intel的汇编格式</p>
+<h2 id="寄存器命名"><a href="#寄存器命名" class="headerlink" title="寄存器命名"></a>寄存器命名</h2><ul>
+<li>ATT的汇编格式中，寄存器名前要加上”%”前缀</li>
+<li>Inter格式中不用</li>
+</ul>
+<h2 id="操作数的顺序"><a href="#操作数的顺序" class="headerlink" title="操作数的顺序"></a>操作数的顺序</h2><ul>
+<li>ATT目标操作数在源操作数的右边</li>
+<li>Intel目标操作数在源操作数的左边</li>
+<li>正好相反</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>AT&amp;T</th>
+<th>Intel</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>movl %eax, %abx</td>
+<td>mov ebx,eax</td>
+</tr>
+</tbody></table>
+<h2 id="常数-立即数的格式"><a href="#常数-立即数的格式" class="headerlink" title="常数/立即数的格式"></a>常数/立即数的格式</h2><ul>
+<li>ATT的汇编格式中，立即数要加上”$”前缀</li>
+<li>Inter格式中不用</li>
+</ul>
+<h2 id="操作符长度标识"><a href="#操作符长度标识" class="headerlink" title="操作符长度标识"></a>操作符长度标识</h2><ul>
+<li>ATT汇编格式中操作符的后缀”b”, “w”, “l”分别表示操作数为字节(byte, 8位)、字(word, 16位)、长字(long, 32位)</li>
+<li>Intel中操作数长度会根据寄存器长度而定，也可用”byte ptr”、”word ptr”等前缀来表示</li>
+</ul>
+<h2 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h2><table>
+<thead>
+<tr>
+<th>AT&amp;T</th>
+<th>Intel</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>imm32(basepointer,indexpointer,indexscale)</td>
+<td>[base+indexpointer*indexscale+imm32]</td>
+</tr>
+</tbody></table>
+<p>两种寻址效果都是：<code>imm32 + basepointer + indexpointer*indexscale</code></p>
+<h2 id="跳转指令"><a href="#跳转指令" class="headerlink" title="跳转指令"></a>跳转指令</h2><ul>
+<li><p>ATT汇编格式中，绝对跳转和调用指令(jump/call)的操作数前要加上”*“作为前缀</p>
+<ul>
+<li>远程跳转指令和远程子程序调用指令的操作码在ATT中为”ljump”和”lcall”</li>
+<li>对应的返回指令为<code>lret</code></li>
+</ul>
+</li>
+<li><p>Intel中不用</p>
+<ul>
+<li>远程跳转指令和远程子程序调用指令的操作码在Intel中为”jmp far”和”call far”</li>
+<li>对应的返回指令为<code>ret</code></li>
+</ul>
+</li>
+<li><p>ATT的汇编格式中，跳转指令有点特殊</p>
+<ul>
+<li>直接跳转，即跳转目标作为指令的一部分编码，如<code>ljump $a</code></li>
+<li>间接跳转，即目标从寄存器或储存器位置中读出的。写法在”*“后面跟一个操作数指示符<ul>
+<li><code>ljump *%eax</code>用寄存器%eax中的值作为目标</li>
+<li><code>ljump *(%eax)</code>用寄存器%eax中的值作为读入地址，从存储器中读出跳转目标</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/07/Major/circuit/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -632,7 +757,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/21/universe/hacker_in_action/" class="post-title-link" itemprop="url">黑客攻防系统实战学习</a>
+            <a href="/2020/05/21/universe/hacker_in_action/" class="post-title-link" itemprop="url">黑客攻防学习</a>
         </h2>
 
         <div class="post-meta">
@@ -649,7 +774,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-26 21:32:41" itemprop="dateModified" datetime="2020-05-26T21:32:41+08:00">2020-05-26</time>
+                <time title="Modified: 2020-06-09 19:39:58" itemprop="dateModified" datetime="2020-06-09T19:39:58+08:00">2020-06-09</time>
               </span>
 
           
@@ -664,7 +789,7 @@
 
       
           <p>前置知识：汇编语言</p>
-<h2 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h2><p>缓冲区是一片有限的、连续的内存区域。在C语言中最常见的缓冲区是数组。</p>
+<h1 id="系统篇"><a href="#系统篇" class="headerlink" title="系统篇"></a>系统篇</h1><h2 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h2><p>缓冲区是一片有限的、连续的内存区域。在C语言中最常见的缓冲区是数组。</p>
 <p>因为在C和C++语言中没有考虑检查缓冲区的内在边界，所以使栈溢出成为可能。当输入的数据足够大时，将会溢出缓冲区的范围，从而改写从而改写其他缓存区域。</p>
 <h3 id="函数与栈"><a href="#函数与栈" class="headerlink" title="函数与栈"></a>函数与栈</h3><p>调用函数的整个过程如下</p>
 <ul>
@@ -1023,6 +1148,38 @@
 </ul>
 </li>
 </ul>
+<hr>
+<h1 id="Web篇"><a href="#Web篇" class="headerlink" title="Web篇"></a>Web篇</h1><h2 id="解析应用程序"><a href="#解析应用程序" class="headerlink" title="解析应用程序"></a>解析应用程序</h2><ul>
+<li>确定后端使用的技术<ul>
+<li><ol>
+<li>提取版本HTTP消息头中的版本信息，但后端程序员也可以伪造</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>文件扩展名<ul>
+<li>许多Web服务器将特殊的文件扩展名映射到特定的服务器组件中，不同组建处理错误的方式不同</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>目录名<ul>
+<li>一些子目录名常常表示应用程序使用了相关技术</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>会话令牌<ul>
+<li>许多Web服务器和Web应用程序平台默认生成的会话令牌名称会揭示其使用的技术</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>等等</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -1155,7 +1312,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-08 21:53:01" itemprop="dateModified" datetime="2020-06-08T21:53:01+08:00">2020-06-08</time>
+                <time title="Modified: 2020-06-10 20:08:27" itemprop="dateModified" datetime="2020-06-10T20:08:27+08:00">2020-06-10</time>
               </span>
 
           
@@ -1692,7 +1849,128 @@
 </ul>
 </li>
 </ul>
-<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重定向<ul>
+<li>标准输入和输出流通常连接着键盘和屏幕，重定向使得能够改变标准输入和标准输出。</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用cout进行输出"><a href="#使用cout进行输出" class="headerlink" title="使用cout进行输出"></a>使用cout进行输出</h3><p>C++将输出看做字节流，但在程序中，很多数据被组织成比字节流更大的单位，如，int类型可能有16位或32位的二进制值表示。但在将字节流发送给屏幕时，希望每个字节表示一个字符，如int类型的12可能是32位表示的，但在屏幕上要求3用一个字节表示，2用一个字节表示。</p>
+<p>因此ostream类最重要的任务之一是将数值类型转换为文本形式表示的字符流。</p>
+<ul>
+<li>重载的&lt;&lt;运算符<ul>
+<li>C/C++中<code>&lt;&lt;</code>运算符默认含义是按位左移，但ostream类重载了<code>&lt;&lt;</code>运算符，将其重载为输出。<code>&lt;&lt;</code>运算符被重载使之能识别C++中所有的基本类型。</li>
+</ul>
+</li>
+<li>其他ostream方法<ul>
+<li><code>put()</code>方法原型：<code>ostream&amp; put(char)</code><ul>
+<li><code>cout.put(&#39;W&#39;);</code>，cout是调用方法的对象，put是类成员函数</li>
+<li>返回一个指向调用对象的引用，因此可以用它将拼接输出</li>
+</ul>
+</li>
+<li><code>write()</code>原型：<code>basic_ostream&lt;charT,traits&gt;&amp; write(const char_type* s, streamsize n);</code><ul>
+<li>write方法显示整个字符串</li>
+<li>第一个参数提供了要显示的字符串的地址，第二个参数指出要显示多少个字符</li>
+<li>write方法不会在遇到空字符时停止打印，而是打印指定数目的字符，即使超出了字符串的边界！</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="刷新缓冲区"><a href="#刷新缓冲区" class="headerlink" title="刷新缓冲区"></a>刷新缓冲区</h3><p>ostream类对cout对象处理的输出进行缓冲，所以输出不会立即发送到目标地址，而是被储存在缓冲区中，直至缓冲区填满。然后刷新(flush)缓冲区，把内容发送出去，并清空缓冲区。</p>
+<ul>
+<li>在屏幕输出时，程序不必等到缓冲区填满。如<ul>
+<li>将换行号发送到缓冲区后将刷新缓冲区。</li>
+<li>多数C++实现都会在输入即将发生时刷新缓冲区，即使没有换行符</li>
+</ul>
+</li>
+<li>如果实现不能在所希望时刷新输出，可以使用两个控制符中的一个来强制进行刷新<ul>
+<li>控制符flush刷新缓冲区：<code>cout &lt;&lt; &quot;hello&quot; &lt;&lt; flush;</code></li>
+<li>控制符endl刷新缓冲区，并插入一个换行符：<code>cout &lt;&lt; &quot;hello&quot; &lt;&lt; endl;</code></li>
+<li>实际上控制符也是函数，可以直接调用<code>flush(cout);</code>，ostream重载了<code>&lt;&lt;</code>，使得<code>cout &lt;&lt; flush;</code>可行。</li>
+</ul>
+</li>
+</ul>
+<h3 id="用cout进行格式化"><a href="#用cout进行格式化" class="headerlink" title="用cout进行格式化"></a>用cout进行格式化</h3><p>ostream类是从ios类派生而来的，而ios类从ios_base类派生而来。ios_base类存储了描述格式状态的信息。通过使用ios_base的成员函数，可以控制字段宽度和小数位数。由于ios_base类是ostream的间接基类，因此可将其方法用于ostream对象，如cout。</p>
+<ul>
+<li>调整进制，<strong>设置持续到将格式状态设置为其他选项为止</strong>，控制符不是成员函数，但也可<code>cout &lt;&lt; hex;</code>调用<ul>
+<li><code>hex()</code>，设置后程序以十六进制形式打印整数值</li>
+<li><code>oct()</code>，设置后程序以八进制形式打印整数值</li>
+</ul>
+</li>
+<li>调整字段宽度<ul>
+<li><code>width</code> <strong>成员函数</strong> 将长度不同的数字放到宽度相同的字段中<ul>
+<li><code>width()</code>方法只影响将显示的下一个项目，然后字段宽度将恢复为默认值<ul>
+<li><code>cout.width(12);cout&lt;&lt;12&lt;&lt;&quot;#&quot;;</code>只有12被放宽到12个字符，并右对齐，后面的将不受影响</li>
+</ul>
+</li>
+<li><code>int width()</code>，返回宽度当前值</li>
+<li><code>int width(int i)</code>，将字段宽度设置为i个，并返回以前的字段宽度值</li>
+<li>如果试图在宽度为2的字段中显示一个7位值，C++将增宽字段，以容纳该数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>填充字符，默认情况下cout使用空格填充字段中未被使用的部分<ul>
+<li><code>fill()</code> <strong>成员函数</strong> 来改变填充的字符，如<code>cout.fill(&#39;*&#39;)</code>。新的填充字符将一直有效直到设置新的填充字符</li>
+</ul>
+</li>
+<li>设置浮点数的显示精度有效位数<ul>
+<li><code>precision()</code> <strong>成员函数</strong> 改变精度。如<code>cout.precision(2);</code>。精度设置一直有效直到被重新设置</li>
+</ul>
+</li>
+<li>打印末尾的0和小数点<ul>
+<li>iostream没有提供专门用于这项功能的函数，但ios_base类提供了一个<code>serf()</code>函数，能够控制多种格式化特性。这个类还定义了多个常量，可以用作改函数的参数</li>
+<li>cout显示末尾小数点<code>cout.setf(ios_base::showpoint);</code><ul>
+<li>这会显示小数后的0,如精度为6时2会显示为2.00000</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><code>setf()</code>除了可以控制小数点的显示还有几个格式选项。ios_base类有一个受保护的数据成员，其中的各位(这里称之为标记)分别控制着格式化的各个方面。打开一个标记称为设置标记(或位)，并意味着相应的位被设置为1.</p>
+<p>hex、dec、oct等控制符实际上就是通过控制技术系统的3个标记位实现的。<code>setf()</code>函数提供了另一种调整标记位的途径。<code>setf()</code>函数有两个原型</p>
+<ul>
+<li><code>fmtflags setf(fmtflags);</code>，其中哦fmtflags是bitmask类型的别名(typedef)，用于储存格式标记。<ul>
+<li>这个版本的setf用来设置单个控制位的格式信息，参数fmtflags是一个值，指出要设置哪一位。返回值是类型为fmtflags的数字，指出标记以前的设置</li>
+<li>ios_base类定义了代表位值的常量：<ul>
+<li><code>ios\_base::boolalpha</code>，输入和输出的bool值，可以为true或false</li>
+<li><code>ios\_base::showbase</code>，对于输出，使用C++基数前缀(0, 0x等)</li>
+<li><code>ios\_base::showpoint</code>，显示末尾的小数点</li>
+<li><code>ios\_base::uppercase</code>，对于十六进制输出，使用大写字母，E表示法</li>
+<li><code>ios\_base::showpos</code>，在正数前面加上+。十进制才有效，因为十六进制八进制都被视为无符号</li>
+</ul>
+</li>
+<li>修改将一直有效直到被覆盖为止</li>
+</ul>
+</li>
+<li><code>fmtflags setf(fmtflags, fmtflags);</code><ul>
+<li>函数的这种格式用于设置有多位控制的格式选项</li>
+<li>第一个参数包含了所需设置的fmtflags值，第二个参数指出要清理第一个参数中的哪些位<ul>
+<li>如，第3位为1表示以10为基数，第4位为1表示以8为基数，第5位为1表示以16为基数，如果要输出原来以10为基数，要设置为以16为基数，则要将第5位设置为1,和将第3位设置为0：这叫做清除位</li>
+</ul>
+</li>
+<li>ios_base类为此定义了常量<ul>
+<li><code>setf(ios_base::dec, ios_base::basefield)</code>，使用10为基数</li>
+<li><code>setf(ios_base::oct, ios_base::basefield)</code>，使用8为基数</li>
+<li><code>setf(ios_base::hex, ios_base::basefield)</code>，使用16为基数</li>
+<li><code>setf(ios_base::fixed, ios_base::floatfield)</code>，使用定点计数法</li>
+<li><code>setf(ios_base::scientific, ios_base::floatfield)</code>，使用科学计数法</li>
+<li><code>setf(ios_base::left, ios_base::adjustfield)</code>，使用左对齐</li>
+<li><code>setf(ios_base::right, ios_base::adjustfield)</code>，使用右对齐</li>
+<li><code>setf(ios_base::internal, ios_base::adjustfield)</code>，符号或基数前缀左对齐，值右对齐</li>
+<li>第二个参数清理一批相关位，然后第一个参数将其中1位设置为1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>调用setf的效果可通过<code>unsetf()</code>消除<ul>
+<li>原型为：<code>void unsetf(fmtflags mask);</code>，mask中位设置为1,将使对应的位被复位</li>
+</ul>
+</li>
+</ul>
+<p>使用setf不是进行格式化、对用户友好的方法，C++提供了过个控制符，如hex、dex等。如：使用下列方式打开左对齐和定点选项<code>cout &lt;&lt; left &lt;&lt; fixed;</code></p>
+<h3 id="使用cin进行输入"><a href="#使用cin进行输入" class="headerlink" title="使用cin进行输入"></a>使用cin进行输入</h3><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
 
 
 
@@ -3589,100 +3867,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/universe/SQL%E6%B3%A8%E5%85%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/12/universe/SQL%E6%B3%A8%E5%85%A5/" class="post-title-link" itemprop="url">SQL注入</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-04-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-12T00:00:00+08:00">2020-04-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-22 12:18:58" itemprop="dateModified" datetime="2020-04-22T12:18:58+08:00">2020-04-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>利用SQL拼接的安全性，将一些恶意的SQL语句传到服务器中执行。<br>如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">网页端登录页面：</span><br><span class="line"></span><br><span class="line">    user: user</span><br><span class="line">password: ****</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">传入服务器中可能就是</span><br><span class="line">SELECT * FROM users WHERE id&#x3D;&#39;user&#39; and password&#x3D;&#39;1234&#39;</span><br></pre></td></tr></table></figure>
-
-<p>如果程序员没有进行过滤，则可能会发生这种情况</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">网页端登录页面：</span><br><span class="line"></span><br><span class="line">    user: admin&#39; or &#39;1&#x3D;1  # 单引号用来闭合SQL语句</span><br><span class="line">password: ****</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">传入服务器中就是</span><br><span class="line">SELECT * FROM users WHERE id&#x3D;&#39;admin&#39; or &#39;1&#x3D;1&#39; and password&#x3D;&#39;1234&#39;</span><br><span class="line">这样就注入了一个or true的语句，从而跳过password</span><br></pre></td></tr></table></figure>
-
-<p>SQL注入大同小异，但是每个数据库的SQL语句不一定相同，<br>当然现在SQL注入的门槛越来越高了。</p>
-<h2 id="注入分类"><a href="#注入分类" class="headerlink" title="注入分类"></a>注入分类</h2><ul>
-<li>根据注入点类型分类<ul>
-<li>数字型注入<ul>
-<li><code>www.xxx.com/log?id=1</code></li>
-<li><code>select * from table_name where id=1</code></li>
-</ul>
-</li>
-<li>字符型注入<ul>
-<li><code>www.xxx.com/log?user=ring</code></li>
-<li><code>select * from table_name where name=&#39;ring&#39;</code></li>
-<li>利用单引号闭合</li>
-</ul>
-</li>
-<li>搜索型注入</li>
-</ul>
-</li>
-<li>根据提交方式分类<ul>
-<li>get注入</li>
-<li>post注入</li>
-<li>cookie注入</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -3752,12 +3936,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

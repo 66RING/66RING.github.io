@@ -28,7 +28,7 @@
 <meta property="og:description" content="简介 从纯文本的程序到可执行的编码，以hello.c为例 预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾 编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序 汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。 链接：hell">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-08T10:49:55.914Z">
+<meta property="article:modified_time" content="2020-06-10T12:39:40.429Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="cs">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-08 18:49:55" itemprop="dateModified" datetime="2020-06-08T18:49:55+08:00">2020-06-08</time>
+                <time title="Modified: 2020-06-10 20:39:40" itemprop="dateModified" datetime="2020-06-10T20:39:40+08:00">2020-06-10</time>
               </span>
 
           
@@ -500,6 +500,183 @@
 <td></td>
 </tr>
 </tbody></table>
+<h2 id="程序的机器级表示"><a href="#程序的机器级表示" class="headerlink" title="程序的机器级表示"></a>程序的机器级表示</h2><h3 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a>数据格式</h3><table>
+<thead>
+<tr>
+<th>C声明</th>
+<th>Intel数据类型</th>
+<th>汇编代码后缀</th>
+<th>大小(字节)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>char</td>
+<td>字节</td>
+<td>b</td>
+<td>1</td>
+</tr>
+<tr>
+<td>short</td>
+<td>字</td>
+<td>w</td>
+<td>2</td>
+</tr>
+<tr>
+<td>int</td>
+<td>双字</td>
+<td>l</td>
+<td>4</td>
+</tr>
+<tr>
+<td>long</td>
+<td>四字</td>
+<td>q</td>
+<td>8</td>
+</tr>
+<tr>
+<td>char*</td>
+<td>四字</td>
+<td>q</td>
+<td>8</td>
+</tr>
+<tr>
+<td>float</td>
+<td>单精度</td>
+<td>s</td>
+<td>4</td>
+</tr>
+<tr>
+<td>double</td>
+<td>双精度</td>
+<td>l</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<h3 id="访问信息"><a href="#访问信息" class="headerlink" title="访问信息"></a>访问信息</h3><p>一个x86-64的CPU包含一组16个储存64位值的通用目的寄存器。每个寄存器都有特殊的用途，它们的名字就反映了这些用途。</p>
+<table>
+<thead>
+<tr>
+<th>64寄存器</th>
+<th>32位寄存器</th>
+<th>16位寄存器</th>
+<th>8位寄存器</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%rax</td>
+<td>%eax</td>
+<td>%ax</td>
+<td>%ax</td>
+<td>返回值</td>
+</tr>
+<tr>
+<td>%rbx</td>
+<td>%ebx</td>
+<td>%bx</td>
+<td>%bl</td>
+<td>被调用者保存</td>
+</tr>
+<tr>
+<td>%rcx</td>
+<td>%ecx</td>
+<td>%cx</td>
+<td>%cl</td>
+<td>第4个参数</td>
+</tr>
+<tr>
+<td>%rdx</td>
+<td>%edx</td>
+<td>%dx</td>
+<td>%dl</td>
+<td>第3个参数</td>
+</tr>
+<tr>
+<td>%rsi</td>
+<td>%esi</td>
+<td>%si</td>
+<td>%sil</td>
+<td>第2个参数</td>
+</tr>
+<tr>
+<td>%rdi</td>
+<td>%edi</td>
+<td>%di</td>
+<td>%dil</td>
+<td>第1个参数</td>
+</tr>
+<tr>
+<td>%rbp</td>
+<td>%ebp</td>
+<td>%bp</td>
+<td>%bpl</td>
+<td>被调用者保存</td>
+</tr>
+<tr>
+<td>%rsp</td>
+<td>%esp</td>
+<td>%sp</td>
+<td>%spl</td>
+<td>栈指针</td>
+</tr>
+<tr>
+<td>%r8</td>
+<td>%r8d</td>
+<td>%r8w</td>
+<td>%r8b</td>
+<td>第5个参数</td>
+</tr>
+<tr>
+<td>%r9</td>
+<td>%r9d</td>
+<td>%r9w</td>
+<td>%r9b</td>
+<td>第6个参数</td>
+</tr>
+<tr>
+<td>%r10</td>
+<td>%r10d</td>
+<td>%r10w</td>
+<td>%r10b</td>
+<td>调用者保存</td>
+</tr>
+<tr>
+<td>%r11</td>
+<td>%r11d</td>
+<td>%r11w</td>
+<td>%r11b</td>
+<td>调用者保存</td>
+</tr>
+<tr>
+<td>%r12</td>
+<td>%r12d</td>
+<td>%r12w</td>
+<td>%r12b</td>
+<td>被调用者保存</td>
+</tr>
+<tr>
+<td>%r13</td>
+<td>%r13d</td>
+<td>%r13w</td>
+<td>%r13b</td>
+<td>被调用者保存</td>
+</tr>
+<tr>
+<td>%r14</td>
+<td>%r14d</td>
+<td>%r14w</td>
+<td>%r14b</td>
+<td>被调用者保存</td>
+</tr>
+<tr>
+<td>%r15</td>
+<td>%r15d</td>
+<td>%r15w</td>
+<td>%r15b</td>
+<td>被调用者保存</td>
+</tr>
+</tbody></table>
+<p>指令可以对这16个寄存器的低位字节中存放的不同大小的数据进行操作。</p>
 
     </div>
 
@@ -583,7 +760,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数"><span class="nav-number">2.2.</span> <span class="nav-text">浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE浮点数表示"><span class="nav-number">2.2.1.</span> <span class="nav-text">IEEE浮点数表示</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数"><span class="nav-number">2.2.</span> <span class="nav-text">浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE浮点数表示"><span class="nav-number">2.2.1.</span> <span class="nav-text">IEEE浮点数表示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的机器级表示"><span class="nav-number">3.</span> <span class="nav-text">程序的机器级表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据格式"><span class="nav-number">3.1.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问信息"><span class="nav-number">3.2.</span> <span class="nav-text">访问信息</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -597,12 +774,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

@@ -28,7 +28,7 @@
 <meta property="og:description" content="C++补完计划关键字decltype(c++11)关键字decltype(x)用于自动检测x的类型，并作为关键字。使用方法如下 1234567int x;decltype(x) y;   &#x2F;&#x2F; 声明y，其中y的类型取决于xdecltype(x+y) xpy;   &#x2F;&#x2F; 格式如下decltype(expression) var;  &#x2F;&#x2F; expression可以是函数调用   另一种函数声明语法(c">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-08T13:53:01.527Z">
+<meta property="article:modified_time" content="2020-06-10T12:08:27.149Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-08 21:53:01" itemprop="dateModified" datetime="2020-06-08T21:53:01+08:00">2020-06-08</time>
+                <time title="Modified: 2020-06-10 20:08:27" itemprop="dateModified" datetime="2020-06-10T20:08:27+08:00">2020-06-10</time>
               </span>
 
           
@@ -718,7 +718,128 @@
 </ul>
 </li>
 </ul>
-<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重定向<ul>
+<li>标准输入和输出流通常连接着键盘和屏幕，重定向使得能够改变标准输入和标准输出。</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用cout进行输出"><a href="#使用cout进行输出" class="headerlink" title="使用cout进行输出"></a>使用cout进行输出</h3><p>C++将输出看做字节流，但在程序中，很多数据被组织成比字节流更大的单位，如，int类型可能有16位或32位的二进制值表示。但在将字节流发送给屏幕时，希望每个字节表示一个字符，如int类型的12可能是32位表示的，但在屏幕上要求3用一个字节表示，2用一个字节表示。</p>
+<p>因此ostream类最重要的任务之一是将数值类型转换为文本形式表示的字符流。</p>
+<ul>
+<li>重载的&lt;&lt;运算符<ul>
+<li>C/C++中<code>&lt;&lt;</code>运算符默认含义是按位左移，但ostream类重载了<code>&lt;&lt;</code>运算符，将其重载为输出。<code>&lt;&lt;</code>运算符被重载使之能识别C++中所有的基本类型。</li>
+</ul>
+</li>
+<li>其他ostream方法<ul>
+<li><code>put()</code>方法原型：<code>ostream&amp; put(char)</code><ul>
+<li><code>cout.put(&#39;W&#39;);</code>，cout是调用方法的对象，put是类成员函数</li>
+<li>返回一个指向调用对象的引用，因此可以用它将拼接输出</li>
+</ul>
+</li>
+<li><code>write()</code>原型：<code>basic_ostream&lt;charT,traits&gt;&amp; write(const char_type* s, streamsize n);</code><ul>
+<li>write方法显示整个字符串</li>
+<li>第一个参数提供了要显示的字符串的地址，第二个参数指出要显示多少个字符</li>
+<li>write方法不会在遇到空字符时停止打印，而是打印指定数目的字符，即使超出了字符串的边界！</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="刷新缓冲区"><a href="#刷新缓冲区" class="headerlink" title="刷新缓冲区"></a>刷新缓冲区</h3><p>ostream类对cout对象处理的输出进行缓冲，所以输出不会立即发送到目标地址，而是被储存在缓冲区中，直至缓冲区填满。然后刷新(flush)缓冲区，把内容发送出去，并清空缓冲区。</p>
+<ul>
+<li>在屏幕输出时，程序不必等到缓冲区填满。如<ul>
+<li>将换行号发送到缓冲区后将刷新缓冲区。</li>
+<li>多数C++实现都会在输入即将发生时刷新缓冲区，即使没有换行符</li>
+</ul>
+</li>
+<li>如果实现不能在所希望时刷新输出，可以使用两个控制符中的一个来强制进行刷新<ul>
+<li>控制符flush刷新缓冲区：<code>cout &lt;&lt; &quot;hello&quot; &lt;&lt; flush;</code></li>
+<li>控制符endl刷新缓冲区，并插入一个换行符：<code>cout &lt;&lt; &quot;hello&quot; &lt;&lt; endl;</code></li>
+<li>实际上控制符也是函数，可以直接调用<code>flush(cout);</code>，ostream重载了<code>&lt;&lt;</code>，使得<code>cout &lt;&lt; flush;</code>可行。</li>
+</ul>
+</li>
+</ul>
+<h3 id="用cout进行格式化"><a href="#用cout进行格式化" class="headerlink" title="用cout进行格式化"></a>用cout进行格式化</h3><p>ostream类是从ios类派生而来的，而ios类从ios_base类派生而来。ios_base类存储了描述格式状态的信息。通过使用ios_base的成员函数，可以控制字段宽度和小数位数。由于ios_base类是ostream的间接基类，因此可将其方法用于ostream对象，如cout。</p>
+<ul>
+<li>调整进制，<strong>设置持续到将格式状态设置为其他选项为止</strong>，控制符不是成员函数，但也可<code>cout &lt;&lt; hex;</code>调用<ul>
+<li><code>hex()</code>，设置后程序以十六进制形式打印整数值</li>
+<li><code>oct()</code>，设置后程序以八进制形式打印整数值</li>
+</ul>
+</li>
+<li>调整字段宽度<ul>
+<li><code>width</code> <strong>成员函数</strong> 将长度不同的数字放到宽度相同的字段中<ul>
+<li><code>width()</code>方法只影响将显示的下一个项目，然后字段宽度将恢复为默认值<ul>
+<li><code>cout.width(12);cout&lt;&lt;12&lt;&lt;&quot;#&quot;;</code>只有12被放宽到12个字符，并右对齐，后面的将不受影响</li>
+</ul>
+</li>
+<li><code>int width()</code>，返回宽度当前值</li>
+<li><code>int width(int i)</code>，将字段宽度设置为i个，并返回以前的字段宽度值</li>
+<li>如果试图在宽度为2的字段中显示一个7位值，C++将增宽字段，以容纳该数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>填充字符，默认情况下cout使用空格填充字段中未被使用的部分<ul>
+<li><code>fill()</code> <strong>成员函数</strong> 来改变填充的字符，如<code>cout.fill(&#39;*&#39;)</code>。新的填充字符将一直有效直到设置新的填充字符</li>
+</ul>
+</li>
+<li>设置浮点数的显示精度有效位数<ul>
+<li><code>precision()</code> <strong>成员函数</strong> 改变精度。如<code>cout.precision(2);</code>。精度设置一直有效直到被重新设置</li>
+</ul>
+</li>
+<li>打印末尾的0和小数点<ul>
+<li>iostream没有提供专门用于这项功能的函数，但ios_base类提供了一个<code>serf()</code>函数，能够控制多种格式化特性。这个类还定义了多个常量，可以用作改函数的参数</li>
+<li>cout显示末尾小数点<code>cout.setf(ios_base::showpoint);</code><ul>
+<li>这会显示小数后的0,如精度为6时2会显示为2.00000</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><code>setf()</code>除了可以控制小数点的显示还有几个格式选项。ios_base类有一个受保护的数据成员，其中的各位(这里称之为标记)分别控制着格式化的各个方面。打开一个标记称为设置标记(或位)，并意味着相应的位被设置为1.</p>
+<p>hex、dec、oct等控制符实际上就是通过控制技术系统的3个标记位实现的。<code>setf()</code>函数提供了另一种调整标记位的途径。<code>setf()</code>函数有两个原型</p>
+<ul>
+<li><code>fmtflags setf(fmtflags);</code>，其中哦fmtflags是bitmask类型的别名(typedef)，用于储存格式标记。<ul>
+<li>这个版本的setf用来设置单个控制位的格式信息，参数fmtflags是一个值，指出要设置哪一位。返回值是类型为fmtflags的数字，指出标记以前的设置</li>
+<li>ios_base类定义了代表位值的常量：<ul>
+<li><code>ios\_base::boolalpha</code>，输入和输出的bool值，可以为true或false</li>
+<li><code>ios\_base::showbase</code>，对于输出，使用C++基数前缀(0, 0x等)</li>
+<li><code>ios\_base::showpoint</code>，显示末尾的小数点</li>
+<li><code>ios\_base::uppercase</code>，对于十六进制输出，使用大写字母，E表示法</li>
+<li><code>ios\_base::showpos</code>，在正数前面加上+。十进制才有效，因为十六进制八进制都被视为无符号</li>
+</ul>
+</li>
+<li>修改将一直有效直到被覆盖为止</li>
+</ul>
+</li>
+<li><code>fmtflags setf(fmtflags, fmtflags);</code><ul>
+<li>函数的这种格式用于设置有多位控制的格式选项</li>
+<li>第一个参数包含了所需设置的fmtflags值，第二个参数指出要清理第一个参数中的哪些位<ul>
+<li>如，第3位为1表示以10为基数，第4位为1表示以8为基数，第5位为1表示以16为基数，如果要输出原来以10为基数，要设置为以16为基数，则要将第5位设置为1,和将第3位设置为0：这叫做清除位</li>
+</ul>
+</li>
+<li>ios_base类为此定义了常量<ul>
+<li><code>setf(ios_base::dec, ios_base::basefield)</code>，使用10为基数</li>
+<li><code>setf(ios_base::oct, ios_base::basefield)</code>，使用8为基数</li>
+<li><code>setf(ios_base::hex, ios_base::basefield)</code>，使用16为基数</li>
+<li><code>setf(ios_base::fixed, ios_base::floatfield)</code>，使用定点计数法</li>
+<li><code>setf(ios_base::scientific, ios_base::floatfield)</code>，使用科学计数法</li>
+<li><code>setf(ios_base::left, ios_base::adjustfield)</code>，使用左对齐</li>
+<li><code>setf(ios_base::right, ios_base::adjustfield)</code>，使用右对齐</li>
+<li><code>setf(ios_base::internal, ios_base::adjustfield)</code>，符号或基数前缀左对齐，值右对齐</li>
+<li>第二个参数清理一批相关位，然后第一个参数将其中1位设置为1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>调用setf的效果可通过<code>unsetf()</code>消除<ul>
+<li>原型为：<code>void unsetf(fmtflags mask);</code>，mask中位设置为1,将使对应的位被复位</li>
+</ul>
+</li>
+</ul>
+<p>使用setf不是进行格式化、对用户友好的方法，C++提供了过个控制符，如hex、dex等。如：使用下列方式打开左对齐和定点选项<code>cout &lt;&lt; left &lt;&lt; fixed;</code></p>
+<h3 id="使用cin进行输入"><a href="#使用cin进行输入" class="headerlink" title="使用cin进行输入"></a>使用cin进行输入</h3><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
 
 
 
@@ -805,7 +926,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-补完计划"><span class="nav-number">1.</span> <span class="nav-text">C++补完计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关键字decltype-c-11"><span class="nav-number">1.1.</span> <span class="nav-text">关键字decltype(c++11)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#另一种函数声明语法-c-11后置返回类型"><span class="nav-number">1.1.1.</span> <span class="nav-text">另一种函数声明语法(c++11后置返回类型)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明符和限定符"><span class="nav-number">1.2.</span> <span class="nav-text">说明符和限定符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用new运算符初始化"><span class="nav-number">1.3.</span> <span class="nav-text">使用new运算符初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化结构体"><span class="nav-number">1.3.1.</span> <span class="nav-text">初始化结构体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定位new运算符"><span class="nav-number">1.3.2.</span> <span class="nav-text">定位new运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#名称空间"><span class="nav-number">1.4.</span> <span class="nav-text">名称空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象和类"><span class="nav-number">2.</span> <span class="nav-text">对象和类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数和析构函数"><span class="nav-number">2.1.</span> <span class="nav-text">构造函数和析构函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类和对象"><span class="nav-number">3.</span> <span class="nav-text">类和对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用类"><span class="nav-number">3.1.</span> <span class="nav-text">使用类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重载运算符"><span class="nav-number">3.1.1.</span> <span class="nav-text">重载运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#友元"><span class="nav-number">3.2.</span> <span class="nav-text">友元</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#友元成员函数"><span class="nav-number">3.2.1.</span> <span class="nav-text">友元成员函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态成员"><span class="nav-number">3.3.</span> <span class="nav-text">静态成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊成员函数"><span class="nav-number">3.4.</span> <span class="nav-text">特殊成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类继承"><span class="nav-number">3.5.</span> <span class="nav-text">类继承</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中代码重用"><span class="nav-number">4.</span> <span class="nav-text">C++中代码重用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友元、异常和其他"><span class="nav-number">5.</span> <span class="nav-text">友元、异常和其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#友元-1"><span class="nav-number">5.1.</span> <span class="nav-text">友元</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#友元类"><span class="nav-number">5.1.1.</span> <span class="nav-text">友元类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套类"><span class="nav-number">5.2.</span> <span class="nav-text">嵌套类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">5.3.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RTTI"><span class="nav-number">5.4.</span> <span class="nav-text">RTTI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准模板库"><span class="nav-number">6.</span> <span class="nav-text">标准模板库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#string"><span class="nav-number">6.1.</span> <span class="nav-text">string</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#string类输入"><span class="nav-number">6.1.1.</span> <span class="nav-text">string类输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#智能指针模板类"><span class="nav-number">6.2.</span> <span class="nav-text">智能指针模板类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#智能指针的使用"><span class="nav-number">6.2.1.</span> <span class="nav-text">智能指针的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#智能指针的注意事项"><span class="nav-number">6.2.2.</span> <span class="nav-text">智能指针的注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准模板库-Standard-Template-Library"><span class="nav-number">6.3.</span> <span class="nav-text">标准模板库(Standard Template Library)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模板类vector"><span class="nav-number">6.3.1.</span> <span class="nav-text">模板类vector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可对vector执行的操作"><span class="nav-number">6.3.2.</span> <span class="nav-text">可对vector执行的操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对vector可执行的其他操作"><span class="nav-number">6.3.3.</span> <span class="nav-text">对vector可执行的其他操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型编程"><span class="nav-number">6.4.</span> <span class="nav-text">泛型编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器"><span class="nav-number">6.4.1.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器的类型"><span class="nav-number">6.4.2.</span> <span class="nav-text">迭代器的类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出和文件"><span class="nav-number">7.</span> <span class="nav-text">输入输出和文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#流和缓冲区"><span class="nav-number">7.1.</span> <span class="nav-text">流和缓冲区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流、缓冲区和iostream文件"><span class="nav-number">7.2.</span> <span class="nav-text">流、缓冲区和iostream文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重定向"><span class="nav-number">7.3.</span> <span class="nav-text">重定向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">8.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">8.1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unordered-map"><span class="nav-number">8.2.</span> <span class="nav-text">unordered_map</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-补完计划"><span class="nav-number">1.</span> <span class="nav-text">C++补完计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关键字decltype-c-11"><span class="nav-number">1.1.</span> <span class="nav-text">关键字decltype(c++11)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#另一种函数声明语法-c-11后置返回类型"><span class="nav-number">1.1.1.</span> <span class="nav-text">另一种函数声明语法(c++11后置返回类型)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明符和限定符"><span class="nav-number">1.2.</span> <span class="nav-text">说明符和限定符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用new运算符初始化"><span class="nav-number">1.3.</span> <span class="nav-text">使用new运算符初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化结构体"><span class="nav-number">1.3.1.</span> <span class="nav-text">初始化结构体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定位new运算符"><span class="nav-number">1.3.2.</span> <span class="nav-text">定位new运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#名称空间"><span class="nav-number">1.4.</span> <span class="nav-text">名称空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象和类"><span class="nav-number">2.</span> <span class="nav-text">对象和类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数和析构函数"><span class="nav-number">2.1.</span> <span class="nav-text">构造函数和析构函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类和对象"><span class="nav-number">3.</span> <span class="nav-text">类和对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用类"><span class="nav-number">3.1.</span> <span class="nav-text">使用类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重载运算符"><span class="nav-number">3.1.1.</span> <span class="nav-text">重载运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#友元"><span class="nav-number">3.2.</span> <span class="nav-text">友元</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#友元成员函数"><span class="nav-number">3.2.1.</span> <span class="nav-text">友元成员函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态成员"><span class="nav-number">3.3.</span> <span class="nav-text">静态成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊成员函数"><span class="nav-number">3.4.</span> <span class="nav-text">特殊成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类继承"><span class="nav-number">3.5.</span> <span class="nav-text">类继承</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中代码重用"><span class="nav-number">4.</span> <span class="nav-text">C++中代码重用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友元、异常和其他"><span class="nav-number">5.</span> <span class="nav-text">友元、异常和其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#友元-1"><span class="nav-number">5.1.</span> <span class="nav-text">友元</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#友元类"><span class="nav-number">5.1.1.</span> <span class="nav-text">友元类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套类"><span class="nav-number">5.2.</span> <span class="nav-text">嵌套类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">5.3.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RTTI"><span class="nav-number">5.4.</span> <span class="nav-text">RTTI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准模板库"><span class="nav-number">6.</span> <span class="nav-text">标准模板库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#string"><span class="nav-number">6.1.</span> <span class="nav-text">string</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#string类输入"><span class="nav-number">6.1.1.</span> <span class="nav-text">string类输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#智能指针模板类"><span class="nav-number">6.2.</span> <span class="nav-text">智能指针模板类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#智能指针的使用"><span class="nav-number">6.2.1.</span> <span class="nav-text">智能指针的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#智能指针的注意事项"><span class="nav-number">6.2.2.</span> <span class="nav-text">智能指针的注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准模板库-Standard-Template-Library"><span class="nav-number">6.3.</span> <span class="nav-text">标准模板库(Standard Template Library)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模板类vector"><span class="nav-number">6.3.1.</span> <span class="nav-text">模板类vector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可对vector执行的操作"><span class="nav-number">6.3.2.</span> <span class="nav-text">可对vector执行的操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对vector可执行的其他操作"><span class="nav-number">6.3.3.</span> <span class="nav-text">对vector可执行的其他操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型编程"><span class="nav-number">6.4.</span> <span class="nav-text">泛型编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器"><span class="nav-number">6.4.1.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器的类型"><span class="nav-number">6.4.2.</span> <span class="nav-text">迭代器的类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出和文件"><span class="nav-number">7.</span> <span class="nav-text">输入输出和文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#流和缓冲区"><span class="nav-number">7.1.</span> <span class="nav-text">流和缓冲区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流、缓冲区和iostream文件"><span class="nav-number">7.2.</span> <span class="nav-text">流、缓冲区和iostream文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用cout进行输出"><span class="nav-number">7.3.</span> <span class="nav-text">使用cout进行输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刷新缓冲区"><span class="nav-number">7.4.</span> <span class="nav-text">刷新缓冲区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用cout进行格式化"><span class="nav-number">7.5.</span> <span class="nav-text">用cout进行格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用cin进行输入"><span class="nav-number">7.6.</span> <span class="nav-text">使用cin进行输入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">8.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">8.1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unordered-map"><span class="nav-number">8.2.</span> <span class="nav-text">unordered_map</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -819,12 +940,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

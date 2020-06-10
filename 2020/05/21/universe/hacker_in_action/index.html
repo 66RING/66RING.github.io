@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="前置知识：汇编语言 栈溢出缓冲区是一片有限的、连续的内存区域。在C语言中最常见的缓冲区是数组。 因为在C和C++语言中没有考虑检查缓冲区的内在边界，所以使栈溢出成为可能。当输入的数据足够大时，将会溢出缓冲区的范围，从而改写从而改写其他缓存区域。 函数与栈调用函数的整个过程如下   把函数的参数压入栈    把函数的返回地址压入栈 主程序调用子程序，子程序结束后继续上次的位置执行主程序      调">
+  <meta name="description" content="前置知识：汇编语言 系统篇栈溢出缓冲区是一片有限的、连续的内存区域。在C语言中最常见的缓冲区是数组。 因为在C和C++语言中没有考虑检查缓冲区的内在边界，所以使栈溢出成为可能。当输入的数据足够大时，将会溢出缓冲区的范围，从而改写从而改写其他缓存区域。 函数与栈调用函数的整个过程如下   把函数的参数压入栈    把函数的返回地址压入栈 主程序调用子程序，子程序结束后继续上次的位置执行主程序">
 <meta property="og:type" content="article">
-<meta property="og:title" content="黑客攻防系统实战学习">
+<meta property="og:title" content="黑客攻防学习">
 <meta property="og:url" content="http://yoursite.com/2020/05/21/universe/hacker_in_action/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前置知识：汇编语言 栈溢出缓冲区是一片有限的、连续的内存区域。在C语言中最常见的缓冲区是数组。 因为在C和C++语言中没有考虑检查缓冲区的内在边界，所以使栈溢出成为可能。当输入的数据足够大时，将会溢出缓冲区的范围，从而改写从而改写其他缓存区域。 函数与栈调用函数的整个过程如下   把函数的参数压入栈    把函数的返回地址压入栈 主程序调用子程序，子程序结束后继续上次的位置执行主程序      调">
+<meta property="og:description" content="前置知识：汇编语言 系统篇栈溢出缓冲区是一片有限的、连续的内存区域。在C语言中最常见的缓冲区是数组。 因为在C和C++语言中没有考虑检查缓冲区的内在边界，所以使栈溢出成为可能。当输入的数据足够大时，将会溢出缓冲区的范围，从而改写从而改写其他缓存区域。 函数与栈调用函数的整个过程如下   把函数的参数压入栈    把函数的返回地址压入栈 主程序调用子程序，子程序结束后继续上次的位置执行主程序">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-20T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-26T13:32:41.862Z">
+<meta property="article:modified_time" content="2020-06-09T11:39:58.954Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="hacker,汇编">
 <meta name="twitter:card" content="summary">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>黑客攻防系统实战学习 | Hexo</title>
+  <title>黑客攻防学习 | Hexo</title>
   
 
 
@@ -164,7 +164,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          黑客攻防系统实战学习
+          黑客攻防学习
         </h1>
 
         <div class="post-meta">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-26 21:32:41" itemprop="dateModified" datetime="2020-05-26T21:32:41+08:00">2020-05-26</time>
+                <time title="Modified: 2020-06-09 19:39:58" itemprop="dateModified" datetime="2020-06-09T19:39:58+08:00">2020-06-09</time>
               </span>
 
           
@@ -196,7 +196,7 @@
 
       
         <p>前置知识：汇编语言</p>
-<h2 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h2><p>缓冲区是一片有限的、连续的内存区域。在C语言中最常见的缓冲区是数组。</p>
+<h1 id="系统篇"><a href="#系统篇" class="headerlink" title="系统篇"></a>系统篇</h1><h2 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h2><p>缓冲区是一片有限的、连续的内存区域。在C语言中最常见的缓冲区是数组。</p>
 <p>因为在C和C++语言中没有考虑检查缓冲区的内在边界，所以使栈溢出成为可能。当输入的数据足够大时，将会溢出缓冲区的范围，从而改写从而改写其他缓存区域。</p>
 <h3 id="函数与栈"><a href="#函数与栈" class="headerlink" title="函数与栈"></a>函数与栈</h3><p>调用函数的整个过程如下</p>
 <ul>
@@ -555,6 +555,38 @@
 </ul>
 </li>
 </ul>
+<hr>
+<h1 id="Web篇"><a href="#Web篇" class="headerlink" title="Web篇"></a>Web篇</h1><h2 id="解析应用程序"><a href="#解析应用程序" class="headerlink" title="解析应用程序"></a>解析应用程序</h2><ul>
+<li>确定后端使用的技术<ul>
+<li><ol>
+<li>提取版本HTTP消息头中的版本信息，但后端程序员也可以伪造</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>文件扩展名<ul>
+<li>许多Web服务器将特殊的文件扩展名映射到特定的服务器组件中，不同组建处理错误的方式不同</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>目录名<ul>
+<li>一些子目录名常常表示应用程序使用了相关技术</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>会话令牌<ul>
+<li>许多Web服务器和Web应用程序平台默认生成的会话令牌名称会揭示其使用的技术</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>等等</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -638,7 +670,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈溢出"><span class="nav-number">1.</span> <span class="nav-text">栈溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数与栈"><span class="nav-number">1.1.</span> <span class="nav-text">函数与栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈上的缓冲区溢出"><span class="nav-number">1.2.</span> <span class="nav-text">栈上的缓冲区溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用漏洞获得root权限"><span class="nav-number">1.3.</span> <span class="nav-text">利用漏洞获得root权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#地址问题"><span class="nav-number">1.3.1.</span> <span class="nav-text">地址问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NOP法"><span class="nav-number">1.3.2.</span> <span class="nav-text">NOP法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#战胜不可执行栈"><span class="nav-number">1.4.</span> <span class="nav-text">战胜不可执行栈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shellcode"><span class="nav-number">2.</span> <span class="nav-text">shellcode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#理解系统调用"><span class="nav-number">2.1.</span> <span class="nav-text">理解系统调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为exit-系统调用写shellcode"><span class="nav-number">2.2.</span> <span class="nav-text">为exit()系统调用写shellcode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可注入的shellcode"><span class="nav-number">2.3.</span> <span class="nav-text">可注入的shellcode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#派生shell"><span class="nav-number">2.4.</span> <span class="nav-text">派生shell</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#格式化串漏洞"><span class="nav-number">3.</span> <span class="nav-text">格式化串漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是格式化串"><span class="nav-number">3.1.</span> <span class="nav-text">什么是格式化串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building"><span class="nav-number">3.2.</span> <span class="nav-text">Building</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化串技术概述"><span class="nav-number">3.3.</span> <span class="nav-text">格式化串技术概述</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#系统篇"><span class="nav-number">1.</span> <span class="nav-text">系统篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈溢出"><span class="nav-number">1.1.</span> <span class="nav-text">栈溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数与栈"><span class="nav-number">1.1.1.</span> <span class="nav-text">函数与栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈上的缓冲区溢出"><span class="nav-number">1.1.2.</span> <span class="nav-text">栈上的缓冲区溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用漏洞获得root权限"><span class="nav-number">1.1.3.</span> <span class="nav-text">利用漏洞获得root权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#地址问题"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">地址问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NOP法"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">NOP法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#战胜不可执行栈"><span class="nav-number">1.1.4.</span> <span class="nav-text">战胜不可执行栈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shellcode"><span class="nav-number">1.2.</span> <span class="nav-text">shellcode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#理解系统调用"><span class="nav-number">1.2.1.</span> <span class="nav-text">理解系统调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为exit-系统调用写shellcode"><span class="nav-number">1.2.2.</span> <span class="nav-text">为exit()系统调用写shellcode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可注入的shellcode"><span class="nav-number">1.2.3.</span> <span class="nav-text">可注入的shellcode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#派生shell"><span class="nav-number">1.2.4.</span> <span class="nav-text">派生shell</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#格式化串漏洞"><span class="nav-number">1.3.</span> <span class="nav-text">格式化串漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是格式化串"><span class="nav-number">1.3.1.</span> <span class="nav-text">什么是格式化串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building"><span class="nav-number">1.3.2.</span> <span class="nav-text">Building</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化串技术概述"><span class="nav-number">1.3.3.</span> <span class="nav-text">格式化串技术概述</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web篇"><span class="nav-number">2.</span> <span class="nav-text">Web篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解析应用程序"><span class="nav-number">2.1.</span> <span class="nav-text">解析应用程序</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -652,12 +684,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
