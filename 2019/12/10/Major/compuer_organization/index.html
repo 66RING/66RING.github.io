@@ -28,7 +28,7 @@
 <meta property="og:description" content="简介 从纯文本的程序到可执行的编码，以hello.c为例 预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾 编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序 汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。 链接：hell">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-10T12:39:40.429Z">
+<meta property="article:modified_time" content="2020-06-12T14:11:58.720Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="cs">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-10 20:39:40" itemprop="dateModified" datetime="2020-06-10T20:39:40+08:00">2020-06-10</time>
+                <time title="Modified: 2020-06-12 22:11:58" itemprop="dateModified" datetime="2020-06-12T22:11:58+08:00">2020-06-12</time>
               </span>
 
           
@@ -677,6 +677,250 @@
 </tr>
 </tbody></table>
 <p>指令可以对这16个寄存器的低位字节中存放的不同大小的数据进行操作。</p>
+<h2 id="MIPS体系结构"><a href="#MIPS体系结构" class="headerlink" title="MIPS体系结构"></a>MIPS体系结构</h2><p>Microprocessor without Interlocked Piped Stage，流水线不会互锁的处理器。避免不同指令间的相互影响。如x86指令的标志寄存器，前一条指令作出的改动会对后面的产生影响，这MIPS所要避免的。</p>
+<ul>
+<li>它的主要关注点<ul>
+<li>减少指令类型</li>
+<li>降低指令复杂度</li>
+</ul>
+</li>
+<li>基本原则是用非常简单的CPU解决非常复杂的系统<ul>
+<li>越简单的CPU越快</li>
+</ul>
+</li>
+<li>MIPS特点<ul>
+<li>固定指令长度(32bit)<ul>
+<li>简化了从存储器取指令</li>
+</ul>
+</li>
+<li>简单的寻址模式<ul>
+<li>简化了从存储器取操作数</li>
+</ul>
+</li>
+<li>指令数量少，功能简单<ul>
+<li>一条指令之完成一个操作</li>
+<li>简化指令的执行过程</li>
+</ul>
+</li>
+<li>只允许Load和Store指令访问存储器</li>
+<li>MIPS这些特点让使用MIPS进行编程变得困难</li>
+</ul>
+</li>
+</ul>
+<h3 id="基本指令"><a href="#基本指令" class="headerlink" title="基本指令"></a>基本指令</h3><ul>
+<li>格式：<code>OPT a, b, c</code><ul>
+<li>如<code>add a, b, c</code>将b和c求和，结果存如a中</li>
+<li>如此还有<ul>
+<li><code>sub a, b, c</code></li>
+<li><code>mul a, b, c</code></li>
+<li><code>div a, b, c</code></li>
+<li><code>and a, b, c</code></li>
+<li><code>or a, b, c</code></li>
+<li><code>sll a, b, c</code>，左移</li>
+<li><code>srl a, b, c</code>，右移</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>指令高度统一，而且操作数都不可是存储器操作数，要使用存储器就必须使用专门的访存指令。</p>
+<ul>
+<li><code>lw $a, $b</code>, load word，读取寄存器b的字(32bit)，放入a中<ul>
+<li>MIPS的寄存器编号用<code>$</code>符进行标记</li>
+</ul>
+</li>
+<li><code>sw $a, $b</code>, store word，将寄存器a的字(32bit)，存到b中</li>
+</ul>
+<p>MIPS有32个通用寄存器，编号从0到31，可以实用<code>$</code>加编号进行指示，也可使用他们的名称(每个寄存器都另有一个名称，并约定了特定的用途)</p>
+<h3 id="指令的基本格式"><a href="#指令的基本格式" class="headerlink" title="指令的基本格式"></a>指令的基本格式</h3><p>MIPS的指令非常的精简，指令分为3种类型</p>
+<ul>
+<li>R：Register，寄存器</li>
+<li>I：Immediate，立即数</li>
+<li>J：Jump，转移</li>
+</ul>
+<h4 id="R型"><a href="#R型" class="headerlink" title="R型"></a>R型</h4><table>
+<thead>
+<tr>
+<th>R</th>
+<th>opcode</th>
+<th>rs</th>
+<th>rt</th>
+<th>rd</th>
+<th>shamt</th>
+<th>funct</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大小(bit)</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>位置</td>
+<td>31~26</td>
+<td>25~21</td>
+<td>20~16</td>
+<td>15~11</td>
+<td>10~6</td>
+<td>5~0</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>R型指令的格式</p>
+<ul>
+<li>opcode域指定指令的类型，对于R型指令均为0</li>
+<li>funct来精确指定指令的类型</li>
+<li>rs：Source Register，通常指定第一个源操作数所在寄存器编号</li>
+<li>rt：Target Register，通常指定第二个源操作数所在寄存器编号</li>
+<li>rd：Destination Register，通常指定目的操作数所在寄存器编号</li>
+<li>shamt用于指定移位指令进行操作数的位数，对于非移位指令为0</li>
+</ul>
+</li>
+<li><p>通过指令得到编码，如<code>add $8, $9, $10</code></p>
+<ul>
+<li>查MIPS的指令编码表：对于add，opcode=0, funct=32, shamt=0</li>
+<li>分析指令操作数：rd=8, rs=9, rt=10</li>
+<li>把对应的值转化为二进制数即可得到编码</li>
+</ul>
+</li>
+</ul>
+<h4 id="I型"><a href="#I型" class="headerlink" title="I型"></a>I型</h4><p>如果只用5bit来表示立即数，显然不够用，所以对于I型指令需要新的格式</p>
+<table>
+<thead>
+<tr>
+<th>I</th>
+<th>opcode</th>
+<th>rs</th>
+<th>rt</th>
+<th>immediate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大小(bit)</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+<td>16</td>
+</tr>
+<tr>
+<td>位置</td>
+<td>31~26</td>
+<td>25~21</td>
+<td>20~16</td>
+<td>15~0</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>I型指令的格式</p>
+<ul>
+<li>opcode域指定指令的类型，没有funct</li>
+<li>funct来精确指定指令的类型</li>
+<li>rs：Source Register，通常指定第一个源操作数所在寄存器编号</li>
+<li>rt：Target Register，通常指定第二个源操作数所在寄存器编号</li>
+<li>immediate可以存放16位的立即数</li>
+</ul>
+</li>
+<li><p>通过指令得到编码，如<code>add $21, $22, -50</code></p>
+<ul>
+<li>opcode=8</li>
+<li>rs=22, rt=21, immedaite=-50</li>
+</ul>
+</li>
+</ul>
+<h4 id="分支指令-条件指令"><a href="#分支指令-条件指令" class="headerlink" title="分支指令(条件指令)"></a>分支指令(条件指令)</h4><ul>
+<li>条件分支<ul>
+<li>根据比较结果改变控制流</li>
+<li><code>beq</code>(branch if equal)<ul>
+<li>opcode=4</li>
+</ul>
+</li>
+<li><code>bne</code>(branch if not equal)<ul>
+<li>opcode=5</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>非条件分支<ul>
+<li>无条件地改变控制流</li>
+<li><code>j</code>(jump)</li>
+</ul>
+</li>
+</ul>
+<p>格式：<code>bep reg1, reg2, L1</code><br>    - 前两个是寄存器操作数，第三个是存储器地址(一个立即数，偏移量)<br>    - 不同于x86指令，没有标志寄存器，在一条语句中完成了比较和转移</p>
+<table>
+<thead>
+<tr>
+<th>I</th>
+<th>opcode</th>
+<th>rs</th>
+<th>rt</th>
+<th>immediate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大小(bit)</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+<td>16</td>
+</tr>
+<tr>
+<td>位置</td>
+<td>31~26</td>
+<td>25~21</td>
+<td>20~16</td>
+<td>15~0</td>
+</tr>
+</tbody></table>
+<ul>
+<li>如何发挥16bit的作用？<ul>
+<li>以当前的PC为基准，16bit偏移量可以表示$\pm 2^{15}$bytes</li>
+<li>由于MIPS指令长度固定为32bit，因此我们可以用16bit的立即数来表示每4个字节为一个单位的地址，这样目标地址范围可以扩大4倍。</li>
+<li>16bit偏移量可以表示$\pm 2^{17}$bytes</li>
+</ul>
+</li>
+<li>目标地址计算方法<ul>
+<li>分支条件不成立时，PC = PC + 4 = 下一条语句</li>
+<li>分支条件成立时，PC = PC + 4  + immediate*4</li>
+</ul>
+</li>
+</ul>
+<p>对于非条件分支指令</p>
+<table>
+<thead>
+<tr>
+<th>J</th>
+<th>opcode</th>
+<th>immediate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大小(bit)</td>
+<td>6</td>
+<td>26</td>
+</tr>
+<tr>
+<td>位置</td>
+<td>31~26</td>
+<td>25~0</td>
+</tr>
+</tbody></table>
+<ul>
+<li>不同于条件分支，需要两个寄存器比较，所以可以表示更大的范围</li>
+<li>目标地址计算方法：New PC = {(PC+4)后取最高4位, address, 00}</li>
+<li>J型指令的目标地址范围：<code>\pm 2^{28}</code>bytes<ul>
+<li>如何到达更远的目标地址？<ul>
+<li>两次调用j指令</li>
+<li>使用jr指令：<code>jr rs</code>，可把要转移的目标地址放在寄存器中，这样就可以使用32位的目标地址</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -760,7 +1004,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数"><span class="nav-number">2.2.</span> <span class="nav-text">浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE浮点数表示"><span class="nav-number">2.2.1.</span> <span class="nav-text">IEEE浮点数表示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的机器级表示"><span class="nav-number">3.</span> <span class="nav-text">程序的机器级表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据格式"><span class="nav-number">3.1.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问信息"><span class="nav-number">3.2.</span> <span class="nav-text">访问信息</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数"><span class="nav-number">2.2.</span> <span class="nav-text">浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE浮点数表示"><span class="nav-number">2.2.1.</span> <span class="nav-text">IEEE浮点数表示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的机器级表示"><span class="nav-number">3.</span> <span class="nav-text">程序的机器级表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据格式"><span class="nav-number">3.1.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问信息"><span class="nav-number">3.2.</span> <span class="nav-text">访问信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIPS体系结构"><span class="nav-number">4.</span> <span class="nav-text">MIPS体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本指令"><span class="nav-number">4.1.</span> <span class="nav-text">基本指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令的基本格式"><span class="nav-number">4.2.</span> <span class="nav-text">指令的基本格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#R型"><span class="nav-number">4.2.1.</span> <span class="nav-text">R型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#I型"><span class="nav-number">4.2.2.</span> <span class="nav-text">I型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令-条件指令"><span class="nav-number">4.2.3.</span> <span class="nav-text">分支指令(条件指令)</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -774,7 +1018,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

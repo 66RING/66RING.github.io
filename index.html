@@ -145,6 +145,175 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/12/Major/Operating_Systems/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/12/Major/Operating_Systems/" class="post-title-link" itemprop="url">操作系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-06-12 00:00:00 / Modified: 17:00:13" itemprop="dateCreated datePublished" datetime="2020-06-12T00:00:00+08:00">2020-06-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>shell对外暴露的接口，操作系统对外提供服务</p>
+<p>特征</p>
+<ul>
+<li>并发<ul>
+<li>同时存在多个运行的程序</li>
+</ul>
+</li>
+<li>共享<ul>
+<li>操作系统控制如何”同时”访问</li>
+<li>文件互斥</li>
+</ul>
+</li>
+<li>虚拟<ul>
+<li>让每个用户/程序都觉得有一个计算机专门为它提供服务</li>
+</ul>
+</li>
+<li>异步<ul>
+<li>程序执行不是一贯到底的，向前推进的速度有系统调度</li>
+<li>但是只要环境相同，每次运行的结果一定相同</li>
+</ul>
+</li>
+<li>相互联系也相互区别</li>
+</ul>
+<ul>
+<li>Microkernel:微内核架构设计<ul>
+<li>只放基本的功能</li>
+<li>文件管理、网路协议栈等都是放在外围以服务的形式存在，服务和服务之间通过内核的消息传递机制</li>
+<li>相互隔离，很灵活，小巧</li>
+<li>代价就是性能</li>
+</ul>
+</li>
+<li>外核设计<ul>
+<li>内核分成两块，<ul>
+<li>Exokernel(外核)与硬件打交道：完成硬件功能的复制。</li>
+<li>建立在exokernel之上，跟具体应用打交道，再通过它访问exokernel，来访问硬件<ul>
+<li>可对应用进行相应的设计，使得速度更快</li>
+<li>完成应用隔离</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>虚拟机</li>
+</ul>
+<h2 id="Part-2"><a href="#Part-2" class="headerlink" title="Part 2"></a>Part 2</h2><ul>
+<li>计算机启动</li>
+</ul>
+<p>os存放在硬盘中，需要bootload将它放入内存。bootloader又由bios负责放入内存。</p>
+<ul>
+<li>bios提供各种支持：检测外设，初始化检查，把bootloader放入内存，让它执行</li>
+<li>bootloader：加载os，从硬盘到内存</li>
+</ul>
+<p>应用间接与外设打交道，之所以应用不能直接访问外设是因为应用是不可信任的，而操作系统是可信任的;另一方面操作系统外为上层提供一致的接口，使得上层应用不用关注底层细节，通用可移植，提高效率。由此设计一下三个基本概念</p>
+<ul>
+<li><p>三个基本概念</p>
+<ul>
+<li>中断<ul>
+<li>产生的源头：外设产生</li>
+<li>处理的时间:异步事件，不会知道什么时候产生</li>
+<li>响应：持续，对应用程序是透明的</li>
+</ul>
+</li>
+<li>异常<ul>
+<li>产生的源头：应用意想不到的行为</li>
+<li>处理的时间：同步，一定在某个特定的指令可以产生，可以确定时间</li>
+<li>响应：杀死或重新执行</li>
+</ul>
+</li>
+<li>系统调用<ul>
+<li>产生的源头：应用请求操作系统提供服务</li>
+<li>处理的时间：同步或异步(返回点有可能是异步的)</li>
+<li>响应：等待和持续</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>中断和异常的处理过程</p>
+<ul>
+<li>中断码<ul>
+<li>查表</li>
+</ul>
+</li>
+<li>保存和恢复<ul>
+<li>程序执行过程中被中断，需要保存当前处理状态，便于恢复后继续执行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>异常处理过程</p>
+<ul>
+<li>保存现场</li>
+<li>异常处理<ul>
+<li>异常编号，相应处理</li>
+</ul>
+</li>
+<li>恢复现场</li>
+</ul>
+</li>
+<li><p>系统调用过程</p>
+<ul>
+<li>访问系统调用接口</li>
+<li>用户态切到内核态，控制权交给操作系统<ul>
+<li>用户态：可执行权限低</li>
+<li>内核态：可执行任何指令</li>
+</ul>
+</li>
+<li>处理完成后返回成功失败</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/10/universe/att_vs_Intel_assembly_language/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1312,7 +1481,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-11 13:45:31" itemprop="dateModified" datetime="2020-06-11T13:45:31+08:00">2020-06-11</time>
+                <time title="Modified: 2020-06-12 19:19:39" itemprop="dateModified" datetime="2020-06-12T19:19:39+08:00">2020-06-12</time>
               </span>
 
           
@@ -1999,7 +2168,95 @@
 </ul>
 </li>
 </ul>
-<h4 id="其他istream方法"><a href="#其他istream方法" class="headerlink" title="其他istream方法"></a>其他istream方法</h4><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
+<h4 id="其他istream类方法"><a href="#其他istream类方法" class="headerlink" title="其他istream类方法"></a>其他istream类方法</h4><ul>
+<li>单字符输入<ul>
+<li><code>get()</code>方法读取下一个输入字符，<strong>即使该字符是空白</strong>，而抽取运算符<code>&gt;&gt;</code>不会读取空白<ul>
+<li><code>get(char&amp; ch)</code>将输入字符赋给参数，返回调用它的istream对象的引用，即cin</li>
+<li><code>get(void)</code>将输入字符转换为整型并返回<ul>
+<li>到达文件尾后，<code>cin.get(void)</code>将返回EOF，可用这点来做条件控制</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th><code>cin.get(ch)</code></th>
+<th><code>ch = cin.get()</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>传输输入字符的方法</td>
+<td>赋值给参数ch</td>
+<td>返回值赋值给ch</td>
+</tr>
+<tr>
+<td>字符输入时函数的返回值</td>
+<td>指向istream对象的引用</td>
+<td>字符编码(int值)</td>
+</tr>
+<tr>
+<td>达到文件尾时函数的返回值</td>
+<td>转换为false</td>
+<td>EOF</td>
+</tr>
+</tbody></table>
+<p>如果希望跳过空白，使用抽取运算符<code>&gt;&gt;</code>更方便。<code>get(void)</code>的主要优点是它和C语言中的<code>getchar</code>函数及其相似，简单替换即可从C转换为C++。</p>
+<ul>
+<li><p>getline()、get()</p>
+<ul>
+<li><code>istream&amp; get(char*, int, char);</code></li>
+<li><code>istream&amp; get(char*, int);</code></li>
+<li><code>istream&amp; getline(char*, int, char);</code></li>
+<li><code>istream&amp; getline(char*, int);</code></li>
+<li>第一个参数是输入字符串的内存单元地址，第二个参数是最大字符数加1，多一位用来存结尾空字符，第3个参数指定分界符，默认以换行符分界</li>
+<li>get和getline之间的主要区别是，get将分界符留在流中，而getline抽取并丢弃分界符</li>
+</ul>
+</li>
+<li><p><code>istream&amp; ignore(int = 1, int = EOF);</code></p>
+<ul>
+<li>一个参数指定要读取的最大字符数，另一个参数用作分界符</li>
+<li>将读取并丢弃最大指定数量个字符或直到到达第一个分界符</li>
+</ul>
+</li>
+<li><p>意外字符串输入</p>
+<ul>
+<li>get和getline的某些输入形式将影响流状态<ul>
+<li>如遇到文件尾将设置eofbit，遇到流被破坏将设置badbit</li>
+<li>空行并不会导致getline设置failbit，因为它抽取换行符</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="其他istream方法"><a href="#其他istream方法" class="headerlink" title="其他istream方法"></a>其他istream方法</h4><p>其他istream方法包括read()、peek()、gcount()和putback()</p>
+<ul>
+<li><code>read(char*, int)</code><ul>
+<li>read函数读取指定数目的字节，并将它们存储在指定的位置中</li>
+<li>read不会在输入后加上空值字符，因此 <strong>不能将输入转换为字符串</strong></li>
+</ul>
+</li>
+<li><code>peek()</code><ul>
+<li>peek函数返回输入中的下一个字符，但不从输入流中抽取出来，即单纯的查看下一个字符</li>
+</ul>
+</li>
+<li><code>gcount()</code><ul>
+<li>gcount方法返回最后一个非格式化抽取方法读取字符<ul>
+<li>所谓格式化是：抽取运算符对输入进行格式化，使之与特定的数据类型匹配</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>istream&amp; putback(char)</code><ul>
+<li>putback将一个字符插入到输入字符串中，被插入的字符串将是下一条输入语句读取的地一个字符(即插入到首部)</li>
+</ul>
+</li>
+</ul>
+<h3 id="文件输入和输出"><a href="#文件输入和输出" class="headerlink" title="文件输入和输出"></a>文件输入和输出</h3><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
 
 
 
@@ -3815,87 +4072,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/14/universe/the_nature_of_code/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/14/universe/the_nature_of_code/" class="post-title-link" itemprop="url">用processing模拟自然系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-04-14 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-14T00:00:00+08:00">2020-04-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-15 12:02:25" itemprop="dateModified" datetime="2020-04-15T12:02:25+08:00">2020-04-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="随机游走"><a href="#随机游走" class="headerlink" title="随机游走"></a>随机游走</h2><ul>
-<li>processing中的random()函数生成的随机数是均匀分布的</li>
-<li>可以利用random函数生成非均匀分布的随机数<ul>
-<li>创建一个非均匀的数组，用random来随机的取索引</li>
-</ul>
-</li>
-<li>也可用random来取概率，但是注意数据类型(float和int有区别)</li>
-<li>随机数的正态分布<ul>
-<li><code>(float)generator.nextGaussian()</code>返回一个高斯随机数，nextGaussian返回值的类型是double</li>
-</ul>
-</li>
-</ul>
-<h3 id="Perlin噪声-一种更平滑的算法"><a href="#Perlin噪声-一种更平滑的算法" class="headerlink" title="Perlin噪声(一种更平滑的算法)"></a>Perlin噪声(一种更平滑的算法)</h3><p>Perlin生成的随机数更平滑，但仍有一定的随机性。</p>
-<p>Processing内置了<code>noise()</code>函数，可以有1~3个参数。<br>分别表示一维、二维、三维随机数。</p>
-<p>noise函数返回的结果总是在0~1之间，我们可以通过map函数来改变结果的范围，<br>可以吧一维的Perlin噪声当作随着时间推移而发生变化的线性序列。<br>通过往noise传入一个”指定的时间”来获取这个时间点上的噪声。</p>
-<p>同理，二维噪声像个崎岖不平的面</p>
-<h3 id="map映射"><a href="#map映射" class="headerlink" title="map映射"></a>map映射</h3><p><code>map(a, b, c, d)</code>, 原范围(a, b), 希望映射到的范围(c, d)</p>
-<h2 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h2>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -3965,7 +4141,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
