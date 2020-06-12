@@ -1230,7 +1230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-05 13:27:58" itemprop="dateModified" datetime="2020-06-05T13:27:58+08:00">2020-06-05</time>
+                <time title="Modified: 2020-06-11 12:01:47" itemprop="dateModified" datetime="2020-06-11T12:01:47+08:00">2020-06-11</time>
               </span>
 
           
@@ -1262,7 +1262,7 @@
 <h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><ul>
 <li>遍历一个 <strong>完整</strong> 的循环会节省很多讨论，何为完整，类似与判断波的一个完整周期</li>
 </ul>
-
+<h2 id="单向栈"><a href="#单向栈" class="headerlink" title="单向栈"></a>单向栈</h2>
       
     </div>
 
@@ -1312,7 +1312,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-10 20:08:27" itemprop="dateModified" datetime="2020-06-10T20:08:27+08:00">2020-06-10</time>
+                <time title="Modified: 2020-06-11 13:45:31" itemprop="dateModified" datetime="2020-06-11T13:45:31+08:00">2020-06-11</time>
               </span>
 
           
@@ -1970,7 +1970,36 @@
 </li>
 </ul>
 <p>使用setf不是进行格式化、对用户友好的方法，C++提供了过个控制符，如hex、dex等。如：使用下列方式打开左对齐和定点选项<code>cout &lt;&lt; left &lt;&lt; fixed;</code></p>
-<h3 id="使用cin进行输入"><a href="#使用cin进行输入" class="headerlink" title="使用cin进行输入"></a>使用cin进行输入</h3><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
+<h3 id="使用cin进行输入"><a href="#使用cin进行输入" class="headerlink" title="使用cin进行输入"></a>使用cin进行输入</h3><p>istream类重载了抽取运算符<code>&gt;&gt;</code>，使之能识别基本类型。重载的原型为：<code>istream&amp; operator&gt;&gt;(Type&amp;)</code>参数和返回都是引用。引用参数意味着会修改参数本身;每个抽取运算符都返回调用对象本身，这使得能够将输入拼接。</p>
+<p>可以将hex、oct和dec控制符与cin一起使用，来指定将整数输入解释为十六进制、八进制还是十进制格式。</p>
+<h4 id="cin-gt-gt-如何检查输入"><a href="#cin-gt-gt-如何检查输入" class="headerlink" title="cin&gt;&gt;如何检查输入"></a>cin&gt;&gt;如何检查输入</h4><p>抽取运算符跳过空白(空格、换行、制表符)，直到遇到非空白字符。抽取运算符将读取指定类型是数据，即从非空白字符开始，到与指定类型不匹配的第一个字符之间的全部内容。不匹配的内容将留在流中，下一个cin语句将从这里开始读取。</p>
+<p>如果istream对象的错误状态被设置，if或while将判定该对象为false。</p>
+<h4 id="流状态"><a href="#流状态" class="headerlink" title="流状态"></a>流状态</h4><p>cin或cout对象包含一个描述流状态的数据成员。流状态由3个ios_base元素组成：eofbit、badbit、failbit，每个元素都是一位，可以是1或0。当全部3个状态都设置为0，则一切顺利。</p>
+<ul>
+<li>设置状态<ul>
+<li><code>clear(eofbit)</code>方法将状态设置为它的参数(eofbit)，剩下的两个状态位置被清除<ul>
+<li><code>clear()</code>将清除全部3个状态位</li>
+</ul>
+</li>
+<li><code>setstate()</code>方法只影响其参数中已设置的位，如<code>setstate(eofbit)</code>如果已经设置了failbit，则仍将被设置</li>
+</ul>
+</li>
+<li>I/O异常<ul>
+<li>可以通过<code>exceptions()</code>方法来控制异常如何被处理<ul>
+<li><code>exceptions()</code>方法返回一个位字段，它包含3个位，分别对应于eofbit、failbit、badbit</li>
+<li>修改流状态后<code>clear()</code>方法将当前的流状态与<code>exceptions()</code>返回的值进行比较。如果当前状态中有”期望”的状态，则clear引发ios_base::failure异常，就可以通过<code>catch(ios_base::failure)</code>捕获</li>
+<li>位运算符OR使得能够指定多位：<code>cin.exceptions(badbit|eofbit);</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>流状态的影响<ul>
+<li>只有流状态良好这个语句才会返回true<code>while(cin&gt;&gt;input)</code>，但这么做有个 <strong>严重的后果</strong> ：流将对后面的输入或输出关闭，直到位被清除</li>
+<li>如果希望程序在流状态被设置后能够读取后面的输入，就必须将流状态设置为良好(clear)和将引发错误的字符清空(<code>while(!isspace(cin.get()))</code>或<code>while(cin.get()!=&#39;\n&#39;)</code>)</li>
+</ul>
+</li>
+</ul>
+<h4 id="其他istream方法"><a href="#其他istream方法" class="headerlink" title="其他istream方法"></a>其他istream方法</h4><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
 
 
 
