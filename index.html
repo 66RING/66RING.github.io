@@ -1481,7 +1481,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-12 19:19:39" itemprop="dateModified" datetime="2020-06-12T19:19:39+08:00">2020-06-12</time>
+                <time title="Modified: 2020-06-13 20:24:45" itemprop="dateModified" datetime="2020-06-13T20:24:45+08:00">2020-06-13</time>
               </span>
 
           
@@ -2256,7 +2256,135 @@
 </ul>
 </li>
 </ul>
-<h3 id="文件输入和输出"><a href="#文件输入和输出" class="headerlink" title="文件输入和输出"></a>文件输入和输出</h3><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
+<h3 id="文件输入和输出"><a href="#文件输入和输出" class="headerlink" title="文件输入和输出"></a>文件输入和输出</h3><h4 id="简单文件的I-O"><a href="#简单文件的I-O" class="headerlink" title="简单文件的I/O"></a>简单文件的I/O</h4><p>要让程序写入文件，必须：</p>
+<ul>
+<li><ol>
+<li>创建一个ostream对象来管理输出流</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>将该对象与特定的文件关联起来</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>以使用cout的方式使用该对象，唯一的区别是输出将进入文件，而不是屏幕</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 包含头文件fstream，该文件包含iostream文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.声明一个ofstream对象</span></span><br><span class="line">ofstream fout;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 将这个对象与特定的文件关联起来</span></span><br><span class="line">fout.<span class="built_in">open</span>(<span class="string">"hello.txt"</span>);</span><br><span class="line"><span class="comment">// 或使用构造函数</span></span><br><span class="line"><span class="function">ofstream <span class="title">fout</span><span class="params">(<span class="string">"hello.txt"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 以使用cout的方式使用fout</span></span><br><span class="line">fout &lt;&lt; <span class="string">"hello world"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>由于ostream是ofstream的基类，因此可以使用所有的ostream方法，包括各种插入运算符定义、格式化方法和控制符。每创建一个对象，程序将为这个对象创建一个缓冲区。</p>
+<p>用上面这种方式打开文件进行输出时，如果没有这样的文件，将创建一个新的文件;如果有这样的文件，则打开并清空文件，输出将进入这个空文件中。</p>
+<p>读取文件与写入文件类似：</p>
+<ul>
+<li><ol>
+<li>创建一个ifstream对象来管理输入流</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>将该对象与特定的文件关联起来</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>以使用cin的方式使用该对象</li>
+</ol>
+</li>
+</ul>
+<p>当输入输出流对象过期时，到文件的连接将自动关闭。也可以使用<code>close()</code>方法来显式地关闭文件的连接。</p>
+<p>关闭这样的连接不会删除流，而只是断开流到文件的连接。流管理装置仍被保留。如：fin对象与它管理的输入缓冲区仍然存在。因此可以将流重新连接到同一个或另一个文件。</p>
+<h4 id="流状态检查"><a href="#流状态检查" class="headerlink" title="流状态检查"></a>流状态检查</h4><p>C++文件流从ios_base类继承了一个流状态成员。该成员存储了指出流状态的信息。当然还继承了报告流状态的方法，如<code>fin.is_open()</code></p>
+<p>由于ifstream和istream对象一样，被放在需要bool类型的地方时，将被转换为bool值。如<code>if(fin)</code></p>
+<h4 id="命令行处理"><a href="#命令行处理" class="headerlink" title="命令行处理"></a>命令行处理</h4><p>C++有一种让在命令环境中运行的程序能够访问命令行参数的机制，方法是使用main函数的参数：<code>int main(int argc, char* argv[])</code>，其中argc为参数的个数，包括命令本身，argv是参数数组argv[0]指向命令行的第一个字符串(命令本身)，以此类推。</p>
+<h4 id="文件模式"><a href="#文件模式" class="headerlink" title="文件模式"></a>文件模式</h4><p>文件模式描述的是文件将被如何使用：读、写、追加等。将流与文件关联时，都可以提供指定文件模式作为第二个参数，如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ifstream <span class="title">fin1</span><span class="params">(<span class="string">"hello"</span>, mod1)</span></span>;</span><br><span class="line">ifstream fin2;</span><br><span class="line">fin2.<span class="built_in">open</span>(<span class="string">"hello"</span>, mod2);</span><br></pre></td></tr></table></figure>
+
+<p>ios_base类定义了一个openmode类型，用于表示模式。可以选择iso_base类中定义的多个常量来指定模式。</p>
+<table>
+<thead>
+<tr>
+<th>常量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ios\_base::in</code></td>
+<td>打开文件，以便读取</td>
+</tr>
+<tr>
+<td><code>ios\_base::cout</code></td>
+<td>打开文件，以便写入</td>
+</tr>
+<tr>
+<td><code>ios\_base::ate</code></td>
+<td>打开文件，并移动到文件尾</td>
+</tr>
+<tr>
+<td><code>ios\_base::app</code></td>
+<td>追加到文件尾</td>
+</tr>
+<tr>
+<td><code>ios\_base::trunc</code></td>
+<td>如果文件存在，则截短文件(清空)</td>
+</tr>
+<tr>
+<td><code>ios\_base::binary</code></td>
+<td>二进制文件</td>
+</tr>
+</tbody></table>
+<p>ifstream的open方法和构造函数默认用<code>ios_base::in</code>打开文件;ofstream默认用<code>ios_base::out|ios_base::trunc</code>打开文件。使用运算符OR将两个位值合并成一个可用于设置两个位的值。</p>
+<p><code>ios_base::trunc</code>标记意味着打开已有的文件，以接受程序的输入时将被截短，即其以前的内容将被删除。</p>
+<p>C++语句<code>ifstream fin(filename, c++mode);</code>就像使用了的C的<code>fopen()</code>函数一样：<code>fopen(filename, cmode)</code>。其中c++mode是一个openmode值，如ios_base::in;而cmode是相对应的C模式字样，如”r”。</p>
+<table>
+<thead>
+<tr>
+<th>C++模式</th>
+<th>C模式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ios_base::in</code></td>
+<td>“r”</td>
+<td>打开以读取</td>
+</tr>
+<tr>
+<td><code>ios_base::out</code></td>
+<td>“w”</td>
+<td>等价于<code>ios_base::out | ios_base::trunc</code></td>
+</tr>
+<tr>
+<td><code>ios_base::out | ios_base::trunc</code></td>
+<td>“w”</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ios_base::out | ios_base::app</code></td>
+<td>“a”</td>
+<td>打开写入，追加</td>
+</tr>
+<tr>
+<td><code>ios_base::out | ios_base::out</code></td>
+<td>“r+”</td>
+<td>打开以读写，在文件允许的位置写入</td>
+</tr>
+<tr>
+<td><code>ios_base::out | ios_base::out | ios_base::trunc</code></td>
+<td>“w+”</td>
+<td>打开以读写，截短</td>
+</tr>
+<tr>
+<td><code>c++mode | ios_base::binary</code></td>
+<td>“cmodeb”</td>
+<td>以C++mode和二进制模式打开</td>
+</tr>
+<tr>
+<td><code>c++mode | ios_base::ate</code></td>
+<td>“cmode”</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><code>ios_base::ate</code>和<code>ios_base::app</code>区别在于：app模式只是将数据添加到文件尾，而ate模式将指针放在文件尾巴</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;</span><br><span class="line"><span class="comment">//索引、添加、修改</span></span><br><span class="line">Hash[key];</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改</span></span><br><span class="line"><span class="comment">//计数</span></span><br><span class="line">Hash.count(key);</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">Hash.erase(key);</span><br></pre></td></tr></table></figure>
 
 
 

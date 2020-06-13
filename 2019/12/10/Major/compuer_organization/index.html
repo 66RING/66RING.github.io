@@ -28,7 +28,7 @@
 <meta property="og:description" content="简介 从纯文本的程序到可执行的编码，以hello.c为例 预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾 编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序 汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。 链接：hell">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-12T14:11:58.720Z">
+<meta property="article:modified_time" content="2020-06-13T08:17:52.599Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="cs">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-12 22:11:58" itemprop="dateModified" datetime="2020-06-12T22:11:58+08:00">2020-06-12</time>
+                <time title="Modified: 2020-06-13 16:17:52" itemprop="dateModified" datetime="2020-06-13T16:17:52+08:00">2020-06-13</time>
               </span>
 
           
@@ -921,7 +921,103 @@
 </ul>
 </li>
 </ul>
+<h2 id="算数逻辑单元"><a href="#算数逻辑单元" class="headerlink" title="算数逻辑单元"></a>算数逻辑单元</h2><p>通过MIPS指令来做示例</p>
+<h3 id="算数运算和逻辑运算"><a href="#算数运算和逻辑运算" class="headerlink" title="算数运算和逻辑运算"></a>算数运算和逻辑运算</h3><p>把编码好的指令，如<code>add r1, r2, r3</code>放入IR寄存器中，根据各个域的数值控制电路向ALU发出信号：输入、输出、运算方法等。</p>
+<p>在如对于立即数加法：<code>addi</code>，ALU接受到信号，通过opcode知道要进行立即数加法，把把源寄存器作为输入，把输出放入目标寄存器。</p>
+<ul>
+<li>立即数是16bit的，但寄存器是32bit的，要能成功相加，需要扩展16bit<ul>
+<li>MIPS使用补码，所以这个立即数采用符号扩展，不会改变补码的值</li>
+</ul>
+</li>
+</ul>
+<p>对于逻辑运算，与算数运算类似，只是立即数采用0扩展。</p>
+<h3 id="门电路的基本原理"><a href="#门电路的基本原理" class="headerlink" title="门电路的基本原理"></a>门电路的基本原理</h3><p>现代集成电路通常使用MOS晶体管</p>
+<ul>
+<li>N型MOS管<ul>
+<li>Source源：电流流入</li>
+<li>Drain漏：电流流出</li>
+<li>Gate门：控制，高电频导通</li>
+</ul>
+</li>
+<li>P型MOS管<ul>
+<li>Source源：电流流入</li>
+<li>Drain漏：电流流出</li>
+<li>Gate门：控制，低电频导通</li>
+</ul>
+</li>
+<li>用这两种晶体管就构成了互补型的MOS关：CMOS</li>
+</ul>
+<p>逻辑门由晶体管构成，各种逻辑门的结构这里就不说了</p>
+<h3 id="寄存器的原理"><a href="#寄存器的原理" class="headerlink" title="寄存器的原理"></a>寄存器的原理</h3><p>在MIPS结构中，寄存器是由32个位组成，从电路上来说每个bit都是一样的，都是一个 <strong>D触发器</strong>。</p>
+<ul>
+<li>D触发器<ul>
+<li>具有存储信息能力的基本单元</li>
+<li>由若干逻辑门构成，有多种实现方式</li>
+<li>主要有1个数据输入、1个数据输出和1个时钟输入</li>
+<li>在上升沿，采样输入D的值，传送到输出Q，其余时间输出Q的值不变</li>
+<li>要求采样信号前后有一段很短的稳定时间</li>
+</ul>
+</li>
+</ul>
+<p>用32个D触发器构成MIPS的寄存器，在将寄存器用逻辑门相连，就构成了CPU。</p>
+<h3 id="逻辑运算的实现"><a href="#逻辑运算的实现" class="headerlink" title="逻辑运算的实现"></a>逻辑运算的实现</h3><p>ALU中包含很多中运算单元，以与元算单元为例：32位的输入需要32个与逻辑门处理，得到对应的32位输出。ALU包含多个单元，一组输入通过不同的单元，的到多组输出，这时需要一个多选器根据选择信号(opcode)对这些输出进行选择，得到一个32位的输出。</p>
+<h3 id="加减法的实现"><a href="#加减法的实现" class="headerlink" title="加减法的实现"></a>加减法的实现</h3><ul>
+<li><p>半加器</p>
+<ul>
+<li>将两个一位二进制数相加</li>
+<li>不能将进位位用与加法</li>
+</ul>
+</li>
+<li><p>全加器</p>
+<ul>
+<li>由两个半加器组成</li>
+<li>能将进位位用与加法</li>
+</ul>
+</li>
+<li><p>MIPS对溢出的处理方式</p>
+<ul>
+<li>将操作数看做有符号数<code>add</code>和<code>addi</code><ul>
+<li>发生溢出时会产生异常</li>
+</ul>
+</li>
+<li>将操作数看做无符号数<code>addu</code>和<code>addiu</code><ul>
+<li>不处理溢出</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>x86对溢出的处理方式</p>
+<ul>
+<li>采用溢出标志OF，根据标志寄存器OF来进行相应的操作</li>
+</ul>
+</li>
+</ul>
+<p>对于减法运算，减法可以转换成加法，那么就要对一个数进行取反操作</p>
+<ul>
+<li>补码表示的二进制数取反<ul>
+<li>规则：按位取反，末位加一</li>
+<li>推导 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x :010101</span><br><span class="line">~x:101010</span><br><span class="line">----------</span><br><span class="line">-1:111111</span><br><span class="line"></span><br><span class="line">x + (~x) &#x3D; -1</span><br><span class="line"></span><br><span class="line">(~x) + 1 &#x3D; -x</span><br></pre></td></tr></table></figure>
 
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="加法器的优化"><a href="#加法器的优化" class="headerlink" title="加法器的优化"></a>加法器的优化</h3><p>前面将的加法有一个个的全加器串联而成，需要等待进位输入，延迟长。进位像波一样传递，这样的加法器也称为 <strong>行波进位加法器(RCA)</strong> 。</p>
+<ul>
+<li>超前进位加法器(CLA)<ul>
+<li>优点： <ul>
+<li>计算延迟时间固定为三级门延迟</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>进一步扩宽加法器的位数，则电路变得非常复杂</li>
+</ul>
+</li>
+<li>因此通常使用小规模的CLA拼接形成加法器</li>
+</ul>
+</li>
+</ul>
+<h2 id="乘法器和除法器"><a href="#乘法器和除法器" class="headerlink" title="乘法器和除法器"></a>乘法器和除法器</h2>
     </div>
 
     
@@ -1004,7 +1100,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数"><span class="nav-number">2.2.</span> <span class="nav-text">浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE浮点数表示"><span class="nav-number">2.2.1.</span> <span class="nav-text">IEEE浮点数表示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的机器级表示"><span class="nav-number">3.</span> <span class="nav-text">程序的机器级表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据格式"><span class="nav-number">3.1.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问信息"><span class="nav-number">3.2.</span> <span class="nav-text">访问信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIPS体系结构"><span class="nav-number">4.</span> <span class="nav-text">MIPS体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本指令"><span class="nav-number">4.1.</span> <span class="nav-text">基本指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令的基本格式"><span class="nav-number">4.2.</span> <span class="nav-text">指令的基本格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#R型"><span class="nav-number">4.2.1.</span> <span class="nav-text">R型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#I型"><span class="nav-number">4.2.2.</span> <span class="nav-text">I型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令-条件指令"><span class="nav-number">4.2.3.</span> <span class="nav-text">分支指令(条件指令)</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数"><span class="nav-number">2.2.</span> <span class="nav-text">浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE浮点数表示"><span class="nav-number">2.2.1.</span> <span class="nav-text">IEEE浮点数表示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的机器级表示"><span class="nav-number">3.</span> <span class="nav-text">程序的机器级表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据格式"><span class="nav-number">3.1.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问信息"><span class="nav-number">3.2.</span> <span class="nav-text">访问信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIPS体系结构"><span class="nav-number">4.</span> <span class="nav-text">MIPS体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本指令"><span class="nav-number">4.1.</span> <span class="nav-text">基本指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令的基本格式"><span class="nav-number">4.2.</span> <span class="nav-text">指令的基本格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#R型"><span class="nav-number">4.2.1.</span> <span class="nav-text">R型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#I型"><span class="nav-number">4.2.2.</span> <span class="nav-text">I型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令-条件指令"><span class="nav-number">4.2.3.</span> <span class="nav-text">分支指令(条件指令)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算数逻辑单元"><span class="nav-number">5.</span> <span class="nav-text">算数逻辑单元</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算数运算和逻辑运算"><span class="nav-number">5.1.</span> <span class="nav-text">算数运算和逻辑运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#门电路的基本原理"><span class="nav-number">5.2.</span> <span class="nav-text">门电路的基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器的原理"><span class="nav-number">5.3.</span> <span class="nav-text">寄存器的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑运算的实现"><span class="nav-number">5.4.</span> <span class="nav-text">逻辑运算的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加减法的实现"><span class="nav-number">5.5.</span> <span class="nav-text">加减法的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加法器的优化"><span class="nav-number">5.6.</span> <span class="nav-text">加法器的优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#乘法器和除法器"><span class="nav-number">6.</span> <span class="nav-text">乘法器和除法器</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
