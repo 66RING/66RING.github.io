@@ -28,7 +28,7 @@
 <meta property="og:description" content="简介 从纯文本的程序到可执行的编码，以hello.c为例 预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾 编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序 汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。 链接：hell">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-13T08:17:52.599Z">
+<meta property="article:modified_time" content="2020-06-14T07:46:07.711Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="cs">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-13 16:17:52" itemprop="dateModified" datetime="2020-06-13T16:17:52+08:00">2020-06-13</time>
+                <time title="Modified: 2020-06-14 15:46:07" itemprop="dateModified" datetime="2020-06-14T15:46:07+08:00">2020-06-14</time>
               </span>
 
           
@@ -1017,7 +1017,81 @@
 </ul>
 </li>
 </ul>
-<h2 id="乘法器和除法器"><a href="#乘法器和除法器" class="headerlink" title="乘法器和除法器"></a>乘法器和除法器</h2>
+<h2 id="乘法器和除法器"><a href="#乘法器和除法器" class="headerlink" title="乘法器和除法器"></a>乘法器和除法器</h2><p>整数乘法指令相当慢，需要多个时钟周期，然而其他的整数运算(如加法、减法、位移)之需要1个时钟周期。因此编译器使用了一项重要的优化：试着用移位和加法运算的组合来代替乘以常数因子的乘法。</p>
+<p>如$x \times 14$，$14=2^3+2^2+2^1$，编译器将乘法重写为(x&lt;&lt;3)+(x&lt;&lt;2)+(x&lt;&lt;1)，将一个乘法代替为3个移位和2个加法。甚至还可以$14=2^4-2^1$。</p>
+<h3 id="乘法器的实现"><a href="#乘法器的实现" class="headerlink" title="乘法器的实现"></a>乘法器的实现</h3><p>观察下列乘法过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">   1000</span><br><span class="line">   1001</span><br><span class="line">   ------</span><br><span class="line">   1000</span><br><span class="line">  0000_   好似乘数左移乘</span><br><span class="line"> 0000__</span><br><span class="line">1000___</span><br></pre></td></tr></table></figure>
+
+<p>一个N位乘法器需要3个寄存器，分别设为被乘数md，乘mr，结果res。由上列过程得到启发，过程如下：</p>
+<ul>
+<li><p>如果被乘数第一位不为0则乘以乘数</p>
+</li>
+<li><p>把结果加到res中</p>
+</li>
+<li><p>乘数右移，被乘数左移</p>
+</li>
+<li><p>如果执行了N次则乘法结束，否则回到第一步</p>
+</li>
+<li><p>对N位乘法器进行优化</p>
+<ul>
+<li><ol>
+<li>加法移位并行<ul>
+<li>通过控制器，控制移位，在一个时钟周期完成移位操作</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>减少不必要的硬件资源<ul>
+<li>md由于左移，储存需要的位数是它原始位宽的两倍<ul>
+<li>取消左移</li>
+</ul>
+</li>
+<li>mr右移有效数字每个周期减少1位<ul>
+<li>用res的低4为存放，因此可以取消mr</li>
+</ul>
+</li>
+<li>res每个周期增加1位<ul>
+<li>增加右移，来代替md的左移，乘积始终放在高4位</li>
+</ul>
+</li>
+<li>加法器参加运输，但实际有效数字自由其位宽的一半<ul>
+<li>md和res的高4位进行运算</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="除法的运算过程"><a href="#除法的运算过程" class="headerlink" title="除法的运算过程"></a>除法的运算过程</h3><p>观察除法的运算过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">         0001        结果累加，相当于左移</span><br><span class="line">        0001</span><br><span class="line">       0000</span><br><span class="line">      0000</span><br><span class="line">     0000            0010&lt;0000所以商为0</span><br><span class="line">0010&#x2F;00000111</span><br><span class="line">     0010____        相当于右移</span><br><span class="line">      0010</span><br><span class="line">       0010</span><br><span class="line">        0010</span><br><span class="line">        ----</span><br><span class="line">         0011</span><br><span class="line">         0010</span><br><span class="line">         ----</span><br><span class="line">            1        记录余数</span><br></pre></td></tr></table></figure>
+
+<p>过程如下</p>
+<ul>
+<li>余数寄存器减去除数，检测最高位判断大小</li>
+<li>除数右移</li>
+<li>商左移，累加</li>
+</ul>
+<p>除法器的优化:</p>
+<ul>
+<li><ol>
+<li>硬件资源优化<ul>
+<li>除数寄存器实际只用了一半</li>
+<li>商寄存器初始的空的，从右到左逐位填满</li>
+<li>余数初始是满的，有意义的位从左到右逐位减少</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>性能资源优化</li>
+</ol>
+</li>
+</ul>
+<h2 id="单周期处理器"><a href="#单周期处理器" class="headerlink" title="单周期处理器"></a>单周期处理器</h2>
     </div>
 
     
@@ -1039,8 +1113,8 @@
       <i class="fa fa-chevron-left"></i> 算法学习
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/02/23/universe/linux_tips/" rel="next" title="linux command line">
-      linux command line <i class="fa fa-chevron-right"></i>
+    <a href="/2020/01/23/universe/regular_expression/" rel="next" title="正则表达式基础语法">
+      正则表达式基础语法 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -1100,7 +1174,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数"><span class="nav-number">2.2.</span> <span class="nav-text">浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE浮点数表示"><span class="nav-number">2.2.1.</span> <span class="nav-text">IEEE浮点数表示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的机器级表示"><span class="nav-number">3.</span> <span class="nav-text">程序的机器级表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据格式"><span class="nav-number">3.1.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问信息"><span class="nav-number">3.2.</span> <span class="nav-text">访问信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIPS体系结构"><span class="nav-number">4.</span> <span class="nav-text">MIPS体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本指令"><span class="nav-number">4.1.</span> <span class="nav-text">基本指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令的基本格式"><span class="nav-number">4.2.</span> <span class="nav-text">指令的基本格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#R型"><span class="nav-number">4.2.1.</span> <span class="nav-text">R型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#I型"><span class="nav-number">4.2.2.</span> <span class="nav-text">I型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令-条件指令"><span class="nav-number">4.2.3.</span> <span class="nav-text">分支指令(条件指令)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算数逻辑单元"><span class="nav-number">5.</span> <span class="nav-text">算数逻辑单元</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算数运算和逻辑运算"><span class="nav-number">5.1.</span> <span class="nav-text">算数运算和逻辑运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#门电路的基本原理"><span class="nav-number">5.2.</span> <span class="nav-text">门电路的基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器的原理"><span class="nav-number">5.3.</span> <span class="nav-text">寄存器的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑运算的实现"><span class="nav-number">5.4.</span> <span class="nav-text">逻辑运算的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加减法的实现"><span class="nav-number">5.5.</span> <span class="nav-text">加减法的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加法器的优化"><span class="nav-number">5.6.</span> <span class="nav-text">加法器的优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#乘法器和除法器"><span class="nav-number">6.</span> <span class="nav-text">乘法器和除法器</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序结构和执行"><span class="nav-number">2.</span> <span class="nav-text">程序结构和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数运算"><span class="nav-number">2.1.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无符号加法"><span class="nav-number">2.1.1.</span> <span class="nav-text">无符号加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘以常数"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘以常数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除以2的幂"><span class="nav-number">2.1.3.</span> <span class="nav-text">除以2的幂</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数"><span class="nav-number">2.2.</span> <span class="nav-text">浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE浮点数表示"><span class="nav-number">2.2.1.</span> <span class="nav-text">IEEE浮点数表示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的机器级表示"><span class="nav-number">3.</span> <span class="nav-text">程序的机器级表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据格式"><span class="nav-number">3.1.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问信息"><span class="nav-number">3.2.</span> <span class="nav-text">访问信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIPS体系结构"><span class="nav-number">4.</span> <span class="nav-text">MIPS体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本指令"><span class="nav-number">4.1.</span> <span class="nav-text">基本指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令的基本格式"><span class="nav-number">4.2.</span> <span class="nav-text">指令的基本格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#R型"><span class="nav-number">4.2.1.</span> <span class="nav-text">R型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#I型"><span class="nav-number">4.2.2.</span> <span class="nav-text">I型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支指令-条件指令"><span class="nav-number">4.2.3.</span> <span class="nav-text">分支指令(条件指令)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算数逻辑单元"><span class="nav-number">5.</span> <span class="nav-text">算数逻辑单元</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算数运算和逻辑运算"><span class="nav-number">5.1.</span> <span class="nav-text">算数运算和逻辑运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#门电路的基本原理"><span class="nav-number">5.2.</span> <span class="nav-text">门电路的基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器的原理"><span class="nav-number">5.3.</span> <span class="nav-text">寄存器的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑运算的实现"><span class="nav-number">5.4.</span> <span class="nav-text">逻辑运算的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加减法的实现"><span class="nav-number">5.5.</span> <span class="nav-text">加减法的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加法器的优化"><span class="nav-number">5.6.</span> <span class="nav-text">加法器的优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#乘法器和除法器"><span class="nav-number">6.</span> <span class="nav-text">乘法器和除法器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#乘法器的实现"><span class="nav-number">6.1.</span> <span class="nav-text">乘法器的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#除法的运算过程"><span class="nav-number">6.2.</span> <span class="nav-text">除法的运算过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单周期处理器"><span class="nav-number">7.</span> <span class="nav-text">单周期处理器</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1114,12 +1188,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

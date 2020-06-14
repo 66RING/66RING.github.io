@@ -748,6 +748,124 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/23/universe/regular_expression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/23/universe/regular_expression/" class="post-title-link" itemprop="url">正则表达式基础语法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-23 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-23T00:00:00+08:00">2020-01-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-14 14:43:09" itemprop="dateModified" datetime="2020-06-14T14:43:09+08:00">2020-06-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><code>.</code><ul>
+<li>匹配任何一个字符</li>
+</ul>
+</li>
+<li><code>*</code><ul>
+<li>匹配任何数量(包括0)的前面的内容，贪婪匹配</li>
+</ul>
+</li>
+<li><code>+</code><ul>
+<li>匹配任何数量(不包括0)的前面的内容，非贪婪匹配</li>
+</ul>
+</li>
+<li><code>$</code><ul>
+<li>以前面的内容结束</li>
+</ul>
+</li>
+<li><code>^</code><ul>
+<li>以前面的内容开头</li>
+</ul>
+</li>
+<li><code>\S</code><ul>
+<li>任何非空白字符</li>
+</ul>
+</li>
+<li><code>\s</code><ul>
+<li>任何空白字符</li>
+</ul>
+</li>
+<li><code>?</code><ul>
+<li>前面内容是可选的</li>
+</ul>
+</li>
+<li><code>\</code><ul>
+<li>有时可以起到转意的作用，<code>\S</code>等就是例外</li>
+</ul>
+</li>
+<li><code>[0-9]</code><ul>
+<li>任何0到9的数字，范围可变但要按顺序</li>
+</ul>
+</li>
+<li><code>[a-z]</code><ul>
+<li>任何a到z的小写字符，范围可变但要按顺序</li>
+</ul>
+</li>
+<li><code>[A-Z]</code><ul>
+<li>任何A到Z的大写字符，范围可变但要按顺序</li>
+</ul>
+</li>
+<li><code>[A-Za-z]</code><ul>
+<li>任何A到Z的字符，范围可变但要按顺序</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/10/Major/compuer_organization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -779,7 +897,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-13 16:17:52" itemprop="dateModified" datetime="2020-06-13T16:17:52+08:00">2020-06-13</time>
+                <time title="Modified: 2020-06-14 15:46:07" itemprop="dateModified" datetime="2020-06-14T15:46:07+08:00">2020-06-14</time>
               </span>
 
           
@@ -1615,7 +1733,81 @@
 </ul>
 </li>
 </ul>
-<h2 id="乘法器和除法器"><a href="#乘法器和除法器" class="headerlink" title="乘法器和除法器"></a>乘法器和除法器</h2>
+<h2 id="乘法器和除法器"><a href="#乘法器和除法器" class="headerlink" title="乘法器和除法器"></a>乘法器和除法器</h2><p>整数乘法指令相当慢，需要多个时钟周期，然而其他的整数运算(如加法、减法、位移)之需要1个时钟周期。因此编译器使用了一项重要的优化：试着用移位和加法运算的组合来代替乘以常数因子的乘法。</p>
+<p>如$x \times 14$，$14=2^3+2^2+2^1$，编译器将乘法重写为(x&lt;&lt;3)+(x&lt;&lt;2)+(x&lt;&lt;1)，将一个乘法代替为3个移位和2个加法。甚至还可以$14=2^4-2^1$。</p>
+<h3 id="乘法器的实现"><a href="#乘法器的实现" class="headerlink" title="乘法器的实现"></a>乘法器的实现</h3><p>观察下列乘法过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">   1000</span><br><span class="line">   1001</span><br><span class="line">   ------</span><br><span class="line">   1000</span><br><span class="line">  0000_   好似乘数左移乘</span><br><span class="line"> 0000__</span><br><span class="line">1000___</span><br></pre></td></tr></table></figure>
+
+<p>一个N位乘法器需要3个寄存器，分别设为被乘数md，乘mr，结果res。由上列过程得到启发，过程如下：</p>
+<ul>
+<li><p>如果被乘数第一位不为0则乘以乘数</p>
+</li>
+<li><p>把结果加到res中</p>
+</li>
+<li><p>乘数右移，被乘数左移</p>
+</li>
+<li><p>如果执行了N次则乘法结束，否则回到第一步</p>
+</li>
+<li><p>对N位乘法器进行优化</p>
+<ul>
+<li><ol>
+<li>加法移位并行<ul>
+<li>通过控制器，控制移位，在一个时钟周期完成移位操作</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>减少不必要的硬件资源<ul>
+<li>md由于左移，储存需要的位数是它原始位宽的两倍<ul>
+<li>取消左移</li>
+</ul>
+</li>
+<li>mr右移有效数字每个周期减少1位<ul>
+<li>用res的低4为存放，因此可以取消mr</li>
+</ul>
+</li>
+<li>res每个周期增加1位<ul>
+<li>增加右移，来代替md的左移，乘积始终放在高4位</li>
+</ul>
+</li>
+<li>加法器参加运输，但实际有效数字自由其位宽的一半<ul>
+<li>md和res的高4位进行运算</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="除法的运算过程"><a href="#除法的运算过程" class="headerlink" title="除法的运算过程"></a>除法的运算过程</h3><p>观察除法的运算过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">         0001        结果累加，相当于左移</span><br><span class="line">        0001</span><br><span class="line">       0000</span><br><span class="line">      0000</span><br><span class="line">     0000            0010&lt;0000所以商为0</span><br><span class="line">0010&#x2F;00000111</span><br><span class="line">     0010____        相当于右移</span><br><span class="line">      0010</span><br><span class="line">       0010</span><br><span class="line">        0010</span><br><span class="line">        ----</span><br><span class="line">         0011</span><br><span class="line">         0010</span><br><span class="line">         ----</span><br><span class="line">            1        记录余数</span><br></pre></td></tr></table></figure>
+
+<p>过程如下</p>
+<ul>
+<li>余数寄存器减去除数，检测最高位判断大小</li>
+<li>除数右移</li>
+<li>商左移，累加</li>
+</ul>
+<p>除法器的优化:</p>
+<ul>
+<li><ol>
+<li>硬件资源优化<ul>
+<li>除数寄存器实际只用了一半</li>
+<li>商寄存器初始的空的，从右到左逐位填满</li>
+<li>余数初始是满的，有意义的位从左到右逐位减少</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>性能资源优化</li>
+</ol>
+</li>
+</ul>
+<h2 id="单周期处理器"><a href="#单周期处理器" class="headerlink" title="单周期处理器"></a>单周期处理器</h2>
       
     </div>
 
@@ -2891,76 +3083,6 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/27/universe/golang%E6%93%8D%E4%BD%9C%20mgov2%E7%AF%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/27/universe/golang%E6%93%8D%E4%BD%9C%20mgov2%E7%AF%87/" class="post-title-link" itemprop="url">golang操作 mgov2篇</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-27 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-27T00:00:00+08:00">2019-08-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-15 11:59:53" itemprop="dateModified" datetime="2020-04-15T11:59:53+08:00">2020-04-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="打开mongo"><a href="#打开mongo" class="headerlink" title="打开mongo"></a>打开mongo</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(</span><br><span class="line">  <span class="string">"gopkg.in/mgo.v2"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">	url:=<span class="string">"mongodb://localhost:27017"</span>  <span class="comment">// 不登录mongo的</span></span><br><span class="line">	url:=<span class="string">"mongodb://root:password@localhost:27017/登录的用户名"</span> <span class="comment">// 登录mongo的</span></span><br><span class="line">	session,err:=mgo.Dial(url)</span><br><span class="line">	<span class="keyword">defer</span> session.Close() <span class="comment">// 最后记得关闭 减压</span></span><br><span class="line">	ses:=session.DB(<span class="string">"databaseName"</span>).C(<span class="string">"collectionName"</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		fmt.Println(err)</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Update更新数据库"><a href="#Update更新数据库" class="headerlink" title="Update更新数据库"></a>Update更新数据库</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"gopkg.in/mgo.v2"</span></span><br><span class="line">	<span class="string">"gopkg.in/mgo.v2/bson"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Update只能更新一条，UpdateAll批量更新</span></span><br><span class="line">	selector := bson.M&#123;<span class="string">"word"</span>:<span class="string">"god"</span>&#125;  <span class="comment">// 选择器：按word:god找，不存在返回nor found</span></span><br><span class="line">	<span class="comment">//bson.M&#123;key:value&#125;就相当于python的字典</span></span><br><span class="line">	data := bson.M&#123;<span class="string">"$set"</span>:bson.M&#123;<span class="string">"word"</span>:<span class="string">"good"</span>&#125;&#125; <span class="comment">// 找到后用$set修改</span></span><br><span class="line">	ses.Update(selector,data)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果要更新集合里一个数组的</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -3030,12 +3152,12 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

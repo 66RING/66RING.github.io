@@ -145,6 +145,76 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/27/universe/golang%E6%93%8D%E4%BD%9C%20mgov2%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/27/universe/golang%E6%93%8D%E4%BD%9C%20mgov2%E7%AF%87/" class="post-title-link" itemprop="url">golang操作 mgov2篇</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-27 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-27T00:00:00+08:00">2019-08-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-15 11:59:53" itemprop="dateModified" datetime="2020-04-15T11:59:53+08:00">2020-04-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="打开mongo"><a href="#打开mongo" class="headerlink" title="打开mongo"></a>打开mongo</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(</span><br><span class="line">  <span class="string">"gopkg.in/mgo.v2"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">	url:=<span class="string">"mongodb://localhost:27017"</span>  <span class="comment">// 不登录mongo的</span></span><br><span class="line">	url:=<span class="string">"mongodb://root:password@localhost:27017/登录的用户名"</span> <span class="comment">// 登录mongo的</span></span><br><span class="line">	session,err:=mgo.Dial(url)</span><br><span class="line">	<span class="keyword">defer</span> session.Close() <span class="comment">// 最后记得关闭 减压</span></span><br><span class="line">	ses:=session.DB(<span class="string">"databaseName"</span>).C(<span class="string">"collectionName"</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		fmt.Println(err)</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Update更新数据库"><a href="#Update更新数据库" class="headerlink" title="Update更新数据库"></a>Update更新数据库</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"gopkg.in/mgo.v2"</span></span><br><span class="line">	<span class="string">"gopkg.in/mgo.v2/bson"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Update只能更新一条，UpdateAll批量更新</span></span><br><span class="line">	selector := bson.M&#123;<span class="string">"word"</span>:<span class="string">"god"</span>&#125;  <span class="comment">// 选择器：按word:god找，不存在返回nor found</span></span><br><span class="line">	<span class="comment">//bson.M&#123;key:value&#125;就相当于python的字典</span></span><br><span class="line">	data := bson.M&#123;<span class="string">"$set"</span>:bson.M&#123;<span class="string">"word"</span>:<span class="string">"good"</span>&#125;&#125; <span class="comment">// 找到后用$set修改</span></span><br><span class="line">	ses.Update(selector,data)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果要更新集合里一个数组的</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1183,12 +1253,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
