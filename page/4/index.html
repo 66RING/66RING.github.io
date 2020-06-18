@@ -500,7 +500,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+                <time title="Modified: 2020-06-18 11:28:19" itemprop="dateModified" datetime="2020-06-18T11:28:19+08:00">2020-06-18</time>
               </span>
 
           
@@ -564,6 +564,12 @@
 
 <h3 id="接收复杂的类型一般自定义结构体"><a href="#接收复杂的类型一般自定义结构体" class="headerlink" title="接收复杂的类型一般自定义结构体"></a>接收复杂的类型一般自定义结构体</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">因为http只能传字符串，所以前端要传json的话要先把json转换成json字符串</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
 
+<h2 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h2><h3 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h3><p><code>go func{}</code>以并发形式执行而不需等待执行完成</p>
+<h3 id="箭头符-lt"><a href="#箭头符-lt" class="headerlink" title="箭头符:&lt;-"></a>箭头符:&lt;-</h3><p>goroutine是golang中在语言级别实现的轻量级线程，仅仅利用 go 就能立刻起一个新线程。多线程会引入线程之间的同步问题，在golang中可以使用channel作为同步的工具。</p>
+<p>通过channel可以实现两个goroutine之间的通信。</p>
+<p>创建一个channel， <code>make(chan TYPE {, NUM})</code> , TYPE指的是channel中传输的数据类型，第二个参数是可选的，指的是channel的容量大小。</p>
+<p>向channel传入数据， <code>CHAN &lt;- DATA</code> , CHAN 指的是目的channel即收集数据的一方， DATA 则是要传的数据。</p>
+<p>从channel读取数据， <code>DATA := &lt;-CHAN</code> ，和向channel传入数据相反，在数据输送箭头的右侧的是channel，形象地展现了数据从‘隧道’流出到变量里。</p>
 
       
     </div>

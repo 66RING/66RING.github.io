@@ -28,7 +28,7 @@
 <meta property="og:description" content="概述shell对外暴露的接口，操作系统对外提供服务 特征  并发 同时存在多个运行的程序   共享 操作系统控制如何”同时”访问 文件互斥   虚拟 让每个用户&#x2F;程序都觉得有一个计算机专门为它提供服务   异步 程序执行不是一贯到底的，向前推进的速度有系统调度 但是只要环境相同，每次运行的结果一定相同   相互联系也相互区别   Microkernel:微内核架构设计 只放基本的功能 文件管理、网">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:34:14.471Z">
+<meta property="article:modified_time" content="2020-06-18T13:56:09.547Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="计算机,操作系统">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+                <time title="Modified: 2020-06-18 21:56:09" itemprop="dateModified" datetime="2020-06-18T21:56:09+08:00">2020-06-18</time>
               </span>
 
           
@@ -410,7 +410,134 @@
 </ul>
 </li>
 </ul>
-<h3 id="连续内存分配：压缩式与交换式碎片整理"><a href="#连续内存分配：压缩式与交换式碎片整理" class="headerlink" title="连续内存分配：压缩式与交换式碎片整理"></a>连续内存分配：压缩式与交换式碎片整理</h3>
+<h3 id="连续内存分配：压缩式与交换式碎片整理"><a href="#连续内存分配：压缩式与交换式碎片整理" class="headerlink" title="连续内存分配：压缩式与交换式碎片整理"></a>连续内存分配：压缩式与交换式碎片整理</h3><ul>
+<li>压缩式碎片整理<ul>
+<li>重置程序以合并孔洞</li>
+<li>要求所有程序是动态可重置的</li>
+<li>思考：<ul>
+<li>何时重置</li>
+<li>开销</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>交换式碎片整理(swaping)<ul>
+<li>运行程序需要更多的内存</li>
+<li>把硬盘当作内存的备份(虚拟内存)，将等待需求较长的程序挪到硬盘腾出内存</li>
+<li>抢占等待的程序&amp;回收他们的内存</li>
+<li>思考<ul>
+<li>那些程序交换</li>
+<li>何时换入换出</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Part-4"><a href="#Part-4" class="headerlink" title="Part 4"></a>Part 4</h2><h3 id="非连续内存分配：分段"><a href="#非连续内存分配：分段" class="headerlink" title="非连续内存分配：分段"></a>非连续内存分配：分段</h3><ul>
+<li><p>连续内存分配的缺点</p>
+<ul>
+<li>分配给一个程序的物理内存是连续的</li>
+<li>内存利用率低</li>
+<li>有外碎片和内碎片的问题</li>
+</ul>
+</li>
+<li><p>为什么需要非连续内存分配(优点)</p>
+<ul>
+<li>一个程序的物理地址空间是非连续的</li>
+<li>更好的内存利用和管理</li>
+<li>允许共享代码和数据</li>
+<li>支持动态加载和动态链接</li>
+</ul>
+</li>
+<li><p>非连续分配的缺点</p>
+<ul>
+<li>管理开销：如何建立虚拟地址和物理地址之间的转换<ul>
+<li>软件方案</li>
+<li>硬件方案<ul>
+<li>分段</li>
+<li>分页</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>分段</p>
+<ul>
+<li>段访问机制<ul>
+<li>程序访问内存需要一个二维数组(段号s，段内偏移addr)</li>
+</ul>
+</li>
+<li>分段的寻址方案<ul>
+<li>虚拟内存通过某种映射联系到物理地址</li>
+<li>需要一个段表，操作系统建立</li>
+<li>需要直到段的大小，防止偏移地址超出范围</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="非连续内存分配：页表"><a href="#非连续内存分配：页表" class="headerlink" title="非连续内存分配：页表"></a>非连续内存分配：页表</h3><p>页表其实就是一个大数组，每个运行的程序都有一个页表，每个页表有(page num, offset)</p>
+<ul>
+<li><p>属于程序运行状态，会动态变化</p>
+</li>
+<li><p>PIBR：页表基址寄存器</p>
+</li>
+<li><p>页表内容</p>
+<ul>
+<li>Flag标志位<ul>
+<li>dirty bit：是否合法</li>
+<li>resident bit：物理地址中是否存在</li>
+<li>clock/reference bit</li>
+</ul>
+</li>
+<li>帧号frame num：f</li>
+</ul>
+</li>
+<li><p>CPU通过页号和偏移寻址到对应的页表项，把帧号和偏移组合形成物理地址</p>
+</li>
+<li><p>分页机制的性能问题：</p>
+<ul>
+<li>访问一个内存单元需要两次内存地址访问<ul>
+<li>一次获取表项</li>
+<li>一次访问数据</li>
+</ul>
+</li>
+<li>页表可能很大，而且为了隔离每个程序要有自己的页表</li>
+<li>页表空间大，因此访问效率页会有问题</li>
+</ul>
+</li>
+<li><p>解决办法</p>
+<ul>
+<li>缓存近期访问的页帧转换表项(TLB)<ul>
+<li>TLB使用关联内存实现，具备快速访问性能</li>
+<li>如果TLB命中，物理页号可以很快获取</li>
+<li>如果TLB未命中TLB miss，对应的表项被更新到TLB中<ul>
+<li>多数编程(访问)的局部性可以降低TLB miss</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>间接访问</li>
+</ul>
+</li>
+</ul>
+<h3 id="非连续内存分配：页表-二级、多级页表"><a href="#非连续内存分配：页表-二级、多级页表" class="headerlink" title="非连续内存分配：页表-二级、多级页表"></a>非连续内存分配：页表-二级、多级页表</h3><p>速度问题解决了，空间上如何解决？那就需要页表分级</p>
+<p>以二级页表举例，把一块大的页表分成两块，把大的page num分成两块：p1、p2。<br>通过一级表[p1]找到二级表的地址，在用二级表地址做索引，二级表[p2]找到frame num就可以找到物理地址。</p>
+<p>整个过程多了寻址，导致开销增大，但是通过分级，当物理地址不存在时(在一级表就可以得出)，从而二级表不必保存这部分内容。以时间换空间。</p>
+<p>多级页表同理</p>
+<h3 id="非连续内存分配：页表-反向页表"><a href="#非连续内存分配：页表-反向页表" class="headerlink" title="非连续内存分配：页表-反向页表"></a>非连续内存分配：页表-反向页表</h3><p>前面所讲的页表的大小都和逻辑地址空间的大小有对应关系，逻辑空间寻址的范围越大，页表越多。</p>
+<ul>
+<li>大地址空间的问题：<ul>
+<li>有大地址空间(64bits)，向前映射页表变得繁琐</li>
+<li>不是让页表与逻辑空间的大小对应，而是让页表与物理地址空间大小对应</li>
+</ul>
+</li>
+</ul>
+<p>有什么办法使得页表项和逻辑地址空间没有那么大的关系，尽量和物理地址空间大小有关？这就是反向页表的想法。</p>
+<p>前面都是以逻辑页号来索引页表(一个大数组)，能否用页帧号(物理页号)来查找对应的逻辑页的页号呢？这样就能省很多空间。</p>
+<p>基于哈希查找的方案</p>
+<h2 id="Part-5"><a href="#Part-5" class="headerlink" title="Part 5"></a>Part 5</h2><h3 id="虚拟内存的起因"><a href="#虚拟内存的起因" class="headerlink" title="虚拟内存的起因"></a>虚拟内存的起因</h3>
     </div>
 
     
@@ -493,7 +620,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2"><span class="nav-number">2.</span> <span class="nav-text">Part 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-3"><span class="nav-number">3.</span> <span class="nav-text">Part 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机体系结构及内存分层体系"><span class="nav-number">3.1.</span> <span class="nav-text">计算机体系结构及内存分层体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址空间与地址生成"><span class="nav-number">3.2.</span> <span class="nav-text">地址空间与地址生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：内存碎片与分区的动态分配"><span class="nav-number">3.3.</span> <span class="nav-text">连续内存分配：内存碎片与分区的动态分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：压缩式与交换式碎片整理"><span class="nav-number">3.4.</span> <span class="nav-text">连续内存分配：压缩式与交换式碎片整理</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2"><span class="nav-number">2.</span> <span class="nav-text">Part 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-3"><span class="nav-number">3.</span> <span class="nav-text">Part 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机体系结构及内存分层体系"><span class="nav-number">3.1.</span> <span class="nav-text">计算机体系结构及内存分层体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址空间与地址生成"><span class="nav-number">3.2.</span> <span class="nav-text">地址空间与地址生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：内存碎片与分区的动态分配"><span class="nav-number">3.3.</span> <span class="nav-text">连续内存分配：内存碎片与分区的动态分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：压缩式与交换式碎片整理"><span class="nav-number">3.4.</span> <span class="nav-text">连续内存分配：压缩式与交换式碎片整理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-4"><span class="nav-number">4.</span> <span class="nav-text">Part 4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：分段"><span class="nav-number">4.1.</span> <span class="nav-text">非连续内存分配：分段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表"><span class="nav-number">4.2.</span> <span class="nav-text">非连续内存分配：页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表-二级、多级页表"><span class="nav-number">4.3.</span> <span class="nav-text">非连续内存分配：页表-二级、多级页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表-反向页表"><span class="nav-number">4.4.</span> <span class="nav-text">非连续内存分配：页表-反向页表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-5"><span class="nav-number">5.</span> <span class="nav-text">Part 5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟内存的起因"><span class="nav-number">5.1.</span> <span class="nav-text">虚拟内存的起因</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
