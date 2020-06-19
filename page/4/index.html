@@ -469,7 +469,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/05/universe/Golang%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/05/universe/Golang_note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -483,7 +483,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/08/05/universe/Golang%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Golang</a>
+            <a href="/2019/08/05/universe/Golang_note/" class="post-title-link" itemprop="url">Golang</a>
         </h2>
 
         <div class="post-meta">
@@ -500,7 +500,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-18 11:28:19" itemprop="dateModified" datetime="2020-06-18T11:28:19+08:00">2020-06-18</time>
+                <time title="Modified: 2020-06-19 16:23:43" itemprop="dateModified" datetime="2020-06-19T16:23:43+08:00">2020-06-19</time>
               </span>
 
           
@@ -570,6 +570,11 @@
 <p>创建一个channel， <code>make(chan TYPE {, NUM})</code> , TYPE指的是channel中传输的数据类型，第二个参数是可选的，指的是channel的容量大小。</p>
 <p>向channel传入数据， <code>CHAN &lt;- DATA</code> , CHAN 指的是目的channel即收集数据的一方， DATA 则是要传的数据。</p>
 <p>从channel读取数据， <code>DATA := &lt;-CHAN</code> ，和向channel传入数据相反，在数据输送箭头的右侧的是channel，形象地展现了数据从‘隧道’流出到变量里。</p>
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><h3 id="参数绑定"><a href="#参数绑定" class="headerlink" title="参数绑定"></a>参数绑定</h3><p>以gin框架为例</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span>&#123;</span><br><span class="line">    Name <span class="keyword">string</span>  <span class="string">`json:"name" form:"name" binding:required`</span></span><br><span class="line">    Age <span class="keyword">int</span>    <span class="string">`json:"age" form:"age"`</span></span><br><span class="line">    Address <span class="keyword">string</span>  <span class="string">`json:"address" form:"addr"`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>``</code>之间的标记表明了了映射关系和数据来源，这样使用gin的<code>bind</code>函数就可生成Person实例。<code>json</code>标记表明了映射成json时使用的名称如name，而不是Name，或使用json中的对应字段完成映射。<code>form</code>标记表明了从表单中获取映射。<code>required</code>标记表明了必须要有这个参数，没有会报错。当然binding等标记还有其他用法，和自定义，详见官方文档。</p>
+<p>gin的这个binding功能使用了第三方的验证器，validator。</p>
 
       
     </div>
@@ -1264,7 +1269,7 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

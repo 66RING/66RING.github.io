@@ -897,7 +897,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-18 21:41:05" itemprop="dateModified" datetime="2020-06-18T21:41:05+08:00">2020-06-18</time>
+                <time title="Modified: 2020-06-19 20:34:07" itemprop="dateModified" datetime="2020-06-19T20:34:07+08:00">2020-06-19</time>
               </span>
 
           
@@ -2234,7 +2234,109 @@
 </li>
 </ul>
 <p>building</p>
-<h3 id="高速缓存的工作原理"><a href="#高速缓存的工作原理" class="headerlink" title="高速缓存的工作原理"></a>高速缓存的工作原理</h3>
+<h3 id="高速缓存的工作原理"><a href="#高速缓存的工作原理" class="headerlink" title="高速缓存的工作原理"></a>高速缓存的工作原理</h3><p>$$Cpu \leftrightarrow Cache \leftrightarrow Main Memory$$</p>
+<ul>
+<li>程序的局部性原理:计算机程序从空间和时间都表现出局部性<ul>
+<li>时间局部性<ul>
+<li>最近被访问的存储器单元(指令或数据)很快会被访问</li>
+</ul>
+</li>
+<li>空间局部性<ul>
+<li>正在被访问的存储器单元附近的单元很快会被访问到</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;<span class="number">10</span>; i++)&#123;</span><br><span class="line">        sum+=a[i][j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// i很快会(频繁)被访问</span></span><br><span class="line"><span class="comment">// a数组附件的单元很快会被访问</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>cache的基本原理</p>
+<ul>
+<li>cache对空间局部性的利用<ul>
+<li>从主存中取回待访问数据时，会同时取回与位置相邻的主存单元的数据</li>
+<li>以数据块(Block)为单位和主存进行数据交换</li>
+</ul>
+</li>
+<li>cache对时间局部性的利用<ul>
+<li>保存近期频繁被访问的主存单元的数据</li>
+</ul>
+</li>
+<li>这样如果cache中有数据(cache命中)则从cache中获取</li>
+</ul>
+</li>
+<li><p>cache的写策略</p>
+<ul>
+<li>cache命中时的写策略<ul>
+<li>写穿透：数据同时写入cache和主存</li>
+<li>写返回：数据只写入cache，仅当改数据块被替换时才写入主存</li>
+</ul>
+</li>
+<li>cache失效时的写策略<ul>
+<li>写不分配：直接写入主存</li>
+<li>写分配：将该数据所在的块读入cache后，在将数据写入cache，利用局部性原理</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="高速缓存的设计要点"><a href="#高速缓存的设计要点" class="headerlink" title="高速缓存的设计要点"></a>高速缓存的设计要点</h3><ul>
+<li>平均访存时间(Average Memory Access Time)=Hit Time + Miss Penalty x Miss Rate<ul>
+<li>Hit Time：命中时间，从cache将命中数据返回的时间</li>
+<li>Miss Penalty：失效代价，从主存读取数据并返回的时间</li>
+<li>Miss Rate：失效率，未命中的概率</li>
+<li>降低访存时间主要就是降低这3个参数</li>
+</ul>
+</li>
+<li>cache失效的原因<ul>
+<li>义务失效：第一次访问<ul>
+<li>无法避免</li>
+</ul>
+</li>
+<li>容量失效：无法保存程序所需的所有数据块<ul>
+<li>可增加cache容量缓解，但会增加命中时间</li>
+</ul>
+</li>
+<li>冲突失效：多个存储器位置映射到同一个cache位置<ul>
+<li>需要精心设计映射策略</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>映射策略<ul>
+<li>直接映射</li>
+<li>多路组相联(相当于用几个表来保存，但是表越多就要用越复杂的电路判断是否在其中一个表中)</li>
+<li>常见的cache替换算法<ul>
+<li>随机</li>
+<li>轮换</li>
+<li>最近最少使用(LRU)：效果最好但设计复杂</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="存储器容量的计算"><a href="#存储器容量的计算" class="headerlink" title="存储器容量的计算"></a>存储器容量的计算</h3><table>
+<thead>
+<tr>
+<th>&lt;++&gt;</th>
+<th>&lt;++&gt;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ki:kibi</td>
+<td>$1024^1$</td>
+</tr>
+<tr>
+<td>Mi:mebi</td>
+<td>$1024^2$</td>
+</tr>
+<tr>
+<td>..</td>
+<td>..</td>
+</tr>
+</tbody></table>
+<h2 id="中断和异常"><a href="#中断和异常" class="headerlink" title="中断和异常"></a>中断和异常</h2>
       
     </div>
 
@@ -3584,7 +3686,7 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
