@@ -145,6 +145,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/01/universe/vimscript_backup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/01/universe/vimscript_backup/" class="post-title-link" itemprop="url">vimscript学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-01T00:00:00+08:00">2020-05-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Remenber to use <code>:h &lt;arg&gt;</code> for help</p>
+<h2 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h2><ul>
+<li><code>let</code> to init or assignment a variable(call it var below)</li>
+<li><code>unlet</code> to delete a var</li>
+<li><code>unlet</code> to delete a var and ignore warnning, if var did not exist</li>
+</ul>
+<p>You can add a prefix before :var to define its scope, like this</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">g:var  # as global</span><br><span class="line">a:var  # as a function arg</span><br><span class="line">l:var  # as a function var</span><br><span class="line">b:var  # as buffer var</span><br><span class="line">w:var  # as window var</span><br><span class="line">t:var  # as tab var</span><br><span class="line">s:var  # as script var, which useful in this script only</span><br><span class="line">v:var  # as vim build-in var</span><br></pre></td></tr></table></figure>
+
+<h2 id="Data-type"><a href="#Data-type" class="headerlink" title="Data type"></a>Data type</h2><ul>
+<li>Number</li>
+<li>Float</li>
+<li>String</li>
+<li>Funcref<ul>
+<li>reference of a function</li>
+<li><code>let func = function(&quot;strlen&quot;)</code></li>
+</ul>
+</li>
+<li>List</li>
+<li>Dictionary</li>
+</ul>
+<h2 id="String-comparison"><a href="#String-comparison" class="headerlink" title="String comparison"></a>String comparison</h2><ul>
+<li><code>&lt;string&gt; == &lt;string&gt;</code> equal</li>
+<li><code>&lt;string&gt; != &lt;string&gt;</code> not equal</li>
+<li><code>&lt;string&gt; =~ &lt;pattern&gt;</code> matching pattern</li>
+<li><code>&lt;string&gt; !~ &lt;pattern&gt;</code> not matching pattern</li>
+<li><code>&lt;operator&gt;#</code> matching with case</li>
+<li><code>&lt;operator&gt;?</code> matching with ignorecase</li>
+</ul>
+<p><code>&lt;string&gt;.&lt;string&gt;</code> to connect string</p>
+<h2 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h2><p><code>If, For, While, Try/Catch</code></p>
+<h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><p>Use <code>function</code> keywork to define a function, use <code>function!</code> to overwire a function. Be attention, function need to begin with capital letter.</p>
+<ul>
+<li><code>delfunction &lt;function&gt;</code> to delete a function</li>
+<li><code>call &lt;function&gt;</code> to call a function </li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/14/universe/the_nature_of_code/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -5678,77 +5778,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/25/universe/linux%E5%93%B2%E5%AD%A6%E8%AE%B0%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/25/universe/linux%E5%93%B2%E5%AD%A6%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">Linux哲学记录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-25 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-25T00:00:00+08:00">2020-02-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="开发效率问题"><a href="#开发效率问题" class="headerlink" title="开发效率问题"></a>开发效率问题</h4><p><strong>闭源</strong> </p>
-<p>在一个项目开发中<br>假设一个人开发效率是100%, 因为他能全身心投入项目中. 两个人每个人的开发效率是80%, 其中20%是因为另一个人损耗的沟通成本, 那么两个人的效率就像一个人的160%.<br>但是如果人数增加, 每个人的沟通成本也会增加, 最后发现效率降低. 所以一个多人开发的大型项目理论上是不可能成功的.</p>
-<p>那么框架, 框架的扩展性就显得尤其重要.</p>
-<p><strong>开源</strong></p>
-<p>一个开源项目往往有成百上千的人参与, 那根据上面的理论, 一个开源项目就不会成功.<br>但是当人数多到一定程度的时候, 一个潜在的错误一旦出现就会立刻得到解决, 反而大大提高了效率.<br>但是当人数多到一定程度的时候, 已经不在上面理论的范畴之内了, 就像物理世界的<strong>宏观和微观问题</strong>.<br>在多人开发的开源项目中的理论就遵循<em>linus</em> 提出的<strong>linus理论</strong>. 开源项目的成功就足以证明其正确性.</p>
-<h4 id="开源程序的责任"><a href="#开源程序的责任" class="headerlink" title="开源程序的责任"></a>开源程序的责任</h4><p>一个开源程序往往有一个开源协议, 这些协议往往把责任只想广大社区的开发者, 也就是我们自己.<br>所以我们获取的开源软件我们自己, 我们广大开发者就要对其负责.</p>
-<p>举个例子:比如你找学霸抄作业, 但是抄来的答案全是错是, 你该怪学霸吗?<br>于是你在抄之前, 问了一下别人是不是也抄了学霸的作业, 别人告诉你说没问题, 或者你检查了一遍发现没问题. 那社区就保证了它的安全性.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -5818,12 +5847,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
