@@ -145,6 +145,76 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/08/universe/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/09/08/universe/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">机器学习与数据分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-08 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-08T00:00:00+08:00">2019-09-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h3><h4 id="打开数据：numpy-genfromtxt"><a href="#打开数据：numpy-genfromtxt" class="headerlink" title="打开数据：numpy.genfromtxt()"></a>打开数据：numpy.genfromtxt()</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.genfromtxt(PATH,delimiter=<span class="string">"分隔符"</span>,dtype=<span class="string">"类型"</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="最核心：numpy-array"><a href="#最核心：numpy-array" class="headerlink" title="最核心：numpy.array()"></a>最核心：numpy.array()</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把数据变成数组-&gt;类似matlab的矩阵</span></span><br><span class="line">vector = numpy.array()</span><br><span class="line"><span class="comment"># numpy.array()会把里面的东西换成一样的类型</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>vector.shape</span><br><span class="line"><span class="comment"># 返回vectoe的规模，几维数组</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>vector==<span class="number">10</span></span><br><span class="line"><span class="comment"># 相当于把vector里面的每个元素都进行==10的判断</span></span><br><span class="line"><span class="comment"># 返回boolean列表</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>vector[<span class="string">'判断方法'</span>]</span><br><span class="line">equal_to_ten = (vector == <span class="number">10</span>) <span class="comment"># equal_to_ten就是一个bool的列表</span></span><br><span class="line">vector[equal_to_ten] <span class="comment"># 按equal_to_ten的列表顺序，返回值</span></span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>vector.astype(TYPE) </span><br><span class="line"><span class="comment"># 整体类型转换</span></span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>vector.min() &amp;&amp; vector.max() &amp;&amp; vector.sum()</span><br><span class="line"><span class="comment"># vector.max()里面提供参数可以指定sum的方法</span></span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>vector.reshape(<span class="number">3</span>,<span class="number">5</span>)</span><br><span class="line"><span class="comment"># 变成个3*5的矩阵</span></span><br><span class="line"></span><br><span class="line"><span class="number">7.</span>numpy.zeros(规模)</span><br><span class="line"><span class="comment"># 初始化	全为0的矩阵</span></span><br><span class="line"></span><br><span class="line"><span class="number">8.</span> numpy.ones((规模),dtype=)</span><br><span class="line"><span class="comment"># 初始化一个，里面元素的类型自定</span></span><br><span class="line"></span><br><span class="line"><span class="number">9.</span>numpy.arange(start,end,step)</span><br><span class="line"></span><br><span class="line">*<span class="number">10.</span>numpy.random.random(规模)</span><br><span class="line"><span class="comment"># 正一到负一的值</span></span><br><span class="line"></span><br><span class="line">*<span class="number">11.</span>numpy.linespace(start,end,分多少份)</span><br><span class="line"><span class="comment"># </span></span><br><span class="line"></span><br><span class="line"><span class="number">12.</span> numpy运算</span><br><span class="line"><span class="comment"># * 对应位置的乘</span></span><br><span class="line"><span class="comment"># A.dot(B) numpy.dot(A.B) A和B矩阵乘</span></span><br><span class="line"></span><br><span class="line"><span class="number">13.</span>numpy.floor()</span><br><span class="line"><span class="comment"># 向下取整</span></span><br><span class="line"></span><br><span class="line"><span class="number">13.</span>vector.ravel()</span><br><span class="line"><span class="comment"># 把矩阵拉成向量</span></span><br><span class="line"></span><br><span class="line"><span class="number">14.</span>矩阵拼接</span><br><span class="line"><span class="comment"># numpy.hstack() 横着拼接</span></span><br><span class="line"><span class="comment"># numpy.vstack() 竖着拼接</span></span><br><span class="line"></span><br><span class="line"><span class="number">15.</span>切分</span><br><span class="line"><span class="comment"># numpy.hsplit(a,3) 按行切分</span></span><br><span class="line"><span class="comment"># numpy.vsplit() 按列切分</span></span><br><span class="line"><span class="comment"># 把a切成3份</span></span><br><span class="line"><span class="comment"># 3的位置可以传入一个元组，就会在元组的位置切分</span></span><br><span class="line"></span><br><span class="line"><span class="number">16.</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/02/universe/kali-linux%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%92%8C%E6%96%87%E6%9C%AC%E7%95%8C%E9%9D%A2%E7%9A%84%E5%88%87%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1159,148 +1229,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/03/universe/pipenv_manual/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/03/universe/pipenv_manual/" class="post-title-link" itemprop="url">pip venv tools usage</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-03 00:00:00" itemprop="dateCreated datePublished" datetime="2019-01-03T00:00:00+08:00">2019-01-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-23 15:53:49" itemprop="dateModified" datetime="2020-06-23T15:53:49+08:00">2020-06-23</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Virtualenvwrapper"><a href="#Virtualenvwrapper" class="headerlink" title="Virtualenvwrapper"></a>Virtualenvwrapper</h1><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install virtualenvwrapper</span><br></pre></td></tr></table></figure>
-
-<p>Some environment variable</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> WORKON_HOME=~/Envs  <span class="comment"># specify home of venv</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> VIRTUALENVWRAPPER_PYTHON=/usr/<span class="built_in">local</span>/bin/python3  <span class="comment"># specify defaul python version </span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh  <span class="comment"># active virtualenvwrapper when open terminal</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><ul>
-<li>New venv<ul>
-<li><code>mkvirtualenv your_venv_name --python=python_version</code></li>
-</ul>
-</li>
-<li>Active/Switch between venvs<ul>
-<li><code>workon your_venv_name</code></li>
-</ul>
-</li>
-<li>Quit<ul>
-<li><code>deactivate</code></li>
-</ul>
-</li>
-<li>Delete<ul>
-<li><code>rmvirtualenv your_venv_name</code></li>
-</ul>
-</li>
-<li>List All<ul>
-<li><code>lsvirtualenv</code></li>
-</ul>
-</li>
-<li>Hook<ul>
-<li>This hook is sourced after this virtualenv is activated</li>
-<li>Specify in <code>your_venv_home/your_venv_name/bin/postactive</code></li>
-</ul>
-</li>
-</ul>
-<h1 id="Pipenv-Usage"><a href="#Pipenv-Usage" class="headerlink" title="Pipenv Usage"></a>Pipenv Usage</h1><h2 id="Install-1"><a href="#Install-1" class="headerlink" title="Install"></a>Install</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pipenv</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Usage-1"><a href="#Usage-1" class="headerlink" title="Usage"></a>Usage</h2><p>Quick Start</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd     myproject</span><br><span class="line">pipenv install  # create virtual environment</span><br><span class="line">pipenv install request  #  or install module</span><br><span class="line">pipenv --venv  # show location of this virtual environmenfuzzy findert</span><br><span class="line">pipenv --py    # show location of this python interpreter</span><br><span class="line">pipenv shell  # activate</span><br></pre></td></tr></table></figure>
-
-<p>Create a new project using Python 3.7, specifically</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv --python 3.7</span><br></pre></td></tr></table></figure>
-
-<p>Remove project virtualenv (inferred from current directory):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv --rm</span><br></pre></td></tr></table></figure>
-
-<p>Install all dependencies for a project (including dev):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --dev</span><br></pre></td></tr></table></figure>
-
-<p>Create a lockfile containing pre-releases:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv lock --pre</span><br></pre></td></tr></table></figure>
-
-<p>Show a graph of your installed dependencies:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv graph</span><br></pre></td></tr></table></figure>
-
-<p>Check your installed dependencies for security vulnerabilities:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv check</span><br></pre></td></tr></table></figure>
-
-<p>Install a local setup.py into your virtual environment/Pipfile:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install -e .</span><br></pre></td></tr></table></figure>
-
-<p>Use a lower-level pip command:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run pip freeze</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Activate"><a href="#Activate" class="headerlink" title="Activate"></a>Activate</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipenv shell</span><br><span class="line">python --version</span><br></pre></td></tr></table></figure>
-
-<h2 id="Use-pypi-mirror"><a href="#Use-pypi-mirror" class="headerlink" title="Use pypi-mirror"></a>Use pypi-mirror</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --pypi-mirror https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple</span><br></pre></td></tr></table></figure>
-
-<p>OR edit Pipfile</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[[source]]</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&quot;</span><br><span class="line">verify_ssl &#x3D; true</span><br><span class="line">name &#x3D; &quot;pypi&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1366,12 +1298,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
