@@ -28,7 +28,7 @@
 <meta property="og:description" content="Scapy使用需要root权限 scapy可以帮助我们铸造各种包，我们利用这些包可以实现我们想要的目的。如扫描等  sr: Send ans Receive   网络包有很多不同的参数，不需要死记硬背，只需用时看以下就行。如不知道ARP需要什么参数，可以采用如下，就可以知道 12a &#x3D; Ether()&#x2F;ARP()a.show()  不知道scapy的类有那些方法时，可以使用type(arg)来查看">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-24T12:10:39.566Z">
+<meta property="article:modified_time" content="2020-06-26T10:33:01.810Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="network, python, hack">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-24 20:10:39" itemprop="dateModified" datetime="2020-06-24T20:10:39+08:00">2020-06-24</time>
+                <time title="Modified: 2020-06-26 18:33:01" itemprop="dateModified" datetime="2020-06-26T18:33:01+08:00">2020-06-26</time>
               </span>
 
           
@@ -204,22 +204,12 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = Ether()/ARP()</span><br><span class="line">a.show()</span><br></pre></td></tr></table></figure>
 
 <p>不知道scapy的类有那些方法时，可以使用<code>type(arg)</code>来查看类，然后网上查找。</p>
-<h2 id="ARP协议"><a href="#ARP协议" class="headerlink" title="ARP协议"></a>ARP协议</h2><p>IP地址和MAC地址的转换，询问目的机的MAC地址</p>
+<h2 id="扫描探测"><a href="#扫描探测" class="headerlink" title="扫描探测"></a>扫描探测</h2><h3 id="ARP扫描-PING扫描"><a href="#ARP扫描-PING扫描" class="headerlink" title="ARP扫描/PING扫描"></a>ARP扫描/PING扫描</h3><p>ARP协议完成IP地址和MAC地址的转换，询问目的机的MAC地址</p>
+<p>通过ping扫描或arp扫描可以知道那些地址上有活动主机</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pkt = IP(dst=<span class="string">'47.96.226.37'</span>, ttl=<span class="number">1</span>, id=<span class="number">168</span>)/ICMP(id=<span class="number">188</span>, seq=<span class="number">1</span>)</span><br><span class="line">result = srp(pkt)  <span class="comment"># 得到 [收到的,未收到的]</span></span><br><span class="line">result[<span class="number">0</span>].res[x][y].getlayer(ARP).fields[<span class="string">'key'</span>]  <span class="comment"># res产生清单，很多元祖啊；getlayer是将二进制转换为字典，fields获取对应的值，缺省的获取整个字典</span></span><br><span class="line"><span class="comment"># 这个结构需要有所了解</span></span><br></pre></td></tr></table></figure>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+<h3 id="TCP扫描"><a href="#TCP扫描" class="headerlink" title="TCP扫描"></a>TCP扫描</h3><p>利用tcp协议，扫描tcp的开放端口。发送SYN包，回复SYN ACK就说明端口开放 </p>
 
     </div>
 
@@ -303,7 +293,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scapy使用"><span class="nav-number">1.</span> <span class="nav-text">Scapy使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARP协议"><span class="nav-number">2.</span> <span class="nav-text">ARP协议</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scapy使用"><span class="nav-number">1.</span> <span class="nav-text">Scapy使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扫描探测"><span class="nav-number">2.</span> <span class="nav-text">扫描探测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ARP扫描-PING扫描"><span class="nav-number">2.1.</span> <span class="nav-text">ARP扫描&#x2F;PING扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP扫描"><span class="nav-number">2.2.</span> <span class="nav-text">TCP扫描</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
