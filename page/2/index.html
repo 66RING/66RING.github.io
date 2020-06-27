@@ -145,6 +145,1457 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/09/Major/assembly_language/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/09/Major/assembly_language/" class="post-title-link" itemprop="url">汇编语言</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-09 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-09T00:00:00+08:00">2020-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><ul>
+<li>地址总线<ul>
+<li>CPU通过地址总线来指定存储单元，N根导线可以传送N位二进制数，可选址$2^N$个内存单元，可表示最大的数为$2^N - 1$。</li>
+</ul>
+</li>
+<li>数据总线<ul>
+<li>CPU与内存或其他器件之间的数据传输是通过数据总线来进行的。数据总线的宽度决定了CPU和外界的数据传输速度。如8根数据总线一次可以传送8位(一个字节)二进制数据。</li>
+</ul>
+</li>
+<li>控制总线<ul>
+<li>CPU对外部器件的控制是通过控制总线来进行的。有多少跟控制总线就意味着CPU提供了对外部器件的多少种控制。</li>
+</ul>
+</li>
+<li>主板<ul>
+<li>主板上有核心器件和一些主要部件，这些部件通过总线(地址总线、数据总线、控制总线)相连</li>
+</ul>
+</li>
+<li>接口卡<ul>
+<li>CPU通过总线向接口卡发送命令，接口卡根据CPU的命令控制外设进行工作</li>
+</ul>
+</li>
+<li>各类储存器芯片<ul>
+<li>从读写属性上分为两类：随机储存器(RAM)和只读储存器(ROM)<ul>
+<li>随机储存器可读可写，关机后储存的内容丢失</li>
+<li>只读储存器只读不能写入，关机后内容不会丢失</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>地址空间<ul>
+<li>内存地址空间的大小受CPU地址总线宽度的限制，如CPU地址总线宽度是20,可以传送$2^{20}$个不同的地址信息。可定位$2^20$个内存单元，该CPU的内存地址空间大小为1MB</li>
+</ul>
+</li>
+</ul>
+<h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><p>寄存器是CPU中程序员可以用指令读写的部件。不同的CPU寄存器的个数、结构是不同的。8086CPU有14个寄存器，每个寄存器有一个名字。这些寄存器是：AX、BX、CX、DX、SI、DI、SP、BP、IP、CS、SS、DS、ES、PSW。</p>
+<h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><p>8086CPU的所有寄存器都是16位的，可以储存两个字节。AX、BX、CX、DX这4个寄存器通常用来存放一般性数据，被称为 <strong>通用寄存器</strong> 。这4个寄存器可以分为两个独立使用的8位寄存器来使用:</p>
+<ul>
+<li>AX可分为AH和AL<ul>
+<li>AX的低8位构成了AL寄存器，高8位构成了AH寄存器，后面的同理</li>
+</ul>
+</li>
+<li>BX可分为BH和BL</li>
+<li>CX可分为CH和CL</li>
+<li>DX可分为DH和DL</li>
+</ul>
+<h3 id="几条汇编命令"><a href="#几条汇编命令" class="headerlink" title="几条汇编命令"></a>几条汇编命令</h3><table>
+<thead>
+<tr>
+<th>汇编命令</th>
+<th>控制CPU完成的操作</th>
+<th>用高级语言的语法描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mov ax,18</td>
+<td>将18送入寄存器AX</td>
+<td>AX=18</td>
+</tr>
+<tr>
+<td>mov ax,bx</td>
+<td>将寄存器bx的数据送入寄存器AX</td>
+<td>AX=BX</td>
+</tr>
+<tr>
+<td>add ax,18</td>
+<td>将寄存器AX的数值加上18</td>
+<td>AX=AX+18</td>
+</tr>
+<tr>
+<td>add ax,bx</td>
+<td>将寄存器AX的数值加上寄存器BX的数值</td>
+<td>AX=AX+BX</td>
+</tr>
+</tbody></table>
+<h3 id="物理地址"><a href="#物理地址" class="headerlink" title="物理地址"></a>物理地址</h3><p>CPU访问内存单元时，要给出内存单元的地址。所有的内存单元构成的存储空间是一个一维的线性空间，每个内存单元在这个空间中都有唯一的地址，我们将这个唯一的地址称为物理地址。</p>
+<h3 id="16位结构的CPU"><a href="#16位结构的CPU" class="headerlink" title="16位结构的CPU"></a>16位结构的CPU</h3><p>特征：</p>
+<ul>
+<li>运算器最多可处理16位的数据</li>
+<li>寄存器的最大宽度为16</li>
+<li>寄存器和运算器之间的通路为16位</li>
+</ul>
+<h3 id="8086CPU给出物理地址的方法"><a href="#8086CPU给出物理地址的方法" class="headerlink" title="8086CPU给出物理地址的方法"></a>8086CPU给出物理地址的方法</h3><p>8086CPU有20位地址总线，可以传送20位地址。8086CPU又是16位结构，在内部一次性处理、传输、暂时储存的地址为16位。</p>
+<p>8086CPU采用一种在内部用两个16位地址合成的方法来形成一个20位的物理地址</p>
+<p>8086CPU读写内存的过程如下：</p>
+<ul>
+<li><ol>
+<li>CPU中相关部件提供两个16位的地址，一个称为段地址，另一个称为偏移地址</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>段地址和偏移地址通过内部总线接入一个称为地址加法器的部件</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>地址加法器将两个16位地址合成一个20位的物理地址</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>地址加法器通过内部总线20位物理地址送入输入输出控制电路</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>输入输出控制电路将20位物理地址送上地址总线</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>20位物理地址被地址总线传送到储存器</li>
+</ol>
+</li>
+</ul>
+<p>地址加法器采用 <strong>物理地址=段地址×16+偏移地址</strong> 的方法合成物理地址。如1230+00C8=12300+00C8=123C8(十六进制表示)</p>
+<h3 id="“物理地址-段地址×16-偏移地址”的本质含义"><a href="#“物理地址-段地址×16-偏移地址”的本质含义" class="headerlink" title="“物理地址=段地址×16+偏移地址”的本质含义"></a>“物理地址=段地址×16+偏移地址”的本质含义</h3><p>本质含义是：CPU在访问内存时，用一个基础地址(段地址×16)和一个相对于基础地址的偏移地址相加，给出内存单元的物理地址。(有点类似计网中的网段)</p>
+<h3 id="段的概念"><a href="#段的概念" class="headerlink" title="段的概念"></a>段的概念</h3><p>其实内存没有分段，段的划分来自于CPU，如我们可以认为地址10000H<del>100FFH的内存单元组成一个段，基础地址为10000H，段地址为1000H;我们也可以认为10000H</del>10007FH、10080H～100FFH的内存单元为两段，基础地址为10000H和10080H，段地址为1000H和1008H。</p>
+<p>在编程时根据需要，将若干地址连续的内存单元看作一个段。</p>
+<h3 id="段寄存器"><a href="#段寄存器" class="headerlink" title="段寄存器"></a>段寄存器</h3><p>8086CPU在访问内存时要由相关部件提供内存单元的段地址和偏移地址，送入地址加法器合成物理地址。段地址在8086CPU的段寄存器中存放。8086CPU有4个段寄存器：CS、DS、SS、ES。</p>
+<h3 id="CS和IP"><a href="#CS和IP" class="headerlink" title="CS和IP"></a>CS和IP</h3><p>CS和IP是8086CPU中最关键的两个寄存器，它们指示了CPU当前要读取指令的地址。CS为代码段寄存器，IP为指令指针寄存器。</p>
+<p>在8086PC机中，设CS中内容为M，IP中内容为N，8086CPU将从内存M×16+N单元开始，读取一条命令并执行。过程如下</p>
+<ul>
+<li><ol>
+<li>8086CPU当前状态：CS中内容为2000H，IP中内容为0000H</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>内存20000H～20009H单元中存放着的机器码对应的汇编指令如下：<ul>
+<li>地址：20000H～20002H，内容：B8 23 01，长度：3Byte，对应汇编指令：mov ax，0123H</li>
+<li>等等</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>CS和IP寄存器的内容传入地址加法器合成物理地址20000H</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>输入输出控制电路将物理地址20000H送上地址总线</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>从内存20000H单元开始存放的机器指令B8 23 01通过数据总线送入CPU</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>输入输出控制电路将机器指令B8 23 01送入指令缓冲器</li>
+</ol>
+</li>
+<li><ol start="7">
+<li>IP中的值根据指令长度自动增加</li>
+</ol>
+</li>
+<li>跳转到第1步，重复这个过程</li>
+</ul>
+<p>CPU工作的时候把有的信息看作指令，有的信息看作数据，那CPU根据什么将内容中的信息看着指令？</p>
+<ul>
+<li>CPU将CS:IP指向的内存单元中的内容看作指令，因为，在任何时候，CPU将CS、IP中的内容看作指令的段地址和偏移地址，来在内存中读取指令码</li>
+</ul>
+<h3 id="修改CS、IP的指令"><a href="#修改CS、IP的指令" class="headerlink" title="修改CS、IP的指令"></a>修改CS、IP的指令</h3><p>在CPU中程序员能用指令读写的部件只有寄存器，程序员可以通过寄存器实现对CPU的控制。CPU从何处执行指令是由CS、IP中的内容决定的，通过改变CS、IP中的内容来控制CPU执行目前指令。</p>
+<p>8086CPU大部分寄存器的值都可以通过mov指令来改变，mov指令被称为传送指令。但mov指令不能用于设置CS、IP的值，因为8086没有提供这样的功能。要改变CS、IP的内容需要的指令被称为跳转指令。一下简单介绍jmp指令。</p>
+<p>若想修改CS、IP的内容，可用<code>jmp 段地址:偏移地址</code>的指令完成，如<code>jmp 2AE3:3</code>执行后<code>CS=2AE3H, IP=0003H</code>。</p>
+<p>若想仅修改IP的内容，可用形如<code>jmp 某一合法寄存器</code>的指令来完成，如<code>jmp ax</code>执行后<code>IP=ax</code>。含义上好似<code>mov IP,ax</code></p>
+<h2 id="寄存器-内存访问"><a href="#寄存器-内存访问" class="headerlink" title="寄存器(内存访问)"></a>寄存器(内存访问)</h2><h3 id="内存中字的储存"><a href="#内存中字的储存" class="headerlink" title="内存中字的储存"></a>内存中字的储存</h3><p><strong>字单元的概念</strong> :字单元，即存放一个字型数据(16位)的内存单元，由两个地址连续的内存单元组成。高地址内存单元存放字型数据的高位字节，低地址内存单元中存放字型数据的低位字节。</p>
+<p>以后我们称起始地址为N的字单元简称为N地址字单元。</p>
+<p>例子：<br>|   |     |<br>|—|—–|<br>| 0 | 20H |<br>| 1 | 4EH |<br>| 2 | 12H |<br>| 3 | 00H |</p>
+<p>0地址单元中存放的字节型数据是：20H</p>
+<p>0地址字单元中存放的字型数据是：4E20H</p>
+<h3 id="DS和-address"><a href="#DS和-address" class="headerlink" title="DS和[address]"></a>DS和[address]</h3><p>CPU要读写一个内存单元的时候，必须先给出这个内存单元的地址，在8086PC中，内存地址由段地址和偏移地址组成。8086CPU中有一个DS寄存器，通常用来存放要访问数据的段地址。</p>
+<p><code>mov al, [0]</code>，这个指令将内存单元中的内容送入寄存器al。”[address]”表示一个内存单元，其中<code>[0]</code>中的0表示内存单元的偏移地址。执行命令时8086CPU自动读取DS中的数据为内存单元的段地址。</p>
+<p>如何把一个数据送入DS寄存器呢？我们以前用过类似<code>mov ax,a</code>这样的指令来完成，但是8086CPU不支持将数据直接放入段寄存器的操作，所有需要先将数据放入一个一般寄存器，然后把一般寄存器的内容送入DS寄存器，<code>mov ds,ax</code>。</p>
+<h3 id="字的传送"><a href="#字的传送" class="headerlink" title="字的传送"></a>字的传送</h3><p>我们用mov指令在寄存器和内存之间进行字节型数据的传送。因为8086CPU是16位结构的，也就是说一次传送一个字。只要在mov指令中给出16位寄存器就可以进行16位的数据传送了，mov指令中给出8位寄存器就进行8位数据传输。</p>
+<p>例子：<br>|   |     |<br>|—|—–|<br>| 0 | 20H |<br>| 1 | 4EH |<br>| 2 | 12H |<br>| 3 | 00H |</p>
+<p><code>mov ax,[1]</code>的结果是<code>ax=124EH</code></p>
+<h3 id="CPU提供的栈机制"><a href="#CPU提供的栈机制" class="headerlink" title="CPU提供的栈机制"></a>CPU提供的栈机制</h3><p>8086CPU提供相关的指令来以栈的方式访问内存空间，这意味着基于8086编程时，可以将一段内存当作栈来使用。</p>
+<p>8086CPU提供<code>push</code>和<code>pop</code>的入栈和出栈指令。<code>push ax</code>表示将寄存器ax中的数据送入栈中，<code>pop ax</code>表示从栈顶取出数据送入ax。8086CPU的入栈和出栈操作都是以字为单位进行的。</p>
+<ul>
+<li>CPU如何知道哪段地址空间被当作栈来使用？push和pop时如何知道哪个单元是栈顶单元？<ul>
+<li>8086CPU中，有两个寄存器，段寄存器SS和寄存器SP，栈顶的段地址存放在SS中，偏移地址存放在SP中。<strong>任意时刻SS:SP指向栈顶元素</strong> 。</li>
+</ul>
+</li>
+</ul>
+<p><code>push ax</code>执行时，由一下两个两步完成</p>
+<ul>
+<li><ol>
+<li>SP=SP-2，SS:SP指向当前栈顶前面的单元，以当前栈顶单元为新的栈顶</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>将ax中的内容送入SS:SP指向的内存单元处，SS:SP此时指向新栈顶</li>
+</ol>
+</li>
+</ul>
+<p>因为CPU执行顺序是从地址低到高，而栈的后进先出的结构，所以push时从后方的地址开始<br>|                |    |<br>|—————-|—-|<br>| 10000H         |    |<br>| 10001H         |    |<br>| …            |    |<br>| SS:SP-&gt;1000EH | 23 |<br>| 1000FH         | 01 |</p>
+<p><code>pop ax</code>的执行过程和<code>push ax</code>刚好相反：</p>
+<ul>
+<li><ol>
+<li>将SS:SP指向的内存单元处的数据送入ax中</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>SP=SP+2，SS:SP指向当前栈顶下面的单元，以当前栈顶下面的单元为新栈顶</li>
+</ol>
+</li>
+</ul>
+<p>栈为空时，偏移地址的计算方法：最底部的字单元的偏移地址+2，如：<br>|                        |  |<br>|————————|–|<br>| 10000H                 |  |<br>| 10001H                 |  |<br>| …                    |  |<br>| (最底部的字单元)1000EH |  |<br>| 1000FH                 |  |<br>| SP=0010H               |  |</p>
+<h3 id="栈段"><a href="#栈段" class="headerlink" title="栈段"></a>栈段</h3><p>将一段内存当作栈段仅仅是我们编程时的一种安排</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>字在内存中存储时，要用两个地址连续的内存单元来存放</li>
+<li>用mov指令访问内存单元，可以在mov指令中给出内存单元的偏移地址，此时段地址默认在DS寄存器中</li>
+<li>[address]表示一个偏移地址为address的内存单元</li>
+<li>在内存和寄存器之间传送数据类型时，高地址单元和高8位寄存器、低地址单元个低8位寄存器相对应</li>
+<li>mov、add、sub是具有两个操作对象的指令，jmp是具有一个操作对象的指令</li>
+<li>CPU不提供栈顶越界的保护，我们要自己注意</li>
+</ul>
+<h2 id="一个程序"><a href="#一个程序" class="headerlink" title="一个程序"></a>一个程序</h2><h3 id="一个源程序从写出到执行的过程"><a href="#一个源程序从写出到执行的过程" class="headerlink" title="一个源程序从写出到执行的过程"></a>一个源程序从写出到执行的过程</h3><ul>
+<li>编写汇编源程序<ul>
+<li>产生一个储存源程序的文本文件</li>
+</ul>
+</li>
+<li>对源程序进行编译链接<ul>
+<li>使用编译程序对源程序进行编译生成目标文件，再用链接工具对目标文件进行链接，生成可在操作系统中直接运行的可执行文件</li>
+</ul>
+</li>
+<li>执行</li>
+</ul>
+<h3 id="源程序"><a href="#源程序" class="headerlink" title="源程序"></a>源程序</h3><h4 id="伪命令"><a href="#伪命令" class="headerlink" title="伪命令"></a>伪命令</h4><p>在汇编语言源程序中，包含两种命令，一种是汇编指令，一种是伪指令。</p>
+<ul>
+<li>汇编指令是有对应机械码的指令，可以被编译为机械指令，最终被CPU执行</li>
+<li>伪指令没有对应的机械码，最终不被CPU执行<ul>
+<li>伪指令是由编译器来执行的指令，编译器根据伪指令来进行相关的编译工作</li>
+</ul>
+</li>
+</ul>
+<h5 id="segment和ends"><a href="#segment和ends" class="headerlink" title="segment和ends"></a>segment和ends</h5><p>segment和ends是一对成对使用的伪指令，这是在写可被编译器编译的汇编程序时必须要用的一对为指令。segment和ends的功能是定义一个段，一个段必须有一个名称来标识，格式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">段名 segment</span><br><span class="line">    ...</span><br><span class="line">段名 ends</span><br></pre></td></tr></table></figure>
+
+<p>一个汇编程序是由多个段组成的，这些段被用来存放代码、数据或当作栈空间来使用。一个程序中所有将被计算机所处理的信息：指令、数据、栈，被划分到不同的段中。</p>
+<h5 id="end"><a href="#end" class="headerlink" title="end"></a>end</h5><p>end是一个汇编程序的结束标记，如果碰到了伪指令end，就结束对 <strong>源程序</strong> 的编译。所以我们在写程序的时候，如果程序写完了，要在结尾出加上伪指令end。否则编译器无法知道何时结束。</p>
+<p>注意，不要搞混end和ends，ends是和segment成对使用的，标记一个段的结束。而end是标记整个程序的结束。</p>
+<h5 id="assume"><a href="#assume" class="headerlink" title="assume"></a>assume</h5><p>这个为指令含义为”假设”，它假设某一段寄存器和程序中的某一个用segment…ends定义的段相关联。通过assume说明这种关联，在需要的情况下，编译程序可以将段寄存器和某一个具体的段相联系。</p>
+<p>如下就是将一个把一个叫做code的段和cs段寄存器联系起来:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    ...</span><br><span class="line">code ends</span><br></pre></td></tr></table></figure>
+
+<h4 id="源程序中的”程序”"><a href="#源程序中的”程序”" class="headerlink" title="源程序中的”程序”"></a>源程序中的”程序”</h4><p>程序最先以汇编指令的形式存在源程序中，经编译、连接后转变为机械码，储存在可执行文件中</p>
+<h4 id="程序返回"><a href="#程序返回" class="headerlink" title="程序返回"></a>程序返回</h4><p>一个程序结束后，将CPU的控制权交还给使它得以运行的程序，我们称这个过程为：程序返回。</p>
+<p>在程序末尾使用两条指令可以实现程序返回：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov ax,4c00H</span><br><span class="line">int 21h</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="BX-和loop命令"><a href="#BX-和loop命令" class="headerlink" title="[BX]和loop命令"></a>[BX]和loop命令</h2><ul>
+<li>用[address]表示一个内存单元时，单元的长度(类型)可以由具体指令中的其他操作对象(比如说寄存器)指出，如<code>mov al,[0]</code>这个内存单元就是一字节</li>
+<li>[bx]同样也表示一个内存单元，它的偏移地址在bx中</li>
+<li>loop进行循环</li>
+<li>约定符号idata表示常量</li>
+<li>我们将使用符号”()”来表示一个寄存器或一个内存单元中的内容</li>
+</ul>
+<h3 id="BX"><a href="#BX" class="headerlink" title="[BX]"></a>[BX]</h3><p>看看如下命令的功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov ax,[bx]</span><br></pre></td></tr></table></figure>
+
+<p>功能：bx中存放的数据作为一个偏移地址EA，段地址SA默认在ds中，将SA:EA中的数据送入ax，即:(ax)=((ds)*16+(bx))</p>
+<p>值得注意的是，bx是寄存器，可以使用一些指令，如：<code>inc bx</code>。就可以方便的完成某些任务，如：把每个内存单元的内容变为1。</p>
+<h3 id="Loop指令"><a href="#Loop指令" class="headerlink" title="Loop指令"></a>Loop指令</h3><p>loop指令的格式是：loop标号，CPU执行loop指令的时候，要进行两部操作：1. (cx)=(cx)-1; 2. 判断cx中的值，不为零则跳转至标号处执行程序，否则向下执行。</p>
+<p>可以看到cx中的值影响着loop指令的结果，通常我们在cx中存放循环次数</p>
+<p>例：计算2^12。(N*2=N+N)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">code segment</span><br><span class="line">    mov ax,2</span><br><span class="line">    mov cx,11</span><br><span class="line">s:  add ax,ax</span><br><span class="line">    loop s</span><br><span class="line">    mov ax,4c00H</span><br><span class="line">    int 21h</span><br><span class="line">code ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>执行loop时(cx)先减1,然后若(cx)不为0，则跳转到s处。从上面的例子可以总结出用cx和loop配合实现循环的3个要点：</p>
+<ul>
+<li><ol>
+<li>在cx中存放循环次数</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>loop指令中的标号所标识地址要在前面</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>要循环的程序段，要写在标号和loop指令中间</li>
+</ol>
+</li>
+</ul>
+<p>用cx和loop指令配合的框架如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    mov cx,循环次数</span><br><span class="line">s:</span><br><span class="line">    循环执行的程序段</span><br><span class="line">    loop s</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="loop和-bx-的联合应用"><a href="#loop和-bx-的联合应用" class="headerlink" title="loop和[bx]的联合应用"></a>loop和[bx]的联合应用</h3><p>若我们想要计算ffff:0~ffff:b单元中的元素的和，结果储存在dx中，分析：</p>
+<ul>
+<li><ol>
+<li>dx是16位的寄存器，内存单元不能直接加到dx中，因为如果直接加会自动区一个字的大小，不满足题意</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>不能用dl来做累加操作，因为dl大小不足以容纳所有内存单元的和导致进位丢失</li>
+</ol>
+</li>
+</ul>
+<p>所以我们需要引入一个16位寄存器ax作为中介，先把内存单元的内容送如al，在用ax和dx相加，通过bx和loop就可以完成。</p>
+<h3 id="段前缀"><a href="#段前缀" class="headerlink" title="段前缀"></a>段前缀</h3><p>段地址默认在ds中，我们可以在访问的内存单元的指令中显式地给出内存单元的段地址所在的段寄存器。如：<code>mov ax,ds:[bx]</code></p>
+<h3 id="一段安全的空间"><a href="#一段安全的空间" class="headerlink" title="一段安全的空间"></a>一段安全的空间</h3><p>任意向一段内存空间写入内容是很危险的，因为这段内存空间可能存放着系统数据或代码。</p>
+<h2 id="包含多个段的程序"><a href="#包含多个段的程序" class="headerlink" title="包含多个段的程序"></a>包含多个段的程序</h2><p>程序取得所需空间的方法有两种，一种是加载程序的时候为程序分配，另一种是程序在执行的过程中向系统申请。我们将介绍第一种。</p>
+<p>我们若要一个程序在被加载的时候取得所需的空间，则必须要在源程序中做出说明。</p>
+<h3 id="在代码段中使用数据"><a href="#在代码段中使用数据" class="headerlink" title="在代码段中使用数据"></a>在代码段中使用数据</h3><p>考虑这样一个问题，编程计算一下8个数据的和，结果存在ax寄存器中：2134h、5342h、6563h、…。如何将这些数据储存在一组地址连续的内存单元中？又在哪找到这段内存空间？</p>
+<p>我们可以在程序中，定义我们希望处理的数据，这些数据会被编译、连接程序作为程序的一部分写到可执行文件中。当可执行文件中的程序被加载入内存时，这些数据也会被加载如内存中。这些数据自然而然地获得了储存空间。</p>
+<p>具体看下面的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    dw 3422,2346h,5643h,3422,2346h,5643h,3422h,3422</span><br><span class="line"></span><br><span class="line">    mov ax,2345h</span><br><span class="line">    some code...</span><br><span class="line">code ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>程序开头”dw”的含义是定义字型数据(define word)。那这些个数据在哪里呢？由于它们在代码段中，程序在运行的时候CS中存放代码段的地址，所以可以从CS中的到他们的段地址。那它们的偏移地址是多少？因为用dw定义的数据处于代码最开始，所以偏远地址为0～E。</p>
+<p>但是编译、连接成可执行文件后，在系统直接运行可能出现问题，因为在程序的入口处不是我们希望执行的指令(而是一些数据)。因此，我们可以在源程序中指明程序的入口所在：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    dw 3422,2346h,5643h,3422,2346h,5643h,3422h,3422</span><br><span class="line"></span><br><span class="line">    start:  mov ax,2345h   ; &lt;---- 在程序的第一条指令的前面加上标号start</span><br><span class="line"></span><br><span class="line">            some code...</span><br><span class="line">code ends</span><br><span class="line">end start       ; &lt;----</span><br></pre></td></tr></table></figure>
+
+<p>在程序的第一条指令的前面加上标号start，这个标号在伪命令end的后面出现，用于通知编译器程序的入口在什么地方。</p>
+<p>回顾可执行文件中的程序执行过程如下：</p>
+<ul>
+<li><ol>
+<li>有其他的程序(shell等)将可执行文件中的程序加载入内存</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>设置CS:IP指向程序的第一条要执行的指令(程序入口)，从而使程序得以运行</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>程序结束后，返回到加载者</li>
+</ol>
+</li>
+</ul>
+<p>现在问题是，根据什么设置CPU的CS:IP指向程序的第一条要执行的指令？这一点，是由可执行文件中的描述信息指明的。可执行文件由描述信息和程序组成：程序来自源程序中的汇编指令和定义的数据;描述信息则主要是通过编译、连接程序对源程序中相关的伪指令进行处理所得到的信息。</p>
+<h3 id="在代码段中使用栈"><a href="#在代码段中使用栈" class="headerlink" title="在代码段中使用栈"></a>在代码段中使用栈</h3><p>我们首先要有一段可当作栈的空间，可在程序中通过定义数据来获取一段空间，然后将这段空间当作栈空间来使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    dw 3422,2346h,5643h,3422,2346h,5643h,3422h,3422</span><br><span class="line">    dw 0,0,0,0,0,0,0,0</span><br><span class="line">                            ;用dw定义8个字型数据，加载程序后将获得8个字的内存空间，这段空间可当作栈使用</span><br><span class="line"></span><br><span class="line">    start:      mov ax,cs</span><br><span class="line">                mov ss,ax</span><br><span class="line">                mov sp,20h  ;将栈顶ss:sp指向cs:20h</span><br><span class="line">                </span><br><span class="line">                some code...</span><br><span class="line">code ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>这段程序中定义了8个字型数据，它们的值都是0。这8个数据的值是多少对程序来说没有意义，只是用它们来开辟内存。</p>
+<h3 id="将数据、代码、栈放入不同的段"><a href="#将数据、代码、栈放入不同的段" class="headerlink" title="将数据、代码、栈放入不同的段"></a>将数据、代码、栈放入不同的段</h3><p>我们在编程的时候要主要何处是数据，何处是代码，何处是栈。这样显然就有两个问题：</p>
+<ul>
+<li>把它们放在一个段中使程序显得混乱</li>
+<li>一个段的容量是受限的，如果数据、栈和代码都放在一个段中，空间可能就不够</li>
+</ul>
+<p>所以用多个段来存放数据、代码和栈。我们用定义代码段一样的方法定义多个段，然后在这些段里面定义需要的数据，或通过定义数据来获取栈空间。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code,ds:data,ss:stack</span><br><span class="line"></span><br><span class="line">data segment</span><br><span class="line">    dw 3422,2346h,5643h,3422,2346h,5643h,3422h,3422</span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">    dw 0,0,0,0,0,0,0,0</span><br><span class="line">stack ends</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">start:  mov ax,stack</span><br><span class="line">        mov ss,ax</span><br><span class="line">        mov sp,20h  ;设置栈顶ss:sp指向stack:20</span><br><span class="line">        ...</span><br><span class="line">code ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>定义了多个段方法<ul>
+<li>对于不同的段，要用不同的段名</li>
+</ul>
+</li>
+<li>对段地址引用<ul>
+<li>段名就相当于一个符号，它代表这段地址</li>
+</ul>
+</li>
+</ul>
+<h2 id="更灵活的定位内存地址的方法"><a href="#更灵活的定位内存地址的方法" class="headerlink" title="更灵活的定位内存地址的方法"></a>更灵活的定位内存地址的方法</h2><h3 id="and和or指令"><a href="#and和or指令" class="headerlink" title="and和or指令"></a>and和or指令</h3><ul>
+<li>and指令：逻辑与指令，按位进行运算<ul>
+<li>通过该指令可将操作对象相应位设备0，其他位不变</li>
+</ul>
+</li>
+<li>or指令：逻辑或指令，按位进行运算<ul>
+<li>通过该指令可将操作对象相应位设备1，其他位不变</li>
+</ul>
+</li>
+</ul>
+<h3 id="以字符形式给出的数据"><a href="#以字符形式给出的数据" class="headerlink" title="以字符形式给出的数据"></a>以字符形式给出的数据</h3><p>可以在汇编程序中，用’…’的方式指明数据是以字符的形式给出的，编译器将它们转化成对应的ASCII码。如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">data segment</span><br><span class="line">    db &#39;unIX&#39;  ;; db是define binary，用一个字节储存，与dw同理</span><br><span class="line">data ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>“db ‘unIX’”就相当于”db 75H, 6EH, 49H, 58H”</p>
+<h3 id="大小写转换的问题"><a href="#大小写转换的问题" class="headerlink" title="大小写转换的问题"></a>大小写转换的问题</h3><p>常规的解法是ASCII码加上或减去一个数，但是我们还没说到条件控制，该怎么办呢？寻找新的规律可以看到，就ASCII码的二进制形式来看，除了第5位外，大写字母和小写字母的其他位都一样。因此我们要了新的方法：将第5位变为0或1就能改变成大小写了。</p>
+<h3 id="用-bx-idata-的方式进行数组的处理"><a href="#用-bx-idata-的方式进行数组的处理" class="headerlink" title="用[bx+idata]的方式进行数组的处理"></a>用[bx+idata]的方式进行数组的处理</h3><p>我们知道在C语言中，数组实际上就是一段连续的内存空间。假设第一个数长5个字节，第二个数组有5个字节：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov al,[bx]  ;; 定位第一个数组</span><br><span class="line">mov al,[5+bx]  ;; 定位第二个数组</span><br><span class="line">;;或写成</span><br><span class="line">mov al,5[bx]</span><br></pre></td></tr></table></figure>
+
+<p>和C语言对比：</p>
+<ul>
+<li>C语言<ul>
+<li><code>a[i], b[i]</code></li>
+</ul>
+</li>
+<li>汇编语言<ul>
+<li><code>0[bx], 5[bx]</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="SI和DI"><a href="#SI和DI" class="headerlink" title="SI和DI"></a>SI和DI</h3><p>si和di是8086CPU中和bx功能近似的寄存器，si和di不能分成两个8位寄存器来使用。</p>
+<p>我们可以灵活使用[bx+si+idata]和[bx+di+idata]来表示一个内存单元。</p>
+<p>-对于[bx+si]和[bx+di]，有指令<code>mov ax,[bx+si]</code>等，该指令也可以写出如下格式(常用)<br>    - <code>mov ax,[bx][si]</code><br>-对于[bx+si+idata]和[bx+di+idata]，有指令<code>mov ax,[bx+si+200]</code>等，该指令也可以写出如下格式(常用)<br>    - <code>mov ax,200[bx][si]</code><br>    - <code>mov ax,[bx][si].200</code><br>    - <code>mov ax,[bx].200[si]</code></p>
+<h2 id="数据处理的两个基本问题"><a href="#数据处理的两个基本问题" class="headerlink" title="数据处理的两个基本问题"></a>数据处理的两个基本问题</h2><ul>
+<li><ol>
+<li>处理的数据在什么地方?</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>要处理的数据有多长?</li>
+</ol>
+</li>
+</ul>
+<p>我们定义两个描述性符号：reg和sreg。reg表示寄存器;sreg表示段寄存器。</p>
+<h3 id="bx、si、di和bp"><a href="#bx、si、di和bp" class="headerlink" title="bx、si、di和bp"></a>bx、si、di和bp</h3><p>前面三个寄存器已经讲过，现在来进行一下总结：</p>
+<ul>
+<li><ol>
+<li>在8086CPU中，只有这4个寄存器可以用在[…]中来进行内存单元的寻址</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>在[…]中，这4个寄存器可以单个出现，或只能以4种组合出现：bx和si、bx和di、bp和si、bp和di</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>只要在[…]中使用寄存器bp，而指令没有显性地给出段地址，段地址默认在ss中</li>
+</ol>
+</li>
+</ul>
+<h3 id="汇编语言中数据位置的表达"><a href="#汇编语言中数据位置的表达" class="headerlink" title="汇编语言中数据位置的表达"></a>汇编语言中数据位置的表达</h3><p>汇编语言中用3个概念来表达数据的位置：</p>
+<ul>
+<li>立即数(idata)<ul>
+<li>对于直接包含在机器指令中的数据(执行前在CPU的指令缓冲器中)，在汇编语言中称为：立即数，在汇编指令中直接给出</li>
+</ul>
+</li>
+<li>寄存器<ul>
+<li>指令要处理的数据在寄存器中，在汇编指令中给出相应的寄存器名</li>
+</ul>
+</li>
+<li>段寄存器(SA)和偏移地址(EA)<ul>
+<li>指令要处理的数据在内存中，在汇编指令中可用[X]的格式给出EA，SA在某个段寄存器中(如ds)</li>
+</ul>
+</li>
+</ul>
+<h3 id="指令要处理的数据有多长"><a href="#指令要处理的数据有多长" class="headerlink" title="指令要处理的数据有多长"></a>指令要处理的数据有多长</h3><p>8086CPU的指令，可以处理两种尺寸的数据：byte和word。所以在机器指令中要指明，指令进行的是字操作还是字节操作。汇编语言用以下方法处理：</p>
+<ul>
+<li>根据寄存器名指明要处理的数据的尺寸</li>
+<li>在没有寄存器名存在的情况下，用操作符<code>X ptr</code>指明内存单元的长度，X在汇编指令中可以为word或byte<ul>
+<li>如：<code>mov word ptr ds:[0],1</code></li>
+</ul>
+</li>
+<li>其他方法<ul>
+<li>这些指令默认了访问的是字单元还是字节单元，如<code>push [1000H]</code>push指令只进行字操作</li>
+</ul>
+</li>
+</ul>
+<h3 id="div指令"><a href="#div指令" class="headerlink" title="div指令"></a>div指令</h3><p>div是除法指令，使用div做除法时应注意以下问题：</p>
+<ul>
+<li>除数：有8位和16位两种，在一个reg或内存单元中</li>
+<li>被除数：默认放在AX或DX和AX中<ul>
+<li>如果除数是8位，被除数则为16位，默认在AX中存放</li>
+<li>如果除数是16位，被除数则为32位，默认在DX和AX中存放，DX存放高16位，AX存放低16位</li>
+</ul>
+</li>
+<li>结果<ul>
+<li>如果除数为8位，则AL储存除法操作的商，AH储存除法操作的余数</li>
+<li>如果除数为16位，则AX储存除法操作的商，DX储存除法操作的余数</li>
+</ul>
+</li>
+</ul>
+<p>格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">div reg</span><br><span class="line">div 内存单元</span><br></pre></td></tr></table></figure>
+
+<p>例：计算100001/100</p>
+<p>被除数100001远大于65535，所以只能用dx和ax两个寄存器联合存放100001(32位)。除数小于255,可以在一个8位寄存器中存放。但是因为被除数是32位的，除数应该为16位，所以用一个16位的寄存器储存100.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov dx,1</span><br><span class="line">mov ax,86A1H</span><br><span class="line">mov bx,100</span><br><span class="line">div bx</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="伪指令dd"><a href="#伪指令dd" class="headerlink" title="伪指令dd"></a>伪指令dd</h3><p>dd是用来定义dword(double word，双字)类型数据的</p>
+<h3 id="dup"><a href="#dup" class="headerlink" title="dup"></a>dup</h3><p>dup是一个操作符，在汇编语言中和db、dw、dd等一样，也是由编译器识别处理的符号。它是和db、dw、dd等数据定义伪指令配合使用的，用来进行数据的重复。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db 3 dup (0,1,2)</span><br></pre></td></tr></table></figure>
+
+<p>定义了9个字节，相当于<code>db 0,1,2,0,1,2,0,1,2</code></p>
+<p>dup的使用格式如下：</p>
+<ul>
+<li>db 重复的次数 dup (重复的字节型数据)</li>
+<li>dw 重复的次数 dup (重复的字型数据)</li>
+<li>dd 重复的次数 dup (重复的双字型数据)</li>
+</ul>
+<h2 id="转移指令的原理"><a href="#转移指令的原理" class="headerlink" title="转移指令的原理"></a>转移指令的原理</h2><p><strong>可以修改IP，或同时修改CS和IP的指令统称为转移指令</strong>。</p>
+<p>8086CPU的转移指令行为有以下几类：</p>
+<ul>
+<li>只修改IP时，称为段内转移，如：<code>jmp ax</code> </li>
+<li>同时修改CS和IP时，称为段间转移，如：<code>jmp 1000:0</code></li>
+</ul>
+<h3 id="操作符offset"><a href="#操作符offset" class="headerlink" title="操作符offset"></a>操作符offset</h3><p>offset是由编译器处理的符号，它的功能是取得标号的偏移地址。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg</span><br><span class="line">codesg segment</span><br><span class="line">    start:mov ax,offset start   ;; 相当于mov ax,0</span><br><span class="line">        s:mov ax,offset s       ;; 相当于mov ax,3</span><br><span class="line">codesg ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+<p>上面的程序中，offset操作符取得了标号start和s的偏移地址0和3。</p>
+<h3 id="依据位移进行转移的jmp指令"><a href="#依据位移进行转移的jmp指令" class="headerlink" title="依据位移进行转移的jmp指令"></a>依据位移进行转移的jmp指令</h3><p><code>jmp short 标号</code>转到标号处执行指令</p>
+<p>这种格式的jmp指令实现的是段内短转移，它对IP修改的范围为-128~127，即最多可以向前跨越128个字节，向后127个字节。指令中的”标号”是代码段中的标号，指明了指令要转移的目的地，跳转指令结束后，CD:IP应该指向标号处的指令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg</span><br><span class="line">codesg segment</span><br><span class="line">    start:mov mov ax, 0   </span><br><span class="line">          jmp short s</span><br><span class="line">          add ax, 1</span><br><span class="line">        s:inc ax</span><br><span class="line">codesg ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+<p>上面的程序就跳过了<code>add ax, 1</code></p>
+<p><code>jmp short</code>依据位移进行转移，也就是说CPU执行jmp指令的时候并不需要转移的目的地址，只需要转移的位移，编译器后计算jmp到标号的位移。</p>
+<p><code>jmp short 标号</code>的功能为：(IP)=(IP)+8位位移</p>
+<ul>
+<li>8位位移=标号处的地址-jmp指令后的第一个字节的地址</li>
+<li>short指明此处的位移为8位位移</li>
+<li>8位位移的范围为-127~128，用补码表示</li>
+<li>8位位移由编译程序在编译时算出</li>
+</ul>
+<p>还有一种与<code>jmp short</code>功能类似的指令，<code>jmp near ptr 标号</code>，它实现的是段内转移，功能为：(IP)=(IP)+16</p>
+<ul>
+<li>17位位移=标号处的地址-jmp指令后的第一个字节的地址</li>
+<li>near ptr指明此处的位移为16位位移</li>
+<li>16位位移的范围为-32768~32767，用补码表示</li>
+<li>16位位移由编译程序在编译时算出</li>
+</ul>
+<h3 id="转移的目的地址在指令中的jmp指令"><a href="#转移的目的地址在指令中的jmp指令" class="headerlink" title="转移的目的地址在指令中的jmp指令"></a>转移的目的地址在指令中的jmp指令</h3><p><code>jmp far ptr 标号</code>实现的是段间转移，又称远转移，功能如下：</p>
+<ul>
+<li>(CS)=标号所在的段地址;(IP)=标号所在段中的偏移地址。</li>
+<li>far ptr指明了指令用标号的段地址和偏移地址修改CS和IP</li>
+</ul>
+<h3 id="转移地址在内存中的jmp指令"><a href="#转移地址在内存中的jmp指令" class="headerlink" title="转移地址在内存中的jmp指令"></a>转移地址在内存中的jmp指令</h3><p>转移地址在内存中的jmp指令有两种格式：</p>
+<ul>
+<li><code>jmp word ptr 内存单元地址(段内地址)</code><ul>
+<li>功能：从内存单元地址处开始存放着一个字，是转移的目的偏移地址</li>
+</ul>
+</li>
+<li><code>jmp dword ptr 内存单元地址(段内地址)</code><ul>
+<li>功能：从内存单元地址处开始存放着两个字，高地址处的字是转移的目的段地址，低地址处的转移的目的偏移地址</li>
+<li>(CS)=(内存单元地址+2)</li>
+<li>(IP)=(内存单元地址)</li>
+</ul>
+</li>
+</ul>
+<h3 id="jcxz指令"><a href="#jcxz指令" class="headerlink" title="jcxz指令"></a>jcxz指令</h3><p>jcxz指令为有条件转移指令，所有的有条件转移指令都是短转移，在对应的机器码中包含转移的位移，而不是转移的目的地址。对IP的修改范围都是：-127~128</p>
+<p>指令格式：<code>jcxz 标号</code>如果(cx)=0，则转移到标号处执行</p>
+<ul>
+<li>操作：当(cx)=0时，(IP)=(IP)+8位位移<ul>
+<li>8位位移=标号处的地址-jcxz指令后的第一个字节的地址</li>
+<li>8位位移的范围为-127~128，用补码表示</li>
+<li>8位位移由编译程序在编译时算出</li>
+</ul>
+</li>
+<li>当(cx)!=0时，什么也不做，程序向下执行</li>
+</ul>
+<p>用C语言的话说，<code>jcxz 标号</code>的功能相当于：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>((cx)==<span class="number">0</span>)jmp short 标号;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="loop指令"><a href="#loop指令" class="headerlink" title="loop指令"></a>loop指令</h3><p>所有的循环指令都是短转移，在对应的机器码中包含转移的位移，而不是转移的目的地址。对IP的修改范围都是：-127~128</p>
+<p>指令格式：<code>loop 标号</code>(cx)=(cx)-1，如果(cx)!=0，则转移到标号处执行</p>
+<ul>
+<li>操作：(cx)=(cx)-1;如果(cx)!=0,(IP)=(IP)+8位位移<ul>
+<li>8位位移=标号处的地址-jcxz指令后的第一个字节的地址</li>
+<li>8位位移的范围为-127~128，用补码表示</li>
+<li>8位位移由编译程序在编译时算出</li>
+</ul>
+</li>
+<li>当(cx)=0时，什么也不做，程序向下执行</li>
+</ul>
+<p>用C语言的话说，<code>loop 标号</code>的功能相当于：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(cx)--;</span><br><span class="line"><span class="keyword">if</span>((cx)!=<span class="number">0</span>)jmp short 标号;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="根据位移转移的意义"><a href="#根据位移转移的意义" class="headerlink" title="根据位移转移的意义"></a>根据位移转移的意义</h3><p>这种设计方便了程序段在内存中的浮动配置。这段程序在内存中的不同位置都可以正确执行，只需要位移，而不需要具体的地址。因为当指令不存在具体地址处时，程序执行就会出错。</p>
+<h2 id="CALL和RET指令"><a href="#CALL和RET指令" class="headerlink" title="CALL和RET指令"></a>CALL和RET指令</h2><p>call和ret指令都是转移指令，它们修改IP，或同时修改CS和IP。它们经常被共同用来实现子程序(函数)的设计</p>
+<h3 id="ret和retf"><a href="#ret和retf" class="headerlink" title="ret和retf"></a>ret和retf</h3><ul>
+<li>ret指令用栈中的数据修改IP的内容，从而实现转移。执行ret指令时，进行下面两步操作：<ul>
+<li><ol>
+<li>(IP)=((ss)*16+(sp))<ul>
+<li>出栈</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>(sp)=(sp)+2</li>
+</ol>
+</li>
+<li>相当于<code>pop IP</code></li>
+</ul>
+</li>
+<li>retf指令用栈中的数据修改cs和ip的内容，从而实现转移。执行retf指令时，进行下面4步操作：<ul>
+<li><ol>
+<li>(IP)=((ss)*16+(sp))</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>(sp)=(sp)+2</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>(CS)=((ss)*16+(sp))</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>(sp)=(sp)+2</li>
+</ol>
+</li>
+<li>相当于<code>pop IP; pop CS</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="call指令"><a href="#call指令" class="headerlink" title="call指令"></a>call指令</h3><p>CPU执行call指令时，进行两步操作：</p>
+<ul>
+<li><ol>
+<li>将当前的IP或CS和IP压入栈中</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>转移</li>
+</ol>
+</li>
+</ul>
+<p>call指令不能实现短转移，除此之外，call指令实现转移的方法和jmp指令了原理相同</p>
+<p>一下介绍call指令的主要应用格式</p>
+<h3 id="依据位移进行转移的call指令"><a href="#依据位移进行转移的call指令" class="headerlink" title="依据位移进行转移的call指令"></a>依据位移进行转移的call指令</h3><p><code>call 标号</code>，将当前的IP压入栈后，转到标号处执行指令</p>
+<p>CPU执行此种格式的call指令时，进行的操作如下：</p>
+<ul>
+<li><ol>
+<li>(sp)=(sp)-2<br>((ss)*16+(sp))=(IP)<ul>
+<li>入栈，栈顶指针上移</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>(IP)=(IP)+16位位移<ul>
+<li>根据标号</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>相当于:<code>push IP;jmp near ptr 标号</code></li>
+</ul>
+<h3 id="转移的目的地址在指令中的call指令"><a href="#转移的目的地址在指令中的call指令" class="headerlink" title="转移的目的地址在指令中的call指令"></a>转移的目的地址在指令中的call指令</h3><p><code>call far ptr 标号</code>，实现的是段间转移，CPU执行这种格式的call指令时，操作如下：</p>
+<ul>
+<li><ol>
+<li>(sp)=(sp)-2<br>((ss)*16+(sp))=(CS)<br>(sp)=(sp)-2<br>((ss)*16+(sp))=(IP)<ul>
+<li>入栈</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>(CS)=标号所在段的段地址<br>(IP)=标号所在段中的偏移地址</li>
+</ol>
+</li>
+<li>相当于<br><code>push CS</code><br><code>push IP</code><br><code>jmp far ptr 标号</code></li>
+</ul>
+<h3 id="转移地址在寄存器中的call指令"><a href="#转移地址在寄存器中的call指令" class="headerlink" title="转移地址在寄存器中的call指令"></a>转移地址在寄存器中的call指令</h3><p>格式:<code>call 16位reg</code>。功能：</p>
+<ul>
+<li>(sp)=(sp)-2<br>((ss)*16+(sp))=(IP)<br>(IP)=(16位reg)</li>
+<li>相当于：<br><code>push IP</code><br><code>jmp 16位reg</code></li>
+</ul>
+<h3 id="转移地址在内存中的call指令"><a href="#转移地址在内存中的call指令" class="headerlink" title="转移地址在内存中的call指令"></a>转移地址在内存中的call指令</h3><p>转移地址在内存中的call指令有两种格式：</p>
+<ul>
+<li><code>call word ptr 内存单元地址</code><ul>
+<li>相当于：<br><code>push IP</code><br><code>jmp word ptr 内存单元地址</code></li>
+</ul>
+</li>
+<li><code>call dword ptr 内存单元地址</code><ul>
+<li>相当于：<br><code>push CS</code><br><code>push IP</code><br><code>jmp dword ptr 内存单元地址</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="call和ret的配合使用"><a href="#call和ret的配合使用" class="headerlink" title="call和ret的配合使用"></a>call和ret的配合使用</h3><p>我们可以写一个具有一定功能的程序段，我们称之为子程序，在需要的时候用call指令转去执行。执行完后用ret指令，用栈中的数据设置IP值，从而跳到call的下一条指令继续执行。</p>
+<p>这样，我们可以利用call和ret来实现子程序的机制。子程序的框架如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">标号：</span><br><span class="line">    指令</span><br><span class="line">    ret</span><br></pre></td></tr></table></figure>
+
+<p>具有子程序的源程序的框架如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">code segment</span><br><span class="line">    main:</span><br><span class="line">        :</span><br><span class="line">        call sub1   ;;调用子程序1</span><br><span class="line">        :</span><br><span class="line">        :</span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br><span class="line"></span><br><span class="line">    sub1:</span><br><span class="line">        :</span><br><span class="line">        call sub2</span><br><span class="line">        :</span><br><span class="line">        :</span><br><span class="line">        ret</span><br><span class="line"></span><br><span class="line">    sub2:</span><br><span class="line">        :</span><br><span class="line">        :</span><br><span class="line">        ret</span><br><span class="line">code ends</span><br><span class="line">end main</span><br></pre></td></tr></table></figure>
+
+<p>使用call和ret可以实现模块化设计</p>
+<h3 id="mul指令"><a href="#mul指令" class="headerlink" title="mul指令"></a>mul指令</h3><p>mul是乘法指令，使用mul时注意以下两点：</p>
+<ul>
+<li><ol>
+<li>两个相乘的数：两个数要么都是8位，要么都是16位<ul>
+<li>如果是8位乘法，一个默认放在AL中，另一个放在8位reg或内存字节单元中</li>
+<li>如果是16位乘法，一个默认在AX中，另一个放在16为reg或内存字单元中</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>结果：<ul>
+<li>8位乘法结果默认放在AX中</li>
+<li>16位乘法结果高位默认放在DX中，低位放在AX中</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mul reg</span><br><span class="line">mul 内存单元</span><br><span class="line"></span><br><span class="line">;; 内存单元可以用不同的寻址方式给出：</span><br><span class="line">mul byte ptr ds:[0]</span><br><span class="line">mul word ptr [bx+si+8]</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="参数和结果传递的问题"><a href="#参数和结果传递的问题" class="headerlink" title="参数和结果传递的问题"></a>参数和结果传递的问题</h3><p>既然知道了如何调用子程序，那应该如何储存子程序需要的参数和产生的返回值呢？</p>
+<ul>
+<li>显然可以用寄存器来存。</li>
+</ul>
+<p>那么如果有N个参数和结果，寄存器的个数是有限的，该怎么存放呢？</p>
+<ul>
+<li>这个时候没将批量的数据放到内存中，然后将它们所在内存空间的首地址放在寄存器中，传递给子程序。对于批量的结果也如此的方法。</li>
+</ul>
+<p><strong>看下面一个例子:</strong> 设计一个子程序，将一个全是字母的字符串转换为大写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">data segment</span><br><span class="line">    db &#39;conversation&#39;</span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    start:  mov ax,data</span><br><span class="line">            mov ds,ax</span><br><span class="line">            mov si,0        ;ds:si指向字符串所在空间的首地址</span><br><span class="line">            mov cx,12       ;cx存放字符串的长度</span><br><span class="line">            call capital    ;调用子程序，就像调用函数</span><br><span class="line"></span><br><span class="line">            mov ax,4c00h</span><br><span class="line">            int 21h</span><br><span class="line"></span><br><span class="line">    capital:and byte ptr [si],11011111b</span><br><span class="line">            inc si</span><br><span class="line">            loop capital</span><br><span class="line">            ret</span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+<p><strong>除了用寄存器传递参数外，还有一种通用的方法是用栈来传递参数</strong></p>
+<h4 id="用栈来传递参数"><a href="#用栈来传递参数" class="headerlink" title="用栈来传递参数"></a>用栈来传递参数</h4><p>由调用者将要传递给子程序的参数压入栈中，子程序从栈中取得参数。</p>
+<ul>
+<li>编写一个函数：计算(a-b)^3，a、b为字型数据，参数为a、b</li>
+<li>栈顶存放IP、后面依次是a、b(注意参数顺序)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">func:   push bp         ;子程序用到寄存器bp，先保存原来的值</span><br><span class="line">        mov bp,sp</span><br><span class="line">        mov ax,[bp+4]   ;将栈中a送入ax</span><br><span class="line">        sub ax,[bp+6]   ;减栈中b的值</span><br><span class="line">        mov bp,ax</span><br><span class="line">        mul bp</span><br><span class="line">        mul bp</span><br><span class="line">        pop bp</span><br><span class="line">        ret 4</span><br></pre></td></tr></table></figure>
+
+<p>指令<code>ret 4</code>的含义用汇编语法描述为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pop ip      ;即返回ip，并使将栈顶指针该为调用前的值。应为这个例子的参数是两个字，所以是4.</span><br><span class="line">add sp,n</span><br></pre></td></tr></table></figure>
+
+<p>看一下对这个函数是如何调用的，设a=3、b=1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mob ax,1</span><br><span class="line">push ax</span><br><span class="line">mov ax,3    ;注意顺序</span><br><span class="line">push ax</span><br><span class="line">call func</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>低地址单元</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BP</td>
+</tr>
+<tr>
+<td>IP</td>
+</tr>
+<tr>
+<td>3  [bp+4]</td>
+</tr>
+<tr>
+<td>1  [bp+6]</td>
+</tr>
+<tr>
+<td>高地址单元</td>
+</tr>
+</tbody></table>
+<h3 id="寄存器冲突的问题"><a href="#寄存器冲突的问题" class="headerlink" title="寄存器冲突的问题"></a>寄存器冲突的问题</h3><p>问题在于：<strong>子程序中的寄存器，很可能在组程序中也要使用，造成寄存器使用上的冲突</strong></p>
+<p>我们希望：</p>
+<ul>
+<li>编写调用子程序的时候不必关心子程序到底使用了那些寄存器</li>
+<li>编写子程序的时候不必关心调用者使用了哪些寄存器</li>
+<li>不会发生寄存器冲突</li>
+</ul>
+<p>解决这个问题的间捷方法是，在子程序的开始将子程序中所有用到的内容保存起来，在子程序返回前恢复。可以用栈来保存寄存器中的内容</p>
+<p>以后我们编写子程序的标准框架如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">子程序开始: 子程序使用的寄存器入栈</span><br><span class="line">            子程序内容</span><br><span class="line">            子程序中使用的寄存器出栈</span><br><span class="line">            返回(ret、retf)</span><br></pre></td></tr></table></figure>
+
+<p>看下面一个例子，将一个全是字母，以0结尾的字符串转换为大写的子程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">capital:    push cx  ;使用的寄存器入栈</span><br><span class="line">            push si</span><br><span class="line"></span><br><span class="line">change:     mov cl,[si]</span><br><span class="line">            mov ch,0</span><br><span class="line">            jcxz ok</span><br><span class="line">            and byte ptr [si],11011111b</span><br><span class="line">            inc si</span><br><span class="line">            jmp short change</span><br><span class="line"></span><br><span class="line">        ok: pop si  ;使用的寄存器出栈</span><br><span class="line">            pop cx</span><br><span class="line">            ret</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="标志寄存器"><a href="#标志寄存器" class="headerlink" title="标志寄存器"></a>标志寄存器</h2><p>在CPU内部的寄存器中，有一种特殊的寄存器(不同的CPU，个数结构可能不同)具有以下3种作用：</p>
+<ul>
+<li>用来存储相关指令的某些执行结果</li>
+<li>用来为CPU执行相关指令提供行为依据</li>
+<li>用来控制CPu的相关工作方式</li>
+</ul>
+<p>这种特殊的寄存器在8086CPU中，被称为 <strong>标志寄存器</strong> 。以下称为flag寄存器。</p>
+<p>8086CPU的flag寄存器的结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>15</th>
+<th>14</th>
+<th>13</th>
+<th>12</th>
+<th>11</th>
+<th>10</th>
+<th>9</th>
+<th>8</th>
+<th>7</th>
+<th>6</th>
+<th>5</th>
+<th>4</th>
+<th>3</th>
+<th>2</th>
+<th>1</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>OF</td>
+<td>DF</td>
+<td>IF</td>
+<td>TF</td>
+<td>SF</td>
+<td>ZF</td>
+<td></td>
+<td>AF</td>
+<td></td>
+<td>PF</td>
+<td></td>
+<td>CF</td>
+</tr>
+</tbody></table>
+<h3 id="ZF标志"><a href="#ZF标志" class="headerlink" title="ZF标志"></a>ZF标志</h3><p>flag的第6位是ZF，零标志位。它记录相关指令执行后其结果是否为0。如果结果为0,则zf=1;否则zf=0。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov ax,1</span><br><span class="line">sub ax,1</span><br><span class="line"></span><br><span class="line">;zf&#x3D;1</span><br></pre></td></tr></table></figure>
+
+<p>在8086CPU的指令集中，有的指令执行是影响标志位寄存器的，如：add、sub、mul、div、and、or等，它们大多都是运算指令;有的指令是不影响的，如mov、push、pop等，它们大多都是传送指令。</p>
+<h3 id="PF标志"><a href="#PF标志" class="headerlink" title="PF标志"></a>PF标志</h3><p>flag的第2位是PF，奇偶标志位。它记录相关指令执行后，其结果的所有bit位中1的个数是否为偶数。如果1的个数是偶数，pf=1。否则pf=0。如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov al,1</span><br><span class="line">add al,10</span><br><span class="line"></span><br><span class="line">;结果是00001011b，有奇数个1，pf&#x3D;0</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="SF标志"><a href="#SF标志" class="headerlink" title="SF标志"></a>SF标志</h3><p>flag的第7位是SF，符号标志位。它记录相关指令执行后，其结果(对于有符号数)是否为负。如果结果为负，sf=1，否则sf=0。</p>
+<p>计算机通常使用补码来表示有符号数，对于无符号数SF的值没有意义，虽然相关指令影响了它的值。</p>
+<h3 id="CF标志"><a href="#CF标志" class="headerlink" title="CF标志"></a>CF标志</h3><p>flag的第0位是CF，进位标志。一般情况下，进行无符号数运算的时候，它记录了运算结果的最高有效位向更高位的进位值，或从更高位的借位值。</p>
+<p>对于位数为N的无符号数来说，其对应的二进制信息的最高位，即第N-1位，就是它的最高有效位。</p>
+<h3 id="OF标志"><a href="#OF标志" class="headerlink" title="OF标志"></a>OF标志</h3><p>由于进行有符号数运算的时候，可能发生溢出造成结果错误。则CPU需要对指令执行后产生的溢出进行记录。</p>
+<p>flag的第11位是OF，溢出标志。一般情况下，OF记录了有符号数运算的结果是否溢出了。如果溢出，OF=1，否则OF=0。</p>
+<p>注意CF和OF的区别：CF是对无符号数有意义的标志位，OF是对无符号数有意义的标志位。</p>
+<h3 id="adc指令"><a href="#adc指令" class="headerlink" title="adc指令"></a>adc指令</h3><p>adc是带进位加法指令，它利用了CF上记录的进位值。</p>
+<ul>
+<li>指令格式：<code>adc 操作对象1 操作对象2</code></li>
+<li>功能：操作对象1 = 操作对象1 + 操作对象2 + CF</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov ax,2</span><br><span class="line">mov bx,1</span><br><span class="line">sub bx,ax  ;1-2借位，CF&#x3D;1</span><br><span class="line">adc ax,1   ;执行后(ax)&#x3D;4&#x3D;(ax)+1+CF</span><br></pre></td></tr></table></figure>
+
+<p>在执行adc指令的时候加上的CF的值的含义，由adc指令前的指令决定的。</p>
+<p>CPU提供adc指令是有目的的，就是来进行加法的第二步运算。</p>
+<p>例：计算1EF0001000H+2010001EF0H，结果放在ax(最高16位)，bx(次高16位)，cx(低16位)中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mov ax,001EH</span><br><span class="line">mov bx,0F000H</span><br><span class="line">mov cx,1000H</span><br><span class="line">add cx,1EF0H</span><br><span class="line">adc bx,1000H</span><br><span class="line">adc ax,0020H</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="sbb指令"><a href="#sbb指令" class="headerlink" title="sbb指令"></a>sbb指令</h3><p>sbb是带借位减法指令，它利用CF位上记录的借位值。应用思路类似adc</p>
+<h3 id="cmp指令"><a href="#cmp指令" class="headerlink" title="cmp指令"></a>cmp指令</h3><p>cmp是比较指令，cmp的功能相当于减法指令，只是不保存结果，而是cmp指令执行后对标志寄存器产生影响。</p>
+<ul>
+<li>cmp指令格式：<code>cmp 操作对象1 操作对象2</code></li>
+<li>功能：操作对象1-操作对象2但不保留结果，仅仅根据结算结果来对标志寄存器进行设置</li>
+<li>如，<code>cmp ax,ax</code>，结果为0，那么标志寄存器：zf=1,pf=1,sf=0,cf=0,of=0。</li>
+</ul>
+<p>cmp的使用非常灵活，如要判断两个数相减的结果是不是负数：cmp将结果在flag中记录，通过判断sf(正负)和of(溢出)就可得知逻辑上真正结果的正负。</p>
+<h3 id="检测比较结果的条件转移指令"><a href="#检测比较结果的条件转移指令" class="headerlink" title="检测比较结果的条件转移指令"></a>检测比较结果的条件转移指令</h3><p>除了jcxz指令之外，CPU还提供了其他条件转移指令，大多数条件转移指令通过检测相关的标志位，根据检测的结果修改IP。通常和cmp配合使用。</p>
+<p>下面是常用的条件转移指令</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>含义</th>
+<th>检测的相关标志位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>je</td>
+<td>等于则转移</td>
+<td>zf=1</td>
+</tr>
+<tr>
+<td>jne</td>
+<td>不等于则转移</td>
+<td>zf=0</td>
+</tr>
+<tr>
+<td>jb</td>
+<td>低于则转移</td>
+<td>cf=1</td>
+</tr>
+<tr>
+<td>jnb</td>
+<td>不低于则转移</td>
+<td>cf=0</td>
+</tr>
+<tr>
+<td>ja</td>
+<td>高于则转移</td>
+<td>cf=0且zf=0</td>
+</tr>
+<tr>
+<td>jna</td>
+<td>不高于则转移</td>
+<td>cf=1或zf=1</td>
+</tr>
+</tbody></table>
+<h3 id="DF标志和串传送指令"><a href="#DF标志和串传送指令" class="headerlink" title="DF标志和串传送指令"></a>DF标志和串传送指令</h3><p>flag的第10位是DF，方向标志位。在串处理指令中，控制每次操作后si、di的增减。</p>
+<ul>
+<li>df=0，每次操作后si、di递增</li>
+<li>df=1，每次操作后si、di递减</li>
+</ul>
+<p>看下面一个串传送指令：</p>
+<ul>
+<li>格式：<code>movsb</code></li>
+<li>功能：将ds:si指向的内存单元中的字节送入es:di中。执行movsb指令相当于进行下面几步操作<ul>
+<li><ol>
+<li>((es)*16+(di))=((ds)*16+(si))</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>如果df=0，则(si)=(si)+1;(di)=(di)+1</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>如果df=1，则(si)=(si)-1;(di)=(di)-1</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>相当于：<br>  <code>mov es:[di], byte ptr ds:[si]</code><br>  如果df=0：<code>inc si;inc di</code><br>  如果df=1：<code>dec si;dec di</code>  </li>
+<li>传送一个字的指令是<code>movsw</code></li>
+</ul>
+<p>movsb和movsw进行的是串传送操作中的一个步骤，一般来说movsb和mobsw都是配合rep使用的，个是如下</p>
+<ul>
+<li><code>rep movsb</code><ul>
+<li>类似于:<br><code>s:movsb</code><br><code>loop s</code></li>
+</ul>
+</li>
+<li>rep的作用是根据cx的值，重复后面的串传送指令</li>
+</ul>
+<p>由于df位决定着串传送指令执行后，si和di是递增还是递减，所以CPU应提供对df进行设置的操作。在8086CPU中：</p>
+<ul>
+<li>cld指令：将标志位寄存器的df设置为0</li>
+<li>std指令：将标志位寄存器的df设置为1</li>
+</ul>
+<h3 id="pushf和popf"><a href="#pushf和popf" class="headerlink" title="pushf和popf"></a>pushf和popf</h3><p>pushf的功能是将标志寄存器的值压入栈中，而popf是从栈中弹出数据，送入标志寄存器中。这也是为什么前面讲标志寄存器结构时，强调什么是第几位的原因。</p>
+<p>pushf和popf，为直接访问标志寄存器提供了一种方法。</p>
+<h2 id="内中断"><a href="#内中断" class="headerlink" title="内中断"></a>内中断</h2><p>任何一个通用CPU都具备一种能力：在执行完当前正在执行的指令之后，检测到从CPU外发送过来的或内部产生的一种特殊信息，并且可以立即对所接收到的信息进行处理。这种信息称为中断信息。中断的意思是指，CPU不再接着向下执行，而是转去处理这个特殊的信息。</p>
+<h3 id="内中断的产生"><a href="#内中断的产生" class="headerlink" title="内中断的产生"></a>内中断的产生</h3><p>当CPU内部有什么事情发生时会马上处理中断信息呢？对于8086CPU，有以下情况发生时，将产生中断信息：</p>
+<ul>
+<li>除法错误</li>
+<li>单步执行</li>
+<li>执行into指令</li>
+<li>执行int指令</li>
+</ul>
+<p>不同的信息需要不同的处理方式。中断信息中包含识别来源的编码，8086CPU用称为中断类型码来识别信息的来源。中断类型码为一个字节，可以表示256种中断信息来源。在8086CPU中：</p>
+<ul>
+<li>除法错误:0</li>
+<li>单步执行:1</li>
+<li>执行into指令:4</li>
+<li>执行int指令：该指令的格式为<code>int n</code>，n是立即数，是提供给CPU的中断类型码</li>
+</ul>
+<h3 id="中断处理程序"><a href="#中断处理程序" class="headerlink" title="中断处理程序"></a>中断处理程序</h3><p>CPU收到中断信息后，需要对信息进行处理。如何处理可以由我们编程决定。我们所编写的中断信息处理程序称为中断处理程序。</p>
+<p>CPU在收到中断信息后，应该转去(改变CS:IP指向)对应的中断处理程序中。中断类型码就是用来定位中断处理程序的。</p>
+<h3 id="中断向量表"><a href="#中断向量表" class="headerlink" title="中断向量表"></a>中断向量表</h3><p>如何根据8位的中断类型码得到中断处理程序的段地址和偏移地址呢？</p>
+<ul>
+<li>CPU通过中断向量表找到相应的中断处理程序入口地址。中断向量表就是中断处理程序入口地址的列表。</li>
+</ul>
+<p>CPU如何找到中断向量表？</p>
+<ul>
+<li>中断向量表在内存中存放，在8086CPU中，中断向量表指定放在内存地址0处。从内存0000:0000到0000:03FF的1024个内存单元中存放着中断向量表。</li>
+</ul>
+<h3 id="中断过程"><a href="#中断过程" class="headerlink" title="中断过程"></a>中断过程</h3><p>CPU在执行完中断处理程序后，应该返回原来的执行点继续执行下面的指令。所以在中断过程中，在设置CS:IP之前，还要将原来的CS和IP的值保存起来。与call指令调用子程序同理。</p>
+<p>下面是8086CPU收到中断信息后，所引发中断的过程：</p>
+<ul>
+<li><ol>
+<li>获取中断类型码</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>标志寄存器入栈</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>设置标志寄存器的第8位TF和第9位IF值为0，因为这也两个标志寄存器也可以是触发中断的因素</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>CS内容入栈</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>IP内容入栈</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>从内存地址为<code>中断类型码*4</code>和<code>中断类型码*4+2</code>的两个字单元中读取中断处理程序的入口地址设置IP和CS</li>
+</ol>
+</li>
+</ul>
+<h3 id="中断处理程序和iret指令"><a href="#中断处理程序和iret指令" class="headerlink" title="中断处理程序和iret指令"></a>中断处理程序和iret指令</h3><p>由于CPU随时可能检测到中断信息，所以中断处理程序必须一直储存来内存的某段空间之中，而中断向量必须存储在对应的中断向量表项中。</p>
+<p>中断处理程序的编写方法和子程序比较相似，步骤如下：</p>
+<ul>
+<li><ol>
+<li>保存用到的寄存器</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>处理中断</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>恢复用到的寄存器</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>用iret指令返回</li>
+</ol>
+</li>
+</ul>
+<p>iret指令用汇编语法描述为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pop IP</span><br><span class="line">pop CS</span><br><span class="line">popf</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="编程处理0号中断"><a href="#编程处理0号中断" class="headerlink" title="编程处理0号中断"></a>编程处理0号中断</h3><p>当除法溢出的时候，产生0号中断信息，从而引发中断过程。此时，CPU将进行如下工作：</p>
+<ul>
+<li><ol>
+<li>获取中断类型码0</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>标志寄存器入栈，TF、IF设置为0</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>CS、IP入栈</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>(IP)=(0*4)，(CS)=(0*4+2)</li>
+</ol>
+</li>
+</ul>
+<p>那么现在的问题是，中断处理程序(我们设为do0)应该放在哪里？</p>
+<ul>
+<li>我们需要找到一块别的程序不会用到的内存区，将do0送入其中</li>
+<li>前面说过，8086支持256个中断，但实际中并不会用到那么多。一般情况下，从0000:0200至0000:02FF的256个字节所对应的中断向量表项是空的，操作系统和其他程序都不会占用，所以我们可以使用这段空间</li>
+</ul>
+<p>程序框架如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line"></span><br><span class="line">start:  do0安装程序</span><br><span class="line">        设置中断向量表</span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br><span class="line"></span><br><span class="line">  do0:  一些操作如:显示字符串&quot;overflow!&quot;</span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br><span class="line"></span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，上面的程序分为两部分：</p>
+<ul>
+<li>安装do0，设置中断向量的程序<ul>
+<li><ol>
+<li>将do0的代码复制到内存0:200处</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>设置中断向量表，将do0的入口地址保存到0号表项中</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>返回</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>do0</li>
+</ul>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>可以使用movsb指令，将do0的代码送入0:200处。程序如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line"></span><br><span class="line">start:  mov ax,cs</span><br><span class="line">        mov ds,ax</span><br><span class="line">        mov si,offset do0       ;设置ds:si指向源地址</span><br><span class="line"></span><br><span class="line">        mov ax,0</span><br><span class="line">        mov es,ax</span><br><span class="line">        mov di,200h             ;设置es:di指向目的地址</span><br><span class="line"></span><br><span class="line">        mov cx,offset do0end-offset do0                     ;设置cs为传输长度，可利用编译器计算do0长度</span><br><span class="line"></span><br><span class="line">        cld                     ;设置传输方向为正向</span><br><span class="line">        rep movsb</span><br><span class="line"></span><br><span class="line">        设置中断向量表</span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br><span class="line"></span><br><span class="line">  do0:  一些操作如:显示字符串&quot;overflow!&quot;</span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br><span class="line"></span><br><span class="line">do0end: nop</span><br><span class="line"></span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="do0"><a href="#do0" class="headerlink" title="do0"></a>do0</h3><p>do0程序的主要任务是显示字符串，如下</p>
+<p>需要注意的是：</p>
+<ul>
+<li>因为do0程序随时可能被执行，而它要用到的字符串”overflow!”，所以该字符串也应该放在一段不会被覆盖的空间中</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line"></span><br><span class="line">start:  mov ax,cs</span><br><span class="line">        mov ds,ax</span><br><span class="line">        mov si,offset do0       ;设置ds:si指向源地址</span><br><span class="line"></span><br><span class="line">        mov ax,0</span><br><span class="line">        mov es,ax</span><br><span class="line">        mov di,200h             ;设置es:di指向目的地址</span><br><span class="line"></span><br><span class="line">        mov cx,offset do0end-offset do0                     ;设置cs为传输长度，可利用编译器计算do0长度</span><br><span class="line"></span><br><span class="line">        cld                     ;设置传输方向为正向</span><br><span class="line">        rep movsb</span><br><span class="line"></span><br><span class="line">        设置中断向量表</span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br><span class="line"></span><br><span class="line">  do0:  jmp short do0start</span><br><span class="line">        db &quot;overflow!&quot;</span><br><span class="line"></span><br><span class="line">do0start:mov ax,cs</span><br><span class="line">         mov ds,ax</span><br><span class="line">         mov si,202h            ;设置ds:si指向字符串，因为do0主程序第一跳指令是跳转，占用两个字节，所以字符串的地址是202h</span><br><span class="line"></span><br><span class="line">         mov ax,0b800h</span><br><span class="line">         mov es,ax</span><br><span class="line">         mov di,12*160+36*2     ;设置es:di指向显存空间的中间位置</span><br><span class="line"></span><br><span class="line">         mov cx,9               ;设置字符串长度</span><br><span class="line">    s:   al,[si]</span><br><span class="line">         mov es:[di],al</span><br><span class="line">         inc si</span><br><span class="line">         add di,2</span><br><span class="line">         loop s</span><br><span class="line"></span><br><span class="line">         mov ax,4c00h</span><br><span class="line">         int 21h</span><br><span class="line"></span><br><span class="line">do0end: nop</span><br><span class="line"></span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="设置中断向量"><a href="#设置中断向量" class="headerlink" title="设置中断向量"></a>设置中断向量</h3><p>0号表项的地址为0:0，其中0:0字单元存放偏移地址，0:2字单元存放段地址。程序如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov ax,0</span><br><span class="line">mov es,ax</span><br><span class="line">mov word ptr es:[0\*4],200h</span><br><span class="line">mov word ptr es:[0\*4+2],0</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="单步中断"><a href="#单步中断" class="headerlink" title="单步中断"></a>单步中断</h3><p>基本上，CPU在执行一条指令之后，如果检查到标志寄存器的TF位为1，则产生单步中断，引发中断过程。单步中断的类型码为1，它引发的中断过程如下：</p>
+<ul>
+<li><ol>
+<li>取得中断类型码</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>标志寄存器入栈，TF、IF设置为0</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>CS、IP入栈</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>(IP)=(1*4), (CS)=(1*4+2)</li>
+</ol>
+</li>
+</ul>
+<p>CPU为什么要提供这样的功能呢？</p>
+<ul>
+<li>我们在debug的时候CPU执行一条指令后就显示各个寄存器的状态，然后等待输入</li>
+</ul>
+<p>当TF=1时，CPU在执行完一条指令后将引发单步中断，转去执行中断处理程序。 <strong>注意，中断处理程序也是由一条条指令组成的</strong> ，如果在执行中断处理程序之前，TF=1,则CPU执行完终端处理程序的第一条指令后，有产生单步中断，就这样死循环下去。</p>
+<p>所以在进入中断处理程序之前，设置TF=0.从而避免CPU在执行中断处理程序的时候发生单步中断。</p>
+<h3 id="响应中断的特殊情况"><a href="#响应中断的特殊情况" class="headerlink" title="响应中断的特殊情况"></a>响应中断的特殊情况</h3><p>一般情况下，CPU在执行完当前指令后，如果检测到中断信息，就响应中断，引发中断过程。可在某些情况，即便是发生了中断，也不会响应。用一个例子说明：</p>
+<p>在执行完向ss寄存器传送数据的指令后，即便发生中断，CPU也不会响应。因为ss:sp联合指向栈顶，对它们的设置应该连续完成。如果在执行完设置ss的指令后，CPU响应中断，引发中断过程，要在栈中压入标志寄存器、CS和IP的值。而ss改变，sp没变，ss:sp不能指向正确的栈顶，引起错误。</p>
+<h2 id="int指令"><a href="#int指令" class="headerlink" title="int指令"></a>int指令</h2><p>中断信息可以来自CPU的内部和外部，当CPU内部需要处理的事情发生时，将产生需要马上处理的中断信息，引发中断过程。</p>
+<p>接下来将介绍另一种重要的内中断，由int指令引发的中断。</p>
+<h3 id="int指令-1"><a href="#int指令-1" class="headerlink" title="int指令"></a>int指令</h3><p>int指令的格式为：<code>int n</code>，n为中断类型码，它的功能是引发中断过程。</p>
+<p>CPU执行<code>int n</code>指令，相当于引发一个n号中断的中断过程，执行过程如下：</p>
+<ul>
+<li><ol>
+<li>取中断类型码n</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>标志寄存器入栈，IF=0，TF=0</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>CS、IP入栈</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>(IP)=(n*4)，(CS)=(n*4+2)<ul>
+<li>跳转去n号中断处理程序</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>编写提供应用程序调用的中断例程，与中断处理类似：</p>
+<ul>
+<li>编写功能程序</li>
+<li>安装程序到内存中</li>
+<li>设置中断向量，将程序的入口地址保存到对应的表项中</li>
+</ul>
+<h3 id="对int、iret和栈的深入理解"><a href="#对int、iret和栈的深入理解" class="headerlink" title="对int、iret和栈的深入理解"></a>对int、iret和栈的深入理解</h3><p>问题：编写名为7ch的中断例程来完成loop指令的功能</p>
+<p>分析：loop s的执行需要两个信息，循环的次数和到s的位移</p>
+<p>例：屏幕中间显示80个”!”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">code segment</span><br><span class="line"></span><br><span class="line">start   :mov ax,0b800h</span><br><span class="line">         mov es,ax</span><br><span class="line">         mov di,160*12</span><br><span class="line"></span><br><span class="line">         mov bx,offset s-offset se      ;设置从标号se到标号s的转移位移</span><br><span class="line">         mov cx,80</span><br><span class="line">    s   :mov byte ptr es:[di],&#39;!&#39;</span><br><span class="line">         add di,2</span><br><span class="line">         int 7ch                        ;如果(cx)!&#x3D;0，转移到s处</span><br><span class="line">   se   :nop</span><br><span class="line"></span><br><span class="line">         mov ax,4c00h</span><br><span class="line">         int 21h</span><br><span class="line"></span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+<p>7ch中断例程如下:</p>
+<ul>
+<li><code>int 7ch</code>引发中断后，在中断过程中将当前的标志寄存器、CS和IP入栈</li>
+<li>通过修改栈中的CS和IP就能让程序返回标号s所在的位置<ul>
+<li>用标号se的偏移地址加上bx中存放的转移位移就可以得到标号s的偏移地址</li>
+<li>如果7ch和主程序在同一段中，则栈中的段寄存器CS就不用修改</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  7ch   :push bp                        </span><br><span class="line">         mov bp,sp</span><br><span class="line">         dec cx</span><br><span class="line">         jcxz lpret                     ;如果cx等于0则不修改偏移地址，直接返回</span><br><span class="line">         add [bp+2],bx                  ;[bp+2]处是IP的内容，栈顶处是bp的内容，下面是se的偏移地址</span><br><span class="line">lpret   :pop bp</span><br><span class="line">         iret</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="BIOS和DOS所提供的中断例程"><a href="#BIOS和DOS所提供的中断例程" class="headerlink" title="BIOS和DOS所提供的中断例程"></a>BIOS和DOS所提供的中断例程</h3><p>在系统板的ROM中存放着一套程序，称为BIOS(基本输入输出系统)，主要包含以下几个部分：</p>
+<ul>
+<li>硬件系统的检测和初始化程序</li>
+<li>外部中断和内部中断的中断例程</li>
+<li>用于对硬件设备进行I/O操作的中断例程</li>
+<li>其他和硬件系统相关的中断例程</li>
+</ul>
+<h2 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h2><p>各种储存器都和CPU的地址线、数据线、控制线相连。CPU在操控它们的时候，把它们当作内存来对待，把它们总地看做一个由若干储存单元组成的逻辑储存器。</p>
+<p>PC机的芯片中，都有一组可以由CPU读写的寄存器，这些寄存器在物理上可能处于不同的芯片中，但是它们都在以下两点上相同：</p>
+<ul>
+<li>都和CPU的总线相连</li>
+<li>CPU对它们进行读写的时候都通过控制总线向它们所在的芯片发出端口读写命令</li>
+</ul>
+<p>从CPU的角度，将这些寄存器都当作端口，对它们进行统一编址，从而建立一个统一的端口地址空间。每个端口在地址空间中都有一个地址</p>
+<p>CPU可以直接读写以下3个地方的数据：</p>
+<ul>
+<li>CPU内部的寄存器</li>
+<li>内存单元</li>
+<li>端口</li>
+</ul>
+<p>以下讨论端口的读写</p>
+<h3 id="端口的读写"><a href="#端口的读写" class="headerlink" title="端口的读写"></a>端口的读写</h3><p>在访问端口时，CPU通过端口地址来定位端口。因为端口所在的芯片和CPU通过总线相连，所以，端口地址和内存地址一样，通过地址总线来传送。在PC系统中，CPU最多可以定位64KB个不同的端口。则端口地址的范围是0～65535</p>
+<p>对端口的读写不能用mov、push、pop等内存读写指令。端口的读写指令只有两条：in和out</p>
+<ul>
+<li>in表示从端口读取数据</li>
+<li>out表示往端口写入数据</li>
+</ul>
+<h4 id="访问端口"><a href="#访问端口" class="headerlink" title="访问端口"></a>访问端口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">in al,60h       ;从60h号端口读入一个字节</span><br></pre></td></tr></table></figure>
+
+<p>执行时与总线相关的操作如下：</p>
+<ul>
+<li>CPU通过地址线将地址信息60h发出</li>
+<li>CPU通过控制线发出端口读命令，选中端口所在的芯片，并通知它，将要从中读取数据</li>
+<li>端口所在的芯片将60h端口中的数据通过数据线送入CPU</li>
+</ul>
+<p><strong>注意</strong> ，在in和out指令中，只能使用ax或al来存放从端口读入的数据或要发送到端口的数据。访问8位端口时用al，访问16位端口时用ax</p>
+<p>对0～255以内的端口进行读写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">in al,20h   </span><br><span class="line">out 20h,al</span><br></pre></td></tr></table></figure>
+
+<p>对256～65535的端口进行读写时，端口号放在dx中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov dx,3f8h</span><br><span class="line">in al,dx   </span><br><span class="line">out dx,al</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="CMOS-RAM芯片"><a href="#CMOS-RAM芯片" class="headerlink" title="CMOS RAM芯片"></a>CMOS RAM芯片</h3><p>PC机中，有一个CMOS RAM芯片，一般简称为CMOS。有如下特征：</p>
+<ul>
+<li>包含一个实时钟和一个128个储存单元的RAM储存器</li>
+<li>该芯片靠电池供电。所以关机后内部实时钟仍可正常工作，RAM中信息不会丢失</li>
+<li>128个字节的RAM中，内部实时钟占用0～0dh单元来保存时间信息，其余大部分单元保存系统配置信息</li>
+<li>该芯片内部有两个端口，端口地址为70h和71h。CPU通过这两个端口来读写CMOS RAM</li>
+<li>70h为地址端口，存放要访问的CMOS RAM单元地址;71h为数据端口，存放从选定的CMOS RAM单元中读取的数据或要写入其中的数据，对CMOS操作时读写分为两步：如读CMOS RAM的2号单元<ul>
+<li><ol>
+<li>将2送入段偶70h</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>从端口71h读出2号单元的内容</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="shl和shr指令"><a href="#shl和shr指令" class="headerlink" title="shl和shr指令"></a>shl和shr指令</h3><p>shl和shr是逻辑位移指令，shl是逻辑左移，shr是逻辑右移</p>
+<p>以shl为例，它的功能为：</p>
+<ul>
+<li>将一个寄存器或内存单元中的数据向左位移</li>
+<li>将最后移出的一位写入CF中</li>
+<li>最低位用0补充</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov al,01001000b</span><br><span class="line">shl al,1            ;将al数据左移一位</span><br><span class="line">;结果al&#x3D;10010000b， CF&#x3D;0</span><br></pre></td></tr></table></figure>
+
+<p>如果位移数大于1时，必须将位移数放在cl中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov al,01001000b</span><br><span class="line">mov cl,2</span><br><span class="line">shl al,cl            ;将al数据左移2位</span><br><span class="line">;结果al&#x3D;00100000b， CF&#x3D;1</span><br></pre></td></tr></table></figure>
+
+<p>逻辑左移相当于执行<code>X=X*2</code></p>
+<p>shr是逻辑右移，和shl的操作相反</p>
+<h3 id="CMOS-RAM中存储的时间信息"><a href="#CMOS-RAM中存储的时间信息" class="headerlink" title="CMOS RAM中存储的时间信息"></a>CMOS RAM中存储的时间信息</h3><p>在CMOS RAM中，存放着当前的时间：年、月、日、时、分、秒。这6个信息的长度为1个字节。这些数据以BCD码的方式存放。</p>
+<table>
+<thead>
+<tr>
+<th>存放单元</th>
+<th>0</th>
+<th>2</th>
+<th>4</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内容</td>
+<td>秒</td>
+<td>分</td>
+<td>时</td>
+<td>日</td>
+<td>月</td>
+<td>年</td>
+</tr>
+</tbody></table>
+<p>CMOS RAM储存时间信息的单元中，储存了用两个BCD码表示的两位十进制数，高4位的BCD码表示十位，低4位的BCD码表示个位。如00010100b表示14。</p>
+<p><strong>实战</strong> :</p>
+<p>编程：在屏幕中显示当前的月份</p>
+<p>分析：这个程序主要做一下两个部分工作：</p>
+<ul>
+<li>从CMOS RAM的8号单元中读出当前月的BCD码<ul>
+<li><ol>
+<li>向地址端口70h写入要访问的单元的地址<br><code>mov al,8; out 70h,al</code></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>从数据端口71h中取得指定单元中的数据<br><code>in al,71h</code></li>
+</ol>
+</li>
+</ul>
+</li>
+<li>将用BCD码表示的月份用十进制的形式显示<ul>
+<li>因为BCD码值=十进制码值，则BCD码值+30h=十进制对应的ASCII码</li>
+<li>从CMOS RAM的8号内存单元读出的一个字节中，包含了用两个BCD码表示的两位十进制数，高4位为十为，低4位为个位<ul>
+<li>取出这两个BCD码<br><code>mov ah,al</code><br><code>cl,4</code>  移位数<br><code>shr ah,cl</code>         ah中为月份的十位<br><code>and al,00001111b</code>  al中为月份的个位数</li>
+<li>显示(ah)+30h和(al)+30h对应的ASCII码字符</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>完整程序如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">code segment</span><br><span class="line">start:  mov al,8</span><br><span class="line">        out 70h,al</span><br><span class="line">        in al,71h</span><br><span class="line"></span><br><span class="line">        mov ah,al</span><br><span class="line">        mov cl,4</span><br><span class="line">        shr ah,cl</span><br><span class="line">        and al,00001111b</span><br><span class="line"></span><br><span class="line">        add ah,30h</span><br><span class="line">        add al,30h</span><br><span class="line"></span><br><span class="line">        mov bx,0b800h</span><br><span class="line">        mov es,bx</span><br><span class="line">        mov byte ptr es:[160*12+40*2],ah        ;显示月份的十位数码</span><br><span class="line">        mov byte ptr es:[160*12+40*2+2],al      ;接着显示月份的个位数码</span><br><span class="line"></span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br><span class="line"></span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="外中断"><a href="#外中断" class="headerlink" title="外中断"></a>外中断</h2><p>要及时处理外设的输入，显然需要解决两个问题：</p>
+<ul>
+<li>外设的输入随时可能发生，CPU如何得知？</li>
+<li>CPU从何处得到外设的输入？</li>
+</ul>
+<h3 id="接口芯片和端口"><a href="#接口芯片和端口" class="headerlink" title="接口芯片和端口"></a>接口芯片和端口</h3><p>外设的输入不直接送入内存和CPU，而是送入相关的接口芯片的端口中;CPU向外设的输出也不是直接送入外设，而是先送入端口中，再由相关的芯片送到外设。CPU还可以向外设输出控制命令，而这些命令也是先送到相关芯片的端口中，然后再由相关的芯片根据命令对外设设施控制。</p>
+<h3 id="外中断信息"><a href="#外中断信息" class="headerlink" title="外中断信息"></a>外中断信息</h3><p>外设的输入随时可能发生，CPU如何得知？</p>
+<ul>
+<li>当CPU外部需要处理的事情发生时，相关的芯片将向CPU发出相应的中断信息，引发中断过程。</li>
+</ul>
+<p>在PC系统中，外中断源一共有以下两类：</p>
+<ul>
+<li>可屏蔽中断<ul>
+<li>可屏蔽中断是CPU可以不响应的外中断</li>
+<li>CPU是否响应可屏蔽中断看标志寄存器IF位的设置，IF=1则响应</li>
+<li><code>sti</code>设置IF=1</li>
+<li><code>cti</code>设置IF=0</li>
+</ul>
+</li>
+<li>不可屏蔽中断<ul>
+<li>不可屏蔽中断的中断类型码固定为2</li>
+</ul>
+</li>
+</ul>
+<h3 id="PC机键盘的处理过程"><a href="#PC机键盘的处理过程" class="headerlink" title="PC机键盘的处理过程"></a>PC机键盘的处理过程</h3><ul>
+<li><ol>
+<li>键盘输入<ul>
+<li>键盘上每个键相当于一个开关，键盘中有一个芯片对键盘上每个键的开关状态进行扫描</li>
+<li>按下一个键，开关接通，芯片产生一个能说明按下键的位置的扫描码。扫描码送入主板上相关接口芯片的寄存器中，该寄存器的端口地址为60h</li>
+<li>松开按键时也会产生扫描码，也被送入60h端口</li>
+<li>一般称按下产生的扫描码为通码，松开产生的扫描码为断码，通码的第7位为0，断码的第7位为1，即：<ul>
+<li><strong>断码=通码+80h</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>引发9号中断<ul>
+<li>键盘输入到达60h端口时，相关的芯片就会向CPU发出中断类型为9的可屏蔽中断信息</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>执行int 9中断例程<ul>
+<li>BIOS提供了int 9中断例程，用来进行基本的键盘输入处理</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="编写int-9中断例程"><a href="#编写int-9中断例程" class="headerlink" title="编写int 9中断例程"></a>编写int 9中断例程</h3><p>键盘输入的处理过程：</p>
+<ul>
+<li><ol>
+<li>键盘产生扫描码</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>扫描码送入60h端口</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>引发9号中断</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>CPU执行int 9中断例程处理键盘输入<ul>
+<li>从端口60h读入输入：<code>in al,60h</code></li>
+<li>调用BIOS的int 9中断例程</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>BIOS提供的int 9中断例程已经对一些硬件细节进行了处理，我们只要在自己编写的中断例程中调用BIOS的int 9中断例程就可以自定义操作了。</p>
+<p>编程：在屏幕中间依次显示a～z，按下Esc后改变显示的颜色</p>
+<ul>
+<li>首先为了能够看清，应该在显示一个字母后延时一段时间</li>
+<li>将我们自己写的9号中断写入向量表，同时保存BIOS的int 9中断例程，以便之后调用<ul>
+<li>这里将原来的int 9中断例程的偏移地址和段地址保存在ds:[0]和ds:[2]单元中</li>
+</ul>
+</li>
+<li>模拟int来实现对我们写的新中断例程进行调用</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">    db 128 dup (0)</span><br><span class="line">stack ends</span><br><span class="line"></span><br><span class="line">data segment</span><br><span class="line">    dw 0,0</span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">start:  mov ax,stack</span><br><span class="line">        mov ss,ax</span><br><span class="line">        mov sp,128</span><br><span class="line"></span><br><span class="line">        mov ax,data</span><br><span class="line">        mov ds,ax</span><br><span class="line"></span><br><span class="line">        mov ax,0</span><br><span class="line">        mov es,ax</span><br><span class="line"></span><br><span class="line">        push es:[9*4]</span><br><span class="line">        pop ds:[0]</span><br><span class="line">        push es:[9*4+2]</span><br><span class="line">        pop ds:[2]          ;将原来的int 9中断例程的入口地址保存在ds:0和ds:2单元中</span><br><span class="line"></span><br><span class="line">        mov ax,0b800h</span><br><span class="line">        mov es,ax</span><br><span class="line">        mov ah,&#39;a&#39;</span><br><span class="line">s:      mov es:[160*12+40*2] ;显示</span><br><span class="line">        call delay</span><br><span class="line">        inc ah</span><br><span class="line">        cmp ah,&#39;z&#39;</span><br><span class="line">        jna s</span><br><span class="line"></span><br><span class="line">        mov ax,0</span><br><span class="line">        mov es,ax</span><br><span class="line"></span><br><span class="line">        push ds:[0]</span><br><span class="line">        pop es:[9*4]</span><br><span class="line">        push ds:[2]</span><br><span class="line">        pop es:[9*4+2]      ;将中断向量表中的int 9中断例程的入口地址恢复为原来的地址</span><br><span class="line"></span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br><span class="line"></span><br><span class="line">delay:  push ax</span><br><span class="line">        push dx</span><br><span class="line">        mov dx,1000h</span><br><span class="line">        mov ax,0</span><br><span class="line">s1:     sub ax,1</span><br><span class="line">        sbb dx,0</span><br><span class="line">        cmp ax,0</span><br><span class="line">        jne s1</span><br><span class="line">        cmp dx,0</span><br><span class="line">        jne s1</span><br><span class="line">        pop dx</span><br><span class="line">        pop ax</span><br><span class="line">        ret</span><br><span class="line">; -------新int 9中断例程--------</span><br><span class="line">int9:   push ax</span><br><span class="line">        push bx</span><br><span class="line">        push es</span><br><span class="line"></span><br><span class="line">        in al,60h</span><br><span class="line"></span><br><span class="line">        pushf</span><br><span class="line">        pushf</span><br><span class="line">        pop bx</span><br><span class="line">        and bh,111111100b</span><br><span class="line">        push bx</span><br><span class="line">        popf</span><br><span class="line">        call dword ptr ds:[0]   ;对int指令进行模拟，调用原来的int 9中断例程</span><br><span class="line"></span><br><span class="line">        cmp al,1</span><br><span class="line">        jne int9ret</span><br><span class="line"></span><br><span class="line">        mov ax,0b800h</span><br><span class="line">        mov es,ax</span><br><span class="line">        inc byte ptr es:[160*12+40*2+1] ;段地址控制的文本显示的信息，改变颜色</span><br><span class="line"></span><br><span class="line">int9ret:pop es</span><br><span class="line">        pop bx</span><br><span class="line">        pop ax</span><br><span class="line">        iret</span><br><span class="line">code ens</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="直接定址表"><a href="#直接定址表" class="headerlink" title="直接定址表"></a>直接定址表</h2><h3 id="描述了单元长度的标号"><a href="#描述了单元长度的标号" class="headerlink" title="描述了单元长度的标号"></a>描述了单元长度的标号</h3><p>之前的程序中，标号仅仅表示了内存单元的地址。但是我们还可以使用一种标号，这种标号不但表示内存单元的地址，还表示了内存单元的长度，即表示此单元是一个字节单元，还是双字单元。如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">code segment</span><br><span class="line">    a db 1, 2, 3, 4, 5, 6, 7, 8         ;a、b后面没有&quot;:&quot;，它们是同时描述内存地址和单元长度的标号</span><br><span class="line">    b dw 0                              ;标号a描述了地址code:0，以后的单元都是字节单元;标号b表述了地址code:8，以后的字单元</span><br><span class="line"></span><br><span class="line">start:  mov si,0</span><br><span class="line">        mov cx,8</span><br><span class="line">s:      mov al,a[si]</span><br><span class="line">        mov ah,0</span><br><span class="line">        add b,ax</span><br><span class="line">        inc si</span><br><span class="line">        loop s</span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+<p>因此这种标号包含了对单元长度的描述，所以在指令中，它可以代表一个段中的内存单元。对于程序中的<code>b dw 0</code></p>
+<ul>
+<li>指令：<code>mov ax,b</code>相当于：<code>mov ax,cs:[8]</code></li>
+<li>指令：<code>mov b,2</code>相当于：<code>mov word ptr cs:[8],2</code></li>
+<li>指令：<code>inc b</code>相当于：<code>inc word ptr cs:[8]</code></li>
+</ul>
+<p>使用这种包含单元长度的标号，可以使我们以简洁的形式访问内存中的数据。我们称这种标号为数据标号。</p>
+<h3 id="在其他段中使用数据标号"><a href="#在其他段中使用数据标号" class="headerlink" title="在其他段中使用数据标号"></a>在其他段中使用数据标号</h3><p>下面程序将data段中a标号处8个数据累加，结果储存在b中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code,ds:data</span><br><span class="line">data segment</span><br><span class="line">    a db 1, 2, 3, 4, 5, 6, 7, 8         </span><br><span class="line">    b dw 0                              </span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">start:  mov ax,data</span><br><span class="line">        mov ds,ax</span><br><span class="line"></span><br><span class="line">        mov si,0</span><br><span class="line">        mov cx,8</span><br><span class="line">s:      mov al,a[si]</span><br><span class="line">        mov ah,0</span><br><span class="line">        add b,ax</span><br><span class="line">        inc si</span><br><span class="line">        loop s</span><br><span class="line"></span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br><span class="line"></span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意：后面加有”:”的地址标号只能在代码段中使用，不能在其他代码段中使用。</li>
+<li>如果想在代码段中直接使用数据标号访问数据，则需要用伪命令assume将标号所在的段和一个段寄存器联系起来<ul>
+<li>只是编译器的工作需要，类系c语言中要有函数原型，assume并没有将段寄存器和某个段相联系</li>
+<li>我们在程序中还要使用指令对寄存器进行设置</li>
+</ul>
+</li>
+</ul>
+<p>对于这个程序，编译器对相关指令的编译如下：</p>
+<ul>
+<li>指令：<code>mov al,a[si]</code>，编译为<code>mov al,ds:[si+0]</code></li>
+<li>指令：<code>mov b,ax</code>，编译为<code>mov ds:[8],ax</code></li>
+<li>在执行这些指令前，ds必须为data的段地址<code>mov ax,data;mov ds,ax</code></li>
+</ul>
+<h3 id="直接定址表-1"><a href="#直接定址表-1" class="headerlink" title="直接定址表"></a>直接定址表</h3><p>我们希望对数据建立某种映射关系，如果我们直接使用条件判断语句明显是可行的。但程序将要执行多条比较、转移指令。程序混乱。</p>
+<p>因此我们可以建立一张表。假设我们要一次储存字符”0”<del>“F”，我们可以通过0</del>15直接查找对应字符。使用如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">table db &#39;0123456789ABCDE&#39;</span><br><span class="line"></span><br><span class="line">mov ah,table[bx]</span><br><span class="line">等等</span><br></pre></td></tr></table></figure>
+
+<p>以数值N为table表中的偏移，可以找到对应的字符</p>
+<p>利用表，两个数据集合之间建立了一种映射关系，使我们可以用查表的方法根据给出的数据的到其在另一个集合中的对应数据。这样做的目的一般有以下3个：</p>
+<ul>
+<li>为了算法的清晰和简洁</li>
+<li>为了加快运算速度<ul>
+<li>如我们可以直接保存常见的三角函数，而不必计算</li>
+</ul>
+</li>
+<li>为了使程序易于扩充</li>
+</ul>
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><ul>
+<li>seg操作符，功能为取得某一标号的段地址</li>
+<li>lea操作符，是mov的变种，功能为取有效地址(Load effect address)，即取偏移地址<ul>
+<li>格式: lea 目的,源</li>
+<li>leaw，两个字节</li>
+<li>leal，4个字节</li>
+<li>leaq，8个字节</li>
+</ul>
+</li>
+<li>leave操作符，功能为将寄存器ebp(保留栈底指针)的内容复制到esp(保留栈顶指针)中，然后从栈中恢复ebp寄存器的旧值</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/04/universe/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E5%AF%86%E7%A0%81%E5%AD%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -5476,441 +6927,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/universe/vim_in_action/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/26/universe/vim_in_action/" class="post-title-link" itemprop="url">vim实用技巧</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-26 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-26T00:00:00+08:00">2020-02-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Vim实用技巧"><a href="#Vim实用技巧" class="headerlink" title="Vim实用技巧"></a>Vim实用技巧</h1><h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><table>
-<thead>
-<tr>
-<th>操作</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>o</td>
-<td>切换高亮中光标所在的端点</td>
-</tr>
-<tr>
-<td>.</td>
-<td>重复执行上一步操作</td>
-</tr>
-<tr>
-<td>%</td>
-<td>它代表当前文件中的所有行</td>
-</tr>
-<tr>
-<td>%</td>
-<td>可以在一组开, 闭括号间跳转</td>
-</tr>
-<tr>
-<td>m{mark}</td>
-<td>当前位置标记为{mark}以便以后跳转</td>
-</tr>
-<tr>
-<td>`{mark}</td>
-<td>跳到{mark}标记处</td>
-</tr>
-<tr>
-<td>qa</td>
-<td>录制宏到寄存器a</td>
-</tr>
-<tr>
-<td>qA</td>
-<td>往寄存器a中追加操作</td>
-</tr>
-<tr>
-<td>i/d{</td>
-<td>i for inside, a for around, 就可以用di/da等操作</td>
-</tr>
-<tr>
-<td>=i{</td>
-<td>=格式化?(缩进), inside {}</td>
-</tr>
-<tr>
-<td>:earlier/later 1m</td>
-<td>回到1min前/后</td>
-</tr>
-</tbody></table>
-<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><table>
-<thead>
-<tr>
-<th>操作</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>*</td>
-<td>向下查找光标停靠的词语</td>
-</tr>
-<tr>
-<td>#</td>
-<td>向上查找</td>
-</tr>
-<tr>
-<td>;</td>
-<td>重复上一次查找</td>
-</tr>
-<tr>
-<td>,</td>
-<td>反转方向重复上一次查找</td>
-</tr>
-<tr>
-<td>\ze和\ze</td>
-<td>匹配界定符, 匹配边界</td>
-</tr>
-</tbody></table>
-<h3 id="按正则表达式查找"><a href="#按正则表达式查找" class="headerlink" title="按正则表达式查找"></a>按正则表达式查找</h3><table>
-<thead>
-<tr>
-<th>操作</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>\v</td>
-<td>使用正则的特殊符号规则</td>
-</tr>
-<tr>
-<td>\V</td>
-<td>原意查找, 即.啊什么的不用反斜转意</td>
-</tr>
-<tr>
-<td>\w</td>
-<td>用来匹配单词类字符, 包括字母,数字及符号</td>
-</tr>
-<tr>
-<td>\W</td>
-<td>匹配单词类以外的所有字符</td>
-</tr>
-<tr>
-<td>\{num}</td>
-<td>引用被没对()捕获的子匹配 \0会引用整个匹配</td>
-</tr>
-<tr>
-<td>&lt;和&gt;</td>
-<td>\v模式中&lt;和&gt;用来匹配边界</td>
-</tr>
-</tbody></table>
-<h2 id="操作符-动作-操作"><a href="#操作符-动作-操作" class="headerlink" title="操作符 + 动作 = 操作"></a>操作符 + 动作 = 操作</h2><h3 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h3><table>
-<thead>
-<tr>
-<th>操作</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>c</td>
-<td>修改</td>
-</tr>
-<tr>
-<td>d</td>
-<td>删除</td>
-</tr>
-<tr>
-<td>y</td>
-<td>复制到寄存器</td>
-</tr>
-<tr>
-<td>g~</td>
-<td>反转大小写</td>
-</tr>
-<tr>
-<td>gu</td>
-<td>反转为小写</td>
-</tr>
-<tr>
-<td>gU</td>
-<td>反转为大写</td>
-</tr>
-<tr>
-<td>&gt;</td>
-<td>增加缩进</td>
-</tr>
-<tr>
-<td>&lt;</td>
-<td>减小缩进</td>
-</tr>
-<tr>
-<td>=</td>
-<td>自动缩进</td>
-</tr>
-<tr>
-<td>!</td>
-<td>使用外部程序</td>
-</tr>
-</tbody></table>
-<h3 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h3><table>
-<thead>
-<tr>
-<th>操作</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>w</td>
-<td>向后一个单词</td>
-</tr>
-<tr>
-<td>W</td>
-<td>当前字串</td>
-</tr>
-<tr>
-<td>aw</td>
-<td>a word, 光标停靠的整个单词及一个空格</td>
-</tr>
-<tr>
-<td>ab</td>
-<td>一对圆括号</td>
-</tr>
-<tr>
-<td>aB</td>
-<td>一对花括号</td>
-</tr>
-<tr>
-<td>t</td>
-<td>to 到</td>
-</tr>
-<tr>
-<td>i”</td>
-<td>inside 在””中</td>
-</tr>
-<tr>
-<td>it</td>
-<td>inside tag <h1></h1></td>
-</tr>
-<tr>
-<td>p</td>
-<td>段落</td>
-</tr>
-<tr>
-<td>s</td>
-<td>句子</td>
-</tr>
-<tr>
-<td>@a</td>
-<td>宏a</td>
-</tr>
-</tbody></table>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><table>
-<thead>
-<tr>
-<th>操作</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>caw</td>
-<td>修改当期单词</td>
-</tr>
-<tr>
-<td>dta</td>
-<td>删除当前位置到字母啊</td>
-</tr>
-<tr>
-<td>以此类推</td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><table>
-<thead>
-<tr>
-<th>操作</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>“{register}</td>
-<td>制定寄存器{register}</td>
-</tr>
-<tr>
-<td>“”</td>
-<td>无名寄存器, 没指定寄存器情况下缺省使用</td>
-</tr>
-<tr>
-<td>“0</td>
-<td>复制专用寄存器</td>
-</tr>
-<tr>
-<td>“_</td>
-<td>黑洞寄存器, 有去无回</td>
-</tr>
-<tr>
-<td>“+</td>
-<td>X11剪贴板</td>
-</tr>
-<tr>
-<td>&lt;C-r&gt;{register}</td>
-<td>在在插入模式下插入寄存器内容</td>
-</tr>
-<tr>
-<td>:reg a</td>
-<td>查看寄存器a</td>
-</tr>
-<tr>
-<td>等等</td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="Shell命令"><a href="#Shell命令" class="headerlink" title="Shell命令"></a>Shell命令</h2><table>
-<thead>
-<tr>
-<th>操作</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>%</td>
-<td>命令行中的%会展开成当前文件的完整路径</td>
-</tr>
-<tr>
-<td>:shell</td>
-<td>启动一个shell(输入exit返回vim)</td>
-</tr>
-<tr>
-<td>:!{cmd}</td>
-<td>在shell中执行{cmd}</td>
-</tr>
-<tr>
-<td>:read !{cmd}</td>
-<td>把{cmd}的标准输出插入到光标下方</td>
-</tr>
-<tr>
-<td>:[range]write !{cmd}</td>
-<td>以[range]作为{cmd}的标准输入</td>
-</tr>
-</tbody></table>
-<h2 id="分屏操作"><a href="#分屏操作" class="headerlink" title="分屏操作"></a>分屏操作</h2><table>
-<thead>
-<tr>
-<th>操作</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&lt;C-w&gt;=</td>
-<td>使得所有窗口等宽, 登高</td>
-</tr>
-<tr>
-<td>&lt;C-w&gt;_</td>
-<td>最大化活动窗口的高度</td>
-</tr>
-<tr>
-<td>&lt;C-w&gt;|</td>
-<td>最大化活动窗口的宽度</td>
-</tr>
-<tr>
-<td>&lt;C-w&gt;方向</td>
-<td>移动光标所在的窗口</td>
-</tr>
-</tbody></table>
-<h2 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h2><table>
-<thead>
-<tr>
-<th>操作</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>虚拟行, 位于第一行上方</td>
-</tr>
-<tr>
-<td>1</td>
-<td>文件第一行</td>
-</tr>
-<tr>
-<td>$</td>
-<td>最后一行</td>
-</tr>
-<tr>
-<td>.</td>
-<td>光标所在行</td>
-</tr>
-<tr>
-<td>‘m</td>
-<td>包含位置标记m的行</td>
-</tr>
-<tr>
-<td>‘&lt;</td>
-<td>高亮选取的起始行</td>
-</tr>
-<tr>
-<td>‘&gt;</td>
-<td>高亮选取的结束行</td>
-</tr>
-<tr>
-<td>%</td>
-<td>整个文件</td>
-</tr>
-</tbody></table>
-<h2 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h2><p>录制宏其实是把操作过程放入了一个寄存器中，如<code>qq</code>就是用寄存器q来录制宏。用<code>:reg q</code>可以查看内容。</p>
-<ul>
-<li><code>qq</code>：用寄存器q录制宏</li>
-<li><code>qQ</code>:往寄存器q中追加操作</li>
-<li><code>:put q</code>：把寄存器q的内容粘贴到文档，以便修改</li>
-<li><code>:d q</code>：复制回寄存器</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -5980,12 +6996,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

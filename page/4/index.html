@@ -145,6 +145,94 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/08/universe/git%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/09/08/universe/git%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">git操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-08 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-08T00:00:00+08:00">2019-09-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Git-操作"><a href="#Git-操作" class="headerlink" title="Git 操作"></a>Git 操作</h1><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+<p>###查看修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff BRANCHNAME</span><br></pre></td></tr></table></figure>
+
+<p>###查看提交记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+<h3 id="添加修改并追踪"><a href="#添加修改并追踪" class="headerlink" title="添加修改并追踪"></a>添加修改并追踪</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add FILE</span><br><span class="line">git add .  &#x2F;&#x2F; 添加所有</span><br></pre></td></tr></table></figure>
+
+<h3 id="退回"><a href="#退回" class="headerlink" title="退回"></a>退回</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset</span><br><span class="line">git reset --hard HEAD^ 退回上一个版本</span><br><span class="line">git reset --hard sjaieral 退回某个版本</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;NAME&quot;</span><br><span class="line">git config --global user.email &quot;EMAIL&quot;</span><br><span class="line">...等等</span><br></pre></td></tr></table></figure>
+
+<h3 id="拉取项目"><a href="#拉取项目" class="headerlink" title="拉取项目"></a>拉取项目</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.获取工程</span><br><span class="line">git clone URL</span><br><span class="line"></span><br><span class="line">2.更新</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1.gibhub上创建一个仓库</span><br><span class="line"></span><br><span class="line">2.添加远程仓库</span><br><span class="line">git remote add origin ULR</span><br><span class="line"></span><br><span class="line">3.推到远程仓库</span><br><span class="line">git push --set-upstream origin master</span><br><span class="line">&#x2F;&#x2F; 然后登录</span><br><span class="line"></span><br><span class="line">4.记住密码</span><br><span class="line">git config credential.helper store</span><br><span class="line">&#x2F;&#x2F; 再次登录就可以记住了</span><br></pre></td></tr></table></figure>
+
+<h3 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit &#x2F;&#x2F; 会打开文件让你添加描述</span><br><span class="line">git commit -m &quot;描述&quot; &#x2F;&#x2F; 快捷添加描述提交</span><br></pre></td></tr></table></figure>
+
+<h3 id="不让git管理指定文件"><a href="#不让git管理指定文件" class="headerlink" title="不让git管理指定文件"></a>不让git管理指定文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.新建一个 .gitignore 文件</span><br><span class="line"></span><br><span class="line">2.写入不需要git管理等文件名</span><br><span class="line">&#x2F;&#x2F; 但是git一旦追踪某个文件那就会一只追踪</span><br><span class="line">&#x2F;&#x2F; 停止追踪 git rm --cached FILE</span><br></pre></td></tr></table></figure>
+
+<h3 id="git分支"><a href="#git分支" class="headerlink" title="git分支"></a>git分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1.创建分支</span><br><span class="line">git branch NAME</span><br><span class="line"></span><br><span class="line">2.切换分支</span><br><span class="line">git checkout NAME</span><br><span class="line"></span><br><span class="line">3.分支合并</span><br><span class="line">git merge NAME &#x2F;&#x2F; 会把NAME分支合并到当前分支</span><br><span class="line"></span><br><span class="line">4.删除分支</span><br><span class="line">git branch -d NAME &#x2F;&#x2F; -D强制删除</span><br><span class="line">&#x2F;&#x2F; 主分支叫master</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/08/universe/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1102,133 +1190,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/26/Major/cpp_note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/26/Major/cpp_note/" class="post-title-link" itemprop="url">c++学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-26 00:00:00" itemprop="dateCreated datePublished" datetime="2019-01-26T00:00:00+08:00">2019-01-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="构造函数-amp-析构函数"><a href="#构造函数-amp-析构函数" class="headerlink" title="构造函数&amp;析构函数"></a>构造函数&amp;析构函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造方法</span></span><br><span class="line"><span class="comment">//法1</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">    A()&#123;...&#125;  <span class="comment">//构造函数</span></span><br><span class="line">    ~A()&#123;...&#125; <span class="comment">//析构函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//法2</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">    A();</span><br><span class="line">    ~A();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">A::A()&#123;...&#125;</span><br><span class="line">A::~A()&#123;...&#125;</span><br><span class="line"><span class="comment">//法3</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line"> 	A():a(),b()&#123;&#125;  <span class="comment">//构造函数初始化列表，只能对非静态成员初始化，a(),b()表示括号里的赋给外的</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="c-中貌似会用很多指针！！"><a href="#c-中貌似会用很多指针！！" class="headerlink" title="c++中貌似会用很多指针！！"></a>c++中貌似会用很多指针！！</h3><p>​    *p    p-&gt;</p>
-<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//继承方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>:</span><span class="keyword">public</span> A&#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="访问限制"><a href="#访问限制" class="headerlink" title="访问限制"></a>访问限制</h3><p>​        private：private成员只能由类成员（类内，类外main什么的就不）和友元（friend）访问<br>​        protected：子类能用<br>​        friend(友元)：？</p>
-<h3 id="内联函数inline"><a href="#内联函数inline" class="headerlink" title="内联函数inline"></a>内联函数inline</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//目的...</span></span><br><span class="line"><span class="comment">//内联函数和普通函数的区别在于：当编译器处理调用内联函数的语句时，不会将该语句编译成函数调用的指令，而是直接将整个函数体的代码插人调用语句处</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;<span class="built_in">cout</span>&lt;&lt;<span class="string">"hh"</span>;&#125; <span class="comment">//用inline关键字修饰</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    func();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//相当于</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"hh"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="覆盖-amp-隐藏"><a href="#覆盖-amp-隐藏" class="headerlink" title="覆盖&amp;隐藏"></a>覆盖&amp;隐藏</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//※虚函数 virtual用法</span></span><br><span class="line">overriding(覆盖)</span><br><span class="line">    特征：</span><br><span class="line">    	<span class="number">1.</span>子类覆盖父类函数</span><br><span class="line">    	<span class="number">2.</span>函数名和参数名都相同</span><br><span class="line">    	<span class="number">3.</span>父类被覆盖函数是虚函数(<span class="keyword">virtual</span>),因为如果不是(<span class="keyword">virtual</span>)的那就会发生namehidden</span><br><span class="line">    </span><br><span class="line">namehidden(隐藏)</span><br><span class="line">    特征:</span><br><span class="line">		<span class="number">1.</span>子类隐藏了父类的函数(还存在)</span><br><span class="line">        <span class="number">2.</span>子类与父类函数名相同但参数不同的父类函数将被隐藏</span><br><span class="line">        <span class="number">3.</span>子类函数与父类函数的名称相同，参数也相同，但是父类函数没有(<span class="keyword">virtual</span>)，父类函数被隐藏，故如果向上转型，将仍然调用的是子类的方法</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="re-C-抽象类"><a href="#re-C-抽象类" class="headerlink" title="re?C++抽象类"></a>re?C++抽象类</h3><p>1.含有<strong>纯</strong>虚拟函数的类称为抽象类&amp;&amp;不能生成实例<br>2.纯虚函数是在基类中声明的虚函数，它在基类中没有定义，但要求任何派生类都要定义自己的实现方法。在基类中<strong>实现纯虚函数的方法是在函数原型后加“=0”</strong><br>3.如果派生类没有重新定义纯虚函数，而派生类只是继承基类的纯虚函数，则这个派生类仍然还是一个 抽象类。如果派生类中给出了基类纯虚函数的实现，则该派生类就不再是抽象类了，它是一个可以建立对象的具体类了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//纯虚函数的写法-&gt;virtual (返回类型) (名) = 0;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="const-vs-const"><a href="#const-vs-const" class="headerlink" title="const* vs *const"></a>const* vs *const</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//主要看const是在*前还是*后</span></span><br><span class="line"><span class="number">1.</span><span class="keyword">const</span>*的情况，<span class="keyword">const</span>在前修饰*</span><br><span class="line">	=&gt;  *是什么？是指针。指针是什么？指针是有指向的，代表指向的那个东西。故<span class="keyword">const</span>在*前就是指针是<span class="keyword">const</span>的，即指向的那个东西是<span class="keyword">const</span>的，所以不能在=别的。</span><br><span class="line">	</span><br><span class="line"><span class="number">2.</span>*<span class="keyword">const</span>的情况，<span class="keyword">const</span>在*后修饰后面的变量</span><br><span class="line">	=&gt; 那。。那个变量是什么呢？是地址。所以一个<span class="keyword">const</span>的地址就是说初始化后b不能在改变，也就是b不能在等于别的&amp;a</span><br><span class="line">	<span class="keyword">int</span> *<span class="keyword">const</span> b = &amp;a;  <span class="comment">//初始化是取出地址初始化的嘛，所以b就是那个地址，前面的int *const都是修饰b的</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h3><p>​        extern也可用来进行链接指定；也可以置于变量或者函数前，以标示变量或者函数的定义在别的文件中，提示编译器遇到此变量和函数时在其他模块中寻找其定义。<br>即有以下两个作用：<br>​                1.与“C”连用，如extern “C” void fun();告诉编译器按C的规则去翻译<br>​                2.修饰声明全局变量或函数，其声明的变量和函数可以在其它模块中使用，注意，这只是一个声明而不是定义，具体的定义要在具体的定义中完成</p>
-<h3 id="类中-f-const-f-gt-类是const时用f-const那个-类似重载"><a href="#类中-f-const-f-gt-类是const时用f-const那个-类似重载" class="headerlink" title="类中 f() const  ?   f()  ==&gt;类是const时用f() const那个(类似重载)"></a>类中 f() const  ?   f()  ==&gt;类是const时用f() const那个(类似重载)</h3><h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">定义：</span><br><span class="line">	引用变量是一个别名，也就是说，它是某个已存在变量的另一个名字。一旦把引用初始化为某个变量，就可以使用该引用名称或变量名称来指向变量。</span><br><span class="line">	</span><br><span class="line">引用vs指针：</span><br><span class="line">	<span class="number">1.</span>不存在空引用。引用必须连接到一块合法的内存。</span><br><span class="line">	<span class="number">2.</span>一旦引用被初始化为一个对象，就不能被指向到另一个对象。指针可以在任何时候指向到另一个对象。</span><br><span class="line">	<span class="number">3.</span>引用必须在创建时被初始化。指针可以在任何时间被初始化。</span><br><span class="line">	</span><br><span class="line">引用创建:</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">char</span> a;</span><br><span class="line"><span class="keyword">char</span>&amp; b = a;<span class="comment">//1.必须初始化  2.指向对象(a)以存在</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="拷贝构造"><a href="#拷贝构造" class="headerlink" title="拷贝构造"></a>拷贝构造</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">### </span><br><span class="line">c++初始化用（）和用=是等价的；如A的构造函数A(<span class="keyword">int</span> x)可以A(<span class="number">10</span>)也可A = <span class="number">10</span>，同理其他类型！！！所以初始化一个类，如A a时  A a = b;相当于用b来初始化a（默认是复制粘贴成员（<span class="keyword">private</span>的不会复制），但也可把他重写A(<span class="keyword">const</span> A&amp; x)&#123;&#125;这个重载就叫拷贝构造；</span><br><span class="line">好习惯 写个类就写一个拷贝构造</span><br><span class="line">###</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">拷贝构造函数是一种特殊的构造函数，它在创建对象时，是使用同一类中之前创建的对象来初始化新创建的对象。拷贝构造函数通常用于：</span><br><span class="line">	<span class="number">1.</span>通过使用另一个同类型的对象来初始化新创建的对象。</span><br><span class="line">	<span class="number">2.</span>复制对象把它作为参数传递给函数。</span><br><span class="line">	<span class="number">3.</span>复制对象，并从函数返回这个对象。</span><br><span class="line">	</span><br><span class="line">如果在类中没有定义拷贝构造函数，编译器会自行定义一个。如果类带有指针变量，并有动态内存分配，则它必须有一个拷贝构造函数。拷贝构造函数的最常见形式如下：</span><br><span class="line"></span><br><span class="line">classname (<span class="keyword">const</span> classname &amp;obj) &#123; <span class="comment">//传一个引用，所谓拷贝就是说不会修改原来的，只是用一个对象去初始化另一个对象</span></span><br><span class="line">   <span class="comment">// 构造函数的主体</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><p>​        静态方法只能访问静态变量<br>​        静态成员可用类名访问::(类似python的类方法)因为它属于整个类 而不是某个对象 因此没有this<br>​        static变量有全局的生存期</p>
-<h3 id="重载运算符"><a href="#重载运算符" class="headerlink" title="重载运算符"></a>重载运算符</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> +-*/%&lt;&gt;!==等  <span class="number">30</span> <span class="number">31</span> <span class="number">32</span> <span class="number">33</span></span><br><span class="line">用关键字 <span class="keyword">operator</span> 修饰要重载的运算符，如</span><br><span class="line"><span class="keyword">operator</span> * (...)&#123;&#125;  <span class="comment">//重载了*</span></span><br><span class="line">运算符左边的变量叫reciver，决定用哪个的运算符来运算，就像取A的成员i =&gt;A.i</span><br><span class="line">如 x+y  ===&gt;  x.<span class="keyword">operator</span>+（y）</span><br><span class="line"><span class="comment">//exp1:成员函数</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">String</span> classname::<span class="keyword">operator</span> * (<span class="keyword">const</span> <span class="keyword">String</span>&amp; that)&#123;&#125; <span class="comment">//也可定义在类中</span></span><br><span class="line">   ^返回类型&amp;&amp;保证不修改算子(++ -- =等不用<span class="keyword">const</span>) ^类中(说明<span class="keyword">this</span>-&gt;可用);</span><br><span class="line"></span><br><span class="line"><span class="comment">//exp2:全局函数</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">String</span> classname::<span class="keyword">operator</span> + (<span class="keyword">const</span> <span class="keyword">String</span> a,<span class="keyword">const</span> <span class="keyword">String</span> b)&#123;&#125;</span><br><span class="line">	<span class="comment">//这个好像会自动把参数放到两边？</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="初始化-赋值"><a href="#初始化-赋值" class="headerlink" title="初始化!=赋值"></a>初始化!=赋值</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="explicit-amp-implicit"><a href="#explicit-amp-implicit" class="headerlink" title="explicit&amp;implicit"></a>explicit&amp;implicit</h3><p>​    首先, C++中的explicit关键字只能用于修饰只有一个参数的类构造函数, 它的作用是表明该构造函数是显示的, 而非隐式的(所以不会自动调用), 跟它相对应的另一个关键字是implicit, 意思是隐藏的,类构造函数默认情况下即声明为implicit(隐式).</p>
-<p>左右移&lt;&lt;  &gt;&gt;</p>
-<h3 id="模板-amp-amp-泛型-amp-amp-标准模板"><a href="#模板-amp-amp-泛型-amp-amp-标准模板" class="headerlink" title="模板&amp;&amp;泛型&amp;&amp;标准模板"></a>模板&amp;&amp;泛型&amp;&amp;标准模板</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数模板</span></span><br><span class="line"><span class="comment">//template &lt;class T&gt; re-type func(T x,T y)&#123;&#125; &lt;-跟在template后，就是函数模板，T代表一个类型,就会自动根据T的类型变化</span></span><br><span class="line"><span class="comment">//或使用template &lt;typename T&gt;</span></span><br><span class="line"><span class="comment">//使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">39</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">20</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Max(i, j): "</span> &lt;&lt; Max(i, j) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//自动根据类型来</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> f1 = <span class="number">13.5</span>; </span><br><span class="line"><span class="keyword">double</span> f2 = <span class="number">20.7</span>; </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Max(f1, f2): "</span> &lt;&lt; Max(f1, f2) &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s1 = <span class="string">"Hello"</span>; </span><br><span class="line"><span class="built_in">string</span> s2 = <span class="string">"World"</span>; </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Max(s1, s2): "</span> &lt;&lt; Max(s1, s2) &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">//类模板(同理</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">classname</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> T;<span class="keyword">char</span> T;<span class="function">T <span class="title">func</span><span class="params">()</span></span>&#123;&#125;....</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用=&gt;在实例化的时候指定类型</span></span><br><span class="line">classname&lt;T&gt; a;</span><br><span class="line"></span><br><span class="line"><span class="comment">//标准模板 如 (标准)类模板---&gt; vector&lt;type&gt;</span></span><br><span class="line">Vector：Vector 是一个类模板。不是一种数据类型。 Vector&lt;<span class="keyword">int</span>&gt;是一种数据类型。</span><br><span class="line"><span class="comment">//一、 定义和初始化</span></span><br><span class="line">Vector&lt;T&gt; v1; <span class="comment">//默认构造函数v1为空</span></span><br><span class="line"><span class="function">Vector&lt;T&gt; <span class="title">v2</span><span class="params">(v1)</span></span>;<span class="comment">//v2是v1的一个副本(拷贝构造?)</span></span><br><span class="line"><span class="function">Vector&lt;T&gt; <span class="title">v3</span><span class="params">(n,i)</span></span>;<span class="comment">//v3包含n个值为i的元素</span></span><br><span class="line"><span class="function">Vector&lt;T&gt; <span class="title">v4</span><span class="params">(n)</span></span>; <span class="comment">//v4含有n个值为0的元素</span></span><br><span class="line"><span class="comment">//二、 值初始化</span></span><br><span class="line"><span class="comment">//1&gt; 如果没有指定元素初始化式，标准库自行提供一个初始化值进行值初始化。</span></span><br><span class="line"><span class="comment">//2&gt; 如果保存的式含有构造函数的类类型的元素，标准库使用该类型的构造函数初始化。</span></span><br><span class="line"><span class="comment">//3&gt; 如果保存的式没有构造函数的类类型的元素，标准库产生一个带初始值的对象，使用这个对象进行值初始化。</span></span><br><span class="line"><span class="comment">//三、Vector对象最重要的几种操作</span></span><br><span class="line"><span class="comment">//1. v.push_back(t) 在数组的最后添加一个值为t的数据</span></span><br><span class="line"><span class="comment">//2. v.size() 当前使用数据的大小</span></span><br><span class="line"><span class="comment">//3. v.empty() 判断vector是否为空</span></span><br><span class="line"><span class="comment">//4. v[n] 返回v中位置为n的元素</span></span><br><span class="line"><span class="comment">//5. v1=v2 把v1的元素替换为v2元素的副本</span></span><br><span class="line"><span class="comment">//6. v1==v2 判断v1与v2是否相等</span></span><br><span class="line"><span class="comment">//7. ！=、&lt;、&lt;=、&gt;、&gt;= 保持这些操作符惯有含义</span></span><br></pre></td></tr></table></figure>
-
-<p>模板只是为编译器指出了要怎么做，并不会减少实际的代码量。编译器会根据模板的类型生成函数。</p>
-<h3 id="实例化和具体化"><a href="#实例化和具体化" class="headerlink" title="实例化和具体化"></a>实例化和具体化</h3><h4 id="隐式实例化"><a href="#隐式实例化" class="headerlink" title="隐式实例化"></a>隐式实例化</h4><p>编译器使用模板为特定类型生成函数定义时，的到的是模板实例(instantiation)。</p>
-<p>在使用模板函数时，编译器会根据参数的类型自动对函数进行定义，这种实例化的方式称为 <strong>隐式实例化</strong>。如</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T&amp; a, T$ b)</span></span>; <span class="comment">//或者使用 &lt;class T&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a, b;</span><br><span class="line"><span class="keyword">double</span> c, d;</span><br><span class="line"></span><br><span class="line">Swap(a, b);</span><br><span class="line">Swap(c, d);  <span class="comment">// 根据参数实例化函数(int 或 double)</span></span><br><span class="line">Swap(a, c);  <span class="comment">// 隐式实例化在这种情况就不行了，因为模板要求两个参数类型相同，因此需要显示实例化</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T&amp; a, T$ b)</span></span>&#123;</span><br><span class="line">    A</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="显示实例化"><a href="#显示实例化" class="headerlink" title="显示实例化"></a>显示实例化</h4><p>这意味着直接命令编译器生成特定的实例，其语法是</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> <span class="keyword">void</span> Swap&lt;<span class="keyword">double</span>&gt;(<span class="keyword">double</span>, <span class="keyword">double</span>);  <span class="comment">// 编译器看到这种声明后，使用模板生成一个double类型的实例</span></span><br></pre></td></tr></table></figure>
-
-<p>也可在程序中调用函数来进行显示实例化</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; Swap&lt;<span class="keyword">double</span>&gt;(a, c);  <span class="comment">// 因为使用的是double类型的实例，所以上面两个参数不一致的问题的到解决，因为int可以赋值给double</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="具体化"><a href="#具体化" class="headerlink" title="具体化"></a>具体化</h4><p>具体化是具体对模板中某特定类型生成函数，具体化使用下面两个等价声明之一：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;&gt; <span class="keyword">void</span> Swap&lt;<span class="keyword">int</span>&gt;(<span class="keyword">int</span>&amp;, <span class="keyword">int</span>&amp;);</span><br><span class="line"><span class="keyword">template</span> &lt;&gt; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(<span class="keyword">int</span>&amp;, <span class="keyword">int</span>&amp;)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T&amp; a, T$ b)</span></span>&#123;</span><br><span class="line">    A</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;&gt; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(class&amp;, class&amp;)</span></span>&#123;  <span class="comment">// 使用具体化函数处理特定类型</span></span><br><span class="line">    B</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><p>​        try catch throw(类似java 只是说明有抛出时用的是throw而不是throws)<br>​        支持异常再抛出<br>​        catch(…)捕所有<br>​        异常声明列表 void func() throw (type1,type2,type3..) 可有多个</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1298,12 +1259,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
