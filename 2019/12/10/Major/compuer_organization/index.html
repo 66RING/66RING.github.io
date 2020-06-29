@@ -28,7 +28,7 @@
 <meta property="og:description" content="简介 从纯文本的程序到可执行的编码，以hello.c为例 预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾 编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序 汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。 链接：hell">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-22T10:52:07.078Z">
+<meta property="article:modified_time" content="2020-06-28T09:13:04.547Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="计算机组成">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-22 18:52:07" itemprop="dateModified" datetime="2020-06-22T18:52:07+08:00">2020-06-22</time>
+                <time title="Modified: 2020-06-28 17:13:04" itemprop="dateModified" datetime="2020-06-28T17:13:04+08:00">2020-06-28</time>
               </span>
 
           
@@ -677,6 +677,46 @@
 </tr>
 </tbody></table>
 <p>指令可以对这16个寄存器的低位字节中存放的不同大小的数据进行操作。</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*AX</td>
+<td>累加器Accumulator</td>
+</tr>
+<tr>
+<td>*BX</td>
+<td>基地址寄存器Base Register</td>
+</tr>
+<tr>
+<td>*CX</td>
+<td>计数寄存器Count Register</td>
+</tr>
+<tr>
+<td>*DX</td>
+<td>数据寄存器Data Register</td>
+</tr>
+<tr>
+<td>*BP</td>
+<td>堆栈基指针Base Pointer</td>
+</tr>
+<tr>
+<td>*SI/*DI</td>
+<td>变址寄存器Index Register</td>
+</tr>
+<tr>
+<td>*SP</td>
+<td>堆栈顶指针Stack Pointer</td>
+</tr>
+<tr>
+<td>*S</td>
+<td>段寄存器Segement Register</td>
+</tr>
+</tbody></table>
 <h2 id="MIPS体系结构"><a href="#MIPS体系结构" class="headerlink" title="MIPS体系结构"></a>MIPS体系结构</h2><p>Microprocessor without Interlocked Piped Stage，流水线不会互锁的处理器。避免不同指令间的相互影响。如x86指令的标志寄存器，前一条指令作出的改动会对后面的产生影响，这MIPS所要避免的。</p>
 <ul>
 <li>它的主要关注点<ul>

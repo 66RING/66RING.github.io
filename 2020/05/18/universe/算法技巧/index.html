@@ -28,7 +28,7 @@
 <meta property="og:description" content="递归 从结束条件开始分析  双指针双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。  一般先对数组排序，然后从边界开始就能简单的定一议二  复杂条件问题允许存在变量如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判断依旧是相同的str[i++]&#x3D;&#x3D;str[j--]。 所以可以分离主要的判断程序，在">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:34:14.501Z">
+<meta property="article:modified_time" content="2020-06-29T01:57:18.878Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+                <time title="Modified: 2020-06-29 09:57:18" itemprop="dateModified" datetime="2020-06-29T09:57:18+08:00">2020-06-29</time>
               </span>
 
           
@@ -209,6 +209,7 @@
 </ul>
 <h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><p>通常，涉及连续子数组问题的时候，我们使用前缀和来解决。</p>
 <p>我们令$P[i] = A[0] + A[1] + … + A[i]$。那么每个连续子数组的和sum(i,j)就可以写成$P[j] - P[i-1]（其中 0 &lt; i &lt; j;0 &lt; i &lt; j）$的形式。</p>
+<h3 id="任意范围连续元素的和"><a href="#任意范围连续元素的和" class="headerlink" title="任意范围连续元素的和"></a>任意范围连续元素的和</h3><p>两个前缀和相减就能得到任意范围连续元素的和，如前5个元素的前缀和间前3个元素的前缀和就得到4~5的和。</p>
 <h2 id="哨兵"><a href="#哨兵" class="headerlink" title="哨兵"></a>哨兵</h2><p>使用哨兵能简化我们的讨论，去掉不必要的分类讨论。如在链表中使用虚拟的头和尾，省去了分类讨论。</p>
 <h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><ul>
 <li>遍历一个 <strong>完整</strong> 的循环会节省很多讨论，何为完整，类似与判断波的一个完整周期</li>
@@ -296,7 +297,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针"><span class="nav-number">2.</span> <span class="nav-text">双指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂条件"><span class="nav-number">3.</span> <span class="nav-text">复杂条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题允许存在变量"><span class="nav-number">3.1.</span> <span class="nav-text">问题允许存在变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除链表上第n个结点"><span class="nav-number">4.</span> <span class="nav-text">删除链表上第n个结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前缀和"><span class="nav-number">5.</span> <span class="nav-text">前缀和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哨兵"><span class="nav-number">6.</span> <span class="nav-text">哨兵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环"><span class="nav-number">7.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单向栈"><span class="nav-number">8.</span> <span class="nav-text">单向栈</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针"><span class="nav-number">2.</span> <span class="nav-text">双指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂条件"><span class="nav-number">3.</span> <span class="nav-text">复杂条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题允许存在变量"><span class="nav-number">3.1.</span> <span class="nav-text">问题允许存在变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除链表上第n个结点"><span class="nav-number">4.</span> <span class="nav-text">删除链表上第n个结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前缀和"><span class="nav-number">5.</span> <span class="nav-text">前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#任意范围连续元素的和"><span class="nav-number">5.1.</span> <span class="nav-text">任意范围连续元素的和</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哨兵"><span class="nav-number">6.</span> <span class="nav-text">哨兵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环"><span class="nav-number">7.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单向栈"><span class="nav-number">8.</span> <span class="nav-text">单向栈</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

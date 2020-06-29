@@ -145,94 +145,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/08/universe/git%E6%93%8D%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/08/universe/git%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">git操作</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-08 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-08T00:00:00+08:00">2019-09-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Git-操作"><a href="#Git-操作" class="headerlink" title="Git 操作"></a>Git 操作</h1><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-
-<h3 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-<p>###查看修改</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff BRANCHNAME</span><br></pre></td></tr></table></figure>
-
-<p>###查看提交记录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
-<h3 id="添加修改并追踪"><a href="#添加修改并追踪" class="headerlink" title="添加修改并追踪"></a>添加修改并追踪</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add FILE</span><br><span class="line">git add .  &#x2F;&#x2F; 添加所有</span><br></pre></td></tr></table></figure>
-
-<h3 id="退回"><a href="#退回" class="headerlink" title="退回"></a>退回</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset</span><br><span class="line">git reset --hard HEAD^ 退回上一个版本</span><br><span class="line">git reset --hard sjaieral 退回某个版本</span><br></pre></td></tr></table></figure>
-
-<h3 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;NAME&quot;</span><br><span class="line">git config --global user.email &quot;EMAIL&quot;</span><br><span class="line">...等等</span><br></pre></td></tr></table></figure>
-
-<h3 id="拉取项目"><a href="#拉取项目" class="headerlink" title="拉取项目"></a>拉取项目</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.获取工程</span><br><span class="line">git clone URL</span><br><span class="line"></span><br><span class="line">2.更新</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
-
-<h3 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1.gibhub上创建一个仓库</span><br><span class="line"></span><br><span class="line">2.添加远程仓库</span><br><span class="line">git remote add origin ULR</span><br><span class="line"></span><br><span class="line">3.推到远程仓库</span><br><span class="line">git push --set-upstream origin master</span><br><span class="line">&#x2F;&#x2F; 然后登录</span><br><span class="line"></span><br><span class="line">4.记住密码</span><br><span class="line">git config credential.helper store</span><br><span class="line">&#x2F;&#x2F; 再次登录就可以记住了</span><br></pre></td></tr></table></figure>
-
-<h3 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit &#x2F;&#x2F; 会打开文件让你添加描述</span><br><span class="line">git commit -m &quot;描述&quot; &#x2F;&#x2F; 快捷添加描述提交</span><br></pre></td></tr></table></figure>
-
-<h3 id="不让git管理指定文件"><a href="#不让git管理指定文件" class="headerlink" title="不让git管理指定文件"></a>不让git管理指定文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.新建一个 .gitignore 文件</span><br><span class="line"></span><br><span class="line">2.写入不需要git管理等文件名</span><br><span class="line">&#x2F;&#x2F; 但是git一旦追踪某个文件那就会一只追踪</span><br><span class="line">&#x2F;&#x2F; 停止追踪 git rm --cached FILE</span><br></pre></td></tr></table></figure>
-
-<h3 id="git分支"><a href="#git分支" class="headerlink" title="git分支"></a>git分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1.创建分支</span><br><span class="line">git branch NAME</span><br><span class="line"></span><br><span class="line">2.切换分支</span><br><span class="line">git checkout NAME</span><br><span class="line"></span><br><span class="line">3.分支合并</span><br><span class="line">git merge NAME &#x2F;&#x2F; 会把NAME分支合并到当前分支</span><br><span class="line"></span><br><span class="line">4.删除分支</span><br><span class="line">git branch -d NAME &#x2F;&#x2F; -D强制删除</span><br><span class="line">&#x2F;&#x2F; 主分支叫master</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/08/universe/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -802,6 +714,122 @@
 
 <p><code>``</code>之间的标记表明了了映射关系和数据来源，这样使用gin的<code>bind</code>函数就可生成Person实例。<code>json</code>标记表明了映射成json时使用的名称如name，而不是Name，或使用json中的对应字段完成映射。<code>form</code>标记表明了从表单中获取映射。<code>required</code>标记表明了必须要有这个参数，没有会报错。当然binding等标记还有其他用法，和自定义，详见官方文档。</p>
 <p>gin的这个binding功能使用了第三方的验证器，validator。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/universe/HashMap%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/06/27/universe/HashMap%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">HashMap原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-06-27 00:00:00" itemprop="dateCreated datePublished" datetime="2019-06-27T00:00:00+08:00">2019-06-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-29 20:21:04" itemprop="dateModified" datetime="2020-06-29T20:21:04+08:00">2020-06-29</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h2><p>hashmap有数组+链表组成</p>
+<p>基于红黑树的hashmap就是当链表达到一定长度时把链表变成红黑树</p>
+<p>向map中put元素，如果key重复，会覆盖并把老的元素返回出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">| array | 1 | 2 | ... | N |</span><br><span class="line">|-------|---|---|-----|---|</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |   </span><br><span class="line"> 链表   value</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">        value</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>hashmap初始化数组容量的时候必须的一个二的幂次方数<ul>
+<li>这样方便控制取值范围<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2^k-1会得到一个全是1的二进制数：0001 1111</span><br><span class="line">用这个数与hash code与运算即可以截断hash code，只保留低位k-1位</span><br><span class="line">0000 0111</span><br><span class="line">0101 1010</span><br><span class="line">---------</span><br><span class="line">0000 0010</span><br><span class="line"></span><br><span class="line">高位数先右移在与这个111与运算就可得到想要的任意位</span><br><span class="line">提高散列性，防止链表过长，提高get的效率</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<p>取小于一个数的最大二次幂算法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">func (int i)&#123;</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 1)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 2)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 4)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 8)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 16)</span><br><span class="line">    return i-(i &gt;&gt;&gt; 1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return前的一系列移位操作把有效位全部变成了1</span><br><span class="line">在用结果减去移1位后的结果(i&gt;&gt;&gt;1)，就得到只有最高位为1</span><br><span class="line"></span><br><span class="line">        0001 ****</span><br><span class="line">&gt;&gt;1      0000 1***</span><br><span class="line">        ---------</span><br><span class="line">        0001 1***</span><br><span class="line">&gt;&gt;2     0000 0110</span><br><span class="line">...直到int的64位都保</span><br><span class="line">        0001 1111</span><br><span class="line">        0000 1111</span><br><span class="line">    res</span><br></pre></td></tr></table></figure>
+
+<p>扩容时：新建数组 -&gt; 迁移到新数组</p>
+<h3 id="多线程的情况"><a href="#多线程的情况" class="headerlink" title="多线程的情况"></a>多线程的情况</h3><p>在多线程情况下，扩容时可能会同时创建多个个数组。在JDK1.7中会出现问题</p>
+<h3 id="put-key-value-方法"><a href="#put-key-value-方法" class="headerlink" title="put(key, value)方法"></a>put(key, value)方法</h3><ul>
+<li>确定下标<ul>
+<li><code>hashcode &amp; (lenght-1)</code></li>
+<li>因为hashmap的长度只会是2的次幂，所以减1后每一个有效位(除了最高有效位)都是1</li>
+</ul>
+</li>
+<li>解决哈希冲突<ul>
+<li>计算hashcode的时候，有可能会得到同样的值，这时候发生哈希冲突</li>
+<li>链表法<ul>
+<li>插入在链表头部(1.7)</li>
+</ul>
+</li>
+<li>再散列法</li>
+</ul>
+</li>
+</ul>
+<h3 id="get-key-方法"><a href="#get-key-方法" class="headerlink" title="get(key)方法"></a>get(key)方法</h3><ul>
+<li>计算下标</li>
+<li>找到key对应的值<ul>
+<li>如果是链表法解决的哈希冲突则<ul>
+<li>遍历寻找key</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><p>ConcurrentHashMap解决多线程情况下出现的问题</p>
+<p>ConcurrentHashMap使用一个并发级别来指定多少个元素共享一个锁，ConcurrentHashMap称这个所为segment。</p>
+<ul>
+<li>初始化<ul>
+<li>根据并发级别来确定segment的容量，一个segment对象就相当于一个小的hashmap</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
