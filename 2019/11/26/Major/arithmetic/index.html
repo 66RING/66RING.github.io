@@ -28,7 +28,7 @@
 <meta property="og:description" content="排序冒泡排序 比较大小,如果符合条件(升序)就交换两个元素的位置   每次执行N-1次 严格大&#x2F;小,保证了原序(稳定性) 没次能保证最大&#x2F;最小的元素会在最后   如果全程无交换,则说明有序了,跳出即可 $T&#x3D;O(x),x\in(N,N^2)$  插入排序 每次抽取一个元素,然后从序列末尾开始进行比较 若符合条件,往后移位,直到不符合条件跳出 然后插入元素  希尔排序对插入排序的改进,每次消除多个逆">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-11-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-29T13:10:47.386Z">
+<meta property="article:modified_time" content="2020-06-30T11:49:52.474Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="算法, c&#x2F;c++">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-29 21:10:47" itemprop="dateModified" datetime="2020-06-29T21:10:47+08:00">2020-06-29</time>
+                <time title="Modified: 2020-06-30 19:49:52" itemprop="dateModified" datetime="2020-06-30T19:49:52+08:00">2020-06-30</time>
               </span>
 
           
@@ -320,6 +320,7 @@
 <h3 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h3><p><strong>要点：</strong> </p>
 <ul>
 <li>前缀表next(或者说match)函数的创建</li>
+<li>动态规划</li>
 </ul>
 <p>利用前缀表的原理：对于一个子串(如：ababc)，所有可能的前缀:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">a b</span><br><span class="line">a b a</span><br><span class="line">a b a b</span><br><span class="line">a b a b c</span><br></pre></td></tr></table></figure>
@@ -374,16 +375,82 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BinTree <span class="title">Delete</span><span class="params">( BinTree BST, ElementType X )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    Position Tmp; </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>( !BST ) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"要删除的元素未找到"</span>); </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>( X &lt; BST-&gt;Data ) </span><br><span class="line">            BST-&gt;Left = Delete( BST-&gt;Left, X );   <span class="comment">/* 从左子树递归删除 */</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( X &gt; BST-&gt;Data ) </span><br><span class="line">            BST-&gt;Right = Delete( BST-&gt;Right, X ); <span class="comment">/* 从右子树递归删除 */</span></span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">/* BST就是要删除的结点 */</span></span><br><span class="line">            <span class="comment">/* 如果被删除结点有左右两个子结点 */</span> </span><br><span class="line">            <span class="keyword">if</span>( BST-&gt;Left &amp;&amp; BST-&gt;Right ) &#123;</span><br><span class="line">                <span class="comment">/* 从右子树中找最小的元素填充删除结点 */</span></span><br><span class="line">                Tmp = FindMin( BST-&gt;Right );</span><br><span class="line">                BST-&gt;Data = Tmp-&gt;Data;</span><br><span class="line">                <span class="comment">/* 从右子树中删除最小元素 */</span></span><br><span class="line">                BST-&gt;Right = Delete( BST-&gt;Right, BST-&gt;Data );</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">/* 被删除结点有一个或无子结点 */</span></span><br><span class="line">                Tmp = BST; </span><br><span class="line">                <span class="keyword">if</span>( !BST-&gt;Left )       <span class="comment">/* 只有右孩子或无子结点 */</span></span><br><span class="line">                    BST = BST-&gt;Right; </span><br><span class="line">                <span class="keyword">else</span>                   <span class="comment">/* 只有左孩子 */</span></span><br><span class="line">                    BST = BST-&gt;Left;</span><br><span class="line">                <span class="built_in">free</span>( Tmp );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> BST;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-<h3 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h3><h3 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h3><h3 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h3><ul>
+<h3 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h3><h3 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h3><h3 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h3><p>为表述方便：C(current)表示针对的节点，P(parent), G(grandparent)，U(uncle)</p>
+<ul>
 <li>特征<ul>
+<li><ol>
 <li>根节点是黑色</li>
-<li>所有叶子搜索黑色</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>所有叶子(nil节点)都是黑色</li>
+</ol>
+</li>
+<li><ol start="3">
 <li>每个红色节点的两个字节点都是黑色(不存在两个连续的红色节点)</li>
-<li>从任意节点到其每个叶子的所有路径都包含相同数目的黑色节点</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>从任意节点到其每个叶子的所有路径都包含相同数目的黑色节点<ul>
+<li>黑色完美平衡</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>旋转：为例减小树的高度<ul>
+<li>红黑树最大高度$O(\log n)$</li>
+<li>左旋：<ul>
+<li>C和它的右子节点交换</li>
+<li>C右子节点的左子树成为C的右子树</li>
+<li>右子变新爹，右子的左子变老爹的右子，老爹变新爹左子<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># LEFT-ROTATE(T, x)</span><br><span class="line">y &#x3D; x.right</span><br><span class="line">x.right &#x3D; y.left</span><br><span class="line">if y.left !&#x3D; nil</span><br><span class="line">    y.left.p &#x3D; x</span><br><span class="line">y.p &#x3D; x.p</span><br><span class="line">if x.p &#x3D;&#x3D; nil</span><br><span class="line">    T.root &#x3D;&#x3D; y</span><br><span class="line">elseif x &#x3D;&#x3D; x.p.left</span><br><span class="line">    x.p.left &#x3D; y</span><br><span class="line">else x.p.right &#x3D; y</span><br><span class="line">y.left &#x3D; x</span><br><span class="line">x.p &#x3D; y</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>右旋：<ul>
+<li>C和它的左子节点交换</li>
+<li>C左子节点的右子树成为C的左子树</li>
+<li>左子变新爹，左子的右子变老爹的左子，老爹变新爹右子</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>搜索<ul>
 <li>比节点小就找左子树，否则右子树</li>
+</ul>
+</li>
+<li>插入<ul>
+<li>每个新节点都是红色的，违规修复代价比较小</li>
+<li><ol>
+<li>C=root，则把C变为黑色</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>P是黑色，直接插入</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>P是红色<ul>
+<li>I. U是红，则P和U都变黑，G变后，向上递归</li>
+<li>II. U是黑<ul>
+<li>三角型：GPC呈三角形<ul>
+<li>对P旋转使得GPC一条直线，然后做直线型操作</li>
+</ul>
+</li>
+<li>直线型：GPC一条直线<ul>
+<li>对G旋转，然后交换G和P的颜色</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>删除<ul>
+<li><strong>building</strong> </li>
 </ul>
 </li>
 </ul>

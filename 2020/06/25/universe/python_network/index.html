@@ -28,7 +28,7 @@
 <meta property="og:description" content="Socket基本使用 创建套接字对象socket.socket(AddressFamily, Type)  udp: s &#x3D; socket.socket(socket.AF_INET, socket.SOCK_DGRAM) tcp: s &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM) 其中AF_INET表示IPv4，SOCK_DGRAM表示u">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-29T08:22:46.608Z">
+<meta property="article:modified_time" content="2020-06-30T07:35:20.774Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="python, network">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-29 16:22:46" itemprop="dateModified" datetime="2020-06-29T16:22:46+08:00">2020-06-29</time>
+                <time title="Modified: 2020-06-30 15:35:20" itemprop="dateModified" datetime="2020-06-30T15:35:20+08:00">2020-06-30</time>
               </span>
 
           
@@ -307,7 +307,7 @@
 <li>tcp服务通过listen将socket创建出来的主动套接字变为被动是必要的</li>
 <li>关闭listen后的套接字意味着被动套接字关闭了，新的客户端不能连接，但之前已经连接成功的客户端正常通信</li>
 </ul>
-<h2 id="多任务-Thread的基本使用"><a href="#多任务-Thread的基本使用" class="headerlink" title="多任务:Thread的基本使用"></a>多任务:Thread的基本使用</h2><p>对于单核cpu，可以在程序间快速切换，以达到多任务的效果，如：qq执行0.00001s，然后切换到微信。如此快速切换以致于人无法察觉，来实现多任务。但本质操作系统调度，一次执行一个任务，这样的方式称为并发。</p>
+<h2 id="多任务"><a href="#多任务" class="headerlink" title="多任务"></a>多任务</h2><h3 id="Thread的基本使用"><a href="#Thread的基本使用" class="headerlink" title="Thread的基本使用"></a>Thread的基本使用</h3><p>对于单核cpu，可以在程序间快速切换，以达到多任务的效果，如：qq执行0.00001s，然后切换到微信。如此快速切换以致于人无法察觉，来实现多任务。但本质操作系统调度，一次执行一个任务，这样的方式称为并发。</p>
 <p>对于多核cpu，每个核功能同单核，多个核在可以同时多个任务。这些在不同核中执行的进程的方式称为并行。真正意义的多任务。</p>
 <p>thread使用需要引入threading模块：<code>import threading</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">t1 = threading.Thread(target=func_pointer1, args=(args,))  <span class="comment"># 返回对象，参数以元祖方式传入</span></span><br><span class="line">t2 = threading.Thread(target=func_pointer2, args=(args,))</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br></pre></td></tr></table></figure>
@@ -343,7 +343,56 @@
 </ul>
 </li>
 </ul>
+<h3 id="进程方式"><a href="#进程方式" class="headerlink" title="进程方式"></a>进程方式</h3><p>需要<code>multiprocessing</code>模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line">p = multiprocessing.Process(target=func_pointer, args=(args,))</span><br><span class="line">p.start()</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>由于是进程，所有可以在shell中查看<code>ps -aux</code>，也可以进行任何进程操作<ul>
+<li>但是耗费的资源也比线程大</li>
+</ul>
+</li>
+<li>进程间是互相独立的，进程间如何通信呢？<ul>
+<li>队列，直接在内存中操作<ul>
+<li><strong>multiprocessing.Queue()</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">q = multiprocessing.Queue()</span><br><span class="line">q.put(arg)</span><br><span class="line">q.get()</span><br><span class="line">q.get_nowait()</span><br><span class="line">q.full()</span><br><span class="line">q.empty()</span><br></pre></td></tr></table></figure></li>
+<li>当队列为空时get方法会阻塞，get_nowait方法会引发异常来告诉你队列为空</li>
+<li>如果队列满了put方法会阻塞</li>
+</ul>
+</li>
+<li>使用队列来减少进程的耦合(解耦)<ul>
+<li>进程A往queue填数据，只需关注写</li>
+<li>进程B从queue取数据，只需关注读</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="进程池"><a href="#进程池" class="headerlink" title="进程池"></a>进程池</h4><p>一个可以容纳很多进程的特殊容器。它 <strong>重复利用进程池里的进程</strong> ，因为进程并非越多越好，会增加操作系统调度的压力。进程池减轻了进程创建和销毁的负担。</p>
+<ul>
+<li>进程池创建<ul>
+<li><code>from multiprocessing import Pool</code></li>
+<li><code>po = Pool(n)</code>，设置最对创建的个数，这里是n<ul>
+<li>可以往里添加无数个，但最对同时运行n个进程，其他存起来</li>
+</ul>
+</li>
+<li>添加到进程池：<code>po.apply_async(func_pointer, (args,))</code></li>
+<li>进程池关闭<code>po.close()</code></li>
+<li><code>po.join()</code>等到进程池中所有子进程执行完成， <strong>join必须放在close之后</strong><ul>
+<li>因为使用进程池不会阻塞主进程，所以可能子进程还没结束，主进程先结束了，导致所以子进程结束</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>进程池里的任务产生的异常不会产生错误信息</li>
+<li>显示进度<ul>
+<li>通过队列在进程间通信，子进程完成后写入队列，主进程从队列读，统计<ul>
+<li><strong>进程的队列要使用 <code>multiprocessing.Manager().Queue()</code></strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>P46</p>
+<h3 id="协程方式"><a href="#协程方式" class="headerlink" title="协程方式"></a>协程方式</h3>
     </div>
 
     
@@ -423,7 +472,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket基本使用"><span class="nav-number">1.</span> <span class="nav-text">Socket基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket中使用tcp"><span class="nav-number">1.1.</span> <span class="nav-text">Socket中使用tcp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp服务器"><span class="nav-number">1.2.</span> <span class="nav-text">tcp服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单下载器的实现"><span class="nav-number">1.3.</span> <span class="nav-text">一个简单下载器的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP注意点"><span class="nav-number">1.4.</span> <span class="nav-text">TCP注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务-Thread的基本使用"><span class="nav-number">2.</span> <span class="nav-text">多任务:Thread的基本使用</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket基本使用"><span class="nav-number">1.</span> <span class="nav-text">Socket基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket中使用tcp"><span class="nav-number">1.1.</span> <span class="nav-text">Socket中使用tcp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp服务器"><span class="nav-number">1.2.</span> <span class="nav-text">tcp服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单下载器的实现"><span class="nav-number">1.3.</span> <span class="nav-text">一个简单下载器的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP注意点"><span class="nav-number">1.4.</span> <span class="nav-text">TCP注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务"><span class="nav-number">2.</span> <span class="nav-text">多任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread的基本使用"><span class="nav-number">2.1.</span> <span class="nav-text">Thread的基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程方式"><span class="nav-number">2.2.</span> <span class="nav-text">进程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程池"><span class="nav-number">2.2.1.</span> <span class="nav-text">进程池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协程方式"><span class="nav-number">2.3.</span> <span class="nav-text">协程方式</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

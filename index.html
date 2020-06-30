@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-29 16:22:46" itemprop="dateModified" datetime="2020-06-29T16:22:46+08:00">2020-06-29</time>
+                <time title="Modified: 2020-06-30 15:35:20" itemprop="dateModified" datetime="2020-06-30T15:35:20+08:00">2020-06-30</time>
               </span>
 
           
@@ -302,7 +302,7 @@
 <li>tcp服务通过listen将socket创建出来的主动套接字变为被动是必要的</li>
 <li>关闭listen后的套接字意味着被动套接字关闭了，新的客户端不能连接，但之前已经连接成功的客户端正常通信</li>
 </ul>
-<h2 id="多任务-Thread的基本使用"><a href="#多任务-Thread的基本使用" class="headerlink" title="多任务:Thread的基本使用"></a>多任务:Thread的基本使用</h2><p>对于单核cpu，可以在程序间快速切换，以达到多任务的效果，如：qq执行0.00001s，然后切换到微信。如此快速切换以致于人无法察觉，来实现多任务。但本质操作系统调度，一次执行一个任务，这样的方式称为并发。</p>
+<h2 id="多任务"><a href="#多任务" class="headerlink" title="多任务"></a>多任务</h2><h3 id="Thread的基本使用"><a href="#Thread的基本使用" class="headerlink" title="Thread的基本使用"></a>Thread的基本使用</h3><p>对于单核cpu，可以在程序间快速切换，以达到多任务的效果，如：qq执行0.00001s，然后切换到微信。如此快速切换以致于人无法察觉，来实现多任务。但本质操作系统调度，一次执行一个任务，这样的方式称为并发。</p>
 <p>对于多核cpu，每个核功能同单核，多个核在可以同时多个任务。这些在不同核中执行的进程的方式称为并行。真正意义的多任务。</p>
 <p>thread使用需要引入threading模块：<code>import threading</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">t1 = threading.Thread(target=func_pointer1, args=(args,))  <span class="comment"># 返回对象，参数以元祖方式传入</span></span><br><span class="line">t2 = threading.Thread(target=func_pointer2, args=(args,))</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br></pre></td></tr></table></figure>
@@ -338,7 +338,56 @@
 </ul>
 </li>
 </ul>
+<h3 id="进程方式"><a href="#进程方式" class="headerlink" title="进程方式"></a>进程方式</h3><p>需要<code>multiprocessing</code>模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line">p = multiprocessing.Process(target=func_pointer, args=(args,))</span><br><span class="line">p.start()</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>由于是进程，所有可以在shell中查看<code>ps -aux</code>，也可以进行任何进程操作<ul>
+<li>但是耗费的资源也比线程大</li>
+</ul>
+</li>
+<li>进程间是互相独立的，进程间如何通信呢？<ul>
+<li>队列，直接在内存中操作<ul>
+<li><strong>multiprocessing.Queue()</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">q = multiprocessing.Queue()</span><br><span class="line">q.put(arg)</span><br><span class="line">q.get()</span><br><span class="line">q.get_nowait()</span><br><span class="line">q.full()</span><br><span class="line">q.empty()</span><br></pre></td></tr></table></figure></li>
+<li>当队列为空时get方法会阻塞，get_nowait方法会引发异常来告诉你队列为空</li>
+<li>如果队列满了put方法会阻塞</li>
+</ul>
+</li>
+<li>使用队列来减少进程的耦合(解耦)<ul>
+<li>进程A往queue填数据，只需关注写</li>
+<li>进程B从queue取数据，只需关注读</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="进程池"><a href="#进程池" class="headerlink" title="进程池"></a>进程池</h4><p>一个可以容纳很多进程的特殊容器。它 <strong>重复利用进程池里的进程</strong> ，因为进程并非越多越好，会增加操作系统调度的压力。进程池减轻了进程创建和销毁的负担。</p>
+<ul>
+<li>进程池创建<ul>
+<li><code>from multiprocessing import Pool</code></li>
+<li><code>po = Pool(n)</code>，设置最对创建的个数，这里是n<ul>
+<li>可以往里添加无数个，但最对同时运行n个进程，其他存起来</li>
+</ul>
+</li>
+<li>添加到进程池：<code>po.apply_async(func_pointer, (args,))</code></li>
+<li>进程池关闭<code>po.close()</code></li>
+<li><code>po.join()</code>等到进程池中所有子进程执行完成， <strong>join必须放在close之后</strong><ul>
+<li>因为使用进程池不会阻塞主进程，所以可能子进程还没结束，主进程先结束了，导致所以子进程结束</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>进程池里的任务产生的异常不会产生错误信息</li>
+<li>显示进度<ul>
+<li>通过队列在进程间通信，子进程完成后写入队列，主进程从队列读，统计<ul>
+<li><strong>进程的队列要使用 <code>multiprocessing.Manager().Queue()</code></strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>P46</p>
+<h3 id="协程方式"><a href="#协程方式" class="headerlink" title="协程方式"></a>协程方式</h3>
       
     </div>
 
@@ -626,7 +675,7 @@ Hash.erase(key);    </code></pre>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-28 15:59:09" itemprop="dateModified" datetime="2020-06-28T15:59:09+08:00">2020-06-28</time>
+                <time title="Modified: 2020-06-30 17:11:33" itemprop="dateModified" datetime="2020-06-30T17:11:33+08:00">2020-06-30</time>
               </span>
 
           
@@ -1295,7 +1344,48 @@ Hash.erase(key);    </code></pre>
 </li>
 </ul>
 <h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>各个进程共享CPU资源，不同时刻进程需要切换，让别的进程能够执行。这个切换过程称为进程的上下文切换。</p>
-<h2 id="Part-8"><a href="#Part-8" class="headerlink" title="Part 8"></a>Part 8</h2>
+<h2 id="Part-8"><a href="#Part-8" class="headerlink" title="Part 8"></a>Part 8</h2><h3 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h3><ul>
+<li>FCFS：先来先服务</li>
+<li>SPN(SJF) SRT：短进程优先 短剩余时间优先<ul>
+<li>可抢占，导致长进程可能一直得不到执行</li>
+</ul>
+</li>
+<li>HRRN：最高响应比优先<ul>
+<li>$R=(w+s)/s$，w是等待时间，s是执行时间。不可抢占，一定程度防止了长进程得不到执行的问题</li>
+</ul>
+</li>
+<li>Round Robin：轮循<ul>
+<li>各个进程轮流占用CPU</li>
+<li>会引入额外的上下文切换开销，时间片太小切换太频繁，时间片太大等待时间太久</li>
+</ul>
+</li>
+<li>Multilevel Feedback Queue：多级反馈队列<ul>
+<li>不同级别队列可以采用不同的调度方案，根据进程特点划分</li>
+</ul>
+</li>
+<li>Fair Share Scheduling：公平共享调度</li>
+</ul>
+<h3 id="实时调度"><a href="#实时调度" class="headerlink" title="实时调度"></a>实时调度</h3><ul>
+<li>实时系统<ul>
+<li>定义：正确性依赖于其时间和功能两方面的一种操作系统。即因为是实时的，如果不能在规定时间完成，则失去时效性</li>
+<li>强实时系统<ul>
+<li>需要在保证的时间内完成重要的任务，必须完成</li>
+</ul>
+</li>
+<li>弱实时系统<ul>
+<li>要求重要的进程优先级更高，尽量完成，非必须</li>
+</ul>
+</li>
+<li>性能指标<ul>
+<li>时间约束的及时性(deadline)</li>
+<li>速度和平均性能相对不重要</li>
+</ul>
+</li>
+<li>主要特征：时间约束的可预测性</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
 
