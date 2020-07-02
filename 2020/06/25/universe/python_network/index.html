@@ -28,7 +28,7 @@
 <meta property="og:description" content="Socket基本使用 创建套接字对象socket.socket(AddressFamily, Type)  udp: s &#x3D; socket.socket(socket.AF_INET, socket.SOCK_DGRAM) tcp: s &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM) 其中AF_INET表示IPv4，SOCK_DGRAM表示u">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-30T07:35:20.774Z">
+<meta property="article:modified_time" content="2020-07-02T03:57:49.400Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="python, network">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-30 15:35:20" itemprop="dateModified" datetime="2020-06-30T15:35:20+08:00">2020-06-30</time>
+                <time title="Modified: 2020-07-02 11:57:49" itemprop="dateModified" datetime="2020-07-02T11:57:49+08:00">2020-07-02</time>
               </span>
 
           
@@ -391,8 +391,77 @@
 </ul>
 </li>
 </ul>
-<p>P46</p>
-<h3 id="协程方式"><a href="#协程方式" class="headerlink" title="协程方式"></a>协程方式</h3>
+<h3 id="协程方式"><a href="#协程方式" class="headerlink" title="协程方式"></a>协程方式</h3><h4 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h4><ul>
+<li>可迭代<ul>
+<li><code>isinstance(ar, Iterable)</code></li>
+<li>必须实现<code>__iter__</code>方法， <strong>返回一个迭代器</strong> ，<code>return Iterator(self)</code>，如果这个类本身是个迭代器(实现了<code>__next__</code>)则可以返回self</li>
+</ul>
+</li>
+<li>迭代器<ul>
+<li><code>isinstance(ar, Iterator)</code></li>
+<li>必须实现<code>__iter__</code>方法和 <strong><code>__next__</code>方法</strong></li>
+<li>使用<code>raise StopIteration</code>来表示迭代结束</li>
+<li><code>iter(Iterable)</code>方法气质其实调用了类的<code>__iter__()</code>，返回类的迭代器，for in就是调用了<code>__iter__()</code>获得迭代器的</li>
+<li><code>next(Iterator)</code>方法调用迭代器的<code>__next__()</code>方法</li>
+<li>转换成list转化成tuple也是使用了迭代器</li>
+</ul>
+</li>
+</ul>
+<p>迭代器储存生成这个数据的方式，而不是生成这个数据的结果。占用极小的内存空间</p>
+<h4 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h4><p>生成器是一种特殊的迭代器</p>
+<ul>
+<li>列表式创建生成器：<code>nums = (x for x in range(10))</code><ul>
+<li>不同于<code>nums = [x for x in range(10)]</code>直接返回结果，生成器返回生成数据的方式</li>
+</ul>
+</li>
+<li>函数变成生成器<ul>
+<li>使用<code>yield</code>返回生成器对象<ul>
+<li>yield相当于返回值后把函数暂停，下次使用将从上一次的位置继续向下走</li>
+<li>获取生成器return的结果，一般捕获异常，<code>except StopIteration as ret</code>，然后使用<code>ret.value</code>取得返回值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>通过<code>send</code>启动生成器：<code>gen.send(args)</code><ul>
+<li>同一会执行一次<code>__next__</code>，但区别于<code>next</code>，<code>send</code>能往里传参数</li>
+<li><code>ret = yield x</code>，由于<code>yield x</code>返回给外面，没有返回值，所以<code>ret=None</code>。send传递的参数args使得<code>ret=args</code><ul>
+<li>一般用于更新状态</li>
+</ul>
+</li>
+<li>第一次迭代使用send会出错</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用yield实现多任务"><a href="#使用yield实现多任务" class="headerlink" title="使用yield实现多任务"></a>使用yield实现多任务</h4><p>使用yield把普通函数转化成生成器，这样对于一个含有无限循环的函数，每轮yield后就会暂停，让下一行代码执行。这就实现了用函数实现并行。</p>
+<p>但不同于操作系统级的并行(上下文切换开销相当大)，这样的多任务就像使用一个函数一样简单。</p>
+<p>开销：$进程&gt;线程&gt;协程$</p>
+<p>但这样存在一个问题，如果有100个这样的函数要写100个调用？这时需要使用<code>gevent</code></p>
+<p>geven是一个基于协程的并发库</p>
+<ul>
+<li><code>greenlet</code>：对yield进行了封装<ul>
+<li>创建greenlet对象：<code>gr1 = greenlet(func_pointer)</code>，对函数进行封装，传入普通函数就行，不需要yield返回了。</li>
+<li>切换：<code>gr1.switch()</code>切换到gr1(封装的函数)<ul>
+<li>如果在函数1中<code>switch</code>到函数2，函数2switch到函数1，就和yield效果一样</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>gevent</code>：对greenlet进行封装<ul>
+<li>创建：<code>g1 = gevent.spawn(func, arg1, arg2, ...)</code></li>
+<li>特点：遇到<code>gevent.sleep()</code>会切换，greenlet遇到延时会等待<ul>
+<li>因此在结尾写上<code>g1.join()</code>(等待g1执行完成，实现了geven.sleep)，使它遇到了延时，它就自动切换执行</li>
+<li><code>geven.joinall([list])</code>，把所有geven对象放入列表就会等待列表内所有</li>
+</ul>
+</li>
+<li><code>monkey.patch_all()</code>，是否所有的延时都要手动换成<code>geven.sleep</code>？<ul>
+<li>使用<code>monkey.patch_all()</code>它会自动将延时换成<code>geven.sleep</code>，包括网络延时</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>P65</p>
+
     </div>
 
     
@@ -472,7 +541,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket基本使用"><span class="nav-number">1.</span> <span class="nav-text">Socket基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket中使用tcp"><span class="nav-number">1.1.</span> <span class="nav-text">Socket中使用tcp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp服务器"><span class="nav-number">1.2.</span> <span class="nav-text">tcp服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单下载器的实现"><span class="nav-number">1.3.</span> <span class="nav-text">一个简单下载器的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP注意点"><span class="nav-number">1.4.</span> <span class="nav-text">TCP注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务"><span class="nav-number">2.</span> <span class="nav-text">多任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread的基本使用"><span class="nav-number">2.1.</span> <span class="nav-text">Thread的基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程方式"><span class="nav-number">2.2.</span> <span class="nav-text">进程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程池"><span class="nav-number">2.2.1.</span> <span class="nav-text">进程池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协程方式"><span class="nav-number">2.3.</span> <span class="nav-text">协程方式</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket基本使用"><span class="nav-number">1.</span> <span class="nav-text">Socket基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket中使用tcp"><span class="nav-number">1.1.</span> <span class="nav-text">Socket中使用tcp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp服务器"><span class="nav-number">1.2.</span> <span class="nav-text">tcp服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单下载器的实现"><span class="nav-number">1.3.</span> <span class="nav-text">一个简单下载器的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP注意点"><span class="nav-number">1.4.</span> <span class="nav-text">TCP注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务"><span class="nav-number">2.</span> <span class="nav-text">多任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread的基本使用"><span class="nav-number">2.1.</span> <span class="nav-text">Thread的基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程方式"><span class="nav-number">2.2.</span> <span class="nav-text">进程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程池"><span class="nav-number">2.2.1.</span> <span class="nav-text">进程池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协程方式"><span class="nav-number">2.3.</span> <span class="nav-text">协程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器"><span class="nav-number">2.3.1.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成器"><span class="nav-number">2.3.2.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用yield实现多任务"><span class="nav-number">2.3.3.</span> <span class="nav-text">使用yield实现多任务</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
