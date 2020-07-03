@@ -703,7 +703,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-26 16:54:49" itemprop="dateModified" datetime="2020-06-26T16:54:49+08:00">2020-06-26</time>
+                <time title="Modified: 2020-07-03 12:01:01" itemprop="dateModified" datetime="2020-07-03T12:01:01+08:00">2020-07-03</time>
               </span>
 
           
@@ -3867,8 +3867,8 @@
 <p>使用Snort特征的语法，网络管理员能够根据机构的需求，通过修改现有的特征或通过创建全新的特征来裁剪某个特征</p>
 <hr>
 <h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p>面向连接的传输</p>
-<p>三次握手</p>
 <ul>
+<li>三次握手<ul>
 <li>用户发送特殊的TCP报文</li>
 <li>服务器用一个特殊的TCP报文回复<ul>
 <li>两次握手后建立起连接</li>
@@ -3876,6 +3876,16 @@
 </ul>
 </li>
 <li>最后用户通过第三次报文发送有效载荷</li>
+</ul>
+</li>
+<li>四次挥手<ul>
+<li>C: 拜拜<code>close()</code>，不再给你发数据了哦</li>
+<li>S: 好的(recv不等收了)知道了</li>
+<li>S: 我也不发了(close，也许会延时，所以是4次)</li>
+<li>C: 好的(recv不用等待接收了)</li>
+<li>服务器和客户端的接收都关了</li>
+</ul>
+</li>
 </ul>
 <h3 id="TCP报文结构"><a href="#TCP报文结构" class="headerlink" title="TCP报文结构"></a>TCP报文结构</h3><p>TCP报文段首部包含一下字段:</p>
 <ul>

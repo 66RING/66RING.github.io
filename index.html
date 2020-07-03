@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-02 11:57:49" itemprop="dateModified" datetime="2020-07-02T11:57:49+08:00">2020-07-02</time>
+                <time title="Modified: 2020-07-03 16:17:07" itemprop="dateModified" datetime="2020-07-03T16:17:07+08:00">2020-07-03</time>
               </span>
 
           
@@ -275,6 +275,27 @@
 <li>当一个客户端不需要服务的时候，即客户端调用close的时候，会使服务端recv解堵塞，返回空，以此做判断依据。</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<h4 id="TCP三次握手和四次挥手"><a href="#TCP三次握手和四次挥手" class="headerlink" title="TCP三次握手和四次挥手"></a>TCP三次握手和四次挥手</h4><ul>
+<li>三次握手：建立连接<ul>
+<li>C: 服务器你准备好没？SYN</li>
+<li>S: 准备好了SYN ACK，你呢？SYN</li>
+<li>C: 我也好了SYN ACK</li>
+</ul>
+</li>
+<li>四次挥手<ul>
+<li>C: 拜拜<code>close()</code>，不再给你发数据了哦</li>
+<li>S: 好的(recv不等收了)知道了</li>
+<li>S: 我也不发了(close，也许会延时，所以是4次)</li>
+<li>C: 好的(recv不用等待接收了)</li>
+<li>服务器和客户端的接收都关了</li>
+</ul>
+</li>
+<li>为什么一般是客户端先关闭的原因：<ul>
+<li>客户端的消息这么知道服务器收到了？服务器发生确认。那服务器的确认如何知道被收到了？客户端发送确认…无穷无尽也</li>
+<li>所以采用发起消息的一方设置超时时间(等待)，所以如果是服务器发起消息(close)那服务器就要进入等待(额外开销浪费)</li>
 </ul>
 </li>
 </ul>
@@ -455,7 +476,39 @@
 </ul>
 </li>
 </ul>
-<p>P65</p>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>报文格式</p>
+<ul>
+<li>请求行<ul>
+<li>方法 URL 版本</li>
+<li>包含一系列必要信息</li>
+</ul>
+</li>
+<li>首部行(optional)<ul>
+<li>首部字段: 值</li>
+<li>相当于指定配置</li>
+</ul>
+</li>
+<li>空行<ul>
+<li>通过空行来分割头和body</li>
+<li>浏览器通过<code>\r\n</code>解析换行</li>
+</ul>
+</li>
+<li>实体主体</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--- 请求行 ---</span><br><span class="line">GET &#x2F;some&#x2F;dir HTTP&#x2F;1.1</span><br><span class="line">--- 首部行 ---</span><br><span class="line">Host: www.some.com           # 指明对象所在的主机, 该首部行的Web高速缓存所要求的</span><br><span class="line">Connection: close            # 非持续连接</span><br><span class="line">User-agent: Mozilla&#x2F;5.0      # 发送请求的浏览器类型</span><br><span class="line"># 还会有很多的配置，首部行是连续的，如果遇到空行则说明首部行结束，进入body</span><br></pre></td></tr></table></figure>
+
+<p>当请求一个页面的时候，返回html，html不会有图片(css、视频或且它等)的数据但会有图片的超链接。浏览器解析到超链接会自动发送一个新的请求，因此可以从一个请求中生出很多个请求。</p>
+<ul>
+<li>多进程web服务器<ul>
+<li>因为子进程会复制父进程的资源，所有子进程里close了父进程里还有close</li>
+</ul>
+</li>
+<li>多线程web服务器<ul>
+<li>如果是使用多线程Thread，不会复制父进程资源，子线程里close了父进程就不需要close了</li>
+</ul>
+</li>
+</ul>
+<p>p74</p>
 
       
     </div>
@@ -744,7 +797,7 @@ Hash.erase(key);    </code></pre>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-02 21:22:50" itemprop="dateModified" datetime="2020-07-02T21:22:50+08:00">2020-07-02</time>
+                <time title="Modified: 2020-07-03 18:04:13" itemprop="dateModified" datetime="2020-07-03T18:04:13+08:00">2020-07-03</time>
               </span>
 
           
@@ -1556,7 +1609,57 @@ Hash.erase(key);    </code></pre>
 </ul>
 </li>
 </ul>
-<h2 id="Part-10"><a href="#Part-10" class="headerlink" title="Part 10"></a>Part 10</h2>
+<h2 id="Part-10"><a href="#Part-10" class="headerlink" title="Part 10"></a>Part 10</h2><h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><ul>
+<li>抽象数据类型<ul>
+<li>一个整形(sem)，两个原子操作</li>
+<li>P()：sem减1,如果sem&lt;0，等待，否则继续</li>
+<li>V()：sem加1,如果sem&lt;=0(说明有有一些进程在等待)，唤醒一个等待的P</li>
+</ul>
+</li>
+</ul>
+<h4 id="信号量的使用"><a href="#信号量的使用" class="headerlink" title="信号量的使用"></a>信号量的使用</h4><ul>
+<li>信号量是整数</li>
+<li>信号量的被保护的变量<ul>
+<li>初始化完成后，唯一改变一个信号量的值的方法是通过P()和V()</li>
+<li>操作必须是原子</li>
+</ul>
+</li>
+<li>P()能够阻塞，V()不会阻塞</li>
+<li>我们假定信号量是”公平的”<ul>
+<li>没有线程被阻塞在P()仍然堵塞V()被无限频繁调用(在同一信号量)</li>
+</ul>
+</li>
+<li>两种类型信号量<ul>
+<li>二进制信号量：可以是0或1</li>
+<li>一般/计数信号量：可是任何非负数<ul>
+<li>允许多个执行P操作的进程进入后续操作</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mutex-&gt;P()</span><br><span class="line">临界区</span><br><span class="line">mutex-&gt;V()</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="信号量的实现"><a href="#信号量的实现" class="headerlink" title="信号量的实现"></a>信号量的实现</h4><p>基本结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Semaphore</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> sem;</span><br><span class="line">    WaitQueue q;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Semaphore::P()&#123;</span><br><span class="line">    sem--;</span><br><span class="line">    <span class="keyword">if</span>(sem&lt;<span class="number">0</span>)&#123;</span><br><span class="line">        把这个线程放入等待队列q;</span><br><span class="line">        block(p);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Semaphore::V()&#123;</span><br><span class="line">    sem++;</span><br><span class="line">    <span class="keyword">if</span>(sem&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">        从等待队列中取出一个线程t</span><br><span class="line">        wakeup(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="管程"><a href="#管程" class="headerlink" title="管程"></a>管程</h3><p>building</p>
+<ul>
+<li>目的：分离互斥和条件同步的关注</li>
+<li>什么是管程：<ul>
+<li>一个锁：指定临界区</li>
+<li>0或多个条件变量：等待/通知信号量用于管理并发访问共享数据</li>
+</ul>
+</li>
+<li>一般方法<ul>
+<li>收集在对象/模块中的相关共享数据</li>
+<li>定义方法来访问共享数据</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
 
