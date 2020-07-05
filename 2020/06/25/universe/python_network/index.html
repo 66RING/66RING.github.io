@@ -28,7 +28,7 @@
 <meta property="og:description" content="Socket基本使用 创建套接字对象socket.socket(AddressFamily, Type)  udp: s &#x3D; socket.socket(socket.AF_INET, socket.SOCK_DGRAM) tcp: s &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM) 其中AF_INET表示IPv4，SOCK_DGRAM表示u">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-03T08:17:07.648Z">
+<meta property="article:modified_time" content="2020-07-05T10:12:25.908Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="python, network">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-03 16:17:07" itemprop="dateModified" datetime="2020-07-03T16:17:07+08:00">2020-07-03</time>
+                <time title="Modified: 2020-07-05 18:12:25" itemprop="dateModified" datetime="2020-07-05T18:12:25+08:00">2020-07-05</time>
               </span>
 
           
@@ -512,8 +512,43 @@
 <li>如果是使用多线程Thread，不会复制父进程资源，子线程里close了父进程就不需要close了</li>
 </ul>
 </li>
+<li>不论是多进程还是多线程，都要创建一个子进程/线程，如果有很多人同时请求服务(如双11)开销相当大</li>
+<li>使用协程的web服务器<ul>
+<li><ol>
+<li>使用gevent</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>非阻塞方式使用socket实现单进程单线程监听多个套接字<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">s.setblocking(<span class="literal">False</span>)  <span class="comment"># 使用非阻塞方式</span></span><br><span class="line">client_socket_list = list()</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">       new_socket, new_addr = s.accept() </span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> ret:</span><br><span class="line">        print(ret)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        new_socket.setblocking(<span class="literal">False</span>)  <span class="comment"># 新socket使用非阻塞方式</span></span><br><span class="line">        client_socket_list.append(new_socket)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> client_socket <span class="keyword">in</span> client_socket_list:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            recv_data = client_socket.recv(<span class="number">1024</span>)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> ret:</span><br><span class="line">            print(ret)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> recv_data:</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># 对方关闭了</span></span><br><span class="line">                client_socket.close()</span><br><span class="line">                client_socket_list.remove(client_socket)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>但这么做列表越大效率越低</li>
 </ul>
-<p>p74</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="长连接"><a href="#长连接" class="headerlink" title="长连接"></a>长连接</h3><ul>
+<li>长连接<ul>
+<li>用同一个连接获取数据</li>
+<li>http1.1</li>
+</ul>
+</li>
+<li>短连接<ul>
+<li>获取一个数据建立一个连接</li>
+<li>http1.0</li>
+</ul>
+</li>
+</ul>
+<p>我们之前每一轮都关闭连接，虽然说是HTTP1.1，实际我们一直用短连接的方式传输</p>
+<p>短连接模式，浏览器通过接受close知道包的内容范围。但如果使用长连接，连接不close，浏览器如何知道包的范围？</p>
+<p>使用长连接，需要在header中标注<code>Content-Length</code>，告诉浏览器包的长度，这样浏览器在获取全部内容后主动断开连接，服务器再断开。</p>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>在单进程单线程服务多用户的实例中，使用列表把所有连接存储起来。但这样随着列表变大，效率将变低。因为需要拷贝fc(文件描述符)到内核的内存空间，这样轮循+拷贝的方式效率相当低。</p>
+<p>epoll有个特殊的内存空间，操作系统和应用程序共用。在这个内存中的所有要监听的套接字检测时不采用轮循而是方式事件通知的方式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> select  <span class="comment"># 引入模块</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建epoll对象</span></span><br><span class="line">epl = select.epoll()  <span class="comment"># 创建这样的共享内存</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将监听套接字对应的fd注册到epoll</span></span><br><span class="line">epl.register(your_socket.fileno(), <span class="comment"># fileno()返回fd</span></span><br><span class="line">            select.EPOLLIN)  <span class="comment"># EPOLLIN表示监听是否有输入</span></span><br><span class="line"></span><br><span class="line">epl.poll()  <span class="comment"># 默认阻塞，知道OS检测到数据到来，通过事件通知的方式告诉程序，才会解阻塞</span></span><br><span class="line"><span class="comment"># 返回列表，一次通知多个[(fd, event), (套接字对应的文件描述符, 对应的事件)]</span></span><br></pre></td></tr></table></figure>
+
+<p>p90</p>
 
     </div>
 
@@ -594,7 +629,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket基本使用"><span class="nav-number">1.</span> <span class="nav-text">Socket基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket中使用tcp"><span class="nav-number">1.1.</span> <span class="nav-text">Socket中使用tcp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp服务器"><span class="nav-number">1.2.</span> <span class="nav-text">tcp服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP三次握手和四次挥手"><span class="nav-number">1.2.1.</span> <span class="nav-text">TCP三次握手和四次挥手</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单下载器的实现"><span class="nav-number">1.3.</span> <span class="nav-text">一个简单下载器的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP注意点"><span class="nav-number">1.4.</span> <span class="nav-text">TCP注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务"><span class="nav-number">2.</span> <span class="nav-text">多任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread的基本使用"><span class="nav-number">2.1.</span> <span class="nav-text">Thread的基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程方式"><span class="nav-number">2.2.</span> <span class="nav-text">进程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程池"><span class="nav-number">2.2.1.</span> <span class="nav-text">进程池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协程方式"><span class="nav-number">2.3.</span> <span class="nav-text">协程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器"><span class="nav-number">2.3.1.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成器"><span class="nav-number">2.3.2.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用yield实现多任务"><span class="nav-number">2.3.3.</span> <span class="nav-text">使用yield实现多任务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP"><span class="nav-number">3.</span> <span class="nav-text">HTTP</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket基本使用"><span class="nav-number">1.</span> <span class="nav-text">Socket基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket中使用tcp"><span class="nav-number">1.1.</span> <span class="nav-text">Socket中使用tcp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp服务器"><span class="nav-number">1.2.</span> <span class="nav-text">tcp服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP三次握手和四次挥手"><span class="nav-number">1.2.1.</span> <span class="nav-text">TCP三次握手和四次挥手</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单下载器的实现"><span class="nav-number">1.3.</span> <span class="nav-text">一个简单下载器的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP注意点"><span class="nav-number">1.4.</span> <span class="nav-text">TCP注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务"><span class="nav-number">2.</span> <span class="nav-text">多任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread的基本使用"><span class="nav-number">2.1.</span> <span class="nav-text">Thread的基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程方式"><span class="nav-number">2.2.</span> <span class="nav-text">进程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程池"><span class="nav-number">2.2.1.</span> <span class="nav-text">进程池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协程方式"><span class="nav-number">2.3.</span> <span class="nav-text">协程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器"><span class="nav-number">2.3.1.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成器"><span class="nav-number">2.3.2.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用yield实现多任务"><span class="nav-number">2.3.3.</span> <span class="nav-text">使用yield实现多任务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP"><span class="nav-number">3.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#长连接"><span class="nav-number">3.1.</span> <span class="nav-text">长连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#epoll"><span class="nav-number">3.2.</span> <span class="nav-text">epoll</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-03 16:17:07" itemprop="dateModified" datetime="2020-07-03T16:17:07+08:00">2020-07-03</time>
+                <time title="Modified: 2020-07-05 18:12:25" itemprop="dateModified" datetime="2020-07-05T18:12:25+08:00">2020-07-05</time>
               </span>
 
           
@@ -507,8 +507,43 @@
 <li>如果是使用多线程Thread，不会复制父进程资源，子线程里close了父进程就不需要close了</li>
 </ul>
 </li>
+<li>不论是多进程还是多线程，都要创建一个子进程/线程，如果有很多人同时请求服务(如双11)开销相当大</li>
+<li>使用协程的web服务器<ul>
+<li><ol>
+<li>使用gevent</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>非阻塞方式使用socket实现单进程单线程监听多个套接字<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">s.setblocking(<span class="literal">False</span>)  <span class="comment"># 使用非阻塞方式</span></span><br><span class="line">client_socket_list = list()</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">       new_socket, new_addr = s.accept() </span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> ret:</span><br><span class="line">        print(ret)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        new_socket.setblocking(<span class="literal">False</span>)  <span class="comment"># 新socket使用非阻塞方式</span></span><br><span class="line">        client_socket_list.append(new_socket)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> client_socket <span class="keyword">in</span> client_socket_list:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            recv_data = client_socket.recv(<span class="number">1024</span>)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> ret:</span><br><span class="line">            print(ret)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> recv_data:</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># 对方关闭了</span></span><br><span class="line">                client_socket.close()</span><br><span class="line">                client_socket_list.remove(client_socket)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>但这么做列表越大效率越低</li>
 </ul>
-<p>p74</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="长连接"><a href="#长连接" class="headerlink" title="长连接"></a>长连接</h3><ul>
+<li>长连接<ul>
+<li>用同一个连接获取数据</li>
+<li>http1.1</li>
+</ul>
+</li>
+<li>短连接<ul>
+<li>获取一个数据建立一个连接</li>
+<li>http1.0</li>
+</ul>
+</li>
+</ul>
+<p>我们之前每一轮都关闭连接，虽然说是HTTP1.1，实际我们一直用短连接的方式传输</p>
+<p>短连接模式，浏览器通过接受close知道包的内容范围。但如果使用长连接，连接不close，浏览器如何知道包的范围？</p>
+<p>使用长连接，需要在header中标注<code>Content-Length</code>，告诉浏览器包的长度，这样浏览器在获取全部内容后主动断开连接，服务器再断开。</p>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>在单进程单线程服务多用户的实例中，使用列表把所有连接存储起来。但这样随着列表变大，效率将变低。因为需要拷贝fc(文件描述符)到内核的内存空间，这样轮循+拷贝的方式效率相当低。</p>
+<p>epoll有个特殊的内存空间，操作系统和应用程序共用。在这个内存中的所有要监听的套接字检测时不采用轮循而是方式事件通知的方式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> select  <span class="comment"># 引入模块</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建epoll对象</span></span><br><span class="line">epl = select.epoll()  <span class="comment"># 创建这样的共享内存</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将监听套接字对应的fd注册到epoll</span></span><br><span class="line">epl.register(your_socket.fileno(), <span class="comment"># fileno()返回fd</span></span><br><span class="line">            select.EPOLLIN)  <span class="comment"># EPOLLIN表示监听是否有输入</span></span><br><span class="line"></span><br><span class="line">epl.poll()  <span class="comment"># 默认阻塞，知道OS检测到数据到来，通过事件通知的方式告诉程序，才会解阻塞</span></span><br><span class="line"><span class="comment"># 返回列表，一次通知多个[(fd, event), (套接字对应的文件描述符, 对应的事件)]</span></span><br></pre></td></tr></table></figure>
+
+<p>p90</p>
 
       
     </div>
@@ -797,7 +832,7 @@ Hash.erase(key);    </code></pre>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-03 18:04:13" itemprop="dateModified" datetime="2020-07-03T18:04:13+08:00">2020-07-03</time>
+                <time title="Modified: 2020-07-05 20:57:48" itemprop="dateModified" datetime="2020-07-05T20:57:48+08:00">2020-07-05</time>
               </span>
 
           
@@ -1659,7 +1694,92 @@ Hash.erase(key);    </code></pre>
 </ul>
 </li>
 </ul>
+<h2 id="Part-11"><a href="#Part-11" class="headerlink" title="Part 11"></a>Part 11</h2><p> <strong>IIII</strong> </p>
+<h3 id="死锁的特征"><a href="#死锁的特征" class="headerlink" title="死锁的特征"></a>死锁的特征</h3><ul>
+<li>互斥：在一个时间只能有一个进程使用资源</li>
+<li>持有并等待：进程保持至少一个资源正在等待获取其他进程持有的额外资源</li>
+<li>不抢占：一个资源只能被进程自愿释放</li>
+<li>循环等待：一个等一个的环，但有环不一定有死锁</li>
+</ul>
+<h3 id="死锁处理办法"><a href="#死锁处理办法" class="headerlink" title="死锁处理办法"></a>死锁处理办法</h3><h4 id="死锁预防"><a href="#死锁预防" class="headerlink" title="死锁预防"></a>死锁预防</h4><p>死锁出现我们将死锁出现的某个条件打破是不是就解决了?</p>
+<ul>
+<li>打破占用并等待<ul>
+<li>一次占用所有所需的资源否则就不拿资源，是不是就防止了其他进程插足<ul>
+<li>缺点是资源利用率低，可能发生饥饿</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>打破不抢占<ul>
+<li>过于极端，导致被抢占的进程无法正常运行</li>
+</ul>
+</li>
+<li>打破循环等待<ul>
+<li>对所有资源类型进行排序，并要求每个进程按照资源的顺序进行申请</li>
+</ul>
+</li>
+</ul>
+<h4 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h4><p>申请资源时进行判断是否会出现死锁。需要操作系统提供一些额外的先验信息：</p>
+<ul>
+<li>最简单的方法如：每个进程声明它可能需要的每个类型资源的最大数目</li>
+<li>限制提供与分配的资源数量，不能超过个某个最大需求</li>
+<li>死锁避免算法动态检查资源分配状态，以确保永远不会有一个环形等待状态<ul>
+<li>但是有环并不一定有死锁</li>
+</ul>
+</li>
+</ul>
+<h4 id="银行家算法"><a href="#银行家算法" class="headerlink" title="银行家算法"></a>银行家算法</h4><blockquote>
+<p>有人找银行家贷款，银行家判断是否能够贷款收回，能收回才放贷。</p>
+</blockquote>
+<ul>
+<li>前提条件<ul>
+<li>多个进程实例</li>
+<li>每个进程必须最大限度利用资源</li>
+<li>当一个进程请求资源，得不到就不等待</li>
+<li>当一个进程得到所有的资源就必须在一定的时间内释放</li>
+</ul>
+</li>
+</ul>
+<p>基于上述条件，银行家算法通过寻找允许每个进程获得的最大资源并结束的进程理想执行时序，来决定是否安全。不存在满足要求的执行时序状态都是不安全的。</p>
+<ul>
+<li><p>数据结构</p>
+<ul>
+<li>n = 进程数量，m = 资源类型数量</li>
+<li>Max(总需求量)：n x m矩阵。Max[i, j] = k表示，进程$P_i$最多请求资源类型$R_j$的实例个数为k</li>
+<li>Available(空闲量)：长度为m的向量。Available[j] = k表示有k个$R_j$类型的资源可用</li>
+<li>Allocation[i, j](已分配)</li>
+<li>Need[i, j](未来需要量)</li>
+<li>Need[i, j] = Max[i, j] - Allocation[i, j]</li>
+</ul>
+</li>
+<li><ol>
+<li>初始化<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; work和finish分别是长度为m和n的向量</span><br><span class="line">work &#x3D; Available  &#x2F;&#x2F; 当前剩余</span><br><span class="line">finish[i] &#x3D; false for i in range(n) &#x2F;&#x2F; 线程i没结束</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>判断能否申请到：找到need比work小的进程i<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 要求</span><br><span class="line">(a) finish[i] &#x3D; false</span><br><span class="line">(b) need_i &lt;&#x3D; work</span><br></pre></td></tr></table></figure>
+<ul>
+<li>没找到跳转到4</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>申请到后认为进程可以正常结束<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 进程i的资源要求量小于当前的剩余空闲资源量</span><br><span class="line">work &#x3D; work + allocation  &#x2F;&#x2F; 回收</span><br><span class="line">finish[i] &#x3D; true</span><br></pre></td></tr></table></figure>
+<ul>
+<li>跳转到2</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>如果步骤2找不到这样的进程<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if finish[i] &#x3D;&#x3D; true for all i  &#x2F;&#x2F; 表明安全状态</span><br><span class="line">    可以分配</span><br><span class="line">else 不应该分配</span><br></pre></td></tr></table></figure>
 
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="死锁检测和死锁恢复"><a href="#死锁检测和死锁恢复" class="headerlink" title="死锁检测和死锁恢复"></a>死锁检测和死锁恢复</h4>
       
     </div>
 
