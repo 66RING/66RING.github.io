@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-08 14:22:20" itemprop="dateModified" datetime="2020-07-08T14:22:20+08:00">2020-07-08</time>
+                <time title="Modified: 2020-07-09 16:15:19" itemprop="dateModified" datetime="2020-07-09T16:15:19+08:00">2020-07-09</time>
               </span>
 
           
@@ -706,7 +706,63 @@
 </ul>
 </li>
 </ul>
-<p>p111</p>
+<h4 id="修改私有属性"><a href="#修改私有属性" class="headerlink" title="修改私有属性"></a>修改私有属性</h4><p>私有属性(在以<code>__</code>开头的变量)之所以无法访问是因为python悄悄改了变量名。如把<code>__func</code>改成了<code>_className__func</code>。所以使用这个改后的名就可以访问私有属性。这机制叫做名字重整。</p>
+<h4 id="魔法属性-方法"><a href="#魔法属性-方法" class="headerlink" title="魔法属性/方法"></a>魔法属性/方法</h4><ul>
+<li><code>__doc__</code>和<code>help()</code><ul>
+<li>使用<code>var.__doc__</code>或<code>help(var)</code>可以查看写在开头的描述</li>
+</ul>
+</li>
+<li><code>__module__</code>和<code>__class__</code><ul>
+<li><code>__class__</code>表示当前操作的对象的类是什么</li>
+<li><code>__module__</code>表示当前操作的对象是在哪个模块</li>
+</ul>
+</li>
+<li><code>__init__</code><ul>
+<li><strong>初始化</strong> 方法，创建类对象时自动触发执行</li>
+</ul>
+</li>
+<li><code>__del__</code><ul>
+<li>对象释放时，自动触发执行</li>
+</ul>
+</li>
+<li><code>__call__</code><ul>
+<li>对象后面加括号，触发执行<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj = classA()</span><br><span class="line">obj()   <span class="comment"># obj.__call__()</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>__dict__</code><ul>
+<li>类或对象的所有属性</li>
+</ul>
+</li>
+<li><code>__str__</code><ul>
+<li>如果一个类中定义了<code>__str__</code>方法，那么打印对象时，默认输出改方法的返回值</li>
+</ul>
+</li>
+<li><code>__getitem__</code>、<code>__setitem__</code>、<code>__delitem</code><ul>
+<li>如果类中实现了这3个方法，则可以当字典用<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        print(key)</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        print(key)</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__delitem__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        print(key)</span><br><span class="line"></span><br><span class="line">odj = A()</span><br><span class="line">res = obj[<span class="string">'k1'</span>]   <span class="comment"># __getitem__</span></span><br><span class="line">obj[<span class="string">'k2'</span>] = <span class="string">'abc'</span> <span class="comment"># __setitem__</span></span><br><span class="line"><span class="keyword">del</span> obj[<span class="string">'k3'</span>]     <span class="comment"># __delitem__</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>__getslice__</code>、<code>__setslice__</code>、<code>__delslice__</code><ul>
+<li>如果类中实现了这3个方法，则可以用于分片操作，如列表<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setslice__</span><span class="params">(self, i, j)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self, i, j)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__delslice__</span><span class="params">(self, i, j)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">odj = A()</span><br><span class="line">obj[<span class="number">-1</span>:<span class="number">1</span>]            <span class="comment"># __getslice__</span></span><br><span class="line">obj[<span class="number">0</span>:<span class="number">1</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="comment"># __setslice__</span></span><br><span class="line"><span class="keyword">del</span> obj[<span class="number">0</span>:<span class="number">2</span>]         <span class="comment"># __delslice__</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="with与上下文管理器"><a href="#with与上下文管理器" class="headerlink" title="with与上下文管理器"></a>with与上下文管理器</h4><p>使用with打开文件能够保证最终文件都会关闭。如果采用传统的<code>f = open()</code>则需要try-catch辅助。with是一种更简洁的写法。</p>
+<ul>
+<li>上下文管理器<ul>
+<li>任何实现了<code>__enter__()</code>和<code>__exit__()</code>方法的对象都可称之为上下文管理器。</li>
+<li><code>__enter__()</code>返回资源对象</li>
+<li><code>__exit__()</code>处理一些清理工作</li>
+</ul>
+</li>
+</ul>
+<p>当一个对象实现了上下文管理器，就可以使用with语句了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> obj(args) <span class="keyword">as</span> f:  </span><br><span class="line">    <span class="comment"># obj()创建实例对象</span></span><br><span class="line">    <span class="comment"># with自动调用了obj(上下文管理器)的__enter__方法，enter的返回值赋给f</span></span><br><span class="line">    <span class="comment"># 如果产生了异常，将自动调用__exit__方法</span></span><br></pre></td></tr></table></figure>
+
+
+<p>p116</p>
 
       
     </div>
@@ -964,7 +1020,7 @@ Hash.erase(key);    </code></pre>
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/12/Major/Operating_Systems/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -978,7 +1034,7 @@ Hash.erase(key);    </code></pre>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/06/12/Major/Operating_Systems/" class="post-title-link" itemprop="url">操作系统</a>
+            <a href="/2020/06/12/Major/OS/Operating_Systems/" class="post-title-link" itemprop="url">操作系统</a>
         </h2>
 
         <div class="post-meta">
@@ -995,7 +1051,7 @@ Hash.erase(key);    </code></pre>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-08 21:51:07" itemprop="dateModified" datetime="2020-07-08T21:51:07+08:00">2020-07-08</time>
+                <time title="Modified: 2020-07-09 19:37:14" itemprop="dateModified" datetime="2020-07-09T19:37:14+08:00">2020-07-09</time>
               </span>
 
           
@@ -2061,8 +2117,184 @@ Hash.erase(key);    </code></pre>
 <li>文件根据其特征是可寻址(辨识)的</li>
 </ul>
 </li>
+<li>日志文件系统<ul>
+<li>记录文件系统的修改/时间</li>
 </ul>
-<p>p91</p>
+</li>
+<li>网络/分布式文件系统</li>
+<li>特殊/虚拟文件系统</li>
+</ul>
+<h4 id="文件系统的实现"><a href="#文件系统的实现" class="headerlink" title="文件系统的实现"></a>文件系统的实现</h4><p>文件系统的种类繁多，如果让操作系统针对不同的文件系统编写应用程序，这显然是很复杂的。所有操作系统把复杂的东西抽象成简单的接口提供给用于，用户只需访问简单的接口，就可以应对不同的文件系统。</p>
+<p>虚拟文件系统是一个内存中的概念，通过虚拟文件系统层，屏蔽了底层文件各种系统的差异，从而应用程序可以访问不同类型的文件系统。</p>
+<ul>
+<li><p>分层结构</p>
+<ul>
+<li>上层：虚拟(逻辑)文件系统</li>
+<li>底层：特定文件系统模块</li>
+</ul>
+</li>
+<li><p>目的</p>
+<ul>
+<li>对多有不同文件系统的抽象</li>
+</ul>
+</li>
+<li><p>功能</p>
+<ul>
+<li>提供相同的文件和文件系统接口</li>
+<li>管理所有文件和文件系统关联的数据结构</li>
+<li>高效查询例程，遍历文件系统</li>
+<li>与特定文件系统模块的交互</li>
+</ul>
+</li>
+<li><p>基本结构</p>
+<ul>
+<li>卷控制块<ul>
+<li>每个文件系统一个</li>
+<li>文件系统详细信息</li>
+<li>块、块大小、空余块、计数/指针等</li>
+</ul>
+</li>
+<li>文件控制块<ul>
+<li>每个文件一个</li>
+<li>文件详细信息</li>
+<li>权限、拥有者、大小等信息</li>
+</ul>
+</li>
+<li>目录节点<ul>
+<li>每个目录项一个(目录和文件)</li>
+<li>将目录项数据结构及树形布局编码成树形数据结构</li>
+<li>指向文件控制块、父节点、项目列表等</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="./static/dir_node_struct.png"/>
+
+
+<h3 id="打开文件的数据结构"><a href="#打开文件的数据结构" class="headerlink" title="打开文件的数据结构"></a>打开文件的数据结构</h3><ul>
+<li>将文件控制块读入内存</li>
+<li>相关信息放入打开文件表</li>
+<li>把打开文件表表项的索引返回给应用程序<ul>
+<li>基于索引找到系统层面的打开文件表。由于可能多个程序打开同一个文件，所以都索引到系统文件表(只有一项)就ok</li>
+<li>系统文件表由索引到目录/文件</li>
+<li>如：访问文件，那么文件的信息会包含文件出现在什么地方(disk位置)，然后由偏移量指出，转换成disk扇区的编号</li>
+<li>然后就可对扇区内容读写</li>
+</ul>
+</li>
+</ul>
+<h3 id="文件分配"><a href="#文件分配" class="headerlink" title="文件分配"></a>文件分配</h3><p>当要写入文件时，要对文件的数据空间进行管理(增减)。分配方式有如下几种</p>
+<ul>
+<li>连续分配<ul>
+<li>文件头指定起始块和长度</li>
+<li>位置/分配策略<ul>
+<li>最先分配、最佳分配</li>
+</ul>
+</li>
+<li>优势<ul>
+<li>文件读取表现号</li>
+<li>高效的顺序和随机访问</li>
+</ul>
+</li>
+<li>劣势，同数组的劣势<ul>
+<li>文件增长问题，可能需要调整后面一系列文件，或者把自己移动到别处，但这样又造成碎片问题</li>
+<li>碎片</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>链式分配<ul>
+<li>文件以数据块链表方式储存</li>
+<li>文件头包含了到第一块和最后一块的指针</li>
+<li>优点<ul>
+<li>创建、增减很容易</li>
+<li>没有碎片</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>不可能进行真正的随机访问</li>
+<li>可靠性：如突然断电一个链被破坏…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>索引分配<ul>
+<li>为每个文件建立一个名为 <strong>索引数据块</strong> 的非数据数据块<ul>
+<li>到文件数据块的指针列表</li>
+</ul>
+</li>
+<li>文件头包含了索引数据块</li>
+<li>优点<ul>
+<li>创建、增减容易</li>
+<li>没有碎片</li>
+<li>支持直接访问</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>当文件很小时，存储开销比例大</li>
+<li>如何处理大文件？一个索引块能够描述的数据块的个数是有限的<ul>
+<li>分级处理，但是引入很多(索引)开销，和链被破坏的问题</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="空闲空间列表"><a href="#空闲空间列表" class="headerlink" title="空闲空间列表"></a>空闲空间列表</h3><p>对空闲空间的管理。有如下几种管理方式</p>
+<ul>
+<li>用位图代表空闲数据块列表<ul>
+<li><code>11110001110011</code>每个位就可表示扇区是否被分配<ul>
+<li>如果i=0表明数据块i是空闲的</li>
+</ul>
+</li>
+<li>使用简单，但是可能会是一个big vector<ul>
+<li>如160G的disk需要5MB的bit表示，可以将这5M读取到内存</li>
+<li>然而如果空闲空间中均匀分布，那么在找到0之前需要扫描n/r。n表示磁盘数据块的总数，r表示空闲块数目</li>
+</ul>
+</li>
+<li>需要保护数据一致性：储存在内存的位图需要和硬盘的位图一致<ul>
+<li>解决办法：先在硬盘位图上修改，再分配，在修改内存的位图。不会出现数据丢失的情况</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>链式列表</li>
+<li>分组列表</li>
+</ul>
+<h3 id="多磁盘管理-RAID"><a href="#多磁盘管理-RAID" class="headerlink" title="多磁盘管理-RAID"></a>多磁盘管理-RAID</h3><p>通常磁盘通过分区来最大限度减小寻道时间</p>
+<ul>
+<li>分区：不同分区可以是不同的文件系统</li>
+<li>卷：把多个磁盘变成一个卷来管理，这就可以把一个文件系统扩展到，多个磁盘</li>
+</ul>
+<p><strong>RAID：冗余磁盘阵列</strong> 。早期的磁盘容易坏，那么能不能用多个磁盘来储存一个文件系统的内容来保证可靠性呢？raid由此提出。后来raid又可以用来提升磁盘访问的吞吐量，提高访问速度。</p>
+<ul>
+<li>实现<ul>
+<li>在操作系统内存：储存/卷管理。软raid</li>
+<li>raid硬件控制器。硬raid</li>
+</ul>
+</li>
+<li>raid0：提高吞吐量<ul>
+<li>每个磁盘的独立的，可以并行的对数据进行访问，提升吞吐量</li>
+</ul>
+</li>
+<li>raid1：提高可靠性<ul>
+<li>每个磁盘的独立的，可以并行的操作</li>
+</ul>
+</li>
+<li>raid4：即提高性能又增加可靠性<ul>
+<li>如：使用一块Parity Disk的盘存储校验码，其他盘可以做并行操作。这样当一块盘的数据坏时可以反推出损坏的数据</li>
+</ul>
+</li>
+<li>raid5：raid4中Parity Disk的读写非常频繁，开销大<ul>
+<li>把校验块均匀的分配在不同的disk中，开销均匀、访问并行</li>
+<li><img src="./static/raid5.png"/>
+
+
+</li>
+</ul>
+</li>
+</ul>
 
       
     </div>

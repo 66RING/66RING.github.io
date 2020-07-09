@@ -28,7 +28,7 @@
 <meta property="og:description" content="Socket基本使用 创建套接字对象socket.socket(AddressFamily, Type)  udp: s &#x3D; socket.socket(socket.AF_INET, socket.SOCK_DGRAM) tcp: s &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM) 其中AF_INET表示IPv4，SOCK_DGRAM表示u">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-08T06:22:20.490Z">
+<meta property="article:modified_time" content="2020-07-09T08:15:19.141Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="python, network">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-08 14:22:20" itemprop="dateModified" datetime="2020-07-08T14:22:20+08:00">2020-07-08</time>
+                <time title="Modified: 2020-07-09 16:15:19" itemprop="dateModified" datetime="2020-07-09T16:15:19+08:00">2020-07-09</time>
               </span>
 
           
@@ -711,7 +711,63 @@
 </ul>
 </li>
 </ul>
-<p>p111</p>
+<h4 id="修改私有属性"><a href="#修改私有属性" class="headerlink" title="修改私有属性"></a>修改私有属性</h4><p>私有属性(在以<code>__</code>开头的变量)之所以无法访问是因为python悄悄改了变量名。如把<code>__func</code>改成了<code>_className__func</code>。所以使用这个改后的名就可以访问私有属性。这机制叫做名字重整。</p>
+<h4 id="魔法属性-方法"><a href="#魔法属性-方法" class="headerlink" title="魔法属性/方法"></a>魔法属性/方法</h4><ul>
+<li><code>__doc__</code>和<code>help()</code><ul>
+<li>使用<code>var.__doc__</code>或<code>help(var)</code>可以查看写在开头的描述</li>
+</ul>
+</li>
+<li><code>__module__</code>和<code>__class__</code><ul>
+<li><code>__class__</code>表示当前操作的对象的类是什么</li>
+<li><code>__module__</code>表示当前操作的对象是在哪个模块</li>
+</ul>
+</li>
+<li><code>__init__</code><ul>
+<li><strong>初始化</strong> 方法，创建类对象时自动触发执行</li>
+</ul>
+</li>
+<li><code>__del__</code><ul>
+<li>对象释放时，自动触发执行</li>
+</ul>
+</li>
+<li><code>__call__</code><ul>
+<li>对象后面加括号，触发执行<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj = classA()</span><br><span class="line">obj()   <span class="comment"># obj.__call__()</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>__dict__</code><ul>
+<li>类或对象的所有属性</li>
+</ul>
+</li>
+<li><code>__str__</code><ul>
+<li>如果一个类中定义了<code>__str__</code>方法，那么打印对象时，默认输出改方法的返回值</li>
+</ul>
+</li>
+<li><code>__getitem__</code>、<code>__setitem__</code>、<code>__delitem</code><ul>
+<li>如果类中实现了这3个方法，则可以当字典用<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        print(key)</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        print(key)</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__delitem__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        print(key)</span><br><span class="line"></span><br><span class="line">odj = A()</span><br><span class="line">res = obj[<span class="string">'k1'</span>]   <span class="comment"># __getitem__</span></span><br><span class="line">obj[<span class="string">'k2'</span>] = <span class="string">'abc'</span> <span class="comment"># __setitem__</span></span><br><span class="line"><span class="keyword">del</span> obj[<span class="string">'k3'</span>]     <span class="comment"># __delitem__</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>__getslice__</code>、<code>__setslice__</code>、<code>__delslice__</code><ul>
+<li>如果类中实现了这3个方法，则可以用于分片操作，如列表<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setslice__</span><span class="params">(self, i, j)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self, i, j)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__delslice__</span><span class="params">(self, i, j)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">odj = A()</span><br><span class="line">obj[<span class="number">-1</span>:<span class="number">1</span>]            <span class="comment"># __getslice__</span></span><br><span class="line">obj[<span class="number">0</span>:<span class="number">1</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="comment"># __setslice__</span></span><br><span class="line"><span class="keyword">del</span> obj[<span class="number">0</span>:<span class="number">2</span>]         <span class="comment"># __delslice__</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="with与上下文管理器"><a href="#with与上下文管理器" class="headerlink" title="with与上下文管理器"></a>with与上下文管理器</h4><p>使用with打开文件能够保证最终文件都会关闭。如果采用传统的<code>f = open()</code>则需要try-catch辅助。with是一种更简洁的写法。</p>
+<ul>
+<li>上下文管理器<ul>
+<li>任何实现了<code>__enter__()</code>和<code>__exit__()</code>方法的对象都可称之为上下文管理器。</li>
+<li><code>__enter__()</code>返回资源对象</li>
+<li><code>__exit__()</code>处理一些清理工作</li>
+</ul>
+</li>
+</ul>
+<p>当一个对象实现了上下文管理器，就可以使用with语句了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> obj(args) <span class="keyword">as</span> f:  </span><br><span class="line">    <span class="comment"># obj()创建实例对象</span></span><br><span class="line">    <span class="comment"># with自动调用了obj(上下文管理器)的__enter__方法，enter的返回值赋给f</span></span><br><span class="line">    <span class="comment"># 如果产生了异常，将自动调用__exit__方法</span></span><br></pre></td></tr></table></figure>
+
+
+<p>p116</p>
 
     </div>
 
@@ -792,7 +848,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket基本使用"><span class="nav-number">1.</span> <span class="nav-text">Socket基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket中使用tcp"><span class="nav-number">1.1.</span> <span class="nav-text">Socket中使用tcp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp服务器"><span class="nav-number">1.2.</span> <span class="nav-text">tcp服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP三次握手和四次挥手"><span class="nav-number">1.2.1.</span> <span class="nav-text">TCP三次握手和四次挥手</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单下载器的实现"><span class="nav-number">1.3.</span> <span class="nav-text">一个简单下载器的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP注意点"><span class="nav-number">1.4.</span> <span class="nav-text">TCP注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务"><span class="nav-number">2.</span> <span class="nav-text">多任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread的基本使用"><span class="nav-number">2.1.</span> <span class="nav-text">Thread的基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程方式"><span class="nav-number">2.2.</span> <span class="nav-text">进程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程池"><span class="nav-number">2.2.1.</span> <span class="nav-text">进程池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协程方式"><span class="nav-number">2.3.</span> <span class="nav-text">协程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器"><span class="nav-number">2.3.1.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成器"><span class="nav-number">2.3.2.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用yield实现多任务"><span class="nav-number">2.3.3.</span> <span class="nav-text">使用yield实现多任务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP"><span class="nav-number">3.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#长连接"><span class="nav-number">3.1.</span> <span class="nav-text">长连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#epoll"><span class="nav-number">3.2.</span> <span class="nav-text">epoll</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python提高"><span class="nav-number">4.</span> <span class="nav-text">python提高</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GIL-全局解释器锁"><span class="nav-number">4.1.</span> <span class="nav-text">GIL(全局解释器锁)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深拷贝、浅拷贝"><span class="nav-number">4.2.</span> <span class="nav-text">深拷贝、浅拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#私有化"><span class="nav-number">4.3.</span> <span class="nav-text">私有化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#import问题"><span class="nav-number">4.4.</span> <span class="nav-text">import问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重新导入模块问题"><span class="nav-number">4.4.1.</span> <span class="nav-text">重新导入模块问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多模块导入问题"><span class="nav-number">4.4.2.</span> <span class="nav-text">多模块导入问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向对象"><span class="nav-number">4.5.</span> <span class="nav-text">面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多继承以及MRO顺序"><span class="nav-number">4.5.1.</span> <span class="nav-text">多继承以及MRO顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可变参数"><span class="nav-number">4.5.2.</span> <span class="nav-text">可变参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态方法和属性方法"><span class="nav-number">4.5.3.</span> <span class="nav-text">静态方法和属性方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#property属性"><span class="nav-number">4.5.4.</span> <span class="nav-text">property属性</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket基本使用"><span class="nav-number">1.</span> <span class="nav-text">Socket基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket中使用tcp"><span class="nav-number">1.1.</span> <span class="nav-text">Socket中使用tcp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp服务器"><span class="nav-number">1.2.</span> <span class="nav-text">tcp服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP三次握手和四次挥手"><span class="nav-number">1.2.1.</span> <span class="nav-text">TCP三次握手和四次挥手</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单下载器的实现"><span class="nav-number">1.3.</span> <span class="nav-text">一个简单下载器的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP注意点"><span class="nav-number">1.4.</span> <span class="nav-text">TCP注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务"><span class="nav-number">2.</span> <span class="nav-text">多任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread的基本使用"><span class="nav-number">2.1.</span> <span class="nav-text">Thread的基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程方式"><span class="nav-number">2.2.</span> <span class="nav-text">进程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程池"><span class="nav-number">2.2.1.</span> <span class="nav-text">进程池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协程方式"><span class="nav-number">2.3.</span> <span class="nav-text">协程方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器"><span class="nav-number">2.3.1.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成器"><span class="nav-number">2.3.2.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用yield实现多任务"><span class="nav-number">2.3.3.</span> <span class="nav-text">使用yield实现多任务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP"><span class="nav-number">3.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#长连接"><span class="nav-number">3.1.</span> <span class="nav-text">长连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#epoll"><span class="nav-number">3.2.</span> <span class="nav-text">epoll</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python提高"><span class="nav-number">4.</span> <span class="nav-text">python提高</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GIL-全局解释器锁"><span class="nav-number">4.1.</span> <span class="nav-text">GIL(全局解释器锁)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深拷贝、浅拷贝"><span class="nav-number">4.2.</span> <span class="nav-text">深拷贝、浅拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#私有化"><span class="nav-number">4.3.</span> <span class="nav-text">私有化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#import问题"><span class="nav-number">4.4.</span> <span class="nav-text">import问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重新导入模块问题"><span class="nav-number">4.4.1.</span> <span class="nav-text">重新导入模块问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多模块导入问题"><span class="nav-number">4.4.2.</span> <span class="nav-text">多模块导入问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向对象"><span class="nav-number">4.5.</span> <span class="nav-text">面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多继承以及MRO顺序"><span class="nav-number">4.5.1.</span> <span class="nav-text">多继承以及MRO顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可变参数"><span class="nav-number">4.5.2.</span> <span class="nav-text">可变参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态方法和属性方法"><span class="nav-number">4.5.3.</span> <span class="nav-text">静态方法和属性方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#property属性"><span class="nav-number">4.5.4.</span> <span class="nav-text">property属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改私有属性"><span class="nav-number">4.5.5.</span> <span class="nav-text">修改私有属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#魔法属性-方法"><span class="nav-number">4.5.6.</span> <span class="nav-text">魔法属性&#x2F;方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#with与上下文管理器"><span class="nav-number">4.5.7.</span> <span class="nav-text">with与上下文管理器</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

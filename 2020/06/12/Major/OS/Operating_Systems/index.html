@@ -23,17 +23,20 @@
   <meta name="description" content="概述shell对外暴露的接口，操作系统对外提供服务 特征  并发 同时存在多个运行的程序   共享 操作系统控制如何”同时”访问 文件互斥   虚拟 让每个用户&#x2F;程序都觉得有一个计算机专门为它提供服务   异步 程序执行不是一贯到底的，向前推进的速度有系统调度 但是只要环境相同，每次运行的结果一定相同   相互联系也相互区别   Microkernel:微内核架构设计 只放基本的功能 文件管理、网">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统">
-<meta property="og:url" content="http://yoursite.com/2020/06/12/Major/Operating_Systems/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="概述shell对外暴露的接口，操作系统对外提供服务 特征  并发 同时存在多个运行的程序   共享 操作系统控制如何”同时”访问 文件互斥   虚拟 让每个用户&#x2F;程序都觉得有一个计算机专门为它提供服务   异步 程序执行不是一贯到底的，向前推进的速度有系统调度 但是只要环境相同，每次运行的结果一定相同   相互联系也相互区别   Microkernel:微内核架构设计 只放基本的功能 文件管理、网">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/static/dir_node_struct.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/static/raid5.png">
 <meta property="article:published_time" content="2020-06-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-08T13:51:07.753Z">
+<meta property="article:modified_time" content="2020-07-09T11:37:14.651Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="计算机,操作系统">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/static/dir_node_struct.png">
 
-<link rel="canonical" href="http://yoursite.com/2020/06/12/Major/Operating_Systems/">
+<link rel="canonical" href="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/">
 
 
 <script id="page-configurations">
@@ -151,7 +154,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/12/Major/Operating_Systems/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -181,7 +184,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-08 21:51:07" itemprop="dateModified" datetime="2020-07-08T21:51:07+08:00">2020-07-08</time>
+                <time title="Modified: 2020-07-09 19:37:14" itemprop="dateModified" datetime="2020-07-09T19:37:14+08:00">2020-07-09</time>
               </span>
 
           
@@ -1247,8 +1250,184 @@
 <li>文件根据其特征是可寻址(辨识)的</li>
 </ul>
 </li>
+<li>日志文件系统<ul>
+<li>记录文件系统的修改/时间</li>
 </ul>
-<p>p91</p>
+</li>
+<li>网络/分布式文件系统</li>
+<li>特殊/虚拟文件系统</li>
+</ul>
+<h4 id="文件系统的实现"><a href="#文件系统的实现" class="headerlink" title="文件系统的实现"></a>文件系统的实现</h4><p>文件系统的种类繁多，如果让操作系统针对不同的文件系统编写应用程序，这显然是很复杂的。所有操作系统把复杂的东西抽象成简单的接口提供给用于，用户只需访问简单的接口，就可以应对不同的文件系统。</p>
+<p>虚拟文件系统是一个内存中的概念，通过虚拟文件系统层，屏蔽了底层文件各种系统的差异，从而应用程序可以访问不同类型的文件系统。</p>
+<ul>
+<li><p>分层结构</p>
+<ul>
+<li>上层：虚拟(逻辑)文件系统</li>
+<li>底层：特定文件系统模块</li>
+</ul>
+</li>
+<li><p>目的</p>
+<ul>
+<li>对多有不同文件系统的抽象</li>
+</ul>
+</li>
+<li><p>功能</p>
+<ul>
+<li>提供相同的文件和文件系统接口</li>
+<li>管理所有文件和文件系统关联的数据结构</li>
+<li>高效查询例程，遍历文件系统</li>
+<li>与特定文件系统模块的交互</li>
+</ul>
+</li>
+<li><p>基本结构</p>
+<ul>
+<li>卷控制块<ul>
+<li>每个文件系统一个</li>
+<li>文件系统详细信息</li>
+<li>块、块大小、空余块、计数/指针等</li>
+</ul>
+</li>
+<li>文件控制块<ul>
+<li>每个文件一个</li>
+<li>文件详细信息</li>
+<li>权限、拥有者、大小等信息</li>
+</ul>
+</li>
+<li>目录节点<ul>
+<li>每个目录项一个(目录和文件)</li>
+<li>将目录项数据结构及树形布局编码成树形数据结构</li>
+<li>指向文件控制块、父节点、项目列表等</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="./static/dir_node_struct.png"/>
+
+
+<h3 id="打开文件的数据结构"><a href="#打开文件的数据结构" class="headerlink" title="打开文件的数据结构"></a>打开文件的数据结构</h3><ul>
+<li>将文件控制块读入内存</li>
+<li>相关信息放入打开文件表</li>
+<li>把打开文件表表项的索引返回给应用程序<ul>
+<li>基于索引找到系统层面的打开文件表。由于可能多个程序打开同一个文件，所以都索引到系统文件表(只有一项)就ok</li>
+<li>系统文件表由索引到目录/文件</li>
+<li>如：访问文件，那么文件的信息会包含文件出现在什么地方(disk位置)，然后由偏移量指出，转换成disk扇区的编号</li>
+<li>然后就可对扇区内容读写</li>
+</ul>
+</li>
+</ul>
+<h3 id="文件分配"><a href="#文件分配" class="headerlink" title="文件分配"></a>文件分配</h3><p>当要写入文件时，要对文件的数据空间进行管理(增减)。分配方式有如下几种</p>
+<ul>
+<li>连续分配<ul>
+<li>文件头指定起始块和长度</li>
+<li>位置/分配策略<ul>
+<li>最先分配、最佳分配</li>
+</ul>
+</li>
+<li>优势<ul>
+<li>文件读取表现号</li>
+<li>高效的顺序和随机访问</li>
+</ul>
+</li>
+<li>劣势，同数组的劣势<ul>
+<li>文件增长问题，可能需要调整后面一系列文件，或者把自己移动到别处，但这样又造成碎片问题</li>
+<li>碎片</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>链式分配<ul>
+<li>文件以数据块链表方式储存</li>
+<li>文件头包含了到第一块和最后一块的指针</li>
+<li>优点<ul>
+<li>创建、增减很容易</li>
+<li>没有碎片</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>不可能进行真正的随机访问</li>
+<li>可靠性：如突然断电一个链被破坏…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>索引分配<ul>
+<li>为每个文件建立一个名为 <strong>索引数据块</strong> 的非数据数据块<ul>
+<li>到文件数据块的指针列表</li>
+</ul>
+</li>
+<li>文件头包含了索引数据块</li>
+<li>优点<ul>
+<li>创建、增减容易</li>
+<li>没有碎片</li>
+<li>支持直接访问</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>当文件很小时，存储开销比例大</li>
+<li>如何处理大文件？一个索引块能够描述的数据块的个数是有限的<ul>
+<li>分级处理，但是引入很多(索引)开销，和链被破坏的问题</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="空闲空间列表"><a href="#空闲空间列表" class="headerlink" title="空闲空间列表"></a>空闲空间列表</h3><p>对空闲空间的管理。有如下几种管理方式</p>
+<ul>
+<li>用位图代表空闲数据块列表<ul>
+<li><code>11110001110011</code>每个位就可表示扇区是否被分配<ul>
+<li>如果i=0表明数据块i是空闲的</li>
+</ul>
+</li>
+<li>使用简单，但是可能会是一个big vector<ul>
+<li>如160G的disk需要5MB的bit表示，可以将这5M读取到内存</li>
+<li>然而如果空闲空间中均匀分布，那么在找到0之前需要扫描n/r。n表示磁盘数据块的总数，r表示空闲块数目</li>
+</ul>
+</li>
+<li>需要保护数据一致性：储存在内存的位图需要和硬盘的位图一致<ul>
+<li>解决办法：先在硬盘位图上修改，再分配，在修改内存的位图。不会出现数据丢失的情况</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>链式列表</li>
+<li>分组列表</li>
+</ul>
+<h3 id="多磁盘管理-RAID"><a href="#多磁盘管理-RAID" class="headerlink" title="多磁盘管理-RAID"></a>多磁盘管理-RAID</h3><p>通常磁盘通过分区来最大限度减小寻道时间</p>
+<ul>
+<li>分区：不同分区可以是不同的文件系统</li>
+<li>卷：把多个磁盘变成一个卷来管理，这就可以把一个文件系统扩展到，多个磁盘</li>
+</ul>
+<p><strong>RAID：冗余磁盘阵列</strong> 。早期的磁盘容易坏，那么能不能用多个磁盘来储存一个文件系统的内容来保证可靠性呢？raid由此提出。后来raid又可以用来提升磁盘访问的吞吐量，提高访问速度。</p>
+<ul>
+<li>实现<ul>
+<li>在操作系统内存：储存/卷管理。软raid</li>
+<li>raid硬件控制器。硬raid</li>
+</ul>
+</li>
+<li>raid0：提高吞吐量<ul>
+<li>每个磁盘的独立的，可以并行的对数据进行访问，提升吞吐量</li>
+</ul>
+</li>
+<li>raid1：提高可靠性<ul>
+<li>每个磁盘的独立的，可以并行的操作</li>
+</ul>
+</li>
+<li>raid4：即提高性能又增加可靠性<ul>
+<li>如：使用一块Parity Disk的盘存储校验码，其他盘可以做并行操作。这样当一块盘的数据坏时可以反推出损坏的数据</li>
+</ul>
+</li>
+<li>raid5：raid4中Parity Disk的读写非常频繁，开销大<ul>
+<li>把校验块均匀的分配在不同的disk中，开销均匀、访问并行</li>
+<li><img src="./static/raid5.png"/>
+
+
+</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -1332,7 +1511,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2"><span class="nav-number">2.</span> <span class="nav-text">Part 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-3"><span class="nav-number">3.</span> <span class="nav-text">Part 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机体系结构及内存分层体系"><span class="nav-number">3.1.</span> <span class="nav-text">计算机体系结构及内存分层体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址空间与地址生成"><span class="nav-number">3.2.</span> <span class="nav-text">地址空间与地址生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：内存碎片与分区的动态分配"><span class="nav-number">3.3.</span> <span class="nav-text">连续内存分配：内存碎片与分区的动态分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：压缩式与交换式碎片整理"><span class="nav-number">3.4.</span> <span class="nav-text">连续内存分配：压缩式与交换式碎片整理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-4"><span class="nav-number">4.</span> <span class="nav-text">Part 4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：分段"><span class="nav-number">4.1.</span> <span class="nav-text">非连续内存分配：分段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表"><span class="nav-number">4.2.</span> <span class="nav-text">非连续内存分配：页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表-二级、多级页表"><span class="nav-number">4.3.</span> <span class="nav-text">非连续内存分配：页表-二级、多级页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表-反向页表"><span class="nav-number">4.4.</span> <span class="nav-text">非连续内存分配：页表-反向页表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-5"><span class="nav-number">5.</span> <span class="nav-text">Part 5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟内存的起因"><span class="nav-number">5.1.</span> <span class="nav-text">虚拟内存的起因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖技术"><span class="nav-number">5.2.</span> <span class="nav-text">覆盖技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换技术"><span class="nav-number">5.3.</span> <span class="nav-text">交换技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚存技术"><span class="nav-number">5.4.</span> <span class="nav-text">虚存技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-6"><span class="nav-number">6.</span> <span class="nav-text">Part 6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最优页面置换算法"><span class="nav-number">6.1.</span> <span class="nav-text">最优页面置换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先进先出算法-FIFO"><span class="nav-number">6.2.</span> <span class="nav-text">先进先出算法(FIFO)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最近最久未使用算法-LRU"><span class="nav-number">6.3.</span> <span class="nav-text">最近最久未使用算法(LRU)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时钟页面置换算法"><span class="nav-number">6.4.</span> <span class="nav-text">时钟页面置换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二次机会法"><span class="nav-number">6.5.</span> <span class="nav-text">二次机会法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最不常用算法-LFU"><span class="nav-number">6.6.</span> <span class="nav-text">最不常用算法(LFU)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部页面替换算法的问题、工作集模型"><span class="nav-number">6.7.</span> <span class="nav-text">局部页面替换算法的问题、工作集模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局置换算法"><span class="nav-number">6.8.</span> <span class="nav-text">全局置换算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-7"><span class="nav-number">7.</span> <span class="nav-text">Part 7</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程控制结构"><span class="nav-number">7.1.</span> <span class="nav-text">进程控制结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的生命周期原理"><span class="nav-number">7.2.</span> <span class="nav-text">进程的生命周期原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程挂起"><span class="nav-number">7.3.</span> <span class="nav-text">进程挂起</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程管理"><span class="nav-number">7.4.</span> <span class="nav-text">线程管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程的实现"><span class="nav-number">7.5.</span> <span class="nav-text">线程的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上下文切换"><span class="nav-number">7.6.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-8"><span class="nav-number">8.</span> <span class="nav-text">Part 8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调度算法"><span class="nav-number">8.1.</span> <span class="nav-text">调度算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实时调度"><span class="nav-number">8.2.</span> <span class="nav-text">实时调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先级反转"><span class="nav-number">8.3.</span> <span class="nav-text">优先级反转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-9"><span class="nav-number">9.</span> <span class="nav-text">Part 9</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些概念："><span class="nav-number">9.1.</span> <span class="nav-text">一些概念：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步"><span class="nav-number">9.2.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#临界区的创建"><span class="nav-number">9.3.</span> <span class="nav-text">临界区的创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-10"><span class="nav-number">10.</span> <span class="nav-text">Part 10</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量"><span class="nav-number">10.1.</span> <span class="nav-text">信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量的使用"><span class="nav-number">10.1.1.</span> <span class="nav-text">信号量的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量的实现"><span class="nav-number">10.1.2.</span> <span class="nav-text">信号量的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管程"><span class="nav-number">10.2.</span> <span class="nav-text">管程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-11"><span class="nav-number">11.</span> <span class="nav-text">Part 11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁的特征"><span class="nav-number">11.1.</span> <span class="nav-text">死锁的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁处理办法"><span class="nav-number">11.2.</span> <span class="nav-text">死锁处理办法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁预防"><span class="nav-number">11.2.1.</span> <span class="nav-text">死锁预防</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁避免"><span class="nav-number">11.2.2.</span> <span class="nav-text">死锁避免</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#银行家算法"><span class="nav-number">11.2.3.</span> <span class="nav-text">银行家算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁检测和死锁恢复"><span class="nav-number">11.2.4.</span> <span class="nav-text">死锁检测和死锁恢复</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPC-进程间通信-Inter-Process-Communication"><span class="nav-number">11.3.</span> <span class="nav-text">IPC(进程间通信:Inter-Process Communication)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-12"><span class="nav-number">12.</span> <span class="nav-text">Part 12</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统"><span class="nav-number">12.1.</span> <span class="nav-text">文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件描述符"><span class="nav-number">12.1.1.</span> <span class="nav-text">文件描述符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目录"><span class="nav-number">12.1.2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件别名"><span class="nav-number">12.1.3.</span> <span class="nav-text">文件别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件系统类别"><span class="nav-number">12.1.4.</span> <span class="nav-text">文件系统类别</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2"><span class="nav-number">2.</span> <span class="nav-text">Part 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-3"><span class="nav-number">3.</span> <span class="nav-text">Part 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机体系结构及内存分层体系"><span class="nav-number">3.1.</span> <span class="nav-text">计算机体系结构及内存分层体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址空间与地址生成"><span class="nav-number">3.2.</span> <span class="nav-text">地址空间与地址生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：内存碎片与分区的动态分配"><span class="nav-number">3.3.</span> <span class="nav-text">连续内存分配：内存碎片与分区的动态分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：压缩式与交换式碎片整理"><span class="nav-number">3.4.</span> <span class="nav-text">连续内存分配：压缩式与交换式碎片整理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-4"><span class="nav-number">4.</span> <span class="nav-text">Part 4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：分段"><span class="nav-number">4.1.</span> <span class="nav-text">非连续内存分配：分段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表"><span class="nav-number">4.2.</span> <span class="nav-text">非连续内存分配：页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表-二级、多级页表"><span class="nav-number">4.3.</span> <span class="nav-text">非连续内存分配：页表-二级、多级页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表-反向页表"><span class="nav-number">4.4.</span> <span class="nav-text">非连续内存分配：页表-反向页表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-5"><span class="nav-number">5.</span> <span class="nav-text">Part 5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟内存的起因"><span class="nav-number">5.1.</span> <span class="nav-text">虚拟内存的起因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖技术"><span class="nav-number">5.2.</span> <span class="nav-text">覆盖技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换技术"><span class="nav-number">5.3.</span> <span class="nav-text">交换技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚存技术"><span class="nav-number">5.4.</span> <span class="nav-text">虚存技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-6"><span class="nav-number">6.</span> <span class="nav-text">Part 6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最优页面置换算法"><span class="nav-number">6.1.</span> <span class="nav-text">最优页面置换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先进先出算法-FIFO"><span class="nav-number">6.2.</span> <span class="nav-text">先进先出算法(FIFO)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最近最久未使用算法-LRU"><span class="nav-number">6.3.</span> <span class="nav-text">最近最久未使用算法(LRU)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时钟页面置换算法"><span class="nav-number">6.4.</span> <span class="nav-text">时钟页面置换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二次机会法"><span class="nav-number">6.5.</span> <span class="nav-text">二次机会法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最不常用算法-LFU"><span class="nav-number">6.6.</span> <span class="nav-text">最不常用算法(LFU)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部页面替换算法的问题、工作集模型"><span class="nav-number">6.7.</span> <span class="nav-text">局部页面替换算法的问题、工作集模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局置换算法"><span class="nav-number">6.8.</span> <span class="nav-text">全局置换算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-7"><span class="nav-number">7.</span> <span class="nav-text">Part 7</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程控制结构"><span class="nav-number">7.1.</span> <span class="nav-text">进程控制结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的生命周期原理"><span class="nav-number">7.2.</span> <span class="nav-text">进程的生命周期原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程挂起"><span class="nav-number">7.3.</span> <span class="nav-text">进程挂起</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程管理"><span class="nav-number">7.4.</span> <span class="nav-text">线程管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程的实现"><span class="nav-number">7.5.</span> <span class="nav-text">线程的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上下文切换"><span class="nav-number">7.6.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-8"><span class="nav-number">8.</span> <span class="nav-text">Part 8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调度算法"><span class="nav-number">8.1.</span> <span class="nav-text">调度算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实时调度"><span class="nav-number">8.2.</span> <span class="nav-text">实时调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先级反转"><span class="nav-number">8.3.</span> <span class="nav-text">优先级反转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-9"><span class="nav-number">9.</span> <span class="nav-text">Part 9</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些概念："><span class="nav-number">9.1.</span> <span class="nav-text">一些概念：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步"><span class="nav-number">9.2.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#临界区的创建"><span class="nav-number">9.3.</span> <span class="nav-text">临界区的创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-10"><span class="nav-number">10.</span> <span class="nav-text">Part 10</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量"><span class="nav-number">10.1.</span> <span class="nav-text">信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量的使用"><span class="nav-number">10.1.1.</span> <span class="nav-text">信号量的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量的实现"><span class="nav-number">10.1.2.</span> <span class="nav-text">信号量的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管程"><span class="nav-number">10.2.</span> <span class="nav-text">管程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-11"><span class="nav-number">11.</span> <span class="nav-text">Part 11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁的特征"><span class="nav-number">11.1.</span> <span class="nav-text">死锁的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁处理办法"><span class="nav-number">11.2.</span> <span class="nav-text">死锁处理办法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁预防"><span class="nav-number">11.2.1.</span> <span class="nav-text">死锁预防</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁避免"><span class="nav-number">11.2.2.</span> <span class="nav-text">死锁避免</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#银行家算法"><span class="nav-number">11.2.3.</span> <span class="nav-text">银行家算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁检测和死锁恢复"><span class="nav-number">11.2.4.</span> <span class="nav-text">死锁检测和死锁恢复</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPC-进程间通信-Inter-Process-Communication"><span class="nav-number">11.3.</span> <span class="nav-text">IPC(进程间通信:Inter-Process Communication)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-12"><span class="nav-number">12.</span> <span class="nav-text">Part 12</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统"><span class="nav-number">12.1.</span> <span class="nav-text">文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件描述符"><span class="nav-number">12.1.1.</span> <span class="nav-text">文件描述符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目录"><span class="nav-number">12.1.2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件别名"><span class="nav-number">12.1.3.</span> <span class="nav-text">文件别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件系统类别"><span class="nav-number">12.1.4.</span> <span class="nav-text">文件系统类别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件系统的实现"><span class="nav-number">12.1.5.</span> <span class="nav-text">文件系统的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开文件的数据结构"><span class="nav-number">12.2.</span> <span class="nav-text">打开文件的数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件分配"><span class="nav-number">12.3.</span> <span class="nav-text">文件分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空闲空间列表"><span class="nav-number">12.4.</span> <span class="nav-text">空闲空间列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多磁盘管理-RAID"><span class="nav-number">12.5.</span> <span class="nav-text">多磁盘管理-RAID</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
