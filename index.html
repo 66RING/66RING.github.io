@@ -176,7 +176,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-09 16:15:19" itemprop="dateModified" datetime="2020-07-09T16:15:19+08:00">2020-07-09</time>
+                <time title="Modified: 2020-07-10 20:04:48" itemprop="dateModified" datetime="2020-07-10T20:04:48+08:00">2020-07-10</time>
               </span>
 
           
@@ -762,7 +762,14 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> obj(args) <span class="keyword">as</span> f:  </span><br><span class="line">    <span class="comment"># obj()创建实例对象</span></span><br><span class="line">    <span class="comment"># with自动调用了obj(上下文管理器)的__enter__方法，enter的返回值赋给f</span></span><br><span class="line">    <span class="comment"># 如果产生了异常，将自动调用__exit__方法</span></span><br></pre></td></tr></table></figure>
 
 
-<p>p116</p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>多层函数嵌套、往往内部函数用到外部函数的变量，一个特殊的对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">solve</span><span class="params">(x)</span>:</span></span><br><span class="line">        print(a*x + b)</span><br><span class="line">    <span class="keyword">return</span> solve</span><br><span class="line"></span><br><span class="line">ans = func(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment"># 创造空间，包含参数a, b和solve函数。a, b相当于solve的全局变量</span></span><br><span class="line"><span class="comment"># 类似类，但比类开销小</span></span><br><span class="line">ans(<span class="number">0</span>)</span><br><span class="line">ans(<span class="number">1</span>)</span><br><span class="line">ans(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    x = <span class="number">100</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">solve</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">nonlocal</span> x  <span class="comment"># 告诉解释器x不是solve中的，否则由于x=10的存在。会导致解释器认为x这个局部变量在声明前使用</span></span><br><span class="line">        print(x)</span><br><span class="line">        x = <span class="number">10</span>  </span><br><span class="line">        print(x)</span><br><span class="line">    <span class="keyword">return</span> solve</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>p116~p150</p>
 
       
     </div>
