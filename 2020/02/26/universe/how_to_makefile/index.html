@@ -28,7 +28,7 @@
 <meta property="og:description" content="How to makefileCompile processHow dose a project turn into an excutable file? There are four step:  Preprocessing Unfold all include libs, macro, head. And produce .i file. (gcc&#x2F;g++ commands)-E   Comp">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:34:14.481Z">
+<meta property="article:modified_time" content="2020-07-12T08:38:47.519Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="makefile, tools">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+                <time title="Modified: 2020-07-12 16:38:47" itemprop="dateModified" datetime="2020-07-12T16:38:47+08:00">2020-07-12</time>
               </span>
 
           
@@ -226,6 +226,32 @@
 <h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make target...</span><br></pre></td></tr></table></figure>
 
 <p>If didn’t specify target, run the first target as default. That is why should we wirte main object at first.</p>
+<h1 id="CMake"><a href="#CMake" class="headerlink" title="CMake"></a>CMake</h1><p>Makefile may not work at different platform. Is quite annoying to rebuild a Makefile. So CMake is came.</p>
+<p>CMake can auto generate Makefile, it is more cross-platform.</p>
+<p>Usually, cmake command write in a <code>CMakeLists.txt</code> file.</p>
+<h2 id="Some-basic"><a href="#Some-basic" class="headerlink" title="Some basic"></a>Some basic</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_MINIMUM_REQUIRED(VERSION define_a_minimum_version_here)</span><br><span class="line"></span><br><span class="line">PROJECT(define_project_name)</span><br><span class="line"></span><br><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)  # to packaging files in dir_source. So you do not need every single source file below.</span><br><span class="line"></span><br><span class="line">ADD_EXECUTABLE(executalbe_name source_files...)</span><br><span class="line"># or</span><br><span class="line">ADD_EXECUTABLE(executalbe_name $&#123;pkg_name&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Multi-Dir-CMake"><a href="#Multi-Dir-CMake" class="headerlink" title="Multi Dir CMake"></a>Multi Dir CMake</h2><p>Every sub dir need a CMake file. So your main CMake file can use it.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line"># static library</span><br><span class="line">ADD_LIBRARY(lib_name STATIC $&#123;pkg_name&#125;)  </span><br><span class="line"></span><br><span class="line"># dynamic library</span><br><span class="line">ADD_LIBRARY(lib_name SHARED $&#123;pkg_name&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Use sub dir</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_MINIMUM_REQUIRED(VERSION minimum_version)</span><br><span class="line"></span><br><span class="line">PROJECT(project_name)</span><br><span class="line"></span><br><span class="line">ADD_SUBDIRACTORY(.&#x2F;subdir)  # add subdir</span><br><span class="line"></span><br><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line">ADD_EXECUTABLE(executalbe_name $&#123;pkg_name&#125;)</span><br><span class="line"></span><br><span class="line">TARGET_LINKLIBRARYS(executalbe_name SubLib)  # link sub lib</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Standard-Project"><a href="#Standard-Project" class="headerlink" title="Standard Project"></a>Standard Project</h2><p>📁/Project<br>—📁/build<br>—📁/src<br>—📁/lib<br>—📝/CMakeLists.txt</p>
+<ul>
+<li><p><code>./src/CMakeLists.txt</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">INCLUDE_DIRECTORY(.&#x2F;path&#x2F;to&#x2F;lib)  #INCLUDE_DIRECTORY(.&#x2F;lib)</span><br><span class="line"></span><br><span class="line">SET(EXECUTABLE_OUTPUT_PATH $(PROJECT_BINARARY_DIR)&#x2F;bin)</span><br><span class="line"># set executable output to EXECUTABLE_OUTPUT_PATH&#x2F;bin &#x3D;..&#x2F;build&#x2F;bin</span><br><span class="line"></span><br><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line">ADD_EXECUTABLE(executalbe_name $&#123;pkg_name&#125;)</span><br><span class="line"></span><br><span class="line">TARGET_LINKLIBRARYS(executalbe_name SubLib)  # link sub lib</span><br></pre></td></tr></table></figure></li>
+<li><p><code>./lib/CMakeLists.txt</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line">SET(LIBRARAY_OUTPUT_PATH $(PROJECT_BINARARY_DIR)&#x2F;lib)</span><br><span class="line"># set library output to PROJECT_BINARARY_DIR&#x2F;lib&#x3D;..&#x2F;build&#x2F;lib</span><br><span class="line"></span><br><span class="line"># static library</span><br><span class="line">ADD_LIBRARY(lib_name STATIC $&#123;pkg_name&#125;)  </span><br><span class="line"></span><br><span class="line"># dynamic library</span><br><span class="line">ADD_LIBRARY(lib_name SHARED $&#123;pkg_name&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p><code>./CMakeLists.txt</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_MINIMUM_REQUIRED(VERSION minimum_version)</span><br><span class="line"></span><br><span class="line">PROJECT(project_name)</span><br><span class="line"></span><br><span class="line">ADD_SUBDIRACTORY(.&#x2F;subdir)  # add subdir</span><br><span class="line"></span><br><span class="line">ADD_SUBDIRACTORY(.&#x2F;src)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ccmake(config cmake)</p>
+</li>
+<li><p>some other option</p>
+</li>
+</ul>
 
     </div>
 
@@ -309,7 +335,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#How-to-makefile"><span class="nav-number">1.</span> <span class="nav-text">How to makefile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Compile-process"><span class="nav-number">1.1.</span> <span class="nav-text">Compile process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-makefile"><span class="nav-number">1.2.</span> <span class="nav-text">Why makefile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lets-start"><span class="nav-number">1.3.</span> <span class="nav-text">Lets start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Format"><span class="nav-number">1.3.1.</span> <span class="nav-text">Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Usage"><span class="nav-number">1.3.2.</span> <span class="nav-text">Usage</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#How-to-makefile"><span class="nav-number">1.</span> <span class="nav-text">How to makefile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Compile-process"><span class="nav-number">1.1.</span> <span class="nav-text">Compile process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-makefile"><span class="nav-number">1.2.</span> <span class="nav-text">Why makefile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lets-start"><span class="nav-number">1.3.</span> <span class="nav-text">Lets start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Format"><span class="nav-number">1.3.1.</span> <span class="nav-text">Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Usage"><span class="nav-number">1.3.2.</span> <span class="nav-text">Usage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CMake"><span class="nav-number">2.</span> <span class="nav-text">CMake</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-basic"><span class="nav-number">2.1.</span> <span class="nav-text">Some basic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-Dir-CMake"><span class="nav-number">2.2.</span> <span class="nav-text">Multi Dir CMake</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Standard-Project"><span class="nav-number">2.3.</span> <span class="nav-text">Standard Project</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

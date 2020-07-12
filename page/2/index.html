@@ -5669,7 +5669,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+                <time title="Modified: 2020-07-12 16:38:47" itemprop="dateModified" datetime="2020-07-12T16:38:47+08:00">2020-07-12</time>
               </span>
 
           
@@ -5714,6 +5714,32 @@
 <h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make target...</span><br></pre></td></tr></table></figure>
 
 <p>If didn’t specify target, run the first target as default. That is why should we wirte main object at first.</p>
+<h1 id="CMake"><a href="#CMake" class="headerlink" title="CMake"></a>CMake</h1><p>Makefile may not work at different platform. Is quite annoying to rebuild a Makefile. So CMake is came.</p>
+<p>CMake can auto generate Makefile, it is more cross-platform.</p>
+<p>Usually, cmake command write in a <code>CMakeLists.txt</code> file.</p>
+<h2 id="Some-basic"><a href="#Some-basic" class="headerlink" title="Some basic"></a>Some basic</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_MINIMUM_REQUIRED(VERSION define_a_minimum_version_here)</span><br><span class="line"></span><br><span class="line">PROJECT(define_project_name)</span><br><span class="line"></span><br><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)  # to packaging files in dir_source. So you do not need every single source file below.</span><br><span class="line"></span><br><span class="line">ADD_EXECUTABLE(executalbe_name source_files...)</span><br><span class="line"># or</span><br><span class="line">ADD_EXECUTABLE(executalbe_name $&#123;pkg_name&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Multi-Dir-CMake"><a href="#Multi-Dir-CMake" class="headerlink" title="Multi Dir CMake"></a>Multi Dir CMake</h2><p>Every sub dir need a CMake file. So your main CMake file can use it.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line"># static library</span><br><span class="line">ADD_LIBRARY(lib_name STATIC $&#123;pkg_name&#125;)  </span><br><span class="line"></span><br><span class="line"># dynamic library</span><br><span class="line">ADD_LIBRARY(lib_name SHARED $&#123;pkg_name&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Use sub dir</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_MINIMUM_REQUIRED(VERSION minimum_version)</span><br><span class="line"></span><br><span class="line">PROJECT(project_name)</span><br><span class="line"></span><br><span class="line">ADD_SUBDIRACTORY(.&#x2F;subdir)  # add subdir</span><br><span class="line"></span><br><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line">ADD_EXECUTABLE(executalbe_name $&#123;pkg_name&#125;)</span><br><span class="line"></span><br><span class="line">TARGET_LINKLIBRARYS(executalbe_name SubLib)  # link sub lib</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Standard-Project"><a href="#Standard-Project" class="headerlink" title="Standard Project"></a>Standard Project</h2><p>📁/Project<br>—📁/build<br>—📁/src<br>—📁/lib<br>—📝/CMakeLists.txt</p>
+<ul>
+<li><p><code>./src/CMakeLists.txt</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">INCLUDE_DIRECTORY(.&#x2F;path&#x2F;to&#x2F;lib)  #INCLUDE_DIRECTORY(.&#x2F;lib)</span><br><span class="line"></span><br><span class="line">SET(EXECUTABLE_OUTPUT_PATH $(PROJECT_BINARARY_DIR)&#x2F;bin)</span><br><span class="line"># set executable output to EXECUTABLE_OUTPUT_PATH&#x2F;bin &#x3D;..&#x2F;build&#x2F;bin</span><br><span class="line"></span><br><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line">ADD_EXECUTABLE(executalbe_name $&#123;pkg_name&#125;)</span><br><span class="line"></span><br><span class="line">TARGET_LINKLIBRARYS(executalbe_name SubLib)  # link sub lib</span><br></pre></td></tr></table></figure></li>
+<li><p><code>./lib/CMakeLists.txt</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line">SET(LIBRARAY_OUTPUT_PATH $(PROJECT_BINARARY_DIR)&#x2F;lib)</span><br><span class="line"># set library output to PROJECT_BINARARY_DIR&#x2F;lib&#x3D;..&#x2F;build&#x2F;lib</span><br><span class="line"></span><br><span class="line"># static library</span><br><span class="line">ADD_LIBRARY(lib_name STATIC $&#123;pkg_name&#125;)  </span><br><span class="line"></span><br><span class="line"># dynamic library</span><br><span class="line">ADD_LIBRARY(lib_name SHARED $&#123;pkg_name&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p><code>./CMakeLists.txt</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_MINIMUM_REQUIRED(VERSION minimum_version)</span><br><span class="line"></span><br><span class="line">PROJECT(project_name)</span><br><span class="line"></span><br><span class="line">ADD_SUBDIRACTORY(.&#x2F;subdir)  # add subdir</span><br><span class="line"></span><br><span class="line">ADD_SUBDIRACTORY(.&#x2F;src)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ccmake(config cmake)</p>
+</li>
+<li><p>some other option</p>
+</li>
+</ul>
 
       
     </div>
@@ -5764,7 +5790,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+                <time title="Modified: 2020-07-12 22:19:44" itemprop="dateModified" datetime="2020-07-12T22:19:44+08:00">2020-07-12</time>
               </span>
 
           
@@ -5828,6 +5854,10 @@
 <tr>
 <td>:earlier/later 1m</td>
 <td>回到1min前/后</td>
+</tr>
+<tr>
+<td>c-z</td>
+<td>挂起vim,命令行下:$ fg可以恢复,jobs查看挂起的进程</td>
 </tr>
 </tbody></table>
 <h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><table>
