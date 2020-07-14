@@ -1,26 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
 
-  <meta name="description" content="概述shell对外暴露的接口，操作系统对外提供服务 特征  并发 同时存在多个运行的程序   共享 操作系统控制如何”同时”访问 文件互斥   虚拟 让每个用户&#x2F;程序都觉得有一个计算机专门为它提供服务   异步 程序执行不是一贯到底的，向前推进的速度有系统调度 但是只要环境相同，每次运行的结果一定相同   相互联系也相互区别   Microkernel:微内核架构设计 只放基本的功能 文件管理、网">
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="计算机,操作系统," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概述shell对外暴露的接口，操作系统对外提供服务 特征  并发 同时存在多个运行的程序   共享 操作系统控制如何”同时”访问 文件互斥   虚拟 让每个用户&#x2F;程序都觉得有一个计算机专门为它提供服务   异步 程序执行不是一贯到底的，向前推进的速度有系统调度 但是只要环境相同，每次运行的结果一定相同   相互联系也相互区别   Microkernel:微内核架构设计 只放基本的功能 文件管理、网">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统">
 <meta property="og:url" content="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/index.html">
@@ -36,18 +95,39 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/static/dir_node_struct.png">
 
-<link rel="canonical" href="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/">
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
   };
 </script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/"/>
+
+
+
+
 
   <title>操作系统 | Hexo</title>
   
@@ -57,145 +137,170 @@
 
 
 
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
   </div>
 </div>
 
-
-
-
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
         <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+      
+    </ul>
+  
 
-  </li>
-  </ul>
+  
 </nav>
 
 
 
-
-</div>
+ </div>
     </header>
 
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
+    <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
+          <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
     
+
+  
+
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="John Doe">
       <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Hexo">
     </span>
+
+    
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          操作系统
-        </h1>
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">操作系统</h1>
+        
 
         <div class="post-meta">
-            <span class="post-meta-item">
+          <span class="post-time">
+            
               <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
+                <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-12T00:00:00+08:00">
+                2020-06-12
+              </time>
+            
 
-              <time title="Created: 2020-06-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-12T00:00:00+08:00">2020-06-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-09 19:37:14" itemprop="dateModified" datetime="2020-07-09T19:37:14+08:00">2020-07-09</time>
-              </span>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
 
           
 
         </div>
       </header>
+    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
+      
 
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>shell对外暴露的接口，操作系统对外提供服务</p>
@@ -1429,142 +1534,212 @@
 </li>
 </ul>
 
+      
     </div>
-
     
     
     
 
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 计算机,操作系统</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2020/06/10/universe/att_vs_Intel_assembly_language/" rel="prev" title="AT&T与Intel汇编语言的比较">
-      <i class="fa fa-chevron-left"></i> AT&T与Intel汇编语言的比较
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/06/20/Major/cpp_level_up/" rel="next" title="Major/cpp_level_up">
-      Major/cpp_level_up <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
     
-  </article>
-  
-  
-  
 
+    
 
+    
 
-          </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
           
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 计算机,操作系统</a>
+          
         </div>
-          
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/10/universe/att_vs_Intel_assembly_language/" rel="next" title="AT&T与Intel汇编语言的比较">
+                <i class="fa fa-chevron-left"></i> AT&T与Intel汇编语言的比较
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/20/Major/cpp_level_up/" rel="prev" title="Major/cpp_level_up">
+                Major/cpp_level_up <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
   
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
-  <aside class="sidebar">
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
+      
 
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
       <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2"><span class="nav-number">2.</span> <span class="nav-text">Part 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-3"><span class="nav-number">3.</span> <span class="nav-text">Part 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机体系结构及内存分层体系"><span class="nav-number">3.1.</span> <span class="nav-text">计算机体系结构及内存分层体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址空间与地址生成"><span class="nav-number">3.2.</span> <span class="nav-text">地址空间与地址生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：内存碎片与分区的动态分配"><span class="nav-number">3.3.</span> <span class="nav-text">连续内存分配：内存碎片与分区的动态分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：压缩式与交换式碎片整理"><span class="nav-number">3.4.</span> <span class="nav-text">连续内存分配：压缩式与交换式碎片整理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-4"><span class="nav-number">4.</span> <span class="nav-text">Part 4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：分段"><span class="nav-number">4.1.</span> <span class="nav-text">非连续内存分配：分段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表"><span class="nav-number">4.2.</span> <span class="nav-text">非连续内存分配：页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表-二级、多级页表"><span class="nav-number">4.3.</span> <span class="nav-text">非连续内存分配：页表-二级、多级页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表-反向页表"><span class="nav-number">4.4.</span> <span class="nav-text">非连续内存分配：页表-反向页表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-5"><span class="nav-number">5.</span> <span class="nav-text">Part 5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟内存的起因"><span class="nav-number">5.1.</span> <span class="nav-text">虚拟内存的起因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖技术"><span class="nav-number">5.2.</span> <span class="nav-text">覆盖技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换技术"><span class="nav-number">5.3.</span> <span class="nav-text">交换技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚存技术"><span class="nav-number">5.4.</span> <span class="nav-text">虚存技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-6"><span class="nav-number">6.</span> <span class="nav-text">Part 6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最优页面置换算法"><span class="nav-number">6.1.</span> <span class="nav-text">最优页面置换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先进先出算法-FIFO"><span class="nav-number">6.2.</span> <span class="nav-text">先进先出算法(FIFO)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最近最久未使用算法-LRU"><span class="nav-number">6.3.</span> <span class="nav-text">最近最久未使用算法(LRU)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时钟页面置换算法"><span class="nav-number">6.4.</span> <span class="nav-text">时钟页面置换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二次机会法"><span class="nav-number">6.5.</span> <span class="nav-text">二次机会法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最不常用算法-LFU"><span class="nav-number">6.6.</span> <span class="nav-text">最不常用算法(LFU)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部页面替换算法的问题、工作集模型"><span class="nav-number">6.7.</span> <span class="nav-text">局部页面替换算法的问题、工作集模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局置换算法"><span class="nav-number">6.8.</span> <span class="nav-text">全局置换算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-7"><span class="nav-number">7.</span> <span class="nav-text">Part 7</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程控制结构"><span class="nav-number">7.1.</span> <span class="nav-text">进程控制结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的生命周期原理"><span class="nav-number">7.2.</span> <span class="nav-text">进程的生命周期原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程挂起"><span class="nav-number">7.3.</span> <span class="nav-text">进程挂起</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程管理"><span class="nav-number">7.4.</span> <span class="nav-text">线程管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程的实现"><span class="nav-number">7.5.</span> <span class="nav-text">线程的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上下文切换"><span class="nav-number">7.6.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-8"><span class="nav-number">8.</span> <span class="nav-text">Part 8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调度算法"><span class="nav-number">8.1.</span> <span class="nav-text">调度算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实时调度"><span class="nav-number">8.2.</span> <span class="nav-text">实时调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先级反转"><span class="nav-number">8.3.</span> <span class="nav-text">优先级反转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-9"><span class="nav-number">9.</span> <span class="nav-text">Part 9</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些概念："><span class="nav-number">9.1.</span> <span class="nav-text">一些概念：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步"><span class="nav-number">9.2.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#临界区的创建"><span class="nav-number">9.3.</span> <span class="nav-text">临界区的创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-10"><span class="nav-number">10.</span> <span class="nav-text">Part 10</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量"><span class="nav-number">10.1.</span> <span class="nav-text">信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量的使用"><span class="nav-number">10.1.1.</span> <span class="nav-text">信号量的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量的实现"><span class="nav-number">10.1.2.</span> <span class="nav-text">信号量的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管程"><span class="nav-number">10.2.</span> <span class="nav-text">管程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-11"><span class="nav-number">11.</span> <span class="nav-text">Part 11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁的特征"><span class="nav-number">11.1.</span> <span class="nav-text">死锁的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁处理办法"><span class="nav-number">11.2.</span> <span class="nav-text">死锁处理办法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁预防"><span class="nav-number">11.2.1.</span> <span class="nav-text">死锁预防</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁避免"><span class="nav-number">11.2.2.</span> <span class="nav-text">死锁避免</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#银行家算法"><span class="nav-number">11.2.3.</span> <span class="nav-text">银行家算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁检测和死锁恢复"><span class="nav-number">11.2.4.</span> <span class="nav-text">死锁检测和死锁恢复</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPC-进程间通信-Inter-Process-Communication"><span class="nav-number">11.3.</span> <span class="nav-text">IPC(进程间通信:Inter-Process Communication)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-12"><span class="nav-number">12.</span> <span class="nav-text">Part 12</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统"><span class="nav-number">12.1.</span> <span class="nav-text">文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件描述符"><span class="nav-number">12.1.1.</span> <span class="nav-text">文件描述符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目录"><span class="nav-number">12.1.2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件别名"><span class="nav-number">12.1.3.</span> <span class="nav-text">文件别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件系统类别"><span class="nav-number">12.1.4.</span> <span class="nav-text">文件系统类别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件系统的实现"><span class="nav-number">12.1.5.</span> <span class="nav-text">文件系统的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开文件的数据结构"><span class="nav-number">12.2.</span> <span class="nav-text">打开文件的数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件分配"><span class="nav-number">12.3.</span> <span class="nav-text">文件分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空闲空间列表"><span class="nav-number">12.4.</span> <span class="nav-text">空闲空间列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多磁盘管理-RAID"><span class="nav-number">12.5.</span> <span class="nav-text">多磁盘管理-RAID</span></a></li></ol></li></ol></div>
-      </div>
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2"><span class="nav-number">2.</span> <span class="nav-text">Part 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-3"><span class="nav-number">3.</span> <span class="nav-text">Part 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机体系结构及内存分层体系"><span class="nav-number">3.1.</span> <span class="nav-text">计算机体系结构及内存分层体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址空间与地址生成"><span class="nav-number">3.2.</span> <span class="nav-text">地址空间与地址生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：内存碎片与分区的动态分配"><span class="nav-number">3.3.</span> <span class="nav-text">连续内存分配：内存碎片与分区的动态分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续内存分配：压缩式与交换式碎片整理"><span class="nav-number">3.4.</span> <span class="nav-text">连续内存分配：压缩式与交换式碎片整理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-4"><span class="nav-number">4.</span> <span class="nav-text">Part 4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：分段"><span class="nav-number">4.1.</span> <span class="nav-text">非连续内存分配：分段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表"><span class="nav-number">4.2.</span> <span class="nav-text">非连续内存分配：页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表-二级、多级页表"><span class="nav-number">4.3.</span> <span class="nav-text">非连续内存分配：页表-二级、多级页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续内存分配：页表-反向页表"><span class="nav-number">4.4.</span> <span class="nav-text">非连续内存分配：页表-反向页表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-5"><span class="nav-number">5.</span> <span class="nav-text">Part 5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟内存的起因"><span class="nav-number">5.1.</span> <span class="nav-text">虚拟内存的起因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖技术"><span class="nav-number">5.2.</span> <span class="nav-text">覆盖技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换技术"><span class="nav-number">5.3.</span> <span class="nav-text">交换技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚存技术"><span class="nav-number">5.4.</span> <span class="nav-text">虚存技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-6"><span class="nav-number">6.</span> <span class="nav-text">Part 6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最优页面置换算法"><span class="nav-number">6.1.</span> <span class="nav-text">最优页面置换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先进先出算法-FIFO"><span class="nav-number">6.2.</span> <span class="nav-text">先进先出算法(FIFO)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最近最久未使用算法-LRU"><span class="nav-number">6.3.</span> <span class="nav-text">最近最久未使用算法(LRU)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时钟页面置换算法"><span class="nav-number">6.4.</span> <span class="nav-text">时钟页面置换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二次机会法"><span class="nav-number">6.5.</span> <span class="nav-text">二次机会法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最不常用算法-LFU"><span class="nav-number">6.6.</span> <span class="nav-text">最不常用算法(LFU)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部页面替换算法的问题、工作集模型"><span class="nav-number">6.7.</span> <span class="nav-text">局部页面替换算法的问题、工作集模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局置换算法"><span class="nav-number">6.8.</span> <span class="nav-text">全局置换算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-7"><span class="nav-number">7.</span> <span class="nav-text">Part 7</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程控制结构"><span class="nav-number">7.1.</span> <span class="nav-text">进程控制结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的生命周期原理"><span class="nav-number">7.2.</span> <span class="nav-text">进程的生命周期原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程挂起"><span class="nav-number">7.3.</span> <span class="nav-text">进程挂起</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程管理"><span class="nav-number">7.4.</span> <span class="nav-text">线程管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程的实现"><span class="nav-number">7.5.</span> <span class="nav-text">线程的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上下文切换"><span class="nav-number">7.6.</span> <span class="nav-text">上下文切换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-8"><span class="nav-number">8.</span> <span class="nav-text">Part 8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调度算法"><span class="nav-number">8.1.</span> <span class="nav-text">调度算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实时调度"><span class="nav-number">8.2.</span> <span class="nav-text">实时调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先级反转"><span class="nav-number">8.3.</span> <span class="nav-text">优先级反转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-9"><span class="nav-number">9.</span> <span class="nav-text">Part 9</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些概念："><span class="nav-number">9.1.</span> <span class="nav-text">一些概念：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步"><span class="nav-number">9.2.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#临界区的创建"><span class="nav-number">9.3.</span> <span class="nav-text">临界区的创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-10"><span class="nav-number">10.</span> <span class="nav-text">Part 10</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量"><span class="nav-number">10.1.</span> <span class="nav-text">信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量的使用"><span class="nav-number">10.1.1.</span> <span class="nav-text">信号量的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量的实现"><span class="nav-number">10.1.2.</span> <span class="nav-text">信号量的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管程"><span class="nav-number">10.2.</span> <span class="nav-text">管程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-11"><span class="nav-number">11.</span> <span class="nav-text">Part 11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁的特征"><span class="nav-number">11.1.</span> <span class="nav-text">死锁的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁处理办法"><span class="nav-number">11.2.</span> <span class="nav-text">死锁处理办法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁预防"><span class="nav-number">11.2.1.</span> <span class="nav-text">死锁预防</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁避免"><span class="nav-number">11.2.2.</span> <span class="nav-text">死锁避免</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#银行家算法"><span class="nav-number">11.2.3.</span> <span class="nav-text">银行家算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁检测和死锁恢复"><span class="nav-number">11.2.4.</span> <span class="nav-text">死锁检测和死锁恢复</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPC-进程间通信-Inter-Process-Communication"><span class="nav-number">11.3.</span> <span class="nav-text">IPC(进程间通信:Inter-Process Communication)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-12"><span class="nav-number">12.</span> <span class="nav-text">Part 12</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统"><span class="nav-number">12.1.</span> <span class="nav-text">文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件描述符"><span class="nav-number">12.1.1.</span> <span class="nav-text">文件描述符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目录"><span class="nav-number">12.1.2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件别名"><span class="nav-number">12.1.3.</span> <span class="nav-text">文件别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件系统类别"><span class="nav-number">12.1.4.</span> <span class="nav-text">文件系统类别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件系统的实现"><span class="nav-number">12.1.5.</span> <span class="nav-text">文件系统的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开文件的数据结构"><span class="nav-number">12.2.</span> <span class="nav-text">打开文件的数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件分配"><span class="nav-number">12.3.</span> <span class="nav-text">文件分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空闲空间列表"><span class="nav-number">12.4.</span> <span class="nav-text">空闲空间列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多磁盘管理-RAID"><span class="nav-number">12.5.</span> <span class="nav-text">多磁盘管理-RAID</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
       <!--/noindex-->
+      
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">44</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">39</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
+      
 
     </div>
   </aside>
-  <div id="sidebar-dimmer"></div>
 
 
+        
       </div>
     </main>
 
-    <footer class="footer">
+    <footer id="footer" class="footer">
       <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
 
         
 
@@ -1574,25 +1749,33 @@
 
 
 
-
+        
       </div>
     </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
 
 
-<script src="/js/next-boot.js"></script>
+
+
+
 
 
 
@@ -1610,8 +1793,111 @@
 
 
 
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
 
   
 
