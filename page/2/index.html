@@ -229,144 +229,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/18/universe/%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/18/universe/%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7/" itemprop="url">算法技巧</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-18T00:00:00+08:00">
-                2020-05-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><ul>
-<li>从结束条件开始分析</li>
-</ul>
-<h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><p>双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。</p>
-<ul>
-<li>一般先对数组排序，然后从边界开始就能简单的定一议二</li>
-</ul>
-<h2 id="复杂条件"><a href="#复杂条件" class="headerlink" title="复杂条件"></a>复杂条件</h2><h3 id="问题允许存在变量"><a href="#问题允许存在变量" class="headerlink" title="问题允许存在变量"></a>问题允许存在变量</h3><p>如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判断依旧是相同的<code>str[i++]==str[j--]</code>。</p>
-<p>所以可以分离主要的判断程序，在主程序中使用<code>||</code>运算符来解决变量引起的讨论。如：<code>return func(删左边)||func(删右边)</code></p>
-<h2 id="删除链表上第n个结点"><a href="#删除链表上第n个结点" class="headerlink" title="删除链表上第n个结点"></a>删除链表上第n个结点</h2><ul>
-<li>快慢指针，当快指针的next是空的时候，慢指针刚好指到倒数第n个节点</li>
-</ul>
-<h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><p>通常，涉及连续子数组问题的时候，我们使用前缀和来解决。</p>
-<p>我们令$P[i] = A[0] + A[1] + … + A[i]$。那么每个连续子数组的和sum(i,j)就可以写成$P[j] - P[i-1]（其中 0 &lt; i &lt; j;0 &lt; i &lt; j）$的形式。</p>
-<h3 id="任意范围连续元素的和"><a href="#任意范围连续元素的和" class="headerlink" title="任意范围连续元素的和"></a>任意范围连续元素的和</h3><p>两个前缀和相减就能得到任意范围连续元素的和，如前5个元素的前缀和间前3个元素的前缀和就得到4~5的和。</p>
-<h2 id="哨兵"><a href="#哨兵" class="headerlink" title="哨兵"></a>哨兵</h2><p>使用哨兵能简化我们的讨论，去掉不必要的分类讨论。如在链表中使用虚拟的头和尾，省去了分类讨论。</p>
-<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><ul>
-<li>遍历一个 <strong>完整</strong> 的循环会节省很多讨论，何为完整，类似与判断波的一个完整周期</li>
-</ul>
-<h2 id="单向栈"><a href="#单向栈" class="headerlink" title="单向栈"></a>单向栈</h2>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/09/Major/assembly_language/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -7793,6 +7655,182 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/universe/how_to_makefile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/26/universe/how_to_makefile/" itemprop="url">How to makefile</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-26T00:00:00+08:00">
+                2020-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="How-to-makefile"><a href="#How-to-makefile" class="headerlink" title="How to makefile"></a>How to makefile</h1><h2 id="Compile-process"><a href="#Compile-process" class="headerlink" title="Compile process"></a>Compile process</h2><p>How dose a project turn into an excutable file? There are four step:</p>
+<ul>
+<li>Preprocessing<ul>
+<li>Unfold all include libs, macro, head. And produce <code>.i</code> file.</li>
+<li>(gcc/g++ commands)<code>-E</code></li>
+</ul>
+</li>
+<li>Compilation<ul>
+<li>The <code>.i</code> file produce an <code>.s</code> file(assembly code).</li>
+<li><code>-S</code></li>
+</ul>
+</li>
+<li>Assemble<ul>
+<li>The <code>.s</code> file produce an <code>.o</code> file(object file).It is a binary file.</li>
+<li><code>-c</code></li>
+</ul>
+</li>
+<li>Linking<ul>
+<li>Linking the <code>.o</code> file produce an excutable file.</li>
+</ul>
+</li>
+</ul>
+<p>Whole example</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -E halo.c -o halo.i  </span><br><span class="line">gcc -S halo.i -o halo.s  </span><br><span class="line">gcc -c halo.s -o halo.o  </span><br><span class="line">gcc -o halo.o -o halo</span><br></pre></td></tr></table></figure>
+
+<h2 id="Why-makefile"><a href="#Why-makefile" class="headerlink" title="Why makefile"></a>Why makefile</h2><p>As we see, compile a file include so much process.Though <code>gcc halo.c -o halo</code> can do the same thing as above, you need to make sure all the <code>.c</code> file are in the directory.<br>And what if a thousand file to compile?</p>
+<h2 id="Lets-start"><a href="#Lets-start" class="headerlink" title="Lets start"></a>Lets start</h2><h3 id="Format"><a href="#Format" class="headerlink" title="Format"></a>Format</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">target: dependencies</span></span><br><span class="line">    command</span><br><span class="line"></span><br><span class="line">^ before command IS A TAB, and make sure a new line at the end</span><br></pre></td></tr></table></figure>
+<p>We should write “from rear to front”. Which means write final target command first and then write dependencies commandS</p>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make target...</span><br></pre></td></tr></table></figure>
+
+<p>If didn’t specify target, run the first target as default. That is why should we wirte main object at first.</p>
+<h1 id="CMake"><a href="#CMake" class="headerlink" title="CMake"></a>CMake</h1><p>Makefile may not work at different platform. Is quite annoying to rebuild a Makefile. So CMake is came.</p>
+<p>CMake can auto generate Makefile, it is more cross-platform.</p>
+<p>Usually, cmake command write in a <code>CMakeLists.txt</code> file.</p>
+<h2 id="Some-basic"><a href="#Some-basic" class="headerlink" title="Some basic"></a>Some basic</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_MINIMUM_REQUIRED(VERSION define_a_minimum_version_here)</span><br><span class="line"></span><br><span class="line">PROJECT(define_project_name)</span><br><span class="line"></span><br><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)  # to packaging files in dir_source. So you do not need every single source file below.</span><br><span class="line"></span><br><span class="line">ADD_EXECUTABLE(executalbe_name source_files...)</span><br><span class="line"># or</span><br><span class="line">ADD_EXECUTABLE(executalbe_name $&#123;pkg_name&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Multi-Dir-CMake"><a href="#Multi-Dir-CMake" class="headerlink" title="Multi Dir CMake"></a>Multi Dir CMake</h2><p>Every sub dir need a CMake file. So your main CMake file can use it.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line"># static library</span><br><span class="line">ADD_LIBRARY(lib_name STATIC $&#123;pkg_name&#125;)  </span><br><span class="line"></span><br><span class="line"># dynamic library</span><br><span class="line">ADD_LIBRARY(lib_name SHARED $&#123;pkg_name&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Use sub dir</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_MINIMUM_REQUIRED(VERSION minimum_version)</span><br><span class="line"></span><br><span class="line">PROJECT(project_name)</span><br><span class="line"></span><br><span class="line">ADD_SUBDIRACTORY(.&#x2F;subdir)  # add subdir</span><br><span class="line"></span><br><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line">ADD_EXECUTABLE(executalbe_name $&#123;pkg_name&#125;)</span><br><span class="line"></span><br><span class="line">TARGET_LINKLIBRARYS(executalbe_name SubLib)  # link sub lib</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Standard-Project"><a href="#Standard-Project" class="headerlink" title="Standard Project"></a>Standard Project</h2><p>📁/Project<br>—📁/build<br>—📁/src<br>—📁/lib<br>—📝/CMakeLists.txt</p>
+<ul>
+<li><p><code>./src/CMakeLists.txt</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">INCLUDE_DIRECTORY(.&#x2F;path&#x2F;to&#x2F;lib)  #INCLUDE_DIRECTORY(.&#x2F;lib)</span><br><span class="line"></span><br><span class="line">SET(EXECUTABLE_OUTPUT_PATH $(PROJECT_BINARARY_DIR)&#x2F;bin)</span><br><span class="line"># set executable output to EXECUTABLE_OUTPUT_PATH&#x2F;bin &#x3D;..&#x2F;build&#x2F;bin</span><br><span class="line"></span><br><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line">ADD_EXECUTABLE(executalbe_name $&#123;pkg_name&#125;)</span><br><span class="line"></span><br><span class="line">TARGET_LINKLIBRARYS(executalbe_name SubLib)  # link sub lib</span><br></pre></td></tr></table></figure></li>
+<li><p><code>./lib/CMakeLists.txt</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AUX_SOURCE_DIRECTORY(&#x2F;your&#x2F;dir&#x2F;source pkg_name)</span><br><span class="line"></span><br><span class="line">SET(LIBRARAY_OUTPUT_PATH $(PROJECT_BINARARY_DIR)&#x2F;lib)</span><br><span class="line"># set library output to PROJECT_BINARARY_DIR&#x2F;lib&#x3D;..&#x2F;build&#x2F;lib</span><br><span class="line"></span><br><span class="line"># static library</span><br><span class="line">ADD_LIBRARY(lib_name STATIC $&#123;pkg_name&#125;)  </span><br><span class="line"></span><br><span class="line"># dynamic library</span><br><span class="line">ADD_LIBRARY(lib_name SHARED $&#123;pkg_name&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p><code>./CMakeLists.txt</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_MINIMUM_REQUIRED(VERSION minimum_version)</span><br><span class="line"></span><br><span class="line">PROJECT(project_name)</span><br><span class="line"></span><br><span class="line">ADD_SUBDIRACTORY(.&#x2F;subdir)  # add subdir</span><br><span class="line"></span><br><span class="line">ADD_SUBDIRACTORY(.&#x2F;src)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ccmake(config cmake)</p>
+</li>
+<li><p>some other option</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -7843,7 +7881,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
