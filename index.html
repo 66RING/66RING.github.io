@@ -4337,6 +4337,7 @@ Hash.erase(key);    </code></pre>
 <ul>
 <li>一般先对数组排序，然后从边界开始就能简单的定一议二</li>
 </ul>
+<h2 id="图"><a href="#图" class="headerlink" title="图"></a>图</h2><h3 id="判断二分图"><a href="#判断二分图" class="headerlink" title="判断二分图"></a>判断二分图</h3><p>染色，然后使用bfs或dfs遍历所有节点，不应该存在相邻节点颜色一样。</p>
 <h2 id="复杂条件"><a href="#复杂条件" class="headerlink" title="复杂条件"></a>复杂条件</h2><h3 id="问题允许存在变量"><a href="#问题允许存在变量" class="headerlink" title="问题允许存在变量"></a>问题允许存在变量</h3><p>如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判断依旧是相同的<code>str[i++]==str[j--]</code>。</p>
 <p>所以可以分离主要的判断程序，在主程序中使用<code>||</code>运算符来解决变量引起的讨论。如：<code>return func(删左边)||func(删右边)</code></p>
 <h2 id="删除链表上第n个结点"><a href="#删除链表上第n个结点" class="headerlink" title="删除链表上第n个结点"></a>删除链表上第n个结点</h2><ul>

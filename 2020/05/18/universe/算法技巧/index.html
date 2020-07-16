@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="递归 从结束条件开始分析  双指针双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。  一般先对数组排序，然后从边界开始就能简单的定一议二  复杂条件问题允许存在变量如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判断依旧是相同的str[i++]&#x3D;&#x3D;str[j--]。 所以可以分离主要的判断程序，在">
+<meta name="description" content="递归 从结束条件开始分析  双指针双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。  一般先对数组排序，然后从边界开始就能简单的定一议二  图判断二分图染色，然后使用bfs或dfs遍历所有节点，不应该存在相邻节点颜色一样。 复杂条件问题允许存在变量如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法技巧">
 <meta property="og:url" content="http://yoursite.com/2020/05/18/universe/%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="递归 从结束条件开始分析  双指针双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。  一般先对数组排序，然后从边界开始就能简单的定一议二  复杂条件问题允许存在变量如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判断依旧是相同的str[i++]&#x3D;&#x3D;str[j--]。 所以可以分离主要的判断程序，在">
+<meta property="og:description" content="递归 从结束条件开始分析  双指针双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。  一般先对数组排序，然后从边界开始就能简单的定一议二  图判断二分图染色，然后使用bfs或dfs遍历所有节点，不应该存在相邻节点颜色一样。 复杂条件问题允许存在变量如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-29T01:57:18.878Z">
+<meta property="article:modified_time" content="2020-07-16T13:20:58.640Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -307,6 +307,7 @@
 <ul>
 <li>一般先对数组排序，然后从边界开始就能简单的定一议二</li>
 </ul>
+<h2 id="图"><a href="#图" class="headerlink" title="图"></a>图</h2><h3 id="判断二分图"><a href="#判断二分图" class="headerlink" title="判断二分图"></a>判断二分图</h3><p>染色，然后使用bfs或dfs遍历所有节点，不应该存在相邻节点颜色一样。</p>
 <h2 id="复杂条件"><a href="#复杂条件" class="headerlink" title="复杂条件"></a>复杂条件</h2><h3 id="问题允许存在变量"><a href="#问题允许存在变量" class="headerlink" title="问题允许存在变量"></a>问题允许存在变量</h3><p>如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判断依旧是相同的<code>str[i++]==str[j--]</code>。</p>
 <p>所以可以分离主要的判断程序，在主程序中使用<code>||</code>运算符来解决变量引起的讨论。如：<code>return func(删左边)||func(删右边)</code></p>
 <h2 id="删除链表上第n个结点"><a href="#删除链表上第n个结点" class="headerlink" title="删除链表上第n个结点"></a>删除链表上第n个结点</h2><ul>
@@ -485,7 +486,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针"><span class="nav-number">2.</span> <span class="nav-text">双指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂条件"><span class="nav-number">3.</span> <span class="nav-text">复杂条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题允许存在变量"><span class="nav-number">3.1.</span> <span class="nav-text">问题允许存在变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除链表上第n个结点"><span class="nav-number">4.</span> <span class="nav-text">删除链表上第n个结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前缀和"><span class="nav-number">5.</span> <span class="nav-text">前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#任意范围连续元素的和"><span class="nav-number">5.1.</span> <span class="nav-text">任意范围连续元素的和</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哨兵"><span class="nav-number">6.</span> <span class="nav-text">哨兵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环"><span class="nav-number">7.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单向栈"><span class="nav-number">8.</span> <span class="nav-text">单向栈</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针"><span class="nav-number">2.</span> <span class="nav-text">双指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图"><span class="nav-number">3.</span> <span class="nav-text">图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断二分图"><span class="nav-number">3.1.</span> <span class="nav-text">判断二分图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂条件"><span class="nav-number">4.</span> <span class="nav-text">复杂条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题允许存在变量"><span class="nav-number">4.1.</span> <span class="nav-text">问题允许存在变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除链表上第n个结点"><span class="nav-number">5.</span> <span class="nav-text">删除链表上第n个结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前缀和"><span class="nav-number">6.</span> <span class="nav-text">前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#任意范围连续元素的和"><span class="nav-number">6.1.</span> <span class="nav-text">任意范围连续元素的和</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哨兵"><span class="nav-number">7.</span> <span class="nav-text">哨兵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环"><span class="nav-number">8.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单向栈"><span class="nav-number">9.</span> <span class="nav-text">单向栈</span></a></li></ol></div>
             
 
           </div>
