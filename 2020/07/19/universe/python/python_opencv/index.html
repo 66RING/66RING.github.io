@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="backup, vim, vimscript," />
+  <meta name="keywords" content="python, opencv," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="Remenber to use :h &lt;arg&gt; for help Variable let to init or assignment a variable(call it var below) unlet to delete a var unlet to delete a var and ignore warnning, if var did not exist  You can">
+<meta name="description" content="读取图像和视频import cv2 图像读取 读取数据 img_data &#x3D; cv2.imread(file)   显示 cv2.imshow(window_name, img_data) 持久化显示：cv2.waitKey(x_ms)。0表示时间无限    视频读取 读取数据 cap &#x3D; cv2.VideoCapture(file)   显示  12345while True:    succe">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vimscript学习">
-<meta property="og:url" content="http://yoursite.com/2020/05/01/universe/vimscript_backup/index.html">
+<meta property="og:title" content="openCV学习笔记">
+<meta property="og:url" content="http://yoursite.com/2020/07/19/universe/python/python_opencv/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Remenber to use :h &lt;arg&gt; for help Variable let to init or assignment a variable(call it var below) unlet to delete a var unlet to delete a var and ignore warnning, if var did not exist  You can">
+<meta property="og:description" content="读取图像和视频import cv2 图像读取 读取数据 img_data &#x3D; cv2.imread(file)   显示 cv2.imshow(window_name, img_data) 持久化显示：cv2.waitKey(x_ms)。0表示时间无限    视频读取 读取数据 cap &#x3D; cv2.VideoCapture(file)   显示  12345while True:    succe">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-04-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:34:14.498Z">
+<meta property="article:published_time" content="2020-07-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-07-19T07:28:12.763Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="backup, vim, vimscript">
+<meta property="article:tag" content="python, opencv">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/05/01/universe/vimscript_backup/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/19/universe/python/python_opencv/"/>
 
 
 
 
 
-  <title>vimscript学习 | Hexo</title>
+  <title>openCV学习笔记 | Hexo</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/01/universe/vimscript_backup/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/19/universe/python/python_opencv/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">vimscript学习</h1>
+          <h1 class="post-title" itemprop="name headline">openCV学习笔记</h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-01T00:00:00+08:00">
-                2020-05-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-19T00:00:00+08:00">
+                2020-07-19
               </time>
             
 
@@ -300,43 +300,76 @@
       
 
       
-        <p>Remenber to use <code>:h &lt;arg&gt;</code> for help</p>
-<h2 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h2><ul>
-<li><code>let</code> to init or assignment a variable(call it var below)</li>
-<li><code>unlet</code> to delete a var</li>
-<li><code>unlet</code> to delete a var and ignore warnning, if var did not exist</li>
-</ul>
-<p>You can add a prefix before :var to define its scope, like this</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">g:var  # as global</span><br><span class="line">a:var  # as a function arg</span><br><span class="line">l:var  # as a function var</span><br><span class="line">b:var  # as buffer var</span><br><span class="line">w:var  # as window var</span><br><span class="line">t:var  # as tab var</span><br><span class="line">s:var  # as script var, which useful in this script only</span><br><span class="line">v:var  # as vim build-in var</span><br></pre></td></tr></table></figure>
-
-<h2 id="Data-type"><a href="#Data-type" class="headerlink" title="Data type"></a>Data type</h2><ul>
-<li>Number</li>
-<li>Float</li>
-<li>String</li>
-<li>Funcref<ul>
-<li>reference of a function</li>
-<li><code>let func = function(&quot;strlen&quot;)</code></li>
+        <h2 id="读取图像和视频"><a href="#读取图像和视频" class="headerlink" title="读取图像和视频"></a>读取图像和视频</h2><p><code>import cv2</code></p>
+<h3 id="图像读取"><a href="#图像读取" class="headerlink" title="图像读取"></a>图像读取</h3><ul>
+<li>读取数据<ul>
+<li><code>img_data = cv2.imread(file)</code></li>
 </ul>
 </li>
-<li>List</li>
-<li>Dictionary</li>
+<li>显示<ul>
+<li><code>cv2.imshow(window_name, img_data)</code></li>
+<li>持久化显示：<code>cv2.waitKey(x_ms)</code>。0表示时间无限</li>
 </ul>
-<h2 id="String-comparison"><a href="#String-comparison" class="headerlink" title="String comparison"></a>String comparison</h2><ul>
-<li><code>&lt;string&gt; == &lt;string&gt;</code> equal</li>
-<li><code>&lt;string&gt; != &lt;string&gt;</code> not equal</li>
-<li><code>&lt;string&gt; =~ &lt;pattern&gt;</code> matching pattern</li>
-<li><code>&lt;string&gt; !~ &lt;pattern&gt;</code> not matching pattern</li>
-<li><code>&lt;operator&gt;#</code> matching with case</li>
-<li><code>&lt;operator&gt;?</code> matching with ignorecase</li>
+</li>
 </ul>
-<p><code>&lt;string&gt;.&lt;string&gt;</code> to connect string</p>
-<h2 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h2><p><code>If, For, While, Try/Catch</code></p>
-<h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><p>Use <code>function</code> keywork to define a function, use <code>function!</code> to overwire a function. Be attention, function need to begin with capital letter.</p>
-<ul>
-<li><code>delfunction &lt;function&gt;</code> to delete a function</li>
-<li><code>call &lt;function&gt;</code> to call a function </li>
+<h3 id="视频读取"><a href="#视频读取" class="headerlink" title="视频读取"></a>视频读取</h3><ul>
+<li>读取数据<ul>
+<li><code>cap = cv2.VideoCapture(file)</code></li>
 </ul>
+</li>
+<li>显示  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    success, img = cap.read()</span><br><span class="line">    cv2.imshow(<span class="string">"video_window"</span>, img)</span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>) &amp; <span class="number">0xFF</span> == ord(<span class="string">'q'</span>):</span><br><span class="line">        <span class="keyword">break</span>  <span class="comment"># q退出</span></span><br></pre></td></tr></table></figure>
 
+
+</li>
+</ul>
+<h3 id="摄像头获取"><a href="#摄像头获取" class="headerlink" title="摄像头获取"></a>摄像头获取</h3><ul>
+<li>读取数据<ul>
+<li><code>cap = cv2.VideoCapture(id_of_cam)</code></li>
+<li>0表示使用默认摄像头</li>
+</ul>
+</li>
+<li>设置<ul>
+<li><code>cap.set(id, value)</code><ul>
+<li>id=3，表示宽度</li>
+<li>id=4，表示高度</li>
+<li>id=10, 表示亮度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>显示  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    success, img = cap.read()</span><br><span class="line">    cv2.imshow(<span class="string">"video_window"</span>, img)</span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>) &amp; <span class="number">0xFF</span> == ord(<span class="string">'q'</span>):</span><br><span class="line">        <span class="keyword">break</span>  <span class="comment"># q退出</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h2 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h2><h3 id="转换灰度"><a href="#转换灰度" class="headerlink" title="转换灰度"></a>转换灰度</h3><ul>
+<li><code>imgGray = cv2.cvtColor(img_data, Color_you_want)</code><ul>
+<li>Color使用<code>cv2.COLOR...</code></li>
+<li>注意在openCV中图像通道是BGR，而不是RGB</li>
+</ul>
+</li>
+</ul>
+<h3 id="模糊"><a href="#模糊" class="headerlink" title="模糊"></a>模糊</h3><p>这里以GaussianBlur为例，当然还有很多种blur方案</p>
+<ul>
+<li><code>imgBlur = cv2.GaussianBlur(img_data, (kernel_size, ), sigmaX)</code></li>
+</ul>
+<h3 id="边缘检测器"><a href="#边缘检测器" class="headerlink" title="边缘检测器"></a>边缘检测器</h3><ul>
+<li><code>imgCanny = cv2.Canny(img_data, threshold1, threshold2)</code><ul>
+<li>threshold阀值就是可能需要调整的参数，要减少边数就提高阀值</li>
+</ul>
+</li>
+<li>增加边缘的厚度：膨胀(dilate)<ul>
+<li><code>imgDialation = cv2.dilate(imgCanny, kernel, iterations=times)</code></li>
+<li>kernel是一个矩阵的大小和值的阵列，可以使用numpy建立<code>kernel = np.ones((x, y), 数据类型)</code>，ones表示所有的值都是1</li>
+<li>iterations=times表示迭代的次数(我们想要多厚)</li>
+</ul>
+</li>
+<li>减小边缘的厚度：侵蚀(erode与膨胀相反)<ul>
+<li><code>imgEroded = cv2.erode(imgDialation, kernel, iterations=times)</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="openCV的数学定义"><a href="#openCV的数学定义" class="headerlink" title="openCV的数学定义"></a>openCV的数学定义</h2>
       
     </div>
     
@@ -353,7 +386,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/backup-vim-vimscript/" rel="tag"># backup, vim, vimscript</a>
+            <a href="/tags/python-opencv/" rel="tag"># python, opencv</a>
           
         </div>
       
@@ -366,8 +399,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/14/universe/the_nature_of_code/" rel="next" title="用processing模拟自然系统">
-                <i class="fa fa-chevron-left"></i> 用processing模拟自然系统
+              <a href="/2020/07/18/universe/linux/exec_and_fork/" rel="next" title="Fork & Exec in Linux">
+                <i class="fa fa-chevron-left"></i> Fork & Exec in Linux
               </a>
             
           </div>
@@ -375,10 +408,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/04/universe/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="prev" title="密码学">
-                密码学 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -399,7 +428,7 @@
       
     </div>
   </div>
-    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/universe/vimscript_backup.md" target="_blank">编辑</a>
+    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/universe/python/python_opencv.md" target="_blank">编辑</a>
 
 
           </div>
@@ -502,7 +531,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Variable"><span class="nav-number">1.</span> <span class="nav-text">Variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-type"><span class="nav-number">2.</span> <span class="nav-text">Data type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String-comparison"><span class="nav-number">3.</span> <span class="nav-text">String comparison</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Control"><span class="nav-number">4.</span> <span class="nav-text">Control</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function"><span class="nav-number">5.</span> <span class="nav-text">Function</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#读取图像和视频"><span class="nav-number">1.</span> <span class="nav-text">读取图像和视频</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像读取"><span class="nav-number">1.1.</span> <span class="nav-text">图像读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视频读取"><span class="nav-number">1.2.</span> <span class="nav-text">视频读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#摄像头获取"><span class="nav-number">1.3.</span> <span class="nav-text">摄像头获取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本功能"><span class="nav-number">2.</span> <span class="nav-text">基本功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转换灰度"><span class="nav-number">2.1.</span> <span class="nav-text">转换灰度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊"><span class="nav-number">2.2.</span> <span class="nav-text">模糊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边缘检测器"><span class="nav-number">2.3.</span> <span class="nav-text">边缘检测器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openCV的数学定义"><span class="nav-number">3.</span> <span class="nav-text">openCV的数学定义</span></a></li></ol></div>
             
 
           </div>
