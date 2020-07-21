@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="go, tools," />
+  <meta name="keywords" content="算法," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="1.生产可执行文件     12&#x2F;&#x2F; 指定目标环境CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build XXX    2.后台运行与关闭 12345678910&#x2F;&#x2F; 生产可执行程序nohup 程序路径 &amp;  &#x2F;&#x2F;后台运行,然后会在当前目录生成nohup.out问">
+<meta name="description" content="递归 从结束条件开始分析  双指针双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。  一般先对数组排序，然后从边界开始就能简单的定一议二  图判断二分图染色，然后使用bfs或dfs遍历所有节点，不应该存在相邻节点颜色一样。 复杂条件问题允许存在变量如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Golang在服务器后台工作">
-<meta property="og:url" content="http://yoursite.com/2019/08/08/universe/go/Golang%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C/index.html">
+<meta property="og:title" content="算法技巧">
+<meta property="og:url" content="http://yoursite.com/2020/05/18/universe/c/algorithm_tips/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1.生产可执行文件     12&#x2F;&#x2F; 指定目标环境CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build XXX    2.后台运行与关闭 12345678910&#x2F;&#x2F; 生产可执行程序nohup 程序路径 &amp;  &#x2F;&#x2F;后台运行,然后会在当前目录生成nohup.out问">
+<meta property="og:description" content="递归 从结束条件开始分析  双指针双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。  一般先对数组排序，然后从边界开始就能简单的定一议二  图判断二分图染色，然后使用bfs或dfs遍历所有节点，不应该存在相邻节点颜色一样。 复杂条件问题允许存在变量如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-08-08T09:52:45.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:34:14.478Z">
+<meta property="article:published_time" content="2020-05-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-07-21T03:40:09.399Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="go, tools">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/08/universe/go/Golang在服务器后台工作/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/05/18/universe/c/algorithm_tips/"/>
 
 
 
 
 
-  <title>Golang在服务器后台工作 | Hexo</title>
+  <title>算法技巧 | Hexo</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/08/universe/go/Golang%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/18/universe/c/algorithm_tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Golang在服务器后台工作</h1>
+          <h1 class="post-title" itemprop="name headline">算法技巧</h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-08T17:52:45+08:00">
-                2019-08-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-18T00:00:00+08:00">
+                2020-05-18
               </time>
             
 
@@ -300,20 +300,33 @@
       
 
       
-        <p>1.生产可执行文件    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 指定目标环境</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build XXX</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2.后台运行与关闭</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 生产可执行程序</span><br><span class="line">nohup 程序路径 &amp;  &#x2F;&#x2F;后台运行,然后会在当前目录生成nohup.out问及文件，记录输出到内容</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 不生成可执行程序</span><br><span class="line">nohup go run name &amp;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;进程控制</span><br><span class="line">ps –aux     &#x2F;&#x2F;查看进程</span><br><span class="line">ps –ef | grep name &#x2F;&#x2F;查看name的进程</span><br><span class="line">kill PID &#x2F;&#x2F;关闭杀掉</span><br></pre></td></tr></table></figure>
-
-<p>2.开机自启</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>3.传文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp FILE NAME@IP:&#x2F;root&#x2F;</span><br></pre></td></tr></table></figure>
-
+        <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><ul>
+<li>从结束条件开始分析</li>
+</ul>
+<h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><p>双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。</p>
+<ul>
+<li>一般先对数组排序，然后从边界开始就能简单的定一议二</li>
+</ul>
+<h2 id="图"><a href="#图" class="headerlink" title="图"></a>图</h2><h3 id="判断二分图"><a href="#判断二分图" class="headerlink" title="判断二分图"></a>判断二分图</h3><p>染色，然后使用bfs或dfs遍历所有节点，不应该存在相邻节点颜色一样。</p>
+<h2 id="复杂条件"><a href="#复杂条件" class="headerlink" title="复杂条件"></a>复杂条件</h2><h3 id="问题允许存在变量"><a href="#问题允许存在变量" class="headerlink" title="问题允许存在变量"></a>问题允许存在变量</h3><p>如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判断依旧是相同的<code>str[i++]==str[j--]</code>。</p>
+<p>所以可以分离主要的判断程序，在主程序中使用<code>||</code>运算符来解决变量引起的讨论。如：<code>return func(删左边)||func(删右边)</code></p>
+<h2 id="删除链表上第n个结点"><a href="#删除链表上第n个结点" class="headerlink" title="删除链表上第n个结点"></a>删除链表上第n个结点</h2><ul>
+<li>快慢指针，当快指针的next是空的时候，慢指针刚好指到倒数第n个节点</li>
+</ul>
+<h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><p>通常，涉及连续子数组问题的时候，我们使用前缀和来解决。</p>
+<p>我们令$P[i] = A[0] + A[1] + … + A[i]$。那么每个连续子数组的和sum(i,j)就可以写成$P[j] - P[i-1]（其中 0 &lt; i &lt; j;0 &lt; i &lt; j）$的形式。</p>
+<h3 id="任意范围连续元素的和"><a href="#任意范围连续元素的和" class="headerlink" title="任意范围连续元素的和"></a>任意范围连续元素的和</h3><p>两个前缀和相减就能得到任意范围连续元素的和，如前5个元素的前缀和间前3个元素的前缀和就得到4~5的和。</p>
+<h2 id="哨兵"><a href="#哨兵" class="headerlink" title="哨兵"></a>哨兵</h2><p>使用哨兵能简化我们的讨论，去掉不必要的分类讨论。如在链表中使用虚拟的头和尾，省去了分类讨论。</p>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><ul>
+<li>遍历一个 <strong>完整</strong> 的循环会节省很多讨论，何为完整，类似与判断波的一个完整周期</li>
+</ul>
+<h2 id="单向栈"><a href="#单向栈" class="headerlink" title="单向栈"></a>单向栈</h2><h2 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h2><ul>
+<li>计算一个数a的n次方<ul>
+<li>当n是偶数，我们先计算a的n/2次方，然后平方</li>
+<li>当n是奇数，我们先计算a的n-1次方，然后乘n</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -331,7 +344,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/go-tools/" rel="tag"># go, tools</a>
+            <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
           
         </div>
       
@@ -344,8 +357,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/05/universe/go/Golang_note/" rel="next" title="Golang">
-                <i class="fa fa-chevron-left"></i> Golang
+              <a href="/2020/05/09/Major/assembly_language/" rel="next" title="汇编语言">
+                <i class="fa fa-chevron-left"></i> 汇编语言
               </a>
             
           </div>
@@ -354,8 +367,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/" rel="prev" title="knowledge universe">
-                knowledge universe <i class="fa fa-chevron-right"></i>
+              <a href="/2020/05/21/universe/hacker_in_action/" rel="prev" title="黑客攻防学习">
+                黑客攻防学习 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -377,7 +390,7 @@
       
     </div>
   </div>
-    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/universe/go/Golang在服务器后台工作.md" target="_blank">编辑</a>
+    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/universe/c/algorithm_tips.md" target="_blank">编辑</a>
 
 
           </div>
@@ -409,8 +422,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -461,6 +483,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针"><span class="nav-number">2.</span> <span class="nav-text">双指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图"><span class="nav-number">3.</span> <span class="nav-text">图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断二分图"><span class="nav-number">3.1.</span> <span class="nav-text">判断二分图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂条件"><span class="nav-number">4.</span> <span class="nav-text">复杂条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题允许存在变量"><span class="nav-number">4.1.</span> <span class="nav-text">问题允许存在变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除链表上第n个结点"><span class="nav-number">5.</span> <span class="nav-text">删除链表上第n个结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前缀和"><span class="nav-number">6.</span> <span class="nav-text">前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#任意范围连续元素的和"><span class="nav-number">6.1.</span> <span class="nav-text">任意范围连续元素的和</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哨兵"><span class="nav-number">7.</span> <span class="nav-text">哨兵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环"><span class="nav-number">8.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单向栈"><span class="nav-number">9.</span> <span class="nav-text">单向栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速幂"><span class="nav-number">10.</span> <span class="nav-text">快速幂</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
