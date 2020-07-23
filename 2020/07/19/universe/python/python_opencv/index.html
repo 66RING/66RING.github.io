@@ -87,7 +87,7 @@
 <meta property="og:description" content="在openCV中图像的xy轴是这样的 12345(0,0) -------&gt; x      |      |      |    y v   读取图像和视频import cv2 图像读取 读取数据 img_data &#x3D; cv2.imread(file)   显示 cv2.imshow(window_name, img_data) 持久化显示：cv2.waitKey(x_ms)。0表示时间无限">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-21T07:50:41.766Z">
+<meta property="article:modified_time" content="2020-07-23T02:05:13.222Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="python, opencv">
 <meta name="twitter:card" content="summary">
@@ -507,7 +507,103 @@
 </ol>
 </li>
 </ul>
-<h3 id="检查面部"><a href="#检查面部" class="headerlink" title="检查面部"></a>检查面部</h3><p>min101</p>
+<h3 id="检查面部"><a href="#检查面部" class="headerlink" title="检查面部"></a>检查面部</h3><p>opencv使用训练得到的级联(Cascade)文件来处理图像。opencv提供了一些默认的Cascade，可以处理人脸、车牌、眼睛等等。</p>
+<ul>
+<li>引入Cascade，如<ul>
+<li><code>faceCascade = cv2.CascadeClassifier(&quot;path/to/Cascade/file&quot;)</code></li>
+</ul>
+</li>
+<li>把图像换成灰度图</li>
+<li>使用引入的Cascade处理图像<ul>
+<li><code>faces = faceCascade.detectMultiScale(img, scale, minimum_neighbor)</code></li>
+</ul>
+</li>
+<li>画框框  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (x, y, w, h) <span class="keyword">in</span> faces:</span><br><span class="line">    cv2.recrangle(img, (x, y), (x+w, y+h), (B, G, R), thick)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p><a href="https://github.com/murtazahassan/Learn-OpenCV-in-3-hours" target="_blank" rel="noopener">源码</a></p>
+<h3 id="检查画笔颜色并在图像中画出"><a href="#检查画笔颜色并在图像中画出" class="headerlink" title="检查画笔颜色并在图像中画出"></a>检查画笔颜色并在图像中画出</h3><ul>
+<li><ol>
+<li><a href="#检测颜色">颜色检测</a>，创建蒙版<ul>
+<li>为同时应对多种色彩，可以将检查到的颜色的参数记录在一个列表中</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>试着<a href="#检查图形">描出颜色的轮廓</a><ul>
+<li>只是为了给出明显的反馈，用完可以删除</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>使用轮廓的参数如x，y就可确定一点的位置</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>然后就可画出想要的BGR颜色<ul>
+<li>创建一个点的列表，每次绘制出所有点[x, y, color]</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="物体扫描"><a href="#物体扫描" class="headerlink" title="物体扫描"></a>物体扫描</h3><ul>
+<li>预处理<ul>
+<li><a href="#摄像头获取">调整大小</a></li>
+<li><a href="#转换灰度">使用灰度图</a></li>
+<li><a href="#模糊">模糊</a></li>
+<li><a href="#边缘检测器">描边</a><ul>
+<li>调整边框粗细等</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>找到主体<ul>
+<li>预处理好的图像该如何找到主体?</li>
+<li>可通过<a href="#检查图形">拐角数</a>、最大面积等判断</li>
+</ul>
+</li>
+<li>通过主体的拐角进行<a href="#变换">变换</a></li>
+</ul>
+<h3 id="车牌识别"><a href="#车牌识别" class="headerlink" title="车牌识别"></a>车牌识别</h3><ul>
+<li><ol>
+<li><a href="#检查面部">引入Cascade</a>，用于识别车牌号</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>框出</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>把识别出来的<a href="#绘制图形">数字放在图片的适当位置</a></li>
+</ol>
+</li>
+<li><ol start="4">
+<li>保存识别的图片<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.imwrite(<span class="string">"path/to/file"</span>, img)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</li>
+</ol>
+</li>
+</ul>
 
       
     </div>
@@ -628,7 +724,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -641,7 +737,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -674,7 +770,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#读取图像和视频"><span class="nav-number">1.</span> <span class="nav-text">读取图像和视频</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像读取"><span class="nav-number">1.1.</span> <span class="nav-text">图像读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视频读取"><span class="nav-number">1.2.</span> <span class="nav-text">视频读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#摄像头获取"><span class="nav-number">1.3.</span> <span class="nav-text">摄像头获取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本功能"><span class="nav-number">2.</span> <span class="nav-text">基本功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转换灰度"><span class="nav-number">2.1.</span> <span class="nav-text">转换灰度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊"><span class="nav-number">2.2.</span> <span class="nav-text">模糊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边缘检测器"><span class="nav-number">2.3.</span> <span class="nav-text">边缘检测器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大小"><span class="nav-number">2.4.</span> <span class="nav-text">大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制图形"><span class="nav-number">2.5.</span> <span class="nav-text">绘制图形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变换"><span class="nav-number">2.6.</span> <span class="nav-text">变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#透视变换"><span class="nav-number">2.6.1.</span> <span class="nav-text">透视变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图像结合"><span class="nav-number">2.7.</span> <span class="nav-text">图像结合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检测颜色"><span class="nav-number">2.8.</span> <span class="nav-text">检测颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查图形"><span class="nav-number">2.9.</span> <span class="nav-text">检查图形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查面部"><span class="nav-number">2.10.</span> <span class="nav-text">检查面部</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#读取图像和视频"><span class="nav-number">1.</span> <span class="nav-text">读取图像和视频</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像读取"><span class="nav-number">1.1.</span> <span class="nav-text">图像读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视频读取"><span class="nav-number">1.2.</span> <span class="nav-text">视频读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#摄像头获取"><span class="nav-number">1.3.</span> <span class="nav-text">摄像头获取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本功能"><span class="nav-number">2.</span> <span class="nav-text">基本功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转换灰度"><span class="nav-number">2.1.</span> <span class="nav-text">转换灰度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊"><span class="nav-number">2.2.</span> <span class="nav-text">模糊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边缘检测器"><span class="nav-number">2.3.</span> <span class="nav-text">边缘检测器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大小"><span class="nav-number">2.4.</span> <span class="nav-text">大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制图形"><span class="nav-number">2.5.</span> <span class="nav-text">绘制图形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变换"><span class="nav-number">2.6.</span> <span class="nav-text">变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#透视变换"><span class="nav-number">2.6.1.</span> <span class="nav-text">透视变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图像结合"><span class="nav-number">2.7.</span> <span class="nav-text">图像结合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检测颜色"><span class="nav-number">2.8.</span> <span class="nav-text">检测颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查图形"><span class="nav-number">2.9.</span> <span class="nav-text">检查图形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查面部"><span class="nav-number">2.10.</span> <span class="nav-text">检查面部</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">3.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#检查画笔颜色并在图像中画出"><span class="nav-number">3.1.</span> <span class="nav-text">检查画笔颜色并在图像中画出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物体扫描"><span class="nav-number">3.2.</span> <span class="nav-text">物体扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#车牌识别"><span class="nav-number">3.3.</span> <span class="nav-text">车牌识别</span></a></li></ol></li></ol></div>
             
 
           </div>
