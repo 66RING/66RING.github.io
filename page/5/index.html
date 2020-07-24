@@ -229,6 +229,362 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/27/universe/go/golang%E6%93%8D%E4%BD%9C%20mgov2%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/27/universe/go/golang%E6%93%8D%E4%BD%9C%20mgov2%E7%AF%87/" itemprop="url">golang操作 mgov2篇</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-27T00:00:00+08:00">
+                2019-08-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="打开mongo"><a href="#打开mongo" class="headerlink" title="打开mongo"></a>打开mongo</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(</span><br><span class="line">  <span class="string">"gopkg.in/mgo.v2"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">	url:=<span class="string">"mongodb://localhost:27017"</span>  <span class="comment">// 不登录mongo的</span></span><br><span class="line">	url:=<span class="string">"mongodb://root:password@localhost:27017/登录的用户名"</span> <span class="comment">// 登录mongo的</span></span><br><span class="line">	session,err:=mgo.Dial(url)</span><br><span class="line">	<span class="keyword">defer</span> session.Close() <span class="comment">// 最后记得关闭 减压</span></span><br><span class="line">	ses:=session.DB(<span class="string">"databaseName"</span>).C(<span class="string">"collectionName"</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		fmt.Println(err)</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Update更新数据库"><a href="#Update更新数据库" class="headerlink" title="Update更新数据库"></a>Update更新数据库</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"gopkg.in/mgo.v2"</span></span><br><span class="line">	<span class="string">"gopkg.in/mgo.v2/bson"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Update只能更新一条，UpdateAll批量更新</span></span><br><span class="line">	selector := bson.M&#123;<span class="string">"word"</span>:<span class="string">"god"</span>&#125;  <span class="comment">// 选择器：按word:god找，不存在返回nor found</span></span><br><span class="line">	<span class="comment">//bson.M&#123;key:value&#125;就相当于python的字典</span></span><br><span class="line">	data := bson.M&#123;<span class="string">"$set"</span>:bson.M&#123;<span class="string">"word"</span>:<span class="string">"good"</span>&#125;&#125; <span class="comment">// 找到后用$set修改</span></span><br><span class="line">	ses.Update(selector,data)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果要更新集合里一个数组的</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/" itemprop="url">knowledge universe</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-25T00:00:00+08:00">
+                2019-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="自然率"><a href="#自然率" class="headerlink" title="自然率"></a>自然率</h2><h3 id="倒霉事的概率"><a href="#倒霉事的概率" class="headerlink" title="倒霉事的概率"></a>倒霉事的概率</h3><h4 id="墨菲定律"><a href="#墨菲定律" class="headerlink" title="墨菲定律"></a>墨菲定律</h4><p>问题引入-&gt;好看的人千篇一律，不好看的人各有千秋</p>
+<ul>
+<li>好看-&gt;五官什么的都是好看的，又好看的概率低，全好看的概率P更低</li>
+<li>不好看-&gt;其中一个不好看就不好看,概率1-P<br>故。</li>
+</ul>
+<h3 id="验证是否正常的方法"><a href="#验证是否正常的方法" class="headerlink" title="验证是否正常的方法"></a>验证是否正常的方法</h3><h4 id="本福特定律"><a href="#本福特定律" class="headerlink" title="本福特定律"></a>本福特定律</h4><p>自然数据的首位数规律</p>
+<ul>
+<li>斐波那契数列符合—&gt;说明近似自然数据</li>
+<li>数据是否造假—&gt;是否符合本福特定律<h5 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h5></li>
+<li>不严谨的证明</li>
+<li>数据的增长量正比于存量 $\frac{\Delta N}{N\Delta t}$ = Constant<ul>
+<li>结论</li>
+<li>$N = N_0e^{ct}$</li>
+<li>$t = C\log_{10}\frac{N_2}{N_1}$</li>
+</ul>
+</li>
+<li>$t_1 = C\log_{10}\frac{2}{1}$ ,$t_1 = C\log_{10}\frac{3}{2}$ …1到2，2到3，3到… <ul>
+<li>$t_n = C\log_{10}\frac{n+1}{n}$</li>
+<li>$T = t_1+t_2+…+t_n = C\log_{10}{10} = C$</li>
+<li>$P = \frac{t_1}{T}$ </li>
+</ul>
+</li>
+</ul>
+<h2 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h2><h3 id="求最大公约数"><a href="#求最大公约数" class="headerlink" title="求最大公约数"></a>求最大公约数</h3><ul>
+<li>图解法<ul>
+<li>矩形填充正方形,最小正方形的边长就是最大公约数</li>
+</ul>
+</li>
+<li>辗转相除法<ul>
+<li>证明<br>被除数a,余数r,除数b,公约数d<br>$r=a-bk$<br>若d|a,且d|b (a|b表示a是b的约数);则d|r<br>则找a和b的最大公约数d,就相当于找b和r的最大公约数  </li>
+</ul>
+</li>
+</ul>
+<h3 id="贝祖数"><a href="#贝祖数" class="headerlink" title="贝祖数"></a>贝祖数</h3><ul>
+<li>贝祖定理<br>方程$ax+by=m(a,b,m\in z)$x,y有解的充要条件是:m是a,b最大公约数的倍数。x,y就是贝祖数</li>
+<li>贝祖数的求法<ul>
+<li>$a\div{b}=k…r$<br>$r = a-bk$<br>a,b又可当做新的r。多组x,y就出来了</li>
+</ul>
+</li>
+</ul>
+<h3 id="Vieta-theorem"><a href="#Vieta-theorem" class="headerlink" title="Vieta theorem"></a>Vieta theorem</h3><p>$$\begin{aligned}<br>ax^2 + bx + c = 0 \<br>x_1 + x_2 = -\frac{b}{a};  x_1x_2 = \frac{c}{a}<br>\end{aligned}$$</p>
+<p><strong>tips</strong><br>$$\begin{aligned}<br>let\ x_1=a-u, x_2=a+u \<br>x_1x_2=(a-u)(a+u) = a^2 - u^2<br>\end{aligned}$$<br>and so can get $x$ quickly.</p>
+<h4 id="expand"><a href="#expand" class="headerlink" title="expand"></a>expand</h4><p>$$<br>ax_1^3 + bx_2^2 + cx_3 + d = 0 \</p>
+<p>\begin{cases}<br>x_1 + x_2 + x_3 = -\frac{b}{a} \<br>x_1x_2 + x_1x_3 + x_2x_3 = \frac{c}{a} \<br>x_1x_2x_3 = -\frac{d}{a} \<br>\end{cases} \</p>
+<p>and\ so\ on …<br>$$</p>
+<h2 id="Anduin"><a href="#Anduin" class="headerlink" title="Anduin"></a>Anduin</h2><h2 id="Cryptography"><a href="#Cryptography" class="headerlink" title="Cryptography"></a>Cryptography</h2><h3 id="Symmetric-encryption"><a href="#Symmetric-encryption" class="headerlink" title="Symmetric encryption"></a>Symmetric encryption</h3><p>The classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.<br>+3 is <em>pre shared key</em>:PSK</p>
+<p>But how to let the receiver know what the PSK is?</p>
+<h3 id="Asymmetric-encryption"><a href="#Asymmetric-encryption" class="headerlink" title="Asymmetric encryption"></a>Asymmetric encryption</h3><p>Which can solve listening problem.</p>
+<p>Encryption with public key, decryption with private key. </p>
+<ul>
+<li>Public key<ul>
+<li>$A_0+public\ key \overset{en}{=} A_1$</li>
+</ul>
+</li>
+<li>Private key<ul>
+<li>$A_1+public\ key \overset{de}{=} A_0$</li>
+</ul>
+</li>
+</ul>
+<p>Such as, there are two guys:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A: What is you public key?</span><br><span class="line">B: pk</span><br><span class="line">Than A can encryption with public and than send the infomation to B.</span><br><span class="line">And B can use the his key to get the right infomation.</span><br><span class="line"></span><br><span class="line">What if the hacker has the public?</span><br><span class="line">So hacker can fake the infomation</span><br></pre></td></tr></table></figure>
+
+<h4 id="Private-key-encryption"><a href="#Private-key-encryption" class="headerlink" title="Private key encryption"></a>Private key encryption</h4><p>Encryption with private key, decryption with public key. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A: Here is my public key</span><br><span class="line">B: get</span><br><span class="line">A: message &#x3D;private encryption&#x3D;&gt; cipher</span><br><span class="line">B: cipher &#x3D;public decryption&#x3D;&gt; message</span><br><span class="line"></span><br><span class="line">But if hacker has your public key hacker can get you message too.</span><br><span class="line">hacker: cipher &#x3D;public decryption&#x3D;&gt; message.</span><br></pre></td></tr></table></figure>
+<h4 id="Use-both"><a href="#Use-both" class="headerlink" title="Use both"></a>Use both</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A: What is your public key?</span><br><span class="line">B: bk</span><br><span class="line">A: Ok. We are going to use Symmetric Encryption. The PSK is:psk.</span><br><span class="line"></span><br><span class="line">hacker don&#39;t have the private the so he don&#39;t know what to do.</span><br></pre></td></tr></table></figure>
+<p>But what <strong>if B IS NOT B</strong>?</p>
+<h4 id="Modern-HTTP-mode"><a href="#Modern-HTTP-mode" class="headerlink" title="Modern HTTP mode"></a>Modern HTTP mode</h4><p>In real life we may choose to trust police station. So it may help that police station tell you that B is B in the following way.</p>
+<p>The police station which we call it CA institution.</p>
+<ul>
+<li>Signature algorithm<ul>
+<li>encryption with CA’s private key</li>
+</ul>
+</li>
+<li>Check algorithm<ul>
+<li>decryption with CA’s public key</li>
+</ul>
+</li>
+<li>the whole process can be received but can’t be faked</li>
+</ul>
+<p>(we trust browser, browser trust CA)<br>| Roles   | browser(user), web, CA                                                                                             |<br>|———|——————————————————————————————————————–|<br>| web     | through a serise of process to get the CA certification.                                                           |<br>| CA      | signature this web with its private key and broadcast the public key, which we can use it to get infomation of web |<br>| browser | varify the web’s public key with CA’s public key and mark web is safe. (B is B)                                    |</p>
+<p>After we know B is B, we can encryption message with B’s public key.And tell B we are going to use PSK.And than we are safe.</p>
+<h3 id="Identity"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</h3><ul>
+<li>authentication<ul>
+<li>to prove you is you</li>
+</ul>
+</li>
+<li>authornization<ul>
+<li>to prove you have the permissions</li>
+</ul>
+</li>
+</ul>
+<p>As we know, a web app can use cookie implementate a identity function.<br>But a cookie is like a tag that server make on you. And in your next request, browser send send cookie with your request.<br>Which means <strong>you can choose to send it or not with technical means!</strong>. Such as delete local cookie to fake a unvoted tags.</p>
+<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><h3 id="Database-Security-tips"><a href="#Database-Security-tips" class="headerlink" title="Database Security(tips)"></a>Database Security(tips)</h3><p>We need to login, but we don’t need to save user’s password into database.<br>We can save this <code>hash(password)</code> and compare it.\o/</p>
+<h3 id="Use-Hash-on-Web-App"><a href="#Use-Hash-on-Web-App" class="headerlink" title="Use Hash on Web App"></a>Use Hash on Web App</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cache-&gt;browser:</span><br><span class="line">browser-&gt;nginx: request(Img)</span><br><span class="line">nginx--&gt;browser: Img &amp; ETag(hash) 200</span><br><span class="line">nginx-&gt;server: </span><br><span class="line">server--&gt;nginx: </span><br><span class="line">browser-&gt;cache: save Img</span><br><span class="line"></span><br><span class="line">browser-&gt;nginx: request(Img &amp; hash equals?)</span><br><span class="line">nginx-&gt;server: hash equals?</span><br><span class="line">server--&gt;nginx: yes</span><br><span class="line">nginx--&gt;browser: not modified 206</span><br><span class="line">browser-&gt;cache: search your cache</span><br><span class="line">cache-&gt;browser: here</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="天文"><a href="#天文" class="headerlink" title="天文"></a>天文</h2><h3 id="发现系外行星的方法"><a href="#发现系外行星的方法" class="headerlink" title="发现系外行星的方法"></a>发现系外行星的方法</h3><h4 id="视像速度法"><a href="#视像速度法" class="headerlink" title="视像速度法"></a>视像速度法</h4><ul>
+<li>双星</li>
+<li>多普勒效益造成 红移/蓝移<ul>
+<li>说明有恒星周期性运动</li>
+<li>说明有双星系统</li>
+</ul>
+</li>
+<li>故恒星旁有行星</li>
+</ul>
+<h4 id="凌日法"><a href="#凌日法" class="headerlink" title="凌日法"></a>凌日法</h4><ul>
+<li>类似日食原理的，亮度的周期性变化</li>
+<li>从周期中得到各种数据<ul>
+<li>但存在角度问题</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/08/universe/go/Golang%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1507,7 +1863,7 @@
             <h1 id="Virtualenvwrapper"><a href="#Virtualenvwrapper" class="headerlink" title="Virtualenvwrapper"></a>Virtualenvwrapper</h1><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install virtualenvwrapper</span><br></pre></td></tr></table></figure>
 
 <p>Some environment variable</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> WORKON_HOME=~/Envs  <span class="comment"># specify home of venv</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> VIRTUALENVWRAPPER_PYTHON=/usr/<span class="built_in">local</span>/bin/python3  <span class="comment"># specify defaul python version </span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh  <span class="comment"># active virtualenvwrapper when open terminal</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> WORKON_HOME=/path/to/your/envs  <span class="comment"># specify home of venv</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> VIRTUALENVWRAPPER_PYTHON=/usr/<span class="built_in">local</span>/bin/python3  <span class="comment"># specify defaul python version </span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh  <span class="comment"># active virtualenvwrapper when open terminal</span></span><br></pre></td></tr></table></figure>
 
 
 <h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><ul>
@@ -1663,7 +2019,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1676,7 +2032,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
