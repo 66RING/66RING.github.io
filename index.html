@@ -300,7 +300,8 @@
       
         
           
-            
+            <h2 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h2><p>p3</p>
+
           
         
       
@@ -870,7 +871,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/universe/funny_algorithm/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/universe/funny_algorithm/funny_algorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -889,7 +890,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/07/20/universe/funny_algorithm/" itemprop="url">有趣的算法问题</a></h1>
+                <a class="post-title-link" href="/2020/07/20/universe/funny_algorithm/funny_algorithm/" itemprop="url">有趣的算法问题</a></h1>
         
 
         <div class="post-meta">
@@ -958,7 +959,21 @@
 <li>不换门中奖概率1/3</li>
 </ul>
 <p>因为主持人知道哪个门没奖，而且一直选择没奖的没，因此导致了概率的不平均，产生偏差</p>
-<h3 id="排序算法可视化"><a href="#排序算法可视化" class="headerlink" title="排序算法可视化"></a>排序算法可视化</h3>
+<h2 id="迷宫问题"><a href="#迷宫问题" class="headerlink" title="迷宫问题"></a>迷宫问题</h2><h3 id="迷宫生成"><a href="#迷宫生成" class="headerlink" title="迷宫生成"></a>迷宫生成</h3><p>抽象成计算机的概念，迷宫其实就是一棵树，迷宫生成问题就是一个随机生成树问题。</p>
+<p><img src="./assets/mazi.png" alt="迷宫初始化"></p>
+<p>以这么的结构初始化图，再随机生成树</p>
+<p>要随机的生成数，就需要创建一个随机队列，出队时随机选择一个元素出队。 <strong>出队时，随机选中的元素和队尾元素交换位置，然后出队。</strong></p>
+<h4 id="随机性更强的迷宫"><a href="#随机性更强的迷宫" class="headerlink" title="随机性更强的迷宫"></a>随机性更强的迷宫</h4><p>上面的迷宫随机性不强，总体上从左上到右下，原因是每次从随机队列选出一个元素时，如果选择的元素是上个元素的最后一个元素，那么就相当于执行了一个小的深度优先遍历。而深度优先走的整体就是向下向右。</p>
+<ul>
+<li>另一种随机队列：<ul>
+<li>基于链表</li>
+<li>入队：随机入队首或队尾</li>
+<li>出队：随机从队首或队尾挑选元素</li>
+</ul>
+</li>
+</ul>
+<h4 id="更多随机方案、更多形状的迷宫"><a href="#更多随机方案、更多形状的迷宫" class="headerlink" title="更多随机方案、更多形状的迷宫"></a>更多随机方案、更多形状的迷宫</h4><h3 id="扫雷游戏"><a href="#扫雷游戏" class="headerlink" title="扫雷游戏"></a>扫雷游戏</h3><p>p51</p>
+
           
         
       
@@ -1277,7 +1292,7 @@
 </li>
 <li><ol start="4">
 <li><p>检测轮廓</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getContours</span><span class="params">(img)</span>:</span></span><br><span class="line">    contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)</span><br><span class="line">    <span class="keyword">for</span> cnt <span class="keyword">in</span> contours:</span><br><span class="line">        area = cv2.contoursArea(cnt)</span><br><span class="line">        <span class="keyword">if</span> area&gt;<span class="number">500</span>:  <span class="comment"># 通过面积来消除噪声</span></span><br><span class="line">            cv2.drawContours(drawToImg, cnt, <span class="number">-1</span>, (B, G, R), thick) <span class="comment"># -1 画所有轮廓</span></span><br><span class="line">            <span class="comment"># 计算轮廓长度</span></span><br><span class="line">            peri = cv2.arcLength(cnt, <span class="literal">True</span>)  <span class="comment"># true表示封闭</span></span><br><span class="line">            <span class="comment"># 计算拐点位置</span></span><br><span class="line">            approx = cv2.approxPolyDP(cnt, <span class="number">0.02</span>*peri(分辨率), <span class="literal">True</span>)</span><br><span class="line">            <span class="comment"># 计算角</span></span><br><span class="line">            objCor = len(approx)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 画边框，实现有个方框包围的效果</span></span><br><span class="line">            x, y, w, h = cv2.boundingRect(approx)</span><br><span class="line">            cv2.rectangle(drawToImg, (x, y), (x+w, y+h), (B, G, R))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getContours</span><span class="params">(img)</span>:</span></span><br><span class="line">    contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)</span><br><span class="line">    <span class="keyword">for</span> cnt <span class="keyword">in</span> contours:</span><br><span class="line">        area = cv2.contourArea(cnt)</span><br><span class="line">        <span class="keyword">if</span> area&gt;<span class="number">500</span>:  <span class="comment"># 通过面积来消除噪声</span></span><br><span class="line">            cv2.drawContours(drawToImg, cnt, <span class="number">-1</span>, (B, G, R), thick) <span class="comment"># -1 画所有轮廓</span></span><br><span class="line">            <span class="comment"># 计算轮廓长度</span></span><br><span class="line">            peri = cv2.arcLength(cnt, <span class="literal">True</span>)  <span class="comment"># true表示封闭</span></span><br><span class="line">            <span class="comment"># 计算拐点位置</span></span><br><span class="line">            approx = cv2.approxPolyDP(cnt, <span class="number">0.02</span>*peri, <span class="literal">True</span>)</span><br><span class="line">            <span class="comment"># 计算角</span></span><br><span class="line">            objCor = len(approx)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 画边框，实现有个方框包围的效果</span></span><br><span class="line">            x, y, w, h = cv2.boundingRect(approx)</span><br><span class="line">            cv2.rectangle(drawToImg, (x, y), (x+w, y+h), (B, G, R))</span><br></pre></td></tr></table></figure>
 
 
 </li>

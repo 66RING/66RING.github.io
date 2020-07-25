@@ -82,15 +82,17 @@
 <meta name="description" content="随机模拟问题分钱问题房间里有100个人，每个人有100块钱，他们在玩一个游戏。没轮游戏中，每个人都拿出一元前随机给另一个人，最后这100个人的财富分布是怎样的？ 最后分布将是非常无序的，而非每人差不多。相当于100x100分给100个人，而每个人差不多的概率其实是小概率事件。 蒙特卡洛算法蒙特卡洛方法是一种统计学的方法，是一种模拟。通过大量随机样本，去了解一个系统，进而得到所要计算的值。 蒙特卡洛">
 <meta property="og:type" content="article">
 <meta property="og:title" content="有趣的算法问题">
-<meta property="og:url" content="http://yoursite.com/2020/07/20/universe/funny_algorithm/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/07/20/universe/funny_algorithm/funny_algorithm/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="随机模拟问题分钱问题房间里有100个人，每个人有100块钱，他们在玩一个游戏。没轮游戏中，每个人都拿出一元前随机给另一个人，最后这100个人的财富分布是怎样的？ 最后分布将是非常无序的，而非每人差不多。相当于100x100分给100个人，而每个人差不多的概率其实是小概率事件。 蒙特卡洛算法蒙特卡洛方法是一种统计学的方法，是一种模拟。通过大量随机样本，去了解一个系统，进而得到所要计算的值。 蒙特卡洛">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/07/20/universe/funny_algorithm/funny_algorithm/assets/mazi.png">
 <meta property="article:published_time" content="2020-07-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-22T14:23:46.910Z">
+<meta property="article:modified_time" content="2020-07-25T10:12:41.651Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="algorithm, gui, tools">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/20/universe/funny_algorithm/funny_algorithm/assets/mazi.png">
 
 
 
@@ -120,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/07/20/universe/funny_algorithm/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/20/universe/funny_algorithm/funny_algorithm/"/>
 
 
 
@@ -233,7 +235,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/universe/funny_algorithm/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/universe/funny_algorithm/funny_algorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -317,7 +319,21 @@
 <li>不换门中奖概率1/3</li>
 </ul>
 <p>因为主持人知道哪个门没奖，而且一直选择没奖的没，因此导致了概率的不平均，产生偏差</p>
-<h3 id="排序算法可视化"><a href="#排序算法可视化" class="headerlink" title="排序算法可视化"></a>排序算法可视化</h3>
+<h2 id="迷宫问题"><a href="#迷宫问题" class="headerlink" title="迷宫问题"></a>迷宫问题</h2><h3 id="迷宫生成"><a href="#迷宫生成" class="headerlink" title="迷宫生成"></a>迷宫生成</h3><p>抽象成计算机的概念，迷宫其实就是一棵树，迷宫生成问题就是一个随机生成树问题。</p>
+<p><img src="./assets/mazi.png" alt="迷宫初始化"></p>
+<p>以这么的结构初始化图，再随机生成树</p>
+<p>要随机的生成数，就需要创建一个随机队列，出队时随机选择一个元素出队。 <strong>出队时，随机选中的元素和队尾元素交换位置，然后出队。</strong></p>
+<h4 id="随机性更强的迷宫"><a href="#随机性更强的迷宫" class="headerlink" title="随机性更强的迷宫"></a>随机性更强的迷宫</h4><p>上面的迷宫随机性不强，总体上从左上到右下，原因是每次从随机队列选出一个元素时，如果选择的元素是上个元素的最后一个元素，那么就相当于执行了一个小的深度优先遍历。而深度优先走的整体就是向下向右。</p>
+<ul>
+<li>另一种随机队列：<ul>
+<li>基于链表</li>
+<li>入队：随机入队首或队尾</li>
+<li>出队：随机从队首或队尾挑选元素</li>
+</ul>
+</li>
+</ul>
+<h4 id="更多随机方案、更多形状的迷宫"><a href="#更多随机方案、更多形状的迷宫" class="headerlink" title="更多随机方案、更多形状的迷宫"></a>更多随机方案、更多形状的迷宫</h4><h3 id="扫雷游戏"><a href="#扫雷游戏" class="headerlink" title="扫雷游戏"></a>扫雷游戏</h3><p>p51</p>
+
       
     </div>
     
@@ -380,7 +396,7 @@
       
     </div>
   </div>
-    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/universe/funny_algorithm.md" target="_blank">编辑</a>
+    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/universe/funny_algorithm/funny_algorithm.md" target="_blank">编辑</a>
 
 
           </div>
@@ -483,7 +499,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#随机模拟问题"><span class="nav-number">1.</span> <span class="nav-text">随机模拟问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分钱问题"><span class="nav-number">1.1.</span> <span class="nav-text">分钱问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#蒙特卡洛算法"><span class="nav-number">1.2.</span> <span class="nav-text">蒙特卡洛算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#蒙特卡洛方法求Pi值"><span class="nav-number">1.2.1.</span> <span class="nav-text">蒙特卡洛方法求Pi值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三门问题-Monty-Hall-Problem"><span class="nav-number">1.2.2.</span> <span class="nav-text">三门问题(Monty Hall Problem)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序算法可视化"><span class="nav-number">1.3.</span> <span class="nav-text">排序算法可视化</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#随机模拟问题"><span class="nav-number">1.</span> <span class="nav-text">随机模拟问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分钱问题"><span class="nav-number">1.1.</span> <span class="nav-text">分钱问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#蒙特卡洛算法"><span class="nav-number">1.2.</span> <span class="nav-text">蒙特卡洛算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#蒙特卡洛方法求Pi值"><span class="nav-number">1.2.1.</span> <span class="nav-text">蒙特卡洛方法求Pi值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三门问题-Monty-Hall-Problem"><span class="nav-number">1.2.2.</span> <span class="nav-text">三门问题(Monty Hall Problem)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迷宫问题"><span class="nav-number">2.</span> <span class="nav-text">迷宫问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#迷宫生成"><span class="nav-number">2.1.</span> <span class="nav-text">迷宫生成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机性更强的迷宫"><span class="nav-number">2.1.1.</span> <span class="nav-text">随机性更强的迷宫</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更多随机方案、更多形状的迷宫"><span class="nav-number">2.1.2.</span> <span class="nav-text">更多随机方案、更多形状的迷宫</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫雷游戏"><span class="nav-number">2.2.</span> <span class="nav-text">扫雷游戏</span></a></li></ol></li></ol></div>
             
 
           </div>
