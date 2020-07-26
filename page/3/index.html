@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/01/universe/vimscript_backup/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/01/universe/vim/vimscript_backup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/01/universe/vimscript_backup/" itemprop="url">vimscript学习</a></h1>
+                <a class="post-title-link" href="/2020/05/01/universe/vim/vimscript_backup/" itemprop="url">vimscript学习</a></h1>
         
 
         <div class="post-meta">
@@ -301,27 +301,128 @@
         
           
             <p>Remenber to use <code>:h &lt;arg&gt;</code> for help</p>
-<h2 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h2><ul>
+<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><h3 id="Echo"><a href="#Echo" class="headerlink" title="Echo"></a>Echo</h3><ul>
+<li><code>:echo &quot;hello&quot;</code></li>
+<li><code>:echom &quot;hello&quot;</code></li>
+</ul>
+<p>区别在于echom会将消息放入消息队列中<code>:messages</code></p>
+<h3 id="Setting-option"><a href="#Setting-option" class="headerlink" title="Setting option"></a>Setting option</h3><ul>
+<li><code>:set &lt;name&gt;=&lt;value&gt;</code><ul>
+<li><code>:set &lt;name&gt;?</code>可以查看设置的情况</li>
+</ul>
+</li>
+</ul>
+<h3 id="Abbreviations"><a href="#Abbreviations" class="headerlink" title="Abbreviations"></a>Abbreviations</h3><ul>
+<li><code>iabbrev adn and</code></li>
+</ul>
+<p>在输入模式下输入adn，然后空格会发现变成了and</p>
+<h3 id="Buffer-Local-Options"><a href="#Buffer-Local-Options" class="headerlink" title="Buffer-Local Options"></a>Buffer-Local Options</h3><ul>
+<li>local mapping<ul>
+<li>like <code>:map &lt;buffer&gt; D dd</code>, the <code>&lt;buffer&gt;</code>told vim only consider that mapping when we are in the buffer where we dedine it</li>
+</ul>
+</li>
+<li>local leader<ul>
+<li><code>&lt;localleader&gt;</code> instead of <code>&lt;leader&gt;</code></li>
+</ul>
+</li>
+<li>setting<ul>
+<li><code>setlocal &lt;name&gt;</code></li>
+</ul>
+</li>
+<li>shadowing  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:nnoremap &lt;buffer&gt; Q x</span><br><span class="line">:nnoremap          Q dd</span><br></pre></td></tr></table></figure>
+<ul>
+<li>first mapping is more specific, so the second not work</li>
+</ul>
+</li>
+</ul>
+<h3 id="Autocommands"><a href="#Autocommands" class="headerlink" title="Autocommands"></a>Autocommands</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">autocmd</span> BufNewFile * :<span class="keyword">write</span></span><br><span class="line">         ^          ^ ^</span><br><span class="line">         |          | |</span><br><span class="line">         |          | The <span class="keyword">command</span> <span class="keyword">to</span> run.</span><br><span class="line">         |          |</span><br><span class="line">         |          A <span class="string">"patterns"</span> <span class="keyword">to</span> <span class="built_in">filter</span> the event.</span><br><span class="line">         |</span><br><span class="line">         The <span class="string">"events"</span> <span class="keyword">to</span> watch <span class="keyword">for</span>.</span><br></pre></td></tr></table></figure>
+
+<p><code>:help autocmd-events</code></p>
+<h4 id="Autocommands-Group"><a href="#Autocommands-Group" class="headerlink" title="Autocommands Group"></a>Autocommands Group</h4><p>It is possible to create duplicate autocommands, so if you try running the following command:<code>:autocmd BufWrite * :sleep 200m</code> three times. Vim will sleep 600m.</p>
+<p>Use <code>augroup</code> is the same</p>
+<ul>
+<li>Clearing Groups<ul>
+<li><code>autocmd!</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">augroup</span> testgroup</span><br><span class="line">:    autocmd!</span><br><span class="line">:    <span class="keyword">autocmd</span> BufWrite * :<span class="keyword">echom</span> <span class="string">"Cats"</span></span><br><span class="line">:<span class="keyword">augroup</span> END</span><br><span class="line">we enter the testgroup group, immediately clear it(gourp), <span class="built_in">and</span> <span class="keyword">no</span> more dup autocommands before any more</span><br></pre></td></tr></table></figure>
+
+<p><code>:help autocmd-groups</code></p>
+<h3 id="Operator-Pending-Mapping"><a href="#Operator-Pending-Mapping" class="headerlink" title="Operator-Pending Mapping"></a>Operator-Pending Mapping</h3><ul>
+<li>like <code>:onoremap p i(</code>, when we run <code>dp</code> it was like saying “delete parameters”, which vim translates to “delete inside parentheses”</li>
+</ul>
+<h3 id="Status-Lines"><a href="#Status-Lines" class="headerlink" title="Status Lines"></a>Status Lines</h3><ul>
+<li><code>:set statusline=%f\ -\ FileType:\ %y</code></li>
+<li><code>:set statusline+=</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:set statusline&#x3D;%l    &quot; Current line</span><br><span class="line">:set statusline+&#x3D;&#x2F;    &quot; Separator</span><br><span class="line">:set statusline+&#x3D;%L   &quot; Total lines</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>width and padding<ul>
+<li><code>:set statusline=Current:\ %4l\ Total:\ %4L</code>, like this<ul>
+<li><code>Current:   12 Total:  223</code></li>
+</ul>
+</li>
+<li><code>:set statusline=Current:\ %-4l\ Total:\ %-4L</code><ul>
+<li><code>Current: 12   Total: 223</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Programming-Language"><a href="#Programming-Language" class="headerlink" title="Programming Language"></a>Programming Language</h2><ul>
+<li>set up folding for Vimscript files: <code>set foldmethod=&lt;value&gt;</code></li>
+</ul>
+<p>Add lines before and after that autocommands group so that it look like thik:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">" Vimscript file settings ---------------------- &#123;&#123;&#123;</span></span><br><span class="line"><span class="keyword">augroup</span> filetype_vim</span><br><span class="line">    autocmd!</span><br><span class="line">    <span class="keyword">autocmd</span> FileType <span class="keyword">vim</span> <span class="keyword">setlocal</span> foldmethod=marker</span><br><span class="line"><span class="keyword">augroup</span> END</span><br><span class="line"><span class="comment">" &#125;&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>In normal mode, type <code>za</code>. Vim will fold/unfold the lines starting at the one containting <code>3{</code> and ending at <code>3}</code></p>
+<p><code>:h foldlevelstart</code></p>
+<h3 id="Multiple-Line-Statements"><a href="#Multiple-Line-Statements" class="headerlink" title="Multiple-Line Statements"></a>Multiple-Line Statements</h3><p>like</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">augroup</span> testgroup</span><br><span class="line">:    <span class="keyword">autocmd</span> BufWrite * :<span class="keyword">echom</span> <span class="string">"Baz"</span></span><br><span class="line">:<span class="keyword">augroup</span> END</span><br></pre></td></tr></table></figure>
+
+<p>You can write this as three separate lines in a Vimscript file. Or you can separate each line with a pipe character <code>|</code>. Like this.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">echom</span> <span class="string">"foo"</span> | <span class="keyword">echom</span> <span class="string">"bar"</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><ul>
 <li><code>let</code> to init or assignment a variable(call it var below)</li>
 <li><code>unlet</code> to delete a var</li>
 <li><code>unlet</code> to delete a var and ignore warnning, if var did not exist</li>
 </ul>
 <p>You can add a prefix before :var to define its scope, like this</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">g:var  # as global</span><br><span class="line">a:var  # as a function arg</span><br><span class="line">l:var  # as a function var</span><br><span class="line">b:var  # as buffer var</span><br><span class="line">w:var  # as window var</span><br><span class="line">t:var  # as tab var</span><br><span class="line">s:var  # as script var, which useful in this script only</span><br><span class="line">v:var  # as vim build-in var</span><br></pre></td></tr></table></figure>
+<h4 id="Options-as-Variables"><a href="#Options-as-Variables" class="headerlink" title="Options as Variables"></a>Options as Variables</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">set</span> textwidth=<span class="number">80</span></span><br><span class="line">:<span class="keyword">echo</span> &amp;textwidth</span><br></pre></td></tr></table></figure>
 
-<h2 id="Data-type"><a href="#Data-type" class="headerlink" title="Data type"></a>Data type</h2><ul>
-<li>Number</li>
-<li>Float</li>
-<li>String</li>
-<li>Funcref<ul>
-<li>reference of a function</li>
-<li><code>let func = function(&quot;strlen&quot;)</code></li>
+<p>Using an ampersand in front of a name tells Vim that you’re referring to the option, not a variable that happens to have the same name</p>
+<h4 id="Registers-as-Variables"><a href="#Registers-as-Variables" class="headerlink" title="Registers as Variables"></a>Registers as Variables</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">let</span> @a = <span class="string">"hello!"</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>:echo @&quot;</code>, unnamed register, which is where text you yank</li>
+<li><code>:echo @/</code>, echo search pattern you just use</li>
 </ul>
-</li>
-<li>List</li>
-<li>Dictionary</li>
+<h4 id="Variables-Scoping"><a href="#Variables-Scoping" class="headerlink" title="Variables Scoping"></a>Variables Scoping</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">g:var  # as global</span><br><span class="line">a:var  # as a function arg</span><br><span class="line">l:var  # as a function var</span><br><span class="line">b:var  # as buffer var</span><br><span class="line">w:var  # as window var</span><br><span class="line">t:var  # as tab var</span><br><span class="line">s:var  # as script var, which useful in this script only</span><br><span class="line">v:var  # as vim build-in var</span><br></pre></td></tr></table></figure>
+
+<p><code>:h internal-variables</code></p>
+<h3 id="Conditionals"><a href="#Conditionals" class="headerlink" title="Conditionals"></a>Conditionals</h3><p>Any decision making you do in your coding will be done with <code>if</code>s.</p>
+<h4 id="Basic-If"><a href="#Basic-If" class="headerlink" title="Basic If"></a>Basic If</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">if</span> <span class="number">1</span></span><br><span class="line">:    <span class="keyword">echom</span> <span class="string">"One"</span></span><br><span class="line">:<span class="keyword">elseif</span> <span class="string">"nope"</span></span><br><span class="line">:    <span class="keyword">echom</span> <span class="string">"elseif"</span></span><br><span class="line">:<span class="keyword">else</span></span><br><span class="line">:    <span class="keyword">echom</span> <span class="string">"finally"</span></span><br><span class="line">:<span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+
+<p>Vim dose not necessarily treat a non-empty string as “truthly”.</p>
+<p>try this</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">echom</span> <span class="string">"hello"</span> + <span class="number">10</span></span><br><span class="line">:<span class="keyword">echom</span> <span class="string">"10hello"</span> + <span class="number">10</span></span><br><span class="line">:<span class="keyword">echom</span> <span class="string">"hello10"</span> + <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Vim will try to coerce variables (and literals) when necessary. When 10 + “20foo” is evaluated Vim will convert “20foo” to an integer (which results in 20) and then add it to 10.</li>
+<li>Strings that start with a number are coerced to that number, otherwise they’re coerced to 0.</li>
+<li>Vim will execute the body of an if statement when its condition evaluates to a non-zero integer, after all coercion takes place.</li>
 </ul>
-<h2 id="String-comparison"><a href="#String-comparison" class="headerlink" title="String comparison"></a>String comparison</h2><ul>
+<h4 id="Comparisons"><a href="#Comparisons" class="headerlink" title="Comparisons"></a>Comparisons</h4><p>Vim is case senitive so <code>&quot;foo&quot; != &quot;FOO&quot;</code>. But if you <code>:set ignorecase</code>, vim is case insenitive.</p>
+<p>So to be code defensively you can nevertrust the <code>==</code> comparison. A bare <code>==</code> should never appear in you plugins’ code. Vim has two extra sets of comparison operators to deal with this.</p>
+<ul>
+<li><code>==?</code> is the “case-insenitive”, no matter what user has set</li>
+<li><code>==#</code> is the “case-senitive”, no matter what user has set</li>
+</ul>
+<h4 id="String-comparison"><a href="#String-comparison" class="headerlink" title="String comparison"></a>String comparison</h4><ul>
 <li><code>&lt;string&gt; == &lt;string&gt;</code> equal</li>
 <li><code>&lt;string&gt; != &lt;string&gt;</code> not equal</li>
 <li><code>&lt;string&gt; =~ &lt;pattern&gt;</code> matching pattern</li>
@@ -330,12 +431,64 @@
 <li><code>&lt;operator&gt;?</code> matching with ignorecase</li>
 </ul>
 <p><code>&lt;string&gt;.&lt;string&gt;</code> to connect string</p>
-<h2 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h2><p><code>If, For, While, Try/Catch</code></p>
-<h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><p>Use <code>function</code> keywork to define a function, use <code>function!</code> to overwire a function. Be attention, function need to begin with capital letter.</p>
+<h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><p> <strong>Vimscript functions must start with a capital letter if they are unscoped!</strong> </p>
+<p>Use <code>function</code> keywork to define a function, use <code>function!</code> to overwire a function. Be attention, function need to begin with capital letter.</p>
 <ul>
-<li><code>delfunction &lt;function&gt;</code> to delete a function</li>
-<li><code>call &lt;function&gt;</code> to call a function </li>
+<li><code>:echo Function()</code> if Function has no return, vim will implicit return 0</li>
+<li><code>:delfunction &lt;function&gt;</code> to delete a function</li>
+<li><code>:call &lt;function&gt;</code> to call a function </li>
 </ul>
+<h4 id="Function-Arguments"><a href="#Function-Arguments" class="headerlink" title="Function Arguments"></a>Function Arguments</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DisplayName</span><span class="params">(name)</span></span></span><br><span class="line">  <span class="keyword">echom</span> <span class="string">"Hello!  My name is:"</span></span><br><span class="line">  <span class="keyword">echom</span> <span class="variable">a:name</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<p>Notice the <code>a:</code> in the name of the variable represents a variable scope. And it tell vim that they’re in the argument scope.</p>
+<h4 id="Varargs"><a href="#Varargs" class="headerlink" title="Varargs"></a>Varargs</h4><p>Vimscript call take variable-length argument lists.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Varg</span><span class="params">(...)</span></span></span><br><span class="line">  <span class="keyword">echom</span> <span class="variable">a:0</span></span><br><span class="line">  <span class="keyword">echom</span> <span class="variable">a:1</span></span><br><span class="line">  <span class="keyword">echo</span> <span class="variable">a:000</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">call</span> Varg(<span class="string">"a"</span>, <span class="string">"b"</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>a:0</code> will be set to the number of extra arguments you were given</li>
+<li><code>a:1</code> will be set to the first extra argument</li>
+<li><code>a:000</code> will be set to a list containing all the extra arguments</li>
+</ul>
+<h4 id="Assignment"><a href="#Assignment" class="headerlink" title="Assignment"></a>Assignment</h4><p>Vimscript not allow you to reassign argument variables.Try running the follow commands, vim will throw an error. And you need a temp var.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">:<span class="function"><span class="keyword">function</span> <span class="title">Assign</span><span class="params">(foo)</span></span></span><br><span class="line">:  <span class="keyword">let</span> <span class="variable">a:foo</span> = <span class="string">"Nope"</span></span><br><span class="line">:  <span class="keyword">echom</span> <span class="variable">a:foo</span></span><br><span class="line">:<span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line">:<span class="keyword">call</span> Assign(<span class="string">"test"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>Vimscritp use <code>.</code> to connect strings. Use <code>\</code> to escape sequences.</p>
+<p>Using single quotes tell vim that you want string exactly as-is, with no escape sequences. And two single quotes in a row will produce one single quote. <code>:echom &#39;That&#39;&#39;s enough.&#39;</code></p>
+<h4 id="String-Functions"><a href="#String-Functions" class="headerlink" title="String Functions"></a>String Functions</h4><ul>
+<li>Length<ul>
+<li><code>strlen(&quot;foo&quot;)</code></li>
+<li><code>len(&quot;foo&quot;)</code></li>
+</ul>
+</li>
+<li>Splitting: splits a String into a List<ul>
+<li><code>split(&quot;String&quot;, separator)</code>, separator is “whitespace” by default</li>
+</ul>
+</li>
+<li>Joining: join a List into a String<ul>
+<li><code>join(List, connector)</code></li>
+</ul>
+</li>
+<li>Case<ul>
+<li><code>tolower(&quot;String&quot;)</code></li>
+<li><code>toupper(&quot;String&quot;)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Execute"><a href="#Execute" class="headerlink" title="Execute"></a>Execute</h3><p>The <code>execute</code> command is user to evaluate a string as if it were a Vimscripte command.</p>
+<h4 id="Normal"><a href="#Normal" class="headerlink" title="Normal"></a>Normal</h4><p>Try run</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">nnoremap</span> G dd</span><br><span class="line">:<span class="keyword">normal</span> G</span><br></pre></td></tr></table></figure>
+
+<p>Vim will delete the current line. The <code>normal</code> command will take into account any mapping that exist.</p>
+<p>Vim has a <code>normal!</code> command to avoid user mapping. So write Vimscript should  <strong>always</strong> use <code>normal!</code>.</p>
+<p>The problem is that <code>normal!</code> dosen’t parse special charater sequences like <code>&lt;cr&gt;</code>. Combining <code>normal!</code> with <code>execute</code> fixes that problem. Like this:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">execute</span> <span class="string">"normal! gg/print\&lt;cr&gt;"</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
 
           
         
@@ -6031,7 +6184,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/universe/vim_in_action/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/universe/vim/vim_in_action/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -6050,7 +6203,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/02/26/universe/vim_in_action/" itemprop="url">vim实用技巧</a></h1>
+                <a class="post-title-link" href="/2020/02/26/universe/vim/vim_in_action/" itemprop="url">vim实用技巧</a></h1>
         
 
         <div class="post-meta">
