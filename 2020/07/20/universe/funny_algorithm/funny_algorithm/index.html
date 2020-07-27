@@ -88,7 +88,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/07/20/universe/funny_algorithm/funny_algorithm/assets/mazi.png">
 <meta property="article:published_time" content="2020-07-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-25T10:12:41.651Z">
+<meta property="article:modified_time" content="2020-07-27T03:52:44.909Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="algorithm, gui, tools">
 <meta name="twitter:card" content="summary">
@@ -332,7 +332,28 @@
 </ul>
 </li>
 </ul>
-<h4 id="更多随机方案、更多形状的迷宫"><a href="#更多随机方案、更多形状的迷宫" class="headerlink" title="更多随机方案、更多形状的迷宫"></a>更多随机方案、更多形状的迷宫</h4><h3 id="扫雷游戏"><a href="#扫雷游戏" class="headerlink" title="扫雷游戏"></a>扫雷游戏</h3><p>p51</p>
+<h4 id="更多随机方案、更多形状的迷宫"><a href="#更多随机方案、更多形状的迷宫" class="headerlink" title="更多随机方案、更多形状的迷宫"></a>更多随机方案、更多形状的迷宫</h4><h3 id="扫雷游戏"><a href="#扫雷游戏" class="headerlink" title="扫雷游戏"></a>扫雷游戏</h3><ul>
+<li>随机生成雷区<ul>
+<li>方案1：随机坐标，然后在这个位置埋雷<ul>
+<li>缺点：随机出的坐标可能已经有雷，如果在while中跳过已经有雷的区域，则时间将不确定，有可能每次都随机出已经有雷的区域</li>
+</ul>
+</li>
+<li>方案2：将雷顺序放在前面的格子，然后随机交换一定次数</li>
+</ul>
+</li>
+</ul>
+<h4 id="什么样的乱序化才是好的乱序"><a href="#什么样的乱序化才是好的乱序" class="headerlink" title="什么样的乱序化才是好的乱序"></a>什么样的乱序化才是好的乱序</h4><ul>
+<li>问：给一副扑克牌，设计一个洗牌算法，怎么说明你的洗牌算法是个好的洗牌算法</li>
+<li>54张牌，可以有54!种结果。所以一个好的洗牌算法可以等概率获得54!种结果之一</li>
+</ul>
+<h4 id="等概率洗牌算法"><a href="#等概率洗牌算法" class="headerlink" title="等概率洗牌算法"></a>等概率洗牌算法</h4><ul>
+<li>方案1：根据现实模拟。54!种结果来源于第一张牌有54个位置可选，第二张53…根据这点设计洗牌算法。从54张牌中随机抽一张放在一个位置…<ul>
+<li>缺点：不是原地的，即需要额外的存储空间;如果随机取牌不够随机，那也不是等概率的</li>
+</ul>
+</li>
+</ul>
+<h4 id="Fisher-Yates-Knuth-洗牌算法"><a href="#Fisher-Yates-Knuth-洗牌算法" class="headerlink" title="Fisher-Yates(-Knuth)洗牌算法"></a><strong>Fisher-Yates(-Knuth)洗牌算法</strong></h4><p>以洗牌为例，在长度位54的数组中随机选择一个元素，然后与第一个元素交换位置。然后以剩下的张牌位单位重复这个操作。</p>
+<h4 id="Floodfill算法"><a href="#Floodfill算法" class="headerlink" title="Floodfill算法"></a>Floodfill算法</h4><p>就像一滴墨水滴在白纸上，慢慢扩散，所以称floodfill。也就是要注意边界的BFS或DFS。</p>
 
       
     </div>
@@ -453,7 +474,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -466,7 +487,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -499,7 +520,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#随机模拟问题"><span class="nav-number">1.</span> <span class="nav-text">随机模拟问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分钱问题"><span class="nav-number">1.1.</span> <span class="nav-text">分钱问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#蒙特卡洛算法"><span class="nav-number">1.2.</span> <span class="nav-text">蒙特卡洛算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#蒙特卡洛方法求Pi值"><span class="nav-number">1.2.1.</span> <span class="nav-text">蒙特卡洛方法求Pi值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三门问题-Monty-Hall-Problem"><span class="nav-number">1.2.2.</span> <span class="nav-text">三门问题(Monty Hall Problem)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迷宫问题"><span class="nav-number">2.</span> <span class="nav-text">迷宫问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#迷宫生成"><span class="nav-number">2.1.</span> <span class="nav-text">迷宫生成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机性更强的迷宫"><span class="nav-number">2.1.1.</span> <span class="nav-text">随机性更强的迷宫</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更多随机方案、更多形状的迷宫"><span class="nav-number">2.1.2.</span> <span class="nav-text">更多随机方案、更多形状的迷宫</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫雷游戏"><span class="nav-number">2.2.</span> <span class="nav-text">扫雷游戏</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#随机模拟问题"><span class="nav-number">1.</span> <span class="nav-text">随机模拟问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分钱问题"><span class="nav-number">1.1.</span> <span class="nav-text">分钱问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#蒙特卡洛算法"><span class="nav-number">1.2.</span> <span class="nav-text">蒙特卡洛算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#蒙特卡洛方法求Pi值"><span class="nav-number">1.2.1.</span> <span class="nav-text">蒙特卡洛方法求Pi值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三门问题-Monty-Hall-Problem"><span class="nav-number">1.2.2.</span> <span class="nav-text">三门问题(Monty Hall Problem)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迷宫问题"><span class="nav-number">2.</span> <span class="nav-text">迷宫问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#迷宫生成"><span class="nav-number">2.1.</span> <span class="nav-text">迷宫生成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机性更强的迷宫"><span class="nav-number">2.1.1.</span> <span class="nav-text">随机性更强的迷宫</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更多随机方案、更多形状的迷宫"><span class="nav-number">2.1.2.</span> <span class="nav-text">更多随机方案、更多形状的迷宫</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫雷游戏"><span class="nav-number">2.2.</span> <span class="nav-text">扫雷游戏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么样的乱序化才是好的乱序"><span class="nav-number">2.2.1.</span> <span class="nav-text">什么样的乱序化才是好的乱序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#等概率洗牌算法"><span class="nav-number">2.2.2.</span> <span class="nav-text">等概率洗牌算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fisher-Yates-Knuth-洗牌算法"><span class="nav-number">2.2.3.</span> <span class="nav-text">Fisher-Yates(-Knuth)洗牌算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Floodfill算法"><span class="nav-number">2.2.4.</span> <span class="nav-text">Floodfill算法</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

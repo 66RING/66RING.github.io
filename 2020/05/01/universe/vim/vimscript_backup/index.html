@@ -87,7 +87,7 @@
 <meta property="og:description" content="Remenber to use :h &lt;arg&gt; for help BasicEcho :echo &quot;hello&quot; :echom &quot;hello&quot;  区别在于echom会将消息放入消息队列中:messages Setting option :set &lt;name&gt;&#x3D;&lt;value&gt; :set &lt;name&gt;?可以查看设">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-26T14:26:01.310Z">
+<meta property="article:modified_time" content="2020-07-27T11:23:02.969Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="backup, vim, vimscript">
 <meta name="twitter:card" content="summary">
@@ -485,11 +485,88 @@
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">execute</span> <span class="string">"normal! gg/print\&lt;cr&gt;"</span></span><br></pre></td></tr></table></figure>
 
 
+<h3 id="Demos"><a href="#Demos" class="headerlink" title="Demos"></a>Demos</h3><h4 id="Grep-Operation-Part-One"><a href="#Grep-Operation-Part-One" class="headerlink" title="Grep Operation, Part One"></a>Grep Operation, Part One</h4><p><code>:nnoremap &lt;leader&gt;g :grep -R &#39;&lt;cWORD&gt;&#39; %&lt;cr&gt;</code></p>
+<h5 id="Escaping-Shell-Command-Argument"><a href="#Escaping-Shell-Command-Argument" class="headerlink" title="Escaping Shell Command Argument"></a>Escaping Shell Command Argument</h5><p>Try the mapping on the word <code>that&#39;s</code>. It won’t work, because the single quote inside the word interferes with the quotes in the grep command!</p>
+<p>To get around this we can use Vim’s <code>shellescape</code> function. <code>:h shellescape()</code> and <code>:h escape</code></p>
+<p>The problem is that <strong>Vim performed the <code>shellescape()</code> call before it expended out special string like <code>&lt;cword&gt;</code>.</strong> So <code>:echom shellescape(&quot;&lt;cWORD&gt;&quot;)</code> is literally output <code>&#39;&lt;cword&gt;&#39;</code></p>
+<p>To fix this we’ll <strong>use the <code>expand()</code> function to force th expansion of <code>&lt;cword&gt;</code> into the actual string</strong> before it gets passed to <code>shellescape</code>.</p>
+<p>try following over the word like <code>that&#39;s</code>:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">echom</span> <span class="built_in">expand</span>(<span class="string">"&lt;cWORD&gt;"</span>)</span><br><span class="line">:<span class="keyword">echom</span> <span class="built_in">shellescape</span>(<span class="built_in">expand</span>(<span class="string">"&lt;cWORD&gt;"</span>))</span><br></pre></td></tr></table></figure>
 
+<p>Finally, try <code>:nnoremap &lt;leader&gt;g :silent execute &quot;grep! -R &quot; . shellescape(expand(&quot;&lt;cWORD&gt;&quot;)) . &quot; .&quot;&lt;cr&gt;:copen&lt;cr&gt;</code></p>
+<ul>
+<li><code>:h copen</code>, <ul>
+<li>Open a window to show the current list of errors</li>
+</ul>
+</li>
+<li><code>:h silent</code><ul>
+<li>The <code>silent</code> command just runs the command that follows it while hiding any messages it would normally display</li>
+</ul>
+</li>
+</ul>
+<h4 id="Grep-Operator-Part-Two"><a href="#Grep-Operator-Part-Two" class="headerlink" title="Grep Operator, Part Two"></a>Grep Operator, Part Two</h4><ul>
+<li>Create a File<ul>
+<li>Inside <code>.vim/plugin</code> create file named <code>grep-operato.vim</code></li>
+<li>This is where you’ll place the code.</li>
+</ul>
+</li>
+<li>Skeleton<ul>
+<li>To create a new Vim operator you’ll start with two components:a function and a mapping  <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="keyword">set</span> operatorfunc=GrepOperator<span class="symbol">&lt;cr&gt;</span>g@</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">GrepOperator</span><span class="params">(type)</span></span></span><br><span class="line">    <span class="keyword">echom</span> <span class="string">"Test"</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure></li>
+<li>we set the <code>operatorfunc</code> option to our function</li>
+<li>then we run <code>g@</code> which calls this function as an operator<ul>
+<li><strong>try type <code>g@</code> in normal mode</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Visual Mode<ul>
+<li>Add another mapping <code>vnoremap &lt;leader&gt;g :&lt;c-u&gt;call GrepOperator(visualmode())&lt;cr&gt;</code><ul>
+<li><code>&lt;c-u&gt;</code> to say “delete from the cursor to the bebginning of the line”</li>
+<li><strong><code>visualmode()</code> is a built-in Vim function</strong> that return a one-character string representing the last type of visual mode. “v、V and Crtl-v”</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="Motion-type"><a href="#Motion-type" class="headerlink" title="Motion type"></a>Motion type</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="keyword">set</span> operatorfunc=GrepOperator<span class="symbol">&lt;cr&gt;</span>g@</span><br><span class="line"><span class="keyword">vnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="symbol">&lt;c-u&gt;</span><span class="keyword">call</span> GrepOperator(<span class="built_in">visualmode</span>())<span class="symbol">&lt;cr&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">GrepOperator</span><span class="params">(type)</span></span></span><br><span class="line">    <span class="keyword">echom</span> <span class="variable">a:type</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>Pressing <code>viw&lt;leader&gt;g</code> echoes <code>v</code> because we were in characterwise visual mode.</li>
+<li>Pressing <code>Vjj&lt;leader&gt;g</code> echoes <code>V</code> because we were in linewise visual mode.</li>
+<li>Pressing <code>&lt;leader&gt;giw</code> echoes <code>char</code> because we used a characterwise motion with the operator.</li>
+<li>Pressing <code>&lt;leader&gt;gG</code> echoes <code>line</code> because we used a linewise motion with the operator.</li>
+</ul>
+<h5 id="Copying-the-Text"><a href="#Copying-the-Text" class="headerlink" title="Copying the Text"></a>Copying the Text</h5><p>Edit a function look like this:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="keyword">set</span> operatorfunc=GrepOperator<span class="symbol">&lt;cr&gt;</span>g@</span><br><span class="line"><span class="keyword">vnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="symbol">&lt;c-u&gt;</span><span class="keyword">call</span> GrepOperator(<span class="built_in">visualmode</span>())<span class="symbol">&lt;cr&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">GrepOperator</span><span class="params">(type)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="variable">a:type</span> ==# <span class="string">'v'</span></span><br><span class="line">        <span class="keyword">execute</span> <span class="string">"normal! `&lt;v`&gt;y"</span></span><br><span class="line">    <span class="keyword">elseif</span> <span class="variable">a:type</span> ==# <span class="string">'char'</span></span><br><span class="line">        <span class="keyword">execute</span> <span class="string">"normal! `[v`]y"</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">echom</span> <span class="built_in">shellescape</span>(@@)</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><code>==#</code> case-sensitive comparison</li>
+<li><strong><code>normal!</code> dose two things</strong>:<ul>
+<li>Visually select the range of text we want by:<ul>
+<li>Moving to mark at the beginning of the range.</li>
+<li>Entering characterwise visual mode.</li>
+<li>Moving to the mark at the end of the range.</li>
+</ul>
+</li>
+<li>Yanking the visually selected text.</li>
+</ul>
+</li>
+<li><code>@@</code> is the “unnamed” register: the one that Vim places text into then yank or delete by default</li>
+</ul>
+<h4 id="Grep-Operator-Part-Three"><a href="#Grep-Operator-Part-Three" class="headerlink" title="Grep Operator, Part Three"></a>Grep Operator, Part Three</h4><p><strong>Namespacing</strong> </p>
+<p>Our script create a function named <code>GrepOperator</code> in the global namespace.</p>
+<p>We can avoid polluting the global namespace by tweaking a couple of lines in our code.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="keyword">set</span> operatorfunc=<span class="symbol">&lt;SID&gt;</span>GrepOperator<span class="symbol">&lt;cr&gt;</span>g@</span><br><span class="line"><span class="keyword">vnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="symbol">&lt;c-u&gt;</span><span class="keyword">call</span> <span class="symbol">&lt;SID&gt;</span>GrepOperator(<span class="built_in">visualmode</span>())<span class="symbol">&lt;cr&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">s</span>:<span class="title">GrepOperator</span><span class="params">(type)</span></span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
 
-
+<ul>
+<li>modified the function name to start with <code>s:</code> which places it in the current script’s namespace</li>
+<li>modified the mapping and prepended the <code>GrepOperator</code> function name with <code>&lt;SID&gt;</code> so they could find the function.<ul>
+<li>If we hadn’t done this they would have tried to find the function in the global namespace, which wouldn’t have worked</li>
+</ul>
+</li>
+</ul>
+<p><code>:h &lt;SID&gt;</code></p>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3>
       
     </div>
     
@@ -609,7 +686,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -622,7 +699,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -655,7 +732,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic"><span class="nav-number">1.</span> <span class="nav-text">Basic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Echo"><span class="nav-number">1.1.</span> <span class="nav-text">Echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting-option"><span class="nav-number">1.2.</span> <span class="nav-text">Setting option</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Abbreviations"><span class="nav-number">1.3.</span> <span class="nav-text">Abbreviations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer-Local-Options"><span class="nav-number">1.4.</span> <span class="nav-text">Buffer-Local Options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Autocommands"><span class="nav-number">1.5.</span> <span class="nav-text">Autocommands</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Autocommands-Group"><span class="nav-number">1.5.1.</span> <span class="nav-text">Autocommands Group</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Operator-Pending-Mapping"><span class="nav-number">1.6.</span> <span class="nav-text">Operator-Pending Mapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Status-Lines"><span class="nav-number">1.7.</span> <span class="nav-text">Status Lines</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Programming-Language"><span class="nav-number">2.</span> <span class="nav-text">Programming Language</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiple-Line-Statements"><span class="nav-number">2.1.</span> <span class="nav-text">Multiple-Line Statements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Variables"><span class="nav-number">2.2.</span> <span class="nav-text">Variables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Options-as-Variables"><span class="nav-number">2.2.1.</span> <span class="nav-text">Options as Variables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Registers-as-Variables"><span class="nav-number">2.2.2.</span> <span class="nav-text">Registers as Variables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Variables-Scoping"><span class="nav-number">2.2.3.</span> <span class="nav-text">Variables Scoping</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conditionals"><span class="nav-number">2.3.</span> <span class="nav-text">Conditionals</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Basic-If"><span class="nav-number">2.3.1.</span> <span class="nav-text">Basic If</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Comparisons"><span class="nav-number">2.3.2.</span> <span class="nav-text">Comparisons</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String-comparison"><span class="nav-number">2.3.3.</span> <span class="nav-text">String comparison</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function"><span class="nav-number">2.4.</span> <span class="nav-text">Function</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Function-Arguments"><span class="nav-number">2.4.1.</span> <span class="nav-text">Function Arguments</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Varargs"><span class="nav-number">2.4.2.</span> <span class="nav-text">Varargs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Assignment"><span class="nav-number">2.4.3.</span> <span class="nav-text">Assignment</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">2.5.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String-Functions"><span class="nav-number">2.5.1.</span> <span class="nav-text">String Functions</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Execute"><span class="nav-number">2.6.</span> <span class="nav-text">Execute</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Normal"><span class="nav-number">2.6.1.</span> <span class="nav-text">Normal</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic"><span class="nav-number">1.</span> <span class="nav-text">Basic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Echo"><span class="nav-number">1.1.</span> <span class="nav-text">Echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting-option"><span class="nav-number">1.2.</span> <span class="nav-text">Setting option</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Abbreviations"><span class="nav-number">1.3.</span> <span class="nav-text">Abbreviations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer-Local-Options"><span class="nav-number">1.4.</span> <span class="nav-text">Buffer-Local Options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Autocommands"><span class="nav-number">1.5.</span> <span class="nav-text">Autocommands</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Autocommands-Group"><span class="nav-number">1.5.1.</span> <span class="nav-text">Autocommands Group</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Operator-Pending-Mapping"><span class="nav-number">1.6.</span> <span class="nav-text">Operator-Pending Mapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Status-Lines"><span class="nav-number">1.7.</span> <span class="nav-text">Status Lines</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Programming-Language"><span class="nav-number">2.</span> <span class="nav-text">Programming Language</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiple-Line-Statements"><span class="nav-number">2.1.</span> <span class="nav-text">Multiple-Line Statements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Variables"><span class="nav-number">2.2.</span> <span class="nav-text">Variables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Options-as-Variables"><span class="nav-number">2.2.1.</span> <span class="nav-text">Options as Variables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Registers-as-Variables"><span class="nav-number">2.2.2.</span> <span class="nav-text">Registers as Variables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Variables-Scoping"><span class="nav-number">2.2.3.</span> <span class="nav-text">Variables Scoping</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conditionals"><span class="nav-number">2.3.</span> <span class="nav-text">Conditionals</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Basic-If"><span class="nav-number">2.3.1.</span> <span class="nav-text">Basic If</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Comparisons"><span class="nav-number">2.3.2.</span> <span class="nav-text">Comparisons</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String-comparison"><span class="nav-number">2.3.3.</span> <span class="nav-text">String comparison</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function"><span class="nav-number">2.4.</span> <span class="nav-text">Function</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Function-Arguments"><span class="nav-number">2.4.1.</span> <span class="nav-text">Function Arguments</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Varargs"><span class="nav-number">2.4.2.</span> <span class="nav-text">Varargs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Assignment"><span class="nav-number">2.4.3.</span> <span class="nav-text">Assignment</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">2.5.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String-Functions"><span class="nav-number">2.5.1.</span> <span class="nav-text">String Functions</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Execute"><span class="nav-number">2.6.</span> <span class="nav-text">Execute</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Normal"><span class="nav-number">2.6.1.</span> <span class="nav-text">Normal</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demos"><span class="nav-number">2.7.</span> <span class="nav-text">Demos</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Grep-Operation-Part-One"><span class="nav-number">2.7.1.</span> <span class="nav-text">Grep Operation, Part One</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Escaping-Shell-Command-Argument"><span class="nav-number">2.7.1.1.</span> <span class="nav-text">Escaping Shell Command Argument</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Grep-Operator-Part-Two"><span class="nav-number">2.7.2.</span> <span class="nav-text">Grep Operator, Part Two</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Motion-type"><span class="nav-number">2.7.2.1.</span> <span class="nav-text">Motion type</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Copying-the-Text"><span class="nav-number">2.7.2.2.</span> <span class="nav-text">Copying the Text</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Grep-Operator-Part-Three"><span class="nav-number">2.7.3.</span> <span class="nav-text">Grep Operator, Part Three</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List"><span class="nav-number">2.8.</span> <span class="nav-text">List</span></a></li></ol></li></ol></div>
             
 
           </div>
