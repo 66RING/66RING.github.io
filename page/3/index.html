@@ -873,7 +873,104 @@
 </li>
 </ul>
 <p><code>:h &lt;SID&gt;</code></p>
-<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>Vim List is much like python.</p>
+<ul>
+<li>Lists<ul>
+<li><code>:echo [&#39;foo&#39;, 3, &#39;bar&#39;]</code></li>
+<li><code>:echo [&#39;foo&#39;, [3, &#39;bar&#39;]]</code> of course can be nested</li>
+</ul>
+</li>
+<li>Indexing<ul>
+<li><code>:echo [0, [1, 2]][1]</code> will display <code>[1, 2]</code></li>
+<li><code>:echo [0, [1, 2]][-2]</code> will display <code>0</code></li>
+</ul>
+</li>
+<li>Slicing<ul>
+<li><code>:echo [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;][0:2]</code></li>
+<li><code>:echo [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;][:2]</code></li>
+</ul>
+</li>
+<li>Concatenation<ul>
+<li><code>:echo [&#39;a&#39;, &#39;b&#39;] + [&#39;c&#39;]</code></li>
+</ul>
+</li>
+<li>Built-in List Function<ul>
+<li><code>:call add(list, &#39;b&#39;)</code> append <code>b</code> </li>
+<li><code>:echo len(list)</code></li>
+<li><code>:echo get(foo, 100, &#39;default&#39;)</code><ul>
+<li>The <code>get</code> function will get the item at the given index from the given list, or return the given default value if the index is out of range in the list.</li>
+</ul>
+</li>
+<li><code>:echo index(foo, &#39;b&#39;)</code><ul>
+<li>return the first index of <code>b</code>, or <code>-1</code> if not in list</li>
+</ul>
+</li>
+<li><code>:echo join(list, &#39;--&#39;)</code> join item in list together into a string</li>
+<li><code>:call reverse(list)</code></li>
+</ul>
+</li>
+</ul>
+<p><code>:h functions</code></p>
+<h3 id="Looping"><a href="#Looping" class="headerlink" title="Looping"></a>Looping</h3><ul>
+<li>For Loops  <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i in [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">endfor</span></span><br></pre></td></tr></table></figure></li>
+<li>While Loops  <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">c</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">c</span> &lt;= <span class="number">4</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">c</span> += <span class="number">1</span></span><br><span class="line"><span class="keyword">endfor</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h3 id="Dictionaries"><a href="#Dictionaries" class="headerlink" title="Dictionaries"></a>Dictionaries</h3><ul>
+<li>Dictionaries<ul>
+<li><code>:echo {&#39;a&#39;: 1, 100: &#39;foo&#39;}</code></li>
+</ul>
+</li>
+<li>Indexing<ul>
+<li><code>:echo {&#39;a&#39;: 1, 100: &#39;foo&#39;,}[&#39;a&#39;]</code></li>
+<li>Or Javascritp-style “dot” <code>:echo {&#39;a&#39;: 1, 100: &#39;foo&#39;,}.a</code></li>
+</ul>
+</li>
+<li>Assigning and Adding <code>:let foo = {&#39;a&#39;: 1}</code><ul>
+<li>Assigning: <code>:let foo.a = 100</code> </li>
+<li>Add: <code>:let foo.b = 200</code></li>
+</ul>
+</li>
+<li>Removing Entries<ul>
+<li><code>:let test = remove(foo, &#39;a&#39;)</code><ul>
+<li>Remove the entry with the given key</li>
+<li>And return the removed value</li>
+</ul>
+</li>
+<li><code>unlet foo.b</code><ul>
+<li>Also removes entries, but you can’t use the value</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Dictionary Functions<ul>
+<li><code>:echom get({&#39;a&#39;: 100}, &#39;b&#39;, &#39;default&#39;)</code><ul>
+<li>just like get function for lists</li>
+</ul>
+</li>
+<li><code>:echom has_key({&#39;a&#39;: 100}, &#39;a&#39;)</code><ul>
+<li>return <code>0</code> as falsy</li>
+</ul>
+</li>
+<li><code>:echo items({&#39;a&#39;: 100, &#39;b&#39;: 200})</code><ul>
+<li>You can pull the key-value pairs out of a dict with <code>item</code></li>
+<li>display like <code>[[&#39;a&#39;, 100], [&#39;b&#39;, 200]]</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Toggling"><a href="#Toggling" class="headerlink" title="Toggling"></a>Toggling</h3><p>For boolean options we can use <code>set someoption!</code> to “toggle” the option.If we want to toggle a non-boolean option we’ll need to do a bit more work.</p>
+<p>Like this. Remember Vim treats the 0 as falsy and any other number as truthy</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">FoldColumnToggle</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">if</span> &amp;foldcolumn</span><br><span class="line">        <span class="keyword">setlocal</span> foldcolumn=<span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">setlocal</span> foldcolumn=<span class="number">4</span></span><br><span class="line">    <span class="keyword">endif</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line"><span class="comment">" Or</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">QuickfixToggle</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="variable">g:quickfix_is_open</span></span><br><span class="line">        <span class="keyword">cclose</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">g:quickfix_is_open</span> = <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">copen</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">g:quickfix_is_open</span> = <span class="number">1</span></span><br><span class="line">    <span class="keyword">endif</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>:h wincmd</code></li>
+<li><code>:h winnr()</code></li>
+</ul>
+<h3 id="Functional-Programming"><a href="#Functional-Programming" class="headerlink" title="Functional Programming"></a>Functional Programming</h3>
           
         
       
@@ -7047,8 +7144,14 @@
 <ul>
 <li><code>qq</code>：用寄存器q录制宏</li>
 <li><code>qQ</code>:往寄存器q中追加操作</li>
-<li><code>:put q</code>：把寄存器q的内容粘贴到文档，以便修改</li>
-<li><code>:d q</code>：复制回寄存器</li>
+<li><code>:put q</code>：把寄存器q的内容粘贴到文档，以便修改<ul>
+<li>Or <code>[&quot;x]p</code></li>
+</ul>
+</li>
+<li><code>:d q</code>：复制回寄存器<ul>
+<li><code>[&quot;x]d{motion}</code> delete text move over [into register x], like<code>&quot;qd3d</code>删除三行，到寄存器q中</li>
+</ul>
+</li>
 </ul>
 
           

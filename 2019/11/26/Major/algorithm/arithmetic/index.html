@@ -82,12 +82,12 @@
 <meta name="description" content="排序冒泡排序 比较大小,如果符合条件(升序)就交换两个元素的位置   每次执行N-1次 严格大&#x2F;小,保证了原序(稳定性) 没次能保证最大&#x2F;最小的元素会在最后   如果全程无交换,则说明有序了,跳出即可 $T&#x3D;O(x),x\in(N,N^2)$  插入排序 每次抽取一个元素,然后从序列末尾开始进行比较 若符合条件,往后移位,直到不符合条件跳出 然后插入元素  希尔排序对插入排序的改进,每次消除多个逆">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法学习">
-<meta property="og:url" content="http://yoursite.com/2019/11/26/Major/arithmetic/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/11/26/Major/algorithm/arithmetic/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="排序冒泡排序 比较大小,如果符合条件(升序)就交换两个元素的位置   每次执行N-1次 严格大&#x2F;小,保证了原序(稳定性) 没次能保证最大&#x2F;最小的元素会在最后   如果全程无交换,则说明有序了,跳出即可 $T&#x3D;O(x),x\in(N,N^2)$  插入排序 每次抽取一个元素,然后从序列末尾开始进行比较 若符合条件,往后移位,直到不符合条件跳出 然后插入元素  希尔排序对插入排序的改进,每次消除多个逆">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-11-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-30T11:49:52.474Z">
+<meta property="article:modified_time" content="2020-07-28T13:33:51.065Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="算法, c&#x2F;c++">
 <meta name="twitter:card" content="summary">
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/26/Major/arithmetic/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/11/26/Major/algorithm/arithmetic/"/>
 
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/26/Major/arithmetic/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/26/Major/algorithm/arithmetic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -613,6 +613,55 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MST=&#123;&#125;;  <span class="comment">// 最小生成树</span></span><br><span class="line">E;   <span class="comment">// 边集</span></span><br><span class="line"><span class="keyword">while</span>(没够V<span class="number">-1</span>条边&amp;&amp;E没空)&#123;</span><br><span class="line">    findmin();  <span class="comment">// 找最小边  用最小堆</span></span><br><span class="line">    delet(E(v,w));  <span class="comment">// 把该边移除边集E</span></span><br><span class="line">    <span class="keyword">if</span>(E(v,w)加入MST不构成回路)   <span class="comment">// 并查集</span></span><br><span class="line">        join(E(v,w));  <span class="comment">// 加入并查集</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        单纯的删除</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(MST中边不够V<span class="number">-1</span>条)</span><br><span class="line">    生成树不存在</span><br></pre></td></tr></table></figure>
 
 
+<h3 id="A星寻路算法"><a href="#A星寻路算法" class="headerlink" title="A星寻路算法"></a>A星寻路算法</h3><ul>
+<li>启发性搜索：f = g + h<ul>
+<li>f：当前点到终点的代价</li>
+<li>g：起点到当前点的代价</li>
+<li>h：当前点到终点的 <strong>预估代价</strong><ul>
+<li>忽略障碍，只算直线距离，但是移动时只走无障碍的路</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>过程<ul>
+<li>使用一个OPEN列表保存能走且未走过的路</li>
+<li>使用一个CLOSED列表保存走过的路</li>
+<li>将起点放入OPEN列表</li>
+<li>循环<ul>
+<li><ol>
+<li><strong>current=OPEN列表中f最小的点</strong></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>OPEN中移出current放入CLOSED</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>如果current是终点，则循环结束</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>遍历current的所有邻居(其中的邻居不能是CLOSED中、不能是障碍物)</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>计算邻居的f</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>将邻居的parent设为current</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>将邻居放入OPEN列表</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>最后从终点一直沿着父节点走就找到了最短路径</li>
+</ul>
+</li>
+</ul>
 <hr>
 <h1 id="效率问题"><a href="#效率问题" class="headerlink" title="效率问题"></a>效率问题</h1><h3 id="联机算法"><a href="#联机算法" class="headerlink" title="联机算法"></a>联机算法</h3><p>在任意时刻，算法对要操作的数据只读入（扫描）一次，一旦被读入并处理，它就不需要在被记忆了。而在此处理过程中算法能对它已经读入的数据立即给出相应子序列问题的正确答案。具有这种特性的算法叫做联机算法（on-line algorithm。</p>
 <h3 id="分治算法"><a href="#分治算法" class="headerlink" title="分治算法"></a>分治算法</h3><p>在计算机科学中，分治法是一种很重要的算法。字面上的解释是“分而治之”，就是把一个复杂的问题分成两个或更多的相同或相似的子问题，再把子问题分成更小的子问题……直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。这个技巧是很多高效算法的基础，如排序算法(快速排序，归并排序)，傅立叶变换(快速傅立叶变换)……</p>
@@ -686,7 +735,7 @@
       
     </div>
   </div>
-    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/Major/arithmetic.md" target="_blank">编辑</a>
+    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/Major/algorithm/arithmetic.md" target="_blank">编辑</a>
 
 
           </div>
@@ -789,7 +838,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#排序"><span class="nav-number">1.</span> <span class="nav-text">排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.0.1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序"><span class="nav-number">1.0.2.</span> <span class="nav-text">插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#希尔排序"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">希尔排序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-number">1.0.3.</span> <span class="nav-text">堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#小-大顶堆"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">小&#x2F;大顶堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用小-大顶堆排序"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">利用小&#x2F;大顶堆排序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序算法"><span class="nav-number">1.0.4.</span> <span class="nav-text">快速排序算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#擂台法"><span class="nav-number">1.0.5.</span> <span class="nav-text">擂台法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并法"><span class="nav-number">1.0.6.</span> <span class="nav-text">归并法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓扑排序"><span class="nav-number">1.1.</span> <span class="nav-text">拓扑排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AOV-activity-on-vertex"><span class="nav-number">1.1.1.</span> <span class="nav-text">AOV(activity on vertex)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOE-activity-on-edge"><span class="nav-number">1.1.2.</span> <span class="nav-text">AOE(activity on edge)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表排序"><span class="nav-number">1.1.3.</span> <span class="nav-text">表排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#桶排序"><span class="nav-number">1.1.4.</span> <span class="nav-text">桶排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LSD-Least-Significant-Digit-次位优先"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">LSD(Least Significant Digit)次位优先</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查找"><span class="nav-number">2.</span> <span class="nav-text">查找</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#散列-hash-查找"><span class="nav-number">2.0.1.</span> <span class="nav-text">散列(hash)查找</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#插入"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理冲突"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">处理冲突</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KMP算法"><span class="nav-number">2.0.2.</span> <span class="nav-text">KMP算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#树"><span class="nav-number">3.</span> <span class="nav-text">树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉搜索树"><span class="nav-number">3.0.1.</span> <span class="nav-text">二叉搜索树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平衡二叉树"><span class="nav-number">3.0.2.</span> <span class="nav-text">平衡二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈夫曼树"><span class="nav-number">3.0.3.</span> <span class="nav-text">哈夫曼树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#红黑树"><span class="nav-number">3.0.4.</span> <span class="nav-text">红黑树</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图"><span class="nav-number">4.</span> <span class="nav-text">图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DFS深度优先搜索"><span class="nav-number">4.1.</span> <span class="nav-text">DFS深度优先搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFS广度优先搜索"><span class="nav-number">4.2.</span> <span class="nav-text">BFS广度优先搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#并查集"><span class="nav-number">4.2.1.</span> <span class="nav-text">并查集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最短路问题"><span class="nav-number">4.3.</span> <span class="nav-text">最短路问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dijkstra算法"><span class="nav-number">4.3.1.</span> <span class="nav-text">Dijkstra算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Floyd算法"><span class="nav-number">4.3.2.</span> <span class="nav-text">Floyd算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prim算法"><span class="nav-number">4.3.3.</span> <span class="nav-text">Prim算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kruskal算法"><span class="nav-number">4.3.4.</span> <span class="nav-text">Kruskal算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#效率问题"><span class="nav-number">5.</span> <span class="nav-text">效率问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#联机算法"><span class="nav-number">5.0.1.</span> <span class="nav-text">联机算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分治算法"><span class="nav-number">5.0.2.</span> <span class="nav-text">分治算法</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#排序"><span class="nav-number">1.</span> <span class="nav-text">排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.0.1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序"><span class="nav-number">1.0.2.</span> <span class="nav-text">插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#希尔排序"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">希尔排序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-number">1.0.3.</span> <span class="nav-text">堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#小-大顶堆"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">小&#x2F;大顶堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用小-大顶堆排序"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">利用小&#x2F;大顶堆排序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序算法"><span class="nav-number">1.0.4.</span> <span class="nav-text">快速排序算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#擂台法"><span class="nav-number">1.0.5.</span> <span class="nav-text">擂台法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并法"><span class="nav-number">1.0.6.</span> <span class="nav-text">归并法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓扑排序"><span class="nav-number">1.1.</span> <span class="nav-text">拓扑排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AOV-activity-on-vertex"><span class="nav-number">1.1.1.</span> <span class="nav-text">AOV(activity on vertex)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOE-activity-on-edge"><span class="nav-number">1.1.2.</span> <span class="nav-text">AOE(activity on edge)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表排序"><span class="nav-number">1.1.3.</span> <span class="nav-text">表排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#桶排序"><span class="nav-number">1.1.4.</span> <span class="nav-text">桶排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LSD-Least-Significant-Digit-次位优先"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">LSD(Least Significant Digit)次位优先</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查找"><span class="nav-number">2.</span> <span class="nav-text">查找</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#散列-hash-查找"><span class="nav-number">2.0.1.</span> <span class="nav-text">散列(hash)查找</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#插入"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理冲突"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">处理冲突</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KMP算法"><span class="nav-number">2.0.2.</span> <span class="nav-text">KMP算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#树"><span class="nav-number">3.</span> <span class="nav-text">树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉搜索树"><span class="nav-number">3.0.1.</span> <span class="nav-text">二叉搜索树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平衡二叉树"><span class="nav-number">3.0.2.</span> <span class="nav-text">平衡二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈夫曼树"><span class="nav-number">3.0.3.</span> <span class="nav-text">哈夫曼树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#红黑树"><span class="nav-number">3.0.4.</span> <span class="nav-text">红黑树</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图"><span class="nav-number">4.</span> <span class="nav-text">图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DFS深度优先搜索"><span class="nav-number">4.1.</span> <span class="nav-text">DFS深度优先搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFS广度优先搜索"><span class="nav-number">4.2.</span> <span class="nav-text">BFS广度优先搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#并查集"><span class="nav-number">4.2.1.</span> <span class="nav-text">并查集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最短路问题"><span class="nav-number">4.3.</span> <span class="nav-text">最短路问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dijkstra算法"><span class="nav-number">4.3.1.</span> <span class="nav-text">Dijkstra算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Floyd算法"><span class="nav-number">4.3.2.</span> <span class="nav-text">Floyd算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prim算法"><span class="nav-number">4.3.3.</span> <span class="nav-text">Prim算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kruskal算法"><span class="nav-number">4.3.4.</span> <span class="nav-text">Kruskal算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A星寻路算法"><span class="nav-number">4.3.5.</span> <span class="nav-text">A星寻路算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#效率问题"><span class="nav-number">5.</span> <span class="nav-text">效率问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#联机算法"><span class="nav-number">5.0.1.</span> <span class="nav-text">联机算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分治算法"><span class="nav-number">5.0.2.</span> <span class="nav-text">分治算法</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

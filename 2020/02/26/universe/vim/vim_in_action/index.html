@@ -87,7 +87,7 @@
 <meta property="og:description" content="Vim实用技巧杂项   操作 描述    o 切换高亮中光标所在的端点   . 重复执行上一步操作   % 它代表当前文件中的所有行   % 可以在一组开, 闭括号间跳转   m{mark} 当前位置标记为{mark}以便以后跳转   &#96;{mark} 跳到{mark}标记处   qa 录制宏到寄存器a   qA 往寄存器a中追加操作   i&#x2F;d{ i for inside, a for aroun">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-16T01:50:02.997Z">
+<meta property="article:modified_time" content="2020-07-27T15:37:44.052Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="vim">
 <meta name="twitter:card" content="summary">
@@ -708,8 +708,14 @@
 <ul>
 <li><code>qq</code>：用寄存器q录制宏</li>
 <li><code>qQ</code>:往寄存器q中追加操作</li>
-<li><code>:put q</code>：把寄存器q的内容粘贴到文档，以便修改</li>
-<li><code>:d q</code>：复制回寄存器</li>
+<li><code>:put q</code>：把寄存器q的内容粘贴到文档，以便修改<ul>
+<li>Or <code>[&quot;x]p</code></li>
+</ul>
+</li>
+<li><code>:d q</code>：复制回寄存器<ul>
+<li><code>[&quot;x]d{motion}</code> delete text move over [into register x], like<code>&quot;qd3d</code>删除三行，到寄存器q中</li>
+</ul>
+</li>
 </ul>
 
       
