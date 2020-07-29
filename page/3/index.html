@@ -970,7 +970,100 @@
 <li><code>:h wincmd</code></li>
 <li><code>:h winnr()</code></li>
 </ul>
-<h3 id="Functional-Programming"><a href="#Functional-Programming" class="headerlink" title="Functional Programming"></a>Functional Programming</h3>
+<h3 id="Functional-Programming"><a href="#Functional-Programming" class="headerlink" title="Functional Programming"></a>Functional Programming</h3><h4 id="Immutable-Data-Structures"><a href="#Immutable-Data-Structures" class="headerlink" title="Immutable Data Structures"></a>Immutable Data Structures</h4><p>Vim dosen’t have any immutable collections, but by create some helper functions we can fake it to some degree.</p>
+<p>Like this:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">Sorted</span><span class="params">(l)</span></span></span><br><span class="line">    <span class="keyword">let</span> new_list = <span class="built_in">deepcopy</span>(<span class="variable">a:l</span>)</span><br><span class="line">    <span class="keyword">call</span> <span class="keyword">sort</span>(new_list)</span><br><span class="line">    <span class="keyword">return</span> new_list</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<p>Vim’s <code>sort()</code> sorts the list in place, so we create a full copy so original list won’t changed.</p>
+<h4 id="Functions-as-Variables"><a href="#Functions-as-Variables" class="headerlink" title="Functions as Variables"></a>Functions as Variables</h4><p>Vimscript supports using variables to store functions, but the syntax is a bit obtuse.</p>
+<p>If a Vimscript variable refers to a function it must start with a capital letter.</p>
+<h4 id="Higher-Order-Functions"><a href="#Higher-Order-Functions" class="headerlink" title="Higher-Order Functions"></a>Higher-Order Functions</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">Mapped</span><span class="params">(fn, l)</span></span></span><br><span class="line">    <span class="keyword">let</span> new_list = <span class="built_in">deepcopy</span>(<span class="variable">a:l</span>)</span><br><span class="line">    <span class="keyword">call</span> <span class="keyword">map</span>(new_list, <span class="built_in">string</span>(<span class="variable">a:fn</span>) . <span class="string">'(v:val)'</span>)</span><br><span class="line">    <span class="keyword">return</span> new_list</span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line">:h <span class="keyword">map</span>()</span><br><span class="line">:h <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Paths"><a href="#Paths" class="headerlink" title="Paths"></a>Paths</h3><ul>
+<li>Relative Paths<ul>
+<li><code>:echom expand(&#39;%&#39;)</code>. <code>%</code>means the file you’re editing.</li>
+</ul>
+</li>
+<li>Absolute Paths<ul>
+<li><code>:echom expand(&#39;%:p&#39;)</code>. The <code>:p</code> in the string tells Vim that you want the absolute path.</li>
+<li><code>:echo fnamemodify(&#39;foo.txt&#39;, &#39;:p&#39;)</code> did the same. <code>fnamemodify()</code> is a Vim function that’s more flexible than <code>expand()</code> in that you can specify any file name, not just special stirngs.</li>
+</ul>
+</li>
+<li>Listing Files<ul>
+<li><code>:echo split(globpath(&#39;.&#39;, &#39;*&#39;), &#39;\n&#39;)</code>, list of files in a specific directory(here is all files of current dir).</li>
+<li>You can recursively list file with <code>**</code>:<code>:echo split(globpath(&#39;.&#39;, &#39;**&#39;), &#39;\n&#39;)</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Creating-a-Full-Plugin"><a href="#Creating-a-Full-Plugin" class="headerlink" title="Creating a Full Plugin"></a>Creating a Full Plugin</h2><h3 id="Basic-Layout"><a href="#Basic-Layout" class="headerlink" title="Basic Layout"></a>Basic Layout</h3><ul>
+<li>Files in <code>~/.vim/colors</code> are treated as color schemes</li>
+<li>Files in <code>~/.vim/plugin</code> will each be run once every time Vim starts</li>
+<li>Files in <code>~/.vim/ftdetect</code> will also be run every time you start Vim<ul>
+<li><code>ftdetect</code> stands for “filetype detection”</li>
+<li>The file in this dir should set up autocommmands that detect and set the <code>filetype</code> of files</li>
+</ul>
+</li>
+<li>Files in <code>~/.vim/ftplugin</code>. When Vim sets a buffer’s <code>filetype</code> to a value it then looks for a file(or dir) in <code>ftplugin</code> that matches and run it.<ul>
+<li>The naming of these files matters!</li>
+<li>Because these files are run every time a buffer’s filetype is set they must only set buffer-local options! If they set options globally they would overwrite them for all open buffers!</li>
+</ul>
+</li>
+<li>Files in <code>~/.vim/indent</code> are a lot like <code>ftplugin</code> files. They get loaded based on their names.</li>
+<li>Files in <code>~/.vim/compiler</code> work exactly like <code>indent</code> files.<ul>
+<li>They should set compiler-related options in the current buffer based on their names</li>
+</ul>
+</li>
+<li>Files in <code>~/.vim/after</code> Files in this dir will be loaded every time Vim start, but after the file in <code>~/.vim/plugin</code></li>
+<li>Files in <code>~/.vim/autoload</code> </li>
+<li>Files in <code>~/.vim/syntax</code> When Vim sets a buffer’s <code>filetype</code> to a value it then looks for a file(or dir) in <code>syntax</code> that matches and run it.</li>
+<li>Files in <code>~/.vim/doc</code> is where you can add doc for your plugin</li>
+</ul>
+<h3 id="Runtimepath"><a href="#Runtimepath" class="headerlink" title="Runtimepath"></a>Runtimepath</h3><p>Much like <code>PATH</code> on <code>Linux/Unix/BSD</code> systems, Vim has the runtimepath setting which tells it where to find files to load.</p>
+<p><code>:set runtimepath?</code></p>
+<p>So a plugin manager automatically add paths to your <code>runtimepath</code> when you load vim</p>
+<h3 id="Detecting-Filetype"><a href="#Detecting-Filetype" class="headerlink" title="Detecting Filetype"></a>Detecting Filetype</h3><p>Vim dosen’t what a <code>.type</code> file is yet.</p>
+<p>Create <code>ftdetect/TYPE.vim</code></p>
+<p><code>au BufNewFile,BufRead *.TYPE set filetype=TYPE</code></p>
+<h3 id="Basic-Syntax-Highlighting"><a href="#Basic-Syntax-Highlighting" class="headerlink" title="Basic Syntax Highlighting"></a>Basic Syntax Highlighting</h3><ul>
+<li><code>:help syn-keyword</code></li>
+<li><code>:help iskeyword</code></li>
+<li><code>:help group-name</code></li>
+<li><code>:help syntax</code></li>
+</ul>
+<p>Create a <code>syntax/potion.vim</code> file and set you buffer filetype to potion <code>:set filetype=potion</code>. The <code>to</code>, <code>times</code> and <code>if</code> words will be highlighted as keywords.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">syntax</span> keyword potionKeyword <span class="keyword">to</span> times</span><br><span class="line"><span class="keyword">syntax</span> keyword potionKeyword <span class="keyword">if</span></span><br><span class="line"><span class="keyword">highlight</span> link potionKeyword Keyword</span><br></pre></td></tr></table></figure>
+
+<p>These two lines show the basic structure of simple sytax highlight in Vim.</p>
+<ul>
+<li>You first define a “chunk” of syntax using <code>syntax keyword</code> or a related command (which we’ll talk about later)</li>
+<li>You then link “chunks” to highlighting groups. A highlighting group is something you define in a color scheme, for example “function names should be blue”.</li>
+</ul>
+<h4 id="Highlighting-Functions"><a href="#Highlighting-Functions" class="headerlink" title="Highlighting Functions"></a>Highlighting Functions</h4><p>Another standard Vim highlighting group is <code>Function</code>.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">syntax</span> keyword potionFunction <span class="keyword">print</span> <span class="keyword">join</span> <span class="built_in">string</span></span><br><span class="line"><span class="keyword">highlight</span> link potionFunction Function</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Advanced-Syntax-Highlighting"><a href="#Advanced-Syntax-Highlighting" class="headerlink" title="Advanced Syntax Highlighting"></a>Advanced Syntax Highlighting</h4><p>Because some character not in <code>iskeyword</code> we need to use a regular expression to match it. We’ll do this with <code>syntax match</code> instead of <code>syntax keyword</code>.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">syntax</span> <span class="keyword">match</span> potionComment <span class="string">"\v#.*$"</span></span><br><span class="line"><span class="keyword">highlight</span> link potionComment Comment</span><br></pre></td></tr></table></figure>
+
+<p>We use <code>syntax match</code> which tells Vim to match regexes instead of literal keywords.</p>
+<h4 id="Highlighting-Operators"><a href="#Highlighting-Operators" class="headerlink" title="Highlighting Operators"></a>Highlighting Operators</h4><p>Another part we need to regexes to highlight is operators. <code>:h group-name</code></p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">syntax</span> <span class="keyword">match</span> potionOperator <span class="string">"\v-\="</span></span><br><span class="line"><span class="keyword">highlight</span> link potionOperator Operator</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Highlighting-Strings"><a href="#Highlighting-Strings" class="headerlink" title="Highlighting Strings"></a>Highlighting Strings</h4><p><code>:help syn-region</code></p>
+<p>To highlight strings, we’ll use the <code>syntax region</code> command.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">syntax</span> region potionString start=/\v<span class="string">"/ skip=/\v\\./ end=/\v"</span>/</span><br><span class="line"><span class="keyword">highlight</span> link potionString String</span><br></pre></td></tr></table></figure>
+
+<p>You’ll see the string between “” is highlighted!</p>
+<ul>
+<li>Regions hava a “start” pattern and an “end” pattern that specify where they start and end</li>
+<li>The <code>skip</code> argument tells Vim to ignore this matching region<ul>
+<li>The “skip” argument to <code>syntax region</code> allow us to handle string escapes like <code>&quot;she said: \&quot;hello\&quot;!&quot;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Basic-Folding"><a href="#Basic-Folding" class="headerlink" title="Basic Folding"></a>Basic Folding</h3>
           
         
       
