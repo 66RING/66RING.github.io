@@ -87,7 +87,7 @@
 <meta property="og:description" content="工厂模式如点外卖，餐厅生产食物，然后拿走。就是最常见了类中定义方法 抽象工厂模式??与工厂方法类似，只是使用抽象类?? 外观模式把所有的内部封装都封装在门面里面。相当于外卖的取餐口，内部的细节不会暴露给外面。 建造者模式建造者一层层的盖楼。对象层层传递，行为和具体实现分离 桥接模式分离的部分联系起来。如画各种圆形，基础的半径、位置等的结构是一样的，不同的圆可能会有不同的图案和细节，所以可以把圆的结">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-28T09:41:13.402Z">
+<meta property="article:modified_time" content="2020-07-30T11:51:39.765Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="design_patterns, go">
 <meta name="twitter:card" content="summary">
@@ -306,7 +306,20 @@
 <h2 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h2><p>建造者一层层的盖楼。对象层层传递，行为和具体实现分离</p>
 <h2 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h2><p>分离的部分联系起来。如画各种圆形，基础的半径、位置等的结构是一样的，不同的圆可能会有不同的图案和细节，所以可以把圆的结构和画的动作分开写，再联系起来。</p>
 <h2 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h2><p>领导下命令(函数)，命令层层传递</p>
-<h2 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h2>
+<h2 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h2><ul>
+<li>结构<ul>
+<li>内部维护索引和数组</li>
+<li>Index索引</li>
+<li>Value值</li>
+<li>HasNext()</li>
+<li>Next()</li>
+</ul>
+</li>
+</ul>
+<h2 id="模板模式"><a href="#模板模式" class="headerlink" title="模板模式"></a>模板模式</h2><p>就像填表格</p>
+<h2 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a>访问者模式</h2><p>访问者来时作出对应的反应，以实现分离</p>
+<h2 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a>备忘录模式</h2><p>到某一状态时保存，就像备忘录一样</p>
+
       
     </div>
     
@@ -468,7 +481,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂模式"><span class="nav-number">1.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number">2.</span> <span class="nav-text">抽象工厂模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外观模式"><span class="nav-number">3.</span> <span class="nav-text">外观模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建造者模式"><span class="nav-number">4.</span> <span class="nav-text">建造者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桥接模式"><span class="nav-number">5.</span> <span class="nav-text">桥接模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令模式"><span class="nav-number">6.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器模式"><span class="nav-number">7.</span> <span class="nav-text">迭代器模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂模式"><span class="nav-number">1.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number">2.</span> <span class="nav-text">抽象工厂模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外观模式"><span class="nav-number">3.</span> <span class="nav-text">外观模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建造者模式"><span class="nav-number">4.</span> <span class="nav-text">建造者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桥接模式"><span class="nav-number">5.</span> <span class="nav-text">桥接模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令模式"><span class="nav-number">6.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器模式"><span class="nav-number">7.</span> <span class="nav-text">迭代器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板模式"><span class="nav-number">8.</span> <span class="nav-text">模板模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问者模式"><span class="nav-number">9.</span> <span class="nav-text">访问者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备忘录模式"><span class="nav-number">10.</span> <span class="nav-text">备忘录模式</span></a></li></ol></div>
             
 
           </div>

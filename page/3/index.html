@@ -608,6 +608,7 @@
         
           
             <p>Remenber to use <code>:h &lt;arg&gt;</code> for help</p>
+<p>Ref: <a href="https://learnvimscriptthehardway.stevelosh.com/" target="_blank" rel="noopener">https://learnvimscriptthehardway.stevelosh.com/</a></p>
 <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><h3 id="Echo"><a href="#Echo" class="headerlink" title="Echo"></a>Echo</h3><ul>
 <li><code>:echo &quot;hello&quot;</code></li>
 <li><code>:echom &quot;hello&quot;</code></li>
@@ -1063,7 +1064,87 @@
 </ul>
 </li>
 </ul>
-<h3 id="Basic-Folding"><a href="#Basic-Folding" class="headerlink" title="Basic Folding"></a>Basic Folding</h3>
+<h3 id="Basic-Folding"><a href="#Basic-Folding" class="headerlink" title="Basic Folding"></a>Basic Folding</h3><ul>
+<li><code>:help usr_28</code></li>
+<li><code>:help fold-XXX</code></li>
+</ul>
+<ul>
+<li>Manual<ul>
+<li>You create the folds by hand and they stored in RAM. When you close Vim they go away.</li>
+</ul>
+</li>
+<li>Marker<ul>
+<li>Vim folds your code based on characters in the actual text.</li>
+<li>Usually these characters put in comments (like<code>3{</code>), but in some languages you can get away with using something in the language’s syntax itself, like <code>{</code> in javascript file.</li>
+<li>It may seem ugly to clutter up your code with comments, but it let you hand-craft folds for a specific file.</li>
+</ul>
+</li>
+<li>Diff<ul>
+<li>A special folding mode used when diff’ing files.</li>
+</ul>
+</li>
+<li>Expr<ul>
+<li>This lets you use a custom piece of Vimscript to define where folds occur.</li>
+</ul>
+</li>
+<li>Indent<ul>
+<li>Vim uses your code’s indentation to determine folds.</li>
+</ul>
+</li>
+</ul>
+<p><code>setlocal foldmethod=&lt;method&gt;</code> and play around with <code>zR</code>, <code>zM</code>, <code>za</code>, <code>zf</code>…</p>
+<h4 id="Advanced-Folding"><a href="#Advanced-Folding" class="headerlink" title="Advanced Folding"></a>Advanced Folding</h4><ul>
+<li>Folding Theory<ul>
+<li>Each line of code in a file has a “foldlevel”. This is always either zero or a positive interger.</li>
+<li>Lines with a foldlevel of zero are never include in any fold</li>
+<li>Adjacant line with the same foldlevel are folded togerther</li>
+<li>If a fold level X is closed, any subsequent lines with a foldlevel greater then or equal to X are folded along with it until you reach a line with a level less than X.</li>
+</ul>
+</li>
+</ul>
+<h5 id="Expr-Folding"><a href="#Expr-Folding" class="headerlink" title="Expr Folding"></a>Expr Folding</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">setlocal</span> foldmethod=expr</span><br><span class="line"><span class="keyword">setlocal</span> foldexpr=GetPotionFold(<span class="variable">v:lnum</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">GetFold</span><span class="params">(lnum)</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'0'</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>first line tells Vim to use <code>expr</code> folding</li>
+<li>second line defines the expression Vim should use to get the foldlevel of a line<ul>
+<li>When Vim runs the expression it will set <code>v:lnum</code> to the line number of the ling it wants to know about.</li>
+</ul>
+</li>
+<li>The expr function return a String and not an Integer</li>
+</ul>
+<p>Our funciont return <code>&#39;0&#39;</code> for every lines, so Vim won’t fold andthing at all.</p>
+<h5 id="Blank-Lines"><a href="#Blank-Lines" class="headerlink" title="Blank Lines"></a>Blank Lines</h5><p>Modify the <code>GetFold</code> function to look like this:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">GetPotionFold</span><span class="params">(lnum)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">getline</span>(<span class="variable">a:lnum</span>) =~? <span class="string">'\v^\s*$'</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'-1'</span></span><br><span class="line">    <span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'0'</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Use <code>getline(a:lnum)</code> to get the content of the current line as a String.<ul>
+<li>This regex <code>\v^\s*$</code> will match “beginning of line, any number of whitespace characters, end of line”</li>
+</ul>
+</li>
+</ul>
+<h5 id="Special-Foldlevels"><a href="#Special-Foldlevels" class="headerlink" title="Special Foldlevels"></a>Special Foldlevels</h5><p>Your custom folding expression can return one of a few “special” strings that tell Vim how to fold the line.</p>
+<p><code>-1</code> is one of these special strings. It tells Vim that the level of this line is “underfined”, which means “the foldlevel of this line is equal to the foldlevel of the line above or below it”</p>
+<h5 id="An-Indentation-Level-Helper"><a href="#An-Indentation-Level-Helper" class="headerlink" title="An Indentation Level Helper"></a>An Indentation Level Helper</h5><p>To tackle non-blank lines we’ll need to know their indentation level.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">IndentLevel</span><span class="params">(lnum)</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">indent</span>(<span class="variable">a:lnum</span>) / &amp;<span class="built_in">shiftwidth</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<p>And run <code>:echom IndentLevel(1)</code> to see line 1 indent level.</p>
+<h3 id="Section-Movement-Theory"><a href="#Section-Movement-Theory" class="headerlink" title="Section Movement Theory"></a>Section Movement Theory</h3><p>If you’ve never used Vim’s section movement commands(like: <code>[[</code>, <code>]]</code>, <code>[]</code>, <code>][</code>) take a second and read <code>:help section</code></p>
+<h4 id="Nroff-Files"><a href="#Nroff-Files" class="headerlink" title="Nroff Files"></a>Nroff Files</h4><p>The four “section movement” commands are conceptually meant to move around between “sections” of a file.</p>
+<p>These commands are designed to work with <a href="https://en.wikipedia.org/wiki/Nroff" target="_blank" rel="noopener">nroff files</a> by default.</p>
+<h3 id="External-Commands"><a href="#External-Commands" class="headerlink" title="External Commands"></a>External Commands</h3><p>The <code>:!</code> command (pronounced “bang”) in Vim runs external commands and display their output on the screen.</p>
+<p>Vim doesn’t pass any input to the command then run this way: <code>:!cat</code></p>
+<p>To run an external command without the <code>Press ENTER or type command to continue</code> prompt, use <code>:silent !</code>. Note that this command is <code>:silent !</code> and not <code>:silent!</code></p>
+<h4 id="system"><a href="#system" class="headerlink" title="system()"></a>system()</h4><p>The <code>system()</code> Vim function takes a command string as a parameter and returns the output of that command as String.</p>
+<p>You can pass a second string as an argument to <code>system()</code>. Run the following command: <code>:echom system(&quot;wc -c&quot;, &quot;abcdefg&quot;)</code></p>
+<p>If you pass a second argument like this, Vim will write it to a temporary file and pipe it into the command on standard input.</p>
+<h4 id="Scratch-Splits"><a href="#Scratch-Splits" class="headerlink" title="Scratch Splits"></a>Scratch Splits</h4><p><code>:split BufferName</code> create an new splite for a buffer named <code>BufferName</code></p>
+<h4 id="append"><a href="#append" class="headerlink" title="append()"></a>append()</h4><p>The <code>append()</code> Vim function takes two arguments: a line number to append after, and a list of Strings to append as lines. For example:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">call</span> <span class="keyword">append</span>(<span class="number">3</span>, [<span class="string">"foo"</span>, <span class="string">"bar"</span>])</span><br></pre></td></tr></table></figure>
+
+<p><code>:help append()</code></p>
+<h4 id="split"><a href="#split" class="headerlink" title="split()"></a>split()</h4><p><code>split()</code> takes a String to split and regular expression to find the split points.</p>
+<p><code>:help split()</code></p>
+<h3 id="Autoloading"><a href="#Autoloading" class="headerlink" title="Autoloading"></a>Autoloading</h3>
           
         
       
