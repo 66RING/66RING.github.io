@@ -789,7 +789,7 @@
 
 <p>Vim will delete the current line. The <code>normal</code> command will take into account any mapping that exist.</p>
 <p>Vim has a <code>normal!</code> command to avoid user mapping. So write Vimscript should  <strong>always</strong> use <code>normal!</code>.</p>
-<p>The problem is that <code>normal!</code> dosen’t parse special charater sequences like <code>&lt;cr&gt;</code>. Combining <code>normal!</code> with <code>execute</code> fixes that problem. Like this:</p>
+<p>The problem is that <code>normal!</code> dosen’t parse special character sequences like <code>&lt;cr&gt;</code>. Combining <code>normal!</code> with <code>execute</code> fixes that problem. Like this:</p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">execute</span> <span class="string">"normal! gg/print\&lt;cr&gt;"</span></span><br></pre></td></tr></table></figure>
 
 
@@ -1144,7 +1144,62 @@
 <p><code>:help append()</code></p>
 <h4 id="split"><a href="#split" class="headerlink" title="split()"></a>split()</h4><p><code>split()</code> takes a String to split and regular expression to find the split points.</p>
 <p><code>:help split()</code></p>
-<h3 id="Autoloading"><a href="#Autoloading" class="headerlink" title="Autoloading"></a>Autoloading</h3>
+<h3 id="Autoloading"><a href="#Autoloading" class="headerlink" title="Autoloading"></a>Autoloading</h3><p><code>:help autoload</code></p>
+<p>Autoload lets you delay loading code until it’s actually needed.</p>
+<p>Look at the following command:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">call</span> somefile#Hello()</span><br></pre></td></tr></table></figure>
+
+<p>If this function has already been loaded, Vim will simply call it normally. Otherwise Vim will look for a file called <code>autoload/somefile.vim</code>.</p>
+<p>If this file exists, Vim will load/source that file. It will then try to call the function normally.</p>
+<p>Inside this file, the function should be defined like this:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">somefile</span>#<span class="title">Hello</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment">" ...</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<p>You can use multiple <code>#</code> characters in the function name like <code>:call myplugin#somefile#Hello()</code>. And it will look for <code>autoload/myplugin/somefile.vim</code></p>
+<p>If a autoload function like <code>somefile#Hello()</code> has been loaded, Vim doesn’t need to reload the file to call it. </p>
+<p>If <code>somefile#A()</code> has been load and <code>somefile#B()</code> doesn’t load. At that time, you rewrite function A. Without closing Vim and call funcion B, Vim will reload this file and your modify in function A will be update.</p>
+<h3 id="Documentetion"><a href="#Documentetion" class="headerlink" title="Documentetion"></a>Documentetion</h3><h4 id="How-Documentetion-Works"><a href="#How-Documentetion-Works" class="headerlink" title="How Documentetion Works"></a>How Documentetion Works</h4><p>A documentation <code>filetype=help</code>.</p>
+<p>Create a file called <code>doc/somefile.txt</code> in you plugin repo. This is where we’ll write help for our plugin.</p>
+<p>Open this file in Vim and run <code>:set filetype=help</code> so you can see the syntax highlighting as you type.</p>
+<h4 id="Help-Header"><a href="#Help-Header" class="headerlink" title="Help Header"></a>Help Header</h4><p>The format of help files is a matter of personal taste, but better to be popular with the modern Vimscript community.</p>
+<ul>
+<li>The first line of the file should contain the filename of the help file.<ul>
+<li><code>*myhelp.txt* functionality for the potion programming language</code></li>
+</ul>
+</li>
+<li>Surrounding a word witd asterisks in a help file create a “tag” that can be jumped to.<ul>
+<li>Run <code>:Helptags</code> to rebuild the index of help tags, and then open a new Vim window and run <code>:help myhelp.txt</code>. Vim will open your help document like any other one.</li>
+</ul>
+</li>
+<li>Title, description, authors and something<ul>
+<li>The <code>~</code> characters at the end of the lines ensure that Vim dosen’t try to highlight or hide individual characters inside the art.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">====================================================</span><br><span class="line">CONTENTS                                            *PotionContents*</span><br><span class="line"></span><br><span class="line">    <span class="number">1</span>. Usage ................ |PotionUsage|</span><br><span class="line">    <span class="number">2</span>. Mappings ............. |PotionMappings|</span><br><span class="line">    <span class="number">3</span>. License .............. |PotionLicense|</span><br><span class="line">    <span class="number">4</span>. Bugs ................. |PotionBugs|</span><br><span class="line">    <span class="number">5</span>. Contributing ......... |PotionContributing|</span><br><span class="line">    <span class="number">6</span>. Changelog ............ |PotionChangelog|</span><br><span class="line">    <span class="number">7</span>. Credits .............. |PotionCredits|</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>The line of <code>=</code> character will be syntax highlight. Use to divide.<ul>
+<li>You can also use line of <code>-</code></li>
+</ul>
+</li>
+<li>The <code>*PotionContents*</code> will create another tag, so run <code>:help PotionContents</code> to go directly to the table of contents.</li>
+<li>Each of the word surrounded by <code>|</code> create a ling to a tag<ul>
+<li>Users can press <code>&lt;c-]&gt;</code> in the file file to jump to the tag, Or click with mouse</li>
+</ul>
+</li>
+</ul>
+<h3 id="The-Command-Command"><a href="#The-Command-Command" class="headerlink" title="The Command Command"></a>The Command Command</h3><p>Read <code>:help user-commands</code></p>
+<p>Some plugin hava commands like <code>:Gdiff</code> and leave it up to the user to decide how to call them.</p>
+<p>Commands like this are create with the <code>:command</code> command.</p>
+<h3 id="Omnicomplete"><a href="#Omnicomplete" class="headerlink" title="Omnicomplete"></a>Omnicomplete</h3><ul>
+<li><code>:help ins-completion</code></li>
+<li><code>:help omnifunc</code></li>
+<li><code>:help compl-omni</code></li>
+</ul>
+<p>Vim offer a number of different ways to complete text. The most powerful of them is “omnicomplete” which let you call a custom Vimscirpt function to determin completions.</p>
+<h3 id="Compiler-Support"><a href="#Compiler-Support" class="headerlink" title="Compiler Support"></a>Compiler Support</h3><p>Read <code>:help quickfix.txt</code></p>
+<p>Vim offer much deeper support for interacting with compilers, including parsing compile error.</p>
+
           
         
       
