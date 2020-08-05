@@ -619,7 +619,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/23/universe/go/go_level_up/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/23/universe/lua/lua_in_ten_min/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -638,7 +638,186 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/07/23/universe/go/go_level_up/" itemprop="url">Golang提高</a></h1>
+                <a class="post-title-link" href="/2020/07/23/universe/lua/lua_in_ten_min/" itemprop="url">lua快速上手</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-23T00:00:00+08:00">
+                2020-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>类似python等脚本语言，在循环、方法、条件等语句需要使用end表示结束，因此不像python那样依靠缩进。</p>
+<ul>
+<li>编译后执行：(不透露源码)<ul>
+<li><code>luac x.lua</code></li>
+<li><code>lua x.out</code></li>
+</ul>
+</li>
+<li>lua使用<code>..</code>连接字符串</li>
+</ul>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">100</span>         <span class="comment">-- 全局变量</span></span><br><span class="line"><span class="keyword">local</span> b = <span class="number">100</span>   <span class="comment">-- 局部变量，不影响全局</span></span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">new_function</span><span class="params">(args)</span></span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- 同python动态类型，同bash需要end所以不依靠缩进</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> a&gt;b <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> b</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> var=<span class="number">1</span>, <span class="number">100</span> <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(var)    <span class="comment">-- 打印1到100</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="表-字典"><a href="#表-字典" class="headerlink" title="表(字典)"></a>表(字典)</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Config = &#123;key1=value1, key2=value2&#125;   <span class="comment">-- 创建一个表</span></span><br><span class="line">Config.word = <span class="string">"Hello"</span>   <span class="comment">-- 往表里增加元素</span></span><br><span class="line">Config.num = <span class="number">100</span></span><br><span class="line">Config[<span class="string">"name"</span>] = <span class="string">"ring"</span>   <span class="comment">-- 往表里增加元素</span></span><br><span class="line"><span class="built_in">print</span>(Config.key)      <span class="comment">-- 使用</span></span><br><span class="line"><span class="built_in">print</span>(Config[<span class="string">"key"</span>])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>遍历  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> key, var <span class="keyword">in</span> <span class="built_in">pairs</span>(Config) <span class="keyword">do</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>lua本身并没有数组的概念，使用的是上面列表然后配合lua的一些api</p>
+<ul>
+<li>创建<code>arr = {1, 2, 3, 4, &quot;hello&quot;}</code></li>
+<li>遍历，lua数组的索引从1开始  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> key, var <span class="keyword">in</span> <span class="built_in">pairs</span>(arr) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(key, var)  <span class="comment">-- 数组的索引从1开始</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+<li>通过api操作  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">arr = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> var=<span class="number">1</span>, <span class="number">100</span> <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">table</span>.<span class="built_in">insert</span>(arr, <span class="number">1</span>, var)</span><br><span class="line">    <span class="comment">-- table.insert(table, pos, value)</span></span><br><span class="line">    <span class="comment">-- 在table的pos位置插入value</span></span><br><span class="line">    <span class="comment">-- 所以上面的插入索引和value顺序相反</span></span><br><span class="line">    <span class="comment">-- 除非table.insert(arr, var, var)，则索引==value</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+<li>数组长度<code>table.maxn(arr)</code>，<strong>注意lua数组索引从1开始</strong></li>
+</ul>
+<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a><strong>面向对象</strong></h3><p>lua本身没有面向对象，但是可以通过某种方式实现</p>
+<ul>
+<li><strong>使用表的形式</strong> (类似golang)  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Obj = &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Obj.sayHi</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"hi"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- 或者</span></span><br><span class="line">Obj.sayHi = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"hi"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建实例，由于lua的类实质就是一个表，所以遍历表，复制，返回即可  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clone</span><span class="params">(tab)</span></span></span><br><span class="line">    <span class="keyword">local</span> ins = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> key, var <span class="keyword">in</span> <span class="built_in">pairs</span>(tab) <span class="keyword">do</span></span><br><span class="line">        ins[key] = var</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> ins</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- 然后这里创造了一个类Obj，balabala</span></span><br><span class="line"><span class="keyword">local</span> p = clone(Obj)</span><br></pre></td></tr></table></figure></li>
+<li>构造方法，书接上文  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Obj.new = <span class="function"><span class="keyword">function</span><span class="params">(arg)</span></span></span><br><span class="line">    <span class="keyword">local</span> self = clone(Obj)</span><br><span class="line">    self.name = <span class="built_in">arg</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">local</span> p = Obj.new(<span class="string">"ring"</span>)</span><br></pre></td></tr></table></figure></li>
+<li>关于指向自己的指针  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Obj.hello = <span class="function"><span class="keyword">function</span><span class="params">(self)</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"hello "</span>..self.name)  <span class="comment">-- ..表示连接字符串</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">local</span> p = Obj.new(<span class="string">"ring"</span>)</span><br><span class="line">p.hello(p)</span><br><span class="line">p:hello()   <span class="comment">-- 默认传入自己</span></span><br><span class="line"><span class="comment">-- 两个方法等效，一般使用下面这个方法</span></span><br></pre></td></tr></table></figure></li>
+<li>继承  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span><span class="params">(dist, tab)</span></span></span><br><span class="line">    <span class="keyword">for</span> key, var <span class="keyword">in</span> paires(tab) <span class="keyword">do</span></span><br><span class="line">        dist[key] = var</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">Son = &#123;&#125;</span><br><span class="line">Son.new = <span class="function"><span class="keyword">function</span><span class="params">(arg)</span></span></span><br><span class="line">    <span class="keyword">local</span> self = Obj.new(<span class="built_in">arg</span>)</span><br><span class="line">    copy(self, Son)  <span class="comment">-- 也别忘了自己原有的东西</span></span><br><span class="line">    <span class="keyword">return</span> self</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><strong>使用函数闭包的形式面向对象</strong> ，可以实现私有化，但是表的方式更块些  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">fuction Obj(<span class="built_in">arg</span>)</span><br><span class="line">    <span class="keyword">local</span> self = &#123;&#125;</span><br><span class="line">    <span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span></span>   <span class="comment">-- 私有</span></span><br><span class="line">        self.name = <span class="built_in">arg</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    self.sayHi = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"hi"</span>)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    init()  <span class="comment">-- 标准化</span></span><br><span class="line">    <span class="keyword">return</span> self</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">local</span> p = Obj(<span class="string">"ring"</span>)</span><br><span class="line">p:sayHi()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>继承  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span><span class="params">(arg)</span></span></span><br><span class="line">    <span class="keyword">local</span> self = Obj(<span class="built_in">arg</span>)</span><br><span class="line">    <span class="comment">-- some</span></span><br><span class="line">    <span class="keyword">return</span> self</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/23/universe/go/go_level_up/go_level_up/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/23/universe/go/go_level_up/go_level_up/" itemprop="url">Golang提高</a></h1>
         
 
         <div class="post-meta">
@@ -896,6 +1075,131 @@
 
 <p>上面的错误示范中，由于向<code>ValueOf()</code>直接传值，而这种的传递方式在上面<code>TypeOf</code>中说过，是创建一个临时的拷贝，所以修改的也将是临时的拷贝。所以会报错。所以需要反射a的指针。</p>
 <p><code>v = v.Elem()</code>拿到<code>v.ptr</code>指向的变量a，并包装成<code>reflect.Value</code>类型</p>
+<h2 id="GMP"><a href="#GMP" class="headerlink" title="GMP"></a>GMP</h2><p>GMP: G for goroutine协程、M for thread 线程，P for processor处理器</p>
+<p>线程越多，CPU在调度上的花销越大，而且多线程也伴随着资源的竞争问题、高内存占用问题。</p>
+<ul>
+<li>多进程、线程的壁垒<ul>
+<li>高内存占用<ul>
+<li>进程约2G</li>
+<li>线程约4M</li>
+</ul>
+</li>
+<li>高CPU调度消耗</li>
+</ul>
+</li>
+</ul>
+<p>一个线程有用户空间(态)和内核空间(态)。内核空间中跑内核线程，操作硬件资源；用户空间中跑用户线程，操作业务逻辑。内核线程和用户线程会进行绑定，即业务逻辑和资源分配绑定。</p>
+<p>用户线程就是协程(co-routine)，内核线程就是线程(thread)。</p>
+<h3 id="M-N的多线程模型"><a href="#M-N的多线程模型" class="headerlink" title="M:N的多线程模型"></a>M:N的多线程模型</h3><p>多个线程通过协程调度器控制多个协程，协程降低的cpu调度的成本，当一个协程阻塞时可以切换另一个线程进行操作。</p>
+<p><img src="./assets/M-N.png" alt="M:N模型"></p>
+<p>这么一来优化只需要关注优化协程调度器</p>
+<ul>
+<li>Golang对协程的处理<ul>
+<li>协程(co-routine)改为Goroutine</li>
+<li>内存只占几KB</li>
+<li>灵活调度，切换成本低</li>
+</ul>
+</li>
+</ul>
+<h3 id="GMP模型"><a href="#GMP模型" class="headerlink" title="GMP模型"></a>GMP模型</h3><ul>
+<li>全局队列<ul>
+<li>存放等待运行的G</li>
+</ul>
+</li>
+<li>P的本地队列<ul>
+<li>存放等待运行的G</li>
+<li>一般不超过256个G</li>
+<li>优先将新创建的G放到P的本地队列，如果满了放全局队列</li>
+</ul>
+</li>
+<li>P列表<ul>
+<li>程序启动时创建</li>
+<li>最多GOMAXPROCS个<ul>
+<li>修改环境变量$GOMAXPROCS</li>
+<li>或使用<code>runtime.GOMAXPROCS()</code>设置</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>M列表<ul>
+<li>当前操作系统分配到当前Go程序的内核线程数</li>
+<li>当一个M阻塞/空闲，就创建/释放一个M</li>
+</ul>
+</li>
+</ul>
+<h3 id="调度器的设计策略"><a href="#调度器的设计策略" class="headerlink" title="调度器的设计策略"></a>调度器的设计策略</h3><ul>
+<li>复用线程<ul>
+<li>work stealing机制<ul>
+<li>当一个P空闲时，可以从忙碌的P的队列中偷取一个G来执行</li>
+</ul>
+</li>
+<li>hand off机制<ul>
+<li>当P阻塞时，将它的P本地队列中的G交给别的P处理或创建新的P来处理</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>利用并行<ul>
+<li>利用多核</li>
+</ul>
+</li>
+<li>抢占<ul>
+<li>不用等待主动释放cpu，一定时间自动释放，再抢占</li>
+</ul>
+</li>
+<li>全局G队列<ul>
+<li>work stealing从其他P偷不到时，从全局队列获取</li>
+</ul>
+</li>
+</ul>
+<h3 id="go指令的调度流程"><a href="#go指令的调度流程" class="headerlink" title="go指令的调度流程"></a>go指令的调度流程</h3><ul>
+<li><ol>
+<li><code>go func()</code>创建一个G</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>G加入队列<ul>
+<li>优先加入当前P的本地队列</li>
+<li>如果已满，则放入全局队列</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>若P的本地队列空，则从全局队列获取G。如果全局队列也空则从别的P队列获取</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>调度</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>执行<ul>
+<li>10ms后放回队列，直到func执行完毕</li>
+<li>如果阻塞，则hand off，解阻塞后放到全局队列</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="调度器的生命周期"><a href="#调度器的生命周期" class="headerlink" title="调度器的生命周期"></a>调度器的生命周期</h3><ul>
+<li>M0<ul>
+<li>启动程序后的编号为0的主线程</li>
+<li>在全局变量runtime.m0中，不需要在heap上分配</li>
+<li>负责执行初始化操作和启动第一个G</li>
+<li>启动第一个G之后，M0和其他M一样了</li>
+</ul>
+</li>
+<li>G0<ul>
+<li>每次启动一个M，都会创建的第一个Goroutine</li>
+<li>仅用于负责调度的G</li>
+<li>不指向任何可执行的函数</li>
+<li>每个M都有自己的G0</li>
+<li>在调度时会使用M切换到G0来调度</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://www.bilibili.com/video/BV1jT4y1j7Cd?p=7" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1jT4y1j7Cd?p=7</a></p>
 <h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><h3 id="常见的控制并发的两种方式"><a href="#常见的控制并发的两种方式" class="headerlink" title="常见的控制并发的两种方式"></a>常见的控制并发的两种方式</h3><ul>
 <li><ol>
 <li>WaitGroup<ul>
@@ -987,185 +1291,6 @@
 <li>给一个函数方法传递Context的时候，不要传递nil，如果不知道传递什么，就使用context.TODO</li>
 <li>Context的Value相关方法应该传递必须的数据，不要什么数据都使用这个传递</li>
 <li>Context是线程安全的，可以放心的在多个goroutine中传递</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/23/universe/lua/lua_in_ten_min/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/23/universe/lua/lua_in_ten_min/" itemprop="url">lua快速上手</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-23T00:00:00+08:00">
-                2020-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>类似python等脚本语言，在循环、方法、条件等语句需要使用end表示结束，因此不像python那样依靠缩进。</p>
-<ul>
-<li>编译后执行：(不透露源码)<ul>
-<li><code>luac x.lua</code></li>
-<li><code>lua x.out</code></li>
-</ul>
-</li>
-<li>lua使用<code>..</code>连接字符串</li>
-</ul>
-<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">100</span>         <span class="comment">-- 全局变量</span></span><br><span class="line"><span class="keyword">local</span> b = <span class="number">100</span>   <span class="comment">-- 局部变量，不影响全局</span></span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">new_function</span><span class="params">(args)</span></span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- 同python动态类型，同bash需要end所以不依靠缩进</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> a&gt;b <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> b</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> var=<span class="number">1</span>, <span class="number">100</span> <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(var)    <span class="comment">-- 打印1到100</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="表-字典"><a href="#表-字典" class="headerlink" title="表(字典)"></a>表(字典)</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Config = &#123;key1=value1, key2=value2&#125;   <span class="comment">-- 创建一个表</span></span><br><span class="line">Config.word = <span class="string">"Hello"</span>   <span class="comment">-- 往表里增加元素</span></span><br><span class="line">Config.num = <span class="number">100</span></span><br><span class="line">Config[<span class="string">"name"</span>] = <span class="string">"ring"</span>   <span class="comment">-- 往表里增加元素</span></span><br><span class="line"><span class="built_in">print</span>(Config.key)      <span class="comment">-- 使用</span></span><br><span class="line"><span class="built_in">print</span>(Config[<span class="string">"key"</span>])</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>遍历  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> key, var <span class="keyword">in</span> <span class="built_in">pairs</span>(Config) <span class="keyword">do</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>lua本身并没有数组的概念，使用的是上面列表然后配合lua的一些api</p>
-<ul>
-<li>创建<code>arr = {1, 2, 3, 4, &quot;hello&quot;}</code></li>
-<li>遍历，lua数组的索引从1开始  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> key, var <span class="keyword">in</span> <span class="built_in">pairs</span>(arr) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(key, var)  <span class="comment">-- 数组的索引从1开始</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
-<li>通过api操作  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">arr = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> var=<span class="number">1</span>, <span class="number">100</span> <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">table</span>.<span class="built_in">insert</span>(arr, <span class="number">1</span>, var)</span><br><span class="line">    <span class="comment">-- table.insert(table, pos, value)</span></span><br><span class="line">    <span class="comment">-- 在table的pos位置插入value</span></span><br><span class="line">    <span class="comment">-- 所以上面的插入索引和value顺序相反</span></span><br><span class="line">    <span class="comment">-- 除非table.insert(arr, var, var)，则索引==value</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
-<li>数组长度<code>table.maxn(arr)</code>，<strong>注意lua数组索引从1开始</strong></li>
-</ul>
-<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a><strong>面向对象</strong></h3><p>lua本身没有面向对象，但是可以通过某种方式实现</p>
-<ul>
-<li><strong>使用表的形式</strong> (类似golang)  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Obj = &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Obj.sayHi</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"hi"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- 或者</span></span><br><span class="line">Obj.sayHi = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"hi"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建实例，由于lua的类实质就是一个表，所以遍历表，复制，返回即可  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clone</span><span class="params">(tab)</span></span></span><br><span class="line">    <span class="keyword">local</span> ins = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> key, var <span class="keyword">in</span> <span class="built_in">pairs</span>(tab) <span class="keyword">do</span></span><br><span class="line">        ins[key] = var</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> ins</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- 然后这里创造了一个类Obj，balabala</span></span><br><span class="line"><span class="keyword">local</span> p = clone(Obj)</span><br></pre></td></tr></table></figure></li>
-<li>构造方法，书接上文  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Obj.new = <span class="function"><span class="keyword">function</span><span class="params">(arg)</span></span></span><br><span class="line">    <span class="keyword">local</span> self = clone(Obj)</span><br><span class="line">    self.name = <span class="built_in">arg</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">local</span> p = Obj.new(<span class="string">"ring"</span>)</span><br></pre></td></tr></table></figure></li>
-<li>关于指向自己的指针  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Obj.hello = <span class="function"><span class="keyword">function</span><span class="params">(self)</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"hello "</span>..self.name)  <span class="comment">-- ..表示连接字符串</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">local</span> p = Obj.new(<span class="string">"ring"</span>)</span><br><span class="line">p.hello(p)</span><br><span class="line">p:hello()   <span class="comment">-- 默认传入自己</span></span><br><span class="line"><span class="comment">-- 两个方法等效，一般使用下面这个方法</span></span><br></pre></td></tr></table></figure></li>
-<li>继承  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span><span class="params">(dist, tab)</span></span></span><br><span class="line">    <span class="keyword">for</span> key, var <span class="keyword">in</span> paires(tab) <span class="keyword">do</span></span><br><span class="line">        dist[key] = var</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">Son = &#123;&#125;</span><br><span class="line">Son.new = <span class="function"><span class="keyword">function</span><span class="params">(arg)</span></span></span><br><span class="line">    <span class="keyword">local</span> self = Obj.new(<span class="built_in">arg</span>)</span><br><span class="line">    copy(self, Son)  <span class="comment">-- 也别忘了自己原有的东西</span></span><br><span class="line">    <span class="keyword">return</span> self</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><strong>使用函数闭包的形式面向对象</strong> ，可以实现私有化，但是表的方式更块些  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">fuction Obj(<span class="built_in">arg</span>)</span><br><span class="line">    <span class="keyword">local</span> self = &#123;&#125;</span><br><span class="line">    <span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span></span>   <span class="comment">-- 私有</span></span><br><span class="line">        self.name = <span class="built_in">arg</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    self.sayHi = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"hi"</span>)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    init()  <span class="comment">-- 标准化</span></span><br><span class="line">    <span class="keyword">return</span> self</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">local</span> p = Obj(<span class="string">"ring"</span>)</span><br><span class="line">p:sayHi()</span><br></pre></td></tr></table></figure>
-<ul>
-<li>继承  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span><span class="params">(arg)</span></span></span><br><span class="line">    <span class="keyword">local</span> self = Obj(<span class="built_in">arg</span>)</span><br><span class="line">    <span class="comment">-- some</span></span><br><span class="line">    <span class="keyword">return</span> self</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-</li>
-</ul>
-</li>
 </ul>
 
           
