@@ -88,7 +88,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/07/23/universe/go/go_level_up/go_level_up/assets/M-N.png">
 <meta property="article:published_time" content="2020-07-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-05T11:38:05.233Z">
+<meta property="article:modified_time" content="2020-08-06T13:52:55.964Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="go">
 <meta name="twitter:card" content="summary">
@@ -632,7 +632,52 @@
 </ul>
 </li>
 </ul>
-<p><a href="https://www.bilibili.com/video/BV1jT4y1j7Cd?p=7" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1jT4y1j7Cd?p=7</a></p>
+<h3 id="GMP终端debug调试"><a href="#GMP终端debug调试" class="headerlink" title="GMP终端debug调试"></a>GMP终端debug调试</h3><p><code>GODEBUG=schedtrace=1000 ./executable</code>, 每1000毫秒打印一下信息。</p>
+<h3 id="Go调度器GMP调度场景"><a href="#Go调度器GMP调度场景" class="headerlink" title="Go调度器GMP调度场景"></a>Go调度器GMP调度场景</h3><ul>
+<li>场景1. 一个G创建另一个G时<ul>
+<li>G1创建G2，为了局部性，G2优先加入G1(P1)的本地队列。 </li>
+</ul>
+</li>
+<li>场景2. 一个G执行完毕时<ul>
+<li>如上一个场景，当G1执行完毕时，G1对应的M1把G0加载过来，再由G0通过环境信息优先从本地队列加载G2。 </li>
+<li>之所以要先加载G0，是因为G0储存有环境信息、上下文信息等，类似闭包(有状态的函数)。</li>
+</ul>
+</li>
+<li>场景3. 一个G创建过多的G<ul>
+<li>因为创建过多的G，本地队列满了，所以要使用全局队列。将本地队列的前一般和<strong>超出部分中的一个</strong>打乱顺序，然后再放入全局队列中。</li>
+<li>如此削减一半后本地队列腾出了空间，可以继续放入G，如果满了就再执行上面的操作。</li>
+</ul>
+</li>
+<li>场景4. 唤醒正在休眠的M<ul>
+<li>每次一个G创建一个G，它将尝试从M空闲队列中唤醒一个M，去和P组合执行。此时新的M本地队列没有G，这个M将成为  <strong>自旋线程</strong> ，它会不断的寻址G或偷G。</li>
+<li>之所以让它自旋是因为销毁也会耗费资源。</li>
+</ul>
+</li>
+<li>场景5. 被唤醒的新M从全局队列批量获取G<ul>
+<li>一个自旋线程优先从全局队列获取，然后才是偷。</li>
+<li>获取的个数: $n = min(len(GQ)/GOMAXPROCS + 1, len(GQ/2))$, GQ表示全局队列总长。</li>
+</ul>
+</li>
+<li>场景6. 被唤醒的新M从别的M批量偷取G<ul>
+<li>从别的队列中偷取后半部分</li>
+</ul>
+</li>
+<li>场景7. 自旋线程的最大限制<ul>
+<li><code>自旋线程 + 执行线程 &lt;= GOMAXPROCS</code></li>
+</ul>
+</li>
+<li>场景8. G发生系统调用/阻塞<ul>
+<li>当遇到系统调用/阻塞时，P将当前正在执行的阻塞的G交个M保存，然后调度器P寻找新的可用的M去执行P的本地队列</li>
+<li>如果没有M则P放入P空闲队列</li>
+<li>并不会进入自旋线程，因为自旋线程抢G，而它们都在执行G0</li>
+</ul>
+</li>
+<li>场景9. G发生系统调用/非阻塞<ul>
+<li>G需要P调度才能执行，在场景8中由于阻塞，P已经与别的M绑定，所以非阻塞时需要从P空闲队列寻找新的P</li>
+<li>如果没有空闲的P，则将G放入全局队列，然后M空闲</li>
+</ul>
+</li>
+</ul>
 <h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><h3 id="常见的控制并发的两种方式"><a href="#常见的控制并发的两种方式" class="headerlink" title="常见的控制并发的两种方式"></a>常见的控制并发的两种方式</h3><ul>
 <li><ol>
 <li>WaitGroup<ul>
@@ -891,7 +936,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GoTest"><span class="nav-number">1.</span> <span class="nav-text">GoTest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杂项"><span class="nav-number">2.</span> <span class="nav-text">杂项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串变量结构"><span class="nav-number">2.1.</span> <span class="nav-text">字符串变量结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切片"><span class="nav-number">2.2.</span> <span class="nav-text">切片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存对齐"><span class="nav-number">2.3.</span> <span class="nav-text">内存对齐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包"><span class="nav-number">2.4.</span> <span class="nav-text">闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量逃逸"><span class="nav-number">2.4.1.</span> <span class="nav-text">变量逃逸</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#defer"><span class="nav-number">2.5.</span> <span class="nav-text">defer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Go-1-12"><span class="nav-number">2.5.1.</span> <span class="nav-text">Go 1.12</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#go1-13的优化策略"><span class="nav-number">2.5.2.</span> <span class="nav-text">go1.13的优化策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#go1-14中defer的优化策略"><span class="nav-number">2.5.3.</span> <span class="nav-text">go1.14中defer的优化策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#panic和recover"><span class="nav-number">2.6.</span> <span class="nav-text">panic和recover</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#有recover发生的panic"><span class="nav-number">2.6.1.</span> <span class="nav-text">有recover发生的panic</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">2.7.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method"><span class="nav-number">2.8.</span> <span class="nav-text">Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口"><span class="nav-number">2.9.</span> <span class="nav-text">接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类型系统"><span class="nav-number">2.9.1.</span> <span class="nav-text">类型系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空接口"><span class="nav-number">2.9.2.</span> <span class="nav-text">空接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非空接口"><span class="nav-number">2.9.3.</span> <span class="nav-text">非空接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类型断言"><span class="nav-number">2.9.4.</span> <span class="nav-text">类型断言</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射"><span class="nav-number">2.10.</span> <span class="nav-text">反射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过反射获取类型信息"><span class="nav-number">2.10.1.</span> <span class="nav-text">通过反射获取类型信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过反射修改变量值"><span class="nav-number">2.10.2.</span> <span class="nav-text">通过反射修改变量值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GMP"><span class="nav-number">3.</span> <span class="nav-text">GMP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#M-N的多线程模型"><span class="nav-number">3.1.</span> <span class="nav-text">M:N的多线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GMP模型"><span class="nav-number">3.2.</span> <span class="nav-text">GMP模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度器的设计策略"><span class="nav-number">3.3.</span> <span class="nav-text">调度器的设计策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go指令的调度流程"><span class="nav-number">3.4.</span> <span class="nav-text">go指令的调度流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度器的生命周期"><span class="nav-number">3.5.</span> <span class="nav-text">调度器的生命周期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context"><span class="nav-number">4.</span> <span class="nav-text">Context</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的控制并发的两种方式"><span class="nav-number">4.1.</span> <span class="nav-text">常见的控制并发的两种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context接口"><span class="nav-number">4.2.</span> <span class="nav-text">Context接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context的继承衍生"><span class="nav-number">4.3.</span> <span class="nav-text">Context的继承衍生</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WithValue传递元数据"><span class="nav-number">4.4.</span> <span class="nav-text">WithValue传递元数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context使用原则"><span class="nav-number">4.5.</span> <span class="nav-text">Context使用原则</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GoTest"><span class="nav-number">1.</span> <span class="nav-text">GoTest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杂项"><span class="nav-number">2.</span> <span class="nav-text">杂项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串变量结构"><span class="nav-number">2.1.</span> <span class="nav-text">字符串变量结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切片"><span class="nav-number">2.2.</span> <span class="nav-text">切片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存对齐"><span class="nav-number">2.3.</span> <span class="nav-text">内存对齐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包"><span class="nav-number">2.4.</span> <span class="nav-text">闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量逃逸"><span class="nav-number">2.4.1.</span> <span class="nav-text">变量逃逸</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#defer"><span class="nav-number">2.5.</span> <span class="nav-text">defer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Go-1-12"><span class="nav-number">2.5.1.</span> <span class="nav-text">Go 1.12</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#go1-13的优化策略"><span class="nav-number">2.5.2.</span> <span class="nav-text">go1.13的优化策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#go1-14中defer的优化策略"><span class="nav-number">2.5.3.</span> <span class="nav-text">go1.14中defer的优化策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#panic和recover"><span class="nav-number">2.6.</span> <span class="nav-text">panic和recover</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#有recover发生的panic"><span class="nav-number">2.6.1.</span> <span class="nav-text">有recover发生的panic</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">2.7.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method"><span class="nav-number">2.8.</span> <span class="nav-text">Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口"><span class="nav-number">2.9.</span> <span class="nav-text">接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类型系统"><span class="nav-number">2.9.1.</span> <span class="nav-text">类型系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空接口"><span class="nav-number">2.9.2.</span> <span class="nav-text">空接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非空接口"><span class="nav-number">2.9.3.</span> <span class="nav-text">非空接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类型断言"><span class="nav-number">2.9.4.</span> <span class="nav-text">类型断言</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射"><span class="nav-number">2.10.</span> <span class="nav-text">反射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过反射获取类型信息"><span class="nav-number">2.10.1.</span> <span class="nav-text">通过反射获取类型信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过反射修改变量值"><span class="nav-number">2.10.2.</span> <span class="nav-text">通过反射修改变量值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GMP"><span class="nav-number">3.</span> <span class="nav-text">GMP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#M-N的多线程模型"><span class="nav-number">3.1.</span> <span class="nav-text">M:N的多线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GMP模型"><span class="nav-number">3.2.</span> <span class="nav-text">GMP模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度器的设计策略"><span class="nav-number">3.3.</span> <span class="nav-text">调度器的设计策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go指令的调度流程"><span class="nav-number">3.4.</span> <span class="nav-text">go指令的调度流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度器的生命周期"><span class="nav-number">3.5.</span> <span class="nav-text">调度器的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GMP终端debug调试"><span class="nav-number">3.6.</span> <span class="nav-text">GMP终端debug调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go调度器GMP调度场景"><span class="nav-number">3.7.</span> <span class="nav-text">Go调度器GMP调度场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context"><span class="nav-number">4.</span> <span class="nav-text">Context</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的控制并发的两种方式"><span class="nav-number">4.1.</span> <span class="nav-text">常见的控制并发的两种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context接口"><span class="nav-number">4.2.</span> <span class="nav-text">Context接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context的继承衍生"><span class="nav-number">4.3.</span> <span class="nav-text">Context的继承衍生</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WithValue传递元数据"><span class="nav-number">4.4.</span> <span class="nav-text">WithValue传递元数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context使用原则"><span class="nav-number">4.5.</span> <span class="nav-text">Context使用原则</span></a></li></ol></li></ol></div>
             
 
           </div>
