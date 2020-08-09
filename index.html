@@ -229,6 +229,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/08/universe/web/jwt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/08/08/universe/web/jwt/" itemprop="url">jwt Note</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-08T00:00:00+08:00">
+                2020-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="传统的基于token的用户验证"><a href="#传统的基于token的用户验证" class="headerlink" title="传统的基于token的用户验证"></a>传统的基于token的用户验证</h2><ul>
+<li><ol>
+<li>用户登录<ul>
+<li>服务返回token，并在服务端保存token</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>用户验证<ul>
+<li>用户再次访问时需要携带token，比较数据库中的token</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="Json-Web-Token"><a href="#Json-Web-Token" class="headerlink" title="Json Web Token"></a>Json Web Token</h2><ul>
+<li><ol>
+<li>用户登录<ul>
+<li>服务返回token，但不保存token</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>用户验证<ul>
+<li>用户再次访问时需要携带token，再做token校验</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="jwt实现过程"><a href="#jwt实现过程" class="headerlink" title="jwt实现过程"></a>jwt实现过程</h3><ul>
+<li><ol>
+<li>用户提交用户名和密码，如果登录成功，使用jwt创建一个token并给用户返回<ul>
+<li>jwt生成的token由三段字符串生成，并由<code>.</code>连接<ul>
+<li>第一段字符串：HEADER。内部包含算法和token类型，json转换成字符串然后做base64url加密<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"alg"</span>: <span class="string">"HS256"</span>,</span><br><span class="line">    <span class="attr">"typ"</span>: <span class="string">"JWT"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>第二段字符串：PAYLOAD。内容自定义值，但一般都有<code>exp</code>超时时间，且不包含敏感信息<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"123"</span>,</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"ring"</span>,</span><br><span class="line">    "exp"  0000000000,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>第三段字符串。第一和第二部分的密文拼接，然后加密。加密方式由第一段字符串给出， <strong>并且<code>加盐</code></strong> 。在这次加密后(HS256，第一次加密不能反解)再对密文进行base64url加密</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>校验token<ul>
+<li><ol>
+<li>对token进行切割，<code>.</code></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>对第二段进行base64url解密，获取PAYLOAD信息。然后检测超时时间</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>把第一第二段拼接进行HS256解密(第一段指定的加密方式)加密。让密文和第三段base64url解密后的密文比较</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>能防止篡改吗？<ul>
+<li>由于第三段密文是<code>加盐</code>后加密得到的，而盐只有自己知道，所以不能篡改</li>
+</ul>
+</li>
+</ul>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>官网给出了对很多语言、算法的支持</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/06/universe/config_lang/yaml_basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2582,324 +2770,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/13/universe/linux/linux_kernel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/13/universe/linux/linux_kernel/" itemprop="url">深入理解linux内核</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-13T00:00:00+08:00">
-                2020-07-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="庖丁解牛linux内核"><a href="#庖丁解牛linux内核" class="headerlink" title="庖丁解牛linux内核"></a>庖丁解牛linux内核</h1><h2 id="堆栈寄存器"><a href="#堆栈寄存器" class="headerlink" title="堆栈寄存器"></a>堆栈寄存器</h2><ul>
-<li>esp, 堆栈指针</li>
-<li>ebp，基址指针</li>
-</ul>
-<h3 id="利用堆栈实现函数的调用和返回"><a href="#利用堆栈实现函数的调用和返回" class="headerlink" title="利用堆栈实现函数的调用和返回"></a>利用堆栈实现函数的调用和返回</h3><ul>
-<li>cs:eip总是指向下一条指令的地址，在跳转时cs:eip的值会根据程序需要被修改</li>
-<li>call将当前cs:eip的值压入栈顶，cs:eip指向被调用函数的入口</li>
-<li>ret从栈顶弹出原来保存在这里的cs:eip的值，放入cs:eip中</li>
-</ul>
-<h4 id="函数调用框架"><a href="#函数调用框架" class="headerlink" title="函数调用框架"></a>函数调用框架</h4><ul>
-<li>调用者:<code>call func</code><ul>
-<li>call把<code>call func</code>指令的下一条指令保存在栈顶，eip指向函数开始处</li>
-</ul>
-</li>
-<li>被调用者:储存在某块地址  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 建立被调用者函数的堆栈框架</span><br><span class="line">push %ebp</span><br><span class="line">mov %esp,%ebp</span><br><span class="line"></span><br><span class="line">函数体</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 拆除被调用者函数的堆栈框架</span><br><span class="line">movl %ebp,%esp</span><br><span class="line">pop %ebp</span><br><span class="line"></span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
-<ul>
-<li>call被调用前程序可能就有使用堆栈，esp到ebp之间的内容被占用</li>
-<li>call执行之后<ul>
-<li>当前cs:eip入栈，然后cs:eip指向函数开始，然后向下执行</li>
-<li><code>push</code>和<code>mov</code>把ebp(原栈底)入栈，然后ebp指向esp，即开辟一段新的栈，供函数使用</li>
-<li>函数调用结束后<code>mov</code>和<code>pop</code>恢复原来的栈顶和栈底</li>
-<li>ret把栈顶元素(cs:eip)出栈，赋给cs:eip，即恢复原cs:eip</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="参数传入"><a href="#参数传入" class="headerlink" title="参数传入"></a>参数传入</h4><p>如调用一个两个参数的函数<code>func(x, y);</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pushl 0xfffffff8(%ebp)</span><br><span class="line">pushl 0xfffffff4(%ebp) </span><br><span class="line">&#x2F;&#x2F; 先通过栈底+偏移的方式把局部变量压栈，方便在函数框架建立后使用</span><br><span class="line">&#x2F;&#x2F; 然后再call func建立函数框架</span><br><span class="line"></span><br><span class="line">call funn</span><br><span class="line">add $0x8,%esp</span><br><span class="line">&#x2F;&#x2F; 由于压入了两个参数，所以通过这样的方式来清理掉</span><br></pre></td></tr></table></figure>
-
-<p>一个函数也会有自己的局部变量，所以函数框架创建后，编译器会扫描整个函数，然后计算需要的空间，位局部变量预留空间。以main函数为例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">    push %ebp</span><br><span class="line">    mov %esp,%ebp</span><br><span class="line">    sub 立即数,%esp  &#x2F;&#x2F; 为声明的变量预留空间</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    movl %ebp,%esp</span><br><span class="line">    pop %ebp</span><br><span class="line">    ret</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h3><p>中断信号发生时，cpu把当前的eip、ebp等都压到  <strong>内核堆栈</strong> 保存现场。然后把eip指向中断处理程序入口，执行中断处理程序。</p>
-<h2 id="嵌入汇编语法"><a href="#嵌入汇编语法" class="headerlink" title="嵌入汇编语法"></a>嵌入汇编语法</h2><p>内嵌汇编语法</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__asm__(</span><br><span class="line">    汇编语句模板：</span><br><span class="line">    输出部分：</span><br><span class="line">    输入部分：</span><br><span class="line">    破坏描述部分：); <span class="comment">// 表示这代码可能会破坏哪个寄存器的内容等</span></span><br></pre></td></tr></table></figure>
-
-<p>看个例子</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// val1+val2=val3</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> val1 = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> val2 = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> val3 = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="string">"movl$0,%%eax\n\t"</span>  <span class="comment">// 把eax清0,%%转意</span></span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="string">"addl%1,%%eax\n\t"</span>  <span class="comment">// %eax+=val1</span></span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="comment">// %1，%2等指下面输出和输入部分从0开始编号</span></span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="comment">// 所以%1指val1</span></span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="string">"addl%2,%%eax\n\t"</span>  <span class="comment">// %eax+=val2</span></span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="string">"movl%%eax,%0\n\t"</span>  <span class="comment">// val2 = %eax</span></span></span></span><br><span class="line"><span class="function"><span class="params">    :<span class="string">"=m"</span>(val3)         <span class="comment">// =m指写到内存变量</span></span></span></span><br><span class="line"><span class="function"><span class="params">    :<span class="string">"c"</span>(val1),<span class="string">"d"</span>(val2)<span class="comment">// c,d做修饰，指%eax,%edx，用ecx存val1，edx存val2</span></span></span></span><br><span class="line"><span class="function"><span class="params">    )</span></span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"val1:%d+val2:%d=val3:%d\n"</span>, val1, val2, val3);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="内嵌汇编常用修饰符-限定符"><a href="#内嵌汇编常用修饰符-限定符" class="headerlink" title="内嵌汇编常用修饰符(限定符)"></a>内嵌汇编常用修饰符(限定符)</h3><table>
-<thead>
-<tr>
-<th></th>
-<th>限定符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>寄存器</td>
-<td>“a”</td>
-<td>将输入变量放入eax</td>
-</tr>
-<tr>
-<td></td>
-<td>“b”</td>
-<td>将输入变量放入ebx</td>
-</tr>
-<tr>
-<td></td>
-<td>“c”</td>
-<td>将输入变量放入ecx</td>
-</tr>
-<tr>
-<td></td>
-<td>“d”</td>
-<td>将输入变量放入edx</td>
-</tr>
-<tr>
-<td></td>
-<td>“s”</td>
-<td>将输入变量放入esi</td>
-</tr>
-<tr>
-<td></td>
-<td>“D”</td>
-<td>将输入变量放入edi</td>
-</tr>
-<tr>
-<td></td>
-<td>“q”</td>
-<td>将输入变量放入eax、ebx、ecx、edx中的一个</td>
-</tr>
-<tr>
-<td></td>
-<td>“r”</td>
-<td>将输入变量放入通用寄存器中的一个</td>
-</tr>
-<tr>
-<td>——-</td>
-<td>“A”</td>
-<td>放入eax和edx，把eax和edx，合成一个64位的寄存器</td>
-</tr>
-<tr>
-<td>内存</td>
-<td>“m”</td>
-<td>内存变量</td>
-</tr>
-<tr>
-<td></td>
-<td>“o”</td>
-<td>操作数为内存变量，但其寻址方式是偏移量类型</td>
-</tr>
-<tr>
-<td></td>
-<td>“V”</td>
-<td>操作数为内存变量，但其寻址方式不是偏移量类型</td>
-</tr>
-<tr>
-<td>——-</td>
-<td>“.”</td>
-<td>操作数为内存变量，但其寻址方式为自增量</td>
-</tr>
-<tr>
-<td>寄存器或内存</td>
-<td>“g”</td>
-<td>将输入放入eax、ebx、ecx、edx中的一个或者作为内存变量</td>
-</tr>
-<tr>
-<td>——-</td>
-<td>“X”</td>
-<td>操作数可以是任何类型</td>
-</tr>
-<tr>
-<td>立即数</td>
-<td>“I”</td>
-<td>0-31之间的立即数(用于32位移位指令)</td>
-</tr>
-<tr>
-<td></td>
-<td>“J”</td>
-<td>0-63之间的立即数(用于64位移位指令)</td>
-</tr>
-<tr>
-<td></td>
-<td>“N”</td>
-<td>0-255之间的立即数(用于out指令)</td>
-</tr>
-<tr>
-<td></td>
-<td>“i”</td>
-<td>立即数</td>
-</tr>
-<tr>
-<td>——-</td>
-<td>“n”</td>
-<td>立即数，有些系统不支持除字以外的立即数，这些系统应该使用”n”</td>
-</tr>
-<tr>
-<td>操作数类型</td>
-<td>“=”</td>
-<td>操作数在指令中是只写的(输出操作数)</td>
-</tr>
-<tr>
-<td>——-</td>
-<td>“+”</td>
-<td>操作数在指令中是读写的(输入输出操作数)</td>
-</tr>
-<tr>
-<td>浮点数</td>
-<td>“f”</td>
-<td>浮点数</td>
-</tr>
-<tr>
-<td></td>
-<td>“t”</td>
-<td>第一个浮点数寄存器</td>
-</tr>
-<tr>
-<td></td>
-<td>“u”</td>
-<td>第二个浮点数寄存器</td>
-</tr>
-<tr>
-<td></td>
-<td>“G”</td>
-<td>标准的80387</td>
-</tr>
-<tr>
-<td></td>
-<td>%</td>
-<td>该操作数可以和下一个操作数交换位置</td>
-</tr>
-<tr>
-<td></td>
-<td>#</td>
-<td>部分注释，注释从该字符到气候的逗号之间的内容</td>
-</tr>
-<tr>
-<td></td>
-<td>*</td>
-<td>表述如果选中寄存器，则其后的字母被忽略</td>
-</tr>
-</tbody></table>
-<h3 id="用户态、内核态和中断处理过程"><a href="#用户态、内核态和中断处理过程" class="headerlink" title="用户态、内核态和中断处理过程"></a>用户态、内核态和中断处理过程</h3><p>CPU一般都有几种不同的指令执行级别。在高级级别下，代码可以执行 <strong>特权指令，访问访问任意物理地址</strong> ，这种CPU执行级别对应内核态，类似的用户态。</p>
-<p>linux中如何区分用户态和内核态：一般来说地址空间是一个显著特征(cs:eip)，0xc0000000以上的地址空间只有在内核态下可以访问，0x00000000-0xbfffffff的地址空间两种状态都可以访问。</p>
-<p>用户态可以传递系统调用号，系统调用根据系统调用号跳到内核态进行相应的处理。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2950,7 +2820,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2963,7 +2833,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
