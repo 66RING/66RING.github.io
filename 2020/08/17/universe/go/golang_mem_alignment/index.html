@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="go, tools," />
+  <meta name="keywords" content="golang, go," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="打开mongo123456789101112import(  &quot;gopkg.in&#x2F;mgo.v2&quot;)	url:&#x3D;&quot;mongodb:&#x2F;&#x2F;localhost:27017&quot;  &#x2F;&#x2F; 不登录mongo的	url:&#x3D;&quot;mongodb:&#x2F;&#x2F;root:password@localhost:27017&#x2F;登录的用户名&quot; &#x2F;&#x2F; 登录mongo的	session,err:&#x3D;mgo.Dial(url)	defer sess">
+<meta name="description" content="Golang内存对齐Cpu要想读取数据，需要通过 地址总线 把地址传输给内存。内存准备好数据输出到 数据总线 ，交给CPU。 每根地址总线能表示一位，8根地址总线就能表示8位二进制数，即256个地址。因为表示不了更大的地址，所以就用不了更大的内存。 每次操作一字节太慢，那就加宽数据总线，要想一次操作一字节就至少需要32位数据总线。8字节就64位。这里每次操作的字节数就是所谓的  机器字长 。 从内">
 <meta property="og:type" content="article">
-<meta property="og:title" content="golang操作 mgov2篇">
-<meta property="og:url" content="http://yoursite.com/2019/08/27/universe/go/golang%E6%93%8D%E4%BD%9C%20mgov2%E7%AF%87/index.html">
+<meta property="og:title" content="Golang内存对齐">
+<meta property="og:url" content="http://yoursite.com/2020/08/17/universe/go/golang_mem_alignment/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="打开mongo123456789101112import(  &quot;gopkg.in&#x2F;mgo.v2&quot;)	url:&#x3D;&quot;mongodb:&#x2F;&#x2F;localhost:27017&quot;  &#x2F;&#x2F; 不登录mongo的	url:&#x3D;&quot;mongodb:&#x2F;&#x2F;root:password@localhost:27017&#x2F;登录的用户名&quot; &#x2F;&#x2F; 登录mongo的	session,err:&#x3D;mgo.Dial(url)	defer sess">
+<meta property="og:description" content="Golang内存对齐Cpu要想读取数据，需要通过 地址总线 把地址传输给内存。内存准备好数据输出到 数据总线 ，交给CPU。 每根地址总线能表示一位，8根地址总线就能表示8位二进制数，即256个地址。因为表示不了更大的地址，所以就用不了更大的内存。 每次操作一字节太慢，那就加宽数据总线，要想一次操作一字节就至少需要32位数据总线。8字节就64位。这里每次操作的字节数就是所谓的  机器字长 。 从内">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-08-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:34:14.478Z">
+<meta property="article:published_time" content="2020-08-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-17T05:58:15.281Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="go, tools">
+<meta property="article:tag" content="golang, go">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/27/universe/go/golang操作 mgov2篇/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/08/17/universe/go/golang_mem_alignment/"/>
 
 
 
 
 
-  <title>golang操作 mgov2篇 | Hexo</title>
+  <title>Golang内存对齐 | Hexo</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/27/universe/go/golang%E6%93%8D%E4%BD%9C%20mgov2%E7%AF%87/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/17/universe/go/golang_mem_alignment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">golang操作 mgov2篇</h1>
+          <h1 class="post-title" itemprop="name headline">Golang内存对齐</h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-27T00:00:00+08:00">
-                2019-08-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-17T00:00:00+08:00">
+                2020-08-17
               </time>
             
 
@@ -300,12 +300,40 @@
       
 
       
-        <h3 id="打开mongo"><a href="#打开mongo" class="headerlink" title="打开mongo"></a>打开mongo</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(</span><br><span class="line">  <span class="string">"gopkg.in/mgo.v2"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">	url:=<span class="string">"mongodb://localhost:27017"</span>  <span class="comment">// 不登录mongo的</span></span><br><span class="line">	url:=<span class="string">"mongodb://root:password@localhost:27017/登录的用户名"</span> <span class="comment">// 登录mongo的</span></span><br><span class="line">	session,err:=mgo.Dial(url)</span><br><span class="line">	<span class="keyword">defer</span> session.Close() <span class="comment">// 最后记得关闭 减压</span></span><br><span class="line">	ses:=session.DB(<span class="string">"databaseName"</span>).C(<span class="string">"collectionName"</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		fmt.Println(err)</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="Golang内存对齐"><a href="#Golang内存对齐" class="headerlink" title="Golang内存对齐"></a><center>Golang内存对齐<center></h2><p>Cpu要想读取数据，需要通过 <strong>地址总线</strong> 把地址传输给内存。内存准备好数据输出到 <strong>数据总线</strong> ，交给CPU。</p>
+<p>每根地址总线能表示一位，8根地址总线就能表示8位二进制数，即256个地址。因为表示不了更大的地址，所以就用不了更大的内存。</p>
+<p>每次操作一字节太慢，那就加宽数据总线，要想一次操作一字节就至少需要32位数据总线。8字节就64位。这里每次操作的字节数就是所谓的  <strong>机器字长</strong> 。</p>
+<p>从内存读取数据时通过”并行”操作同时从储存单元(DRAM芯片)读出数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">----+-------+-------+-------+---- address</span><br><span class="line">    |       |       |       |</span><br><span class="line">    |       |       |       |</span><br><span class="line">  chip1    chip2   chip3    chip4</span><br><span class="line">    |       |       |       |</span><br><span class="line">    0       0       1       1</span><br><span class="line">----</span><br><span class="line">0011...</span><br><span class="line">假设有8个chip</span><br></pre></td></tr></table></figure>
 
-<h3 id="Update更新数据库"><a href="#Update更新数据库" class="headerlink" title="Update更新数据库"></a>Update更新数据库</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"gopkg.in/mgo.v2"</span></span><br><span class="line">	<span class="string">"gopkg.in/mgo.v2/bson"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Update只能更新一条，UpdateAll批量更新</span></span><br><span class="line">	selector := bson.M&#123;<span class="string">"word"</span>:<span class="string">"god"</span>&#125;  <span class="comment">// 选择器：按word:god找，不存在返回nor found</span></span><br><span class="line">	<span class="comment">//bson.M&#123;key:value&#125;就相当于python的字典</span></span><br><span class="line">	data := bson.M&#123;<span class="string">"$set"</span>:bson.M&#123;<span class="string">"word"</span>:<span class="string">"good"</span>&#125;&#125; <span class="comment">// 找到后用$set修改</span></span><br><span class="line">	ses.Update(selector,data)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果要更新集合里一个数组的</span></span><br></pre></td></tr></table></figure>
+<p>每个储存单元共用同一个地址，各自从地址取出一位组成我们逻辑上认为的连续4字节数据。提高了内存访问效率。</p>
+<p>采用着用设计，那么<code>address</code>就必须的8的倍数。如果非要错开一个格，那么错开后多出来的格子和其他不同，不能在一次操作中被同一个地址选中，所以这样的地址是不能用的。</p>
+<p>CPU对这种情况的处理：多次读取。如取第一次读取的后7字节和第二次读取的前1字节拼接得到想要的8字节数据。但这样就影响了性能。</p>
+<p>为了保证程序顺利高效的运行，编译器会把各种类型的数据安排到合适的地址并占用合适的长度，这就叫做 <strong>内存对齐</strong>。每种类型对齐值就是它的 <strong>对齐边界</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |</span><br><span class="line">|---|---|---|---|---|---|---|---|</span><br><span class="line">用0~1存储int16的数据，对齐值(对齐边界)就是2</span><br><span class="line">用4~7存储int32的数据，对齐边界就是4</span><br></pre></td></tr></table></figure>
 
+<p>内存对齐要求数据存储地址以及占用的字节数都是它对齐边界的倍数。因此，在上面的情况中，如果int16从0开始(0%2=0;2%2=0)，那么int32就要错开两字节，从4开始(4%4=0;4%4=0)。</p>
+<h3 id="如何确定每种类型的对齐边界"><a href="#如何确定每种类型的对齐边界" class="headerlink" title="如何确定每种类型的对齐边界"></a>如何确定每种类型的对齐边界</h3><p>这与平台有关，go支持很多平台386、arm、mips等。常见的32位平台指针宽度和寄存器宽度都是4字节，64位平台上都是8字节。被Go语言称为寄存器宽度的这个值就可以理解为机器字长，也是平台对应的最大对齐边界。</p>
+<p>数据对齐边界取数据类型大小和平台最大对齐边界中较小的一个。如果只根据平台最大对齐边界对齐，则容易浪费很多字节(跳过很多空闲的字节)。</p>
+<h3 id="结构体的对齐边界"><a href="#结构体的对齐边界" class="headerlink" title="结构体的对齐边界"></a>结构体的对齐边界</h3><p>取结构体中数据类型大小最大的成员，这个就是这个结构体的对齐边界。</p>
+<ul>
+<li><ol>
+<li>存储这个结构体的起始地址是对齐边界的倍数</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>结构体每个成员存储时，都把起始地址当作地址0，然后再用相对地址决定自己放在哪</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>结构体整体占用字节数需要是类型对齐边界的倍数，不够的话往后扩张</li>
+</ol>
+</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">type T struct&#123;</span><br><span class="line">    a int8   &#x2F;&#x2F; 1byte</span><br><span class="line">    b int64  &#x2F;&#x2F; 8byte</span><br><span class="line">    c int32  &#x2F;&#x2F; 4byte</span><br><span class="line">    d int16  &#x2F;&#x2F; 2byte</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">最大是8，所以改结构体对齐边界是8</span><br><span class="line"></span><br><span class="line">第一个成员a从0开始;第二个成员要对齐，只能从8开始;第三个成员从16开始，占用16~19;第四个成员从20开始占用20~21。然后还需要向后扩张到23</span><br></pre></td></tr></table></figure>
 
-
+<p>思考：调整结构体成员的顺序是否能够优化内存？</p>
 
       
     </div>
@@ -323,7 +351,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/go-tools/" rel="tag"># go, tools</a>
+            <a href="/tags/golang-go/" rel="tag"># golang, go</a>
           
         </div>
       
@@ -336,8 +364,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/" rel="next" title="knowledge universe">
-                <i class="fa fa-chevron-left"></i> knowledge universe
+              <a href="/2020/08/11/universe/go/gui_programming/gui_programming/" rel="next" title="Golang gui 编程笔记">
+                <i class="fa fa-chevron-left"></i> Golang gui 编程笔记
               </a>
             
           </div>
@@ -345,10 +373,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/02/universe/linux/kali-linux%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%92%8C%E6%96%87%E6%9C%AC%E7%95%8C%E9%9D%A2%E7%9A%84%E5%88%87%E6%8D%A2/" rel="prev" title="kali linux图形界面和文本界面的切换">
-                kali linux图形界面和文本界面的切换 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -369,7 +393,7 @@
       
     </div>
   </div>
-    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/universe/go/golang操作 mgov2篇.md" target="_blank">编辑</a>
+    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/universe/go/golang_mem_alignment.md" target="_blank">编辑</a>
 
 
           </div>
@@ -472,7 +496,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开mongo"><span class="nav-number">1.</span> <span class="nav-text">打开mongo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update更新数据库"><span class="nav-number">2.</span> <span class="nav-text">Update更新数据库</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang内存对齐"><span class="nav-number">1.</span> <span class="nav-text">Golang内存对齐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何确定每种类型的对齐边界"><span class="nav-number">1.1.</span> <span class="nav-text">如何确定每种类型的对齐边界</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构体的对齐边界"><span class="nav-number">1.2.</span> <span class="nav-text">结构体的对齐边界</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -229,6 +229,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/17/universe/go/golang_mem_alignment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/08/17/universe/go/golang_mem_alignment/" itemprop="url">Golang内存对齐</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-17T00:00:00+08:00">
+                2020-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Golang内存对齐"><a href="#Golang内存对齐" class="headerlink" title="Golang内存对齐"></a><center>Golang内存对齐<center></h2><p>Cpu要想读取数据，需要通过 <strong>地址总线</strong> 把地址传输给内存。内存准备好数据输出到 <strong>数据总线</strong> ，交给CPU。</p>
+<p>每根地址总线能表示一位，8根地址总线就能表示8位二进制数，即256个地址。因为表示不了更大的地址，所以就用不了更大的内存。</p>
+<p>每次操作一字节太慢，那就加宽数据总线，要想一次操作一字节就至少需要32位数据总线。8字节就64位。这里每次操作的字节数就是所谓的  <strong>机器字长</strong> 。</p>
+<p>从内存读取数据时通过”并行”操作同时从储存单元(DRAM芯片)读出数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">----+-------+-------+-------+---- address</span><br><span class="line">    |       |       |       |</span><br><span class="line">    |       |       |       |</span><br><span class="line">  chip1    chip2   chip3    chip4</span><br><span class="line">    |       |       |       |</span><br><span class="line">    0       0       1       1</span><br><span class="line">----</span><br><span class="line">0011...</span><br><span class="line">假设有8个chip</span><br></pre></td></tr></table></figure>
+
+<p>每个储存单元共用同一个地址，各自从地址取出一位组成我们逻辑上认为的连续4字节数据。提高了内存访问效率。</p>
+<p>采用着用设计，那么<code>address</code>就必须的8的倍数。如果非要错开一个格，那么错开后多出来的格子和其他不同，不能在一次操作中被同一个地址选中，所以这样的地址是不能用的。</p>
+<p>CPU对这种情况的处理：多次读取。如取第一次读取的后7字节和第二次读取的前1字节拼接得到想要的8字节数据。但这样就影响了性能。</p>
+<p>为了保证程序顺利高效的运行，编译器会把各种类型的数据安排到合适的地址并占用合适的长度，这就叫做 <strong>内存对齐</strong>。每种类型对齐值就是它的 <strong>对齐边界</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |</span><br><span class="line">|---|---|---|---|---|---|---|---|</span><br><span class="line">用0~1存储int16的数据，对齐值(对齐边界)就是2</span><br><span class="line">用4~7存储int32的数据，对齐边界就是4</span><br></pre></td></tr></table></figure>
+
+<p>内存对齐要求数据存储地址以及占用的字节数都是它对齐边界的倍数。因此，在上面的情况中，如果int16从0开始(0%2=0;2%2=0)，那么int32就要错开两字节，从4开始(4%4=0;4%4=0)。</p>
+<h3 id="如何确定每种类型的对齐边界"><a href="#如何确定每种类型的对齐边界" class="headerlink" title="如何确定每种类型的对齐边界"></a>如何确定每种类型的对齐边界</h3><p>这与平台有关，go支持很多平台386、arm、mips等。常见的32位平台指针宽度和寄存器宽度都是4字节，64位平台上都是8字节。被Go语言称为寄存器宽度的这个值就可以理解为机器字长，也是平台对应的最大对齐边界。</p>
+<p>数据对齐边界取数据类型大小和平台最大对齐边界中较小的一个。如果只根据平台最大对齐边界对齐，则容易浪费很多字节(跳过很多空闲的字节)。</p>
+<h3 id="结构体的对齐边界"><a href="#结构体的对齐边界" class="headerlink" title="结构体的对齐边界"></a>结构体的对齐边界</h3><p>取结构体中数据类型大小最大的成员，这个就是这个结构体的对齐边界。</p>
+<ul>
+<li><ol>
+<li>存储这个结构体的起始地址是对齐边界的倍数</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>结构体每个成员存储时，都把起始地址当作地址0，然后再用相对地址决定自己放在哪</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>结构体整体占用字节数需要是类型对齐边界的倍数，不够的话往后扩张</li>
+</ol>
+</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">type T struct&#123;</span><br><span class="line">    a int8   &#x2F;&#x2F; 1byte</span><br><span class="line">    b int64  &#x2F;&#x2F; 8byte</span><br><span class="line">    c int32  &#x2F;&#x2F; 4byte</span><br><span class="line">    d int16  &#x2F;&#x2F; 2byte</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">最大是8，所以改结构体对齐边界是8</span><br><span class="line"></span><br><span class="line">第一个成员a从0开始;第二个成员要对齐，只能从8开始;第三个成员从16开始，占用16~19;第四个成员从20开始占用20~21。然后还需要向后扩张到23</span><br></pre></td></tr></table></figure>
+
+<p>思考：调整结构体成员的顺序是否能够优化内存？</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/11/universe/go/gui_programming/gui_programming/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2515,139 +2668,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/18/universe/linux/exec_and_fork/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/18/universe/linux/exec_and_fork/" itemprop="url">Fork & Exec in Linux</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-18T00:00:00+08:00">
-                2020-07-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在linux中启动新一个程序有两种方式：</p>
-<ul>
-<li>Fork(分叉)<ul>
-<li>创建一个新的进程，该进程几乎是前一个进程的拷贝</li>
-<li>子进程和父进程使用相同的代码段，子进程复制父进程的堆栈段和数据段</li>
-<li>子进程对父进程的复制是逻辑上的复制，所有实际上物理空间还是共享着的，直到一个进程写了数据，才将有差别的”页”从物理地址上分开</li>
-</ul>
-</li>
-<li>Exec<ul>
-<li>启动另外的进程以取代当前运行的进程</li>
-<li>调用exec的进程将会死亡，废弃原有的数据段和堆栈段，分配新的数据段和堆栈段，<strong>但是进程号是同一个</strong> 。所以对于系统来说还是同一个进程，但不是同一个程序了</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2698,7 +2718,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2711,7 +2731,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
