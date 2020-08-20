@@ -229,6 +229,1113 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/26/Major/algorithm/arithmetic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/26/Major/algorithm/arithmetic/" itemprop="url">算法学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-26T00:00:00+08:00">
+                2019-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><ul>
+<li>比较大小,如果符合条件(升序)就交换两个元素的位置  <ul>
+<li>每次执行N-1次</li>
+<li>严格大/小,保证了原序(稳定性)</li>
+<li>没次能保证最大/最小的元素会在最后</li>
+</ul>
+</li>
+<li>如果全程无交换,则说明有序了,跳出即可</li>
+<li>$T=O(x),x\in(N,N^2)$</li>
+</ul>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><ul>
+<li>每次抽取一个元素,然后从序列末尾开始进行比较</li>
+<li>若符合条件,往后移位,直到不符合条件跳出</li>
+<li>然后插入元素</li>
+</ul>
+<h4 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h4><p>对插入排序的改进,每次消除多个逆序对以达到加速的效果  </p>
+<ul>
+<li>按照一定增量序列,每次进行D排序 $D_N &gt; D_{N-1}…&gt;D_1$ ,这样一来一趟就有可能消除多个逆序对<ul>
+<li>按照$D_N &gt; D_{N-1}…&gt;D_1$进行排序,后一次会保持前一次的顺序,故可用</li>
+<li>但最终都要进行1排序</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(D=N/<span class="number">2</span>;D&gt;<span class="number">0</span>;D/=<span class="number">2</span>)&#123;  <span class="comment">// 希尔增量序列。Hibbard增量序列:Dk=2^k-1...等等</span></span><br><span class="line">    <span class="keyword">for</span>(p=D;p&lt;N;p++)&#123;  <span class="comment">// 插入排序</span></span><br><span class="line">        Tmp = A[p];</span><br><span class="line">        <span class="keyword">for</span>(i=p;i&gt;=D&amp;&amp;A[i-D]&gt;Tmp;i-=D)&#123;</span><br><span class="line">            A[i] = A[i-D];</span><br><span class="line">        &#125;</span><br><span class="line">        A[i] = Tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><h4 id="小-大顶堆"><a href="#小-大顶堆" class="headerlink" title="小/大顶堆"></a>小/大顶堆</h4><p>子节点比父节点小/大的二叉树  </p>
+<p><strong>构建方法</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 法一：上浮下沉法(小顶堆为例)</span></span><br><span class="line"><span class="comment">// 从第一个非叶子节点开始，以它为子树，先自下而上把小的节点上浮，到达子树根节点后自上而下把大的节点下沉</span></span><br><span class="line"><span class="comment">// 知道根节点结束</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=len/<span class="number">2</span><span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">        <span class="keyword">int</span> t = j;</span><br><span class="line">        <span class="keyword">while</span>((t+<span class="number">1</span>)*<span class="number">2</span>&lt;=len)&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="built_in">min</span> = (t+<span class="number">1</span>)*<span class="number">2</span><span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">min</span>+<span class="number">1</span>&lt;len)&#123;</span><br><span class="line">                <span class="keyword">if</span>(heap[<span class="built_in">min</span>+<span class="number">1</span>]&lt;heap[<span class="built_in">min</span>])&#123;</span><br><span class="line">                    <span class="built_in">min</span>++; </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(heap[<span class="built_in">min</span>]&lt;heap[t])&#123;</span><br><span class="line">                swop(<span class="built_in">min</span>,t,heap);</span><br><span class="line">                t = <span class="built_in">min</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 法二：插入法</span></span><br><span class="line"><span class="comment">// 从根节点出发，若父节点比插入元素大，则调整位置，如此循环，保证父节点小于子节点</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    heap[<span class="number">0</span>] = <span class="number">-1000</span>;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=len;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;temp);</span><br><span class="line">        <span class="keyword">int</span> j;</span><br><span class="line">        <span class="keyword">for</span>(j=i;heap[j/<span class="number">2</span>]&gt;temp;j/=<span class="number">2</span>)&#123;</span><br><span class="line">            heap[j] = heap[j/<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        heap[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="利用小-大顶堆排序"><a href="#利用小-大顶堆排序" class="headerlink" title="利用小/大顶堆排序"></a>利用小/大顶堆排序</h4><ul>
+<li>根据小/大顶堆的性质，可以确定顶部一定是最大或最小的元素</li>
+<li>交换根节点和最后一个节点，那么最后一个节点一定是最大/最小</li>
+<li>把最后的节点排除，剩下节点构成的子树再调整成小/大顶堆，重复以上步骤</li>
+</ul>
+<h3 id="快速排序算法"><a href="#快速排序算法" class="headerlink" title="快速排序算法"></a>快速排序算法</h3><p>通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列    </p>
+<ul>
+<li>先从数列中取出一个数作为主元<ul>
+<li>主元选不好会影响速度</li>
+<li>法1.选头,中,尾三个数的中位数做主元</li>
+</ul>
+</li>
+<li>分区过程，交替移动，将比这个数大的数全放到它的右边，小于或等于它的数全放到它的左边</li>
+<li>再对左右区间重复第二步，直到各区间只有一个数</li>
+</ul>
+<h3 id="擂台法"><a href="#擂台法" class="headerlink" title="擂台法"></a>擂台法</h3><ul>
+<li>适用于找最值</li>
+</ul>
+<h3 id="归并法"><a href="#归并法" class="headerlink" title="归并法"></a>归并法</h3><ul>
+<li>把两个有序的序列合并</li>
+<li>法1.递归的进行下去(有点类似快速排序)</li>
+<li>法2.每个元素看成一段序列,合并合并…</li>
+<li>$T=N\log{N}$</li>
+<li>缺点:需要开额外一份空间</li>
+</ul>
+<h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><h3 id="AOV-activity-on-vertex"><a href="#AOV-activity-on-vertex" class="headerlink" title="AOV(activity on vertex)"></a>AOV(activity on vertex)</h3><p>节点代表事件<br>若v到w连通,则v一定在w的前面  </p>
+<ul>
+<li>有向图</li>
+<li>有优先级限制<br>按照此法输出就是拓扑排序  </li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Queuezero Q;   <span class="comment">// 储存入度为零的,即前头没有限制了的</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;|V|;i++)&#123;    <span class="comment">// 记录最先的入度为0的节点</span></span><br><span class="line">    <span class="keyword">if</span>(indegree[V]==<span class="number">0</span>)&#123;</span><br><span class="line">        Enqueue(V,Q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span>(!isEmpty(Q))&#123;</span><br><span class="line">    V = Dequeue(Q);  <span class="comment">//cnt++,记录或者输出什么的(拓扑排序)</span></span><br><span class="line">    <span class="keyword">for</span>(V的每个邻接点W)&#123;</span><br><span class="line">        indegree(W)--;</span><br><span class="line">        <span class="keyword">if</span>(degree(w)==<span class="number">0</span>)&#123;</span><br><span class="line">            Enqueue(W,Q);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(cnt!=|V|)</span><br><span class="line">    图有回路,无法拓扑排序</span><br></pre></td></tr></table></figure>
+
+<h3 id="AOE-activity-on-edge"><a href="#AOE-activity-on-edge" class="headerlink" title="AOE(activity on edge)"></a>AOE(activity on edge)</h3><p>例:关键路径问题  </p>
+<h3 id="表排序"><a href="#表排序" class="headerlink" title="表排序"></a>表排序</h3><p>当移动的成本很高时(如移动一部电影)就用表来储存他的顺序</p>
+<ul>
+<li>table[N]指向N,故用table[N]进行访问\排序</li>
+</ul>
+<h3 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h3><p>基本原理:假如有10个数分别是0<del>9让你排序,那建立10个桶ar[10],根据情况0</del>9放到对应的桶了,最后顺序输出桶就是有序的了</p>
+<h4 id="LSD-Least-Significant-Digit-次位优先"><a href="#LSD-Least-Significant-Digit-次位优先" class="headerlink" title="LSD(Least Significant Digit)次位优先"></a>LSD(Least Significant Digit)次位优先</h4><p>排10个在0~999的整数难道要建1000个桶吗？</p>
+<ul>
+<li>根据低位到高位建通(实际情况肯更抽象)<ul>
+<li>这里是从个位到百位,没位置建10桶</li>
+<li>个位桶建装好后再遍历桶,装十位的桶,以此类推</li>
+<li>因为是遍历有序桶来填入新桶的,所以最后的桶只需按顺序输出就是有序了</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><h3 id="散列-hash-查找"><a href="#散列-hash-查找" class="headerlink" title="散列(hash)查找"></a>散列(hash)查找</h3><p>把关键词看成变量,通过哈希函数运算赋予地址</p>
+<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><p>关键词是数字时的常见方法</p>
+<ul>
+<li>折叠法</li>
+<li>平方取中法</li>
+<li>数字分析法</li>
+<li>除留余数法</li>
+</ul>
+<p>关键词是字符时的常见方法</p>
+<ul>
+<li>位移法(变成整数移位&lt;&lt;求余)</li>
+</ul>
+<p><strong>核心思想就是当一位改变时尽可能多的影响位数,避免浪费</strong></p>
+<h4 id="处理冲突"><a href="#处理冲突" class="headerlink" title="处理冲突"></a>处理冲突</h4><p>产生冲突就添加偏移量到别的位置  </p>
+<ul>
+<li>线性探测<ul>
+<li>偏移量是一增量序列: 1.2.3.4…</li>
+<li>容易产生聚集</li>
+</ul>
+</li>
+<li>平方探测<ul>
+<li>偏移量是一增量序列: 1^2.2^2.3^2.4^2…</li>
+<li>容易产生死循环<ul>
+<li>定理:散列表长是某个4k+3的素数时,一定能探测整个表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>双散列探测<ul>
+<li>$d_i = i\times h_2(kay)$</li>
+<li>$h_2(key)=p-(key mod p)$ 效果最好</li>
+</ul>
+</li>
+<li>再散列<ul>
+<li>装填因子太大是查找效率下降</li>
+<li>那就扩大散列表,在把原来的元素搬进去</li>
+</ul>
+</li>
+<li>分离链接法<ul>
+<li>有冲突的关键字都放在(同一个关键字的)一个链表中</li>
+</ul>
+</li>
+</ul>
+<p><strong>删除时不能直接删除,会影响后续的查找。正确的删除是标记为删除,新的元素来时再替换</strong></p>
+<h3 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h3><p><strong>要点：</strong> </p>
+<ul>
+<li>前缀表next(或者说match)函数的创建</li>
+<li>动态规划</li>
+</ul>
+<p>利用前缀表的原理：对于一个子串(如：ababc)，所有可能的前缀:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">a b</span><br><span class="line">a b a</span><br><span class="line">a b a b</span><br><span class="line">a b a b c</span><br></pre></td></tr></table></figure>
+
+<p>我们需要找出每种可能中最长的、非本身的公共前后缀，因为如果前后缀相同的话，当后缀失去匹配时，可从前缀结束的地方开始匹配，而不是从头开始。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a               null    0</span><br><span class="line">a b             null    0</span><br><span class="line">a b a           a       1</span><br><span class="line">a b a b         ab      2</span><br><span class="line">a b a b c       null    0  &lt;一般剔除字符串本身,在开头填-1</span><br><span class="line"></span><br><span class="line">这些最长公共前后缀的长度就构成了前缀表</span><br><span class="line"> a b a b c</span><br><span class="line">-1 0 0 1 2</span><br><span class="line">这样就表示了当，str[j]失去匹配时，从match[j](前缀结束的地方)尝试匹配</span><br></pre></td></tr></table></figure>
+
+<p><strong>前缀表如何创建</strong></p>
+<ul>
+<li>可将创建一个子串前缀表的问题划分为一系列子问题：<ul>
+<li>创建每种前缀的前缀表</li>
+<li>为每种前缀构造前缀表又是一个个子串匹配问题：前1为是否匹配(是否有公共后缀)、前2位是否匹配，…，前n位是否</li>
+<li>又因为从最短开始尝试，最短的又为次短的做了铺垫。最短串的KMP创建了次短所需的前缀表</li>
+</ul>
+</li>
+</ul>
+<p>对于ababc，可以划分为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">长的1,不需要前缀表辅助匹配。得到前缀表：</span><br><span class="line">[-1]</span><br><span class="line"></span><br><span class="line">a b</span><br><span class="line">对于ab，找最长公共前后缀。找前1位(a)时，相当与在串ab中找匹配的子串a，而子串a的前缀表已经由上一步得出，前2位ab是它本身，结束匹配。得</span><br><span class="line">[-1, 0]</span><br><span class="line"></span><br><span class="line">a b a</span><br><span class="line">对于aba，找最长公共前后缀。找前1位(a)时，相当与在串aba中找匹配的子串a，而子串a的前缀表已经由上一步得出，前2位同理。得</span><br><span class="line">[-1 0 1]</span><br><span class="line"></span><br><span class="line">a b a b</span><br><span class="line">a b a b c</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for(j&#x3D;1;j&lt;len;j++)&#123;</span><br><span class="line">    p &#x3D; m[j-1];</span><br><span class="line">    &#x2F;&#x2F;尝试利用前缀表找到匹配的公共前后缀</span><br><span class="line">    while(p&gt;&#x3D;0&amp;&amp;pattern[p+1]!&#x3D;pattern[j])&#123;</span><br><span class="line">        p &#x3D; m[p];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;如果下一位匹配，公共前后缀长的等于当前匹配的公共前后缀长度加1</span><br><span class="line">    &#x2F;&#x2F;否则不匹配</span><br><span class="line">    if(pattern[p+1]&#x3D;&#x3D;pattern[j])&#123;</span><br><span class="line">        m[j] &#x3D; p+1;</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        m[j] &#x3D; -1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="实战1：一颗树A是否是另一个树的子树B"><a href="#实战1：一颗树A是否是另一个树的子树B" class="headerlink" title="实战1：一颗树A是否是另一个树的子树B"></a>实战1：一颗树A是否是另一个树的子树B</h4><p>序列化A和B树，然后就变成了用KMP找子串的问题了。</p>
+<p>关于序列化和反序列化，如何序列化就如何反序列化。如使用先序遍历序列化，得到<code>1 2 3 # #</code>，那么也使用先序遍历反序列化得到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   1</span><br><span class="line">  2 </span><br><span class="line"> 3</span><br><span class="line"># #</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Manacher算法：最长回文子串"><a href="#Manacher算法：最长回文子串" class="headerlink" title="Manacher算法：最长回文子串"></a>Manacher算法：最长回文子串</h3><p>在中心扩展的基础上， <strong>为了解决字符串长度奇偶的问题，在字符间插入<code>#</code></strong>，这样一来保证找到的所有回文串都是奇数长度。</p>
+<p>用<code>f(i)</code>来表示第i位为中心，可以拓展出的最大回文半径，那么<code>f(i)-1</code>就是以i为中心的最大回文串长度(有一半是<code>#</code>)。</p>
+<p>Manacher依旧是穷举每一个位置，但是它会动态规划<code>f(i)</code>。遍历每个位置算出最右回文右边界，如<code>01232101</code>，最右回文右边界就是0处。当最右回文右边界发生变化时，记录回文中心，然后比较是否是新最大回文子串。</p>
+<ul>
+<li>三种情况的处理方法<ul>
+<li><ol>
+<li>当回文中心不在最右回文右边界中时，就暴力扩。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>当回文子串，中心在最大回文右边界内，且对称点的回文左右半径在最右回文边界对应的回文左右半径内<ul>
+<li>那就可以通过对称点直接得出改点的回文半径<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ ( o ) a ( o ) ]</span><br><span class="line">L   i   c   i   R</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>当回文子串，中心在最大回文右边界内，且对称点的回文左右半径不在最右回文边界对应的回文左右半径内<ul>
+<li>那到R回文，因为y!=Y，不然最大回文半径还会扩大<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">( y[ o   ) a     o ]Y</span><br><span class="line">   L i     c     i R</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>如果3的情况刚好压线，那就在半径到R的基础上在扩试试</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Manacher模板"><a href="#Manacher模板" class="headerlink" title="Manacher模板"></a>Manacher模板</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用#预处理好字符串m</span></span><br><span class="line"><span class="comment">// 用rs储存回文半径</span></span><br><span class="line"><span class="comment">// mr为最大回文半径的位置</span></span><br><span class="line"><span class="comment">// c为最大回文半径对应的回文中心</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len;i++)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果在最大回文半径内则取较小值，后面再调整</span></span><br><span class="line">    <span class="comment">// 当前点能到的最大回文半径：rm-i+1</span></span><br><span class="line">    <span class="comment">// 通过对称点得到的回文半径：rs[2*c - i]</span></span><br><span class="line">    rs[i] = (i&lt;=mr)? <span class="built_in">min</span>(mr-i+<span class="number">1</span> , rs[<span class="number">2</span>*c - i]):<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 中心扩展试着找更大半径</span></span><br><span class="line">    <span class="keyword">while</span>(m[rs[i]+i] == m[i-rs[i]]) rs[i]++;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新最大边界及对应回文中心</span></span><br><span class="line">    <span class="keyword">if</span>(rs[i]+i<span class="number">-1</span> &gt; mr)&#123;</span><br><span class="line">        mr = rs[i] + i<span class="number">-1</span>;</span><br><span class="line">        c = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h3 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h3><ul>
+<li>左边孩子比根节点小</li>
+<li>右边孩子比根节点大</li>
+</ul>
+<p><strong>查找</strong>  </p>
+<ul>
+<li>左小右大，递归或循环  </li>
+</ul>
+<p><strong>插入</strong></p>
+<ul>
+<li>左小右大，递归或循环  </li>
+</ul>
+<p><strong>删除</strong></p>
+<ul>
+<li>没有孩子<ul>
+<li>直接插入</li>
+</ul>
+</li>
+<li>只有一个孩子<ul>
+<li>子承父业</li>
+</ul>
+</li>
+<li>有两个孩子<ul>
+<li>找到左子树的最大或右子树的最小替换被删除节点…有效降低树的高度</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BinTree <span class="title">Delete</span><span class="params">( BinTree BST, ElementType X )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    Position Tmp; </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>( !BST ) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"要删除的元素未找到"</span>); </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>( X &lt; BST-&gt;Data ) </span><br><span class="line">            BST-&gt;Left = Delete( BST-&gt;Left, X );   <span class="comment">/* 从左子树递归删除 */</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( X &gt; BST-&gt;Data ) </span><br><span class="line">            BST-&gt;Right = Delete( BST-&gt;Right, X ); <span class="comment">/* 从右子树递归删除 */</span></span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">/* BST就是要删除的结点 */</span></span><br><span class="line">            <span class="comment">/* 如果被删除结点有左右两个子结点 */</span> </span><br><span class="line">            <span class="keyword">if</span>( BST-&gt;Left &amp;&amp; BST-&gt;Right ) &#123;</span><br><span class="line">                <span class="comment">/* 从右子树中找最小的元素填充删除结点 */</span></span><br><span class="line">                Tmp = FindMin( BST-&gt;Right );</span><br><span class="line">                BST-&gt;Data = Tmp-&gt;Data;</span><br><span class="line">                <span class="comment">/* 从右子树中删除最小元素 */</span></span><br><span class="line">                BST-&gt;Right = Delete( BST-&gt;Right, BST-&gt;Data );</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">/* 被删除结点有一个或无子结点 */</span></span><br><span class="line">                Tmp = BST; </span><br><span class="line">                <span class="keyword">if</span>( !BST-&gt;Left )       <span class="comment">/* 只有右孩子或无子结点 */</span></span><br><span class="line">                    BST = BST-&gt;Right; </span><br><span class="line">                <span class="keyword">else</span>                   <span class="comment">/* 只有左孩子 */</span></span><br><span class="line">                    BST = BST-&gt;Left;</span><br><span class="line">                <span class="built_in">free</span>( Tmp );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> BST;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h3><h3 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h3><h3 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h3><p>为表述方便：C(current)表示针对的节点，P(parent), G(grandparent)，U(uncle)</p>
+<ul>
+<li>特征<ul>
+<li><ol>
+<li>根节点是黑色</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>所有叶子(nil节点)都是黑色</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>每个红色节点的两个字节点都是黑色(不存在两个连续的红色节点)</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>从任意节点到其每个叶子的所有路径都包含相同数目的黑色节点<ul>
+<li>黑色完美平衡</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>旋转：为例减小树的高度<ul>
+<li>红黑树最大高度$O(\log n)$</li>
+<li>左旋：<ul>
+<li>C和它的右子节点交换</li>
+<li>C右子节点的左子树成为C的右子树</li>
+<li>右子变新爹，右子的左子变老爹的右子，老爹变新爹左子<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># LEFT-ROTATE(T, x)</span><br><span class="line">y &#x3D; x.right</span><br><span class="line">x.right &#x3D; y.left</span><br><span class="line">if y.left !&#x3D; nil</span><br><span class="line">    y.left.p &#x3D; x</span><br><span class="line">y.p &#x3D; x.p</span><br><span class="line">if x.p &#x3D;&#x3D; nil</span><br><span class="line">    T.root &#x3D;&#x3D; y</span><br><span class="line">elseif x &#x3D;&#x3D; x.p.left</span><br><span class="line">    x.p.left &#x3D; y</span><br><span class="line">else x.p.right &#x3D; y</span><br><span class="line">y.left &#x3D; x</span><br><span class="line">x.p &#x3D; y</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>右旋：<ul>
+<li>C和它的左子节点交换</li>
+<li>C左子节点的右子树成为C的左子树</li>
+<li>左子变新爹，左子的右子变老爹的左子，老爹变新爹右子</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>搜索<ul>
+<li>比节点小就找左子树，否则右子树</li>
+</ul>
+</li>
+<li>插入<ul>
+<li>每个新节点都是红色的，违规修复代价比较小</li>
+<li><ol>
+<li>C=root，则把C变为黑色</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>P是黑色，直接插入</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>P是红色<ul>
+<li>I. U是红，则P和U都变黑，G变后，向上递归</li>
+<li>II. U是黑<ul>
+<li>三角型：GPC呈三角形<ul>
+<li>对P旋转使得GPC一条直线，然后做直线型操作</li>
+</ul>
+</li>
+<li>直线型：GPC一条直线<ul>
+<li>对G旋转，然后交换G和P的颜色</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>删除<ul>
+<li><strong>building</strong> </li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h2 id="DFS深度优先搜索"><a href="#DFS深度优先搜索" class="headerlink" title="DFS深度优先搜索"></a>DFS深度优先搜索</h2><ul>
+<li>从一节点出发<ul>
+<li>非连通图分而治之</li>
+</ul>
+</li>
+<li>依次从访问邻接点,直至所有邻接点都被访问<ul>
+<li>例:迷宫  </li>
+</ul>
+</li>
+</ul>
+<h2 id="BFS广度优先搜索"><a href="#BFS广度优先搜索" class="headerlink" title="BFS广度优先搜索"></a>BFS广度优先搜索</h2><ul>
+<li>从一节点出发</li>
+<li>把他所有的邻接点入队列,并检测目标节点</li>
+<li>依次把节点出队列,并递归的把他的邻接点入队列,直到访问所有点<ul>
+<li>例:树的层序遍历  </li>
+</ul>
+</li>
+</ul>
+<h3 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h3><p>若存在两点在同一个连通集合中，则这两点存在回路</p>
+<ul>
+<li>Find() 找根节点</li>
+<li>Union() 合并成集合</li>
+</ul>
+<h2 id="最短路问题"><a href="#最短路问题" class="headerlink" title="最短路问题"></a>最短路问题</h2><h3 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h3><p>解决单源路非递减顺序(没有负)最短路径问题</p>
+<ul>
+<li>对所有未检索的点进行标记:collected[v] = false</li>
+<li>从一点出发,记录所有邻接点,若邻接点加入后路径最短,则更新<ul>
+<li>类似BFS</li>
+</ul>
+</li>
+<li>所有邻接点访问完后colleceted[v]=true,从下一个未检索的点继续循环,直到检索所有节点</li>
+</ul>
+<h3 id="Floyd算法"><a href="#Floyd算法" class="headerlink" title="Floyd算法"></a>Floyd算法</h3><p>解决多源路非递减顺序最短路径问题   </p>
+<p>稠密图有优势  </p>
+<p>$T=O(V^3)$  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 核心</span></span><br><span class="line"><span class="comment">// 顶点i到顶点j,顶点间的最短路就在矩阵显示出来了</span></span><br><span class="line"><span class="keyword">for</span>(k = <span class="number">0</span>;k&lt;N;k++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;N;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;N;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(D[i][k]+D[k][j]&lt;D[i][j])&#123;</span><br><span class="line">                D[i][j] = D[i][k]+D[k][j];</span><br><span class="line">                path[i][j] = k;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h3><p>解决稠密图的最小生成树问题  </p>
+<ul>
+<li>从任意点出发</li>
+<li>寻找与这个整体相邻,且不构成回路的权最小点</li>
+<li>加入该整体,继续搜索,直至所有点都收录(生成树必须包含所有点)</li>
+</ul>
+<h3 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h3><p>解决稀疏图的最小生成树问题  </p>
+<p>$T=E\log{E}$  </p>
+<ul>
+<li>核心思想,每个顶点都是一棵树,把森林连成树</li>
+<li>找最短且不构成回路的边,又因为每个顶点都是一棵树,每个边都把森林连成树</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MST=&#123;&#125;;  <span class="comment">// 最小生成树</span></span><br><span class="line">E;   <span class="comment">// 边集</span></span><br><span class="line"><span class="keyword">while</span>(没够V<span class="number">-1</span>条边&amp;&amp;E没空)&#123;</span><br><span class="line">    findmin();  <span class="comment">// 找最小边  用最小堆</span></span><br><span class="line">    delet(E(v,w));  <span class="comment">// 把该边移除边集E</span></span><br><span class="line">    <span class="keyword">if</span>(E(v,w)加入MST不构成回路)   <span class="comment">// 并查集</span></span><br><span class="line">        join(E(v,w));  <span class="comment">// 加入并查集</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        单纯的删除</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(MST中边不够V<span class="number">-1</span>条)</span><br><span class="line">    生成树不存在</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="A星寻路算法"><a href="#A星寻路算法" class="headerlink" title="A星寻路算法"></a>A星寻路算法</h3><ul>
+<li>启发性搜索：f = g + h<ul>
+<li>f：当前点到终点的代价</li>
+<li>g：起点到当前点的代价</li>
+<li>h：当前点到终点的 <strong>预估代价</strong><ul>
+<li>忽略障碍，只算直线距离，但是移动时只走无障碍的路</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>过程<ul>
+<li>使用一个OPEN列表保存能走且未走过的路</li>
+<li>使用一个CLOSED列表保存走过的路</li>
+<li>将起点放入OPEN列表</li>
+<li>循环<ul>
+<li><ol>
+<li><strong>current=OPEN列表中f最小的点</strong></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>OPEN中移出current放入CLOSED</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>如果current是终点，则循环结束</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>遍历current的所有邻居(其中的邻居不能是CLOSED中、不能是障碍物)</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>计算邻居的f</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>将邻居的parent设为current</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>将邻居放入OPEN列表</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>最后从终点一直沿着父节点走就找到了最短路径</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="效率问题"><a href="#效率问题" class="headerlink" title="效率问题"></a>效率问题</h1><h3 id="联机算法"><a href="#联机算法" class="headerlink" title="联机算法"></a>联机算法</h3><p>在任意时刻，算法对要操作的数据只读入（扫描）一次，一旦被读入并处理，它就不需要在被记忆了。而在此处理过程中算法能对它已经读入的数据立即给出相应子序列问题的正确答案。具有这种特性的算法叫做联机算法（on-line algorithm。</p>
+<h3 id="分治算法"><a href="#分治算法" class="headerlink" title="分治算法"></a>分治算法</h3><p>在计算机科学中，分治法是一种很重要的算法。字面上的解释是“分而治之”，就是把一个复杂的问题分成两个或更多的相同或相似的子问题，再把子问题分成更小的子问题……直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。这个技巧是很多高效算法的基础，如排序算法(快速排序，归并排序)，傅立叶变换(快速傅立叶变换)……</p>
+<ul>
+<li>该问题的规模缩小到一定的程度就可以容易地解决</li>
+<li>该问题可以分解为若干个规模较小的相同问题，即该问题具有最优子结构性质</li>
+<li>利用该问题分解出的子问题的解可以合并为该问题的解</li>
+<li>该问题所分解出的各个子问题是相互独立的，即子问题之间不包含公共的子子问题</li>
+</ul>
+<hr>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/19/universe/python/tensorflow_learning/Tensorflow_learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/19/universe/python/tensorflow_learning/Tensorflow_learning/" itemprop="url">Tensorflow</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-19T00:00:00+08:00">
+                2019-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h3 id="图片读取展示"><a href="#图片读取展示" class="headerlink" title="图片读取展示"></a>图片读取展示</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2  <span class="comment"># 引入OpenCV</span></span><br><span class="line">img = cv2.imread(<span class="string">'path'</span>,<span class="number">1</span>)  <span class="comment"># 读取图片，0是灰图，1是彩图</span></span><br><span class="line">cv2.imshow(<span class="string">'image'</span>,img)  <span class="comment"># 'image'打开的窗体的标题，img展示的内容</span></span><br><span class="line">cv2.waitKey(<span class="number">0</span>)  <span class="comment"># 暂停</span></span><br></pre></td></tr></table></figure>
+<p>cv.imread 过程：1文件读取 2封装格式解析 3数据解码 4数据加载  </p>
+<h3 id="读写操作"><a href="#读写操作" class="headerlink" title="读写操作"></a>读写操作</h3><h4 id="图片读写"><a href="#图片读写" class="headerlink" title="图片读写"></a>图片读写</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">img = cv2.imread(<span class="string">'path'</span>,<span class="number">1</span>)  <span class="comment"># 读取图片，0是灰图，1是彩图</span></span><br><span class="line">cv2.imwrite(<span class="string">"path"</span>,img)  <span class="comment"># 1,图片名 2.图片数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 不同质量的图片写入</span></span><br><span class="line"><span class="comment"># jpg,有损压缩</span></span><br><span class="line"><span class="comment"># 压缩比参数范围为0~100，越低压缩比越高</span></span><br><span class="line">cv2.imwrite(<span class="string">"path.jpg"</span>,img,[cv2.IMWRITE_JPEG_QUALITY,<span class="number">0</span>]) </span><br><span class="line"></span><br><span class="line"><span class="comment"># png是无损压缩，有透明度属性</span></span><br><span class="line"><span class="comment"># 压缩比参数0~9,越低压缩比越低</span></span><br><span class="line">cv2.imwrite(<span class="string">"path.png"</span>,img,[cv2.IMWRITE_PNG_QUALITY,<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id="操作像素"><a href="#操作像素" class="headerlink" title="操作像素"></a>操作像素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">img = cv2.imread(<span class="string">"img.jpg"</span>,<span class="number">1</span>)</span><br><span class="line"><span class="comment"># OpenCv读取图片是bgr(rgb倒过来)，左上角开始的坐标轴</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取像素点</span></span><br><span class="line">(b,g,r) = img[x,y]</span><br><span class="line">print(b,g,r)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入像素</span></span><br><span class="line">img[x,y] = (b,g,r)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<hr>
+<h1 id="OpenCv"><a href="#OpenCv" class="headerlink" title="OpenCv"></a>OpenCv</h1><h3 id="OpenCv模块结构"><a href="#OpenCv模块结构" class="headerlink" title="OpenCv模块结构"></a>OpenCv模块结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">to be continued</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Tensotflow"><a href="#Tensotflow" class="headerlink" title="Tensotflow"></a>Tensotflow</h1><h4 id="基本操作-1"><a href="#基本操作-1" class="headerlink" title="基本操作"></a>基本操作</h4><h5 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="comment"># 定义常量</span></span><br><span class="line">data1 = tf.constant(<span class="number">2.5</span>)  <span class="comment"># 指定数据类型可以加参数(2,dtype=tf.int32)</span></span><br><span class="line"><span class="comment"># 定义变量</span></span><br><span class="line">data2 = tf.Variable(b,name=<span class="string">"name"</span>)</span><br><span class="line"><span class="comment"># 打印出来的是描述信息</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 所有操作要session会话进行</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line">print(sess.run(data1))  <span class="comment"># 通过会话进行的就可以打印了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 所有变量都要用session进行初始化</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)  <span class="comment"># 初始化</span></span><br><span class="line"><span class="comment"># session打印多个内容</span></span><br><span class="line">sess.run([x1,x2,x3])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭session</span></span><br><span class="line"><span class="comment"># 法一</span></span><br><span class="line">sess.close()</span><br><span class="line"><span class="comment"># 法二  with</span></span><br><span class="line"><span class="keyword">with</span> sees:</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+
+<h5 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tensorflow运算的每个类型都要是tensor</span></span><br><span class="line"><span class="comment"># 转换为tensor,如 a=np.arange(1)</span></span><br><span class="line">aa = tf.convert_to_tensor(a,dtye=tf.int32) <span class="comment">#dtype=数据类型</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tensor类型间转换</span></span><br><span class="line">tf.cast(aa,dtype=tf.double)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Variable</span></span><br><span class="line"><span class="comment"># Variable包装过的变量会具有一些特殊的属性,如可导</span></span><br><span class="line">b=tf.Variable(b,name=<span class="string">"name"</span>)</span><br><span class="line">b.name</span><br><span class="line">b.trainable</span><br><span class="line"></span><br><span class="line"><span class="comment"># tensor变numpy</span></span><br><span class="line"><span class="comment"># tensor一般在GPU,当有时我们要在CPU上处理默写逻辑时就要转成numpy</span></span><br><span class="line">a.numpy()  <span class="comment"># tensor:a 就变成了numpy</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="创建tensor"><a href="#创建tensor" class="headerlink" title="创建tensor"></a>创建tensor</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a.convert_to_tensor()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化</span></span><br><span class="line">tf.zeros(shape)  <span class="comment"># tf.zeros_like(a) 初始化一个和a一样维度的(shape)</span></span><br><span class="line">tf,ones(shape)</span><br><span class="line">tf.fill(shape,elem)</span><br><span class="line">tf.random.normal(shape,mean=<span class="number">1</span>,stddev=<span class="number">1</span>)  <span class="comment"># 用正态分布采样(normal,其他分部同理)初始化一个,其中mean,stddev正太分部的参数,其他分部同理</span></span><br><span class="line">tf.random.truncated_normal(...)  <span class="comment"># 截断的正态分布</span></span><br><span class="line">tf.random.uniform(shape,minval=<span class="number">0</span>,maxval=<span class="number">1</span>)  <span class="comment"># 均匀分布采样</span></span><br><span class="line"><span class="comment"># shape表示维度</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机打散</span></span><br><span class="line"><span class="comment"># 就是random了,但是如果是两组有一一对应关系的东西,怎么打散才不会破坏那个一一对应关系?</span></span><br><span class="line">idx = tf.range(<span class="number">10</span>)  <span class="comment"># 假设有10组数据</span></span><br><span class="line">idx = rf.random.shuffle(idx)  <span class="comment"># (就好比生成了10组随机的通道(每个通道代表一种一一对应关系)通道两边绑定了,所以对应关系不变)</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="索引与切片"><a href="#索引与切片" class="headerlink" title="索引与切片"></a>索引与切片</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 索引</span></span><br><span class="line"><span class="comment"># numpy风格的索引，如：</span></span><br><span class="line">a.shape() = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">a[<span class="number">1</span>,<span class="number">2</span>].shape = [<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="comment"># 索引写在一个[]内，用逗号隔开</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 切片</span></span><br><span class="line"><span class="comment"># 对于某个维度</span></span><br><span class="line">a[<span class="number">-1</span>:]  <span class="comment"># 到数第一个到最后一个,就是python的切片</span></span><br><span class="line"><span class="comment"># 对多个维度的切片</span></span><br><span class="line">a[<span class="number">0</span>,<span class="number">1</span>,:,<span class="number">1</span>:<span class="number">3</span>,:]  <span class="comment"># (取a01的全部的1到3的全部。。。很灵活)</span></span><br><span class="line"><span class="comment"># step,步长.... [::] 同理, 步长为负，实现倒叙</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 省略号:省略多个:(自动识别)</span></span><br><span class="line">a[<span class="number">1</span>,<span class="number">2</span>,...,<span class="number">0</span>,:]  <span class="comment"># 中间的没有切片操作,但是倒数第二有切片操作,用...就不用人为的把中间的:不上了</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Selective Indexing </span></span><br><span class="line"><span class="comment"># 可以乱序取样</span></span><br><span class="line"><span class="comment"># 假设a.shape = [4,32,8] ,a[4个班,35个学生,8门科目成绩]</span></span><br><span class="line">a = tf.gather(a,axis=<span class="number">0</span>,indices=[<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">0</span>])</span><br><span class="line"><span class="comment"># 1.取样的样本 2.抽取的维度,上面就是从第一个维度中乱序的抽取,随机抽取一个班查看 3.抽取的顺序,抽2班1班3班0班</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 还是上面的例子,如果想要取n个学生的m门成绩呢？</span></span><br><span class="line">aa = tf.gather(a,axis=<span class="number">1</span>,indices=[<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">0</span>])  <span class="comment"># 取4个班2，1，3，0号学生</span></span><br><span class="line">aaa = tf.gather(aa,axis=<span class="number">2</span>,indices=[<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">0</span>])  <span class="comment"># 取这4个班2，1，3，0号学生,的2，1，3，0号成绩</span></span><br><span class="line"><span class="comment"># 多个gather嵌套</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tf.gather_nd !!!比较难理解</span></span><br><span class="line">gather_nd(a,[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>])  <span class="comment"># 1班1号同学的1号成绩,标量</span></span><br><span class="line">gather_nd(a,[[<span class="number">0</span>,<span class="number">0</span>],[<span class="number">1</span>,<span class="number">1</span>]])  <span class="comment"># 0班0号同学的8门成绩,和1班1号同学的8门成绩,组成的矩阵,shape = [2,8] 2个同学,8门成绩</span></span><br><span class="line">gather_nd(a,[[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>]])  <span class="comment"># shape = [2]</span></span><br><span class="line">gather_nd(a,[[[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>]]])  <span class="comment"># shape = [1,2]</span></span><br><span class="line"><span class="comment"># 体会标量放[]里和矩阵放[]里的区别,差不多就是这个意思</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tf.boolean_mask</span></span><br><span class="line"><span class="comment"># 通过boolean来取样 假设a.shape = [4,28,28,3]</span></span><br><span class="line">tf.boolean_mask(a,mask=[<span class="literal">True</span>,<span class="literal">True</span>,<span class="literal">False</span>,<span class="literal">False</span>])  <span class="comment"># 默认从最外层(mask嘛)</span></span><br><span class="line"><span class="comment"># 结果shape = [2,28,28,3]</span></span><br><span class="line"><span class="comment"># 多维遮罩 例:a.shape = [2,3,4]</span></span><br><span class="line">tf.boolean_mask(a,mask=[[<span class="literal">True</span>,<span class="literal">False</span>,<span class="literal">False</span>],[<span class="literal">False</span>,<span class="literal">True</span>,<span class="literal">True</span>]])  <span class="comment"># mask.shape=[2,3] 采样的元素取对应关系,根据mask,第0行第一个元素是True，所以要...</span></span><br><span class="line"><span class="comment"># 结果shape = [3,4]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 当然也可以指定,遮罩哪个维度 </span></span><br><span class="line">tf.boolean_mask(a,mask=[<span class="literal">True</span>,<span class="literal">True</span>,<span class="literal">False</span>],axis = <span class="number">3</span>)  <span class="comment"># shape = [4,28,28,2]</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="维度变换"><a href="#维度变换" class="headerlink" title="维度变换"></a>维度变换</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a.shape = [4,28,28,3]</span></span><br><span class="line">tf.reshape(a,[<span class="number">4</span>,<span class="number">784</span>,<span class="number">3</span>])  <span class="comment"># 4*28*28*3  ==  4*784*3 才能保证所有数据充分利用</span></span><br><span class="line"><span class="comment"># 如果先偷懒的话可以用-1</span></span><br><span class="line">tf.reshape(a,[<span class="number">4</span>,<span class="number">-1</span>,<span class="number">3</span>])  <span class="comment"># 一个式子只能有一个-1,-1就相当于x,保证4*28*28*3 == 4*x*3</span></span><br><span class="line"><span class="comment"># 变换前要理清楚物理含义</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 矩阵变换,改变格式</span></span><br><span class="line"><span class="comment"># a.shape = [4,3,2,1] </span></span><br><span class="line">tf.transpose(a)  <span class="comment"># 矩阵转置</span></span><br><span class="line">tf.transpose(a,perm=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>])  <span class="comment"># 原来的0维放在新的0维...原来的3维放在新的2维...</span></span><br><span class="line"><span class="comment"># 结果 shape = [4,3,1,2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 维度的增加</span></span><br><span class="line"><span class="comment"># a.shape=[4,35,8]</span></span><br><span class="line">tf.expand_dims(a,axis=<span class="number">0</span>)  <span class="comment"># 插入的(一个)维度相当于插入后维度的第0维,a.shape=[1,4,35,8]</span></span><br><span class="line">tf.expand_dims(a,axis=<span class="number">3</span>)  <span class="comment"># 插入的维度相当于插入后维度的第3维,a.shape=[4,35,8,1]</span></span><br><span class="line"><span class="comment"># 负数同理</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 维度减少</span></span><br><span class="line"><span class="comment"># 元素个数为1的维度是可以去掉的,a.shape=[1,2,1,1,3]</span></span><br><span class="line">tf.squeeze(a)  <span class="comment"># 不加axis参数就是把所有1去掉</span></span><br><span class="line">tf.squeeze(a,axis=<span class="number">2</span>)  <span class="comment"># 把第二维度去掉</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="Broadcasting"><a href="#Broadcasting" class="headerlink" title="Broadcasting"></a>Broadcasting</h5><ul>
+<li>expand without copying data:扩张了一个数据,但实际上并没有复制出来多份<img src="./static/broadcasting.png" style="zoom:50%">
+
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tf.broadcast_to</span><br><span class="line"><span class="comment"># ape=[3,5]</span></span><br><span class="line">aa = broadcast_to(a,[<span class="number">4</span>,<span class="number">3</span>,<span class="number">5</span>])</span><br><span class="line">aa.shape = [<span class="number">4</span>,<span class="number">3</span>,<span class="number">5</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如前面的 x@w+b,b是一个一维的，但却能加上去,就是broadcast的功劳</span></span><br><span class="line"><span class="comment"># 如a.shape=[4,16,16,32] b.shape=[32]</span></span><br><span class="line"><span class="comment"># 如果a+b 那么b就会相当于自动变成[4,16,16,32],以满足相应的运算(包括加减乘除</span></span><br><span class="line"><span class="comment"># 先从小维度开始匹配,自动扩张是满足运算</span></span><br><span class="line"><span class="comment"># 但却不会生成4*16*16个b</span></span><br><span class="line"><span class="comment"># 判断方法:右对其,用1把维度补相同,然后把1是维度变成和另一个匹配的</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># a.shape=[1,3,4]</span></span><br><span class="line"><span class="comment"># tf.tile(a,[2,1,3]) 第一个维度复制2ci，第二个1次，第三个4次</span></span><br><span class="line"><span class="comment"># a.shape = [2,3,12]</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="数学运算"><a href="#数学运算" class="headerlink" title="数学运算"></a>数学运算</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># element-wise: +-*/</span></span><br><span class="line"><span class="comment"># shape一样，对应元素运算</span></span><br><span class="line"><span class="comment"># (一般的运算,非矩阵...吧)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># matrix-wise: @,matmul</span></span><br><span class="line"><span class="comment"># 如 [b,3,4]@[b,4,5]</span></span><br><span class="line"><span class="comment"># 相当于把后两个当成矩阵然后来运算[3,4]*[4,5] = [3,5]</span></span><br><span class="line"><span class="comment"># 相当于一下子b个矩阵相乘</span></span><br><span class="line"><span class="comment"># (矩阵运算...)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># dim-wise: reduce_mean/max/min/sum</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="手写数字识别-你可能用到"><a href="#手写数字识别-你可能用到" class="headerlink" title="手写数字识别,你可能用到"></a>手写数字识别,你可能用到</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> datasets</span><br><span class="line"></span><br><span class="line">(xs, ys),_ = datasets.mnist.load_data()</span><br><span class="line">xs = tf.convert_to_tensor(xs, dtype=tf.float32) / <span class="number">255.</span>    <span class="comment"># 除以255是为了优化,这样0&lt;x&lt;1</span></span><br><span class="line">ys = ....  <span class="comment"># 变成tensor</span></span><br><span class="line"></span><br><span class="line">train_db = tf.data.Dataset.from_tenfor_slices((x,y)).batch(<span class="number">128</span>)</span><br><span class="line">train_iter = iter(train_db)</span><br><span class="line">sample = next(train_iter)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">w1 = tf.Variable(tf.random.truncated_normal([<span class="number">784</span>,<span class="number">256</span>]),stddev=<span class="number">0.1</span>)  <span class="comment"># stddev=0.1是为了......</span></span><br><span class="line">b1 = tf.Variable(tf.zeros([<span class="number">256</span>]))   <span class="comment"># 变成tf.Variable才能被Gradient跟踪</span></span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">10</span>):   <span class="comment"># 对整个数据集循环,反复使用用一个数据集不断优化</span></span><br><span class="line">	<span class="keyword">for</span> step,(x, y) <span class="keyword">in</span> enumerate(train_db):  <span class="comment"># step,方便记录,查enumerate用法</span></span><br><span class="line">		x = tf.reshape(x,[<span class="number">-1</span>,<span class="number">28</span>*<span class="number">28</span>])</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:  <span class="comment"># 默认只会跟踪tf.Variable的类型</span></span><br><span class="line">			h1 = x@w1 + b1</span><br><span class="line">			h1 = tf.nn.relu(h1)</span><br><span class="line">			...</span><br><span class="line">			out = ...</span><br><span class="line">			</span><br><span class="line">			y_onehot = tf.one_hot(y, depth=<span class="number">10</span>)  <span class="comment"># y:[b] =&gt; [b,10]</span></span><br><span class="line">		</span><br><span class="line">			loss = tf.square(y_onehot - out)</span><br><span class="line">			loss = tf.reduce_mean(loss)</span><br><span class="line">			</span><br><span class="line">		grads = tape.gradient(loss,[w1,b1,w2,b2,w3,b3])</span><br><span class="line">		<span class="comment"># 更新w,b</span></span><br><span class="line">		w1.assign_sub(lr*grads[<span class="number">0</span>])  <span class="comment"># 原地更新,引用不变,类型不变</span></span><br><span class="line">		...</span><br><span class="line">		...</span><br><span class="line">		<span class="keyword">if</span> step % <span class="number">100</span> ==<span class="number">0</span>:</span><br><span class="line">			print(float(loss))</span><br></pre></td></tr></table></figure>
+
+<h5 id="合并与拼接"><a href="#合并与拼接" class="headerlink" title="合并与拼接"></a>合并与拼接</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">c =tf.concat([a,b],axis=<span class="number">0</span>)   <span class="comment"># a和b第0维度合并</span></span><br><span class="line"><span class="comment"># 在原有维度上累加,不能生成新的维度</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果要创造新的维度</span></span><br><span class="line"><span class="comment"># a.shape = [4,3,5] b.shape = [4,3,5]</span></span><br><span class="line">c = tf.stack([a,b]axis = <span class="number">1</span>)</span><br><span class="line"><span class="comment"># c.shape = [4,2,3,5]  </span></span><br><span class="line"><span class="comment"># 根据表示意义理解 如[chool,class,student,scores]</span></span><br><span class="line"><span class="comment">### 以上对维度都有要求,有一定的局限性</span></span><br><span class="line"><span class="comment"># 同样用[class,student,scores] 模型举例</span></span><br><span class="line"><span class="comment"># 每个学校，班等都可能不同,stack就操作不了</span></span><br><span class="line"></span><br><span class="line">tf.unstack(a,axis=<span class="number">0</span>)   <span class="comment"># 全部拆开,返回几个tensor取决于有几个</span></span><br><span class="line">tf.unstack(a,axis=<span class="number">3</span>,num_or_size_splits=<span class="number">2</span>)   <span class="comment"># 在指定维度拆开拆开,参数是2所以拆成两个</span></span><br><span class="line">tf.unstack(a,axis=<span class="number">3</span>,num_or_size_splits=[<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>])   <span class="comment"># 指定拆开,拆开的低0个有2份,地2个有3份...</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="数据统计"><a href="#数据统计" class="headerlink" title="数据统计"></a>数据统计</h5><ul>
+<li>范数<ul>
+<li>二范数<br>$${||x||}_2 = [\sum_k{x^2_k}]^\frac{1}{2}$$  </li>
+<li>无穷范数  </li>
+<li>一范数..等等<br>$${||x||}_1 = \sum_k{|x_k|}$$  </li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###  这里讨论的都是向量的范数(非矩阵)</span></span><br><span class="line">tf.norm(a)  <span class="comment"># 二范数</span></span><br><span class="line">tf.norm(a,ord=<span class="number">1</span>,axis=<span class="number">1</span>)  <span class="comment"># 一范数,同时把某维度看做整体来做范数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># reduce_mean/min/max</span></span><br><span class="line"><span class="comment"># reduce说明,这操作会有个减维的过程:相当于每组选出了指定的数,那组的大小就成了1</span></span><br><span class="line">tf.reduce_mean(a,axis=<span class="number">1</span>)  <span class="comment"># 2.不指定维度的话会打平成以维度</span></span><br><span class="line"><span class="comment"># 指定了维度就会在指定维度取  $注意,这里讨论的都是向量,不用矩阵来理解</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 就最大最小值的位置</span></span><br><span class="line"><span class="comment"># a.shape = [4,10]</span></span><br><span class="line">tf.argmax(a)  <span class="comment"># 默认第0维比较,a有10组,所以会返回10个结果[2,3,4..]</span></span><br><span class="line">tf.argmin(a,axis=<span class="number">1</span>)  <span class="comment"># 指定维度</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 比较</span></span><br><span class="line">tf.equal(a,b) <span class="comment"># 返回[True,False,True,...]</span></span><br><span class="line"><span class="comment"># 准确度:把上面的返回结果dtype成0,1然后累加</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tf.unique</span></span><br><span class="line">tf,unique(a)</span><br><span class="line"><span class="comment"># 返回两个值,第一个是无重复值的tensor,第二个是tensor是值表示原tensor的元素在新tensor中的位置</span></span><br><span class="line"><span class="comment"># 这么一来可以用tf.gather来吧原tensor还原出来</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="张量排序"><a href="#张量排序" class="headerlink" title="张量排序"></a>张量排序</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">tf.sort(a,direction=<span class="string">'DESCENDING'</span>)  <span class="comment"># 降序,  direction='ASCENDING'就能升序</span></span><br><span class="line">tf.argsort(a,direction=<span class="string">'DESCENDING'</span>)  <span class="comment"># 降序,返回的是位置:如[最大值位置，次大..]</span></span><br><span class="line"><span class="comment"># 同理可与gather配合</span></span><br><span class="line"><span class="comment"># 高维的话就按每维排列完全排序</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 但有时候我们只需要最大最小(不用完全排序,耗时)</span></span><br><span class="line">res = tf.max.top_k(a,<span class="number">2</span>)  <span class="comment"># 返回最大的两个</span></span><br><span class="line">res.indices   <span class="comment"># 返回索引值,像argsort</span></span><br><span class="line">res.values  <span class="comment"># 返回值</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用</span></span><br><span class="line"><span class="comment"># 预测问题:0,1,2,3的预测分别是 prob[0.1,0.2,0.3,0.4]</span></span><br><span class="line"><span class="comment"># 真实值是2</span></span><br><span class="line"><span class="comment"># top-1 prediction(正确答案在前1个的概率):0%   (预测对的样本个数/总样本数(这了只用应该样本)) </span></span><br><span class="line"><span class="comment"># top-2 prediction(正确答案在前2个的概率):100% </span></span><br><span class="line"><span class="comment"># top-3 prediction(正确答案在前3个的概率):100% </span></span><br><span class="line"><span class="comment"># 举例</span></span><br><span class="line"><span class="comment"># prob = tf.constant([[0.1,0.2,0.7],[0.2,0.7,0.1]]) #样本1最可能是2,样本2最可能是1</span></span><br><span class="line"><span class="comment"># target = tf.constant([2,0])  # 样本1正式值应该是2，样本2真实值应该是0</span></span><br><span class="line"><span class="comment"># 所以: top-1 prediction=1/2  = 50%</span></span><br><span class="line"><span class="comment"># top-2 prediction = 2/2 = 100%</span></span><br><span class="line"><span class="comment"># top-3 prediction = 2/2 = 100%</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="填充与复制"><a href="#填充与复制" class="headerlink" title="填充与复制"></a>填充与复制</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 填充 pad</span></span><br><span class="line">tf.pad(a,[[<span class="number">2</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">1</span>]])  <span class="comment"># 行上边边填充2行下边0行;列左0右1</span></span><br><span class="line"><span class="comment">#          ^行  ^列  </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制 tile</span></span><br><span class="line"><span class="comment"># a.shape = [3,3]</span></span><br><span class="line">tf.tile(a,[<span class="number">1</span>,<span class="number">2</span>])  <span class="comment"># 第一维复制一次(不变),第二维复制2次 </span></span><br><span class="line"><span class="comment"># res.shape = [3,6]</span></span><br><span class="line"><span class="comment"># 会真实的复制到内存</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="张量的限幅"><a href="#张量的限幅" class="headerlink" title="张量的限幅"></a>张量的限幅</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 限制最小值</span></span><br><span class="line">tf.maximum(a,<span class="number">2</span>)  <span class="comment"># 返回a,2间的最大值,故a不会小于2,限制的最小值</span></span><br><span class="line"><span class="comment"># 限制最大值</span></span><br><span class="line">tf.minimum(a,<span class="number">8</span>)  <span class="comment"># 返回a,8间的最小值 </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 限制范围</span></span><br><span class="line">tf.clip_by_value(a,<span class="number">2</span>,<span class="number">8</span>)  <span class="comment"># 2&lt;x&lt;8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># relu函数,x小于0时取0，大于0是取本身</span></span><br><span class="line"><span class="comment"># 可用maximum(a,0)实现</span></span><br><span class="line"><span class="comment"># 也可用封装好的relu函数</span></span><br><span class="line">tf.relu(a)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等比例放缩,希望把grad缩小方便学习,但又不希望改变gred值</span></span><br><span class="line"><span class="comment"># 可用除以模再乘以一个值来控制范围来,也可用函数</span></span><br><span class="line">tf.clipe_by_norm(a,<span class="number">15</span>)  <span class="comment"># 相当于除模后乘15,改变了a的模</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Gradient Exploding 梯度太大,一步学习跨越太大,来回震荡</span></span><br><span class="line"><span class="comment"># Gradient Vanishing 梯度太小,学习太慢，长时间没有变化</span></span><br><span class="line"><span class="comment"># tf.clipe_by_global_norm(grads,25)  # 整体缩放,避免方向改变</span></span><br><span class="line"><span class="comment"># 梯度向量表示[2,5,3],那么整体缩小就不会改变方向</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 筛选 mask = [True,False,True]</span></span><br><span class="line">tf.where(mask)  <span class="comment"># 没有参数,返回tensor中值是True的值的对应坐标tensor</span></span><br><span class="line">tf.where(mask,A,B)  <span class="comment"># True时对A采样,False时对B采样</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 有目的性的更新</span></span><br><span class="line">tf.scatter_nd(indices,updates,shape) </span><br><span class="line"><span class="comment"># 1.只能在全0的底板上更新,就是上面的shape</span></span><br><span class="line"><span class="comment"># 2.indices表示要更新的位置,把对应位置上updates的值更新过去</span></span><br><span class="line"><span class="comment"># 一般用作给指定位置加减(因为只能全0为底板)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 快速生成坐标轴系(GPU加速的,区别于传统for循环的)</span></span><br><span class="line">point_x,point_y = tf.meshgrid(x,y)</span><br><span class="line"><span class="comment"># 返回两个值,个存取x的所有值和y的所有值</span></span><br><span class="line"><span class="comment"># 对应位置的祝贺就是(x,y) </span></span><br><span class="line"><span class="comment"># 重新组合: tf.stack([point_x,point_y],axis=2)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="神经网络与全连接层"><a href="#神经网络与全连接层" class="headerlink" title="神经网络与全连接层"></a>神经网络与全连接层</h4><h5 id="数据集的加载-小型"><a href="#数据集的加载-小型" class="headerlink" title="数据集的加载(小型)"></a>数据集的加载(小型)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据集准备</span></span><br><span class="line">(x,y),(x_test,y_test) = keras.datasets.mnist.load_data()  <span class="comment"># 获取mninst数据集,返回各有不同</span></span><br><span class="line"><span class="comment"># 返回的是numpy的格式</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将numpy转换成对象</span></span><br><span class="line">db = tf.data.Dataset.from_tenfor_slices(x_test,y_test)</span><br><span class="line">next(iter(db))[<span class="number">0</span>].shape  <span class="comment"># 转换成对象后就可进行的一系列操作,支持多线程等</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打散</span></span><br><span class="line">db = db.shuffle(<span class="number">10000</span>)  <span class="comment"># 打散,但x和y的对应关系不打撒(gather),参数?给大点就是了</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据预处理</span></span><br><span class="line">db2 = db.map(func)  <span class="comment"># 对db里的每个元素进行func里的操作</span></span><br><span class="line"><span class="comment"># 如每个元素是(x,y),func函数的参数的x,y返回的是处理后的x,y</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># batch</span></span><br><span class="line">db3 = db2.batch(<span class="number">42</span>)  <span class="comment"># 不再一次读取一组数据,一次读取指定数量的数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重复迭代</span></span><br><span class="line">db4 = db3.repeat(<span class="number">2</span>)  <span class="comment"># 重复迭代2次</span></span><br><span class="line">db4 = db3.repeat()  <span class="comment"># 无限重复</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每个节点跟每个节点连接——Dense</span></span><br><span class="line">x = tf.random.normal([<span class="number">4</span>,<span class="number">728</span>])  <span class="comment"># 输入</span></span><br><span class="line">net = tf.keras.layers.Dense(<span class="number">512</span>)  <span class="comment"># 创建输出512的层</span></span><br><span class="line">out = net(x)  <span class="comment"># out.shape = [4,512]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多层嵌套——Multi-Layers</span></span><br><span class="line"><span class="comment"># keras.Sequential([layer1,layer2,...])  # layer-&gt;Dense</span></span><br><span class="line">network = keras.Sequential([</span><br><span class="line">        keras.layers.Dense(<span class="number">2</span>,activation=<span class="string">'relu'</span>),</span><br><span class="line">        keras.layers.Dense(<span class="number">2</span>,activation=<span class="string">'relu'</span>),</span><br><span class="line">        keras.layers.Dense(<span class="number">2</span>)</span><br><span class="line">    ])</span><br><span class="line">network.build(input_shape=[<span class="literal">None</span>,<span class="number">3</span>])  <span class="comment"># 创建，给定输入维度3</span></span><br><span class="line">network.summary()   <span class="comment"># 打印信息</span></span><br><span class="line">network.trainable_variables   <span class="comment"># list[],可训练参数</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="输出方式"><a href="#输出方式" class="headerlink" title="输出方式"></a>输出方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出范围压缩</span></span><br><span class="line"><span class="comment"># sigmod函数(同理relu)</span></span><br><span class="line">y = tf.sigmod(x)   <span class="comment"># x属于R,y属于[0,1]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tanh函数,压缩范围到[-1,1]</span></span><br><span class="line">tf.tanh(x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出概率(所有的和为1)</span></span><br><span class="line"><span class="comment"># softmax函数</span></span><br><span class="line">tf.softmax(a)</span><br></pre></td></tr></table></figure>
+
+<h5 id="损失函数的计算"><a href="#损失函数的计算" class="headerlink" title="损失函数的计算"></a>损失函数的计算</h5><ul>
+<li>MSE<br>$$loss=\frac{1}{N}\sum(y-out)^2$$<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">loss1 = tf.reduce_mean(tf.square(y-out))</span><br><span class="line">loss2 = tf.reduce_mean(tf.losses.MSE(y,out))</span><br><span class="line"><span class="comment"># loss1 = loss2 等价</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h5 id="标差熵"><a href="#标差熵" class="headerlink" title="标差熵"></a>标差熵</h5><ul>
+<li>熵 $Entropy = -\sum P(i)\log_2{P(i)}$<ul>
+<li>不确定度 Uncertainty</li>
+<li>惊奇度 measure of surprise</li>
+<li>lower entropy -&gt; more info</li>
+</ul>
+</li>
+</ul>
+<h5 id="交叉熵-Cross-Entropy"><a href="#交叉熵-Cross-Entropy" class="headerlink" title="交叉熵 Cross Entropy"></a>交叉熵 Cross Entropy</h5><ul>
+<li><p>描述两个集合p,q的惊奇度</p>
+<ul>
+<li>$H(p,q) = -\sum{p(x) \log_2{q(x)}}$</li>
+<li>$H(p,g) = H(p) + D(p|q)$ <ul>
+<li>$D(p|q)$ 表示p和q的离散度</li>
+<li>当p=q时$D(p|q)=0$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>for p:one_hot encoding</p>
+<ul>
+<li>$h(p:[0,1,0]) = -1\log_2{1}=0$</li>
+<li>$H([0,1,0],[q_1,q_2,q_3]) = 0+D(p|q)=-1\log{q_1}$</li>
+<li>即要使p逼近与q用交叉熵的方法的可行的  </li>
+</ul>
+</li>
+<li><p>具体解法<br>设一组分类的one_hot encoding是$P_1[1,0,0,0,0]$;<br>一组输出为$Q_1[0.4,0.3,0.05,0.05,0.5]$;<br>则:</p>
+</li>
+</ul>
+<p>$$\begin{aligned}<br>loss &amp;= H(p,q) \<br>&amp;= -\sum{P_1(x) \log_2{Q_1(x)}} \<br>&amp;= -\log_2{0.4}  \<br>&amp;= 0.916<br>\end{aligned}<br>$$</p>
+<p>然后lr,w1,b2…,多次学习后发现loss越来越小,即q = p  </p>
+<ul>
+<li>在tensorflow中的使用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tf.losses.categorical_crossentropy(p,q) <span class="comment"># 函数的形式</span></span><br><span class="line">tf.losses.BinaryCrossentropy()(p,q)  <span class="comment"># 类的形式</span></span><br><span class="line">tf.losses.binary_crossentropy(p,q) <span class="comment"># 函数的形式 </span></span><br><span class="line"><span class="comment"># p是真实在的one_hot encodingq是预测值</span></span><br><span class="line"><span class="comment"># 如tf.losses.categorical_crossentropy([1,0,0,0],[0.25,0.25,0.25,0.25])</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 通常的用法 ###</span></span><br><span class="line">tf.losses.categorical_crossentropy(one_hot,logits,from_logits=<span class="literal">True</span>)  <span class="comment"># 这样能处理logits转换成prob时的错误</span></span><br><span class="line">tf.losses.categorical_crossentropy(one_hot,prob)  <span class="comment"># 等价但不推荐</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="梯度下降-Gradient-Descent"><a href="#梯度下降-Gradient-Descent" class="headerlink" title="梯度下降 Gradient Descent"></a>梯度下降 Gradient Descent</h3><ul>
+<li>梯度:向量grad<ul>
+<li>用梯度下降来逼近<br>$$ w_n = w - lr \times \frac{\partial{loss}}{\partial{w}} $$</li>
+</ul>
+</li>
+<li>在tensorflow中的使用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:  <span class="comment"># 把计算过程包在里面</span></span><br><span class="line">    tape.watch([w,b])  <span class="comment"># 如果参数不是tf.variable类型话要用这个函数声明</span></span><br><span class="line">    loss = f(x)</span><br><span class="line">[w_grad] = tape.gradient(loss,[w])  <span class="comment"># 自动求解参数的梯度,并返回相应的列表</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tape.gradient调用一次后会把资源释放掉,可用参数persistent改变</span></span><br><span class="line"><span class="keyword">with</span> tf.GradientTape(persistent=<span class="literal">True</span>) <span class="keyword">as</span> tape:  <span class="comment"># 用完后会保留资源</span></span><br><span class="line">grad1 = tape.gradient(loss,[w]) </span><br><span class="line">grad2 = tape.gradient(loss,[w])  <span class="comment"># 可调用多次</span></span><br><span class="line"><span class="comment"># 但要记得手动释放资源！！！</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="激活函数-Activation-Function"><a href="#激活函数-Activation-Function" class="headerlink" title="激活函数 Activation Function"></a>激活函数 Activation Function</h4><p>科学家在研究青蛙神经是发现，当刺激到达一定程度是青蛙才会做出相应的反应，是个离散的过程<br>因此在深度学习中就可模仿设点，设计神经网络，因此有了激活函数  </p>
+<p>连续的光滑的激活函数</p>
+<ul>
+<li><strong>sigmoid(logistic)</strong><ul>
+<li>$f(x)=\delta(x)=\frac{1}{1+e^{-x}}$</li>
+<li><code>y = tf.sigmoid(a)</code></li>
+<li>可以将范围压缩到[0,1]</li>
+<li>但当x接近无穷时，导数几乎为零，导致梯度离散，使得长期得不到更新</li>
+</ul>
+</li>
+<li><strong>Tanh</strong><ul>
+<li>$f(x)=tanh(x)=\frac{(e^x-e^{-x})}{e^x+e^{-x}}=2sigmoid(2x)-1$</li>
+<li><code>y = tf.tanh(a)</code></li>
+</ul>
+</li>
+<li><strong>ReLU(Rectified Linear Unit)</strong><ul>
+<li>$<br>f(x) = \begin{cases}<br>0, &amp; \text{if } x &lt; 0  \<br>x, &amp; \text{if } x \geq 0<br>\end{cases}<br>$</li>
+<li><code>tf.nn.relu()</code></li>
+<li>深度学习最常用的<ul>
+<li>优势</li>
+<li>求导简单</li>
+<li>不会放大或缩小梯度(reLU的导数为1)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Softmax</strong><ul>
+<li>$S(y_i)=\frac{e^{y_i}}{\sum_j{e^{y_i}}}$</li>
+<li>常用于多分类问题，因为它把logits转换为prob</li>
+<li>区别于一般的转换成prob的方法，Softmax会把大的放大，小的缩小；拉大差距(sotf version of max)</li>
+<li>求导:把先把分子分母看做整体<code>f(x)和g(x)</code>然后相当于$\frac{\partial p_i}{\partial a_j}=\frac{f’(x)g(x)-f(x)g’(x)}{g(x)^2}$;注意i和j不同的情况要分开讨论<ul>
+<li>结果$<br>\frac{\partial p_i}{\partial a_j} = \begin{cases}<br>p_i(1-p_1), &amp; \text{if } i=j  \</li>
+<li>p_jp_i, &amp; \text{if } i\neq j<br>\end{cases}<br>$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Loss函数的梯度"><a href="#Loss函数的梯度" class="headerlink" title="Loss函数的梯度"></a>Loss函数的梯度</h4><p>经典的loss函数</p>
+<ul>
+<li>Mean Squared Error(MSE,均方差)<ul>
+<li>$loss=\frac{1}{N}\sum(y-out)^2$</li>
+<li><code>loss1 = tf.reduce_mean(tf.square(y-out))</code></li>
+<li><code>loss2 = tf.reduce_mean(tf.losses.MSE(y,out))</code></li>
+</ul>
+</li>
+<li>Cross Entropy Loss<ul>
+<li>Softmax</li>
+</ul>
+</li>
+</ul>
+<h4 id="链式法则"><a href="#链式法则" class="headerlink" title="链式法则"></a>链式法则</h4><p>$\frac{\partial y}{\partial x} = \frac{\partial y}{\partial u}\frac{\partial u}{\partial x}$</p>
+<h4 id="感知机梯度传导"><a href="#感知机梯度传导" class="headerlink" title="感知机梯度传导"></a>感知机梯度传导</h4><p>利用链式法则从输出往输入退就可以知道梯度信息，然后更新  </p>
+<h3 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h3><ul>
+<li>tensorboard<ul>
+<li><code>pip install tensorboard</code></li>
+<li>在代码中写入<code>summary_writer = tf.summary.create_file_writer(DIR)</code></li>
+<li>拿到<code>summary_writer</code>后就可以忘里面喂数据</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1,喂数据点</span></span><br><span class="line"><span class="keyword">with</span> summary_writer.as_default():</span><br><span class="line">    tf.summary.scalar(<span class="string">'NAME1'</span>, float(LOSS), step=STEP)  <span class="comment"># (图的名字,数据,坐标(默认是x轴))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2,喂一个图片</span></span><br><span class="line"><span class="keyword">with</span> summary_writer.as_default():</span><br><span class="line">    tf.summary.image(<span class="string">'NAME1'</span>, IMG, step=STEP)  <span class="comment"># (图的名字,数据,坐标(默认是x轴))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3,给多个图片</span></span><br><span class="line"><span class="comment"># 最好的办法是认为的拼接图片,然后传一张拼接的图片(google)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>visdom </li>
+</ul>
+<h2 id="Keras高层API"><a href="#Keras高层API" class="headerlink" title="Keras高层API"></a>Keras高层API</h2><h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><p>在计算loss,accuracy的时候经常会发现数据忽高忽低,所以可借助keras的api来优化</p>
+<ul>
+<li>metrics测量<ul>
+<li>keras会将数据放在一个list,然后取平均值来优化?</li>
+<li>如<code>loss_meter = metrics.Mean()</code>,<code>acc_meter = metrics.Accuracy()</code></li>
+</ul>
+</li>
+<li>update_state更新数据<ul>
+<li><code>loss_meter.update_state(loss)</code>,<code>acc_meter.update_state(y, pred)</code></li>
+</ul>
+</li>
+<li>result().numpy()获取结果,转换成numpy输出<ul>
+<li><code>loss_meter.result().numpy()</code>result得到tensor，再转换成numpy</li>
+</ul>
+</li>
+<li>reset_states释放数据<ul>
+<li>当要废弃旧的数据时<code>loss_meter.reset_states()</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="Compile-amp-Fit"><a href="#Compile-amp-Fit" class="headerlink" title="Compile&amp;Fit"></a>Compile&amp;Fit</h4><ul>
+<li>Compile,类似装载弹药,可以指定loss,优化器,评估指标</li>
+<li>Fix,完成标准创立</li>
+<li>Evaluate,测试</li>
+<li>Predic,拿创建好的模型来预测</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 一般的流程</span></span><br><span class="line">epoch <span class="keyword">in</span> range(num):</span><br><span class="line">    <span class="keyword">for</span> step, (x, y) <span class="keyword">in</span> enumerate(db):</span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:   <span class="comment"># 循环网络</span></span><br><span class="line">            <span class="comment"># [b, 784] =&gt; [b, 10]</span></span><br><span class="line">            logits = model(x)</span><br><span class="line">            y_onehot = tf.one_hot(y, depth=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">            loss_ce = tf.losses.categorical_crossentropy(y_onehot, logits, from_logits=<span class="literal">True</span>)</span><br><span class="line">            loss_ce = tf.reduce_mean(loss_ce)</span><br><span class="line"></span><br><span class="line">        grads = tape.gradient(loss_ce, model.trainable_variables)    <span class="comment"># 更新</span></span><br><span class="line">        optimizer.apply_gradients(zip(grads, model.trainable_variables))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> step % <span class="number">100</span> == <span class="number">0</span>:   </span><br><span class="line">            <span class="comment"># ...</span></span><br><span class="line">    <span class="keyword">for</span> (x_test, y_test) <span class="keyword">in</span> test_db:    <span class="comment"># 测试</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 使用Keras的api快速建立标准化的神经网络</span></span><br><span class="line"><span class="comment"># 称network或model</span></span><br><span class="line">network = Sequential([...])   <span class="comment"># 如果是别的没学到的话...</span></span><br><span class="line">network.compile(</span><br><span class="line">        optimizer=optimizers.Adam(lr=<span class="number">0.01</span>),    <span class="comment"># 指定优化器</span></span><br><span class="line">        loss=tf.loss.CategoricalCrossentropy(from_logits=<span class="literal">True</span>),   <span class="comment"># 指定loss函数</span></span><br><span class="line">        metrics=[<span class="string">'accuracy'</span>]     <span class="comment"># 指定测试标准</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">network.fit(</span><br><span class="line">        db,   <span class="comment"># 要训练的数据集</span></span><br><span class="line">        epochs=<span class="number">10</span>,    <span class="comment"># 训练的周期</span></span><br><span class="line">        validation_data=db_test,    <span class="comment"># 用于做测试的数据集,一般写作ds_val</span></span><br><span class="line">        validation_freq=<span class="number">2</span>    <span class="comment"># 测试的周期,如这里一共10个epochs,每2个epochs就进行一次测试</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">network.evaluate(ds_val)    <span class="comment"># 训练完后对模型的评估,传入一个数据集</span></span><br><span class="line"></span><br><span class="line">pred = network(x)</span><br><span class="line"><span class="comment"># 或 pred = network.predict(x)    预测</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="自定义网络"><a href="#自定义网络" class="headerlink" title="自定义网络"></a>自定义网络</h4><ul>
+<li>keras.Sequential(layer1, layer2, …)<ul>
+<li>参数要继承自<code>keras.layers.Layer()</code></li>
+<li>建立好网络后variable(w和b)是没有的<ul>
+<li>法1:指定输入shape<code>network.build(input_shape=(None, 28*28))</code></li>
+<li>法2:自动识别<code>network(x)</code><ul>
+<li>这个的原理是调用了类中的call()方法,相当于network.<strong>call</strong>(x)。同理自定义类中也可如此</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>keras.layers.Layer()<ul>
+<li>任何要自定义的层要继承自它</li>
+</ul>
+</li>
+<li>keras.Model()<ul>
+<li>compile/fit/evaluate</li>
+<li>Sequential也是继承自该类，所以自定义的网络应该继承这个</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyDense</span><span class="params">(layers.Layer)</span>:</span>    <span class="comment"># 自定义层继承</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, inp_dim, outp_dim)</span>:</span></span><br><span class="line">        super(MyDense, self).__init__() </span><br><span class="line">        self.kernel = self.add_weight(<span class="string">'name1'</span>, [inp_dim, outp_dim])   <span class="comment"># 用母类的add_weight而不是用tf.variable</span></span><br><span class="line">        self.bias = self.add_weight(<span class="string">'name2'</span>, [outp_dim])    <span class="comment"># name是给母类管理用的</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(self, inputs, training=None)</span>:</span></span><br><span class="line">        out = inputs @ self.kernel + self.bias</span><br><span class="line">        <span class="keyword">return</span> out</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对比</span></span><br><span class="line">layers.Dense(<span class="number">256</span>, activation=tf.nn.relu),</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同理Model自定义方法也一样</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="模型的加载与保持"><a href="#模型的加载与保持" class="headerlink" title="模型的加载与保持"></a>模型的加载与保持</h4><ul>
+<li>save/load weights<ul>
+<li>只保存模型参数</li>
+<li>缺点是没有源代码，网络不得而知</li>
+</ul>
+</li>
+<li>save/load entire model<ul>
+<li>简单粗暴的</li>
+</ul>
+</li>
+<li>saved_model <ul>
+<li>通用的保存格式</li>
+</ul>
+</li>
+</ul>
+<p><strong>save/load weights</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># save</span></span><br><span class="line">model.save_weights(<span class="string">'PATH'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># load</span></span><br><span class="line">model = create_model()    <span class="comment"># 需要人工创建网络</span></span><br><span class="line">model.load_weights(<span class="string">'PATH'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>save/load entire model</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># save</span></span><br><span class="line">model.save(<span class="string">'PATH'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># load</span></span><br><span class="line">model = tf.keras.models.load_model(<span class="string">'PATH'</span>)  <span class="comment"># 不需要人工创建网络</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>saved model</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># save</span></span><br><span class="line">tf.saved_model.saved(model, <span class="string">'PATH'</span>)   <span class="comment"># 标准的，可供其他模型使用的保存</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># load</span></span><br><span class="line">imported = tf.saved_model.load(path)   </span><br><span class="line"></span><br><span class="line"><span class="comment"># 还原除网络</span></span><br><span class="line">f = imported.signature[<span class="string">'serving_defaut'</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="过拟合和欠拟合"><a href="#过拟合和欠拟合" class="headerlink" title="过拟合和欠拟合"></a>过拟合和欠拟合</h3><p>现实情况是我们并不知道模型的符合什么分布  </p>
+<ul>
+<li>model capacity,模型的学习能力<ul>
+<li>显然项越多越高</li>
+</ul>
+</li>
+<li>underfitting<ul>
+<li>模型的表达能力弱于真实数据，如用直线拟合双曲线</li>
+</ul>
+</li>
+<li>overfitting<ul>
+<li>模型的表达能力大于真实数据，把不必要的噪声也拟合进来了</li>
+<li>最常见</li>
+</ul>
+</li>
+</ul>
+<h4 id="检查overfitting"><a href="#检查overfitting" class="headerlink" title="检查overfitting"></a>检查overfitting</h4><h5 id="交叉验证"><a href="#交叉验证" class="headerlink" title="交叉验证"></a>交叉验证</h5><p>检查欠拟合和过拟合的方法   </p>
+<p>一般情况下会把数据集切分(splitting)成三份,作用分别是train set，val set，test set<br>数据集一部分用来训练，一部分用来验证accuracy这是是显然的，那为什么有第三份呢？<br>因为在真实的需求中，是不是有取巧的人会把test用的数据集也用来训练，从而过拟合来达到很高的准确度(但实际它们已经过拟合了)<br>所以第三份是用来防止这种情况发生的，不参与训练的，最终检验模型的数据集</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">network.compile(</span><br><span class="line">        optimizer=optimizers.Adam(lr=<span class="number">0.01</span>),   </span><br><span class="line">        loss=tf.loss.CategoricalCrossentropy(from_logits=<span class="literal">True</span>),   </span><br><span class="line">        metrics=[<span class="string">'accuracy'</span>]   </span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">network.fit(</span><br><span class="line">        db,    <span class="comment"># training</span></span><br><span class="line">        epochs=<span class="number">10</span>,</span><br><span class="line">        validation_data=db_test,   <span class="comment"># val set</span></span><br><span class="line">        validation_freq=<span class="number">2</span>   </span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">network.evaluate(ds_val)   <span class="comment"># test set</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="K-fold-cross-validation"><a href="#K-fold-cross-validation" class="headerlink" title="K-fold cross-validation"></a>K-fold cross-validation</h5><p>由上面知，test set是完全不能动的，所以在切分的时候train set和val set可以随机的切分，可以防止网络记忆特性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在tensorflow中可以表现为</span></span><br><span class="line">shuffle(db)  <span class="comment"># 打散</span></span><br><span class="line">splices()   <span class="comment"># 切割</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可用keras的功能</span></span><br><span class="line">network.fit(db, validation_split=<span class="number">0.1</span>)   <span class="comment"># 按照9:1随机切分</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="减轻overfitting"><a href="#减轻overfitting" class="headerlink" title="减轻overfitting"></a>减轻overfitting</h4><h5 id="Regularization"><a href="#Regularization" class="headerlink" title="Regularization"></a>Regularization</h5><ul>
+<li>L1-regularization<ul>
+<li>loss加上lambda约束的一范式</li>
+<li>$j(\theta) = -\sum^m_1{y_i\log_e{\bar y_i} + (1-y_i)\log_e{(1-\bar y_i)}} + \lambda \sum_i^n{|\theta_i|}$</li>
+</ul>
+</li>
+<li>L2-regularization<ul>
+<li>loss加上lambda约束的一范式</li>
+<li>$J(W;x,y)+\frac{1}{2} \times ||W||^2$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 法一：在一层网络中添加kernel_regularizer参数</span></span><br><span class="line">keras.layers.Dense(<span class="number">16</span>,</span><br><span class="line">                    kernel_regularizer=keras.regularizers.L2(<span class="number">0.001</span>)   <span class="comment"># 0.001就是 lambda</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 法二：更加灵活的自己控制范式</span></span><br><span class="line">loss_regularization = []   </span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> network.trainable_variables:     <span class="comment"># 取范式里面的参数w1,w2...b1,b2...取法很灵活</span></span><br><span class="line">    loss_regularization.append(tf.nn.l2_loss(p))</span><br><span class="line">loss_regularization = tf.reduce_sum(tf.stack(loss_regularization))  <span class="comment"># 做一范式还是二范数...</span></span><br><span class="line"></span><br><span class="line">loss = loss + <span class="number">0.0001</span>*loss_regularization</span><br></pre></td></tr></table></figure>
+
+<h4 id="动量与学习率"><a href="#动量与学习率" class="headerlink" title="动量与学习率"></a>动量与学习率</h4><h5 id="Momentum-动量"><a href="#Momentum-动量" class="headerlink" title="Momentum 动量"></a>Momentum 动量</h5><p>由于梯度的更新，会有大幅的反复跳跃的现象，动量就是在更新方向的基础上结合上一阶段的方向进行梯度更新，从而使得更平缓，像踩刹车一样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">optimizer = SGD(learing_rate=<span class="number">0.02</span>, momentum=<span class="number">0.9</span>)   <span class="comment"># momentum 就在超参数lambda</span></span><br><span class="line">optimizer = RMSprop(learing_rate=<span class="number">0.02</span>, momentum=<span class="number">0.9</span>)</span><br><span class="line">optimizer = Adam(learing_rate=<span class="number">0.02</span>,   <span class="comment"># Adam没有momentum(内置),但有beta_1,beta_2</span></span><br><span class="line">        beta_1=<span class="number">0.9</span>,</span><br><span class="line">        beta_2=<span class="number">0.999</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Learning-rate-学习率"><a href="#Learning-rate-学习率" class="headerlink" title="Learning rate 学习率"></a>Learning rate 学习率</h5><p>学习率动态调整来优化网络</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">optimizer = SGD(learing_rate=<span class="number">0.02</span>)</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    <span class="comment"># get loss</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># change learing_rate 比较简单粗暴</span></span><br><span class="line">    optimizer.learing_rate = <span class="number">0.2</span>*(<span class="number">100</span>-epoch)/<span class="number">100</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># update weights</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Early-Stopping-amp-Dropout"><a href="#Early-Stopping-amp-Dropout" class="headerlink" title="Early Stopping &amp; Dropout"></a>Early Stopping &amp; Dropout</h4><h5 id="Early-Stopping"><a href="#Early-Stopping" class="headerlink" title="Early Stopping"></a>Early Stopping</h5><p>很多情况下虽然training accuracy还在上升，但是validation accuracy以及达到最优甚至开始下降了，这是就需要以前终止</p>
+<h5 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h5><p>和overfitting的情况一样，为减少噪声的干扰，可以减少节点数(?矩阵里面的?),learning less to learning better</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">network = Sequential([layers.Dense(<span class="number">256</span>, activation=<span class="string">'relu'</span>),</span><br><span class="line">                      layers.Dropout(<span class="number">0.5</span>),    <span class="comment"># 0.5 rate to dropout</span></span><br><span class="line">                      layers.Dense(<span class="number">256</span>, activation=<span class="string">'relu'</span>),</span><br><span class="line">                      layers.Dropout(<span class="number">0.5</span>),    <span class="comment"># 0.5 rate to dropout</span></span><br><span class="line">                      ...</span><br><span class="line">                    ])</span><br></pre></td></tr></table></figure>
+<p>因为training和test的策略不同(training时为得到更好的w,b，而使用dropout的方法来减小overfitting,所以开启dropout，test是测试模型，所以不用开)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># training</span></span><br><span class="line">network(x, training=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># validation || test</span></span><br><span class="line">network(x, training=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Stochastic"><a href="#Stochastic" class="headerlink" title="Stochastic"></a>Stochastic</h5><h5 id="Deterministic"><a href="#Deterministic" class="headerlink" title="Deterministic"></a>Deterministic</h5><h2 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h2><p>在处理图像问题时，使用全连接的方式会导致大量的资源占用.<br>于是由生物学上眼睛可视域的启发，我们采用局部连接，然后滑动直至扫描全部输入。特点在于对于相同的层如(RGB),每次扫描的观察方式(卷积核)是一样的(weight sharing)<br>所以学习的时候就大大减少了参数量  </p>
+<h3 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h3><p>信号的叠加叫做卷积,得到的结果叫做<strong>feature map</strong>  </p>
+<p>$$<br>y(t)=x(t) * h(t)=\int^\infty _ {-\infty}  x(\tau)h(t-\tau)\mathrm{d}x<br>$$</p>
+<p>* 表示卷积操作,x就相当于输入,h就相当于观察方式(卷积核),t就相当偏移量，扫过整个图片t发生改变x和h卷积出信号输出y</p>
+<h4 id="Padding-amp-Stride"><a href="#Padding-amp-Stride" class="headerlink" title="Padding &amp; Stride"></a>Padding &amp; Stride</h4><ul>
+<li>Padding<ul>
+<li>把输入层扩大(虚的)然后扫描后就能得到维度与输入相等的输出</li>
+</ul>
+</li>
+<li>Stride<ul>
+<li>把扫描的步长加大，就能减少输出的维度</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">layers.Conv2D(<span class="number">4</span>, kernel_size=<span class="number">5</span>, stride=<span class="number">1</span>, padding=<span class="string">'samd'</span>)  <span class="comment"># 卷积核个数,5*5,步长,'same'可以保证输入维度等于输出</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h4><ul>
+<li>设输入是[1, 32, 32, 3],32*32的图片,3个通道<ul>
+<li>那我们的一个卷积核可以是[3, 5, 5] 3表示输入通道的数量(RGB)</li>
+<li>最后可以得到一个[b, 30, 30, 1]的输出</li>
+</ul>
+</li>
+<li>如果使用多个核如[N, 3, 5, 5]那就能得到N个[b, 30, 30, 1]即[b, 30, 30, N]</li>
+</ul>
+<p>多通道输出，多通道输入</p>
+<h4 id="Gradient"><a href="#Gradient" class="headerlink" title="Gradient"></a>Gradient</h4><p>$$<br>O _ {mn} = \sum {x _ {ij} * w _ {ij}} + b  \<br>\frac{\delta Loss}{\delta w _ {ij}}<br>$$</p>
+<h3 id="Classic-Network"><a href="#Classic-Network" class="headerlink" title="Classic Network"></a>Classic Network</h3><h4 id="GoogLeNet"><a href="#GoogLeNet" class="headerlink" title="GoogLeNet"></a>GoogLeNet</h4><p>When the network get deeper, above 20, is get harder to training, even make trains revoke.</p>
+<h4 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h4><p>Residual</p>
+<h2 id="Sequence"><a href="#Sequence" class="headerlink" title="Sequence"></a>Sequence</h2><p>Signal with time order</p>
+<ul>
+<li>sequence embed<ul>
+<li>turn digital signal into a sequence</li>
+</ul>
+</li>
+</ul>
+<p>Many sets can be like a sequence. mnist for example[b, 28, 28]. can expand like [b, time, 28] or [time, b, 28] and so on.</p>
+<p>But a sequence better to expand like a time orde things [time, b, 28] is much better. It depend on how you expand.</p>
+<p>Here are some rules:</p>
+<ul>
+<li>semantic similarity</li>
+<li>trainable</li>
+</ul>
+<h3 id="Cycle-network"><a href="#Cycle-network" class="headerlink" title="Cycle network"></a>Cycle network</h3><p>Two question:</p>
+<ul>
+<li><p>Long sentence</p>
+<ul>
+<li>weight sharing</li>
+<li>We can do like a conv_net</li>
+</ul>
+</li>
+<li><p>Context information</p>
+<ul>
+<li>It is a pertinence bettween word and word</li>
+<li>Here is the example formulation</li>
+</ul>
+</li>
+</ul>
+<p>$$\begin{aligned}<br>h_t &amp;= f_w(h_{t-1}, x_t) \<br>h_t &amp;= tanh(W_{hh}h_{t-1} + W{xh}x_t) \<br>y_t &amp;= W_{hy}h_t \<br>\end{aligned}$$</p>
+<h3 id="RNNlayer"><a href="#RNNlayer" class="headerlink" title="RNNlayer"></a>RNNlayer</h3><h4 id="SimpleRNN"><a href="#SimpleRNN" class="headerlink" title="SimpleRNN"></a>SimpleRNN</h4><p>$$<br>\begin{aligned}<br>call &amp;= xw_{xh} + h_tw_{hh}, (for\ each\ item\ in\ timeline) \<br>out_1, h_1 &amp;= call(x, h_0) \<br>out_2, h_2 &amp;= call(x, h_1) \<br>out_t, h_t &amp;= call(x, h_{t-1})<br>\end{aligned}<br>$$</p>
+<p>$h_t$ and $out_t$ is the same thing(id) but have difference meaning </p>
+<h4 id="Optimize"><a href="#Optimize" class="headerlink" title="Optimize"></a>Optimize</h4><ul>
+<li>Step 1:Gradient Exploding<ul>
+<li>Gradient Clipping</li>
+<li>$grad = \frac{|grad|}{grad}$ ,shrink to 1 and mult $15\times{lr}$</li>
+<li><code>grads = [tf.clipe_by_norm(g, 15) for g in grads]</code></li>
+</ul>
+</li>
+<li>Step 2:Gradient Vanishing<ul>
+<li><em>LSTM</em> \ <em>GRU</em>  </li>
+</ul>
+</li>
+</ul>
+<h5 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h5><p>Compare with RNN(short term memory), which can only remenber nearly sentence.<em>LSTM</em> is long short term memory.</p>
+<p>LSTM use three gates(sigmoid) to contral the signal. </p>
+<ul>
+<li>Forget gate<ul>
+<li>$f_t = \sigma(W_f\cdot[h_{t-1}, x_t]+b_f)$</li>
+<li><img src="./static/forget_gate.png" style="zoom:50%"></li>
+</ul>
+</li>
+<li>Input gate<ul>
+<li>$$<br>\begin{aligned}<br>  i_t &amp;= \sigma(W_i\cdot[h{t-1}, x_t] + b_i) \<br>  \widetilde{C_t} &amp;= tanh(W_C\cdot[h_{t-1}, x_t] + b_C)<br>\end{aligned}<br>$$</li>
+<li><img src="./static/input_gate.png" style="zoom:50%"></li>
+</ul>
+</li>
+<li>Cell state<ul>
+<li>$C_t = f_f * C_{t-1} + i_t * \widetilde{C_t}$</li>
+<li><img src="./static/cell_state.png" style="zoom:50%"></li>
+</ul>
+</li>
+<li>Output gate<ul>
+<li>$$<br>  \begin{aligned}<br>  O_t &amp;= \sigma(W_o[h_{t-1}, x_t] + b_o) \<br>  h_t &amp;= O_t * tanh(C_t)<br>  \end{aligned}$$</li>
+<li><img src="./static/output_gate.png" style="zoom:50%">
+
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h5><h2 id="Auto-Encoder"><a href="#Auto-Encoder" class="headerlink" title="Auto-Encoder"></a>Auto-Encoder</h2><p>Why we need:</p>
+<ul>
+<li>Dimension reduction</li>
+<li>Visualization</li>
+<li>Take advantages of <em>unsupervised</em> date<ul>
+<li>Unsupervise</li>
+<li><em>Reconstruct</em> itself</li>
+</ul>
+</li>
+</ul>
+<h3 id="Denoising-AutoEncoder"><a href="#Denoising-AutoEncoder" class="headerlink" title="Denoising AutoEncoder"></a>Denoising AutoEncoder</h3><p>Add some noise and can still reconstruct well. Means model can dig out information from a mass data.</p>
+<h3 id="Dropout-AutoEncoder"><a href="#Dropout-AutoEncoder" class="headerlink" title="Dropout AutoEncoder"></a>Dropout AutoEncoder</h3><p>Use dropout to autoencoder. It the hard dropouted network can than the disdropout network do better.</p>
+<h3 id="Adversarial-AutoEncoder"><a href="#Adversarial-AutoEncoder" class="headerlink" title="Adversarial AutoEncoder"></a>Adversarial AutoEncoder</h3><h3 id="Variational-AutoEncoder"><a href="#Variational-AutoEncoder" class="headerlink" title="Variational AutoEncoder"></a>Variational AutoEncoder</h3><h1 id="Gen"><a href="#Gen" class="headerlink" title="Gen"></a>Gen</h1><ul>
+<li>Painter or Generator</li>
+<li>Critic or Discriminator</li>
+</ul>
+<p>$$<br>\begin{aligned}<br>min_G\ max_D\ L(D,G) &amp;= E_{x<del>p_r(x)}[\log{D(x)}] + E_{z</del>p_r(z)}[\log{1-D(G(z))}] \<br>&amp;= E_{x<del>p_r(x)}[\log{D(x)}] + E_{x</del>p_r(x)}[\log{1-D(x)}] \<br>\end{aligned}<br>$$</p>
+<p>Both of they want to maximum and than get a nash equilibrium</p>
+<h3 id="Nash-Equilibrium"><a href="#Nash-Equilibrium" class="headerlink" title="Nash Equilibrium"></a>Nash Equilibrium</h3><ul>
+<li>Q1.Where will D converge, given fixed G</li>
+<li>Q2.Where will G converge, after optimal D</li>
+</ul>
+<h3 id="tensorflow运行机制"><a href="#tensorflow运行机制" class="headerlink" title="tensorflow运行机制"></a>tensorflow运行机制</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本质 tf = tensor + 计算图</span></span><br><span class="line"><span class="comment"># tensor 数据</span></span><br><span class="line"><span class="comment"># op 操作</span></span><br><span class="line"><span class="comment"># graphs 数据操作</span></span><br><span class="line"><span class="comment"># session 会话核心</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="四则运算"><a href="#四则运算" class="headerlink" title="四则运算"></a>四则运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果是变量的话要先init</span></span><br><span class="line">tf.add(data1+data2)</span><br><span class="line">tf.multiply(data1,data2)</span><br><span class="line">tf.subtract(data1,data2)</span><br><span class="line">tf.divide(data1,data2)</span><br><span class="line"></span><br><span class="line">dataCopy = tf.assign(x1,x2)  <span class="comment"># 把x2的值赋给x1</span></span><br><span class="line">dataCopy.eval()  <span class="comment"># 相当于sess.run(dataCopy)</span></span><br><span class="line"><span class="comment"># 等价于</span></span><br><span class="line">tf.get_default_session().run(dataCopy)</span><br></pre></td></tr></table></figure>
+
+<h3 id="矩阵运算"><a href="#矩阵运算" class="headerlink" title="矩阵运算"></a>矩阵运算</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># 数据装载</span><br><span class="line">x1 &#x3D; tf.placeholder(tf.float32)</span><br><span class="line">x2 &#x3D; tf.placeholder(tf.float32)</span><br><span class="line">dataAdd &#x3D; tf.add(x1,x2)</span><br><span class="line">sess.run(dataAdd,feed_dict&#x3D;&#123;x1:2,x2:4&#125;)</span><br><span class="line"># 1.tensor张量dataAdd  2.追加的数据 语法同上</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 矩阵~&#x3D;数组 矩阵整体[] 每列都要[]包起来 每[]就是一行</span><br><span class="line">x1 &#x3D; tf.constant([2,2])</span><br><span class="line">x2 &#x3D; tf.constant([[2],</span><br><span class="line">				  [2]])</span><br><span class="line">x1.shape  #维度</span><br><span class="line">sess.run(x1)   # 打印整体</span><br><span class="line">sess.run(x1.[0])   # 打印第0行</span><br><span class="line">sess.run(x1.[:,0])   # 打印第0列</span><br><span class="line"></span><br><span class="line"># 运算</span><br><span class="line">tf.matmul(x1,x2)  # 矩阵乘法</span><br><span class="line">tf.multiply()  # 普通乘法 对应元素相乘</span><br><span class="line">tf.add()   # ..</span><br><span class="line"></span><br><span class="line"># 特殊矩阵的初始化</span><br><span class="line">tf.zeros([2,3])  # 两行三列空间矩阵</span><br><span class="line">tf.onex([2,3])   # 全一矩阵</span><br><span class="line">tf.fill([2,3],15)  # 填充矩阵,全为15的2*3矩阵</span><br><span class="line"></span><br><span class="line">tf.zeros_like(x1)  # 矩阵维度同x1的全零矩阵</span><br><span class="line">x3 &#x3D; tf.linspace(0.0,2.0,11)  # 生成一个矩阵，元素从0到2均匀分成11分</span><br><span class="line">x4 &#x3D; tf.random_uniform([2,3],-1,2)  # 生成2*3的一个矩阵，元素是-1到2的随机数</span><br></pre></td></tr></table></figure>
+
+<h3 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h3><p>loss function:<br>$$loss = \sum_i(w\times x_i+b-y_i)^2 \tag{1}$$<br>loss 累加会很大，所以一般会除以元素个数n,结果还是一样的</p>
+<p>$$w^<code>= w - lr \times \frac{\partial{loss}}{\partial{w}} \tag{2}$$
+$$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会得到新的w b,再返回第(1)步，如此循环就能得到最回事的w b</p>
+<p>对loss的求导其实有规律可循:<br>$$\frac{\partial{loss}}{\partial{w}} = \frac{2}{n}\sum(wx + b - y)x$$<br>$$\frac{\partial{loss}}{\partial{b}} = \frac{2}{n}\sum(wx + b - y)$$</p>
+<h3 id="Discrete-Prediction"><a href="#Discrete-Prediction" class="headerlink" title="Discrete Prediction"></a>Discrete Prediction</h3><p>离散值预测  </p>
+<p>Classification (分类)为例<br>显然的离散的问题，那我们要怎么解决离散的问题呢？<br>激活函数 activation<br>常见的有ReLU和sigmoid<br>目的是为了把线性的值离散化，然后才能套用上面的公式  </p>
+<p>但是就算用一个函数把线性模型离散化了，但还是太简单<br>所以引入隐藏层概念<br>input -&gt; h1 -&gt; h2 -&gt; out<br>经过多层隐藏层问题就更加离散了<br>$$h1 = relu(x@w_1 + b_1)$$<br>$$h2 = relu(h1@w_2 + b_2)$$<br>$$out = relu(h2@w_3 + b_3)$$<br>@表示矩阵乘法, 每道工序都有自己的参数   </p>
+<p>那参数w和b怎么确定呢？<br>若我们想要识别0~9,那我们是不是应该希望最后输出是有10类(一个[1,10]的矩阵,每个元素可以代表一个数字)<br>那么根据矩阵运算的规则(nm*mt = nt),所以我们只要控制每层运算符合矩阵乘法规则且最后输出是我们想要的规模就好<br>最后再用out来计算loss(这里是欧氏距离(n维空间两点的距离)的loss)<br>然后就可以反复更新w` b`了</p>
+<hr>
+<h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><p>tensorflow的弟弟版,因为他不能GPU计算</p>
+<h3 id="基本操作-2"><a href="#基本操作-2" class="headerlink" title="基本操作"></a>基本操作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">x1 = np.array([第一行],[第二行]...)</span><br><span class="line">x1.shape   <span class="comment"># 打印规模</span></span><br><span class="line">np.zeros([<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">np.ones([<span class="number">2</span>,<span class="number">3</span>])   <span class="comment"># 零矩阵和单位矩阵的初始化（2行3列）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 改查</span></span><br><span class="line">x1[<span class="number">1</span>,<span class="number">2</span>]=<span class="number">5</span>  <span class="comment"># 第二行第一列改成5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 基本运算</span></span><br><span class="line">x1*x2   <span class="comment"># 加减乘除都是对应元素加减乘除</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 矩阵运算</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h1><p><code>import matplotlib as plt</code></p>
+<h3 id="基本操作-3"><a href="#基本操作-3" class="headerlink" title="基本操作"></a>基本操作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>])</span><br><span class="line">y = np.array([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 折线图</span></span><br><span class="line">plt.plot(x,y,<span class="string">"r"</span>)  <span class="comment"># 1.x轴 2.y轴 3.颜色</span></span><br><span class="line">plt.plot(x,y,<span class="string">"g"</span>,lw=<span class="number">10</span>)  <span class="comment"># 1.x轴 2.y轴 3.颜色 4.折线的宽度</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 柱状图</span></span><br><span class="line">plt.bar(x,y,<span class="number">0.9</span>,alpha=<span class="number">1</span>,color=<span class="string">'b'</span>)  <span class="comment"># 3.柱状图的宽 4.alpha通道,即透明度</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/15/universe/java/Maven_Note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1481,312 +2588,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/universe/java/HashMap%E5%8E%9F%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/27/universe/java/HashMap%E5%8E%9F%E7%90%86/" itemprop="url">HashMap原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-27T00:00:00+08:00">
-                2019-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h2><p>hashmap有数组+链表组成</p>
-<p>基于红黑树的hashmap就是当链表达到一定长度时把链表变成红黑树</p>
-<p>向map中put元素，如果key重复，会覆盖并把老的元素返回出来</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">| array | 1 | 2 | ... | N |</span><br><span class="line">|-------|---|---|-----|---|</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |   </span><br><span class="line"> 链表   value</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">        value</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>hashmap初始化数组容量的时候必须的一个二的幂次方数<ul>
-<li>这样方便控制取值范围<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2^k-1会得到一个全是1的二进制数：0001 1111</span><br><span class="line">用这个数与hash code与运算即可以截断hash code，只保留低位k-1位</span><br><span class="line">0000 0111</span><br><span class="line">0101 1010</span><br><span class="line">---------</span><br><span class="line">0000 0010</span><br><span class="line"></span><br><span class="line">高位数先右移在与这个111与运算就可得到想要的任意位</span><br><span class="line">提高散列性，防止链表过长，提高get的效率</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<p>取小于一个数的最大二次幂算法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">func (int i)&#123;</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 1)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 2)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 4)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 8)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 16)</span><br><span class="line">    return i-(i &gt;&gt;&gt; 1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return前的一系列移位操作把有效位全部变成了1</span><br><span class="line">在用结果减去移1位后的结果(i&gt;&gt;&gt;1)，就得到只有最高位为1</span><br><span class="line"></span><br><span class="line">        0001 ****</span><br><span class="line">&gt;&gt;1      0000 1***</span><br><span class="line">        ---------</span><br><span class="line">        0001 1***</span><br><span class="line">&gt;&gt;2     0000 0110</span><br><span class="line">...直到int的64位都保</span><br><span class="line">        0001 1111</span><br><span class="line">        0000 1111</span><br><span class="line">    res</span><br></pre></td></tr></table></figure>
-
-<p>扩容时：新建数组 -&gt; 迁移到新数组</p>
-<h3 id="多线程的情况"><a href="#多线程的情况" class="headerlink" title="多线程的情况"></a>多线程的情况</h3><p>在多线程情况下，扩容时可能会同时创建多个个数组。在JDK1.7中会出现问题</p>
-<h3 id="put-key-value-方法"><a href="#put-key-value-方法" class="headerlink" title="put(key, value)方法"></a>put(key, value)方法</h3><ul>
-<li>确定下标<ul>
-<li><code>hashcode &amp; (lenght-1)</code></li>
-<li>因为hashmap的长度只会是2的次幂，所以减1后每一个有效位(除了最高有效位)都是1</li>
-</ul>
-</li>
-<li>解决哈希冲突<ul>
-<li>计算hashcode的时候，有可能会得到同样的值，这时候发生哈希冲突</li>
-<li>链表法<ul>
-<li>插入在链表头部(1.7)</li>
-</ul>
-</li>
-<li>再散列法</li>
-</ul>
-</li>
-</ul>
-<h3 id="get-key-方法"><a href="#get-key-方法" class="headerlink" title="get(key)方法"></a>get(key)方法</h3><ul>
-<li>计算下标</li>
-<li>找到key对应的值<ul>
-<li>如果是链表法解决的哈希冲突则<ul>
-<li>遍历寻找key</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><p>ConcurrentHashMap解决多线程情况下出现的问题</p>
-<p>ConcurrentHashMap使用一个并发级别来指定多少个元素共享一个锁，ConcurrentHashMap称这个所为segment。</p>
-<ul>
-<li>初始化<ul>
-<li>根据并发级别来确定segment的容量，一个segment对象就相当于一个小的hashmap</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/05/universe/utils/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/05/universe/utils/" itemprop="url">markdown utils</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-05T00:00:00+08:00">
-                2019-04-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>$\sqrt{3x-1}+(1+x)^2$</p>
-<p>$$\begin{array}{c}</p>
-<p>\nabla \times \vec{\mathbf{B}} -, \frac1c, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp;<br>= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} &amp; = 4 \pi \rho \</p>
-<p>\nabla \times \vec{\mathbf{E}}, +, \frac1c, \frac{\partial\vec{\mathbf{B}}}{\partial t} &amp; = \vec{\mathbf{0}} \</p>
-<p>\nabla \cdot \vec{\mathbf{B}} &amp; = 0</p>
-<p>\end{array}$$</p>
-<p>$$\begin{aligned}<br>loss &amp;= H(p,q) \<br>&amp;= -\sum{P_1(x) \log_2{Q_1(x)}} \<br>&amp;= -\log_2{0.4}  \<br>&amp;= 0.916<br>\end{aligned}<br>$$</p>
-<p>$$f(x)=<br>\begin{cases}<br>0&amp; \text{x=0}\<br>1&amp; \text{x!=0}<br>\end{cases}$$</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">    dateFormat DD-MM-YYY</span><br><span class="line">    axisFormat %d&#x2F;%m&#x2F;%y</span><br><span class="line"></span><br><span class="line">    title Example</span><br><span class="line">    section example section</span><br><span class="line">    activity :active, 01-02-2019, 03-08-2019</span><br><span class="line">    city :active, 01-02-2019, 03-08-2020</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">other-&gt;Andrew: Says Says to China</span><br><span class="line">Andrew-&gt;China: Says</span><br><span class="line">Note right of China: China thinks\nabout it</span><br><span class="line">China--&gt;Andrew: How are you?</span><br><span class="line">Andrew-&gt;&gt;China: I am good thanks!</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">st&#x3D;&gt;start: Start|past:&gt;http:&#x2F;&#x2F;www.google.com[blank]</span><br><span class="line">e&#x3D;&gt;end: End|future:&gt;http:&#x2F;&#x2F;www.google.com</span><br><span class="line">op1&#x3D;&gt;operation: My Operation|past</span><br><span class="line">op2&#x3D;&gt;operation: Stuff|current</span><br><span class="line">sub1&#x3D;&gt;subroutine: My Subroutine|invalid</span><br><span class="line">cond&#x3D;&gt;condition: Yes</span><br><span class="line">or No?|approved:&gt;http:&#x2F;&#x2F;www.google.com</span><br><span class="line">c2&#x3D;&gt;condition: Good idea|rejected</span><br><span class="line">io&#x3D;&gt;inputoutput: catch something...|future</span><br><span class="line"></span><br><span class="line">st-&gt;op1(right)-&gt;cond</span><br><span class="line">cond(yes, right)-&gt;c2</span><br><span class="line">cond(no)-&gt;sub1(left)-&gt;op1</span><br><span class="line">c2(yes)-&gt;io-&gt;e</span><br><span class="line">c2(no)-&gt;op2-&gt;e</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;type&quot;: &quot;pie&quot;,</span><br><span class="line">  &quot;data&quot;: &#123;</span><br><span class="line">    &quot;labels&quot;: [</span><br><span class="line">      &quot;Red&quot;,</span><br><span class="line">      &quot;Blue&quot;,</span><br><span class="line">      &quot;Yellow&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;datasets&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;data&quot;: [</span><br><span class="line">          300,</span><br><span class="line">          50,</span><br><span class="line">          100</span><br><span class="line">        ],</span><br><span class="line">        &quot;backgroundColor&quot;: [</span><br><span class="line">          &quot;#FF6384&quot;,</span><br><span class="line">          &quot;#36A2EB&quot;,</span><br><span class="line">          &quot;#FFCE56&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;hoverBackgroundColor&quot;: [</span><br><span class="line">          &quot;#FF6384&quot;,</span><br><span class="line">          &quot;#36A2EB&quot;,</span><br><span class="line">          &quot;#FFCE56&quot;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;options&quot;: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1837,7 +2638,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1850,7 +2651,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

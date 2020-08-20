@@ -229,6 +229,600 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/Major/algorithm/funny_algorithm/funny_algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/20/Major/algorithm/funny_algorithm/funny_algorithm/" itemprop="url">有趣的算法问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-20T00:00:00+08:00">
+                2020-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="随机模拟问题"><a href="#随机模拟问题" class="headerlink" title="随机模拟问题"></a>随机模拟问题</h2><h3 id="分钱问题"><a href="#分钱问题" class="headerlink" title="分钱问题"></a>分钱问题</h3><p>房间里有100个人，每个人有100块钱，他们在玩一个游戏。没轮游戏中，每个人都拿出一元前随机给另一个人，最后这100个人的财富分布是怎样的？</p>
+<p>最后分布将是非常无序的，而非每人差不多。相当于100x100分给100个人，而每个人差不多的概率其实是小概率事件。</p>
+<h3 id="蒙特卡洛算法"><a href="#蒙特卡洛算法" class="headerlink" title="蒙特卡洛算法"></a>蒙特卡洛算法</h3><p>蒙特卡洛方法是一种统计学的方法，是一种模拟。通过大量随机样本，去了解一个系统，进而得到所要计算的值。</p>
+<h4 id="蒙特卡洛方法求Pi值"><a href="#蒙特卡洛方法求Pi值" class="headerlink" title="蒙特卡洛方法求Pi值"></a>蒙特卡洛方法求Pi值</h4><p>一个正方形，里面是一个直径和它边长相等的圆</p>
+<ul>
+<li>圆面积 = Pi x R x R</li>
+<li>方面积 = 2R x 2R</li>
+<li>比一下则：Pi = 4 x 圆面积/方面积</li>
+</ul>
+<p>那么不知道Pi怎么计算圆的面积呢？大可不必算，圆/方不就是落在圆中的概率么。</p>
+<h4 id="三门问题-Monty-Hall-Problem"><a href="#三门问题-Monty-Hall-Problem" class="headerlink" title="三门问题(Monty Hall Problem)"></a>三门问题(Monty Hall Problem)</h4><p>参赛者会看见三扇关闭的门，其中一扇的后面有一辆汽车，选中后面有车的门可以赢得该汽车，而另外两扇门后面什么都没有。当参赛者选定一扇门，但开启前，节目主持人会开启剩下两扇门中的一扇，这扇门后面一定没有汽车。主持人问参赛者要不要换另一扇门。问题是：另一扇门会不会增加参赛者获奖概率？</p>
+<p>直觉上，主持人开的门并不会影响我们，相当于1/2的命中率。但事实上:</p>
+<ul>
+<li>换门中奖概率2/3</li>
+<li>不换门中奖概率1/3</li>
+</ul>
+<p>因为主持人知道哪个门没奖，而且一直选择没奖的没，因此导致了概率的不平均，产生偏差</p>
+<h2 id="迷宫问题"><a href="#迷宫问题" class="headerlink" title="迷宫问题"></a>迷宫问题</h2><h3 id="迷宫生成"><a href="#迷宫生成" class="headerlink" title="迷宫生成"></a>迷宫生成</h3><p>抽象成计算机的概念，迷宫其实就是一棵树，迷宫生成问题就是一个随机生成树问题。</p>
+<p><img src="./assets/mazi.png" alt="迷宫初始化"></p>
+<p>以这么的结构初始化图，再随机生成树</p>
+<p>要随机的生成数，就需要创建一个随机队列，出队时随机选择一个元素出队。 <strong>出队时，随机选中的元素和队尾元素交换位置，然后出队。</strong></p>
+<h4 id="随机性更强的迷宫"><a href="#随机性更强的迷宫" class="headerlink" title="随机性更强的迷宫"></a>随机性更强的迷宫</h4><p>上面的迷宫随机性不强，总体上从左上到右下，原因是每次从随机队列选出一个元素时，如果选择的元素是上个元素的最后一个元素，那么就相当于执行了一个小的深度优先遍历。而深度优先走的整体就是向下向右。</p>
+<ul>
+<li>另一种随机队列：<ul>
+<li>基于链表</li>
+<li>入队：随机入队首或队尾</li>
+<li>出队：随机从队首或队尾挑选元素</li>
+</ul>
+</li>
+</ul>
+<h4 id="更多随机方案、更多形状的迷宫"><a href="#更多随机方案、更多形状的迷宫" class="headerlink" title="更多随机方案、更多形状的迷宫"></a>更多随机方案、更多形状的迷宫</h4><h3 id="扫雷游戏"><a href="#扫雷游戏" class="headerlink" title="扫雷游戏"></a>扫雷游戏</h3><ul>
+<li>随机生成雷区<ul>
+<li>方案1：随机坐标，然后在这个位置埋雷<ul>
+<li>缺点：随机出的坐标可能已经有雷，如果在while中跳过已经有雷的区域，则时间将不确定，有可能每次都随机出已经有雷的区域</li>
+</ul>
+</li>
+<li>方案2：将雷顺序放在前面的格子，然后随机交换一定次数</li>
+</ul>
+</li>
+</ul>
+<h4 id="什么样的乱序化才是好的乱序"><a href="#什么样的乱序化才是好的乱序" class="headerlink" title="什么样的乱序化才是好的乱序"></a>什么样的乱序化才是好的乱序</h4><ul>
+<li>问：给一副扑克牌，设计一个洗牌算法，怎么说明你的洗牌算法是个好的洗牌算法</li>
+<li>54张牌，可以有54!种结果。所以一个好的洗牌算法可以等概率获得54!种结果之一</li>
+</ul>
+<h4 id="等概率洗牌算法"><a href="#等概率洗牌算法" class="headerlink" title="等概率洗牌算法"></a>等概率洗牌算法</h4><ul>
+<li>方案1：根据现实模拟。54!种结果来源于第一张牌有54个位置可选，第二张53…根据这点设计洗牌算法。从54张牌中随机抽一张放在一个位置…<ul>
+<li>缺点：不是原地的，即需要额外的存储空间;如果随机取牌不够随机，那也不是等概率的</li>
+</ul>
+</li>
+</ul>
+<h4 id="Fisher-Yates-Knuth-洗牌算法"><a href="#Fisher-Yates-Knuth-洗牌算法" class="headerlink" title="Fisher-Yates(-Knuth)洗牌算法"></a><strong>Fisher-Yates(-Knuth)洗牌算法</strong></h4><p>以洗牌为例，在长度位54的数组中随机选择一个元素，然后与第一个元素交换位置。然后以剩下的张牌位单位重复这个操作。</p>
+<h4 id="Floodfill算法"><a href="#Floodfill算法" class="headerlink" title="Floodfill算法"></a>Floodfill算法</h4><p>就像一滴墨水滴在白纸上，慢慢扩散，所以称floodfill。也就是要注意边界的BFS或DFS。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/19/universe/python/python_opencv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/19/universe/python/python_opencv/" itemprop="url">openCV学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-19T00:00:00+08:00">
+                2020-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在openCV中图像的xy轴是这样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(0,0) -------&gt; x</span><br><span class="line">      |</span><br><span class="line">      |</span><br><span class="line">      |</span><br><span class="line">    y v</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="读取图像和视频"><a href="#读取图像和视频" class="headerlink" title="读取图像和视频"></a>读取图像和视频</h2><p><code>import cv2</code></p>
+<h3 id="图像读取"><a href="#图像读取" class="headerlink" title="图像读取"></a>图像读取</h3><ul>
+<li>读取数据<ul>
+<li><code>img_data = cv2.imread(file)</code></li>
+</ul>
+</li>
+<li>显示<ul>
+<li><code>cv2.imshow(window_name, img_data)</code></li>
+<li>持久化显示：<code>cv2.waitKey(x_ms)</code>。0表示时间无限</li>
+</ul>
+</li>
+</ul>
+<h3 id="视频读取"><a href="#视频读取" class="headerlink" title="视频读取"></a>视频读取</h3><ul>
+<li>读取数据<ul>
+<li><code>cap = cv2.VideoCapture(file)</code></li>
+</ul>
+</li>
+<li>显示  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    success, img = cap.read()</span><br><span class="line">    cv2.imshow(<span class="string">"video_window"</span>, img)</span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>) &amp; <span class="number">0xFF</span> == ord(<span class="string">'q'</span>):</span><br><span class="line">        <span class="keyword">break</span>  <span class="comment"># q退出</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h3 id="摄像头获取"><a href="#摄像头获取" class="headerlink" title="摄像头获取"></a>摄像头获取</h3><ul>
+<li>读取数据<ul>
+<li><code>cap = cv2.VideoCapture(id_of_cam)</code></li>
+<li>0表示使用默认摄像头</li>
+</ul>
+</li>
+<li>设置<ul>
+<li><code>cap.set(id, value)</code><ul>
+<li>id=3，表示宽度</li>
+<li>id=4，表示高度</li>
+<li>id=10, 表示亮度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>显示  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    success, img = cap.read()</span><br><span class="line">    cv2.imshow(<span class="string">"video_window"</span>, img)</span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>) &amp; <span class="number">0xFF</span> == ord(<span class="string">'q'</span>):</span><br><span class="line">        <span class="keyword">break</span>  <span class="comment"># q退出</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h2 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h2><h3 id="转换灰度"><a href="#转换灰度" class="headerlink" title="转换灰度"></a>转换灰度</h3><ul>
+<li><code>imgGray = cv2.cvtColor(img_data, Color_you_want)</code><ul>
+<li>Color使用<code>cv2.COLOR...</code></li>
+<li>注意在openCV中图像通道是BGR，而不是RGB</li>
+</ul>
+</li>
+</ul>
+<h3 id="模糊"><a href="#模糊" class="headerlink" title="模糊"></a>模糊</h3><p>这里以GaussianBlur为例，当然还有很多种blur方案</p>
+<ul>
+<li><code>imgBlur = cv2.GaussianBlur(img_data, (kernel_size, ), sigmaX)</code></li>
+</ul>
+<h3 id="边缘检测器"><a href="#边缘检测器" class="headerlink" title="边缘检测器"></a>边缘检测器</h3><ul>
+<li><code>imgCanny = cv2.Canny(img_data, threshold1, threshold2)</code><ul>
+<li>threshold阀值就是可能需要调整的参数，要减少边数就提高阀值</li>
+</ul>
+</li>
+<li>增加边缘的厚度：膨胀(dilate)<ul>
+<li><code>imgDialation = cv2.dilate(imgCanny, kernel, iterations=times)</code></li>
+<li>kernel是一个矩阵的大小和值的阵列，可以使用numpy建立<code>kernel = np.ones((x, y), 数据类型)</code>，ones表示所有的值都是1</li>
+<li>iterations=times表示迭代的次数(我们想要多厚)</li>
+</ul>
+</li>
+<li>减小边缘的厚度：侵蚀(erode与膨胀相反)<ul>
+<li><code>imgEroded = cv2.erode(imgDialation, kernel, iterations=times)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h3><ul>
+<li>获得大小和通道数据<ul>
+<li><code>img.shape</code>，返回(height, width, BGR)</li>
+</ul>
+</li>
+<li>调整大小<ul>
+<li><code>resized = cv2.resize(img, (width, height))</code></li>
+</ul>
+</li>
+<li>裁剪<ul>
+<li><code>img[h_begin:h_end, w_begin:w_end]</code>，和cv2的函数不同，这里先高度再宽度，使用数据切片来裁剪图片</li>
+</ul>
+</li>
+</ul>
+<h3 id="绘制图形"><a href="#绘制图形" class="headerlink" title="绘制图形"></a>绘制图形</h3><p>图像的本质就是一个矩阵，所以我们可以使用numpy来生成矩阵，然后show出来。如<code>img = np.zeros((x, y))</code>，0表示黑色，所有将得到一个纯黑的图片。</p>
+<p>当然用numpy生成矩阵的时候也可以指定通道数，所谓通道就是n个(x, y)的矩阵。需要注意的是opencv中通道是BGR，在python中矩阵的表示形式也需要了解</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img = np.zeros((x, y, <span class="number">3</span>), np.uint8)</span><br><span class="line">img[:] = <span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>  <span class="comment"># 生成纯蓝的图片</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>画线<ul>
+<li><code>cv2.line(img, (x1, y1), (x2, , y2), (B, G, R), thick)</code>，需要起始点和终点(x1, y1)和(x2, y2)</li>
+</ul>
+</li>
+<li>画矩形<ul>
+<li><code>cv2.rectangle(img, (x1, y1), (x2, , y2), (B, G, R), thick)</code>，需要起始点和终点(x1, y1)和(x2, y2)</li>
+<li>如果font_size部分写入<code>cv2.FILLED</code>则会填充整个矩形，同理还有很多<code>cv2.XXX</code>可以使用</li>
+</ul>
+</li>
+<li>画圆<ul>
+<li><code>cv2.circle(img, (x1, y1), r, (B, G, R), thick)</code>，需要起始点和半径(x1, y1)和r</li>
+</ul>
+</li>
+<li>文本<ul>
+<li><code>cv2.putText(img, &quot;text&quot;, (x1, y1), font, scale, (B, G, R), thick)</code></li>
+<li><code>font</code>可以使用cv2内置的<code>cv2.XXX</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h3><h4 id="透视变换"><a href="#透视变换" class="headerlink" title="透视变换"></a>透视变换</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pts1 = np.float32([x1, y1], [x2, y2], [x3, y3], [x4, y3])</span><br><span class="line">pts2 = np.float32([x1, y1], [x2, y2], [x3, y3], [x4, y3])</span><br><span class="line">matrix = cv2.getPerspectiveTransform(pts1, pts2)  <span class="comment"># 从pts1到pts2的透视变换矩阵，相当于ps中扯4个点</span></span><br><span class="line">imgOutput = cv.warpPerspective(img, matrix, (width, heigh))</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="图像结合"><a href="#图像结合" class="headerlink" title="图像结合"></a>图像结合</h3><p>如果有很多图像，使用图像结合就不用一张一张的的运行了，在一个窗口中完成</p>
+<ul>
+<li>简单的合并<ul>
+<li>水平合并<ul>
+<li><code>img = np.hstack((img1, img2, ..., imgN))</code></li>
+</ul>
+</li>
+<li>垂直合并<ul>
+<li><code>img = np.vstack((img1, img2, ..., imgN))</code></li>
+</ul>
+</li>
+<li>但单纯使用这两种简单合并存在一些问题<ul>
+<li><ol>
+<li>无法调节大小</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>通道数必须一样</li>
+</ol>
+</li>
+<li>因此需要自己写些函数来有机结合他们</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="检测颜色"><a href="#检测颜色" class="headerlink" title="检测颜色"></a>检测颜色</h3><ul>
+<li>色彩捕获</li>
+<li><ol>
+<li>将图像转换成HSV<code>imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)</code></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>编写TrackBars以辅助我们找出最佳值<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建一个窗口</span></span><br><span class="line">cv2.namedWindow(<span class="string">"TrackBars"</span>)</span><br><span class="line">cv2.resizeWindow(<span class="string">"TrackBars"</span>, <span class="number">640</span>, <span class="number">240</span>)  <span class="comment"># 通过winName找到想要的win</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建跟踪栏</span></span><br><span class="line"><span class="comment"># cv2.createTrackbar("barName", "winName", min, max, func)</span></span><br><span class="line"><span class="comment"># func接受一个值，当Trackbar的值改变值执行对应操作</span></span><br><span class="line"><span class="comment"># 这样的trackbar有6个，包含所有的色相最大最小饱和度等</span></span><br><span class="line">cv2.createTrackbar(<span class="string">"Hue min"</span>, <span class="string">"TrackBars"</span>, <span class="number">0</span>, <span class="number">179</span>, func)</span><br><span class="line">cv2.createTrackbar(<span class="string">"Hue max"</span>, <span class="string">"TrackBars"</span>, <span class="number">179</span>, <span class="number">179</span>, func)</span><br><span class="line">cv2.createTrackbar(<span class="string">"Sat min"</span>, <span class="string">"TrackBars"</span>, <span class="number">0</span>, <span class="number">255</span>, func)</span><br><span class="line">cv2.createTrackbar(<span class="string">"Sat max"</span>, <span class="string">"TrackBars"</span>, <span class="number">255</span>, <span class="number">255</span>, func)</span><br><span class="line">cv2.createTrackbar(<span class="string">"val min"</span>, <span class="string">"TrackBars"</span>, <span class="number">0</span>, <span class="number">255</span>, func)</span><br><span class="line">cv2.createTrackbar(<span class="string">"val max"</span>, <span class="string">"TrackBars"</span>, <span class="number">255</span>, <span class="number">255</span>, func)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>跟踪trackbar的值<code>val = cv2.getTrackbarPos(&quot;barName&quot;, &quot;winName&quot;)</code></li>
+<li>无限循环以实时更新</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>创建mask遮罩<code>mask = cv2.inRange(img, lower, upper)</code><ul>
+<li><code>lower = np.array([min1, min2, ..., minN])</code></li>
+<li><code>upper = np.array([max1, max2, ..., maxN])</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>把遮罩显示出来调整trackbar，以找到合适的值</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>使用遮罩和原始图片创建新图片即可得到抽取颜色后的图片<ul>
+<li><code>res = cv2.bitwise_and(img, img, mask=mask)</code>，and:按位与操作</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>堆叠图像，而不是一个一个显示所有图像</li>
+</ul>
+<h3 id="检查图形"><a href="#检查图形" class="headerlink" title="检查图形"></a>检查图形</h3><ul>
+<li><ol>
+<li>转化成灰度图，以便找到拐角<ul>
+<li><code>imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>添加一些模糊<ul>
+<li><code>imgBlur = cv2.GaussianBlur(imgGray, (kernel,), sigma)</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>描边<ul>
+<li><code>imgCanny = cv2.Canny(imgBlur, threshold, threshold)</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li><p>检测轮廓</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getContours</span><span class="params">(img)</span>:</span></span><br><span class="line">    contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)</span><br><span class="line">    <span class="keyword">for</span> cnt <span class="keyword">in</span> contours:</span><br><span class="line">        area = cv2.contourArea(cnt)</span><br><span class="line">        <span class="keyword">if</span> area&gt;<span class="number">500</span>:  <span class="comment"># 通过面积来消除噪声</span></span><br><span class="line">            cv2.drawContours(drawToImg, cnt, <span class="number">-1</span>, (B, G, R), thick) <span class="comment"># -1 画所有轮廓</span></span><br><span class="line">            <span class="comment"># 计算轮廓长度</span></span><br><span class="line">            peri = cv2.arcLength(cnt, <span class="literal">True</span>)  <span class="comment"># true表示封闭</span></span><br><span class="line">            <span class="comment"># 计算拐点位置</span></span><br><span class="line">            approx = cv2.approxPolyDP(cnt, <span class="number">0.02</span>*peri, <span class="literal">True</span>)</span><br><span class="line">            <span class="comment"># 计算角</span></span><br><span class="line">            objCor = len(approx)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 画边框，实现有个方框包围的效果</span></span><br><span class="line">            x, y, w, h = cv2.boundingRect(approx)</span><br><span class="line">            cv2.rectangle(drawToImg, (x, y), (x+w, y+h), (B, G, R))</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="检查面部"><a href="#检查面部" class="headerlink" title="检查面部"></a>检查面部</h3><p>opencv使用训练得到的级联(Cascade)文件来处理图像。opencv提供了一些默认的Cascade，可以处理人脸、车牌、眼睛等等。</p>
+<ul>
+<li>引入Cascade，如<ul>
+<li><code>faceCascade = cv2.CascadeClassifier(&quot;path/to/Cascade/file&quot;)</code></li>
+</ul>
+</li>
+<li>把图像换成灰度图</li>
+<li>使用引入的Cascade处理图像<ul>
+<li><code>faces = faceCascade.detectMultiScale(img, scale, minimum_neighbor)</code></li>
+</ul>
+</li>
+<li>画框框  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (x, y, w, h) <span class="keyword">in</span> faces:</span><br><span class="line">    cv2.recrangle(img, (x, y), (x+w, y+h), (B, G, R), thick)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p><a href="https://github.com/murtazahassan/Learn-OpenCV-in-3-hours" target="_blank" rel="noopener">源码</a></p>
+<h3 id="检查画笔颜色并在图像中画出"><a href="#检查画笔颜色并在图像中画出" class="headerlink" title="检查画笔颜色并在图像中画出"></a>检查画笔颜色并在图像中画出</h3><ul>
+<li><ol>
+<li><a href="#检测颜色">颜色检测</a>，创建蒙版<ul>
+<li>为同时应对多种色彩，可以将检查到的颜色的参数记录在一个列表中</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>试着<a href="#检查图形">描出颜色的轮廓</a><ul>
+<li>只是为了给出明显的反馈，用完可以删除</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>使用轮廓的参数如x，y就可确定一点的位置</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>然后就可画出想要的BGR颜色<ul>
+<li>创建一个点的列表，每次绘制出所有点[x, y, color]</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="物体扫描"><a href="#物体扫描" class="headerlink" title="物体扫描"></a>物体扫描</h3><ul>
+<li>预处理<ul>
+<li><a href="#摄像头获取">调整大小</a></li>
+<li><a href="#转换灰度">使用灰度图</a></li>
+<li><a href="#模糊">模糊</a></li>
+<li><a href="#边缘检测器">描边</a><ul>
+<li>调整边框粗细等</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>找到主体<ul>
+<li>预处理好的图像该如何找到主体?</li>
+<li>可通过<a href="#检查图形">拐角数</a>、最大面积等判断</li>
+</ul>
+</li>
+<li>通过主体的拐角进行<a href="#变换">变换</a></li>
+</ul>
+<h3 id="车牌识别"><a href="#车牌识别" class="headerlink" title="车牌识别"></a>车牌识别</h3><ul>
+<li><ol>
+<li><a href="#检查面部">引入Cascade</a>，用于识别车牌号</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>框出</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>把识别出来的<a href="#绘制图形">数字放在图片的适当位置</a></li>
+</ol>
+</li>
+<li><ol start="4">
+<li>保存识别的图片<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.imwrite(<span class="string">"path/to/file"</span>, img)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</li>
+</ol>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/18/universe/linux/exec_and_fork/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3600,595 +4194,6 @@ Hash.erase(key);    </code></pre>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/07/Major/circuit/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/07/Major/circuit/" itemprop="url">电路</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-07T00:00:00+08:00">
-                2020-06-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="半导体的工作原理"><a href="#半导体的工作原理" class="headerlink" title="半导体的工作原理"></a>半导体的工作原理</h2><p>半导体的材料一般是电子不多不少(不易获得也不易失去)的，如:硅(4最外层4电子)</p>
-<p>电子多，说明核带正电多，对电子吸引力强; 电子少，说明核带正电少，对电子吸引力弱。</p>
-<h3 id="晶体二极管"><a href="#晶体二极管" class="headerlink" title="晶体二极管"></a>晶体二极管</h3><p>纯硅电子不易得也不易失，我们称之为 <strong>本征半导体</strong> 。如果我们在硅中加入一点磷(最外层5电子)，则将不是在最外出4电子的基础上多了一个电子。这时这个电子将相对”自由”。这个整体带的电子比稳定的4电子多，我们就叫它N型半导体(Negetive)。</p>
-<p>如果我们在本征半导体参入堋(最外层3个电子)，整体将变得渴望1个电子，我们将这个空的地方(为到达4电子)称为空穴。这些空穴有渴望电子的能力。相对4电子结构，空穴是Positive的，因此称为P型半导体。</p>
-<p>采用特殊的技术，把P型半导体和N型半导体(P、N整体都是中性，别被PN误导)拼接在一起。那么由于P型半导体的空穴浓度高，N型半导体的空穴浓度低，空穴就会从P扩散到N;同理N型半导体的电子扩散到P型半导体，就像液体中的扩散一样。但扩散不会一直发生，当N中的空穴变多，变得带正电，P中的电子变多，变得带负电，形成电场。</p>
-<p>随着电场的形成，电场将试图将P的电子拉到N，随着P的电子减少，电场减弱，扩散又发生，最后扩散和电场达到动态平衡。</p>
-<ul>
-<li>如果我们向N区通正电，新增的电场与内部的电场方向一致，电场将会变强。虽然仍会处于动态平衡，但是电场抑制了粒子移动，从而阻断电流。</li>
-<li>如果我们向P区通整点，N区通负电，将压缩内电场，电子的束缚将变小从而导通电流</li>
-<li>于是晶体二极管就诞生了</li>
-</ul>
-<h3 id="晶体三极管"><a href="#晶体三极管" class="headerlink" title="晶体三极管"></a>晶体三极管</h3><p>晶体三极管结构如下：</p>
-<table>
-<thead>
-<tr>
-<th>外</th>
-<th>N</th>
-<th>P</th>
-<th>N</th>
-<th>内</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>通电电极</td>
-<td>+</td>
-<td>+</td>
-<td>-</td>
-<td></td>
-</tr>
-<tr>
-<td>位置</td>
-<td>3</td>
-<td>2</td>
-<td>1</td>
-<td></td>
-</tr>
-</tbody></table>
-<p>每个PN接触面会形成PN节，一般0.7V的电压会导通PN节。</p>
-<p>如果1号位和2号位电压大于0.7V，就通电了。需要注意的是，设计时，1号位故意参杂很多5电子元素，使得电子浓度很高;而2号位的半导体很薄，很难一次消耗掉这些涌入的电子;当2号涌入了很多电子又无法消耗，那么就打破了2号和3号的动态平衡。而且3号设计得很大电子浓度低，2号扩散过来的电子很快会被3号收集。又因为3号通的正电，电子得到了一个快速的泄洪通道，迅速通过电源正极。</p>
-<p>这样一来，我们可以认为2号和3号通电了。又因为2号电子来自1号，所以1号也和3号通电了。</p>
-<p>2号极小的信号改变就会导致1号电子涌入的巨大变化，从而引起1号与3号之间电流的巨大变化。</p>
-<ul>
-<li>1号连接负极，称为发射极</li>
-<li>2号相当于阀门，操作这原始信号，称为基极</li>
-<li>3号收集电子，称为集电极</li>
-</ul>
-<h3 id="场效应管"><a href="#场效应管" class="headerlink" title="场效应管"></a>场效应管</h3><p>将两个N型半导体浸如一个大的P型半导体中，两个N型半导体分别接入正极和负极，P型半导体接入正极，但与正极间隔这一个电容。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th>N</th>
-<th>P</th>
-<th>N</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>通电电极</td>
-<td>P</td>
-<td>-</td>
-<td>+电容</td>
-<td>+</td>
-<td>P</td>
-</tr>
-<tr>
-<td>位置</td>
-<td>P</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>P</td>
-</tr>
-<tr>
-<td></td>
-<td>P</td>
-<td>P</td>
-<td>P</td>
-<td>P</td>
-<td>P</td>
-</tr>
-</tbody></table>
-<ul>
-<li>1号由电源不断提供电子</li>
-<li>2号不断吸引电子，但不会快速消耗电子</li>
-<li>3号快速消耗电子</li>
-</ul>
-<p>由于2号电子处聚集了大量电子，3号消耗了很多电子，于是P型半导体由于电子聚集的位置与3号N型半导体由于电子消耗，半导体的类型发生了改变。即2号与3号之间，2号成了N型，3号成了P型，电子将扩散到3号并被快速消耗。又由于1号源源不断提供电子，不断涌向2号。于是1号和3号在2号的控制下形成了通电回路。</p>
-<ul>
-<li>1号提供电子，称为源极</li>
-<li>2号像栅栏一样控制电路导通，称为栅极<ul>
-<li>栅极的正负控制这电路的通阻，如果用01表示同断，那么计算机科学就开始了</li>
-</ul>
-</li>
-<li>3号称为漏极</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/29/universe/Emacs_in_action/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/29/universe/Emacs_in_action/" itemprop="url">emacs快速入门</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-29T00:00:00+08:00">
-                2020-05-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Emacs细节"><a href="#Emacs细节" class="headerlink" title="Emacs细节"></a>Emacs细节</h2><ul>
-<li>major mode和minor mode<ul>
-<li>打开一个文件时会有默认的mode激活，这个默认的mode就是major mode</li>
-<li>minor mode在配置文件中，状态栏不会显示，<code>c-h m</code>显示打开的minor mode</li>
-</ul>
-</li>
-<li>org mode标签TODO/DONE<ul>
-<li><code>c-t/c-s</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="Emacs基本操作"><a href="#Emacs基本操作" class="headerlink" title="Emacs基本操作"></a>Emacs基本操作</h2><ul>
-<li><p>M for meta, Alt or Command(MAC)</p>
-</li>
-<li><p>S for shift</p>
-</li>
-<li><p>C for control</p>
-</li>
-<li><p>s for super</p>
-</li>
-<li><p>Move</p>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>c-f</td>
-<td>forward</td>
-</tr>
-<tr>
-<td>c-b</td>
-<td>backward</td>
-</tr>
-<tr>
-<td>c-p</td>
-<td>previous</td>
-</tr>
-<tr>
-<td>c-n</td>
-<td>next</td>
-</tr>
-<tr>
-<td>c-a</td>
-<td>ahead</td>
-</tr>
-<tr>
-<td>c-e</td>
-<td>end</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>Action</p>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>c-w</td>
-<td>cut</td>
-</tr>
-<tr>
-<td>m-w</td>
-<td>copy</td>
-</tr>
-<tr>
-<td>c-y</td>
-<td>yank(paste)</td>
-</tr>
-<tr>
-<td>m-&lt;</td>
-<td>begin of file</td>
-</tr>
-<tr>
-<td>m-&gt;</td>
-<td>end of file</td>
-</tr>
-<tr>
-<td>c-k</td>
-<td>del to end of line(kill)</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>Edit</p>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>C-g</td>
-<td>中断所有操作</td>
-</tr>
-<tr>
-<td>C-x C-f</td>
-<td>打开文件</td>
-</tr>
-<tr>
-<td>C-x C-s</td>
-<td>save</td>
-</tr>
-<tr>
-<td>C-h key/var/func</td>
-<td>help for key/var/func</td>
-</tr>
-<tr>
-<td>C-x C-e</td>
-<td>执行表达式，根据括号范围决定运行的指令</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>Search</p>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>c-s</td>
-<td>search below</td>
-</tr>
-<tr>
-<td>c-r</td>
-<td>search above</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<h2 id="Elisp"><a href="#Elisp" class="headerlink" title="Elisp"></a>Elisp</h2><p>括号括起来是表达式，表达式第一个参数是函数，后面是参数。如</p>
-<ul>
-<li><code>(+ 2 2)</code>，+的函数，结果是2+2</li>
-</ul>
-<p>括号也起到了代码块的作用</p>
-<table>
-<thead>
-<tr>
-<th>指令</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>(setq var [value])</td>
-<td>定义变量（赋值）</td>
-</tr>
-<tr>
-<td>(message var)</td>
-<td>格式化输出，同C</td>
-</tr>
-<tr>
-<td>(defun func)</td>
-<td>定义函数</td>
-</tr>
-<tr>
-<td>(interactive)</td>
-<td>声明函数是交互式的函数，<M-x>可以找到这个函数</td>
-</tr>
-<tr>
-<td>(global-set-ket (kbd “<key>“) ‘func)</td>
-<td>定义快捷键</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-<tr>
-<td>&lt;++&gt;</td>
-<td>&lt;++&gt;</td>
-</tr>
-</tbody></table>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4239,7 +4244,7 @@ Hash.erase(key);    </code></pre>
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -4252,7 +4257,7 @@ Hash.erase(key);    </code></pre>
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
