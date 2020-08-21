@@ -473,11 +473,44 @@
 </ul>
 </li>
 <li>命令模板<ul>
-<li><code>su [-i]</code>，中括号中表示可省略</li>
-<li><code>cd -</code>，在前一个目录和当前目录中切换</li>
+<li><code>[]</code>中表示可选的内容</li>
+<li><code>&lt;&gt;</code>中表示必须给出的内容</li>
+<li><code>...</code>表示可以出现多个，可以使用多次</li>
+<li>用<code>|</code>分割表示多选一，如<code>[-a|-b]</code></li>
 </ul>
 </li>
 <li>魔数Magic Number：标记文件的执行格式，如<code>#!/bin/sh</code>，也称为shebang</li>
+</ul>
+<h3 id="FHS-文件层级系统"><a href="#FHS-文件层级系统" class="headerlink" title="FHS(文件层级系统)"></a>FHS(文件层级系统)</h3><ul>
+<li>/boot: 系统启动相关文件</li>
+<li>/dev: 设备文件</li>
+<li>/etc: 配置文件，存文本</li>
+<li>/home: 用户家目录</li>
+<li>/root: 管理员家目录</li>
+<li>/lib: 库文件<ul>
+<li>/lib/modules: 内核模块文件</li>
+<li>静态库<ul>
+<li>linux下表现为.a</li>
+</ul>
+</li>
+<li>动态库:载入到内存中可以复用<ul>
+<li>win下表现为.dll文件，linux下表现为.so(shared object)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>/opt: 可选目录，第三方程序的安装目录</li>
+<li>/proc: 伪文件系统，内核映射</li>
+<li>/sys: 伪文件系统，跟硬件相关的属性映射</li>
+<li>/tmp: 临时文件，会定时清理</li>
+<li>/var: 可变化文件</li>
+<li>/bin: 可执行文件，用户命令</li>
+<li>/sbin: 管理命令</li>
+<li>/usr: universal shared read-only<ul>
+<li>usr下之所以有/usr/bin和/usr/sbin是因为/bin跟启动系统相关，而/usr下跟启动系统后提供正常功能相关</li>
+</ul>
+</li>
+<li>/usr/local: 又是一个独立的文件系统，也有bin，sbin。是第三方软件的安装路径</li>
 </ul>
 
           
