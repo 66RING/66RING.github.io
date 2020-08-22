@@ -377,6 +377,36 @@
 </ul>
 </li>
 </ul>
+<h2 id="BFPRT算法：求无序数组低k小-大的数"><a href="#BFPRT算法：求无序数组低k小-大的数" class="headerlink" title="BFPRT算法：求无序数组低k小/大的数"></a>BFPRT算法：求无序数组低k小/大的数</h2><p>思路类似于partition快速排序，下标就能说明范围是第几，小于放左边大于放右边，然后范围只需要关注左边或者右边。</p>
+<p>但是如果是简单的基于快速排序，随机选一个划分值，复杂度的变数就比较大，即如果每次选中的划分值都是最小或最大，那么剩下还得关注len-1的数。效率不高。</p>
+<ul>
+<li><code>bfprt(vector&lt;int&gt; arr, int kf)</code><ul>
+<li><ol>
+<li>整个数组先分组<ul>
+<li>BFPRT发明者是5个人，所以一般5个一组，不足5个就是单独一组</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>每个小组中排序</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>取出每个组的中位数，构成一个新的组，偶数个就取上中数或下中数，得到一个N/5长度的新数组</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>递归调用<code>num = bfprt(arr, k)</code>拿到中位数，把上面得到的数组和<code>new_arr.size()/2</code>传入</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>用上一步拿到的中位数进行划分</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
 <hr>
 <h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><h3 id="散列-hash-查找"><a href="#散列-hash-查找" class="headerlink" title="散列(hash)查找"></a>散列(hash)查找</h3><p>把关键词看成变量,通过哈希函数运算赋予地址</p>
 <h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><p>关键词是数字时的常见方法</p>
