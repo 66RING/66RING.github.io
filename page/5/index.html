@@ -513,6 +513,76 @@
 <h4 id="Manacher模板"><a href="#Manacher模板" class="headerlink" title="Manacher模板"></a>Manacher模板</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用#预处理好字符串m</span></span><br><span class="line"><span class="comment">// 用rs储存回文半径</span></span><br><span class="line"><span class="comment">// mr为最大回文半径的位置</span></span><br><span class="line"><span class="comment">// c为最大回文半径对应的回文中心</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len;i++)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果在最大回文半径内则取较小值，后面再调整</span></span><br><span class="line">    <span class="comment">// 当前点能到的最大回文半径：rm-i+1</span></span><br><span class="line">    <span class="comment">// 通过对称点得到的回文半径：rs[2*c - i]</span></span><br><span class="line">    rs[i] = (i&lt;=mr)? <span class="built_in">min</span>(mr-i+<span class="number">1</span> , rs[<span class="number">2</span>*c - i]):<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 中心扩展试着找更大半径</span></span><br><span class="line">    <span class="keyword">while</span>(m[rs[i]+i] == m[i-rs[i]]) rs[i]++;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新最大边界及对应回文中心</span></span><br><span class="line">    <span class="keyword">if</span>(rs[i]+i<span class="number">-1</span> &gt; mr)&#123;</span><br><span class="line">        mr = rs[i] + i<span class="number">-1</span>;</span><br><span class="line">        c = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
+<h3 id="窗口内最大值"><a href="#窗口内最大值" class="headerlink" title="窗口内最大值"></a>窗口内最大值</h3><p>窗口就是用L、R标记窗口的左右边界，而且都只能往右，不能回退。</p>
+<ul>
+<li>使用一个队列储存下标和值</li>
+<li>队列只能从大到小排列<ul>
+<li>当窗口右边界向右，在队列后面，如果队列后面的数小于等于待插入的数，则弹出，直到大于等于</li>
+<li>当窗口左边界向右，检查队列前面的值的index是否过期，过期则弹出</li>
+</ul>
+</li>
+<li>这么一来，队列顶部的数就是当前窗口中的最大值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct Node &#123;</span><br><span class="line">    val</span><br><span class="line">    index</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="例题1"><a href="#例题1" class="headerlink" title="例题1"></a>例题1</h4><p>找出最大值减最小值<em>小于</em>num的所有子数组，且要求时间复杂度为O(n)</p>
+<ul>
+<li>解：<ul>
+<li><ol>
+<li>性质<ul>
+<li>如果一个数组达标，那它里面的任何一个子数组一定达标</li>
+<li>如果一个子数组不达标，那它怎么往外扩都不达标</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>利用上面的性质，创建一个最小队列和一个最大队列，让L=0，R外扩，直到下一个r不达标<ul>
+<li>那么<strong>以L开头</strong>的所有子数组都达标，R-L+1个</li>
+<li>ans += R-L+1</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>然后L右缩小移位，如果R的下一个可以达标，那就外扩，然后回到第2步</li>
+</ol>
+</li>
+<li>这么就得到了所求</li>
+</ul>
+</li>
+</ul>
+<h3 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h3><p>单调栈：从底到顶是有顺序的，如大到小。</p>
+<p>对数组中的每个元素找出它左边最近的大于它的值和右边最近大于它的值。要求时间复杂度O(n)。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">3 5 2 4 6</span><br><span class="line">    左      右</span><br><span class="line">3   null    5</span><br><span class="line">5   null    6</span><br><span class="line">2   5       4</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol>
+<li>建立一个单调栈</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>如果满足单调的顺序要求，则可栈</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>当要入栈的数不满足顺序要求，则开始弹出，并记录数据<ul>
+<li>如下一个index的4，不满足顺序，那么index为3的数右边最近的比他大的数就是index4对应的数，那么左边最近的比他大的就是弹出后的栈顶</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>弹出后插入是否有序，不满足则再次进行3的操作</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>如果数组遍历完了栈还没空，则依次弹出，无右边最近的大于的数</li>
+</ol>
+</li>
+<li>如果两个相同的数相邻，则在栈中他们共用一个位置</li>
+</ul>
 <hr>
 <h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h3 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h3><ul>
 <li>左边孩子比根节点小</li>
