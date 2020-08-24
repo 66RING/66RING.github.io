@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content=". 匹配任何一个字符   * 匹配任何数量(包括0)的前面的内容，贪婪匹配   + 匹配任何数量(不包括0)的前面的内容，非贪婪匹配   $ 以前面的内容结束   ^ 以前面的内容开头   \S 任何非空白字符   \s 任何空白字符   ? 前面内容是可选的   \ 有时可以起到转意的作用，\S等就是例外   [0-9] 任何0到9的数字，范围可变但要按顺序   [a-z] 任何a到z的小写字">
+<meta name="description" content="Base&#x2F;Extended Regex  . 匹配任何一个字符   * 匹配任何数量(包括0)的前面的内容，贪婪匹配   + 匹配任何数量(不包括0)的前面的内容，非贪婪匹配   {1} 重复次数1   \S 任何非空白字符   \s 任何空白字符   ? 前面内容是可选的   \ 有时可以起到转意的作用，\S等就是例外   [0-9] 任何0到9的数字，范围可变但要按顺序   [a-z] 任何a">
 <meta property="og:type" content="article">
 <meta property="og:title" content="正则表达式基础语法">
 <meta property="og:url" content="http://yoursite.com/2020/01/23/universe/regular_expression/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content=". 匹配任何一个字符   * 匹配任何数量(包括0)的前面的内容，贪婪匹配   + 匹配任何数量(不包括0)的前面的内容，非贪婪匹配   $ 以前面的内容结束   ^ 以前面的内容开头   \S 任何非空白字符   \s 任何空白字符   ? 前面内容是可选的   \ 有时可以起到转意的作用，\S等就是例外   [0-9] 任何0到9的数字，范围可变但要按顺序   [a-z] 任何a到z的小写字">
+<meta property="og:description" content="Base&#x2F;Extended Regex  . 匹配任何一个字符   * 匹配任何数量(包括0)的前面的内容，贪婪匹配   + 匹配任何数量(不包括0)的前面的内容，非贪婪匹配   {1} 重复次数1   \S 任何非空白字符   \s 任何空白字符   ? 前面内容是可选的   \ 有时可以起到转意的作用，\S等就是例外   [0-9] 任何0到9的数字，范围可变但要按顺序   [a-z] 任何a">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:34:14.481Z">
+<meta property="article:modified_time" content="2020-08-24T08:58:42.937Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Regex, 正则, tool">
 <meta name="twitter:card" content="summary">
@@ -300,7 +300,8 @@
       
 
       
-        <ul>
+        <p>Base/Extended Regex</p>
+<ul>
 <li><code>.</code><ul>
 <li>匹配任何一个字符</li>
 </ul>
@@ -313,12 +314,8 @@
 <li>匹配任何数量(不包括0)的前面的内容，非贪婪匹配</li>
 </ul>
 </li>
-<li><code>$</code><ul>
-<li>以前面的内容结束</li>
-</ul>
-</li>
-<li><code>^</code><ul>
-<li>以前面的内容开头</li>
+<li><code>{1}</code><ul>
+<li>重复次数1</li>
 </ul>
 </li>
 <li><code>\S</code><ul>
@@ -353,6 +350,30 @@
 <li>任何A到Z的字符，范围可变但要按顺序</li>
 </ul>
 </li>
+<li>锚定<ul>
+<li><code>$</code><ul>
+<li>以前面的内容结束</li>
+</ul>
+</li>
+<li><code>^</code><ul>
+<li>以前面的内容开头</li>
+</ul>
+</li>
+<li><code>\&lt; ,\b</code><ul>
+<li>锚定单词首部</li>
+</ul>
+</li>
+<li><code>\&gt; ,\b</code><ul>
+<li>锚定单词结尾</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>|</code><ul>
+<li>or，整个左边或整个右边如<code>C|cat</code>表示C或cat</li>
+<li>也可使用分组改变执行顺序<code>(C|c)at</code>表示Cat或cat</li>
+</ul>
+</li>
 </ul>
 
       
@@ -384,8 +405,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/12/10/Major/compuer_organization/" rel="next" title="Computer Organization">
-                <i class="fa fa-chevron-left"></i> Computer Organization
+              <a href="/2020/01/20/universe/linux/linux_note/" rel="next" title="Linux学习">
+                <i class="fa fa-chevron-left"></i> Linux学习
               </a>
             
           </div>

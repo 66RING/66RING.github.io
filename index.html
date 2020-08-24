@@ -373,193 +373,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/20/universe/linux/linux_note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/08/20/universe/linux/linux_note/" itemprop="url">Linux学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-20T00:00:00+08:00">
-                2020-08-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Linux哲学"><a href="#Linux哲学" class="headerlink" title="Linux哲学"></a>Linux哲学</h2><ul>
-<li>Linux基本原则<ul>
-<li><ol>
-<li>由目的单一的小程序组成，组合小程序完整复杂任务</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>一切皆文件</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>避免捕获用户接口，避免与用户交互</li>
-</ol>
-</li>
-<li><ol start="4">
-<li>配置文件保存为纯文本格式</li>
-</ol>
-</li>
-</ul>
-</li>
-<li>命令格式<code>命令 选项 参数</code><ul>
-<li>短选项：<code>-</code>加某个字母，如<code>-h</code>查看help<ul>
-<li>短选项可以多个选项写一起<code>-a -b = -ab</code></li>
-</ul>
-</li>
-<li>长选项：<code>--&lt;option&gt;</code></li>
-</ul>
-</li>
-<li>命令模板<ul>
-<li><code>[]</code>中表示可选的内容</li>
-<li><code>&lt;&gt;</code>中表示必须给出的内容</li>
-<li><code>...</code>表示可以出现多个，可以使用多次</li>
-<li>用<code>|</code>分割表示多选一，如<code>[-a|-b]</code></li>
-</ul>
-</li>
-<li>魔数Magic Number：标记文件的执行格式，如<code>#!/bin/sh</code>，也称为shebang</li>
-</ul>
-<h3 id="FHS-文件层级系统"><a href="#FHS-文件层级系统" class="headerlink" title="FHS(文件层级系统)"></a>FHS(文件层级系统)</h3><ul>
-<li>/boot: 系统启动相关文件</li>
-<li>/dev: 设备文件</li>
-<li>/etc: 配置文件，存文本</li>
-<li>/home: 用户家目录</li>
-<li>/root: 管理员家目录</li>
-<li>/lib: 库文件<ul>
-<li>/lib/modules: 内核模块文件</li>
-<li>静态库<ul>
-<li>linux下表现为.a</li>
-</ul>
-</li>
-<li>动态库:载入到内存中可以复用<ul>
-<li>win下表现为.dll文件，linux下表现为.so(shared object)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>/opt: 可选目录，第三方程序的安装目录</li>
-<li>/proc: 伪文件系统，内核映射</li>
-<li>/sys: 伪文件系统，跟硬件相关的属性映射</li>
-<li>/tmp: 临时文件，会定时清理</li>
-<li>/var: 可变化文件</li>
-<li>/bin: 可执行文件，用户命令</li>
-<li>/sbin: 管理命令</li>
-<li>/usr: universal shared read-only<ul>
-<li>usr下之所以有/usr/bin和/usr/sbin是因为/bin跟启动系统相关，而/usr下跟启动系统后提供正常功能相关</li>
-</ul>
-</li>
-<li>/usr/local: 又是一个独立的文件系统，也有bin，sbin。是第三方软件的安装路径</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/17/universe/go/golang_mem_alignment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2435,6 +2248,177 @@
 <li>Context的Value相关方法应该传递必须的数据，不要什么数据都使用这个传递</li>
 <li>Context是线程安全的，可以放心的在多个goroutine中传递</li>
 </ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/Major/algorithm/funny_algorithm/funny_algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/20/Major/algorithm/funny_algorithm/funny_algorithm/" itemprop="url">有趣的算法问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-20T00:00:00+08:00">
+                2020-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="随机模拟问题"><a href="#随机模拟问题" class="headerlink" title="随机模拟问题"></a>随机模拟问题</h2><h3 id="分钱问题"><a href="#分钱问题" class="headerlink" title="分钱问题"></a>分钱问题</h3><p>房间里有100个人，每个人有100块钱，他们在玩一个游戏。没轮游戏中，每个人都拿出一元前随机给另一个人，最后这100个人的财富分布是怎样的？</p>
+<p>最后分布将是非常无序的，而非每人差不多。相当于100x100分给100个人，而每个人差不多的概率其实是小概率事件。</p>
+<h3 id="蒙特卡洛算法"><a href="#蒙特卡洛算法" class="headerlink" title="蒙特卡洛算法"></a>蒙特卡洛算法</h3><p>蒙特卡洛方法是一种统计学的方法，是一种模拟。通过大量随机样本，去了解一个系统，进而得到所要计算的值。</p>
+<h4 id="蒙特卡洛方法求Pi值"><a href="#蒙特卡洛方法求Pi值" class="headerlink" title="蒙特卡洛方法求Pi值"></a>蒙特卡洛方法求Pi值</h4><p>一个正方形，里面是一个直径和它边长相等的圆</p>
+<ul>
+<li>圆面积 = Pi x R x R</li>
+<li>方面积 = 2R x 2R</li>
+<li>比一下则：Pi = 4 x 圆面积/方面积</li>
+</ul>
+<p>那么不知道Pi怎么计算圆的面积呢？大可不必算，圆/方不就是落在圆中的概率么。</p>
+<h4 id="三门问题-Monty-Hall-Problem"><a href="#三门问题-Monty-Hall-Problem" class="headerlink" title="三门问题(Monty Hall Problem)"></a>三门问题(Monty Hall Problem)</h4><p>参赛者会看见三扇关闭的门，其中一扇的后面有一辆汽车，选中后面有车的门可以赢得该汽车，而另外两扇门后面什么都没有。当参赛者选定一扇门，但开启前，节目主持人会开启剩下两扇门中的一扇，这扇门后面一定没有汽车。主持人问参赛者要不要换另一扇门。问题是：另一扇门会不会增加参赛者获奖概率？</p>
+<p>直觉上，主持人开的门并不会影响我们，相当于1/2的命中率。但事实上:</p>
+<ul>
+<li>换门中奖概率2/3</li>
+<li>不换门中奖概率1/3</li>
+</ul>
+<p>因为主持人知道哪个门没奖，而且一直选择没奖的没，因此导致了概率的不平均，产生偏差</p>
+<h2 id="迷宫问题"><a href="#迷宫问题" class="headerlink" title="迷宫问题"></a>迷宫问题</h2><h3 id="迷宫生成"><a href="#迷宫生成" class="headerlink" title="迷宫生成"></a>迷宫生成</h3><p>抽象成计算机的概念，迷宫其实就是一棵树，迷宫生成问题就是一个随机生成树问题。</p>
+<p><img src="./assets/mazi.png" alt="迷宫初始化"></p>
+<p>以这么的结构初始化图，再随机生成树</p>
+<p>要随机的生成数，就需要创建一个随机队列，出队时随机选择一个元素出队。 <strong>出队时，随机选中的元素和队尾元素交换位置，然后出队。</strong></p>
+<h4 id="随机性更强的迷宫"><a href="#随机性更强的迷宫" class="headerlink" title="随机性更强的迷宫"></a>随机性更强的迷宫</h4><p>上面的迷宫随机性不强，总体上从左上到右下，原因是每次从随机队列选出一个元素时，如果选择的元素是上个元素的最后一个元素，那么就相当于执行了一个小的深度优先遍历。而深度优先走的整体就是向下向右。</p>
+<ul>
+<li>另一种随机队列：<ul>
+<li>基于链表</li>
+<li>入队：随机入队首或队尾</li>
+<li>出队：随机从队首或队尾挑选元素</li>
+</ul>
+</li>
+</ul>
+<h4 id="更多随机方案、更多形状的迷宫"><a href="#更多随机方案、更多形状的迷宫" class="headerlink" title="更多随机方案、更多形状的迷宫"></a>更多随机方案、更多形状的迷宫</h4><h3 id="扫雷游戏"><a href="#扫雷游戏" class="headerlink" title="扫雷游戏"></a>扫雷游戏</h3><ul>
+<li>随机生成雷区<ul>
+<li>方案1：随机坐标，然后在这个位置埋雷<ul>
+<li>缺点：随机出的坐标可能已经有雷，如果在while中跳过已经有雷的区域，则时间将不确定，有可能每次都随机出已经有雷的区域</li>
+</ul>
+</li>
+<li>方案2：将雷顺序放在前面的格子，然后随机交换一定次数</li>
+</ul>
+</li>
+</ul>
+<h4 id="什么样的乱序化才是好的乱序"><a href="#什么样的乱序化才是好的乱序" class="headerlink" title="什么样的乱序化才是好的乱序"></a>什么样的乱序化才是好的乱序</h4><ul>
+<li>问：给一副扑克牌，设计一个洗牌算法，怎么说明你的洗牌算法是个好的洗牌算法</li>
+<li>54张牌，可以有54!种结果。所以一个好的洗牌算法可以等概率获得54!种结果之一</li>
+</ul>
+<h4 id="等概率洗牌算法"><a href="#等概率洗牌算法" class="headerlink" title="等概率洗牌算法"></a>等概率洗牌算法</h4><ul>
+<li>方案1：根据现实模拟。54!种结果来源于第一张牌有54个位置可选，第二张53…根据这点设计洗牌算法。从54张牌中随机抽一张放在一个位置…<ul>
+<li>缺点：不是原地的，即需要额外的存储空间;如果随机取牌不够随机，那也不是等概率的</li>
+</ul>
+</li>
+</ul>
+<h4 id="Fisher-Yates-Knuth-洗牌算法"><a href="#Fisher-Yates-Knuth-洗牌算法" class="headerlink" title="Fisher-Yates(-Knuth)洗牌算法"></a><strong>Fisher-Yates(-Knuth)洗牌算法</strong></h4><p>以洗牌为例，在长度位54的数组中随机选择一个元素，然后与第一个元素交换位置。然后以剩下的张牌位单位重复这个操作。</p>
+<h4 id="Floodfill算法"><a href="#Floodfill算法" class="headerlink" title="Floodfill算法"></a>Floodfill算法</h4><p>就像一滴墨水滴在白纸上，慢慢扩散，所以称floodfill。也就是要注意边界的BFS或DFS。</p>
 
           
         

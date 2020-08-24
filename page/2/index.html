@@ -229,177 +229,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/Major/algorithm/funny_algorithm/funny_algorithm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/20/Major/algorithm/funny_algorithm/funny_algorithm/" itemprop="url">有趣的算法问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-20T00:00:00+08:00">
-                2020-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="随机模拟问题"><a href="#随机模拟问题" class="headerlink" title="随机模拟问题"></a>随机模拟问题</h2><h3 id="分钱问题"><a href="#分钱问题" class="headerlink" title="分钱问题"></a>分钱问题</h3><p>房间里有100个人，每个人有100块钱，他们在玩一个游戏。没轮游戏中，每个人都拿出一元前随机给另一个人，最后这100个人的财富分布是怎样的？</p>
-<p>最后分布将是非常无序的，而非每人差不多。相当于100x100分给100个人，而每个人差不多的概率其实是小概率事件。</p>
-<h3 id="蒙特卡洛算法"><a href="#蒙特卡洛算法" class="headerlink" title="蒙特卡洛算法"></a>蒙特卡洛算法</h3><p>蒙特卡洛方法是一种统计学的方法，是一种模拟。通过大量随机样本，去了解一个系统，进而得到所要计算的值。</p>
-<h4 id="蒙特卡洛方法求Pi值"><a href="#蒙特卡洛方法求Pi值" class="headerlink" title="蒙特卡洛方法求Pi值"></a>蒙特卡洛方法求Pi值</h4><p>一个正方形，里面是一个直径和它边长相等的圆</p>
-<ul>
-<li>圆面积 = Pi x R x R</li>
-<li>方面积 = 2R x 2R</li>
-<li>比一下则：Pi = 4 x 圆面积/方面积</li>
-</ul>
-<p>那么不知道Pi怎么计算圆的面积呢？大可不必算，圆/方不就是落在圆中的概率么。</p>
-<h4 id="三门问题-Monty-Hall-Problem"><a href="#三门问题-Monty-Hall-Problem" class="headerlink" title="三门问题(Monty Hall Problem)"></a>三门问题(Monty Hall Problem)</h4><p>参赛者会看见三扇关闭的门，其中一扇的后面有一辆汽车，选中后面有车的门可以赢得该汽车，而另外两扇门后面什么都没有。当参赛者选定一扇门，但开启前，节目主持人会开启剩下两扇门中的一扇，这扇门后面一定没有汽车。主持人问参赛者要不要换另一扇门。问题是：另一扇门会不会增加参赛者获奖概率？</p>
-<p>直觉上，主持人开的门并不会影响我们，相当于1/2的命中率。但事实上:</p>
-<ul>
-<li>换门中奖概率2/3</li>
-<li>不换门中奖概率1/3</li>
-</ul>
-<p>因为主持人知道哪个门没奖，而且一直选择没奖的没，因此导致了概率的不平均，产生偏差</p>
-<h2 id="迷宫问题"><a href="#迷宫问题" class="headerlink" title="迷宫问题"></a>迷宫问题</h2><h3 id="迷宫生成"><a href="#迷宫生成" class="headerlink" title="迷宫生成"></a>迷宫生成</h3><p>抽象成计算机的概念，迷宫其实就是一棵树，迷宫生成问题就是一个随机生成树问题。</p>
-<p><img src="./assets/mazi.png" alt="迷宫初始化"></p>
-<p>以这么的结构初始化图，再随机生成树</p>
-<p>要随机的生成数，就需要创建一个随机队列，出队时随机选择一个元素出队。 <strong>出队时，随机选中的元素和队尾元素交换位置，然后出队。</strong></p>
-<h4 id="随机性更强的迷宫"><a href="#随机性更强的迷宫" class="headerlink" title="随机性更强的迷宫"></a>随机性更强的迷宫</h4><p>上面的迷宫随机性不强，总体上从左上到右下，原因是每次从随机队列选出一个元素时，如果选择的元素是上个元素的最后一个元素，那么就相当于执行了一个小的深度优先遍历。而深度优先走的整体就是向下向右。</p>
-<ul>
-<li>另一种随机队列：<ul>
-<li>基于链表</li>
-<li>入队：随机入队首或队尾</li>
-<li>出队：随机从队首或队尾挑选元素</li>
-</ul>
-</li>
-</ul>
-<h4 id="更多随机方案、更多形状的迷宫"><a href="#更多随机方案、更多形状的迷宫" class="headerlink" title="更多随机方案、更多形状的迷宫"></a>更多随机方案、更多形状的迷宫</h4><h3 id="扫雷游戏"><a href="#扫雷游戏" class="headerlink" title="扫雷游戏"></a>扫雷游戏</h3><ul>
-<li>随机生成雷区<ul>
-<li>方案1：随机坐标，然后在这个位置埋雷<ul>
-<li>缺点：随机出的坐标可能已经有雷，如果在while中跳过已经有雷的区域，则时间将不确定，有可能每次都随机出已经有雷的区域</li>
-</ul>
-</li>
-<li>方案2：将雷顺序放在前面的格子，然后随机交换一定次数</li>
-</ul>
-</li>
-</ul>
-<h4 id="什么样的乱序化才是好的乱序"><a href="#什么样的乱序化才是好的乱序" class="headerlink" title="什么样的乱序化才是好的乱序"></a>什么样的乱序化才是好的乱序</h4><ul>
-<li>问：给一副扑克牌，设计一个洗牌算法，怎么说明你的洗牌算法是个好的洗牌算法</li>
-<li>54张牌，可以有54!种结果。所以一个好的洗牌算法可以等概率获得54!种结果之一</li>
-</ul>
-<h4 id="等概率洗牌算法"><a href="#等概率洗牌算法" class="headerlink" title="等概率洗牌算法"></a>等概率洗牌算法</h4><ul>
-<li>方案1：根据现实模拟。54!种结果来源于第一张牌有54个位置可选，第二张53…根据这点设计洗牌算法。从54张牌中随机抽一张放在一个位置…<ul>
-<li>缺点：不是原地的，即需要额外的存储空间;如果随机取牌不够随机，那也不是等概率的</li>
-</ul>
-</li>
-</ul>
-<h4 id="Fisher-Yates-Knuth-洗牌算法"><a href="#Fisher-Yates-Knuth-洗牌算法" class="headerlink" title="Fisher-Yates(-Knuth)洗牌算法"></a><strong>Fisher-Yates(-Knuth)洗牌算法</strong></h4><p>以洗牌为例，在长度位54的数组中随机选择一个元素，然后与第一个元素交换位置。然后以剩下的张牌位单位重复这个操作。</p>
-<h4 id="Floodfill算法"><a href="#Floodfill算法" class="headerlink" title="Floodfill算法"></a>Floodfill算法</h4><p>就像一滴墨水滴在白纸上，慢慢扩散，所以称floodfill。也就是要注意边界的BFS或DFS。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/19/universe/python/python_opencv/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4158,6 +3987,222 @@ Hash.erase(key);    </code></pre>
 </li>
 </ul>
 </li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/07/Major/circuit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/07/Major/circuit/" itemprop="url">电路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-07T00:00:00+08:00">
+                2020-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="半导体的工作原理"><a href="#半导体的工作原理" class="headerlink" title="半导体的工作原理"></a>半导体的工作原理</h2><p>半导体的材料一般是电子不多不少(不易获得也不易失去)的，如:硅(4最外层4电子)</p>
+<p>电子多，说明核带正电多，对电子吸引力强; 电子少，说明核带正电少，对电子吸引力弱。</p>
+<h3 id="晶体二极管"><a href="#晶体二极管" class="headerlink" title="晶体二极管"></a>晶体二极管</h3><p>纯硅电子不易得也不易失，我们称之为 <strong>本征半导体</strong> 。如果我们在硅中加入一点磷(最外层5电子)，则将不是在最外出4电子的基础上多了一个电子。这时这个电子将相对”自由”。这个整体带的电子比稳定的4电子多，我们就叫它N型半导体(Negetive)。</p>
+<p>如果我们在本征半导体参入堋(最外层3个电子)，整体将变得渴望1个电子，我们将这个空的地方(为到达4电子)称为空穴。这些空穴有渴望电子的能力。相对4电子结构，空穴是Positive的，因此称为P型半导体。</p>
+<p>采用特殊的技术，把P型半导体和N型半导体(P、N整体都是中性，别被PN误导)拼接在一起。那么由于P型半导体的空穴浓度高，N型半导体的空穴浓度低，空穴就会从P扩散到N;同理N型半导体的电子扩散到P型半导体，就像液体中的扩散一样。但扩散不会一直发生，当N中的空穴变多，变得带正电，P中的电子变多，变得带负电，形成电场。</p>
+<p>随着电场的形成，电场将试图将P的电子拉到N，随着P的电子减少，电场减弱，扩散又发生，最后扩散和电场达到动态平衡。</p>
+<ul>
+<li>如果我们向N区通正电，新增的电场与内部的电场方向一致，电场将会变强。虽然仍会处于动态平衡，但是电场抑制了粒子移动，从而阻断电流。</li>
+<li>如果我们向P区通整点，N区通负电，将压缩内电场，电子的束缚将变小从而导通电流</li>
+<li>于是晶体二极管就诞生了</li>
+</ul>
+<h3 id="晶体三极管"><a href="#晶体三极管" class="headerlink" title="晶体三极管"></a>晶体三极管</h3><p>晶体三极管结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>外</th>
+<th>N</th>
+<th>P</th>
+<th>N</th>
+<th>内</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通电电极</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>位置</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>每个PN接触面会形成PN节，一般0.7V的电压会导通PN节。</p>
+<p>如果1号位和2号位电压大于0.7V，就通电了。需要注意的是，设计时，1号位故意参杂很多5电子元素，使得电子浓度很高;而2号位的半导体很薄，很难一次消耗掉这些涌入的电子;当2号涌入了很多电子又无法消耗，那么就打破了2号和3号的动态平衡。而且3号设计得很大电子浓度低，2号扩散过来的电子很快会被3号收集。又因为3号通的正电，电子得到了一个快速的泄洪通道，迅速通过电源正极。</p>
+<p>这样一来，我们可以认为2号和3号通电了。又因为2号电子来自1号，所以1号也和3号通电了。</p>
+<p>2号极小的信号改变就会导致1号电子涌入的巨大变化，从而引起1号与3号之间电流的巨大变化。</p>
+<ul>
+<li>1号连接负极，称为发射极</li>
+<li>2号相当于阀门，操作这原始信号，称为基极</li>
+<li>3号收集电子，称为集电极</li>
+</ul>
+<h3 id="场效应管"><a href="#场效应管" class="headerlink" title="场效应管"></a>场效应管</h3><p>将两个N型半导体浸如一个大的P型半导体中，两个N型半导体分别接入正极和负极，P型半导体接入正极，但与正极间隔这一个电容。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th>N</th>
+<th>P</th>
+<th>N</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通电电极</td>
+<td>P</td>
+<td>-</td>
+<td>+电容</td>
+<td>+</td>
+<td>P</td>
+</tr>
+<tr>
+<td>位置</td>
+<td>P</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>P</td>
+</tr>
+<tr>
+<td></td>
+<td>P</td>
+<td>P</td>
+<td>P</td>
+<td>P</td>
+<td>P</td>
+</tr>
+</tbody></table>
+<ul>
+<li>1号由电源不断提供电子</li>
+<li>2号不断吸引电子，但不会快速消耗电子</li>
+<li>3号快速消耗电子</li>
+</ul>
+<p>由于2号电子处聚集了大量电子，3号消耗了很多电子，于是P型半导体由于电子聚集的位置与3号N型半导体由于电子消耗，半导体的类型发生了改变。即2号与3号之间，2号成了N型，3号成了P型，电子将扩散到3号并被快速消耗。又由于1号源源不断提供电子，不断涌向2号。于是1号和3号在2号的控制下形成了通电回路。</p>
+<ul>
+<li>1号提供电子，称为源极</li>
+<li>2号像栅栏一样控制电路导通，称为栅极<ul>
+<li>栅极的正负控制这电路的通阻，如果用01表示同断，那么计算机科学就开始了</li>
+</ul>
+</li>
+<li>3号称为漏极</li>
 </ul>
 
           

@@ -82,12 +82,12 @@
 <meta name="description" content="Linux哲学 Linux基本原则  由目的单一的小程序组成，组合小程序完整复杂任务    一切皆文件    避免捕获用户接口，避免与用户交互    配置文件保存为纯文本格式     命令格式命令 选项 参数 短选项：-加某个字母，如-h查看help 短选项可以多个选项写一起-a -b &#x3D; -ab   长选项：--&lt;option&gt;   命令模板 []中表示可选的内容 &lt;&gt;中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux学习">
-<meta property="og:url" content="http://yoursite.com/2020/08/20/universe/linux/linux_note/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/01/20/universe/linux/linux_note/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Linux哲学 Linux基本原则  由目的单一的小程序组成，组合小程序完整复杂任务    一切皆文件    避免捕获用户接口，避免与用户交互    配置文件保存为纯文本格式     命令格式命令 选项 参数 短选项：-加某个字母，如-h查看help 短选项可以多个选项写一起-a -b &#x3D; -ab   长选项：--&lt;option&gt;   命令模板 []中表示可选的内容 &lt;&gt;中">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-08-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-21T02:45:23.869Z">
+<meta property="article:published_time" content="2020-01-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-24T09:14:25.385Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/08/20/universe/linux/linux_note/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/01/20/universe/linux/linux_note/"/>
 
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/20/universe/linux/linux_note/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/universe/linux/linux_note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-20T00:00:00+08:00">
-                2020-08-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-20T00:00:00+08:00">
+                2020-01-20
               </time>
             
 
@@ -368,6 +368,100 @@
 </li>
 <li>/usr/local: 又是一个独立的文件系统，也有bin，sbin。是第三方软件的安装路径</li>
 </ul>
+<h2 id="常用工具"><a href="#常用工具" class="headerlink" title="常用工具"></a>常用工具</h2><ul>
+<li>man：查看手册<ul>
+<li><code>whatis name</code>查看name的目录，使用<code>man [n] name</code>打开name第n章</li>
+</ul>
+</li>
+<li>tr：字符串转换或删除<ul>
+<li><code>tr &#39;a-z&#39; &#39;A-Z&#39;</code>把输入中的字符转换成大写</li>
+<li><code>tr -d &#39;abc&#39;</code>删除出现的字符，这里是a，b，c</li>
+</ul>
+</li>
+<li>shell中可以开子shell，使用<code>pstree</code>可以查看父子关系，使用exit退出一个</li>
+<li>环境变量<ul>
+<li><code>PATH</code>命令搜索路径</li>
+<li><code>HISTSIZE</code>命令历史缓冲区<ul>
+<li>使用<code>history</code>查看命令历史</li>
+<li>使用<code>!n</code>执行命令历史中第n条历史命令</li>
+<li>使用<code>!-n</code>执行命令历史中倒数第n条历史命令</li>
+<li>使用<code>!!</code>执行刚才执行的命令</li>
+<li>使用<code>!string</code>执行命令历史中最近的以指定字符串开头的命令</li>
+<li>使用<code>!$</code>引用上一个命令的最后一个参数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>命令替换：<code>$(COMMAND)</code>或使用反引号`COMMAND`<ul>
+<li>把命令的结果放入一个命令中</li>
+<li><code>echo $(ls)</code></li>
+</ul>
+</li>
+<li>shell中的引号：<ul>
+<li>反引号``：命令替换</li>
+<li>双引号””：弱引用。可以实现变量替换</li>
+<li>单引号’’：强引用。不能实现变量替换</li>
+</ul>
+</li>
+<li>文件名通配，globbing<ul>
+<li><code>*</code>：任意长度的任意字符</li>
+<li><code>?</code>：任意单个字符</li>
+<li><code>[]</code>：指定范围内的任意单个字符</li>
+<li><code>[^]</code>：指定范围外的任意单个字符</li>
+<li>特殊字符，形如<code>[:punct:]</code>。<code>[:punct:]</code>所有的标点符号</li>
+</ul>
+</li>
+</ul>
+<h2 id="管道及IO重定向"><a href="#管道及IO重定向" class="headerlink" title="管道及IO重定向"></a>管道及IO重定向</h2><ul>
+<li>系统设定<ul>
+<li>默认输入设备，标准输入，stdin, 0</li>
+<li>默认输出设备，标准输出，stdout, 1</li>
+<li>标准错误输出，stderr, 2</li>
+</ul>
+</li>
+<li>重定向，默认都是重定向标准输入输出<ul>
+<li>输出重定向<ul>
+<li><code>&gt;</code>覆盖输出<ul>
+<li>强制覆盖：当设置了不允许覆盖已存在文件时使用<code>&gt;|</code></li>
+</ul>
+</li>
+<li><code>&gt;&gt;</code>追加输出</li>
+<li><code>2&gt;</code>, <code>2&gt;&gt;</code>重定向错误输出<ul>
+<li>可以使用<code>ls ./ &gt; a.out 2&gt; b.out</code>这样的形式</li>
+</ul>
+</li>
+<li><code>&amp;&gt;</code>重定向标准输出或错误输出到同一个文件</li>
+</ul>
+</li>
+<li>输入重定向<ul>
+<li><code>&lt;</code>输入重定向</li>
+<li><code>&lt;&lt;</code>Here Document  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &lt;&lt; END_SIGN</span><br><span class="line">&gt; hello</span><br><span class="line">&gt; END_SIGN</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>管道<ul>
+<li><code>cmd1 | cmd2</code>前一个命令的输出作为后一个命令的输入</li>
+</ul>
+</li>
+<li>tee<ul>
+<li><code>man tee</code>一个输入两个输出</li>
+</ul>
+</li>
+</ul>
+<h2 id="Shell编程"><a href="#Shell编程" class="headerlink" title="Shell编程"></a>Shell编程</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p><code>VARNAME=VALUE</code></p>
+<ul>
+<li>引用：<code>$VAENAME</code> or <code>${VARNAME}</code></li>
+<li>环境变量：作用域为当前shell或器子进程<ul>
+<li>用<code>export</code>导出，<code>export var=value</code></li>
+</ul>
+</li>
+<li>位置变量<ul>
+<li><code>$0, $1, ...</code>，所有参数，第一个参数…</li>
+<li><code>$?</code>，上一个命令的<strong>执行状态</strong>返回值，0正确，1~255执行错误</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -398,8 +492,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/08/17/universe/go/golang_mem_alignment/" rel="next" title="Golang内存对齐">
-                <i class="fa fa-chevron-left"></i> Golang内存对齐
+              <a href="/2019/12/10/Major/compuer_organization/" rel="next" title="Computer Organization">
+                <i class="fa fa-chevron-left"></i> Computer Organization
               </a>
             
           </div>
@@ -408,8 +502,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/08/20/universe/js,ts/this_and_arrow_function/" rel="prev" title="This和箭头函数">
-                This和箭头函数 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/01/23/universe/regular_expression/" rel="prev" title="正则表达式基础语法">
+                正则表达式基础语法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -534,7 +628,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux哲学"><span class="nav-number">1.</span> <span class="nav-text">Linux哲学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FHS-文件层级系统"><span class="nav-number">1.1.</span> <span class="nav-text">FHS(文件层级系统)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux哲学"><span class="nav-number">1.</span> <span class="nav-text">Linux哲学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FHS-文件层级系统"><span class="nav-number">1.1.</span> <span class="nav-text">FHS(文件层级系统)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用工具"><span class="nav-number">2.</span> <span class="nav-text">常用工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道及IO重定向"><span class="nav-number">3.</span> <span class="nav-text">管道及IO重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell编程"><span class="nav-number">4.</span> <span class="nav-text">Shell编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">4.1.</span> <span class="nav-text">变量</span></a></li></ol></li></ol></div>
             
 
           </div>
