@@ -87,7 +87,7 @@
 <meta property="og:description" content="Linux哲学 Linux基本原则  由目的单一的小程序组成，组合小程序完整复杂任务    一切皆文件    避免捕获用户接口，避免与用户交互    配置文件保存为纯文本格式     命令格式命令 选项 参数 短选项：-加某个字母，如-h查看help 短选项可以多个选项写一起-a -b &#x3D; -ab   长选项：--&lt;option&gt;   命令模板 []中表示可选的内容 &lt;&gt;中">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-24T09:14:25.385Z">
+<meta property="article:modified_time" content="2020-08-25T04:16:39.487Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
@@ -451,7 +451,7 @@
 </ul>
 <h2 id="Shell编程"><a href="#Shell编程" class="headerlink" title="Shell编程"></a>Shell编程</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p><code>VARNAME=VALUE</code></p>
 <ul>
-<li>引用：<code>$VAENAME</code> or <code>${VARNAME}</code></li>
+<li>引用：<code>$VAENAME</code> or <code>${VARNAME}</code>，注意<code>$()</code>是引用执行结果，而<code>{}</code>才是引用内容</li>
 <li>环境变量：作用域为当前shell或器子进程<ul>
 <li>用<code>export</code>导出，<code>export var=value</code></li>
 </ul>
