@@ -697,7 +697,70 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BinTree <span class="title">Delete</span><span class="params">( BinTree BST, ElementType X )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    Position Tmp; </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>( !BST ) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"要删除的元素未找到"</span>); </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>( X &lt; BST-&gt;Data ) </span><br><span class="line">            BST-&gt;Left = Delete( BST-&gt;Left, X );   <span class="comment">/* 从左子树递归删除 */</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( X &gt; BST-&gt;Data ) </span><br><span class="line">            BST-&gt;Right = Delete( BST-&gt;Right, X ); <span class="comment">/* 从右子树递归删除 */</span></span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">/* BST就是要删除的结点 */</span></span><br><span class="line">            <span class="comment">/* 如果被删除结点有左右两个子结点 */</span> </span><br><span class="line">            <span class="keyword">if</span>( BST-&gt;Left &amp;&amp; BST-&gt;Right ) &#123;</span><br><span class="line">                <span class="comment">/* 从右子树中找最小的元素填充删除结点 */</span></span><br><span class="line">                Tmp = FindMin( BST-&gt;Right );</span><br><span class="line">                BST-&gt;Data = Tmp-&gt;Data;</span><br><span class="line">                <span class="comment">/* 从右子树中删除最小元素 */</span></span><br><span class="line">                BST-&gt;Right = Delete( BST-&gt;Right, BST-&gt;Data );</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">/* 被删除结点有一个或无子结点 */</span></span><br><span class="line">                Tmp = BST; </span><br><span class="line">                <span class="keyword">if</span>( !BST-&gt;Left )       <span class="comment">/* 只有右孩子或无子结点 */</span></span><br><span class="line">                    BST = BST-&gt;Right; </span><br><span class="line">                <span class="keyword">else</span>                   <span class="comment">/* 只有左孩子 */</span></span><br><span class="line">                    BST = BST-&gt;Left;</span><br><span class="line">                <span class="built_in">free</span>( Tmp );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> BST;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-<h3 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h3><h3 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h3><h3 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h3><p>为表述方便：C(current)表示针对的节点，P(parent), G(grandparent)，U(uncle)</p>
+<h3 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h3><p>节点左边都比该节点小，右边都比该节点大</p>
+<p>不考虑平衡性的情况下</p>
+<ul>
+<li><p>插入</p>
+<ul>
+<li>左小右大，找到自己的位置</li>
+</ul>
+</li>
+<li><p>删除</p>
+<ul>
+<li>当左右子树都非空时，用右子树的最左节点顶替，该节点的右子树交给它的父节点<ul>
+<li>因为右子树最左节点是最小的比它大的数</li>
+<li>同理，也可选左子树的最右节点</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如果考虑平衡性不同的平衡二差数动作的组合不同，但基本思想(动作)都是<strong>通过旋转来改变局部的平衡性</strong></p>
+<ul>
+<li>左旋：头节点变成了新头节点的左节点<ul>
+<li>如果新头节点存在左孩子，则成为旧头节点的右孩子。因为对于左旋，新头节点本来是旧头节点的右孩子</li>
+</ul>
+</li>
+<li>右旋：头节点变成了新头节点的右节点<ul>
+<li>如果新头节点存在右孩子，则成为旧头节点的左孩子。因为对于右旋，新头节点本来是旧头节点的左孩子</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="AVL树"><a href="#AVL树" class="headerlink" title="AVL树"></a>AVL树</h4><ul>
+<li>发现不平衡<ul>
+<li>把左树高度和右树高度记录在节点中，当插入新节点时回溯，修改沿途的值，修改过程中将发现不平衡。删除节点同理</li>
+</ul>
+</li>
+<li>当发现不平衡时进行旋转，<strong>4种调整的组合</strong><ul>
+<li>LL：左子树的左子树导致的不平衡<ul>
+<li>单纯的右旋</li>
+<li>即<code>node.left.left != NULL</code>的情况：因为向上3级就能发现不平衡</li>
+</ul>
+</li>
+<li>LR：左子树的右子树导致的不平衡<ul>
+<li>先左旋再右旋：<ul>
+<li>先以头节点的左子节点为新头节点左旋</li>
+<li>然后就转化成了LL型的操作</li>
+</ul>
+</li>
+<li>即<code>node.left.right != NULL</code>的情况</li>
+</ul>
+</li>
+<li>RR：右子树的右子树导致的不平衡<ul>
+<li>单纯的左旋</li>
+<li>即<code>node.right.right != NULL</code>的情况</li>
+</ul>
+</li>
+<li>RL：右子树的左子树导致的不平衡<ul>
+<li>即<code>node.right.left != NULL</code>的情况</li>
+<li>同理LR型</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h4><p>为表述方便：C(current)表示针对的节点，P(parent), G(grandparent)，U(uncle)</p>
 <ul>
 <li>特征<ul>
 <li><ol>
@@ -776,7 +839,7 @@
 </ul>
 </li>
 </ul>
-<hr>
+<h3 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h3><hr>
 <h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h2 id="DFS深度优先搜索"><a href="#DFS深度优先搜索" class="headerlink" title="DFS深度优先搜索"></a>DFS深度优先搜索</h2><ul>
 <li>从一节点出发<ul>
 <li>非连通图分而治之</li>
@@ -889,6 +952,25 @@
 <li>该问题所分解出的各个子问题是相互独立的，即子问题之间不包含公共的子子问题</li>
 </ul>
 <hr>
+<h1 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h1><h3 id="全排列"><a href="#全排列" class="headerlink" title="全排列"></a>全排列</h3><p>给定一个 没有重复 数字的序列，返回其所有可能的全排列。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,2,3]</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [1,3,2],</span><br><span class="line">  [2,1,3],</span><br><span class="line">  [2,3,1],</span><br><span class="line">  [3,1,2],</span><br><span class="line">  [3,2,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>思路，可以模拟全排列的过程，一个一个插入。只是不同的方法优劣程度不同<ul>
+<li>妙：通过交换位置维护已选数，回溯时再换回来<ul>
+<li><ol>
+<li>优化空间，不需要而外空间保存已选</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>优化未选数查询，交换后已选的数都排在了前头，未选的数从剩余长度开始就是</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
           
         
