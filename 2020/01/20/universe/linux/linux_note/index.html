@@ -87,7 +87,7 @@
 <meta property="og:description" content="Linux哲学 Linux基本原则  由目的单一的小程序组成，组合小程序完整复杂任务    一切皆文件    避免捕获用户接口，避免与用户交互    配置文件保存为纯文本格式     命令格式命令 选项 参数 短选项：-加某个字母，如-h查看help 短选项可以多个选项写一起-a -b &#x3D; -ab   长选项：--&lt;option&gt;   命令模板 []中表示可选的内容 &lt;&gt;中">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-25T04:16:39.487Z">
+<meta property="article:modified_time" content="2020-08-27T11:13:49.506Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
@@ -397,7 +397,7 @@
 <li><code>echo $(ls)</code></li>
 </ul>
 </li>
-<li>shell中的引号：<ul>
+<li><strong>shell中的引号</strong>：<ul>
 <li>反引号``：命令替换</li>
 <li>双引号””：弱引用。可以实现变量替换</li>
 <li>单引号’’：强引用。不能实现变量替换</li>
@@ -458,7 +458,57 @@
 </li>
 <li>位置变量<ul>
 <li><code>$0, $1, ...</code>，所有参数，第一个参数…</li>
+<li><code>shift [n]</code>，把第一个变量弹出。因此有很多变量时可以使用shift</li>
+</ul>
+</li>
+<li>特殊变量<ul>
 <li><code>$?</code>，上一个命令的<strong>执行状态</strong>返回值，0正确，1~255执行错误</li>
+<li><code>$#</code>，参数个数</li>
+<li><code>$*</code>，参数列表</li>
+<li><code>$@</code>，参数列表</li>
+</ul>
+</li>
+</ul>
+<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if expression; then</span><br><span class="line">    statement</span><br><span class="line">elif</span><br><span class="line">    statement</span><br><span class="line">else</span><br><span class="line">    statement</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>条件测试的表达式<ul>
+<li><code>[ expression ]</code>， <strong>注意</strong> 中扩号两端的空格是必须的</li>
+<li><code>[[ expression ]]</code>，两种方法用法相同，但是两个中括号是bash的关键字</li>
+<li><code>test expression</code></li>
+<li>因为if语句取的是表达式执行状态的结果，所以如果条件判断是命令则不需要中括号，如<code>if test expression; then</code></li>
+</ul>
+</li>
+<li>shell中进行算数运算<ul>
+<li><strong>shell把所有的变量都当作字符</strong>，所以要进行算数运算需要额外操作</li>
+<li><ol>
+<li><code>let</code>，见<code>help let</code>。如<code>c=$a+$b</code></li>
+</ol>
+</li>
+<li><ol start="2">
+<li><code>$[expression]</code>。如<code>c=$[$a+$b]</code></li>
+</ol>
+</li>
+<li><ol start="3">
+<li><code>$(())</code>。如<code>c=$(($a+$b))</code></li>
+</ol>
+</li>
+<li><ol start="4">
+<li><code>expr expression</code>，表达式中，各操作数和操作符直接要有空格，且要使用命令引用。因为本质是调用<code>expr</code>程序。如<code>c=$(expr $a + $b)</code></li>
+</ol>
+</li>
+</ul>
+</li>
+<li>退出脚本：<code>exit</code><ul>
+<li>如果没有指定退出状态，则返回上一条命令的执行状态</li>
+<li>0正确，1～255错误</li>
+</ul>
+</li>
+<li>文件测试<ul>
+<li><code>-e FILE</code>，是否存在</li>
+<li><code>-f FILE</code>，是否普通文件</li>
+<li><code>-d FILE</code>，是否为目录</li>
+<li><code>-r/w/x</code>，是否可读写执行</li>
 </ul>
 </li>
 </ul>
@@ -628,7 +678,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux哲学"><span class="nav-number">1.</span> <span class="nav-text">Linux哲学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FHS-文件层级系统"><span class="nav-number">1.1.</span> <span class="nav-text">FHS(文件层级系统)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用工具"><span class="nav-number">2.</span> <span class="nav-text">常用工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道及IO重定向"><span class="nav-number">3.</span> <span class="nav-text">管道及IO重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell编程"><span class="nav-number">4.</span> <span class="nav-text">Shell编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">4.1.</span> <span class="nav-text">变量</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux哲学"><span class="nav-number">1.</span> <span class="nav-text">Linux哲学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FHS-文件层级系统"><span class="nav-number">1.1.</span> <span class="nav-text">FHS(文件层级系统)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用工具"><span class="nav-number">2.</span> <span class="nav-text">常用工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道及IO重定向"><span class="nav-number">3.</span> <span class="nav-text">管道及IO重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell编程"><span class="nav-number">4.</span> <span class="nav-text">Shell编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">4.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件判断"><span class="nav-number">4.2.</span> <span class="nav-text">条件判断</span></a></li></ol></li></ol></div>
             
 
           </div>
