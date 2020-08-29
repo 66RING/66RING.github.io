@@ -1716,6 +1716,49 @@
         
           
             <h2 id="GoTest"><a href="#GoTest" class="headerlink" title="GoTest"></a>GoTest</h2><p>使用go test，文件名格式有要求<code>XXX_test.go</code></p>
+<h2 id="go工具使用"><a href="#go工具使用" class="headerlink" title="go工具使用"></a>go工具使用</h2><ul>
+<li><code>go &lt;command&gt; [arguments]</code><ul>
+<li>build, 编译</li>
+<li>install，区别与build，install会编译后将输出文件打包成库放在pkg下</li>
+<li>fmt，把所有代码标准化/格式化编码风格</li>
+<li>test，运行当前包目录下的tests<ul>
+<li>一般以<code>XXX_test.go</code>位文件名</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Test写法"><a href="#Test写法" class="headerlink" title="Test写法"></a>Test写法</h3><ul>
+<li>每个test文件必须引入<code>testing</code></li>
+<li>test文件下的每一个test case必须以Test开头并符合TestXxx形式，否则go test会直接跳过测试不执行</li>
+<li><code>test case</code>的入参为<code>*testing.T</code>或<code>b *testing.B</code><ul>
+<li><code>T</code>普通入参</li>
+<li><code>B</code>如果是测试性能的test</li>
+</ul>
+</li>
+<li><code>t.SkipNow()</code>跳过当前test，并且直接PASS处理，继续下一个test<ul>
+<li>必须写在第一行</li>
+</ul>
+</li>
+<li>test的顺序<ul>
+<li>go并不会保证多个TestXxx是顺序执行的，但通常是顺序执行</li>
+<li>使用<code>t.Run</code>来执行subtests可以做到控制test输出以及test顺序</li>
+<li>使用TestMain作为初始化test，并使用<code>m.Run()</code>来调用其他tests可以完成一些需要初始化的testing，比如数据库连接，文件打开等</li>
+</ul>
+</li>
+</ul>
+<h4 id="Test之benchmark"><a href="#Test之benchmark" class="headerlink" title="Test之benchmark"></a>Test之benchmark</h4><p><code>go test -banch=.</code></p>
+<ul>
+<li>benchmark函数一般以Benchmark开头<ul>
+<li><code>func BenchmarkXxx(b *testing.B)</code></li>
+</ul>
+</li>
+<li>benchmark的case一般会跑b.N次，而且每次执行都会如此</li>
+<li>在执行过程中会根据实际case的执行时间是否稳定增加b.N的次数以达到稳态<ul>
+<li>由于b.N会动态改变，所以要测试的函数必须是有稳态的，否则bench可能不会停止</li>
+</ul>
+</li>
+</ul>
 <h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><h3 id="字符串变量结构"><a href="#字符串变量结构" class="headerlink" title="字符串变量结构"></a>字符串变量结构</h3><ul>
 <li>不同于C语言字符串以<code>\0</code>结尾，golang字符串中的字符可以是任何字符，因为它的结构为: <code>| data | len |</code></li>
 <li>因此你可以像这样<code>str[2]</code>读取字符串内容，但不能修改它</li>
