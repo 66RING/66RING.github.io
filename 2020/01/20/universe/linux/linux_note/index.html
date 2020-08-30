@@ -87,7 +87,7 @@
 <meta property="og:description" content="Linux哲学 Linux基本原则  由目的单一的小程序组成，组合小程序完整复杂任务    一切皆文件    避免捕获用户接口，避免与用户交互    配置文件保存为纯文本格式     命令格式命令 选项 参数 短选项：-加某个字母，如-h查看help 短选项可以多个选项写一起-a -b &#x3D; -ab   长选项：--&lt;option&gt;   命令模板 []中表示可选的内容 &lt;&gt;中">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-28T03:59:44.038Z">
+<meta property="article:modified_time" content="2020-08-30T10:46:55.763Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
@@ -411,6 +411,34 @@
 <li>特殊字符，形如<code>[:punct:]</code>。<code>[:punct:]</code>所有的标点符号</li>
 </ul>
 </li>
+<li>生成列表<ul>
+<li><code>seq [OPTION] [FIRST] [INCREMENT] LAST</code></li>
+</ul>
+</li>
+<li><code>xargs</code><ul>
+<li>从标准输入接收命令并执行</li>
+</ul>
+</li>
+<li><code>w</code><ul>
+<li>显示已登录的用户</li>
+</ul>
+</li>
+<li><code>last</code><ul>
+<li>显示登录日志，即显示<code>/var/log/wtmp</code>文件</li>
+</ul>
+</li>
+<li><code>lastb</code><ul>
+<li>显示错误的登录日志，即显示<code>/var/log/btmp</code>文件</li>
+</ul>
+</li>
+<li><code>lastlog</code><ul>
+<li>显示每一个用户最近一次的成功登录信息</li>
+</ul>
+</li>
+<li><code>basename</code><ul>
+<li>显示文件的基路径名</li>
+</ul>
+</li>
 </ul>
 <h2 id="管道及IO重定向"><a href="#管道及IO重定向" class="headerlink" title="管道及IO重定向"></a>管道及IO重定向</h2><ul>
 <li>系统设定<ul>
@@ -474,7 +502,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if expression; then</span><br><span class="line">    statement</span><br><span class="line">elif</span><br><span class="line">    statement</span><br><span class="line">else</span><br><span class="line">    statement</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3 id="条件分支"><a href="#条件分支" class="headerlink" title="条件分支"></a>条件分支</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if expression; then</span><br><span class="line">    statement</span><br><span class="line">elif</span><br><span class="line">    statement</span><br><span class="line">else</span><br><span class="line">    statement</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>条件测试的表达式<ul>
@@ -487,7 +515,7 @@
 <li>shell中进行算数运算<ul>
 <li><strong>shell把所有的变量都当作字符</strong>，所以要进行算数运算需要额外操作</li>
 <li><ol>
-<li><code>let</code>，见<code>help let</code>。如<code>c=$a+$b</code></li>
+<li><code>let</code>，见<code>help let</code>。如<code>let c=$a+$b</code></li>
 </ol>
 </li>
 <li><ol start="2">
@@ -516,7 +544,17 @@
 <li><code>-r/w/x</code>，是否可读写执行</li>
 </ul>
 </li>
+<li>组合测试条件<ul>
+<li><code>-a</code>，逻辑与</li>
+<li><code>-o</code>，逻辑或</li>
+<li><code>!</code>，非</li>
+<li>也可以使用<code>[ expression ] || [ expression ]</code></li>
 </ul>
+</li>
+</ul>
+<h4 id="switch-case"><a href="#switch-case" class="headerlink" title="switch case"></a>switch case</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> SWITCH <span class="keyword">in</span></span><br><span class="line">    value1)</span><br><span class="line">        statement</span><br><span class="line">        ...</span><br><span class="line">        ;;</span><br><span class="line">    value2|value3)</span><br><span class="line">        statement</span><br><span class="line">        ...</span><br><span class="line">        ;;</span><br><span class="line">    [0-9])</span><br><span class="line">        statement</span><br><span class="line">        ...</span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        statement</span><br><span class="line">        ...</span><br><span class="line">        ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
+
+
 <h3 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h3><h4 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h4><p>流编辑器(Stream EDitor, sed)。行编辑器。默认将输出到屏幕</p>
 <p><code>sed [option] &#39;AddressCommand&#39; file...</code></p>
 <ul>
@@ -568,6 +606,7 @@
 <li><code>g</code>全局替换</li>
 <li><code>i</code>忽略大小写</li>
 <li>分隔符号不一定是<code>/</code>也可是<code>@, #, ~...</code>等</li>
+<li><code>%</code>全文查找</li>
 </ul>
 </li>
 <li>引用匹配串<ul>
@@ -578,7 +617,43 @@
 </ul>
 </li>
 </ul>
-<h3 id="生成列表"><a href="#生成列表" class="headerlink" title="生成列表"></a>生成列表</h3><p><code>seq [OPTION] [FIRST] [INCREMENT] LAST</code></p>
+<h3 id="特殊权限"><a href="#特殊权限" class="headerlink" title="特殊权限"></a>特殊权限</h3><ul>
+<li><p>SUID：文件运行时，相应进程的属主是程序文件自身的属主，而非启动者</p>
+<ul>
+<li><code>chmod u+s FILE</code></li>
+<li><code>chmod u-s FILE</code></li>
+<li>如果FILE本身就有执行权限，则SUID显示为s，否则为S</li>
+</ul>
+</li>
+<li><p>GUID：文件运行时，相应进程的属组是程序文件自身的属组，而非启动者所属的基本组</p>
+<ul>
+<li><code>chmod g+s FILE</code></li>
+<li><code>chmod g-s FILE</code></li>
+</ul>
+</li>
+<li><p>Sticky：在一个公共目录，每个用户都可以创建文件，删除自己的文件，但不能删除别人的文件</p>
+<ul>
+<li><code>chmod o+t DIR</code></li>
+<li><code>chmod o-t DIR</code></li>
+</ul>
+</li>
+<li><p>也可用<code>111</code>，二进制表示</p>
+</li>
+<li><p>FACL, Filesystem Access Control List</p>
+<ul>
+<li><code>setfacl OPTION FILE</code><ul>
+<li><code>-m</code>，设定<ul>
+<li><code>u:UID:perm</code></li>
+<li><code>g:GID:perm</code></li>
+</ul>
+</li>
+<li><code>-x</code>，取消设定</li>
+</ul>
+</li>
+<li><code>getfacl FILE</code></li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -745,7 +820,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux哲学"><span class="nav-number">1.</span> <span class="nav-text">Linux哲学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FHS-文件层级系统"><span class="nav-number">1.1.</span> <span class="nav-text">FHS(文件层级系统)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用工具"><span class="nav-number">2.</span> <span class="nav-text">常用工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道及IO重定向"><span class="nav-number">3.</span> <span class="nav-text">管道及IO重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell编程"><span class="nav-number">4.</span> <span class="nav-text">Shell编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">4.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件判断"><span class="nav-number">4.2.</span> <span class="nav-text">条件判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本处理"><span class="nav-number">4.3.</span> <span class="nav-text">文本处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sed"><span class="nav-number">4.3.1.</span> <span class="nav-text">sed</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成列表"><span class="nav-number">4.4.</span> <span class="nav-text">生成列表</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux哲学"><span class="nav-number">1.</span> <span class="nav-text">Linux哲学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FHS-文件层级系统"><span class="nav-number">1.1.</span> <span class="nav-text">FHS(文件层级系统)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用工具"><span class="nav-number">2.</span> <span class="nav-text">常用工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道及IO重定向"><span class="nav-number">3.</span> <span class="nav-text">管道及IO重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell编程"><span class="nav-number">4.</span> <span class="nav-text">Shell编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">4.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件分支"><span class="nav-number">4.2.</span> <span class="nav-text">条件分支</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#switch-case"><span class="nav-number">4.2.1.</span> <span class="nav-text">switch case</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本处理"><span class="nav-number">4.3.</span> <span class="nav-text">文本处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sed"><span class="nav-number">4.3.1.</span> <span class="nav-text">sed</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊权限"><span class="nav-number">4.4.</span> <span class="nav-text">特殊权限</span></a></li></ol></li></ol></div>
             
 
           </div>
