@@ -1125,6 +1125,30 @@
 <td>{}</td>
 <td>跳转到上一个/下一个段落</td>
 </tr>
+<tr>
+<td>q:, q/, q?</td>
+<td>打开命令历史</td>
+</tr>
+<tr>
+<td>gv</td>
+<td>选择上一次的选择</td>
+</tr>
+<tr>
+<td>g <c-a>/<c-v></td>
+<td>visual mode下</td>
+</tr>
+<tr>
+<td>:g/regex/ex</td>
+<td>run the Ex command only on teh line that match</td>
+</tr>
+<tr>
+<td>:v/regex/ex</td>
+<td>run the Ex command only on teh line not match</td>
+</tr>
+<tr>
+<td>:windo {ex}</td>
+<td>run ex on all windows</td>
+</tr>
 </tbody></table>
 <h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><table>
 <thead>
@@ -3170,6 +3194,56 @@
 </li>
 </ul>
 <p>当<code>umount</code>busy时，可以使用<code>fuser -v /mount/point</code>查看谁在访问。使用<code>fuser -km /mount/point</code>杀死所有进程</p>
+<h3 id="文件压缩与归档"><a href="#文件压缩与归档" class="headerlink" title="文件压缩与归档"></a>文件压缩与归档</h3><p>对于文本文件，会发现压缩比非常打，这是因为对文本文件的压缩，是对文本进行标记，以后该文本再次出现时，使用标记代替文本，以达到压缩的目的。算法不同压缩比也可能不同。</p>
+<ul>
+<li>目流行的压缩格式(工具):xz(zx), bz2(bzip2), gz(gzip)。只能压缩文件，不能压缩目录。默认还会删除原文件。<ul>
+<li>gzip<ul>
+<li>压缩<code>gzip &lt;FILE&gt;</code><ul>
+<li><code>-[1-9]</code>指定压缩比</li>
+</ul>
+</li>
+<li>解压缩<code>gunzip &lt;FILE&gt;</code>或<code>gzip -d &lt;FILE&gt;</code></li>
+<li><code>zcat</code>在不解压的情况下查看文本文件的内容</li>
+</ul>
+</li>
+<li>bz2<ul>
+<li><code>bzip2</code>压缩，对于大文件比gzip有更大压缩比的工具，格式近似</li>
+<li><code>-d</code>解压缩</li>
+<li><code>-k</code>压缩保留源文件</li>
+<li><code>bunzip2</code>解压</li>
+<li><code>bzcat</code></li>
+</ul>
+</li>
+<li>xz<ul>
+<li>格式类似<code>man xz</code></li>
+</ul>
+</li>
+<li>zip<ul>
+<li><strong>压缩比不大</strong>，但可以压缩目录，格式也独特</li>
+<li><code>zip OUT_FILE.ZIP IN_FILE1 ...</code></li>
+<li>这种能将多个文件整合在一起就叫<strong>archive(归档)</strong></li>
+</ul>
+</li>
+<li>tar：归档工具，只归档不压缩，体积还会变大<ul>
+<li><code>-c</code>创建归档文件</li>
+<li><code>-f</code>FILE` <strong>操作的文件</strong></li>
+<li><code>-x</code>展开归档, 一般用<code>-xf</code></li>
+<li><code>--xattrs</code>归档时保留其扩展属性信息</li>
+<li><code>-t</code>查看归档里有啥</li>
+<li>即归档又压缩<ul>
+<li>当然可以先使用tar归档，再压缩。但是可以直接一步到位</li>
+<li><code>-zcf</code>归档然后调用gzip压缩</li>
+<li><code>-zxf</code>调用gzip解压缩然后展开归档</li>
+<li><code>-jcf</code>, <code>-jxf</code>调用bz2</li>
+<li><code>-Jcf</code>, <code>-Jxf</code>调用xz</li>
+<li>展开时使用的工具可以省略，如<code>-xf</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
           
         
