@@ -229,225 +229,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/02/universe/js_ts/typescript/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/02/universe/js_ts/typescript/" itemprop="url">TypeScript</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-02T00:00:00+08:00">
-                2020-03-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h1><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>typescript是编译型,编译成javascript(解释型).</p>
-<ul>
-<li>安装<ul>
-<li><code>npm install -g typescript</code></li>
-</ul>
-</li>
-<li>编译<ul>
-<li><code>tsc hello.ts</code></li>
-</ul>
-</li>
-<li>编写react时以.tsx为后缀</li>
-</ul>
-<h2 id="强类型"><a href="#强类型" class="headerlink" title="强类型"></a>强类型</h2><h3 id="指定类型"><a href="#指定类型" class="headerlink" title="指定类型"></a>指定类型</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str:<span class="built_in">string</span> = <span class="string">"1"</span>;</span><br><span class="line"><span class="keyword">var</span> num:<span class="built_in">number</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> bool:<span class="built_in">boolean</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">var</span> un:<span class="literal">undefined</span> = <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">var</span> nil:<span class="literal">null</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">var</span> a:<span class="built_in">any</span>;</span><br><span class="line">a = <span class="number">1</span>;</span><br><span class="line">a = <span class="string">"1"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> func1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>):<span class="title">void</span></span>&#123;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> func2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>):<span class="title">number</span></span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>没有赋值,表示是any值,以后不管怎么赋值都是any值的类型</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a2;</span><br><span class="line">a2 = <span class="number">1</span>;</span><br><span class="line">a2 = <span class="string">"1"</span>;</span><br></pre></td></tr></table></figure>
-
-<p>联合类型,方法只能调用类型公共的方法</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> strnum:<span class="built_in">string</span>|<span class="built_in">number</span> = <span class="string">"1"</span>;</span><br><span class="line"><span class="comment">// strnum.length() 就不行</span></span><br><span class="line">strnum.toString()</span><br></pre></td></tr></table></figure>
-
-<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>类似java的接口,’子类必须实现接口’</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Inf&#123;</span><br><span class="line">    name:<span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj:Inf;</span><br><span class="line">obj = &#123;name:<span class="string">"ring"</span>&#125;  <span class="comment">// 没有赋值会报错</span></span><br></pre></td></tr></table></figure>
-
-<p>可选属性</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Inf&#123;</span><br><span class="line">    name:<span class="built_in">string</span>,</span><br><span class="line">    age?:<span class="built_in">number</span>  <span class="comment">// 可选类型</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj:Inf;</span><br><span class="line">obj = &#123;name:<span class="string">"ring"</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>不确定数量属性</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Inf&#123;</span><br><span class="line">    name:<span class="built_in">string</span>,</span><br><span class="line">    age?:<span class="built_in">number</span>, <span class="comment">// 可选类型</span></span><br><span class="line">    [propName:<span class="built_in">string</span>]:<span class="built_in">any</span>  <span class="comment">// 不确定数量的propName(strng类型),他的值是any</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj:Inf;</span><br><span class="line">obj = &#123;name:<span class="string">"ring"</span>, age:<span class="number">10</span>, sex:man&#125;</span><br></pre></td></tr></table></figure>
-
-<p>只读属性</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Inf&#123;</span><br><span class="line">    name:<span class="built_in">string</span>,</span><br><span class="line">    readonly age:<span class="built_in">number</span>  <span class="comment">// 只读属性</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj:Inf;</span><br><span class="line">obj = &#123;name:<span class="string">"ring"</span>, age:<span class="number">10</span>, sex:man&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>类型方括号</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr:<span class="built_in">number</span>[] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">var</span> arr2:<span class="built_in">any</span>[] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
-
-<p>泛型定义法</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr:<span class="built_in">Array</span>&lt;<span class="built_in">number</span>&gt; = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">var</span> arr2:<span class="built_in">Array</span>&lt;<span class="built_in">any</span>&gt; = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
-
-<p>接口定义法</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> IArr&#123;</span><br><span class="line">    [index:<span class="built_in">number</span>]:<span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr:IArr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类型除了是内置的类型, 还可以是接口的类型</span></span><br><span class="line"><span class="keyword">interface</span> Istate&#123;</span><br><span class="line">    name:<span class="built_in">string</span>,</span><br><span class="line">    age:<span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> IArr&#123;</span><br><span class="line">    [index:<span class="built_in">number</span>]:Istate</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr:IArr = [&#123;name:<span class="string">"ring"</span>, age:<span class="number">20</span>&#125;]</span><br><span class="line"><span class="keyword">var</span> arr:<span class="built_in">Array</span>&lt;IArr&gt; = [&#123;name:<span class="string">"ring"</span>, age:<span class="number">20</span>&#125;]</span><br><span class="line"><span class="keyword">var</span> arr:Istate[] = [&#123;name:<span class="string">"ring"</span>, age:<span class="number">20</span>&#125;]</span><br></pre></td></tr></table></figure>
-
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>声明式函数</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数名 参数名:类型  :返回类型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">name:<span class="built_in">string</span>, age:<span class="built_in">number</span></span>):<span class="title">number</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> age:<span class="built_in">number</span> = func(<span class="string">"ring"</span>, <span class="number">20</span>)</span><br></pre></td></tr></table></figure>
-
-<p>函数参数不确定</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">name:<span class="built_in">string</span>, age:<span class="built_in">number</span>, sex?:<span class="built_in">string</span></span>):<span class="title">number</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> age:<span class="built_in">number</span> = func(<span class="string">"ring"</span>, <span class="number">20</span>, <span class="string">"man"</span>)</span><br></pre></td></tr></table></figure>
-
-<p>参数默认值</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">name:<span class="built_in">string</span>, age:<span class="built_in">number</span>, sex?:<span class="built_in">string</span>="man"</span>):<span class="title">number</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> age:<span class="built_in">number</span> = func(<span class="string">"ring"</span>, <span class="number">20</span>, <span class="string">"man"</span>)</span><br></pre></td></tr></table></figure>
-
-<p>表达式类型函数</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params">name:<span class="built_in">string</span>, age:<span class="built_in">number</span></span>):<span class="title">number</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> age:<span class="built_in">number</span> = func(<span class="string">"ring"</span>, <span class="number">20</span>)</span><br></pre></td></tr></table></figure>
-
-<p>表达式类型函数变量的约束规范</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 变量  约束  类型</span></span><br><span class="line"><span class="keyword">var</span> func:<span class="function">(<span class="params">name:<span class="built_in">string</span>, age:<span class="built_in">number</span></span>)=&gt;</span><span class="built_in">number</span> = <span class="function"><span class="keyword">function</span>(<span class="params">name:<span class="built_in">string</span>, age:<span class="built_in">number</span></span>):<span class="title">number</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> age:<span class="built_in">number</span> = func(<span class="string">"ring"</span>, <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者使用接口</span></span><br><span class="line"><span class="keyword">interface</span> Istate&#123;</span><br><span class="line">    (name:<span class="built_in">string</span>, age:<span class="built_in">number</span>):<span class="built_in">number</span>  <span class="comment">// (参数):返回类型</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> func:Istate = <span class="function"><span class="keyword">function</span>(<span class="params">name:<span class="built_in">string</span>, age:<span class="built_in">number</span></span>):<span class="title">number</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> age:<span class="built_in">number</span> = func(<span class="string">"ring"</span>, <span class="number">20</span>)</span><br></pre></td></tr></table></figure>
-
-<p>采用重载的方式支持联合类型的函数关系</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">value:<span class="built_in">string</span></span>):<span class="title">string</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">value:<span class="built_in">number</span></span>):<span class="title">number</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">value:<span class="built_in">string</span>|<span class="built_in">number</span></span>)</span>&#123;  <span class="comment">// 这是上面的实现</span></span><br><span class="line">    <span class="keyword">return</span> value</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> a:<span class="built_in">number</span> = func(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">let</span> b:<span class="built_in">string</span> = func(<span class="string">"1"</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><p>在联合类型的情况下, 调用的函数要是共有的函数, 不然会报错, 所以需要进行断言</p>
-<p>&lt;类型&gt;值 或 值as类型</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">name:<span class="built_in">string</span>|<span class="built_in">number</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (&lt;<span class="built_in">string</span>&gt;name).length()</span><br><span class="line">    <span class="comment">// 或者return (name as string).length()</span></span><br><span class="line">    <span class="comment">// 只能转换成联合类型中存在的类型</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// !! jsx/tsx中必须采用后一种 !!</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> strtype = <span class="built_in">string</span>|<span class="built_in">number</span>;</span><br><span class="line"><span class="keyword">var</span> str:strtype = <span class="string">"10"</span></span><br><span class="line">str = <span class="number">10</span></span><br></pre></td></tr></table></figure>
-
-<p>对于接口</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> muchType1&#123;</span><br><span class="line">    name:<span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> muchType2&#123;</span><br><span class="line">    age:<span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> muchType = muchType1|muchType2</span><br><span class="line"><span class="keyword">var</span> obj1:muchType = &#123;name:<span class="string">"ring"</span>&#125;</span><br><span class="line"><span class="keyword">var</span> obj2:muchType = &#123;age:<span class="number">1</span>&#125;</span><br><span class="line"><span class="keyword">var</span> obj3:muchType = &#123;name:<span class="string">"ring"</span>, age:<span class="number">1</span>&#125;  <span class="comment">// 一种或多种或全部</span></span><br></pre></td></tr></table></figure>
-
-<p>限制字符串的选择</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> sex = <span class="string">"man"</span>|<span class="string">"woman"</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">s:sex</span>):<span class="title">string</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br><span class="line">func(<span class="string">"man"</span>)</span><br><span class="line"><span class="comment">// func("an") 就不行</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><p>使用枚举可以定义一些有名字的数字常量</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> Days&#123;</span><br><span class="line">    Sun,  <span class="comment">// 默认第一个取值为0</span></span><br><span class="line">    Mon,  <span class="comment">// 后面的一次累加</span></span><br><span class="line">    Tue,</span><br><span class="line">    Wed,</span><br><span class="line">    Thu,</span><br><span class="line">    Fri,</span><br><span class="line">    Sat,</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(Days.Sun)</span><br></pre></td></tr></table></figure>
-
-<p>typescript枚举出来会自动赋值外, 同时会对枚举值到枚举名的反向映射, 就是变成了双向映射</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ts编译成js后的结果</span></span><br><span class="line"><span class="comment">// 即Days[0] = "Sun"</span></span><br><span class="line"><span class="keyword">var</span> Days;</span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">Days</span>) </span>&#123;</span><br><span class="line">    Days[Days[<span class="string">"Sun"</span>] = <span class="number">0</span>] = <span class="string">"Sun"</span>;</span><br><span class="line">    Days[Days[<span class="string">"Mon"</span>] = <span class="number">1</span>] = <span class="string">"Mon"</span>;</span><br><span class="line">    Days[Days[<span class="string">"Tue"</span>] = <span class="number">2</span>] = <span class="string">"Tue"</span>;</span><br><span class="line">    Days[Days[<span class="string">"Wed"</span>] = <span class="number">3</span>] = <span class="string">"Wed"</span>;</span><br><span class="line">    Days[Days[<span class="string">"Thu"</span>] = <span class="number">4</span>] = <span class="string">"Thu"</span>;</span><br><span class="line">    Days[Days[<span class="string">"Fri"</span>] = <span class="number">5</span>] = <span class="string">"Fri"</span>;</span><br><span class="line">    Days[Days[<span class="string">"Sat"</span>] = <span class="number">6</span>] = <span class="string">"Sat"</span>;</span><br><span class="line">&#125;)(Days || (Days = &#123;&#125;));</span><br><span class="line"><span class="built_in">console</span>.log(Days.Sun);</span><br></pre></td></tr></table></figure>
-
-<h3 id="类的修饰符"><a href="#类的修饰符" class="headerlink" title="类的修饰符"></a>类的修饰符</h3><p>public private protected</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Person&#123;</span><br><span class="line">    name = <span class="string">"ring"</span>,</span><br><span class="line">    <span class="keyword">private</span> age = <span class="number">20</span>,</span><br><span class="line">    <span class="keyword">protected</span> say()&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"halo"</span>)</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 没有修饰的话, 类中的属性后方法默认是public</span></span><br><span class="line"><span class="comment">// private 属性只能在类中被访问</span></span><br><span class="line"><span class="comment">// protected 只能在类及其子类中访问</span></span><br></pre></td></tr></table></figure>
-
-<p>类的继承</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Child <span class="keyword">extends</span> Person&#123;</span><br><span class="line">    callParent()&#123;</span><br><span class="line">        <span class="keyword">super</span>.say()  <span class="comment">// super能拿到父类的对象, 所以能访问父类公开的属性和方法</span></span><br><span class="line">        <span class="comment">// 类中也能访问父类protected的方法, 类外就不行</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>静态方法, 可以通过类名调用</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Child <span class="keyword">extends</span> Person&#123;</span><br><span class="line">    callParent()&#123;</span><br><span class="line">        <span class="keyword">super</span>.say()  </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> test()&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"halo"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Child.test())  <span class="comment">// 但在静态方法中不可以使用this</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><p>泛型是指在定义函数, 接口或类的时候, 不预先指定具体类型, 而在使用的时候再指定类型的一种特性.<br>也可以帮助我们限定约束规范</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用T来统一类型, T可以是任何名字</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>&lt;<span class="title">T</span>&gt;(<span class="params">len:<span class="built_in">number</span>, value:&lt;T&gt;</span>):<span class="title">Array</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> arr = []</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;len;<span class="number">1</span>++)&#123;</span><br><span class="line">        arr[i] = value</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> strArry: <span class="built_in">string</span>[] = func&lt;<span class="built_in">string</span>&gt;(<span class="number">3</span>, <span class="string">'1'</span>)  <span class="comment">// 制定类型为string</span></span><br><span class="line"><span class="keyword">var</span> numArry: <span class="built_in">number</span>[] = func(<span class="number">3</span>, <span class="number">1</span>)  <span class="comment">// 右边也可以不指定类型, 因为左边要求就收的是number, 所以它会反推</span></span><br></pre></td></tr></table></figure>
-
-<p>接口采用泛型</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Istate&#123;</span><br><span class="line">    &lt;T&gt;(name:<span class="built_in">string</span>, value:T):<span class="built_in">Array</span>&lt;T&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> func:Istate;</span><br><span class="line"><span class="comment">// 接口约束函数返回值</span></span><br><span class="line">func = <span class="function"><span class="keyword">function</span>&lt;<span class="title">T</span>&gt;(<span class="params">name:<span class="built_in">string</span>, value:T</span>):<span class="title">Array</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用时指定类型</span></span><br><span class="line"><span class="keyword">var</span> strArry:<span class="built_in">string</span> [] = func(<span class="string">"ring"</span>, <span class="string">"2020"</span>)  <span class="comment">// 2020就指定了类型是string</span></span><br><span class="line"><span class="keyword">var</span> numArry:<span class="built_in">number</span> [] = func(<span class="string">"ring"</span>, <span class="number">2020</span>)  <span class="comment">// 同理</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/universe/python/python_level_up/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -5066,6 +4847,869 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/26/Major/algorithm/arithmetic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/26/Major/algorithm/arithmetic/" itemprop="url">算法学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-26T00:00:00+08:00">
+                2019-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><ul>
+<li>比较大小,如果符合条件(升序)就交换两个元素的位置  <ul>
+<li>每次执行N-1次</li>
+<li>严格大/小,保证了原序(稳定性)</li>
+<li>没次能保证最大/最小的元素会在最后</li>
+</ul>
+</li>
+<li>如果全程无交换,则说明有序了,跳出即可</li>
+<li>$T=O(x),x\in(N,N^2)$</li>
+</ul>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><ul>
+<li>每次抽取一个元素,然后从序列末尾开始进行比较</li>
+<li>若符合条件,往后移位,直到不符合条件跳出</li>
+<li>然后插入元素</li>
+</ul>
+<h4 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h4><p>对插入排序的改进,每次消除多个逆序对以达到加速的效果  </p>
+<ul>
+<li>按照一定增量序列,每次进行D排序 $D_N &gt; D_{N-1}…&gt;D_1$ ,这样一来一趟就有可能消除多个逆序对<ul>
+<li>按照$D_N &gt; D_{N-1}…&gt;D_1$进行排序,后一次会保持前一次的顺序,故可用</li>
+<li>但最终都要进行1排序</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(D=N/<span class="number">2</span>;D&gt;<span class="number">0</span>;D/=<span class="number">2</span>)&#123;  <span class="comment">// 希尔增量序列。Hibbard增量序列:Dk=2^k-1...等等</span></span><br><span class="line">    <span class="keyword">for</span>(p=D;p&lt;N;p++)&#123;  <span class="comment">// 插入排序</span></span><br><span class="line">        Tmp = A[p];</span><br><span class="line">        <span class="keyword">for</span>(i=p;i&gt;=D&amp;&amp;A[i-D]&gt;Tmp;i-=D)&#123;</span><br><span class="line">            A[i] = A[i-D];</span><br><span class="line">        &#125;</span><br><span class="line">        A[i] = Tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><h4 id="小-大顶堆"><a href="#小-大顶堆" class="headerlink" title="小/大顶堆"></a>小/大顶堆</h4><p>子节点比父节点小/大的二叉树  </p>
+<p><strong>构建方法</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 法一：上浮下沉法(小顶堆为例)</span></span><br><span class="line"><span class="comment">// 从第一个非叶子节点开始，以它为子树，先自下而上把小的节点上浮，到达子树根节点后自上而下把大的节点下沉</span></span><br><span class="line"><span class="comment">// 知道根节点结束</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=len/<span class="number">2</span><span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">        <span class="keyword">int</span> t = j;</span><br><span class="line">        <span class="keyword">while</span>((t+<span class="number">1</span>)*<span class="number">2</span>&lt;=len)&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="built_in">min</span> = (t+<span class="number">1</span>)*<span class="number">2</span><span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">min</span>+<span class="number">1</span>&lt;len)&#123;</span><br><span class="line">                <span class="keyword">if</span>(heap[<span class="built_in">min</span>+<span class="number">1</span>]&lt;heap[<span class="built_in">min</span>])&#123;</span><br><span class="line">                    <span class="built_in">min</span>++; </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(heap[<span class="built_in">min</span>]&lt;heap[t])&#123;</span><br><span class="line">                swop(<span class="built_in">min</span>,t,heap);</span><br><span class="line">                t = <span class="built_in">min</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 法二：插入法</span></span><br><span class="line"><span class="comment">// 从根节点出发，若父节点比插入元素大，则调整位置，如此循环，保证父节点小于子节点</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    heap[<span class="number">0</span>] = <span class="number">-1000</span>;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=len;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;temp);</span><br><span class="line">        <span class="keyword">int</span> j;</span><br><span class="line">        <span class="keyword">for</span>(j=i;heap[j/<span class="number">2</span>]&gt;temp;j/=<span class="number">2</span>)&#123;</span><br><span class="line">            heap[j] = heap[j/<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        heap[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="利用小-大顶堆排序"><a href="#利用小-大顶堆排序" class="headerlink" title="利用小/大顶堆排序"></a>利用小/大顶堆排序</h4><ul>
+<li>根据小/大顶堆的性质，可以确定顶部一定是最大或最小的元素</li>
+<li>交换根节点和最后一个节点，那么最后一个节点一定是最大/最小</li>
+<li>把最后的节点排除，剩下节点构成的子树再调整成小/大顶堆，重复以上步骤</li>
+</ul>
+<h3 id="快速排序算法"><a href="#快速排序算法" class="headerlink" title="快速排序算法"></a>快速排序算法</h3><p>通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列    </p>
+<ul>
+<li>先从数列中取出一个数作为主元<ul>
+<li>主元选不好会影响速度</li>
+<li>法1.选头,中,尾三个数的中位数做主元</li>
+</ul>
+</li>
+<li>分区过程，交替移动，将比这个数大的数全放到它的右边，小于或等于它的数全放到它的左边</li>
+<li>再对左右区间重复第二步，直到各区间只有一个数</li>
+</ul>
+<h3 id="擂台法"><a href="#擂台法" class="headerlink" title="擂台法"></a>擂台法</h3><ul>
+<li>适用于找最值</li>
+</ul>
+<h3 id="归并法"><a href="#归并法" class="headerlink" title="归并法"></a>归并法</h3><ul>
+<li>把两个有序的序列合并</li>
+<li>法1.递归的进行下去(有点类似快速排序)</li>
+<li>法2.每个元素看成一段序列,合并合并…</li>
+<li>$T=N\log{N}$</li>
+<li>缺点:需要开额外一份空间</li>
+</ul>
+<h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><h3 id="AOV-activity-on-vertex"><a href="#AOV-activity-on-vertex" class="headerlink" title="AOV(activity on vertex)"></a>AOV(activity on vertex)</h3><p>节点代表事件<br>若v到w连通,则v一定在w的前面  </p>
+<ul>
+<li>有向图</li>
+<li>有优先级限制<br>按照此法输出就是拓扑排序  </li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Queuezero Q;   <span class="comment">// 储存入度为零的,即前头没有限制了的</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;|V|;i++)&#123;    <span class="comment">// 记录最先的入度为0的节点</span></span><br><span class="line">    <span class="keyword">if</span>(indegree[V]==<span class="number">0</span>)&#123;</span><br><span class="line">        Enqueue(V,Q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span>(!isEmpty(Q))&#123;</span><br><span class="line">    V = Dequeue(Q);  <span class="comment">//cnt++,记录或者输出什么的(拓扑排序)</span></span><br><span class="line">    <span class="keyword">for</span>(V的每个邻接点W)&#123;</span><br><span class="line">        indegree(W)--;</span><br><span class="line">        <span class="keyword">if</span>(degree(w)==<span class="number">0</span>)&#123;</span><br><span class="line">            Enqueue(W,Q);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(cnt!=|V|)</span><br><span class="line">    图有回路,无法拓扑排序</span><br></pre></td></tr></table></figure>
+
+<h3 id="AOE-activity-on-edge"><a href="#AOE-activity-on-edge" class="headerlink" title="AOE(activity on edge)"></a>AOE(activity on edge)</h3><p>例:关键路径问题  </p>
+<h3 id="表排序"><a href="#表排序" class="headerlink" title="表排序"></a>表排序</h3><p>当移动的成本很高时(如移动一部电影)就用表来储存他的顺序</p>
+<ul>
+<li>table[N]指向N,故用table[N]进行访问\排序</li>
+</ul>
+<h3 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h3><p>基本原理:假如有10个数分别是0<del>9让你排序,那建立10个桶ar[10],根据情况0</del>9放到对应的桶了,最后顺序输出桶就是有序的了</p>
+<h4 id="LSD-Least-Significant-Digit-次位优先"><a href="#LSD-Least-Significant-Digit-次位优先" class="headerlink" title="LSD(Least Significant Digit)次位优先"></a>LSD(Least Significant Digit)次位优先</h4><p>排10个在0~999的整数难道要建1000个桶吗？</p>
+<ul>
+<li>根据低位到高位建通(实际情况肯更抽象)<ul>
+<li>这里是从个位到百位,没位置建10桶</li>
+<li>个位桶建装好后再遍历桶,装十位的桶,以此类推</li>
+<li>因为是遍历有序桶来填入新桶的,所以最后的桶只需按顺序输出就是有序了</li>
+</ul>
+</li>
+</ul>
+<h2 id="BFPRT算法：求无序数组低k小-大的数"><a href="#BFPRT算法：求无序数组低k小-大的数" class="headerlink" title="BFPRT算法：求无序数组低k小/大的数"></a>BFPRT算法：求无序数组低k小/大的数</h2><p>思路类似于partition快速排序，下标就能说明范围是第几，小于放左边大于放右边，然后范围只需要关注左边或者右边。</p>
+<p>但是如果是简单的基于快速排序，随机选一个划分值，复杂度的变数就比较大，即如果每次选中的划分值都是最小或最大，那么剩下还得关注len-1的数。效率不高。</p>
+<ul>
+<li><code>bfprt(vector&lt;int&gt; arr, int kf)</code><ul>
+<li><ol>
+<li>整个数组先分组<ul>
+<li>BFPRT发明者是5个人，所以一般5个一组，不足5个就是单独一组</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>每个小组中排序</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>取出每个组的中位数，构成一个新的组，偶数个就取上中数或下中数，得到一个N/5长度的新数组</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>递归调用<code>num = bfprt(arr, k)</code>拿到中位数，把上面得到的数组和<code>new_arr.size()/2</code>传入</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>用上一步拿到的中位数进行划分</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><h3 id="散列-hash-查找"><a href="#散列-hash-查找" class="headerlink" title="散列(hash)查找"></a>散列(hash)查找</h3><p>把关键词看成变量,通过哈希函数运算赋予地址</p>
+<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><p>关键词是数字时的常见方法</p>
+<ul>
+<li>折叠法</li>
+<li>平方取中法</li>
+<li>数字分析法</li>
+<li>除留余数法</li>
+</ul>
+<p>关键词是字符时的常见方法</p>
+<ul>
+<li>位移法(变成整数移位&lt;&lt;求余)</li>
+</ul>
+<p><strong>核心思想就是当一位改变时尽可能多的影响位数,避免浪费</strong></p>
+<h4 id="处理冲突"><a href="#处理冲突" class="headerlink" title="处理冲突"></a>处理冲突</h4><p>产生冲突就添加偏移量到别的位置  </p>
+<ul>
+<li>线性探测<ul>
+<li>偏移量是一增量序列: 1.2.3.4…</li>
+<li>容易产生聚集</li>
+</ul>
+</li>
+<li>平方探测<ul>
+<li>偏移量是一增量序列: 1^2.2^2.3^2.4^2…</li>
+<li>容易产生死循环<ul>
+<li>定理:散列表长是某个4k+3的素数时,一定能探测整个表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>双散列探测<ul>
+<li>$d_i = i\times h_2(kay)$</li>
+<li>$h_2(key)=p-(key mod p)$ 效果最好</li>
+</ul>
+</li>
+<li>再散列<ul>
+<li>装填因子太大是查找效率下降</li>
+<li>那就扩大散列表,在把原来的元素搬进去</li>
+</ul>
+</li>
+<li>分离链接法<ul>
+<li>有冲突的关键字都放在(同一个关键字的)一个链表中</li>
+</ul>
+</li>
+</ul>
+<p><strong>删除时不能直接删除,会影响后续的查找。正确的删除是标记为删除,新的元素来时再替换</strong></p>
+<h3 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h3><p><strong>要点：</strong> </p>
+<ul>
+<li>前缀表next(或者说match)函数的创建</li>
+<li>动态规划</li>
+</ul>
+<p>利用前缀表的原理：对于一个子串(如：ababc)，所有可能的前缀:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">a b</span><br><span class="line">a b a</span><br><span class="line">a b a b</span><br><span class="line">a b a b c</span><br></pre></td></tr></table></figure>
+
+<p>我们需要找出每种可能中最长的、非本身的公共前后缀，因为如果前后缀相同的话，当后缀失去匹配时，可从前缀结束的地方开始匹配，而不是从头开始。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a               null    0</span><br><span class="line">a b             null    0</span><br><span class="line">a b a           a       1</span><br><span class="line">a b a b         ab      2</span><br><span class="line">a b a b c       null    0  &lt;一般剔除字符串本身,在开头填-1</span><br><span class="line"></span><br><span class="line">这些最长公共前后缀的长度就构成了前缀表</span><br><span class="line"> a b a b c</span><br><span class="line">-1 0 0 1 2</span><br><span class="line">这样就表示了当，str[j]失去匹配时，从match[j](前缀结束的地方)尝试匹配</span><br></pre></td></tr></table></figure>
+
+<p><strong>前缀表如何创建</strong></p>
+<ul>
+<li>可将创建一个子串前缀表的问题划分为一系列子问题：<ul>
+<li>创建每种前缀的前缀表</li>
+<li>为每种前缀构造前缀表又是一个个子串匹配问题：前1为是否匹配(是否有公共后缀)、前2位是否匹配，…，前n位是否</li>
+<li>又因为从最短开始尝试，最短的又为次短的做了铺垫。最短串的KMP创建了次短所需的前缀表</li>
+</ul>
+</li>
+</ul>
+<p>对于ababc，可以划分为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">长的<span class="number">1</span>,不需要前缀表辅助匹配。得到前缀表：</span><br><span class="line">[<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">a b</span><br><span class="line">对于ab，找最长公共前后缀。找前<span class="number">1</span>位(a)时，相当与在串ab中找匹配的子串a，而子串a的前缀表已经由上一步得出，前<span class="number">2</span>位ab是它本身，结束匹配。得</span><br><span class="line">[<span class="number">-1</span>, <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">a b a</span><br><span class="line">对于aba，找最长公共前后缀。找前<span class="number">1</span>位(a)时，相当与在串aba中找匹配的子串a，而子串a的前缀表已经由上一步得出，前<span class="number">2</span>位同理。得</span><br><span class="line">[<span class="number">-1</span> <span class="number">0</span> <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">a b a b</span><br><span class="line">a b a b c</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;len;j++)&#123;</span><br><span class="line">    p = m[j<span class="number">-1</span>];</span><br><span class="line">    <span class="comment">//尝试利用前缀表找到匹配的公共前后缀</span></span><br><span class="line">    <span class="keyword">while</span>(p&gt;=<span class="number">0</span>&amp;&amp;pattern[p+<span class="number">1</span>]!=pattern[j])&#123;</span><br><span class="line">        p = m[p];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果下一位匹配，公共前后缀长的等于当前匹配的公共前后缀长度加1</span></span><br><span class="line">    <span class="comment">//否则不匹配</span></span><br><span class="line">    <span class="keyword">if</span>(pattern[p+<span class="number">1</span>]==pattern[j])&#123;</span><br><span class="line">        m[j] = p+<span class="number">1</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        m[j] = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="实战1：一颗树A是否是另一个树的子树B"><a href="#实战1：一颗树A是否是另一个树的子树B" class="headerlink" title="实战1：一颗树A是否是另一个树的子树B"></a>实战1：一颗树A是否是另一个树的子树B</h4><p>序列化A和B树，然后就变成了用KMP找子串的问题了。</p>
+<p>关于序列化和反序列化，如何序列化就如何反序列化。如使用先序遍历序列化，得到<code>1 2 3 # #</code>，那么也使用先序遍历反序列化得到</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   <span class="number">1</span></span><br><span class="line">  <span class="number">2</span> </span><br><span class="line"> <span class="number">3</span></span><br><span class="line"># #</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，一个节点的value表示完毕时，要给出特殊的字符序列化，否则序列化的结果可能会有歧义。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    <span class="number">12</span>     <span class="number">1</span></span><br><span class="line">  <span class="number">3</span>      <span class="number">23</span></span><br><span class="line">如果value表示完不给出特殊字符，那都是</span><br><span class="line"><span class="number">123</span>###</span><br><span class="line"></span><br><span class="line">改进：</span><br><span class="line"><span class="number">12</span>!<span class="number">3</span>!#!#!#!</span><br><span class="line"><span class="number">1</span>!<span class="number">23</span>!#!#!#!</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Manacher算法：最长回文子串"><a href="#Manacher算法：最长回文子串" class="headerlink" title="Manacher算法：最长回文子串"></a>Manacher算法：最长回文子串</h3><p>在中心扩展的基础上， <strong>为了解决字符串长度奇偶的问题，在字符间插入<code>#</code></strong>，这样一来保证找到的所有回文串都是奇数长度。</p>
+<p>用<code>f(i)</code>来表示第i位为中心，可以拓展出的最大回文半径，那么<code>f(i)-1</code>就是以i为中心的最大回文串长度(有一半是<code>#</code>)。</p>
+<p>Manacher依旧是穷举每一个位置，但是它会动态规划<code>f(i)</code>。遍历每个位置算出最右回文右边界，如<code>01232101</code>，最右回文右边界就是0处。当最右回文右边界发生变化时，记录回文中心，然后比较是否是新最大回文子串。</p>
+<ul>
+<li>三种情况的处理方法<ul>
+<li><ol>
+<li>当回文中心不在最右回文右边界中时，就暴力扩。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>当回文子串，中心在最大回文右边界内，且对称点的回文左右半径在最右回文边界对应的回文左右半径内<ul>
+<li>那就可以通过对称点直接得出改点的回文半径<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ ( o ) a ( o ) ]</span><br><span class="line">L   i   c   i   R</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>当回文子串，中心在最大回文右边界内，且对称点的回文左右半径不在最右回文边界对应的回文左右半径内<ul>
+<li>那到R回文，因为y!=Y，不然最大回文半径还会扩大<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">( y[ o   ) a     o ]Y</span><br><span class="line">   L i     c     i R</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>如果3的情况刚好压线，那就在半径到R的基础上在扩试试</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Manacher模板"><a href="#Manacher模板" class="headerlink" title="Manacher模板"></a>Manacher模板</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用#预处理好字符串m</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 用rs储存回文半径</span></span><br><span class="line"><span class="comment">// mr为最大回文半径的位置</span></span><br><span class="line"><span class="comment">// c为最大回文半径对应的回文中心</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len;i++)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果在最大回文半径内则取较小值，后面再调整</span></span><br><span class="line">    <span class="comment">// 当前点能到的最大回文半径：rm-i+1</span></span><br><span class="line">    <span class="comment">// 通过对称点得到的回文半径：rs[2*c - i]</span></span><br><span class="line">    rs[i] = (i&lt;=mr)? <span class="built_in">min</span>(mr-i+<span class="number">1</span> , rs[<span class="number">2</span>*c - i]):<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 中心扩展试着找更大半径</span></span><br><span class="line">    <span class="keyword">while</span>(m[rs[i]+i] == m[i-rs[i]]) rs[i]++;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新最大边界及对应回文中心</span></span><br><span class="line">    <span class="keyword">if</span>(rs[i]+i<span class="number">-1</span> &gt; mr)&#123;</span><br><span class="line">        mr = rs[i] + i<span class="number">-1</span>;</span><br><span class="line">        c = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="窗口内最大值"><a href="#窗口内最大值" class="headerlink" title="窗口内最大值"></a>窗口内最大值</h3><p>窗口就是用L、R标记窗口的左右边界，而且都只能往右，不能回退。</p>
+<ul>
+<li>使用一个队列储存下标和值</li>
+<li>队列只能从大到小排列<ul>
+<li>当窗口右边界向右，在队列后面，如果队列后面的数小于等于待插入的数，则弹出，直到大于等于</li>
+<li>当窗口左边界向右，检查队列前面的值的index是否过期，过期则弹出</li>
+</ul>
+</li>
+<li>这么一来，队列顶部的数就是当前窗口中的最大值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct Node &#123;</span><br><span class="line">    val</span><br><span class="line">    index</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="例题1"><a href="#例题1" class="headerlink" title="例题1"></a>例题1</h4><p>找出最大值减最小值<em>小于</em>num的所有子数组，且要求时间复杂度为O(n)</p>
+<ul>
+<li>解：<ul>
+<li><ol>
+<li>性质<ul>
+<li>如果一个数组达标，那它里面的任何一个子数组一定达标</li>
+<li>如果一个子数组不达标，那它怎么往外扩都不达标</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>利用上面的性质，创建一个最小队列和一个最大队列，让L=0，R外扩，直到下一个r不达标<ul>
+<li>那么<strong>以L开头</strong>的所有子数组都达标，R-L+1个</li>
+<li>ans += R-L+1</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>然后L右缩小移位，如果R的下一个可以达标，那就外扩，然后回到第2步</li>
+</ol>
+</li>
+<li>这么就得到了所求</li>
+</ul>
+</li>
+</ul>
+<h3 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h3><p>单调栈：从底到顶是有顺序的，如大到小。</p>
+<p>对数组中的每个元素找出它左边最近的大于它的值和右边最近大于它的值。要求时间复杂度O(n)。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">3 5 2 4 6</span><br><span class="line">    左      右</span><br><span class="line">3   null    5</span><br><span class="line">5   null    6</span><br><span class="line">2   5       4</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol>
+<li>建立一个单调栈</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>如果满足单调的顺序要求，则可栈</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>当要入栈的数不满足顺序要求，则开始弹出，并记录数据<ul>
+<li>如下一个index的4，不满足顺序，那么index为3的数右边最近的比他大的数就是index4对应的数，那么左边最近的比他大的就是弹出后的栈顶</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>弹出后插入是否有序，不满足则再次进行3的操作</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>如果数组遍历完了栈还没空，则依次弹出，无右边最近的大于的数</li>
+</ol>
+</li>
+<li>如果两个相同的数相邻，则在栈中他们共用一个位置</li>
+</ul>
+<h4 id="例题1-1"><a href="#例题1-1" class="headerlink" title="例题1"></a>例题1</h4><p>给定一个没有重复元素的数组要求建立一棵树，其中的每一棵子树上，值最大的节点都是树的头部。如果数组长度为n，则时间复杂度要求为O(n)</p>
+<ul>
+<li>解1. 使用大大根堆</li>
+<li>解2. 使用单调栈<ul>
+<li>使用单调栈找出左右最近的大于的信息</li>
+<li>若左右都找不到大于的节点，则说明该点最大，做根节点</li>
+<li>当左右都有大于的节点时让当前节点成为较小的一个子节点</li>
+</ul>
+</li>
+</ul>
+<h4 id="例题2"><a href="#例题2" class="headerlink" title="例题2"></a>例题2</h4><p>给定一个整形矩阵map，其中的值只有0和1两种，求其中全是1的所有矩形区域中，最大的矩形区域中1的数量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 0 1 1</span><br><span class="line">1 1 1 1</span><br><span class="line">1 1 1 0</span><br><span class="line">0 1 0 1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>引子题：求组装它所包含的最大的矩形面积<ul>
+<li>如柱状图的高度分别为：<code>5 2 3 1 4</code>最大面积就是6(2往左往右)</li>
+<li>这个题的解法就是建立从小到大的单调栈，找出每个元素最右最近的小于的值</li>
+<li>然后更新面积信息</li>
+</ul>
+</li>
+<li>解<ul>
+<li><ol>
+<li>从第一行开始，执行上面的操作找出最大的矩形，更新max值</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>加上下一行，当以列的元素遇到零时归零<ul>
+<li>这里加到最后会得到<code>0 3 0 1</code></li>
+<li>然后就成为了引子题的问题</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>这么一个过程下来就记录的最大值</li>
+</ul>
+</li>
+</ul>
+<h4 id="例题3"><a href="#例题3" class="headerlink" title="例题3"></a>例题3</h4><p>给一个数组表示一个环形的山，数组的值表示山的高度。每座山顶放烽火，相邻的山可以相互看见，高的山会挡住低的山的视线。求能互相看见的对数。</p>
+<p>思路类似例2，中的柱状图，小的山峰找大的山峰，使用最大值打底作出单调栈，找出两边最近的大于的数，弹出时结算对数，一般情况下是2对。需要注意的是：</p>
+<p>如果入栈的数和栈顶的数一样大，那就压在一起计数加一，如<code>4, 4</code>4个4，当来了的大的值如5</p>
+<ul>
+<li>结算4个4，则得到的对数为$C_4^2 + 4*2$，C42表示这4个4之间的对数，4x2表示每个4左右都能看到</li>
+</ul>
+<p>如果遍历完了栈还非空</p>
+<ul>
+<li>栈剩余2条以上的记录时，还是公式$C_k^2 + k*2$</li>
+<li>栈剩2条记录时<ul>
+<li>如果最后一条记录的个数是大于1，则还是公式</li>
+<li>如果最后一条记录的个数是1，则公式把<code>k*2改为k*1</code></li>
+</ul>
+</li>
+<li>只剩一条记录是时$C^2_k$</li>
+</ul>
+<h3 id="字符串匹配"><a href="#字符串匹配" class="headerlink" title="字符串匹配"></a>字符串匹配</h3><ul>
+<li>递归<ul>
+<li><code>f(int i, int j)</code>，表示str[i]之后的整个能不能被exp[j]之后的整个匹配<ul>
+<li>j+1是*<ul>
+<li>如果i，j匹配</li>
+<li>如果i，j不匹配</li>
+</ul>
+</li>
+<li>j+1不是*<ul>
+<li>如果i，j匹配</li>
+<li>如果i，j不匹配</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>暴力递归</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">process</span><span class="params">(<span class="built_in">string</span>&amp; str, <span class="built_in">string</span>&amp; <span class="built_in">exp</span>, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(j == <span class="built_in">exp</span>.<span class="built_in">size</span>())&#123;</span><br><span class="line">        <span class="keyword">return</span> i == str.<span class="built_in">size</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// j上面还有字符，考察j+1的情况</span></span><br><span class="line">    <span class="keyword">if</span>(j + <span class="number">1</span> == <span class="built_in">exp</span>.<span class="built_in">size</span>() || <span class="built_in">exp</span>[j+<span class="number">1</span>] != <span class="string">'*'</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> i != str.<span class="built_in">size</span>() &amp;&amp; (<span class="built_in">exp</span>[j] == str[i] || <span class="built_in">exp</span>[j] == <span class="string">'.'</span>)</span><br><span class="line">            &amp;&amp; <span class="built_in">process</span>(str, <span class="built_in">exp</span>, i+<span class="number">1</span>, j+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// exp的j+1位置不仅有字符，而且字符是*</span></span><br><span class="line">    <span class="keyword">while</span>(i != str.<span class="built_in">size</span>() &amp;&amp; (<span class="built_in">exp</span>[j] == str[i] || <span class="built_in">exp</span>[j] == <span class="string">'.'</span>))&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">process</span>(str, <span class="built_in">exp</span>, i, j+<span class="number">2</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">process</span>(str, <span class="built_in">exp</span>, i, j+<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>动态规划</p>
+<p>building…</p>
+<hr>
+<h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h3 id="Morris遍历"><a href="#Morris遍历" class="headerlink" title="Morris遍历"></a>Morris遍历</h3><p>一般方法的遍历树，空间复杂读是O(h)，h是树的高度，因为需要用栈来储存父节点来实现回退。</p>
+<p>Morris遍历是在空间复杂度为O(1)的情况下遍历树的方法。它利用了树上的空闲空间</p>
+<ul>
+<li><ol>
+<li>当前节点记位Cur，如果Cur无左孩子，Cur向右移动<code>Cur = Cur.right</code></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>如果Cur有左孩子，找到Cur左子树上最右的节点，记做<code>mostright</code><ul>
+<li><ol>
+<li>如果<code>mostright</code>的右指针是空，让其指向Cur，然后cur向左移动</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>如果<code>mostright</code>的右指针指向cur，让cur右移，然后让其指向空</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>没有右孩子遍历结束</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(Node* head)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head==<span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    Node cur = head;</span><br><span class="line">    Node mostRight = null;</span><br><span class="line">    <span class="keyword">while</span>(cur!=null)&#123;</span><br><span class="line">        mostRight = cur.left;</span><br><span class="line">        <span class="keyword">if</span>(mostRight != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">            <span class="keyword">while</span>(mostRight.right != <span class="literal">nullptr</span> &amp;&amp; mostRight.right != cur)&#123;</span><br><span class="line">                mostRight = mostRight.right;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(mostRight.right == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">                mostRight.right = cur;</span><br><span class="line">                cur = cur.left;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;  <span class="comment">// 第二次来此节点</span></span><br><span class="line">                mostRight.right = <span class="literal">nullptr</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        cur = cur.right;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h3><ul>
+<li>左边孩子比根节点小</li>
+<li>右边孩子比根节点大</li>
+</ul>
+<p><strong>查找</strong>  </p>
+<ul>
+<li>左小右大，递归或循环  </li>
+</ul>
+<p><strong>插入</strong></p>
+<ul>
+<li>左小右大，递归或循环  </li>
+</ul>
+<p><strong>删除</strong></p>
+<ul>
+<li>没有孩子<ul>
+<li>直接插入</li>
+</ul>
+</li>
+<li>只有一个孩子<ul>
+<li>子承父业</li>
+</ul>
+</li>
+<li>有两个孩子<ul>
+<li>找到左子树的最大或右子树的最小替换被删除节点…有效降低树的高度</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BinTree <span class="title">Delete</span><span class="params">( BinTree BST, ElementType X )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    Position Tmp; </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>( !BST ) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"要删除的元素未找到"</span>); </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>( X &lt; BST-&gt;Data ) </span><br><span class="line">            BST-&gt;Left = Delete( BST-&gt;Left, X );   <span class="comment">/* 从左子树递归删除 */</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( X &gt; BST-&gt;Data ) </span><br><span class="line">            BST-&gt;Right = Delete( BST-&gt;Right, X ); <span class="comment">/* 从右子树递归删除 */</span></span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">/* BST就是要删除的结点 */</span></span><br><span class="line">            <span class="comment">/* 如果被删除结点有左右两个子结点 */</span> </span><br><span class="line">            <span class="keyword">if</span>( BST-&gt;Left &amp;&amp; BST-&gt;Right ) &#123;</span><br><span class="line">                <span class="comment">/* 从右子树中找最小的元素填充删除结点 */</span></span><br><span class="line">                Tmp = FindMin( BST-&gt;Right );</span><br><span class="line">                BST-&gt;Data = Tmp-&gt;Data;</span><br><span class="line">                <span class="comment">/* 从右子树中删除最小元素 */</span></span><br><span class="line">                BST-&gt;Right = Delete( BST-&gt;Right, BST-&gt;Data );</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">/* 被删除结点有一个或无子结点 */</span></span><br><span class="line">                Tmp = BST; </span><br><span class="line">                <span class="keyword">if</span>( !BST-&gt;Left )       <span class="comment">/* 只有右孩子或无子结点 */</span></span><br><span class="line">                    BST = BST-&gt;Right; </span><br><span class="line">                <span class="keyword">else</span>                   <span class="comment">/* 只有左孩子 */</span></span><br><span class="line">                    BST = BST-&gt;Left;</span><br><span class="line">                <span class="built_in">free</span>( Tmp );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> BST;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h3><p>节点左边都比该节点小，右边都比该节点大</p>
+<p>不考虑平衡性的情况下</p>
+<ul>
+<li><p>插入</p>
+<ul>
+<li>左小右大，找到自己的位置</li>
+</ul>
+</li>
+<li><p>删除</p>
+<ul>
+<li>当左右子树都非空时，用右子树的最左节点顶替，该节点的右子树交给它的父节点<ul>
+<li>因为右子树最左节点是最小的比它大的数</li>
+<li>同理，也可选左子树的最右节点</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如果考虑平衡性不同的平衡二差数动作的组合不同，但基本思想(动作)都是<strong>通过旋转来改变局部的平衡性</strong></p>
+<ul>
+<li>左旋：头节点变成了新头节点的左节点<ul>
+<li>如果新头节点存在左孩子，则成为旧头节点的右孩子。因为对于左旋，新头节点本来是旧头节点的右孩子</li>
+</ul>
+</li>
+<li>右旋：头节点变成了新头节点的右节点<ul>
+<li>如果新头节点存在右孩子，则成为旧头节点的左孩子。因为对于右旋，新头节点本来是旧头节点的左孩子</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="AVL树"><a href="#AVL树" class="headerlink" title="AVL树"></a>AVL树</h4><ul>
+<li>发现不平衡<ul>
+<li>把左树高度和右树高度记录在节点中，当插入新节点时回溯，修改沿途的值，修改过程中将发现不平衡。删除节点同理</li>
+</ul>
+</li>
+<li>当发现不平衡时进行旋转，<strong>4种调整的组合</strong><ul>
+<li>LL：左子树的左子树导致的不平衡<ul>
+<li>单纯的右旋</li>
+<li>即<code>node.left.left != NULL</code>的情况：因为向上3级就能发现不平衡</li>
+</ul>
+</li>
+<li>LR：左子树的右子树导致的不平衡<ul>
+<li>先左旋再右旋：<ul>
+<li>先以头节点的左子节点为新头节点左旋</li>
+<li>然后就转化成了LL型的操作</li>
+</ul>
+</li>
+<li>即<code>node.left.right != NULL</code>的情况</li>
+</ul>
+</li>
+<li>RR：右子树的右子树导致的不平衡<ul>
+<li>单纯的左旋</li>
+<li>即<code>node.right.right != NULL</code>的情况</li>
+</ul>
+</li>
+<li>RL：右子树的左子树导致的不平衡<ul>
+<li>即<code>node.right.left != NULL</code>的情况</li>
+<li>同理LR型</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h4><p>为表述方便：C(current)表示针对的节点，P(parent), G(grandparent)，U(uncle)</p>
+<ul>
+<li>特征<ul>
+<li><ol>
+<li>根节点是黑色</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>所有叶子(nil节点)都是黑色</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>每个红色节点的两个字节点都是黑色(不存在两个连续的红色节点)</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>从任意节点到其每个叶子的所有路径都包含相同数目的黑色节点<ul>
+<li>黑色完美平衡</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>旋转：为例减小树的高度<ul>
+<li>红黑树最大高度$O(\log n)$</li>
+<li>左旋：<ul>
+<li>C和它的右子节点交换</li>
+<li>C右子节点的左子树成为C的右子树</li>
+<li>右子变新爹，右子的左子变老爹的右子，老爹变新爹左子<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># LEFT-ROTATE(T, x)</span><br><span class="line">y &#x3D; x.right</span><br><span class="line">x.right &#x3D; y.left</span><br><span class="line">if y.left !&#x3D; nil</span><br><span class="line">    y.left.p &#x3D; x</span><br><span class="line">y.p &#x3D; x.p</span><br><span class="line">if x.p &#x3D;&#x3D; nil</span><br><span class="line">    T.root &#x3D;&#x3D; y</span><br><span class="line">elseif x &#x3D;&#x3D; x.p.left</span><br><span class="line">    x.p.left &#x3D; y</span><br><span class="line">else x.p.right &#x3D; y</span><br><span class="line">y.left &#x3D; x</span><br><span class="line">x.p &#x3D; y</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>右旋：<ul>
+<li>C和它的左子节点交换</li>
+<li>C左子节点的右子树成为C的左子树</li>
+<li>左子变新爹，左子的右子变老爹的左子，老爹变新爹右子</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>搜索<ul>
+<li>比节点小就找左子树，否则右子树</li>
+</ul>
+</li>
+<li>插入<ul>
+<li>每个新节点都是红色的，违规修复代价比较小</li>
+<li><ol>
+<li>C=root，则把C变为黑色</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>P是黑色，直接插入</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>P是红色<ul>
+<li>I. U是红，则P和U都变黑，G变后，向上递归</li>
+<li>II. U是黑<ul>
+<li>三角型：GPC呈三角形<ul>
+<li>对P旋转使得GPC一条直线，然后做直线型操作</li>
+</ul>
+</li>
+<li>直线型：GPC一条直线<ul>
+<li>对G旋转，然后交换G和P的颜色</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>删除<ul>
+<li><strong>building</strong> </li>
+</ul>
+</li>
+</ul>
+<h3 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h3><hr>
+<h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h2 id="DFS深度优先搜索"><a href="#DFS深度优先搜索" class="headerlink" title="DFS深度优先搜索"></a>DFS深度优先搜索</h2><ul>
+<li>从一节点出发<ul>
+<li>非连通图分而治之</li>
+</ul>
+</li>
+<li>依次从访问邻接点,直至所有邻接点都被访问<ul>
+<li>例:迷宫  </li>
+</ul>
+</li>
+</ul>
+<h2 id="BFS广度优先搜索"><a href="#BFS广度优先搜索" class="headerlink" title="BFS广度优先搜索"></a>BFS广度优先搜索</h2><ul>
+<li>从一节点出发</li>
+<li>把他所有的邻接点入队列,并检测目标节点</li>
+<li>依次把节点出队列,并递归的把他的邻接点入队列,直到访问所有点<ul>
+<li>例:树的层序遍历  </li>
+</ul>
+</li>
+</ul>
+<h3 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h3><p>若存在两点在同一个连通集合中，则这两点存在回路</p>
+<ul>
+<li>Find() 找根节点</li>
+<li>Union() 合并成集合</li>
+</ul>
+<h2 id="最短路问题"><a href="#最短路问题" class="headerlink" title="最短路问题"></a>最短路问题</h2><h3 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h3><p>解决单源路非递减顺序(没有负)最短路径问题</p>
+<ul>
+<li>对所有未检索的点进行标记:collected[v] = false</li>
+<li>从一点出发,记录所有邻接点,若邻接点加入后路径最短,则更新<ul>
+<li>类似BFS</li>
+</ul>
+</li>
+<li>所有邻接点访问完后colleceted[v]=true,从下一个未检索的点继续循环,直到检索所有节点</li>
+</ul>
+<h3 id="Floyd算法"><a href="#Floyd算法" class="headerlink" title="Floyd算法"></a>Floyd算法</h3><p>解决多源路非递减顺序最短路径问题   </p>
+<p>稠密图有优势  </p>
+<p>$T=O(V^3)$  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 核心</span></span><br><span class="line"><span class="comment">// 顶点i到顶点j,顶点间的最短路就在矩阵显示出来了</span></span><br><span class="line"><span class="keyword">for</span>(k = <span class="number">0</span>;k&lt;N;k++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;N;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;N;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(D[i][k]+D[k][j]&lt;D[i][j])&#123;</span><br><span class="line">                D[i][j] = D[i][k]+D[k][j];</span><br><span class="line">                path[i][j] = k;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h3><p>解决稠密图的最小生成树问题  </p>
+<ul>
+<li>从任意点出发</li>
+<li>寻找与这个整体相邻,且不构成回路的权最小点</li>
+<li>加入该整体,继续搜索,直至所有点都收录(生成树必须包含所有点)</li>
+</ul>
+<h3 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h3><p>解决稀疏图的最小生成树问题  </p>
+<p>$T=E\log{E}$  </p>
+<ul>
+<li>核心思想,每个顶点都是一棵树,把森林连成树</li>
+<li>找最短且不构成回路的边,又因为每个顶点都是一棵树,每个边都把森林连成树</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MST=&#123;&#125;;  <span class="comment">// 最小生成树</span></span><br><span class="line">E;   <span class="comment">// 边集</span></span><br><span class="line"><span class="keyword">while</span>(没够V<span class="number">-1</span>条边&amp;&amp;E没空)&#123;</span><br><span class="line">    findmin();  <span class="comment">// 找最小边  用最小堆</span></span><br><span class="line">    delet(E(v,w));  <span class="comment">// 把该边移除边集E</span></span><br><span class="line">    <span class="keyword">if</span>(E(v,w)加入MST不构成回路)   <span class="comment">// 并查集</span></span><br><span class="line">        join(E(v,w));  <span class="comment">// 加入并查集</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        单纯的删除</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(MST中边不够V<span class="number">-1</span>条)</span><br><span class="line">    生成树不存在</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="A星寻路算法"><a href="#A星寻路算法" class="headerlink" title="A星寻路算法"></a>A星寻路算法</h3><ul>
+<li>启发性搜索：f = g + h<ul>
+<li>f：当前点到终点的代价</li>
+<li>g：起点到当前点的代价</li>
+<li>h：当前点到终点的 <strong>预估代价</strong><ul>
+<li>忽略障碍，只算直线距离，但是移动时只走无障碍的路</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>过程<ul>
+<li>使用一个OPEN列表保存能走且未走过的路</li>
+<li>使用一个CLOSED列表保存走过的路</li>
+<li>将起点放入OPEN列表</li>
+<li>循环<ul>
+<li><ol>
+<li><strong>current=OPEN列表中f最小的点</strong></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>OPEN中移出current放入CLOSED</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>如果current是终点，则循环结束</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>遍历current的所有邻居(其中的邻居不能是CLOSED中、不能是障碍物)</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>计算邻居的f</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>将邻居的parent设为current</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>将邻居放入OPEN列表</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>最后从终点一直沿着父节点走就找到了最短路径</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="效率问题"><a href="#效率问题" class="headerlink" title="效率问题"></a>效率问题</h1><h3 id="联机算法"><a href="#联机算法" class="headerlink" title="联机算法"></a>联机算法</h3><p>在任意时刻，算法对要操作的数据只读入（扫描）一次，一旦被读入并处理，它就不需要在被记忆了。而在此处理过程中算法能对它已经读入的数据立即给出相应子序列问题的正确答案。具有这种特性的算法叫做联机算法（on-line algorithm。</p>
+<h3 id="分治算法"><a href="#分治算法" class="headerlink" title="分治算法"></a>分治算法</h3><p>在计算机科学中，分治法是一种很重要的算法。字面上的解释是“分而治之”，就是把一个复杂的问题分成两个或更多的相同或相似的子问题，再把子问题分成更小的子问题……直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。这个技巧是很多高效算法的基础，如排序算法(快速排序，归并排序)，傅立叶变换(快速傅立叶变换)……</p>
+<ul>
+<li>该问题的规模缩小到一定的程度就可以容易地解决</li>
+<li>该问题可以分解为若干个规模较小的相同问题，即该问题具有最优子结构性质</li>
+<li>利用该问题分解出的子问题的解可以合并为该问题的解</li>
+<li>该问题所分解出的各个子问题是相互独立的，即子问题之间不包含公共的子子问题</li>
+</ul>
+<hr>
+<h1 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h1><h3 id="全排列"><a href="#全排列" class="headerlink" title="全排列"></a>全排列</h3><p>给定一个 没有重复 数字的序列，返回其所有可能的全排列。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,2,3]</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [1,3,2],</span><br><span class="line">  [2,1,3],</span><br><span class="line">  [2,3,1],</span><br><span class="line">  [3,1,2],</span><br><span class="line">  [3,2,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>思路，可以模拟全排列的过程，一个一个插入。只是不同的方法优劣程度不同<ul>
+<li>妙：通过交换位置维护已选数，回溯时再换回来<ul>
+<li><ol>
+<li>优化空间，不需要而外空间保存已选</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>优化未选数查询，交换后已选的数都排在了前头，未选的数从剩余长度开始就是</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h1><h2 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h2><p>设有100亿个黑名单网页，每个网页URL占用64字节，想要实现一种网页过滤系统，过滤黑名单，允许有万分之一的判断失误，且而外空间不超过30G。</p>
+<p>如果用哈希表存入数据库，但是至少需要640G空间。这样对空间要求比较严格，但允许一定失误的过滤系统，往往是  <strong>布隆过滤器：使用很少的空间就能把正确率做到很高的程度</strong> </p>
+<p>布隆过滤器可以精确的代表一个集合，可精确到判断某一元素是否在集合中，但100%的精确是不可能的。</p>
+<ul>
+<li>加入布隆过滤器<ul>
+<li>一个长度为m的bit类型的数组<code>bitarray</code>，每个位置只有0(白)和1(黑)</li>
+<li>有k个哈希函数，这些哈希函数都足够优秀，且输出域都大于等于m</li>
+<li>对于一个对象，如64字节的URL通过k个哈希函数<ul>
+<li>哈希的结果对m取余，取余的结果在bitarray上将相应的位置设为1(涂黑)</li>
+</ul>
+</li>
+<li>使用该方法处理所有的对象，如果遇到已经涂黑的位置，则让其保持黑</li>
+</ul>
+</li>
+<li>检查<ul>
+<li>将对象通过这k个哈希函数，取余等操作，找到bitarray上对应的位置</li>
+<li>如果得到的位置都为黑色，则就是黑名单中，否则不是</li>
+<li>但是也有可能误判，将白的判为黑的</li>
+</ul>
+</li>
+</ul>
+<h3 id="bitarray和k大小的确定"><a href="#bitarray和k大小的确定" class="headerlink" title="bitarray和k大小的确定"></a>bitarray和k大小的确定</h3><p>bitarray大小m由样本数量n和能容忍的驶入率p决定。上题中$m=100亿，p=0.01%$</p>
+<p>$$<br>m = - \frac{n \times lnp}{(ln2)^2} \<br>k = ln2 \times \frac mn = 0.7 \times \frac mn<br>$$</p>
+<h2 id="不用额外空间交换量整数的值"><a href="#不用额外空间交换量整数的值" class="headerlink" title="不用额外空间交换量整数的值"></a>不用额外空间交换量整数的值</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = a0;</span><br><span class="line">b = b0;</span><br><span class="line">a = a^b;  <span class="comment">// a=a0^b0, b=b0</span></span><br><span class="line">b = a^b;  <span class="comment">// a=a0^b0, b=a0^b0^b0=a0</span></span><br><span class="line">a = a^b;  <span class="comment">// a=a0^b0^a0=b0, b=a0</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="奇数次偶数次"><a href="#奇数次偶数次" class="headerlink" title="奇数次偶数次"></a>奇数次偶数次</h2><ul>
+<li><ol>
+<li>假设一个数组中只有一个数出现了奇数次，其他数都出现了偶数次，要求在时间复杂度0(1)的情况下找出这个数。<ul>
+<li>使用一个数a=0，与arr中的每一个数[c, b, a, c, b, a, d]异或，结果就是这个数</li>
+<li>因为异或运算满足交换率和结合率，异或的次序就可以是[aabbccd]，所以得到d</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>第一题小小改进，有两个数出现奇数次<ul>
+<li>先与每个数异或最后剩下<code>a=b^c</code></li>
+<li>因为b和c是不同的数，所以a不为0，找到为1的一位，假设是第k位</li>
+<li>因为低k位为1，说明a和b的第k位一定不一样</li>
+<li>第二次遍历让a2=0只与与第k位为1的数异或，则异或的结果就是a和b中的一个</li>
+<li><code>a^a2</code>的结果就是a和b中的另一个</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -5116,7 +5760,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -5129,7 +5773,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
