@@ -1987,7 +1987,7 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/08/universe/git%E6%93%8D%E4%BD%9C/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/08/universe/git_tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -2006,7 +2006,7 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/09/08/universe/git%E6%93%8D%E4%BD%9C/" itemprop="url">git操作</a></h1>
+                <a class="post-title-link" href="/2019/09/08/universe/git_tips/" itemprop="url">git操作</a></h1>
         
 
         <div class="post-meta">
@@ -2078,6 +2078,21 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
 
 <h3 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit &#x2F;&#x2F; 会打开文件让你添加描述</span><br><span class="line">git commit -m &quot;描述&quot; &#x2F;&#x2F; 快捷添加描述提交</span><br></pre></td></tr></table></figure>
 
+
+<h3 id="PR"><a href="#PR" class="headerlink" title="PR"></a>PR</h3><ul>
+<li><ol>
+<li>fork from rep</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>make some change on a new branch of the fork rep</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>commit and pr</li>
+</ol>
+</li>
+</ul>
 <h3 id="不让git管理指定文件"><a href="#不让git管理指定文件" class="headerlink" title="不让git管理指定文件"></a>不让git管理指定文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.新建一个 .gitignore 文件</span><br><span class="line"></span><br><span class="line">2.写入不需要git管理等文件名</span><br><span class="line">&#x2F;&#x2F; 但是git一旦追踪某个文件那就会一只追踪</span><br><span class="line">&#x2F;&#x2F; 停止追踪 git rm --cached FILE</span><br></pre></td></tr></table></figure>
 
 <h3 id="git分支"><a href="#git分支" class="headerlink" title="git分支"></a>git分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1.创建分支</span><br><span class="line">git branch NAME</span><br><span class="line"></span><br><span class="line">2.切换分支</span><br><span class="line">git checkout NAME</span><br><span class="line"></span><br><span class="line">3.分支合并</span><br><span class="line">git merge NAME &#x2F;&#x2F; 会把NAME分支合并到当前分支</span><br><span class="line"></span><br><span class="line">4.删除分支</span><br><span class="line">git branch -d NAME &#x2F;&#x2F; -D强制删除</span><br><span class="line">&#x2F;&#x2F; 主分支叫master</span><br></pre></td></tr></table></figure>
