@@ -81,13 +81,13 @@
 
 <meta name="description" content="title: c++进阶date: 2020-5-15tags: c++      C++补完计划关键字decltype(c++11)关键字decltype(x)用于自动检测x的类型，并作为关键字。使用方法如下     12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Major&#x2F;cpp_level_up">
-<meta property="og:url" content="http://yoursite.com/2020/06/20/Major/cpp_level_up/index.html">
+<meta property="og:title" content="universe&#x2F;c&#x2F;cpp_level_up">
+<meta property="og:url" content="http://yoursite.com/2020/09/08/universe/c/cpp_level_up/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="title: c++进阶date: 2020-5-15tags: c++      C++补完计划关键字decltype(c++11)关键字decltype(x)用于自动检测x的类型，并作为关键字。使用方法如下     12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-06-20T15:13:24.803Z">
-<meta property="article:modified_time" content="2020-06-20T15:13:24.806Z">
+<meta property="article:published_time" content="2020-09-08T14:00:16.848Z">
+<meta property="article:modified_time" content="2020-09-08T14:00:16.848Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/06/20/Major/cpp_level_up/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/09/08/universe/c/cpp_level_up/"/>
 
 
 
 
 
-  <title>Major/cpp_level_up | Hexo</title>
+  <title>universe/c/cpp_level_up | Hexo</title>
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/20/Major/cpp_level_up/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/08/universe/c/cpp_level_up/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Major/cpp_level_up</h1>
+          <h1 class="post-title" itemprop="name headline">universe/c/cpp_level_up</h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-20T23:13:24+08:00">
-                2020-06-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-08T22:00:16+08:00">
+                2020-09-08
               </time>
             
 
@@ -332,75 +332,8 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="title">class</span>... <span class="title">Args</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">show</span>(<span class="title">T</span> <span class="title">value</span>, <span class="title">Args</span>... <span class="title">args</span>)&#123;</span></span><br><span class="line">    show(args...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这样每次T都会取走第一个参数，而arg取走其余参数，每次递归就会少一个参数，直到递归结束。</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><pre><code class="c"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;    
-<span class="comment">//索引、添加、修改    </span>
-Hash[key];    
-Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加    </span>
-Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改    </span>
-<span class="comment">//计数    </span>
-Hash.count(key);    
-<span class="comment">//删除    </span>
-Hash.erase(key);    </code></pre>
-<h3 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h3><table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&amp;</td>
-<td>如果同时存在于两个操作数中，二进制 AND 运算符复制一位到结果中。</td>
-</tr>
-<tr>
-<td>|</td>
-<td>如果存在于任一操作数中，二进制 OR 运算符复制一位到结果中。</td>
-</tr>
-<tr>
-<td>^</td>
-<td>如果存在于其中一个操作数中但不同时存在于两个操作数中，二进制异或运算符复制一位到结果中。</td>
-</tr>
-<tr>
-<td>~</td>
-<td>二进制补码运算符是一元运算符，具有”翻转”位效果，即0变成1，1变成0。</td>
-</tr>
-<tr>
-<td>&lt;&lt;</td>
-<td>二进制左移运算符。左操作数的值向左移动右操作数指定的位数。</td>
-</tr>
-<tr>
-<td>&gt;&gt;</td>
-<td>二进制右移运算符。左操作数的值向右移动右操作数指定的位数。</td>
-</tr>
-</tbody></table>
-<h3 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h3><table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&lt;&lt;=</td>
-<td>左移且赋值运算符</td>
-</tr>
-<tr>
-<td>&gt;&gt;=</td>
-<td>右移且赋值运算符</td>
-</tr>
-<tr>
-<td>&amp;=</td>
-<td>按位与且赋值运算符</td>
-</tr>
-<tr>
-<td>^=</td>
-<td>按位异或且赋值运算符</td>
-</tr>
-<tr>
-<td>|=</td>
-<td>按位或且赋值运算符</td>
-</tr>
-</tbody></table>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;Type, Type&gt; Hash;	</span><br><span class="line"><span class="comment">//索引、添加、修改	</span></span><br><span class="line">Hash[key];	</span><br><span class="line">Hash[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">//添加	</span></span><br><span class="line">Hash[<span class="number">2</span>] = <span class="number">3</span>; <span class="comment">//修改	</span></span><br><span class="line"><span class="comment">//计数	</span></span><br><span class="line">Hash.count(key);	</span><br><span class="line"><span class="comment">//删除	</span></span><br><span class="line">Hash.erase(key);	</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">## Queue</span><br><span class="line"></span><br><span class="line">### priority_queue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 位运算符</span><br><span class="line"></span><br><span class="line">| 运算符 | 描述                                                                                     |</span><br><span class="line">|--------|------------------------------------------------------------------------------------------|</span><br><span class="line">| &amp;      | 如果同时存在于两个操作数中，二进制 AND 运算符复制一位到结果中。                          |</span><br><span class="line">| \|     | 如果存在于任一操作数中，二进制 OR 运算符复制一位到结果中。                               |</span><br><span class="line">| ^      | 如果存在于其中一个操作数中但不同时存在于两个操作数中，二进制异或运算符复制一位到结果中。 |</span><br><span class="line">| ~      | 二进制补码运算符是一元运算符，具有<span class="string">"翻转"</span>位效果，即<span class="number">0</span>变成<span class="number">1</span>，<span class="number">1</span>变成<span class="number">0</span>。                       |</span><br><span class="line">| &lt;&lt;     | 二进制左移运算符。左操作数的值向左移动右操作数指定的位数。                               |</span><br><span class="line">| &gt;&gt;     | 二进制右移运算符。左操作数的值向右移动右操作数指定的位数。                               |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 赋值运算符</span><br><span class="line"></span><br><span class="line">| 运算符 | 描述                 |</span><br><span class="line">|--------|----------------------|</span><br><span class="line">| &lt;&lt;=    | 左移且赋值运算符     |</span><br><span class="line">| &gt;&gt;=    | 右移且赋值运算符     |</span><br><span class="line">| &amp;=     | 按位与且赋值运算符   |</span><br><span class="line">| ^=     | 按位异或且赋值运算符 |</span><br><span class="line">| \|=    | 按位或且赋值运算符   |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 伪函数Functor</span><br><span class="line"></span><br><span class="line">伪函数不是一个函数，而是一个类或结构体。伪函数 **必须充值`()`运算符** ,通过重载`()`运算符来执行函数。</span><br><span class="line"></span><br><span class="line">之所以需要伪函数是因为，在传递函数指针在函数内部调用函数，如果我们需要在函数使用一个全局变量，而不能通过在最外层设置全局变量(可能污染命名空间)，那么伪函数是类的属性就起到重要作用。</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">class Func&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Func(<span class="built_in">string</span> str) : ss(str)&#123;&#125;</span><br><span class="line">    <span class="keyword">void</span> <span class="keyword">operator</span>() (<span class="built_in">string</span> str)&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="string">" "</span> &lt;&lt; ss &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">string</span> str;  <span class="comment">// 一旦类构造好，那它就是类的全局属性</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">realFunc</span><span class="params">(<span class="built_in">string</span> str, Func myfunc)</span></span>&#123;</span><br><span class="line">    myfunc(str);  <span class="comment">// 正式调用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    realFunc(<span class="string">"hello"</span>, Func(<span class="string">"ring"</span>)); <span class="comment">// 传入时构造好</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -425,8 +358,8 @@ Hash.erase(key);    </code></pre>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/06/12/Major/OS/Operating_Systems/" rel="next" title="操作系统">
-                <i class="fa fa-chevron-left"></i> 操作系统
+              <a href="/2020/09/03/universe/RPC/" rel="next" title="RPC intro">
+                <i class="fa fa-chevron-left"></i> RPC intro
               </a>
             
           </div>
@@ -434,10 +367,6 @@ Hash.erase(key);    </code></pre>
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/06/23/universe/python/python_hack/" rel="prev" title="python hack">
-                python hack <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -458,7 +387,7 @@ Hash.erase(key);    </code></pre>
       
     </div>
   </div>
-    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/Major/cpp_level_up.md" target="_blank">编辑</a>
+    <a href="https://github.com/66RING/66RING.github.io/edit/myblog/source/_posts/universe/c/cpp_level_up.md" target="_blank">编辑</a>
 
 
           </div>
@@ -561,7 +490,7 @@ Hash.erase(key);    </code></pre>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-补完计划"><span class="nav-number">1.</span> <span class="nav-text">C++补完计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关键字decltype-c-11"><span class="nav-number">1.1.</span> <span class="nav-text">关键字decltype(c++11)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包装器"><span class="nav-number">1.2.</span> <span class="nav-text">包装器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可变参数模板"><span class="nav-number">1.3.</span> <span class="nav-text">可变参数模板</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模板参数包"><span class="nav-number">1.3.1.</span> <span class="nav-text">模板参数包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#展开参数包"><span class="nav-number">1.3.2.</span> <span class="nav-text">展开参数包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在可变参数模板函数中使用递归"><span class="nav-number">1.3.3.</span> <span class="nav-text">在可变参数模板函数中使用递归</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">2.1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unordered-map"><span class="nav-number">2.2.</span> <span class="nav-text">unordered_map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位运算符"><span class="nav-number">2.3.</span> <span class="nav-text">位运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#赋值运算符"><span class="nav-number">2.4.</span> <span class="nav-text">赋值运算符</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-补完计划"><span class="nav-number">1.</span> <span class="nav-text">C++补完计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关键字decltype-c-11"><span class="nav-number">1.1.</span> <span class="nav-text">关键字decltype(c++11)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包装器"><span class="nav-number">1.2.</span> <span class="nav-text">包装器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可变参数模板"><span class="nav-number">1.3.</span> <span class="nav-text">可变参数模板</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模板参数包"><span class="nav-number">1.3.1.</span> <span class="nav-text">模板参数包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#展开参数包"><span class="nav-number">1.3.2.</span> <span class="nav-text">展开参数包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在可变参数模板函数中使用递归"><span class="nav-number">1.3.3.</span> <span class="nav-text">在可变参数模板函数中使用递归</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map"><span class="nav-number">3.</span> <span class="nav-text">Map</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#unordered-map"><span class="nav-number">3.1.</span> <span class="nav-text">unordered_map</span></a></li></ol></li></ol></div>
             
 
           </div>
