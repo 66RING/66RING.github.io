@@ -162,26 +162,6 @@
 
       <div class="post-meta">
         <time itemprop="dateCreated"
-              datetime="2020-05-29T00:00:00+08:00"
-              content="2020-05-29">
-          05-29
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/05/29/universe/Emacs_in_action/" itemprop="url">
-            <span itemprop="name">emacs快速入门</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
               datetime="2020-05-21T00:00:00+08:00"
               content="2020-05-21">
           05-21
@@ -211,6 +191,26 @@
       <div class="post-title">
           <a class="post-title-link" href="/2020/05/18/universe/c/algorithm_tips/" itemprop="url">
             <span itemprop="name">算法技巧</span>
+          </a>
+      </div>
+
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2020-05-15T00:00:00+08:00"
+              content="2020-05-15">
+          05-15
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/2020/05/15/universe/c/cpp_level_up/" itemprop="url">
+            <span itemprop="name">c++进阶</span>
           </a>
       </div>
 
@@ -488,7 +488,6 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -502,65 +501,6 @@
 
 <script src="/js/next-boot.js"></script>
 
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '.languages',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.dataset.pjax !== undefined) {
-      script.dataset.pjax = '';
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
 
 
 
@@ -580,11 +520,11 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
   
 
   
 
-    </div>
+  
+
 </body>
 </html>
