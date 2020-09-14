@@ -987,7 +987,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-18 14:05:11" itemprop="dateModified" datetime="2020-07-18T14:05:11+08:00">2020-07-18</time>
+                <time title="Modified: 2020-09-14 19:48:14" itemprop="dateModified" datetime="2020-09-14T19:48:14+08:00">2020-09-14</time>
               </span>
 
           
@@ -1145,8 +1145,8 @@
 <li>常用于多分类问题，因为它把logits转换为prob</li>
 <li>区别于一般的转换成prob的方法，Softmax会把大的放大，小的缩小；拉大差距(sotf version of max)</li>
 <li>求导:把先把分子分母看做整体<code>f(x)和g(x)</code>然后相当于$\frac{\partial p_i}{\partial a_j}=\frac{f’(x)g(x)-f(x)g’(x)}{g(x)^2}$;注意i和j不同的情况要分开讨论<ul>
-<li>结果$<br>\frac{\partial p_i}{\partial a_j} = \begin{cases}<br>p_i(1-p_1), &amp; \text{if } i=j  \</li>
-<li>p_jp_i, &amp; \text{if } i\neq j<br>\end{cases}<br>$</li>
+<li>结果$$<br>\frac{\partial p_i}{\partial a_j} = \begin{cases}<br>p_i(1-p_1), &amp; \text{if } i=j  \</li>
+<li>p_jp_i, &amp; \text{if } i\neq j<br>\end{cases}<br>$$</li>
 </ul>
 </li>
 </ul>
