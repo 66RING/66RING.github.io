@@ -1507,6 +1507,15 @@
 </ul>
 </li>
 </ul>
+<h2 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h2><h3 id="利用-进行文件操作"><a href="#利用-进行文件操作" class="headerlink" title="利用%进行文件操作"></a>利用%进行文件操作</h3><p>只读寄存器%中储存有当前文件路径，通过关键字可以展开到绝对路径、所在目录等信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:echo expand(&#39;%:t&#39;)  &quot; 文件名</span><br><span class="line">:echo expand(&#39;%:p&#39;)  &quot; 绝对路径</span><br><span class="line">:echo expand(&#39;%:p:h&#39;) &quot; 所在目录</span><br><span class="line">:echo expand(&#39;%:p:h:t&#39;) &quot; 所在目录名</span><br></pre></td></tr></table></figure>
+
+<p> <strong>p表示path，h表示head，t表示tail</strong> </p>
+<h3 id="打开目录"><a href="#打开目录" class="headerlink" title="打开目录"></a>打开目录</h3><p>如果打开的是目录，则Vim会使用<code>Explore</code>打开。当然也可手动在一个文件中<code>:Explore</code>打开当前目录。</p>
+<ul>
+<li><code>:Sexplore</code>，水平分割打开目录</li>
+<li><code>:Vexplore</code>，垂直分割打开目录</li>
+</ul>
 
           
         
@@ -3224,21 +3233,26 @@
 <li>这种能将多个文件整合在一起就叫<strong>archive(归档)</strong></li>
 </ul>
 </li>
-<li>tar：归档工具，只归档不压缩，体积还会变大<ul>
+</ul>
+</li>
+<li>归档工具，只归档不压缩，体积还会变大<ul>
+<li>tar<ul>
 <li><code>-c</code>创建归档文件</li>
 <li><code>-f</code>FILE` <strong>操作的文件</strong></li>
 <li><code>-x</code>展开归档, 一般用<code>-xf</code></li>
 <li><code>--xattrs</code>归档时保留其扩展属性信息</li>
 <li><code>-t</code>查看归档里有啥</li>
+</ul>
+</li>
+</ul>
+</li>
 <li>即归档又压缩<ul>
-<li>当然可以先使用tar归档，再压缩。但是可以直接一步到位</li>
+<li>当然可以先使用tar归档，再压缩。但是可以直接一步到位<ul>
 <li><code>-zcf</code>归档然后调用gzip压缩</li>
 <li><code>-zxf</code>调用gzip解压缩然后展开归档</li>
 <li><code>-jcf</code>, <code>-jxf</code>调用bz2</li>
 <li><code>-Jcf</code>, <code>-Jxf</code>调用xz</li>
 <li>展开时使用的工具可以省略，如<code>-xf</code></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
