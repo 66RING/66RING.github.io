@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/11/index.html">
+  <meta name="description" content="&lt;SID&gt; The string ““ can be used in a mapping or menu. When executing the map command, Vim will replace ““ with the special key code , followed by a number that’s unique for the script, and an un">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Advanced Vim Programming">
+<meta property="og:url" content="http://yoursite.com/2020/09/16/universe/vim/advanced_vim_programming/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&lt;SID&gt; The string ““ can be used in a mapping or menu. When executing the map command, Vim will replace ““ with the special key code , followed by a number that’s unique for the script, and an un">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-16T13:30:09.398Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="vim, advanced">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/archives/2019/11/">
+<link rel="canonical" href="http://yoursite.com/2020/09/16/universe/vim/advanced_vim_programming/">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Archive | Hexo</title>
+  <title>Advanced Vim Programming | Hexo</title>
   
 
 
@@ -139,51 +144,101 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">Nice! 57 posts in total. Keep on posting.</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/16/universe/vim/advanced_vim_programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Advanced Vim Programming
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-09-16 00:00:00 / Modified: 21:30:09" itemprop="dateCreated datePublished" datetime="2020-09-16T00:00:00+08:00">2020-09-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2019</span>
+        <h2 id="lt-SID-gt"><a href="#lt-SID-gt" class="headerlink" title="&lt;SID&gt;"></a>&lt;SID&gt;</h2><blockquote>
+<p>The string “<SID>“ can be used in a mapping or menu.</p>
+<p>When executing the map command, Vim will replace “<SID>“ with the special key code <SNR>, followed by a number that’s unique for the script, and an underscore.  Example: <code>:map &lt;SID&gt;Add</code> could define a mapping “<SNR>23_Add”.</p>
+</blockquote>
+<p>When you map some thing to a <code>s:</code> function, which means you may call it may mapping outside of the script. Try the follow scirpts:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function! s:say()</span><br><span class="line">    echo expand(&quot;&lt;SID&gt;&quot;)</span><br><span class="line">    echo &quot;hello&quot;</span><br><span class="line">endfunction</span><br><span class="line">map WW :call s:say()&lt;CR&gt;</span><br><span class="line">map RR :call &lt;SID&gt;say()&lt;CR&gt;</span><br></pre></td></tr></table></figure>
+
+<p>When mapping <code>WW</code> is executed from outside of scirpt, it don’t know which the script the function was defined.</p>
+<p>The <code>:scriptnames</code> command can be used to see which scripts have been sourced</p>
+<h3 id="lt-sfile-gt"><a href="#lt-sfile-gt" class="headerlink" title="&lt;sfile&gt;"></a>&lt;sfile&gt;</h3><p><code>:h &lt;sfile&gt;</code></p>
+<h2 id="lt-Plug-gt"><a href="#lt-Plug-gt" class="headerlink" title="&lt;Plug&gt;"></a>&lt;Plug&gt;</h2><blockquote>
+<p>The special key name “<Plug>“ can be used for an internal mapping, which is not to be matched with any key sequence.  This is useful in plugins</p>
+</blockquote>
+<p>As the doc file said, <code>&lt;Plug&gt;</code> key is often use in a internal mapping. Like:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func! s:somecme</span><br><span class="line">    ...</span><br><span class="line">endfunc</span><br><span class="line">noremap &lt;silent&gt; &lt;Plug&gt;SomeCmd :call &lt;SID&gt;somecmd</span><br><span class="line">nmap ss &lt;Plug&gt;SomeCmd</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Why Vim has this feature?<ul>
+<li>may be its a way to set alias in vimscript?</li>
+</ul>
+</li>
+</ul>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-26T00:00:00+08:00"
-              content="2019-11-26">
-          11-26
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vim-advanced/" rel="tag"># vim, advanced</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/11/26/Major/algorithm/arithmetic/" itemprop="url">
-            <span itemprop="name">算法学习</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/03/universe/RPC/" rel="prev" title="RPC intro">
+      <i class="fa fa-chevron-left"></i> RPC intro
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -236,6 +291,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-SID-gt"><span class="nav-number">1.</span> <span class="nav-text">&lt;SID&gt;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lt-sfile-gt"><span class="nav-number">1.1.</span> <span class="nav-text">&lt;sfile&gt;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-Plug-gt"><span class="nav-number">2.</span> <span class="nav-text">&lt;Plug&gt;</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
