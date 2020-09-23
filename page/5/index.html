@@ -1908,7 +1908,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-05 11:56:17" itemprop="dateModified" datetime="2020-09-05T11:56:17+08:00">2020-09-05</time>
+                <time title="Modified: 2020-09-22 22:02:58" itemprop="dateModified" datetime="2020-09-22T22:02:58+08:00">2020-09-22</time>
               </span>
 
           
@@ -2669,7 +2669,27 @@
 </ol>
 </li>
 </ul>
-<h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1>
+<h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><p>从暴力搜索 推导出 动态规划，然后优化</p>
+<h2 id="动态规划与记忆搜索的关系"><a href="#动态规划与记忆搜索的关系" class="headerlink" title="动态规划与记忆搜索的关系"></a>动态规划与记忆搜索的关系</h2><p>给定一个集合，{1, 5, 10, 15, 25}，求组合得到一个数target是所有组合数。</p>
+<ul>
+<li>递归<ul>
+<li>遍历数组，取一个值后，用剩下target继续递归执行</li>
+<li><strong>大量重复计算</strong>，对于一个target值，组合数是相同的，不需要每次都从头计算</li>
+</ul>
+</li>
+<li>记忆搜索<ul>
+<li>使用一个map记录某个状态下target对应的组合数，如果没计算过才算，否则直接取值</li>
+<li><strong>区别于动态规划</strong> ，记忆搜索”不规定计算顺序”，遇到无记忆的就算</li>
+</ul>
+</li>
+<li>动态规划<ul>
+<li>生成行数为N，列数位aim+1的矩阵dp(dynamic programming)，<code>dp[i][j]</code>表示使用<code>arr[0...i]</code>货币的情况下，组成钱数j有多少种方法</li>
+<li>动态规划规定每一种递归状态下的计算顺序，依次进行计算</li>
+<li>动态规划严格规定计算顺序，存在进一步优化的可能</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
 
