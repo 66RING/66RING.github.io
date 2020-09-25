@@ -1231,7 +1231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-24 22:01:05" itemprop="dateModified" datetime="2020-09-24T22:01:05+08:00">2020-09-24</time>
+                <time title="Modified: 2020-09-25 16:18:18" itemprop="dateModified" datetime="2020-09-25T16:18:18+08:00">2020-09-25</time>
               </span>
 
           
@@ -1820,8 +1820,11 @@
 <li>Context的Value相关方法应该传递必须的数据，不要什么数据都使用这个传递</li>
 <li>Context是线程安全的，可以放心的在多个goroutine中传递</li>
 </ul>
-<h2 id="go语言圣经"><a href="#go语言圣经" class="headerlink" title="go语言圣经"></a>go语言圣经</h2><h3 id="复合数据结构"><a href="#复合数据结构" class="headerlink" title="复合数据结构"></a>复合数据结构</h3><h4 id="文本和HTML模板"><a href="#文本和HTML模板" class="headerlink" title="文本和HTML模板"></a>文本和HTML模板</h4><p><code>text/template</code>和<code>html/template</code>等模板包提供了一个将变量值填充到一个文本或HTML格式的模板机制。方便完成简复杂的格式打印</p>
-<p>一个模板是一个字符串或一个文件，里面包含了一个或多个有双花括号包含的  `{{action}}` 对象。每个action都包含一个 <strong>用模板语句书写的表达式</strong> 。模板语言包含通过选择结构体的成员、调用函数方法、流程控制和range循环语句。</p>
+<h2 id="go语言圣经"><a href="#go语言圣经" class="headerlink" title="go语言圣经"></a>go语言圣经</h2><h3 id="复合数据结构"><a href="#复合数据结构" class="headerlink" title="复合数据结构"></a>复合数据结构</h3><h4 id="文本和HTML模板"><a href="#文本和HTML模板" class="headerlink" title="文本和HTML模板"></a>文本和HTML模板</h4><p><strong>为hexo提供转意** 
+
+`text/template`和`html/template`等模板包提供了一个将变量值填充到一个文本或HTML格式的模板机制。方便完成简复杂的格式打印
+
+一个模板是一个字符串或一个文件，里面包含了一个或多个有双花括号包含的  `{{action}}` 对象。每个action都包含一个 **用模板语句书写的表达式</strong> 。模板语言包含通过选择结构体的成员、调用函数方法、流程控制和range循环语句。</p>
 
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> templ = <span class="string">`&#123;&#123;.TotalCount&#125;&#125; issues:</span></span><br><span class="line"><span class="string">&#123;&#123;range .Items&#125;&#125;----------------------------------------</span></span><br><span class="line"><span class="string">Number: &#123;&#123;.Number&#125;&#125;</span></span><br><span class="line"><span class="string">User:   &#123;&#123;.User.Login&#125;&#125;</span></span><br><span class="line"><span class="string">Title:  &#123;&#123;.Title | printf "%.64s"&#125;&#125;</span></span><br><span class="line"><span class="string">Age:    &#123;&#123;.CreatedAt | daysAgo&#125;&#125; days</span></span><br><span class="line"><span class="string">&#123;&#123;end&#125;&#125;`</span></span><br></pre></td></tr></table></figure>
 
