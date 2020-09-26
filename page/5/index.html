@@ -1908,7 +1908,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-24 11:43:45" itemprop="dateModified" datetime="2020-09-24T11:43:45+08:00">2020-09-24</time>
+                <time title="Modified: 2020-09-26 19:57:22" itemprop="dateModified" datetime="2020-09-26T19:57:22+08:00">2020-09-26</time>
               </span>
 
           
@@ -1950,7 +1950,7 @@
 
 <h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><h4 id="小-大顶堆"><a href="#小-大顶堆" class="headerlink" title="小/大顶堆"></a>小/大顶堆</h4><p>子节点比父节点小/大的二叉树  </p>
 <p><strong>构建方法</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 法一：上浮下沉法(小顶堆为例)</span></span><br><span class="line"><span class="comment">// 从第一个非叶子节点开始，以它为子树，先自下而上把小的节点上浮，到达子树根节点后自上而下把大的节点下沉</span></span><br><span class="line"><span class="comment">// 知道根节点结束</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=len/<span class="number">2</span><span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">        <span class="keyword">int</span> t = j;</span><br><span class="line">        <span class="keyword">while</span>((t+<span class="number">1</span>)*<span class="number">2</span>&lt;=len)&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="built_in">min</span> = (t+<span class="number">1</span>)*<span class="number">2</span><span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">min</span>+<span class="number">1</span>&lt;len)&#123;</span><br><span class="line">                <span class="keyword">if</span>(heap[<span class="built_in">min</span>+<span class="number">1</span>]&lt;heap[<span class="built_in">min</span>])&#123;</span><br><span class="line">                    <span class="built_in">min</span>++; </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(heap[<span class="built_in">min</span>]&lt;heap[t])&#123;</span><br><span class="line">                swop(<span class="built_in">min</span>,t,heap);</span><br><span class="line">                t = <span class="built_in">min</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 法二：插入法</span></span><br><span class="line"><span class="comment">// 从根节点出发，若父节点比插入元素大，则调整位置，如此循环，保证父节点小于子节点</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    heap[<span class="number">0</span>] = <span class="number">-1000</span>;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=len;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;temp);</span><br><span class="line">        <span class="keyword">int</span> j;</span><br><span class="line">        <span class="keyword">for</span>(j=i;heap[j/<span class="number">2</span>]&gt;temp;j/=<span class="number">2</span>)&#123;</span><br><span class="line">            heap[j] = heap[j/<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        heap[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 法一：上浮下沉法(小顶堆为例)</span></span><br><span class="line"><span class="comment">// 从第一个非叶子节点开始，以它为子树，先自下而上把小的节点上浮，到达子树根节点后自上而下把大的节点下沉</span></span><br><span class="line"><span class="comment">// 知道根节点结束</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=len/<span class="number">2</span><span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">        <span class="keyword">int</span> t = j;</span><br><span class="line">        <span class="keyword">while</span>((t+<span class="number">1</span>)*<span class="number">2</span>&lt;=len)&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="built_in">min</span> = (t+<span class="number">1</span>)*<span class="number">2</span><span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">min</span>+<span class="number">1</span>&lt;len)&#123;</span><br><span class="line">                <span class="keyword">if</span>(heap[<span class="built_in">min</span>+<span class="number">1</span>]&lt;heap[<span class="built_in">min</span>])&#123;</span><br><span class="line">                    <span class="built_in">min</span>++; </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(heap[<span class="built_in">min</span>]&lt;heap[t])&#123;</span><br><span class="line">                swop(<span class="built_in">min</span>,t,heap);</span><br><span class="line">                t = <span class="built_in">min</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 法二：插入法</span></span><br><span class="line"><span class="comment">// 从根节点出发，若父节点比插入元素大，则调整位置，如此循环，保证父节点小于子节点</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    heap[<span class="number">0</span>] = <span class="number">-1000</span>;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=len;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;temp);</span><br><span class="line">        <span class="keyword">int</span> j;</span><br><span class="line">        <span class="keyword">for</span>(j=i;heap[j/<span class="number">2</span>]&gt;temp;j/=<span class="number">2</span>)&#123;</span><br><span class="line">            heap[j] = heap[j/<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        heap[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="利用小-大顶堆排序"><a href="#利用小-大顶堆排序" class="headerlink" title="利用小/大顶堆排序"></a>利用小/大顶堆排序</h4><ul>
 <li>根据小/大顶堆的性质，可以确定顶部一定是最大或最小的元素</li>
@@ -2080,10 +2080,10 @@
 <li>动态规划</li>
 </ul>
 <p>利用前缀表的原理：对于一个子串(如：ababc)，所有可能的前缀:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">a b</span><br><span class="line">a b a</span><br><span class="line">a b a b</span><br><span class="line">a b a b c</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">a b</span><br><span class="line">a b a</span><br><span class="line">a b a b</span><br><span class="line">a b a b c</span><br></pre></td></tr></table></figure>
 
 <p>我们需要找出每种可能中最长的、非本身的公共前后缀，因为如果前后缀相同的话，当后缀失去匹配时，可从前缀结束的地方开始匹配，而不是从头开始。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a               null    0</span><br><span class="line">a b             null    0</span><br><span class="line">a b a           a       1</span><br><span class="line">a b a b         ab      2</span><br><span class="line">a b a b c       null    0  &lt;一般剔除字符串本身,在开头填-1</span><br><span class="line"></span><br><span class="line">这些最长公共前后缀的长度就构成了前缀表</span><br><span class="line"> a b a b c</span><br><span class="line">-1 0 0 1 2</span><br><span class="line">这样就表示了当，str[j]失去匹配时，从match[j](前缀结束的地方)尝试匹配</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a               null    <span class="number">0</span></span><br><span class="line">a b             null    <span class="number">0</span></span><br><span class="line">a b a           a       <span class="number">1</span></span><br><span class="line">a b a b         ab      <span class="number">2</span></span><br><span class="line">a b a b c       null    <span class="number">0</span>  &lt;一般剔除字符串本身,在开头填<span class="number">-1</span></span><br><span class="line"></span><br><span class="line">这些最长公共前后缀的长度就构成了前缀表</span><br><span class="line"> a b a b c</span><br><span class="line"><span class="number">-1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">2</span></span><br><span class="line">这样就表示了当，str[j]失去匹配时，从match[j](前缀结束的地方)尝试匹配</span><br></pre></td></tr></table></figure>
 
 <p><strong>前缀表如何创建</strong></p>
 <ul>
@@ -2117,14 +2117,14 @@
 </li>
 <li><ol start="2">
 <li>当回文子串，中心在最大回文右边界内，且对称点的回文左右半径在最右回文边界对应的回文左右半径内<ul>
-<li>那就可以通过对称点直接得出改点的回文半径<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ ( o ) a ( o ) ]</span><br><span class="line">L   i   c   i   R</span><br></pre></td></tr></table></figure></li>
+<li>那就可以通过对称点直接得出改点的回文半径<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ ( o ) a ( o ) ]</span><br><span class="line">L   i   c   i   R</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ol>
 </li>
 <li><ol start="3">
 <li>当回文子串，中心在最大回文右边界内，且对称点的回文左右半径不在最右回文边界对应的回文左右半径内<ul>
-<li>那到R回文，因为y!=Y，不然最大回文半径还会扩大<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">( y[ o   ) a     o ]Y</span><br><span class="line">   L i     c     i R</span><br></pre></td></tr></table></figure></li>
+<li>那到R回文，因为y!=Y，不然最大回文半径还会扩大<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">( y[ o   ) a     o ]Y</span><br><span class="line">   L i     c     i R</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ol>
@@ -2149,7 +2149,7 @@
 </li>
 <li>这么一来，队列顶部的数就是当前窗口中的最大值</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct Node &#123;</span><br><span class="line">    val</span><br><span class="line">    index</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">    val</span><br><span class="line">    index</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <h4 id="例题1"><a href="#例题1" class="headerlink" title="例题1"></a>例题1</h4><p>找出最大值减最小值<em>小于</em>num的所有子数组，且要求时间复杂度为O(n)</p>
@@ -2181,7 +2181,7 @@
 </ul>
 <h3 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h3><p>单调栈：从底到顶是有顺序的，如大到小。</p>
 <p>对数组中的每个元素找出它左边最近的大于它的值和右边最近大于它的值。要求时间复杂度O(n)。如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">3 5 2 4 6</span><br><span class="line">    左      右</span><br><span class="line">3   null    5</span><br><span class="line">5   null    6</span><br><span class="line">2   5       4</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> <span class="number">5</span> <span class="number">2</span> <span class="number">4</span> <span class="number">6</span></span><br><span class="line">    左      右</span><br><span class="line"><span class="number">3</span>   null    <span class="number">5</span></span><br><span class="line"><span class="number">5</span>   null    <span class="number">6</span></span><br><span class="line"><span class="number">2</span>   <span class="number">5</span>       <span class="number">4</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><ol>
@@ -2220,7 +2220,7 @@
 </li>
 </ul>
 <h4 id="例题2"><a href="#例题2" class="headerlink" title="例题2"></a>例题2</h4><p>给定一个整形矩阵map，其中的值只有0和1两种，求其中全是1的所有矩形区域中，最大的矩形区域中1的数量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 0 1 1</span><br><span class="line">1 1 1 1</span><br><span class="line">1 1 1 0</span><br><span class="line">0 1 0 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line"><span class="number">1</span> <span class="number">1</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line"><span class="number">1</span> <span class="number">1</span> <span class="number">1</span> <span class="number">0</span></span><br><span class="line"><span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>引子题：求组装它所包含的最大的矩形面积<ul>
@@ -2263,7 +2263,8 @@
 <li>只剩一条记录是时$C^2_k$</li>
 </ul>
 <h3 id="字符串匹配"><a href="#字符串匹配" class="headerlink" title="字符串匹配"></a>字符串匹配</h3><ul>
-<li>递归<ul>
+<li><p>递归</p>
+<ul>
 <li><code>f(int i, int j)</code>，表示str[i]之后的整个能不能被exp[j]之后的整个匹配<ul>
 <li>j+1是*<ul>
 <li>如果i，j匹配</li>
@@ -2279,11 +2280,14 @@
 </li>
 </ul>
 </li>
+<li><p>暴力递归</p>
+</li>
 </ul>
-<p>暴力递归</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">process</span><span class="params">(<span class="built_in">string</span>&amp; str, <span class="built_in">string</span>&amp; <span class="built_in">exp</span>, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(j == <span class="built_in">exp</span>.<span class="built_in">size</span>())&#123;</span><br><span class="line">        <span class="keyword">return</span> i == str.<span class="built_in">size</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// j上面还有字符，考察j+1的情况</span></span><br><span class="line">    <span class="keyword">if</span>(j + <span class="number">1</span> == <span class="built_in">exp</span>.<span class="built_in">size</span>() || <span class="built_in">exp</span>[j+<span class="number">1</span>] != <span class="string">'*'</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> i != str.<span class="built_in">size</span>() &amp;&amp; (<span class="built_in">exp</span>[j] == str[i] || <span class="built_in">exp</span>[j] == <span class="string">'.'</span>)</span><br><span class="line">            &amp;&amp; <span class="built_in">process</span>(str, <span class="built_in">exp</span>, i+<span class="number">1</span>, j+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// exp的j+1位置不仅有字符，而且字符是*</span></span><br><span class="line">    <span class="keyword">while</span>(i != str.<span class="built_in">size</span>() &amp;&amp; (<span class="built_in">exp</span>[j] == str[i] || <span class="built_in">exp</span>[j] == <span class="string">'.'</span>))&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">process</span>(str, <span class="built_in">exp</span>, i, j+<span class="number">2</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">process</span>(str, <span class="built_in">exp</span>, i, j+<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>动态规划</p>
+<ul>
+<li>动态规划</li>
+</ul>
 <p>building…</p>
 <hr>
 <h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h3 id="Morris遍历"><a href="#Morris遍历" class="headerlink" title="Morris遍历"></a>Morris遍历</h3><p>一般方法的遍历树，空间复杂读是O(h)，h是树的高度，因为需要用栈来储存父节点来实现回退。</p>
@@ -2313,6 +2317,13 @@
 </li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(Node* head)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head==<span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    Node cur = head;</span><br><span class="line">    Node mostRight = null;</span><br><span class="line">    <span class="keyword">while</span>(cur!=null)&#123;</span><br><span class="line">        mostRight = cur.left;</span><br><span class="line">        <span class="keyword">if</span>(mostRight != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">            <span class="keyword">while</span>(mostRight.right != <span class="literal">nullptr</span> &amp;&amp; mostRight.right != cur)&#123;</span><br><span class="line">                mostRight = mostRight.right;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(mostRight.right == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">                mostRight.right = cur;</span><br><span class="line">                cur = cur.left;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;  <span class="comment">// 第二次来此节点</span></span><br><span class="line">                mostRight.right = <span class="literal">nullptr</span></span><br><span class="line">                <span class="comment">// cur = cur.right; //跳过or not</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        cur = cur.right;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Morris后序遍历"><a href="#Morris后序遍历" class="headerlink" title="Morris后序遍历"></a>Morris后序遍历</h4><p>Morris遍历在遍历右子树时无法一步一步后退，这会导致需要回溯时不是全部都能单步回溯。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line">  \</span><br><span class="line">    <span class="number">2</span></span><br><span class="line">  /   \</span><br><span class="line"> <span class="number">5</span>      <span class="number">3</span></span><br><span class="line">          \</span><br><span class="line">            <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>后序遍历获得左字节点后就可输出，但是要在根节点前输出右子节点，需要外的操作。可以将整个”右斜”的树记录然后逆序输出，就是后序的结果。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">    TreeNode* mostRight;</span><br><span class="line">    TreeNode* head = <span class="keyword">new</span> TreeNode(<span class="number">0</span>);</span><br><span class="line">    head-&gt;left = root;</span><br><span class="line">    <span class="keyword">while</span>(head)&#123;</span><br><span class="line">        mostRight = head-&gt;left;</span><br><span class="line">        <span class="keyword">if</span>(mostRight)&#123;</span><br><span class="line">            <span class="keyword">while</span>(mostRight-&gt;right &amp;&amp; mostRight-&gt;right!=head)&#123;</span><br><span class="line">                mostRight = mostRight-&gt;right;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(mostRight-&gt;right == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">                mostRight-&gt;right = head;</span><br><span class="line">                head = head-&gt;left;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                TreeNode* temp = head-&gt;left;</span><br><span class="line">                <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; rtree;</span><br><span class="line">                <span class="comment">// 第二次访问节点时，其"孤立左节点"一定都已输出，且正是后序需要的在右节点前输出</span></span><br><span class="line">                <span class="comment">// 遍历整个右长树，然后reverse就是后序的右节点和根节点的输出</span></span><br><span class="line">                <span class="keyword">while</span>(temp!=mostRight)&#123;</span><br><span class="line">                    rtree.push_back(temp-&gt;val);</span><br><span class="line">                    temp = temp-&gt;right;</span><br><span class="line">                &#125;</span><br><span class="line">                rtree.push_back(temp-&gt;val);</span><br><span class="line">                reverse(rtree.begin(), rtree.end());</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">auto</span> i: rtree)&#123;</span><br><span class="line">                    ans.push_back(i);</span><br><span class="line">                &#125;</span><br><span class="line">                mostRight-&gt;right = <span class="literal">nullptr</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        head = head-&gt;right;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <h3 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h3><ul>
@@ -2691,6 +2702,68 @@
 <li>生成行数为N，列数位aim+1的矩阵dp(dynamic programming)，<code>dp[i][j]</code>表示使用<code>arr[0...i]</code>货币的情况下，组成钱数j有多少种方法</li>
 <li>动态规划规定每一种递归状态下的计算顺序，依次进行计算</li>
 <li>动态规划严格规定计算顺序，存在进一步优化的可能</li>
+</ul>
+</li>
+</ul>
+<p>building…</p>
+<h1 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h1><h2 id="Map-Reduce"><a href="#Map-Reduce" class="headerlink" title="Map-Reduce"></a>Map-Reduce</h2><ul>
+<li>Map<ul>
+<li>通过哈希函数把大任务分成子任务</li>
+</ul>
+</li>
+<li>Reduce<ul>
+<li>把子任务并发处理，然后合并结果</li>
+</ul>
+</li>
+<li>注意点<ul>
+<li>备份的考虑，分布式存储的设计细节(多少备份合适)</li>
+<li>任务分配策略与任务进度跟踪</li>
+<li>多用户权限控制</li>
+</ul>
+</li>
+</ul>
+<p>以下的经典用map-reduce解决问题的方案</p>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>统计一篇文章中每个单词出现次数</p>
+<ul>
+<li>文章预处理，抓取有效单词<ul>
+<li>去除标点，去除连字符，处理缩写等</li>
+</ul>
+</li>
+<li>map阶段<ul>
+<li>对每个单词生成词频为一的记录，如(dog, 1), (cat, 1)</li>
+<li>通过哈希函数将所有单词分成若干个子任务<ul>
+<li>每个子任务会包含若干种单词，但同一种单词不会被分配到不同子任务中</li>
+<li>这样一来相同的都能被统计到</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>reduce阶段<ul>
+<li>所有子任务记录合并</li>
+</ul>
+</li>
+</ul>
+<h2 id="海量数据处理"><a href="#海量数据处理" class="headerlink" title="海量数据处理"></a>海量数据处理</h2><ul>
+<li><ol>
+<li>分治，通过哈希函数将大任务分流<ul>
+<li>难点在于通讯、时间和空间的估算</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p>对10亿个ip地址排序，已知每个ip地址只会出现一次</p>
+<ul>
+<li>普通方法<ul>
+<li>每个ip转换成无符号整数</li>
+<li>10亿个整数约占4G空间</li>
+</ul>
+</li>
+<li>bitmap<ul>
+<li>每个ip转换成无符号整数</li>
+<li>申请一个$2^32$的bit类型的数组，空间约128m</li>
+<li>如果整数k出现则把第k-1位bit描黑</li>
+<li>从0位置遍历，把ip通过位置还原即可</li>
 </ul>
 </li>
 </ul>
