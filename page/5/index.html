@@ -1908,7 +1908,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-28 21:13:25" itemprop="dateModified" datetime="2020-09-28T21:13:25+08:00">2020-09-28</time>
+                <time title="Modified: 2020-09-29 20:57:06" itemprop="dateModified" datetime="2020-09-29T20:57:06+08:00">2020-09-29</time>
               </span>
 
           
@@ -2808,6 +2808,44 @@
 <li>添加删除机器只会改变环的一部分</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="字符串拷贝和替换"><a href="#字符串拷贝和替换" class="headerlink" title="字符串拷贝和替换"></a>字符串拷贝和替换</h2><p>给定一个字符串str，将其中空格替换成”%20”，假设str后面有足够的空间</p>
+<ul>
+<li>算出替换后的长度</li>
+<li><strong>从后向前拷贝</strong>，经常是这种操作</li>
+</ul>
+<h2 id="括号匹配"><a href="#括号匹配" class="headerlink" title="括号匹配"></a>括号匹配</h2><p>给定一个字符串str，判断是不是整体有效的括号字符串，最优解时间复杂度O(n), 空间复杂度O(1)</p>
+<ul>
+<li>用一个num记录一种括号，以下假设只有一种括号出现</li>
+<li>左括号num++，右括号num–</li>
+<li>如果num&lt;0，return false</li>
+<li>如果遍历完后num==0,return true</li>
+</ul>
+<h2 id="最长无重复子字符串"><a href="#最长无重复子字符串" class="headerlink" title="最长无重复子字符串"></a>最长无重复子字符串</h2><p>给定一个字符串str找出它的最长无重复子字符串，最优解O(n), O(n)</p>
+<ul>
+<li>假设s[i]表示i位置为结尾，向左的最长无重复字符串的长度</li>
+<li>map，统计每种字符之前出现的位置</li>
+<li><code>int pre</code>，s[i-1]结尾的情况下，最长无重复子串长度</li>
+<li><ol>
+<li><code>map[str[i]]</code>找到之前<code>str[i]</code>结尾的无重子串长度，记为A</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>使用pre，找到<code>str[i-1]</code>结尾的无重子串长度<code>s[i-1]</code>，记为B</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>比较A和B，则<code>s[i]</code>等于A，B较小的一个</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>更新，map和pre</li>
+</ol>
+</li>
+<li>原理:<ul>
+<li>因为从左到右都在这么的操作(取较小的一方)，字符之前的字符都能保证在这个长度内不会有重复</li>
 </ul>
 </li>
 </ul>
