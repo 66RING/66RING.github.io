@@ -28,7 +28,7 @@
 <meta property="og:description" content="排序冒泡排序 比较大小,如果符合条件(升序)就交换两个元素的位置   每次执行N-1次 严格大&#x2F;小,保证了原序(稳定性) 没次能保证最大&#x2F;最小的元素会在最后   如果全程无交换,则说明有序了,跳出即可 $T&#x3D;O(x),x\in(N,N^2)$  插入排序 每次抽取一个元素,然后从序列末尾开始进行比较 若符合条件,往后移位,直到不符合条件跳出 然后插入元素  希尔排序对插入排序的改进,每次消除多个逆">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-11-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-29T12:57:06.470Z">
+<meta property="article:modified_time" content="2020-10-01T12:38:24.614Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="算法, c&#x2F;c++">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-29 20:57:06" itemprop="dateModified" datetime="2020-09-29T20:57:06+08:00">2020-09-29</time>
+                <time title="Modified: 2020-10-01 20:38:24" itemprop="dateModified" datetime="2020-10-01T20:38:24+08:00">2020-10-01</time>
               </span>
 
           
@@ -1098,19 +1098,19 @@
 </ul>
 <h2 id="最长无重复子字符串"><a href="#最长无重复子字符串" class="headerlink" title="最长无重复子字符串"></a>最长无重复子字符串</h2><p>给定一个字符串str找出它的最长无重复子字符串，最优解O(n), O(n)</p>
 <ul>
-<li>假设s[i]表示i位置为结尾，向左的最长无重复字符串的长度</li>
-<li>map，统计每种字符之前出现的位置</li>
-<li><code>int pre</code>，s[i-1]结尾的情况下，最长无重复子串长度</li>
+<li>假设s[i]表示i位置为结尾，能到达(符合不重复字符)的最左的位置</li>
+<li>map，统计每种字符最后一次出现的位置</li>
+<li><code>int pre</code>，s[i-1]结尾的情况下，能到达的最左位置</li>
 <li><ol>
-<li><code>map[str[i]]</code>找到之前<code>str[i]</code>结尾的无重子串长度，记为A</li>
+<li><code>map[str[i]]</code>找到之前<code>str[i]</code>结尾的位置，记为A</li>
 </ol>
 </li>
 <li><ol start="2">
-<li>使用pre，找到<code>str[i-1]</code>结尾的无重子串长度<code>s[i-1]</code>，记为B</li>
+<li>使用pre，找到<code>str[i-1]</code>最左位置，记为B</li>
 </ol>
 </li>
 <li><ol start="3">
-<li>比较A和B，则<code>s[i]</code>等于A，B较小的一个</li>
+<li>比较A和B，选择当前位置间A或B较短的一方，更新最大无重复字符字串长度</li>
 </ol>
 </li>
 <li><ol start="4">
@@ -1118,7 +1118,7 @@
 </ol>
 </li>
 <li>原理:<ul>
-<li>因为从左到右都在这么的操作(取较小的一方)，字符之前的字符都能保证在这个长度内不会有重复</li>
+<li>从左到右都是取最长无重复，再多一个就重复的操作</li>
 </ul>
 </li>
 </ul>
@@ -1219,12 +1219,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
