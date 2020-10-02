@@ -28,7 +28,7 @@
 <meta property="og:description" content="RPC (Remote Procedure Call)RPC，远程过程调用，是一个计算机通信协议。 相对的就是本地过程调用，即一个程序中调用它的子程序，可以直接通过地址访问。而RPC的远程，就是跨进程访问的意思。 该协议允许运行于一台计算机的程序调用另一个地址空间(通常是开放网络中的一台计算机)的子程序。程序员就像调用本地程序一样，无需额外地为这个交互作用编程。 RPC是一种Client&#x2F;Serv">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-06T10:59:11.595Z">
+<meta property="article:modified_time" content="2020-10-02T14:02:57.509Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="RPC">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-06 18:59:11" itemprop="dateModified" datetime="2020-09-06T18:59:11+08:00">2020-09-06</time>
+                <time title="Modified: 2020-10-02 22:02:57" itemprop="dateModified" datetime="2020-10-02T22:02:57+08:00">2020-10-02</time>
               </span>
 
           
@@ -203,6 +203,38 @@
 
 
 
+<h2 id="Go语言RPC实例"><a href="#Go语言RPC实例" class="headerlink" title="Go语言RPC实例"></a>Go语言RPC实例</h2><h3 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h3><p>GO语言的RPC包路径为<code>net/rpc</code></p>
+<ul>
+<li>一个对象要能走RPC调用需要规则<ul>
+<li>Go语言的RPC规则：公开方法只能有两个可序列化的参数，第二个参数为指针类型，并返回一个error</li>
+</ul>
+</li>
+<li>注册RPC服务<code>rpc.RegisterName(&quot;NameSpace&quot;, new(对象))</code><ul>
+<li>会将对象类型中所有满足RPC规则的对象方法注册为RPC函数</li>
+<li>所有注册的方法会放在”NameSpace”的命名空间下</li>
+</ul>
+</li>
+<li>拨号RPC服务<code>client, err := rpc.Dial(&quot;tcp&quot;, &quot;localhost:1234&quot;)</code><ul>
+<li>这里建立通过tcp调用本机1234端口的rpc服务的连接</li>
+</ul>
+</li>
+<li>调用RPC服务<code>client.Call(&quot;NameSpace.Func&quot;, &quot;arg1&quot;, &amp;args)</code><ul>
+<li>第一个参数用点连接RPC服务的名字和要调用的方法</li>
+<li>第二、三个参数，是RPC需要的两个参数</li>
+</ul>
+</li>
+<li><strong>安全的RPC调用</strong> <ul>
+<li>上面就实现的简单的RPC调用过程，但是在<strong>RPC方法名，参数类型等还存在安全隐患</strong>。所以更安全的RPC调用需要进行一些简单的封装<ul>
+<li>如：  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *RPCServerClien)</span> <span class="title">SomeFunc</span><span class="params">(request <span class="keyword">string</span>, reply *<span class="keyword">string</span>)</span> <span class="title">error</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> p.Client.Call(<span class="string">"NameSpace.SomeFunc"</span>, request, reply)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -286,7 +318,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC-Remote-Procedure-Call"><span class="nav-number">1.</span> <span class="nav-text">RPC (Remote Procedure Call)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC-Remote-Procedure-Call"><span class="nav-number">1.</span> <span class="nav-text">RPC (Remote Procedure Call)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go语言RPC实例"><span class="nav-number">2.</span> <span class="nav-text">Go语言RPC实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#入门"><span class="nav-number">2.1.</span> <span class="nav-text">入门</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
