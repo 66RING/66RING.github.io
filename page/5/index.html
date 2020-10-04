@@ -145,6 +145,145 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/23/universe/regular_expression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/23/universe/regular_expression/" class="post-title-link" itemprop="url">正则表达式基础语法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-23 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-23T00:00:00+08:00">2020-01-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-24 16:58:42" itemprop="dateModified" datetime="2020-08-24T16:58:42+08:00">2020-08-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Base/Extended Regex</p>
+<ul>
+<li><code>.</code><ul>
+<li>匹配任何一个字符</li>
+</ul>
+</li>
+<li><code>*</code><ul>
+<li>匹配任何数量(包括0)的前面的内容，贪婪匹配</li>
+</ul>
+</li>
+<li><code>+</code><ul>
+<li>匹配任何数量(不包括0)的前面的内容，非贪婪匹配</li>
+</ul>
+</li>
+<li><code>{1}</code><ul>
+<li>重复次数1</li>
+</ul>
+</li>
+<li><code>\S</code><ul>
+<li>任何非空白字符</li>
+</ul>
+</li>
+<li><code>\s</code><ul>
+<li>任何空白字符</li>
+</ul>
+</li>
+<li><code>?</code><ul>
+<li>前面内容是可选的</li>
+</ul>
+</li>
+<li><code>\</code><ul>
+<li>有时可以起到转意的作用，<code>\S</code>等就是例外</li>
+</ul>
+</li>
+<li><code>[0-9]</code><ul>
+<li>任何0到9的数字，范围可变但要按顺序</li>
+</ul>
+</li>
+<li><code>[a-z]</code><ul>
+<li>任何a到z的小写字符，范围可变但要按顺序</li>
+</ul>
+</li>
+<li><code>[A-Z]</code><ul>
+<li>任何A到Z的大写字符，范围可变但要按顺序</li>
+</ul>
+</li>
+<li><code>[A-Za-z]</code><ul>
+<li>任何A到Z的字符，范围可变但要按顺序</li>
+</ul>
+</li>
+<li>锚定<ul>
+<li><code>$</code><ul>
+<li>以前面的内容结束</li>
+</ul>
+</li>
+<li><code>^</code><ul>
+<li>以前面的内容开头</li>
+</ul>
+</li>
+<li><code>\&lt; ,\b</code><ul>
+<li>锚定单词首部</li>
+</ul>
+</li>
+<li><code>\&gt; ,\b</code><ul>
+<li>锚定单词结尾</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>|</code><ul>
+<li>or，整个左边或整个右边如<code>C|cat</code>表示C或cat</li>
+<li>也可使用分组改变执行顺序<code>(C|c)at</code>表示Cat或cat</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/universe/linux/linux_note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -176,7 +315,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-12 11:47:28" itemprop="dateModified" datetime="2020-09-12T11:47:28+08:00">2020-09-12</time>
+                <time title="Modified: 2020-10-04 11:42:45" itemprop="dateModified" datetime="2020-10-04T11:42:45+08:00">2020-10-04</time>
               </span>
 
           
@@ -348,7 +487,19 @@
 <li>可以使用<code>ls ./ &gt; a.out 2&gt; b.out</code>这样的形式</li>
 </ul>
 </li>
-<li><code>&amp;&gt;</code>重定向标准输出或错误输出到同一个文件</li>
+<li><code>&amp;&gt;</code>将两种输出(标准输出，标准错误)同时输出到同个文件</li>
+<li><code>2&gt;&amp;1</code><strong>重定向绑定</strong>，2(标准错误)重定向到1定向的文件<ul>
+<li>shell脚本从左所以注意顺序<code>&gt;/dev/null 2&gt;&amp;1</code> VS <code>2&gt;&amp;1 &gt;/dev/null</code><ul>
+<li>前者1定向到null，2再定向到1定向的文件(null)</li>
+<li>前者1定向到null，2再定向到1定向的文件(stdout)，然后1才定向到null</li>
+</ul>
+</li>
+<li>为什么不用<code>&gt;/path/to 2&gt;/path/to</code><ul>
+<li>这种方法，标准输出和错误输出会抢占out文件的管道，因此输出的顺序无法估计</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>输入重定向<ul>
@@ -2443,7 +2594,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-02 21:42:33" itemprop="dateModified" datetime="2020-10-02T21:42:33+08:00">2020-10-02</time>
+                <time title="Modified: 2020-10-04 19:47:10" itemprop="dateModified" datetime="2020-10-04T19:47:10+08:00">2020-10-04</time>
               </span>
 
           
@@ -3403,7 +3554,7 @@
 </ul>
 </li>
 </ul>
-
+<h1 id="排列组合"><a href="#排列组合" class="headerlink" title="排列组合"></a>排列组合</h1><h2 id="卡特兰数公式"><a href="#卡特兰数公式" class="headerlink" title="卡特兰数公式"></a>卡特兰数公式</h2>
       
     </div>
 
@@ -4386,182 +4537,6 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/" class="post-title-link" itemprop="url">knowledge universe</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-25 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-25T00:00:00+08:00">2019-08-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="自然率"><a href="#自然率" class="headerlink" title="自然率"></a>自然率</h2><h3 id="倒霉事的概率"><a href="#倒霉事的概率" class="headerlink" title="倒霉事的概率"></a>倒霉事的概率</h3><h4 id="墨菲定律"><a href="#墨菲定律" class="headerlink" title="墨菲定律"></a>墨菲定律</h4><p>问题引入-&gt;好看的人千篇一律，不好看的人各有千秋</p>
-<ul>
-<li>好看-&gt;五官什么的都是好看的，又好看的概率低，全好看的概率P更低</li>
-<li>不好看-&gt;其中一个不好看就不好看,概率1-P<br>故。</li>
-</ul>
-<h3 id="验证是否正常的方法"><a href="#验证是否正常的方法" class="headerlink" title="验证是否正常的方法"></a>验证是否正常的方法</h3><h4 id="本福特定律"><a href="#本福特定律" class="headerlink" title="本福特定律"></a>本福特定律</h4><p>自然数据的首位数规律</p>
-<ul>
-<li>斐波那契数列符合—&gt;说明近似自然数据</li>
-<li>数据是否造假—&gt;是否符合本福特定律<h5 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h5></li>
-<li>不严谨的证明</li>
-<li>数据的增长量正比于存量 $\frac{\Delta N}{N\Delta t}$ = Constant<ul>
-<li>结论</li>
-<li>$N = N_0e^{ct}$</li>
-<li>$t = C\log_{10}\frac{N_2}{N_1}$</li>
-</ul>
-</li>
-<li>$t_1 = C\log_{10}\frac{2}{1}$ ,$t_1 = C\log_{10}\frac{3}{2}$ …1到2，2到3，3到… <ul>
-<li>$t_n = C\log_{10}\frac{n+1}{n}$</li>
-<li>$T = t_1+t_2+…+t_n = C\log_{10}{10} = C$</li>
-<li>$P = \frac{t_1}{T}$ </li>
-</ul>
-</li>
-</ul>
-<h2 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h2><h3 id="求最大公约数"><a href="#求最大公约数" class="headerlink" title="求最大公约数"></a>求最大公约数</h3><ul>
-<li>图解法<ul>
-<li>矩形填充正方形,最小正方形的边长就是最大公约数</li>
-</ul>
-</li>
-<li>辗转相除法<ul>
-<li>证明<br>被除数a,余数r,除数b,公约数d<br>$r=a-bk$<br>若d|a,且d|b (a|b表示a是b的约数);则d|r<br>则找a和b的最大公约数d,就相当于找b和r的最大公约数  </li>
-</ul>
-</li>
-</ul>
-<h3 id="贝祖数"><a href="#贝祖数" class="headerlink" title="贝祖数"></a>贝祖数</h3><ul>
-<li>贝祖定理<br>方程$ax+by=m(a,b,m\in z)$x,y有解的充要条件是:m是a,b最大公约数的倍数。x,y就是贝祖数</li>
-<li>贝祖数的求法<ul>
-<li>$a\div{b}=k…r$<br>$r = a-bk$<br>a,b又可当做新的r。多组x,y就出来了</li>
-</ul>
-</li>
-</ul>
-<h3 id="Vieta-theorem"><a href="#Vieta-theorem" class="headerlink" title="Vieta theorem"></a>Vieta theorem</h3><p>$$\begin{aligned}<br>ax^2 + bx + c = 0 \<br>x_1 + x_2 = -\frac{b}{a};  x_1x_2 = \frac{c}{a}<br>\end{aligned}$$</p>
-<p><strong>tips</strong><br>$$\begin{aligned}<br>let\ x_1=a-u, x_2=a+u \<br>x_1x_2=(a-u)(a+u) = a^2 - u^2<br>\end{aligned}$$<br>and so can get $x$ quickly.</p>
-<h4 id="expand"><a href="#expand" class="headerlink" title="expand"></a>expand</h4><p>$$<br>ax_1^3 + bx_2^2 + cx_3 + d = 0 \</p>
-<p>\begin{cases}<br>x_1 + x_2 + x_3 = -\frac{b}{a} \<br>x_1x_2 + x_1x_3 + x_2x_3 = \frac{c}{a} \<br>x_1x_2x_3 = -\frac{d}{a} \<br>\end{cases} \</p>
-<p>and\ so\ on …<br>$$</p>
-<h2 id="Anduin"><a href="#Anduin" class="headerlink" title="Anduin"></a>Anduin</h2><h2 id="Cryptography"><a href="#Cryptography" class="headerlink" title="Cryptography"></a>Cryptography</h2><h3 id="Symmetric-encryption"><a href="#Symmetric-encryption" class="headerlink" title="Symmetric encryption"></a>Symmetric encryption</h3><p>The classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.<br>+3 is <em>pre shared key</em>:PSK</p>
-<p>But how to let the receiver know what the PSK is?</p>
-<h3 id="Asymmetric-encryption"><a href="#Asymmetric-encryption" class="headerlink" title="Asymmetric encryption"></a>Asymmetric encryption</h3><p>Which can solve listening problem.</p>
-<p>Encryption with public key, decryption with private key. </p>
-<ul>
-<li>Public key<ul>
-<li>$A_0+public\ key \overset{en}{=} A_1$</li>
-</ul>
-</li>
-<li>Private key<ul>
-<li>$A_1+public\ key \overset{de}{=} A_0$</li>
-</ul>
-</li>
-</ul>
-<p>Such as, there are two guys:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A: What is you public key?</span><br><span class="line">B: pk</span><br><span class="line">Than A can encryption with public and than send the infomation to B.</span><br><span class="line">And B can use the his key to get the right infomation.</span><br><span class="line"></span><br><span class="line">What if the hacker has the public?</span><br><span class="line">So hacker can fake the infomation</span><br></pre></td></tr></table></figure>
-
-<h4 id="Private-key-encryption"><a href="#Private-key-encryption" class="headerlink" title="Private key encryption"></a>Private key encryption</h4><p>Encryption with private key, decryption with public key. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A: Here is my public key</span><br><span class="line">B: get</span><br><span class="line">A: message &#x3D;private encryption&#x3D;&gt; cipher</span><br><span class="line">B: cipher &#x3D;public decryption&#x3D;&gt; message</span><br><span class="line"></span><br><span class="line">But if hacker has your public key hacker can get you message too.</span><br><span class="line">hacker: cipher &#x3D;public decryption&#x3D;&gt; message.</span><br></pre></td></tr></table></figure>
-<h4 id="Use-both"><a href="#Use-both" class="headerlink" title="Use both"></a>Use both</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A: What is your public key?</span><br><span class="line">B: bk</span><br><span class="line">A: Ok. We are going to use Symmetric Encryption. The PSK is:psk.</span><br><span class="line"></span><br><span class="line">hacker don&#39;t have the private the so he don&#39;t know what to do.</span><br></pre></td></tr></table></figure>
-<p>But what <strong>if B IS NOT B</strong>?</p>
-<h4 id="Modern-HTTP-mode"><a href="#Modern-HTTP-mode" class="headerlink" title="Modern HTTP mode"></a>Modern HTTP mode</h4><p>In real life we may choose to trust police station. So it may help that police station tell you that B is B in the following way.</p>
-<p>The police station which we call it CA institution.</p>
-<ul>
-<li>Signature algorithm<ul>
-<li>encryption with CA’s private key</li>
-</ul>
-</li>
-<li>Check algorithm<ul>
-<li>decryption with CA’s public key</li>
-</ul>
-</li>
-<li>the whole process can be received but can’t be faked</li>
-</ul>
-<p>(we trust browser, browser trust CA)<br>| Roles   | browser(user), web, CA                                                                                             |<br>|———|——————————————————————————————————————–|<br>| web     | through a serise of process to get the CA certification.                                                           |<br>| CA      | signature this web with its private key and broadcast the public key, which we can use it to get infomation of web |<br>| browser | varify the web’s public key with CA’s public key and mark web is safe. (B is B)                                    |</p>
-<p>After we know B is B, we can encryption message with B’s public key.And tell B we are going to use PSK.And than we are safe.</p>
-<h3 id="Identity"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</h3><ul>
-<li>authentication<ul>
-<li>to prove you is you</li>
-</ul>
-</li>
-<li>authornization<ul>
-<li>to prove you have the permissions</li>
-</ul>
-</li>
-</ul>
-<p>As we know, a web app can use cookie implementate a identity function.<br>But a cookie is like a tag that server make on you. And in your next request, browser send send cookie with your request.<br>Which means <strong>you can choose to send it or not with technical means!</strong>. Such as delete local cookie to fake a unvoted tags.</p>
-<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><h3 id="Database-Security-tips"><a href="#Database-Security-tips" class="headerlink" title="Database Security(tips)"></a>Database Security(tips)</h3><p>We need to login, but we don’t need to save user’s password into database.<br>We can save this <code>hash(password)</code> and compare it.\o/</p>
-<h3 id="Use-Hash-on-Web-App"><a href="#Use-Hash-on-Web-App" class="headerlink" title="Use Hash on Web App"></a>Use Hash on Web App</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cache-&gt;browser:</span><br><span class="line">browser-&gt;nginx: request(Img)</span><br><span class="line">nginx--&gt;browser: Img &amp; ETag(hash) 200</span><br><span class="line">nginx-&gt;server: </span><br><span class="line">server--&gt;nginx: </span><br><span class="line">browser-&gt;cache: save Img</span><br><span class="line"></span><br><span class="line">browser-&gt;nginx: request(Img &amp; hash equals?)</span><br><span class="line">nginx-&gt;server: hash equals?</span><br><span class="line">server--&gt;nginx: yes</span><br><span class="line">nginx--&gt;browser: not modified 206</span><br><span class="line">browser-&gt;cache: search your cache</span><br><span class="line">cache-&gt;browser: here</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="天文"><a href="#天文" class="headerlink" title="天文"></a>天文</h2><h3 id="发现系外行星的方法"><a href="#发现系外行星的方法" class="headerlink" title="发现系外行星的方法"></a>发现系外行星的方法</h3><h4 id="视像速度法"><a href="#视像速度法" class="headerlink" title="视像速度法"></a>视像速度法</h4><ul>
-<li>双星</li>
-<li>多普勒效益造成 红移/蓝移<ul>
-<li>说明有恒星周期性运动</li>
-<li>说明有双星系统</li>
-</ul>
-</li>
-<li>故恒星旁有行星</li>
-</ul>
-<h4 id="凌日法"><a href="#凌日法" class="headerlink" title="凌日法"></a>凌日法</h4><ul>
-<li>类似日食原理的，亮度的周期性变化</li>
-<li>从周期中得到各种数据<ul>
-<li>但存在角度问题</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -4631,12 +4606,12 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
