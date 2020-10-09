@@ -145,6 +145,322 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/06/universe/config_lang/yaml_basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/06/universe/config_lang/yaml_basic/" class="post-title-link" itemprop="url">Yaml Basic</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-08-06 00:00:00 / Modified: 20:29:53" itemprop="dateCreated datePublished" datetime="2020-08-06T00:00:00+08:00">2020-08-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a href="https://yaml.org/spec/1.2/spec.html" target="_blank" rel="noopener">Offical Tutorial</a></p>
+<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><p><code>key: value</code></p>
+<p>Yaml will auto detect data type, but some time that’s what we don’t want. So you need  <strong>Type cast</strong> :</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">age:</span> <span class="type">!!str</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>type avaliable<ul>
+<li>str</li>
+<li>int</li>
+<li>float</li>
+<li>bool</li>
+<li>null</li>
+<li>ISO date type:<code>2020-1-1 11:11:22</code></li>
+<li>array</li>
+</ul>
+</li>
+</ul>
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><p><strong>Can not use TAB</strong> in yaml. Use indentation to grading and <code>-</code> char to sign as a array.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">arr:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">item1</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">item11</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">item2</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">item21</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">item22</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><p><strong>Can not use TAB</strong> in yaml. Use indentation to grading but no <code>-</code> char.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">person:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ring</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Long-string-value"><a href="#Long-string-value" class="headerlink" title="Long string value"></a>Long string value</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">message:</span></span><br><span class="line">  <span class="string">a</span> <span class="string">long</span> <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">msg</span></span><br></pre></td></tr></table></figure>
+
+<p>To end with <code>\n</code> </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">message:</span> <span class="string">&gt;</span></span><br><span class="line">  <span class="string">a</span> <span class="string">long</span> <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">msg</span></span><br></pre></td></tr></table></figure>
+
+<p>To end with <code>\n</code> for each line </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">message:</span> <span class="string">|</span></span><br><span class="line">  <span class="string">a</span> <span class="string">long</span> <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">msg</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">#a long long long\nlong long\nlong msg\n</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Use-Reference"><a href="#Use-Reference" class="headerlink" title="Use Reference"></a>Use Reference</h2><p>Assign with pointer</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">father:</span> <span class="meta">&amp;father_info</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ring</span></span><br><span class="line"></span><br><span class="line"><span class="attr">monitor:</span> <span class="meta">*father_info</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># value of monitor same as value of father</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="New-part"><a href="#New-part" class="headerlink" title="New part"></a>New part</h2><p>Yaml not allow you have dulplicate key. You can use <code>---</code> to statement in a new part</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">ring</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">ring</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="End-of-File"><a href="#End-of-File" class="headerlink" title="End of File"></a>End of File</h2><p>You can use <code>...</code> to tell yaml, this is the end.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/24/universe/web/react_note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/24/universe/web/react_note/" class="post-title-link" itemprop="url">React学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-24 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-24T00:00:00+08:00">2020-07-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-13 11:04:15" itemprop="dateModified" datetime="2020-08-13T11:04:15+08:00">2020-08-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>React是用于构建用户界面的javascript库</p>
+<ul>
+<li>特性<ul>
+<li>声明式编程<ul>
+<li>通过代码告诉计算机，你想的是什么，让计算机想出如何去做</li>
+<li>命令式编程：告诉计算机去做什么</li>
+</ul>
+</li>
+<li>组件化</li>
+<li>一次学会，随处编写</li>
+</ul>
+</li>
+</ul>
+<h2 id="Main-Concepts"><a href="#Main-Concepts" class="headerlink" title="Main Concepts"></a>Main Concepts</h2><h3 id="Rendering-Elements"><a href="#Rendering-Elements" class="headerlink" title="Rendering Elements"></a>Rendering Elements</h3><p>To rendering an element into a root DOM node like <code>&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</code>, pass both to <code>ReactDOM.render()</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, world<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">ReactDOM.render(element, <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br></pre></td></tr></table></figure>
+
+<p>React elements are immutable. Once you create an element, you can’t change its children or attributes. React Only Updates What’s Necessary.</p>
+<p>With our knowledge so far, the only way to update the UI is to create a new element, and pass it to <code>ReactDOM.render()</code>.</p>
+<h3 id="Components-and-Props"><a href="#Components-and-Props" class="headerlink" title="Components and Props"></a>Components and Props</h3><p>Components are like JavaScript functions. <strong>They accept arbitrary inputs (called “props”) and return React elements</strong>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This function is valid React component because it accept a single “props” object and return a React element.</p>
+<p>You can also use an <code>ES6 class</code> to define a component:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Rendering-a-Component"><a href="#Rendering-a-Component" class="headerlink" title="Rendering a Component"></a>Rendering a Component</h4><p>React element not only can represent DOM tags, but also can represent user-defined components.</p>
+<p><strong>When React sees an element representing a user-defined component, it pass JSX attributes and children to this component as a single object</strong>. We call this obj “props”.</p>
+<p>For example:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> element = <span class="xml"><span class="tag">&lt;<span class="name">Welcome</span> <span class="attr">name</span>=<span class="string">"Sara"</span> /&gt;</span></span>;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">  element,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Props-are-Read-Only"><a href="#Props-are-Read-Only" class="headerlink" title="Props are Read-Only"></a>Props are Read-Only</h4><p>React is pretty flexible but it has a single strict rule:</p>
+<p><strong>All React components must act like pure functions with respect to their props</strong></p>
+<h3 id="State-and-Lifecycle"><a href="#State-and-Lifecycle" class="headerlink" title="State and Lifecycle"></a>State and Lifecycle</h3><p>State is similar to props, but it it private and fully controlled by the component.</p>
+<ul>
+<li>Converting a Function to a Class<ul>
+<li><ol>
+<li>Create an <code>ES6 class</code>, with the same name, that extends <code>React.Component</code></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>Add a single empty method to it called <code>render()</code></li>
+</ol>
+</li>
+<li><ol start="3">
+<li>Move the body of the function into the <code>render()</code> method</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>Replace <code>props</code> with <code>this.props</code> in the <code>render()</code> body</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>Delete the remaining empty function declaration</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clock</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;Hello, world!&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">        &lt;h2&gt;It is &#123;this.props.date.toLocaleTimeString()&#125;.&lt;/</span>h2&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Adding-Local-State-to-a-Class"><a href="#Adding-Local-State-to-a-Class" class="headerlink" title="Adding Local State to a Class"></a>Adding Local State to a Class</h4><ul>
+<li><ol>
+<li>Add a <code>class constructor</code> that assigns the initial <code>this.state</code><ul>
+<li>Class components should always call the base constructor with <code>props</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">date</span>: <span class="keyword">new</span> <span class="built_in">Date</span>()&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>Replace <code>this.props.date</code> with <code>this.state.date</code></li>
+</ol>
+</li>
+</ul>
+<h4 id="Adding-Lifecycle-Methods-to-a-Class"><a href="#Adding-Lifecycle-Methods-to-a-Class" class="headerlink" title="Adding Lifecycle Methods to a Class"></a>Adding Lifecycle Methods to a Class</h4><p>We can declare special methods on the component class to run some code when a component mounts and unmounts:</p>
+<ul>
+<li><code>componentDidMount()</code> method runs after the component output has been rendered to the DOM</li>
+<li><code>componentWillUnmount()</code></li>
+<li>Use <code>this.setState()</code> to schedule updates to the component local state:<ul>
+<li>like: <code>this.setState({date: new Date()})</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="Using-State-Correctly"><a href="#Using-State-Correctly" class="headerlink" title="Using State Correctly"></a>Using State Correctly</h4><ul>
+<li><strong>Do Not Modify State Directly</strong> <ul>
+<li>WRONG: <code>this.state.comment = &quot;hello&quot;</code></li>
+<li>CORRECT: <code>this.setState({comment: &quot;hello&quot;})</code></li>
+<li>the only place where you can assign <code>this.state</code> is the constructor</li>
+</ul>
+</li>
+<li><strong>State Updates May Be Asynchronous</strong><ul>
+<li>React may batch multiple <code>setState()</code> calls into a single update for performance</li>
+<li>Because of that, you should not rely on their values for calculating the next state</li>
+<li><strong>To fix it, use a second form of <code>setState()</code> that accepts a function rather than an object</strong><ul>
+<li>the function will receive the previous state as the first argument, and the props as the time update is applied as the second argument</li>
+<li><code>this.setState((state, props)=&gt;{})</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="State-Updates-are-Merged"><a href="#State-Updates-are-Merged" class="headerlink" title="State Updates are Merged"></a>State Updates are Merged</h4><p><a href="https://reactjs.org/docs/state-and-lifecycle.html#state-updates-are-merged" target="_blank" rel="noopener">???</a></p>
+<h4 id="The-Date-Flows-Down"><a href="#The-Date-Flows-Down" class="headerlink" title="The Date Flows Down"></a>The Date Flows Down</h4><p>Both parent and children should not care if a certain component is stateful(class) or stateless(functionf). It is not accessible to any component other than the one that owns and sets it.</p>
+<p>A component may choose to pass its state down as props to its child components: <code>&lt;FormattedDate date={this.state.date} /&gt;</code></p>
+<p>This is commonly called a “top-down” or “unidirectional” data flow.</p>
+<h3 id="Handling-Events"><a href="#Handling-Events" class="headerlink" title="Handling Events"></a>Handling Events</h3><p>With JSX you pass a function as the handler, rather than string.</p>
+<p>the Html:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"activateLasers()"</span>&gt;</span></span><br><span class="line">  Activate Lasers</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>it is different in React</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;button onClick=&#123;activateLasers&#125;&gt;</span><br><span class="line">  Activate Lasers</span><br><span class="line">&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ActionLink</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleClick</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'The link was clicked.'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;a href=<span class="string">"#"</span> onClick=&#123;handleClick&#125;&gt;</span><br><span class="line">      Click me</span><br><span class="line">    &lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ Or</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">class Click extends React.Component&#123;</span></span><br><span class="line"><span class="regexp">  function handleClick(e) &#123;</span></span><br><span class="line"><span class="regexp">    e.preventDefault();</span></span><br><span class="line"><span class="regexp">    console.log('The link was clicked.');</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  render()&#123;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;a href="#" onClick=&#123;this.handleClick&#125;&gt;</span></span><br><span class="line"><span class="regexp">        Click me</span></span><br><span class="line"><span class="regexp">      &lt;/</span>a&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Here, <code>e</code> is a synthetic event. See the <a href="https://reactjs.org/docs/events.html" target="_blank" rel="noopener">SyntheticEvent</a> reference guide to learn more.</p>
+<p>In JavaScript, class methods are not <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind" target="_blank" rel="noopener">bound</a> by defaul.</p>
+<p>Generally, if you refer to a method without <code>()</code> after it, such as <code>onClick={this.handleClick}</code>, you should bind that method. <a href="https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/" target="_blank" rel="noopener">how funcions work in JavaScript</a>.</p>
+<h3 id="Conditional-Rendering"><a href="#Conditional-Rendering" class="headerlink" title="Conditional Rendering"></a>Conditional Rendering</h3><p>Use JavaScript operators like <code>if</code> or <code>conditonal operator</code> to Conditional Rendering.</p>
+<h3 id="Lists-and-Keys"><a href="#Lists-and-Keys" class="headerlink" title="Lists and Keys"></a>Lists and Keys</h3><h4 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h4><p>You can use <code>map()</code> to create <code>listItems</code> in React:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">const</span> listItems = numbers.map(<span class="function">(<span class="params">number</span>) =&gt;</span></span><br><span class="line">  &lt;li&gt;&#123;number&#125;&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+
+<p>When you render them, you’ll be given a warning that a key should be provided for list items.</p>
+<h4 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h4><p>Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity.</p>
+<p>If you choose not to assign an explicit key to list items then React will default to using indexes as keys.</p>
+<h4 id="Extracting-Components-with-Keys"><a href="#Extracting-Components-with-Keys" class="headerlink" title="Extracting Components with Keys"></a>Extracting Components with Keys</h4><p>Keys only make sense in the context of the surrounding array.</p>
+<p>If you extract a ListItem components, you should keep the key on the <code>&lt;ListItem /&gt;</code> element, but not inside.</p>
+<h3 id="Forms"><a href="#Forms" class="headerlink" title="Forms"></a>Forms</h3><h4 id="Controlled-Components"><a href="#Controlled-Components" class="headerlink" title="Controlled Components"></a>Controlled Components</h4><p>An input form element whose value is controlled by React in this way is called a “controlled component”.</p>
+<p>With a controlled component, the input’s value is always driven by the React state. For example:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NameForm</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">value</span>: <span class="string">''</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.handleSubmit = <span class="keyword">this</span>.handleSubmit.bind(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleChange(event) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">value</span>: event.target.value&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleSubmit(event) &#123;</span><br><span class="line">    alert(<span class="string">'A name was submitted: '</span> + <span class="keyword">this</span>.state.value);</span><br><span class="line">    event.preventDefault();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;form onSubmit=&#123;<span class="keyword">this</span>.handleSubmit&#125;&gt;</span><br><span class="line">        &lt;label&gt;</span><br><span class="line">          Name:</span><br><span class="line">          &lt;input type=<span class="string">"text"</span> value=&#123;<span class="keyword">this</span>.state.value&#125; onChange=&#123;<span class="keyword">this</span>.handleChange&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/label&gt;</span></span><br><span class="line"><span class="regexp">        &lt;input type="submit" value="Submit" /</span>&gt;</span><br><span class="line">      &lt;<span class="regexp">/form&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>set <code>value</code> attribute<ul>
+<li>the displayed value will always be <code>this.state.value</code></li>
+</ul>
+</li>
+<li><code>handleChange</code> <ul>
+<li>runs on every keystroke to update the React state, the displayed value will update as the user types</li>
+</ul>
+</li>
+</ul>
+<h3 id="Composition-vs-Inheritance"><a href="#Composition-vs-Inheritance" class="headerlink" title="Composition vs Inheritance"></a>Composition vs Inheritance</h3><h4 id="Containment"><a href="#Containment" class="headerlink" title="Containment"></a>Containment</h4><p>Some component don’t know their children ahead of time. We recommend that such component use the special <code>children</code> prop to pass children elements directly into their output.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">E</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;props.children&#125;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function Hello()&#123;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">        &lt;E&gt;</span></span><br><span class="line"><span class="regexp">            &lt;h1&gt;hello&lt;/</span>h1&gt;</span><br><span class="line">        &lt;<span class="regexp">/E&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Anything inside the <code>&lt;E&gt;</code> tag gets passed into the <code>E</code> component as <code>props.children</code>.</p>
+<p>Some time you might need multiple “holes” in a componnet. You can:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">E</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;div&gt;&#123;props.left&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">            &lt;div&gt;&#123;props.right&#125;&lt;/</span>div&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function Hello()&#123;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">        &lt;E</span></span><br><span class="line"><span class="regexp">          left=&#123;</span></span><br><span class="line"><span class="regexp">              &lt;h1&gt;hello&lt;/</span>h1&gt;</span><br><span class="line">          &#125;</span><br><span class="line">          right=&#123;</span><br><span class="line">              &lt;h1&gt;world&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">          &#125; /</span>&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Advanced"><a href="#Advanced" class="headerlink" title="Advanced"></a>Advanced</h2><p><a href="https://reactjs.org/docs/accessibility.html" target="_blank" rel="noopener">https://reactjs.org/docs/accessibility.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/23/universe/lua/lua_in_ten_min/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -176,7 +492,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-19 15:32:46" itemprop="dateModified" datetime="2020-09-19T15:32:46+08:00">2020-09-19</time>
+                <time title="Modified: 2020-10-06 09:18:44" itemprop="dateModified" datetime="2020-10-06T09:18:44+08:00">2020-10-06</time>
               </span>
 
           
@@ -192,6 +508,7 @@
       
           <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>类似python等脚本语言，在循环、方法、条件等语句需要使用end表示结束，因此不像python那样依靠缩进。</p>
 <ul>
+<li>解释器执行<code>lua &lt;filename&gt;</code></li>
 <li>编译后执行：(不透露源码)<ul>
 <li><code>luac x.lua</code></li>
 <li><code>lua x.out</code></li>
@@ -2708,1383 +3025,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/23/universe/python/python_hack/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/23/universe/python/python_hack/" class="post-title-link" itemprop="url">python hack</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-06-23 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-23T00:00:00+08:00">2020-06-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-27 19:09:14" itemprop="dateModified" datetime="2020-06-27T19:09:14+08:00">2020-06-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Scapy使用"><a href="#Scapy使用" class="headerlink" title="Scapy使用"></a>Scapy使用</h2><p>需要root权限</p>
-<p>scapy可以帮助我们铸造各种包，我们利用这些包可以实现我们想要的目的。如扫描等</p>
-<ul>
-<li><code>sr</code>: Send ans Receive </li>
-</ul>
-<p>网络包有很多不同的参数，不需要死记硬背，只需用时看以下就行。如不知道ARP需要什么参数，可以采用如下，就可以知道</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = Ether()/ARP()</span><br><span class="line">a.show()</span><br></pre></td></tr></table></figure>
-
-<p>不知道scapy的类有那些方法时，可以使用<code>type(arg)</code>来查看类，然后网上查找。</p>
-<h2 id="扫描探测"><a href="#扫描探测" class="headerlink" title="扫描探测"></a>扫描探测</h2><h3 id="ARP扫描-PING扫描"><a href="#ARP扫描-PING扫描" class="headerlink" title="ARP扫描/PING扫描"></a>ARP扫描/PING扫描</h3><p>ARP协议完成IP地址和MAC地址的转换，询问目的机的MAC地址</p>
-<p>通过ping扫描或arp扫描可以知道那些地址上有活动主机</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pkt = IP(dst=<span class="string">'47.96.226.37'</span>, ttl=<span class="number">1</span>, id=<span class="number">168</span>)/ICMP(id=<span class="number">188</span>, seq=<span class="number">1</span>)</span><br><span class="line">result = srp(pkt)  <span class="comment"># 得到 [收到的,未收到的]</span></span><br><span class="line">result[<span class="number">0</span>].res[x][y].getlayer(ARP).fields[<span class="string">'key'</span>]  <span class="comment"># res产生清单，很多元祖啊；getlayer是将二进制转换为字典，fields获取对应的值，缺省的获取整个字典</span></span><br><span class="line"><span class="comment"># 这个结构需要有所了解</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="TCP扫描"><a href="#TCP扫描" class="headerlink" title="TCP扫描"></a>TCP扫描</h3><p>利用tcp协议，扫描tcp的开放端口。发送SYN包，回复SYN ACK就说明端口开放 </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/12/Major/OS/Operating_Systems/" class="post-title-link" itemprop="url">操作系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-06-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-12T00:00:00+08:00">2020-06-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-09 19:37:14" itemprop="dateModified" datetime="2020-07-09T19:37:14+08:00">2020-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>shell对外暴露的接口，操作系统对外提供服务</p>
-<p>特征</p>
-<ul>
-<li>并发<ul>
-<li>同时存在多个运行的程序</li>
-</ul>
-</li>
-<li>共享<ul>
-<li>操作系统控制如何”同时”访问</li>
-<li>文件互斥</li>
-</ul>
-</li>
-<li>虚拟<ul>
-<li>让每个用户/程序都觉得有一个计算机专门为它提供服务</li>
-</ul>
-</li>
-<li>异步<ul>
-<li>程序执行不是一贯到底的，向前推进的速度有系统调度</li>
-<li>但是只要环境相同，每次运行的结果一定相同</li>
-</ul>
-</li>
-<li>相互联系也相互区别</li>
-</ul>
-<ul>
-<li>Microkernel:微内核架构设计<ul>
-<li>只放基本的功能</li>
-<li>文件管理、网路协议栈等都是放在外围以服务的形式存在，服务和服务之间通过内核的消息传递机制</li>
-<li>相互隔离，很灵活，小巧</li>
-<li>代价就是性能</li>
-</ul>
-</li>
-<li>外核设计<ul>
-<li>内核分成两块，<ul>
-<li>Exokernel(外核)与硬件打交道：完成硬件功能的复制。</li>
-<li>建立在exokernel之上，跟具体应用打交道，再通过它访问exokernel，来访问硬件<ul>
-<li>可对应用进行相应的设计，使得速度更快</li>
-<li>完成应用隔离</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>虚拟机</li>
-</ul>
-<h2 id="Part-2"><a href="#Part-2" class="headerlink" title="Part 2"></a>Part 2</h2><ul>
-<li>计算机启动</li>
-</ul>
-<p>os存放在硬盘中，需要bootload将它放入内存。bootloader又由bios负责放入内存。</p>
-<ul>
-<li>bios提供各种支持：检测外设，初始化检查，把bootloader放入内存，让它执行</li>
-<li>bootloader：加载os，从硬盘到内存</li>
-</ul>
-<p>应用间接与外设打交道，之所以应用不能直接访问外设是因为应用是不可信任的，而操作系统是可信任的;另一方面操作系统外为上层提供一致的接口，使得上层应用不用关注底层细节，通用可移植，提高效率。由此设计一下三个基本概念</p>
-<ul>
-<li><p>三个基本概念</p>
-<ul>
-<li>中断<ul>
-<li>产生的源头：外设产生</li>
-<li>处理的时间:异步事件，不会知道什么时候产生</li>
-<li>响应：持续，对应用程序是透明的</li>
-</ul>
-</li>
-<li>异常<ul>
-<li>产生的源头：应用意想不到的行为</li>
-<li>处理的时间：同步，一定在某个特定的指令可以产生，可以确定时间</li>
-<li>响应：杀死或重新执行</li>
-</ul>
-</li>
-<li>系统调用<ul>
-<li>产生的源头：应用请求操作系统提供服务</li>
-<li>处理的时间：同步或异步(返回点有可能是异步的)</li>
-<li>响应：等待和持续</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>中断和异常的处理过程</p>
-<ul>
-<li>中断码<ul>
-<li>查表</li>
-</ul>
-</li>
-<li>保存和恢复<ul>
-<li>程序执行过程中被中断，需要保存当前处理状态，便于恢复后继续执行</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>异常处理过程</p>
-<ul>
-<li>保存现场</li>
-<li>异常处理<ul>
-<li>异常编号，相应处理</li>
-</ul>
-</li>
-<li>恢复现场</li>
-</ul>
-</li>
-<li><p>系统调用过程</p>
-<ul>
-<li>访问系统调用接口</li>
-<li>用户态切到内核态，控制权交给操作系统<ul>
-<li>用户态：可执行权限低</li>
-<li>内核态：可执行任何指令</li>
-</ul>
-</li>
-<li>处理完成后返回成功失败</li>
-</ul>
-</li>
-</ul>
-<h2 id="Part-3"><a href="#Part-3" class="headerlink" title="Part 3"></a>Part 3</h2><h3 id="计算机体系结构及内存分层体系"><a href="#计算机体系结构及内存分层体系" class="headerlink" title="计算机体系结构及内存分层体系"></a>计算机体系结构及内存分层体系</h3><p>…</p>
-<h3 id="地址空间与地址生成"><a href="#地址空间与地址生成" class="headerlink" title="地址空间与地址生成"></a>地址空间与地址生成</h3><ul>
-<li>地址空间<ul>
-<li>物理地址空间<ul>
-<li>硬件支持的地址空间</li>
-</ul>
-</li>
-<li>逻辑地址空间<ul>
-<li>一个运行打程序所拥有的内存范围</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>地址空间生成<ul>
-<li>cpu会根据逻辑地址查找物理地址，对应对应关系储存在MMU的表示映射关系的区域</li>
-<li>CPU执行某条指令时，ALU根据指令的内容发送请求，携带逻辑地址。CPU中的MMU查找MMU对应的物理地址</li>
-<li>逻辑地址和物理地址的联系又操作系统生成</li>
-</ul>
-</li>
-<li>检查地址的安全<ul>
-<li>确保每个程序访问的地址空间</li>
-</ul>
-</li>
-</ul>
-<h3 id="连续内存分配：内存碎片与分区的动态分配"><a href="#连续内存分配：内存碎片与分区的动态分配" class="headerlink" title="连续内存分配：内存碎片与分区的动态分配"></a>连续内存分配：内存碎片与分区的动态分配</h3><ul>
-<li><p>外碎片</p>
-<ul>
-<li>分配单元之间的未使用内存</li>
-</ul>
-</li>
-<li><p>内碎片</p>
-<ul>
-<li>在分配单元中的碎片</li>
-</ul>
-</li>
-<li><p>简单的内存管理方法</p>
-<ul>
-<li>当一个程序准许运行在内存中时，分配一个连续的区间</li>
-<li>分配一个连续的内存区间给运行的程序以访问数据</li>
-</ul>
-</li>
-<li><p>分配策略</p>
-<ul>
-<li>首次适配算法<ul>
-<li>碰到的第一个能够满足需求的空闲块，分配给程序</li>
-<li>需求<ul>
-<li>按照地址排序的空闲地址块列表</li>
-<li>重新分配需要检查，看是否有空闲块能够合并</li>
-</ul>
-</li>
-<li>优势<ul>
-<li>简单</li>
-<li>易于把大的空闲块留在结尾</li>
-</ul>
-</li>
-<li>劣势<ul>
-<li>容易产生外碎片</li>
-<li>不确定性</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>最优适配算法<ul>
-<li>寻找最适合的空闲块</li>
-<li>需求<ul>
-<li>按照大小排序的空闲地址块列表</li>
-<li>重新分配需要检查，看是否有空闲块能够合并</li>
-</ul>
-</li>
-<li>优势<ul>
-<li>避免了把大的空闲块拆散</li>
-<li>最小化外部碎片的产生</li>
-<li>比较简单</li>
-</ul>
-</li>
-<li>劣势<ul>
-<li>重新分配慢</li>
-<li>外碎片拆得很细，使得将来的利用可能性小</li>
-<li>易产生很多没用的小碎片</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>最差适配算法<ul>
-<li>与最优相反，找差距最大的空闲块</li>
-<li>需求<ul>
-<li>按照大小排序的空闲地址块列表</li>
-<li>重新分配需要检查，看是否有空闲块能够合并</li>
-</ul>
-</li>
-<li>优势<ul>
-<li>分配时中等尺寸时效果最小</li>
-</ul>
-</li>
-<li>劣势<ul>
-<li>易于破碎大的空间，以致于(将来需要时)大分区无法被分配</li>
-<li>重新分配慢</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="连续内存分配：压缩式与交换式碎片整理"><a href="#连续内存分配：压缩式与交换式碎片整理" class="headerlink" title="连续内存分配：压缩式与交换式碎片整理"></a>连续内存分配：压缩式与交换式碎片整理</h3><ul>
-<li>压缩式碎片整理<ul>
-<li>重置程序以合并孔洞</li>
-<li>要求所有程序是动态可重置的</li>
-<li>思考：<ul>
-<li>何时重置</li>
-<li>开销</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>交换式碎片整理(swaping)<ul>
-<li>运行程序需要更多的内存</li>
-<li>把硬盘当作内存的备份(虚拟内存)，将等待需求较长的程序挪到硬盘腾出内存</li>
-<li>抢占等待的程序&amp;回收他们的内存</li>
-<li>思考<ul>
-<li>那些程序交换</li>
-<li>何时换入换出</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Part-4"><a href="#Part-4" class="headerlink" title="Part 4"></a>Part 4</h2><h3 id="非连续内存分配：分段"><a href="#非连续内存分配：分段" class="headerlink" title="非连续内存分配：分段"></a>非连续内存分配：分段</h3><ul>
-<li><p>连续内存分配的缺点</p>
-<ul>
-<li>分配给一个程序的物理内存是连续的</li>
-<li>内存利用率低</li>
-<li>有外碎片和内碎片的问题</li>
-</ul>
-</li>
-<li><p>为什么需要非连续内存分配(优点)</p>
-<ul>
-<li>一个程序的物理地址空间是非连续的</li>
-<li>更好的内存利用和管理</li>
-<li>允许共享代码和数据</li>
-<li>支持动态加载和动态链接</li>
-</ul>
-</li>
-<li><p>非连续分配的缺点</p>
-<ul>
-<li>管理开销：如何建立虚拟地址和物理地址之间的转换<ul>
-<li>软件方案</li>
-<li>硬件方案<ul>
-<li>分段</li>
-<li>分页</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>分段</p>
-<ul>
-<li>段访问机制<ul>
-<li>程序访问内存需要一个二维数组(段号s，段内偏移addr)</li>
-</ul>
-</li>
-<li>分段的寻址方案<ul>
-<li>虚拟内存通过某种映射联系到物理地址</li>
-<li>需要一个段表，操作系统建立</li>
-<li>需要直到段的大小，防止偏移地址超出范围</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="非连续内存分配：页表"><a href="#非连续内存分配：页表" class="headerlink" title="非连续内存分配：页表"></a>非连续内存分配：页表</h3><p>页表其实就是一个大数组，每个运行的程序都有一个页表，每个页表有(page num, offset)</p>
-<ul>
-<li><p>属于程序运行状态，会动态变化</p>
-</li>
-<li><p>PIBR：页表基址寄存器</p>
-</li>
-<li><p>页表内容</p>
-<ul>
-<li>Flag标志位<ul>
-<li>dirty bit：是否合法</li>
-<li>resident bit：物理地址中是否存在</li>
-<li>clock/reference bit</li>
-</ul>
-</li>
-<li>帧号frame num：f</li>
-</ul>
-</li>
-<li><p>CPU通过页号和偏移寻址到对应的页表项，把帧号和偏移组合形成物理地址</p>
-</li>
-<li><p>分页机制的性能问题：</p>
-<ul>
-<li>访问一个内存单元需要两次内存地址访问<ul>
-<li>一次获取表项</li>
-<li>一次访问数据</li>
-</ul>
-</li>
-<li>页表可能很大，而且为了隔离每个程序要有自己的页表</li>
-<li>页表空间大，因此访问效率页会有问题</li>
-</ul>
-</li>
-<li><p>解决办法</p>
-<ul>
-<li>缓存近期访问的页帧转换表项(TLB)<ul>
-<li>TLB使用关联内存实现，具备快速访问性能</li>
-<li>如果TLB命中，物理页号可以很快获取</li>
-<li>如果TLB未命中TLB miss，对应的表项被更新到TLB中<ul>
-<li>多数编程(访问)的局部性可以降低TLB miss</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>间接访问</li>
-</ul>
-</li>
-</ul>
-<h3 id="非连续内存分配：页表-二级、多级页表"><a href="#非连续内存分配：页表-二级、多级页表" class="headerlink" title="非连续内存分配：页表-二级、多级页表"></a>非连续内存分配：页表-二级、多级页表</h3><p>速度问题解决了，空间上如何解决？那就需要页表分级</p>
-<p>以二级页表举例，把一块大的页表分成两块，把大的page num分成两块：p1、p2。<br>通过一级表[p1]找到二级表的地址，在用二级表地址做索引，二级表[p2]找到frame num就可以找到物理地址。</p>
-<p>整个过程多了寻址，导致开销增大，但是通过分级，当物理地址不存在时(在一级表就可以得出)，从而二级表不必保存这部分内容。以时间换空间。</p>
-<p>多级页表同理</p>
-<h3 id="非连续内存分配：页表-反向页表"><a href="#非连续内存分配：页表-反向页表" class="headerlink" title="非连续内存分配：页表-反向页表"></a>非连续内存分配：页表-反向页表</h3><p>前面所讲的页表的大小都和逻辑地址空间的大小有对应关系，逻辑空间寻址的范围越大，页表越多。</p>
-<ul>
-<li>大地址空间的问题：<ul>
-<li>有大地址空间(64bits)，向前映射页表变得繁琐</li>
-<li>不是让页表与逻辑空间的大小对应，而是让页表与物理地址空间大小对应</li>
-</ul>
-</li>
-</ul>
-<p>有什么办法使得页表项和逻辑地址空间没有那么大的关系，尽量和物理地址空间大小有关？这就是反向页表的想法。</p>
-<p>前面都是以逻辑页号来索引页表(一个大数组)，能否用页帧号(物理页号)来查找对应的逻辑页的页号呢？这样就能省很多空间。</p>
-<p>基于哈希查找的方案</p>
-<h2 id="Part-5"><a href="#Part-5" class="headerlink" title="Part 5"></a>Part 5</h2><h3 id="虚拟内存的起因"><a href="#虚拟内存的起因" class="headerlink" title="虚拟内存的起因"></a>虚拟内存的起因</h3><p>理想中的存储器：更大、更快、更便宜的非易失性存储器</p>
-<h3 id="覆盖技术"><a href="#覆盖技术" class="headerlink" title="覆盖技术"></a>覆盖技术</h3><ul>
-<li>目标<ul>
-<li>在较小的可用内存中运行较大的程序。常用于多道程序系统，与分区储存管理配合</li>
-</ul>
-</li>
-<li>原理<ul>
-<li>把程序按照自身逻辑结构，划分为若干个功能上相对独立的程序模块，那些不会同时执行的模块共享同一块内存区域，按照时间先后来运行<ul>
-<li>必要部分(常用功能)的代码和数据常驻内存</li>
-<li>可选部分(不常用功能)在其他程序模块中实现，平时存放在外存中，在需要时才装入内存</li>
-<li>不存在调用关系的模块不必同时装入到内存，从而可以 <strong>相互覆盖</strong> 即这些模块共享一个分区</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="交换技术"><a href="#交换技术" class="headerlink" title="交换技术"></a>交换技术</h3><ul>
-<li>目标<ul>
-<li>多道程序在内存中时，让正在运行的程序或需要运行的程序获得更多的内存资源</li>
-</ul>
-</li>
-<li>方法<ul>
-<li>将暂时不能运行的程序送到外存，从而获得空闲内存空间</li>
-<li>操作系统把一个进程的整个地址空间的内容保存到外存中(换出swap out)，而将外存中的某个进程的地址空间读入内存中(换入swap in)。换入换出内容的大小为整个程序的地址空间</li>
-</ul>
-</li>
-<li>存在的问题<ul>
-<li>交换的时机：只当内存空间不够或有不够的危险时换出</li>
-<li>交换区的大小：必须足够大以存放所有用户进程的所有内存映像的拷贝</li>
-<li>程序换入时的重定位：最好采用动态地址映射的方法</li>
-</ul>
-</li>
-</ul>
-<h3 id="虚存技术"><a href="#虚存技术" class="headerlink" title="虚存技术"></a>虚存技术</h3><ul>
-<li><p>上面方法的不足</p>
-<ul>
-<li>覆盖技术：需要程序员自己把整个程序划分为若干个小的功能模块，并确定各个模块之间的覆盖关系，增加程序员的负担</li>
-<li>交换技术：以进程作为交换单位，需要把进程的整个地址空间都换进换出，增加了处理器的开销</li>
-</ul>
-</li>
-<li><p>虚存技术的目标：</p>
-<ul>
-<li>像覆盖技术那样，但做的更好，由操作系统完成，不需要程序员的干涉</li>
-<li>像交换技术那样，但做的更好，只对进程的部分内容在内存和外存之间进行交换</li>
-</ul>
-</li>
-<li><p>原理：利用程序的局部性</p>
-</li>
-<li><p>基本特征：</p>
-<ul>
-<li>大的用户空间：与外存相结合</li>
-<li>部分交换：不同于交换技术，可以部分交换</li>
-<li>不连续：物理内存分配不连续，虚拟地址空间使用不连续</li>
-</ul>
-</li>
-<li><p>虚拟技术-虚拟页式内存管理</p>
-<ul>
-<li>基本思路：<ul>
-<li>当程序需要调入内存运行时，不是将程序的所有页都装入内存，而是只装如部分页，就可启动程序而运行</li>
-<li>在运行的过程中，如果发现运行的程序或要访问的数据不再内存，则发出缺页中断请求，系统在处理这个中断时，将外存中相应的页调入内存，使得程序能够运行</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>为了事先虚拟页式内存管理，需要在页表项中多加几位：</p>
-<table>
-<thead>
-<tr>
-<th>逻辑页号</th>
-<th>访问位</th>
-<th>修改位</th>
-<th>保护位</th>
-<th>驻留位</th>
-<th>物理页帧号</th>
-</tr>
-</thead>
-</table>
-<ul>
-<li>驻留位<ul>
-<li>表示改页是内存还是外存，如果为1,表示在内存中，可以访问，否则导致缺页中断</li>
-</ul>
-</li>
-<li>保护位<ul>
-<li>表示允许对该页做何种类型的访问，如只读、只写等</li>
-</ul>
-</li>
-<li>修改位<ul>
-<li>表示页在内存中是否修改过，当系统回收改物理页时，根据此位来决定是否把它的内存写回到外存(跟新外存的数据)</li>
-</ul>
-</li>
-<li>访问位<ul>
-<li>表明是否访问过。用于置换算法</li>
-</ul>
-</li>
-</ul>
-<h2 id="Part-6"><a href="#Part-6" class="headerlink" title="Part 6"></a>Part 6</h2><h3 id="最优页面置换算法"><a href="#最优页面置换算法" class="headerlink" title="最优页面置换算法"></a>最优页面置换算法</h3><ul>
-<li><p>功能</p>
-<ul>
-<li>当缺页中断发生，需要调入新的页面而内存已满时，选择内存当中哪个物理页面被置换</li>
-</ul>
-</li>
-<li><p>目标</p>
-<ul>
-<li>尽可能减少页面换入换出的次数</li>
-</ul>
-</li>
-<li><p>最优页面置换算法</p>
-<ul>
-<li>思路：当缺页发生时，选择等待时间最长的那个(将来长一段时间不会发生)，作为置换页面</li>
-<li>这一种情况实际无法实现的原因是操作系统无法知道每个页面等待多长时间以后消失。所以只能尽可能接近，作为参考来比较其他算法</li>
-</ul>
-</li>
-</ul>
-<h3 id="先进先出算法-FIFO"><a href="#先进先出算法-FIFO" class="headerlink" title="先进先出算法(FIFO)"></a>先进先出算法(FIFO)</h3><ul>
-<li>思路<ul>
-<li>选择在内存中驻留时间最长的页面并淘汰之。即维护一个链表，链表记录所有的逻辑页，链首表示驻留时间最长。缺页时把链首淘汰，把新页添加到链尾</li>
-</ul>
-</li>
-<li>性能较差，并且有Belady现象<ul>
-<li>Belady现象<ul>
-<li>在采用FIFO算法时，有时出现分配的物理页数增加，缺页率反而提高的异常现象</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="最近最久未使用算法-LRU"><a href="#最近最久未使用算法-LRU" class="headerlink" title="最近最久未使用算法(LRU)"></a>最近最久未使用算法(LRU)</h3><ul>
-<li>思路<ul>
-<li>缺页发生时，替换最久未被使用的页，并淘汰之</li>
-<li>利用局部性原理</li>
-</ul>
-</li>
-<li>需要记录使用时间的先后顺序，开销较大。两种可能的实现方法：<ul>
-<li>维护链表</li>
-<li>堆栈，最新的压到栈顶，但是要查找一遍把已经存在的剔除</li>
-</ul>
-</li>
-</ul>
-<h3 id="时钟页面置换算法"><a href="#时钟页面置换算法" class="headerlink" title="时钟页面置换算法"></a>时钟页面置换算法</h3><p>时钟页面置换算法，LRU的近似，对FIFO的一种改进。</p>
-<ul>
-<li>基本思路<ul>
-<li>需要用到表项当中的访问位。当一个页面被装入内存时，把该位初始化为0。如果这个页面被访问到，则把该位置置为1</li>
-<li>把各个页面组织成环形链表，指针指向最老的页面</li>
-<li>当缺页发生时，考虑指针指向的最老的页面，如果它的访问位为0，则淘汰。如果访问位为1，则把它置为0,然后指针往下寻找</li>
-</ul>
-</li>
-</ul>
-<h3 id="二次机会法"><a href="#二次机会法" class="headerlink" title="二次机会法"></a>二次机会法</h3><p>时钟页面置换算法的访问并没有区分读还是写。实际中如果执行了写操作dirty bit会置为1，如果只是读dirty bit是0。那么dirty bit有什么用呢？</p>
-<p>如果进行的是写操作，那么需要同时写到内存和硬盘(数据一致)。如果是只进行读操作，由于内容并没有改变，只需释放内存，然后换入即可。这种使用两个bit的算法就是二次机会法。</p>
-<p>used bit、dirty bit的转变规则如下</p>
-<table>
-<thead>
-<tr>
-<th>如果</th>
-<th>则</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>used | dirty</td>
-<td>used | dirty</td>
-</tr>
-<tr>
-<td>0     0</td>
-<td>替换的页</td>
-</tr>
-<tr>
-<td>0     1</td>
-<td>0     0</td>
-</tr>
-<tr>
-<td>1     0</td>
-<td>0     0</td>
-</tr>
-<tr>
-<td>1     1</td>
-<td>0     1</td>
-</tr>
-</tbody></table>
-<h3 id="最不常用算法-LFU"><a href="#最不常用算法-LFU" class="headerlink" title="最不常用算法(LFU)"></a>最不常用算法(LFU)</h3><ul>
-<li>基本思路<ul>
-<li>缺页发生时，淘汰访问次数最少的页面</li>
-</ul>
-</li>
-<li>维护计数器、顺序</li>
-</ul>
-<h3 id="局部页面替换算法的问题、工作集模型"><a href="#局部页面替换算法的问题、工作集模型" class="headerlink" title="局部页面替换算法的问题、工作集模型"></a>局部页面替换算法的问题、工作集模型</h3><p>如果局部性原理不成立，则各种置换算法效果没有区别。如果局部性原理成立，则可以通过工作集模型来表现。</p>
-<ul>
-<li><strong>工作集</strong> ：一个进程当前正在使用了逻辑页面集合，可以用一个二元函数$W(t, \Delta)$来表示<ul>
-<li>t是当前的执行时刻</li>
-<li>$\Delta$称为工作集窗口，即一个定长的页面访问的时间窗口</li>
-<li>$W(t, \Delta)=$在当前时刻t之前的$\Delta$时间窗口当中的所有页面所组成的集合(随着t的变化， 该集合页不断地变化)</li>
-<li>$|W(t, \Delta)|$值工作集的大小，即页面数目(不同页面的个数)</li>
-</ul>
-</li>
-<li><strong>常驻集</strong> ：当前时刻，进程实际驻留在内存的页面集合<ul>
-<li>工作集是进程在运行过程中固有的性质，而常驻集取决于系统分配进程的物理页的数目，以及所采用的页面置换算法</li>
-<li>当常驻集的大小达到某个数目之后，在给他分配更多的物理页面，缺页率页不会明显下降</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    t: 0 1 2 3 4 5 6 7 8 9 10</span><br><span class="line">pages: a c d c b a a b b d b</span><br><span class="line"></span><br><span class="line">若Delta&#x3D;4, t&#x3D;5, 则</span><br><span class="line">工作集大小&#x3D;4(dcba)</span><br><span class="line"></span><br><span class="line">若Delta&#x3D;3, t&#x3D;8, 则</span><br><span class="line">工作集大小&#x3D;2(abb)</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="全局置换算法"><a href="#全局置换算法" class="headerlink" title="全局置换算法"></a>全局置换算法</h3><p>把眼光放到整个系统的所有程序，而不仅仅是专注一个程序的页面置换。程序之间物理页需求不同，操作系统可以进行动态调节。</p>
-<ul>
-<li>缺页率页面置换算法<ul>
-<li>可变分配策略：常驻集大小可变。如每个进程刚开始的时候，先根据程序大小给它分配一定数目的物理页面，然而在程序运行中，再动态调节常驻集大小<ul>
-<li>当一个缺页中断发生时，被置换的页面可以是在其他进程当中。各个并发进程竞争地使用物理页面</li>
-<li>优缺点：性能较好，但增加了系统开销</li>
-<li>具体实现：可以使用缺页率算法来到动态调整常驻集大小</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Part-7"><a href="#Part-7" class="headerlink" title="Part 7"></a>Part 7</h2><h3 id="进程控制结构"><a href="#进程控制结构" class="headerlink" title="进程控制结构"></a>进程控制结构</h3><ul>
-<li>进程控制块：操作系统管理控制进程所需的信息集合<ul>
-<li>操作系统用 <strong>PCB(Process Control Block)</strong> 来描述进程的基本情况以及运行变化的过程，PCB是进程存在的唯一标志<ul>
-<li>进程的创建：为该进程生成一个PCB</li>
-<li>进程的终止：回收它的PCB</li>
-<li>进程的组织管理：通过PCB的组织管理来实现</li>
-</ul>
-</li>
-<li>PCB含有以下三大类信息<ul>
-<li>进程的标识信息</li>
-<li>处理机状态信息</li>
-<li>进程控制信息</li>
-</ul>
-</li>
-<li>PCB的组织方式<ul>
-<li>链表：经常有动态插入删除的操作系统</li>
-<li>索引表(数组)：不常有动态插入删除的操作系统</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="进程的生命周期原理"><a href="#进程的生命周期原理" class="headerlink" title="进程的生命周期原理"></a>进程的生命周期原理</h3><ul>
-<li>进程创建<ul>
-<li>引起进程创建的3个主要事件<ul>
-<li>系统初始化</li>
-<li>用户请求创建一个新进程</li>
-<li>正在运行的进程执行了创建进程的系统调用</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>进程运行<ul>
-<li>一个就绪的进程开始运行</li>
-</ul>
-</li>
-<li>进程等待<ul>
-<li>一个进程没有就绪，就进入等待，让其他进程先执行</li>
-</ul>
-</li>
-<li>进程唤醒<ul>
-<li>等待的进程就绪</li>
-</ul>
-</li>
-<li>进程结束</li>
-</ul>
-<h3 id="进程挂起"><a href="#进程挂起" class="headerlink" title="进程挂起"></a>进程挂起</h3><ul>
-<li>进程挂起<ul>
-<li>进程没有占用内存空间，叫做进程挂起</li>
-<li>阻塞挂起状态：进程在外存并等待某时间的提出</li>
-<li>就绪挂起状态：进程在外存，但只要进入内存即可运行</li>
-</ul>
-</li>
-<li>状态队列把进程管理起来<ul>
-<li>一个队列只存一种状态的进程</li>
-</ul>
-</li>
-</ul>
-<h3 id="线程管理"><a href="#线程管理" class="headerlink" title="线程管理"></a>线程管理</h3><p>线程就是进程中的一条执行流程</p>
-<ul>
-<li>特性<ul>
-<li>线程间可以并发执行</li>
-<li>线程间共享相同的地址空间</li>
-</ul>
-</li>
-<li>优点<ul>
-<li>一个进程中可以同时存在多个线程</li>
-<li>各个线程之间可以并发地执行</li>
-<li>各个线程之间可以共享相同地址空间和文件等资源</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>一个线程崩溃，会导致其所属进程的所有线程崩溃</li>
-<li>如：浏览器如果使用一个页面一个进程，则该页面崩溃不会影响其他页面</li>
-</ul>
-</li>
-</ul>
-<h3 id="线程的实现"><a href="#线程的实现" class="headerlink" title="线程的实现"></a>线程的实现</h3><p>主要有三种线程的实现方式</p>
-<ul>
-<li>用户线程：在用户空间实现<ul>
-<li>在用户空间实现的线程机制不依赖于操作系统的内核，由一组用户级的线程库函数来完成线程的管理</li>
-<li>操作系统只能感知到线程所属的进程</li>
-<li>缺点：<ul>
-<li>如果一个线程发起系统调用而阻塞，则整个进程进入等待。因为操作系统只能感知到进程，所以操作系统阻塞了进程，导致所有的线程阻塞</li>
-<li>当一个线程开始运行后，除非它主动交出CPU的使用权，否则它所在的进程当中的其他线程将无法使用。因为用户进程没有打断线程的特权</li>
-<li>由于时间分片分配给进程，故与其他进程比，在多个线程执行时，每个线程得到的时间片少，执行会慢。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>内核线程：在内核中实现</li>
-<li>轻量级进程：在内核中实现，支持用户线程<ul>
-<li>内核支持的用户线程。一个进程可有一个或多个轻量级进程，每个量级进程有一个单独的内核线程来支持</li>
-</ul>
-</li>
-</ul>
-<h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>各个进程共享CPU资源，不同时刻进程需要切换，让别的进程能够执行。这个切换过程称为进程的上下文切换。</p>
-<h2 id="Part-8"><a href="#Part-8" class="headerlink" title="Part 8"></a>Part 8</h2><h3 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h3><ul>
-<li>FCFS：先来先服务</li>
-<li>SPN(SJF) SRT：短进程优先 短剩余时间优先<ul>
-<li>可抢占，导致长进程可能一直得不到执行</li>
-</ul>
-</li>
-<li>HRRN：最高响应比优先<ul>
-<li>$R=(w+s)/s$，w是等待时间，s是执行时间。不可抢占，一定程度防止了长进程得不到执行的问题</li>
-</ul>
-</li>
-<li>Round Robin：轮循<ul>
-<li>各个进程轮流占用CPU</li>
-<li>会引入额外的上下文切换开销，时间片太小切换太频繁，时间片太大等待时间太久</li>
-</ul>
-</li>
-<li>Multilevel Feedback Queue：多级反馈队列<ul>
-<li>不同级别队列可以采用不同的调度方案，根据进程特点划分</li>
-</ul>
-</li>
-<li>Fair Share Scheduling：公平共享调度</li>
-</ul>
-<h3 id="实时调度"><a href="#实时调度" class="headerlink" title="实时调度"></a>实时调度</h3><ul>
-<li>实时系统<ul>
-<li>定义：正确性依赖于其时间和功能两方面的一种操作系统。即因为是实时的，如果不能在规定时间完成，则失去时效性</li>
-<li>强实时系统<ul>
-<li>需要在保证的时间内完成重要的任务，必须完成</li>
-</ul>
-</li>
-<li>弱实时系统<ul>
-<li>要求重要的进程优先级更高，尽量完成，非必须</li>
-</ul>
-</li>
-<li>性能指标<ul>
-<li>时间约束的及时性(deadline)</li>
-<li>速度和平均性能相对不重要</li>
-</ul>
-</li>
-<li>主要特征：时间约束的可预测性</li>
-</ul>
-</li>
-</ul>
-<h3 id="优先级反转"><a href="#优先级反转" class="headerlink" title="优先级反转"></a>优先级反转</h3><p>举个例子：设优先级$T1&gt;T2&gt;T3$，T3先执行并访问一块共享资源(上锁)，但还没解锁CPU就调度去执行T1。当T1也要访问这共享资源时，要等T3使用完毕(解锁)。但这时由于T2优先级高于T3，T2想要执行了，抢占了CPU，那么T1的执行时间被T2延长了。</p>
-<ul>
-<li>解决办法<ul>
-<li>优先级继承<ul>
-<li>低优先级任务继承高优先级任务的优先级依赖于他们共享的资源，即在上面这个例子中，由于T1要等待T3访问完毕，所以T3的优先级得到动态的提升和T1一样。</li>
-</ul>
-</li>
-<li>优先级天花板<ul>
-<li>资源的优先级和所有可能锁定该资源的任务中优先级最高的那个任务的优先级相同</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Part-9"><a href="#Part-9" class="headerlink" title="Part 9"></a>Part 9</h2><h3 id="一些概念："><a href="#一些概念：" class="headerlink" title="一些概念："></a>一些概念：</h3><ul>
-<li>临界区：进程中的一段需要访问共享资源并且当另一个进程处于相应代码区域时不会被执行的代码区域</li>
-<li>互斥：访问临界区的进程只有一个</li>
-<li>死锁：两个或以上的进程，在互相等待完成待定任务</li>
-<li>饥饿：一个可执行进程持续得不到执行</li>
-<li>原子操作：一次不存在中断或者失败的执行(不可在”分”的最小单位，原子)</li>
-</ul>
-<h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>并发存在的问题：同时对一个数据进行写入操作会存在问题，因为写入操作大致可分为这么几个步骤：读取数据、操作数据、写入数据。由于cpu在线程间切换，如果操作数据后切换到另一个进程，然后才写入数据，将导致问题。</p>
-<p>为了解决上面的并发问题，引入互斥锁机制，使得共享的数据一次只能一个进程操作，其他需要等待正在使用的进程使用结束</p>
-<ul>
-<li>上锁操作执行顺序(也存在上下文切换)问题:<ul>
-<li>方案一：<ul>
-<li><ol>
-<li>判断是否操作共享资源</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>判断是否有锁</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>上锁</li>
-</ol>
-</li>
-<li>存在问题，如果A先执行1、2，然后切换到B。B也会成功执行1、2进入3的区域。这时A和B都可以执行3，并没有起到锁的保护机制：只让一个进程操作</li>
-</ul>
-</li>
-<li>方案二：<ul>
-<li><ol>
-<li>上锁</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>判断是否有锁</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>判断是否操作共享资源</li>
-</ol>
-</li>
-<li>存在问题，A执行了1二话不说先上锁，然后切换到B。B也二话不说先上锁，这时A和B都被对方锁住，谁都不会执行</li>
-<li>这种由于进程切换导致谁都不执行的现象称为饥饿</li>
-</ul>
-</li>
-<li>方案三：使用临界区</li>
-</ul>
-</li>
-</ul>
-<h3 id="临界区的创建"><a href="#临界区的创建" class="headerlink" title="临界区的创建"></a>临界区的创建</h3><ul>
-<li>禁用硬件中断<ul>
-<li>虽然在临界区中执行时不会被随意切换了，但对于外设的事件也得不到相应</li>
-<li>而且对于多核CPU，要屏蔽所有CPU的相应中断能力，所在多CPU情况下无法解决互斥问题</li>
-</ul>
-</li>
-<li>基于软件的解决方法<ul>
-<li>设有两个线程T0、T1,它们的结构通常为<code>while(1){进入临界区;执行临界区代码;退出临界区}</code><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> <span class="built_in">turn</span>;  <span class="comment">// 指示该谁进入临界区</span></span><br><span class="line"><span class="keyword">bool</span> flag[];  <span class="comment">// 指示进程是否准备好进入临界区</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="comment">// 进入临界区的代码</span></span><br><span class="line">    flag[i] = TRUE;</span><br><span class="line">    <span class="built_in">turn</span> = j;</span><br><span class="line">    <span class="keyword">while</span>(flag[j]&amp;&amp;<span class="built_in">turn</span>==j);</span><br><span class="line">        <span class="comment">//操作</span></span><br><span class="line">    <span class="comment">// 退出临界区的代码</span></span><br><span class="line">    flag[i] = FALSE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>更高级的抽象：基于硬件的一些原子操作<ul>
-<li>Test-and-Set：这是一条完成读和写的机器指令<ul>
-<li><ol>
-<li>从内存读值</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>测试该值是否为1(返回bool)</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>内存值设置为1</li>
-</ol>
-</li>
-</ul>
-</li>
-<li>交换exchange<ul>
-<li>交换两个内存中的值</li>
-</ul>
-</li>
-<li>上面两条指令都是原子操作，不会被切换、中断</li>
-<li>缺点：<ul>
-<li>忙等消耗处理器时间</li>
-<li>当进程离开临界区并且多个进程在等待的时候可能导致饥饿(抢lock抢不到)</li>
-<li>死锁：如果一个低优先级的进程拥有临界区并且一个高优先级进程也要求，那么高优先级进程会获得处理器并等待临界区</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Part-10"><a href="#Part-10" class="headerlink" title="Part 10"></a>Part 10</h2><h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><ul>
-<li>抽象数据类型<ul>
-<li>一个整形(sem)，两个原子操作</li>
-<li>P()：sem减1,如果sem&lt;0，等待，否则继续</li>
-<li>V()：sem加1,如果sem&lt;=0(说明有有一些进程在等待)，唤醒一个等待的P</li>
-</ul>
-</li>
-</ul>
-<h4 id="信号量的使用"><a href="#信号量的使用" class="headerlink" title="信号量的使用"></a>信号量的使用</h4><ul>
-<li>信号量是整数</li>
-<li>信号量的被保护的变量<ul>
-<li>初始化完成后，唯一改变一个信号量的值的方法是通过P()和V()</li>
-<li>操作必须是原子</li>
-</ul>
-</li>
-<li>P()能够阻塞，V()不会阻塞</li>
-<li>我们假定信号量是”公平的”<ul>
-<li>没有线程被阻塞在P()仍然堵塞V()被无限频繁调用(在同一信号量)</li>
-</ul>
-</li>
-<li>两种类型信号量<ul>
-<li>二进制信号量：可以是0或1</li>
-<li>一般/计数信号量：可是任何非负数<ul>
-<li>允许多个执行P操作的进程进入后续操作</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mutex-&gt;P()</span><br><span class="line">临界区</span><br><span class="line">mutex-&gt;V()</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="信号量的实现"><a href="#信号量的实现" class="headerlink" title="信号量的实现"></a>信号量的实现</h4><p>基本结构</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Semaphore</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> sem;</span><br><span class="line">    WaitQueue q;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Semaphore::P()&#123;</span><br><span class="line">    sem--;</span><br><span class="line">    <span class="keyword">if</span>(sem&lt;<span class="number">0</span>)&#123;</span><br><span class="line">        把这个线程放入等待队列q;</span><br><span class="line">        block(p);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Semaphore::V()&#123;</span><br><span class="line">    sem++;</span><br><span class="line">    <span class="keyword">if</span>(sem&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">        从等待队列中取出一个线程t</span><br><span class="line">        wakeup(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="管程"><a href="#管程" class="headerlink" title="管程"></a>管程</h3><p>building</p>
-<ul>
-<li>目的：分离互斥和条件同步的关注</li>
-<li>什么是管程：<ul>
-<li>一个锁：指定临界区</li>
-<li>0或多个条件变量：等待/通知信号量用于管理并发访问共享数据</li>
-</ul>
-</li>
-<li>一般方法<ul>
-<li>收集在对象/模块中的相关共享数据</li>
-<li>定义方法来访问共享数据</li>
-</ul>
-</li>
-</ul>
-<h2 id="Part-11"><a href="#Part-11" class="headerlink" title="Part 11"></a>Part 11</h2><p> <strong>IIII</strong> </p>
-<h3 id="死锁的特征"><a href="#死锁的特征" class="headerlink" title="死锁的特征"></a>死锁的特征</h3><ul>
-<li>互斥：在一个时间只能有一个进程使用资源</li>
-<li>持有并等待：进程保持至少一个资源正在等待获取其他进程持有的额外资源</li>
-<li>不抢占：一个资源只能被进程自愿释放</li>
-<li>循环等待：一个等一个的环，但有环不一定有死锁</li>
-</ul>
-<h3 id="死锁处理办法"><a href="#死锁处理办法" class="headerlink" title="死锁处理办法"></a>死锁处理办法</h3><h4 id="死锁预防"><a href="#死锁预防" class="headerlink" title="死锁预防"></a>死锁预防</h4><p>死锁出现我们将死锁出现的某个条件打破是不是就解决了?</p>
-<ul>
-<li>打破占用并等待<ul>
-<li>一次占用所有所需的资源否则就不拿资源，是不是就防止了其他进程插足<ul>
-<li>缺点是资源利用率低，可能发生饥饿</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>打破不抢占<ul>
-<li>过于极端，导致被抢占的进程无法正常运行</li>
-</ul>
-</li>
-<li>打破循环等待<ul>
-<li>对所有资源类型进行排序，并要求每个进程按照资源的顺序进行申请</li>
-</ul>
-</li>
-</ul>
-<h4 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h4><p>申请资源时进行判断是否会出现死锁。需要操作系统提供一些额外的先验信息：</p>
-<ul>
-<li>最简单的方法如：每个进程声明它可能需要的每个类型资源的最大数目</li>
-<li>限制提供与分配的资源数量，不能超过个某个最大需求</li>
-<li>死锁避免算法动态检查资源分配状态，以确保永远不会有一个环形等待状态<ul>
-<li>但是有环并不一定有死锁</li>
-</ul>
-</li>
-</ul>
-<h4 id="银行家算法"><a href="#银行家算法" class="headerlink" title="银行家算法"></a>银行家算法</h4><blockquote>
-<p>有人找银行家贷款，银行家判断是否能够贷款收回，能收回才放贷。</p>
-</blockquote>
-<ul>
-<li>前提条件<ul>
-<li>多个进程实例</li>
-<li>每个进程必须最大限度利用资源</li>
-<li>当一个进程请求资源，得不到就不等待</li>
-<li>当一个进程得到所有的资源就必须在一定的时间内释放</li>
-</ul>
-</li>
-</ul>
-<p>基于上述条件，银行家算法通过寻找允许每个进程获得的最大资源并结束的进程理想执行时序，来决定是否安全。不存在满足要求的执行时序状态都是不安全的。</p>
-<ul>
-<li><p>数据结构</p>
-<ul>
-<li>n = 进程数量，m = 资源类型数量</li>
-<li>Max(总需求量)：n x m矩阵。Max[i, j] = k表示，进程$P_i$最多请求资源类型$R_j$的实例个数为k</li>
-<li>Available(空闲量)：长度为m的向量。Available[j] = k表示有k个$R_j$类型的资源可用</li>
-<li>Allocation[i, j](已分配)</li>
-<li>Need[i, j](未来需要量)</li>
-<li>Need[i, j] = Max[i, j] - Allocation[i, j]</li>
-</ul>
-</li>
-<li><ol>
-<li>初始化<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; work和finish分别是长度为m和n的向量</span><br><span class="line">work &#x3D; Available  &#x2F;&#x2F; 当前剩余</span><br><span class="line">finish[i] &#x3D; false for i in range(n) &#x2F;&#x2F; 线程i没结束</span><br></pre></td></tr></table></figure></li>
-</ol>
-</li>
-<li><ol start="2">
-<li>判断能否申请到：找到need比work小的进程i<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 要求</span><br><span class="line">(a) finish[i] &#x3D; false</span><br><span class="line">(b) need_i &lt;&#x3D; work</span><br></pre></td></tr></table></figure>
-<ul>
-<li>没找到跳转到4</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>申请到后认为进程可以正常结束<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 进程i的资源要求量小于当前的剩余空闲资源量</span><br><span class="line">work &#x3D; work + allocation  &#x2F;&#x2F; 回收</span><br><span class="line">finish[i] &#x3D; true</span><br></pre></td></tr></table></figure>
-<ul>
-<li>跳转到2</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol start="4">
-<li>如果步骤2找不到这样的进程<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if finish[i] &#x3D;&#x3D; true for all i  &#x2F;&#x2F; 表明安全状态</span><br><span class="line">    可以分配</span><br><span class="line">else 不应该分配</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-</li>
-</ul>
-<h4 id="死锁检测和死锁恢复"><a href="#死锁检测和死锁恢复" class="headerlink" title="死锁检测和死锁恢复"></a>死锁检测和死锁恢复</h4><ul>
-<li>死锁检测<ul>
-<li>维护等待图<ul>
-<li>节点是进程</li>
-<li>$P_i \rightarrow P_j$：Pi等待Pj</li>
-</ul>
-</li>
-<li>定期调用检测算法来搜索图中是否存在循环</li>
-<li>算法需要$n^2$次操作，n是图中定点的数目</li>
-<li>开销比较大</li>
-</ul>
-</li>
-<li>死锁恢复<ul>
-<li>终止所有的死锁进程<ul>
-<li>比较暴力</li>
-</ul>
-</li>
-<li>在一个时间内终止一个进程直到死锁消除<ul>
-<li>基于进程的优先级</li>
-<li>基于进程运行需要的时间</li>
-<li>基于进程的资源占用</li>
-<li>基于进程需要的资源</li>
-<li>基于进程需要被终止的数目</li>
-<li>基于进程是交互还是批处理</li>
-</ul>
-</li>
-<li>资源抢占</li>
-</ul>
-</li>
-</ul>
-<h3 id="IPC-进程间通信-Inter-Process-Communication"><a href="#IPC-进程间通信-Inter-Process-Communication" class="headerlink" title="IPC(进程间通信:Inter-Process Communication)"></a>IPC(进程间通信:Inter-Process Communication)</h3><ul>
-<li>直接通信<ul>
-<li>自动建立链路</li>
-<li>一条链路恰好对应一对通信进程</li>
-<li>每对进程之间只有一个连接存在<ul>
-<li>打破进程间的隔离</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>间接通信<ul>
-<li>定向从消息队列接收消息</li>
-</ul>
-</li>
-<li>信号<ul>
-<li>类似与中断信号，但在IPC中是基于软件的信号</li>
-<li>实现：<ul>
-<li>在程序中编写handler负责处理操作系统发出的信号</li>
-<li>收到信号后操作系统把本来应该向下执行的地址改为信号处理函数的入口地址</li>
-</ul>
-</li>
-<li>进程可以接收、可以忽略</li>
-<li>不足是信号不传参数，只是信号(某种标记)</li>
-</ul>
-</li>
-<li>管道pipe<code>a | b</code><ul>
-<li>用于数据交换，通过父进程帮子进程建立好通道</li>
-<li>把a的输出放入缓冲区buffer，把这个缓冲区的内容当作b的输入</li>
-</ul>
-</li>
-<li>消息队列<ul>
-<li>不同于管道<ul>
-<li>没有父子关系</li>
-<li>管道里数据是一种字节流，不是一种结构化的数据</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>共享内存<ul>
-<li>一种直接通信方式，共享内存</li>
-<li>优点：快速，方便的共享数据</li>
-<li>缺点：必须同步数据访问，需要同步互斥机制</li>
-</ul>
-</li>
-</ul>
-<h2 id="Part-12"><a href="#Part-12" class="headerlink" title="Part 12"></a>Part 12</h2><h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><h4 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h4><ul>
-<li>内核跟踪每个进程打开的文件<ul>
-<li>操作系统为每个进程维护一个打开文件表</li>
-<li>一个打开文件描述符是这个表中的索引</li>
-</ul>
-</li>
-<li>需要元数据来管理打开文件<ul>
-<li>文件指针：指向最近一次读写位置，每个打开这个文件的进程都有这个指针</li>
-<li>文件打开计数器：记录文件打开的次数。当最后一个进程关闭了文件时，允许将其从打开文件表中移除</li>
-<li>文件磁盘位置：缓存数据访问信息</li>
-<li>访问权限</li>
-</ul>
-</li>
-</ul>
-<h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><p>目录好比一个集合，这个集合里有很多文件。集合用何种数据结构实现取决于文件系统的设计。可以采取传统的数组形式、、链表形式、也可采取哈希表形式或者更复杂的形式。</p>
-<h4 id="文件别名"><a href="#文件别名" class="headerlink" title="文件别名"></a>文件别名</h4><ul>
-<li>多个文件名关联同一个文件<ul>
-<li>硬连接：多个文件指向一个文件<ul>
-<li>删除一个文件将减少文件的引用计数，只有引用计数为0时才会删除一个文件</li>
-</ul>
-</li>
-<li>软连接：以”快捷方式”指向其他文件<ul>
-<li>删除真实文件后会留下的快捷方式将指向空</li>
-</ul>
-</li>
-<li>通过存储真实文件的逻辑名称来实现</li>
-</ul>
-</li>
-<li>别名机制潜在的循环<ul>
-<li>对目录的别名：子目录是父目录的一个引用</li>
-<li>这将导致查找文件时检索路径出现死循环</li>
-</ul>
-</li>
-</ul>
-<h4 id="文件系统类别"><a href="#文件系统类别" class="headerlink" title="文件系统类别"></a>文件系统类别</h4><ul>
-<li>磁盘文件系统<ul>
-<li>文件存储在数据存储设备上，如磁盘</li>
-<li>例如：FAT、NTFS、ext3/4等</li>
-</ul>
-</li>
-<li>数据库文件系统<ul>
-<li>文件根据其特征是可寻址(辨识)的</li>
-</ul>
-</li>
-<li>日志文件系统<ul>
-<li>记录文件系统的修改/时间</li>
-</ul>
-</li>
-<li>网络/分布式文件系统</li>
-<li>特殊/虚拟文件系统</li>
-</ul>
-<h4 id="文件系统的实现"><a href="#文件系统的实现" class="headerlink" title="文件系统的实现"></a>文件系统的实现</h4><p>文件系统的种类繁多，如果让操作系统针对不同的文件系统编写应用程序，这显然是很复杂的。所有操作系统把复杂的东西抽象成简单的接口提供给用于，用户只需访问简单的接口，就可以应对不同的文件系统。</p>
-<p>虚拟文件系统是一个内存中的概念，通过虚拟文件系统层，屏蔽了底层文件各种系统的差异，从而应用程序可以访问不同类型的文件系统。</p>
-<ul>
-<li><p>分层结构</p>
-<ul>
-<li>上层：虚拟(逻辑)文件系统</li>
-<li>底层：特定文件系统模块</li>
-</ul>
-</li>
-<li><p>目的</p>
-<ul>
-<li>对多有不同文件系统的抽象</li>
-</ul>
-</li>
-<li><p>功能</p>
-<ul>
-<li>提供相同的文件和文件系统接口</li>
-<li>管理所有文件和文件系统关联的数据结构</li>
-<li>高效查询例程，遍历文件系统</li>
-<li>与特定文件系统模块的交互</li>
-</ul>
-</li>
-<li><p>基本结构</p>
-<ul>
-<li>卷控制块<ul>
-<li>每个文件系统一个</li>
-<li>文件系统详细信息</li>
-<li>块、块大小、空余块、计数/指针等</li>
-</ul>
-</li>
-<li>文件控制块<ul>
-<li>每个文件一个</li>
-<li>文件详细信息</li>
-<li>权限、拥有者、大小等信息</li>
-</ul>
-</li>
-<li>目录节点<ul>
-<li>每个目录项一个(目录和文件)</li>
-<li>将目录项数据结构及树形布局编码成树形数据结构</li>
-<li>指向文件控制块、父节点、项目列表等</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img src="./static/dir_node_struct.png"/>
-
-
-<h3 id="打开文件的数据结构"><a href="#打开文件的数据结构" class="headerlink" title="打开文件的数据结构"></a>打开文件的数据结构</h3><ul>
-<li>将文件控制块读入内存</li>
-<li>相关信息放入打开文件表</li>
-<li>把打开文件表表项的索引返回给应用程序<ul>
-<li>基于索引找到系统层面的打开文件表。由于可能多个程序打开同一个文件，所以都索引到系统文件表(只有一项)就ok</li>
-<li>系统文件表由索引到目录/文件</li>
-<li>如：访问文件，那么文件的信息会包含文件出现在什么地方(disk位置)，然后由偏移量指出，转换成disk扇区的编号</li>
-<li>然后就可对扇区内容读写</li>
-</ul>
-</li>
-</ul>
-<h3 id="文件分配"><a href="#文件分配" class="headerlink" title="文件分配"></a>文件分配</h3><p>当要写入文件时，要对文件的数据空间进行管理(增减)。分配方式有如下几种</p>
-<ul>
-<li>连续分配<ul>
-<li>文件头指定起始块和长度</li>
-<li>位置/分配策略<ul>
-<li>最先分配、最佳分配</li>
-</ul>
-</li>
-<li>优势<ul>
-<li>文件读取表现号</li>
-<li>高效的顺序和随机访问</li>
-</ul>
-</li>
-<li>劣势，同数组的劣势<ul>
-<li>文件增长问题，可能需要调整后面一系列文件，或者把自己移动到别处，但这样又造成碎片问题</li>
-<li>碎片</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>链式分配<ul>
-<li>文件以数据块链表方式储存</li>
-<li>文件头包含了到第一块和最后一块的指针</li>
-<li>优点<ul>
-<li>创建、增减很容易</li>
-<li>没有碎片</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>不可能进行真正的随机访问</li>
-<li>可靠性：如突然断电一个链被破坏…</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>索引分配<ul>
-<li>为每个文件建立一个名为 <strong>索引数据块</strong> 的非数据数据块<ul>
-<li>到文件数据块的指针列表</li>
-</ul>
-</li>
-<li>文件头包含了索引数据块</li>
-<li>优点<ul>
-<li>创建、增减容易</li>
-<li>没有碎片</li>
-<li>支持直接访问</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>当文件很小时，存储开销比例大</li>
-<li>如何处理大文件？一个索引块能够描述的数据块的个数是有限的<ul>
-<li>分级处理，但是引入很多(索引)开销，和链被破坏的问题</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="空闲空间列表"><a href="#空闲空间列表" class="headerlink" title="空闲空间列表"></a>空闲空间列表</h3><p>对空闲空间的管理。有如下几种管理方式</p>
-<ul>
-<li>用位图代表空闲数据块列表<ul>
-<li><code>11110001110011</code>每个位就可表示扇区是否被分配<ul>
-<li>如果i=0表明数据块i是空闲的</li>
-</ul>
-</li>
-<li>使用简单，但是可能会是一个big vector<ul>
-<li>如160G的disk需要5MB的bit表示，可以将这5M读取到内存</li>
-<li>然而如果空闲空间中均匀分布，那么在找到0之前需要扫描n/r。n表示磁盘数据块的总数，r表示空闲块数目</li>
-</ul>
-</li>
-<li>需要保护数据一致性：储存在内存的位图需要和硬盘的位图一致<ul>
-<li>解决办法：先在硬盘位图上修改，再分配，在修改内存的位图。不会出现数据丢失的情况</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>链式列表</li>
-<li>分组列表</li>
-</ul>
-<h3 id="多磁盘管理-RAID"><a href="#多磁盘管理-RAID" class="headerlink" title="多磁盘管理-RAID"></a>多磁盘管理-RAID</h3><p>通常磁盘通过分区来最大限度减小寻道时间</p>
-<ul>
-<li>分区：不同分区可以是不同的文件系统</li>
-<li>卷：把多个磁盘变成一个卷来管理，这就可以把一个文件系统扩展到，多个磁盘</li>
-</ul>
-<p><strong>RAID：冗余磁盘阵列</strong> 。早期的磁盘容易坏，那么能不能用多个磁盘来储存一个文件系统的内容来保证可靠性呢？raid由此提出。后来raid又可以用来提升磁盘访问的吞吐量，提高访问速度。</p>
-<ul>
-<li>实现<ul>
-<li>在操作系统内存：储存/卷管理。软raid</li>
-<li>raid硬件控制器。硬raid</li>
-</ul>
-</li>
-<li>raid0：提高吞吐量<ul>
-<li>每个磁盘的独立的，可以并行的对数据进行访问，提升吞吐量</li>
-</ul>
-</li>
-<li>raid1：提高可靠性<ul>
-<li>每个磁盘的独立的，可以并行的操作</li>
-</ul>
-</li>
-<li>raid4：即提高性能又增加可靠性<ul>
-<li>如：使用一块Parity Disk的盘存储校验码，其他盘可以做并行操作。这样当一块盘的数据坏时可以反推出损坏的数据</li>
-</ul>
-</li>
-<li>raid5：raid4中Parity Disk的读写非常频繁，开销大<ul>
-<li>把校验块均匀的分配在不同的disk中，开销均匀、访问并行</li>
-<li><img src="./static/raid5.png"/>
-
-
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -4150,12 +3094,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

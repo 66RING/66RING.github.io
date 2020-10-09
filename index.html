@@ -145,6 +145,189 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/06/universe/lua/lua_stl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/06/universe/lua/lua_stl/" class="post-title-link" itemprop="url">Lua标准库工具</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-10-06 00:00:00 / Modified: 20:11:53" itemprop="dateCreated datePublished" datetime="2020-10-06T00:00:00+08:00">2020-10-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="string"><a href="#string" class="headerlink" title="string"></a>string</h2><ul>
+<li><code>string.gmatch(s, pattern)</code><ul>
+<li>返回一个迭代器函数，每次调用这个函数，返回一个在字符串<code>s</code>找到的下一个pattern描述的子串。没找到返回<code>nil</code></li>
+<li>类型类似正则表达式(或者就是)<ul>
+<li><code>%a</code>查找一个字母</li>
+<li><code>%w</code>查找一个数字或字母</li>
+<li><code>%d</code>查找一个数字</li>
+<li><code>(%w+)=(%w+)</code>，<code>()</code>分组，返回成对的，<code>+</code>找一个及以上</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="table"><a href="#table" class="headerlink" title="table"></a>table</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/05/universe/database/sql_base_usage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/05/universe/database/sql_base_usage/" class="post-title-link" itemprop="url">SQL基本语句</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-05 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-05T00:00:00+08:00">2020-10-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-06 19:25:38" itemprop="dateModified" datetime="2020-10-06T19:25:38+08:00">2020-10-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`tbl_file`</span>(</span><br><span class="line">    <span class="string">`id`</span> <span class="built_in">INT</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span>(<span class="string">`id`</span>),</span><br><span class="line">    <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`idx_user_file`</span> (<span class="string">`user_name`</span>, <span class="string">`file_sha1`</span>),</span><br><span class="line">    <span class="keyword">KEY</span> <span class="string">`idx_status`</span> (<span class="string">`status`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>PRIMARY KEY(&lt;name&gt;)</code></li>
+<li><code>UNIQUE KEY &lt;name&gt; (&lt;name1...&gt;)</code>表示name1…中所有字段是唯一的，命名为name<ul>
+<li><code>INSERT IGNORE</code>时，要插入与unique相同的自动将会跳过</li>
+</ul>
+</li>
+<li><code>KEY &lt;name&gt; (&lt;name&gt;)</code></li>
+</ul>
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><p><code>INSERT [INGORE] INTO &lt;表名&gt; &lt;字段名...&gt; VALUES &lt;字段对应值&gt;</code></p>
+<ul>
+<li><code>IGNORE</code>表示如果要插入的字段已存在，则忽略(不执行插入)</li>
+</ul>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ul>
+<li>软删除<code>DELETE</code></li>
+<li>硬删除<code>DROP</code></li>
+</ul>
+<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><h4 id="UPDATE语句"><a href="#UPDATE语句" class="headerlink" title="UPDATE语句"></a>UPDATE语句</h4><p><code>UPDATE &lt;table_name&gt; SET &lt;column&gt;=&lt;value&gt;... WHERE &lt;column&gt;=&lt;value&gt;</code></p>
+<p> <strong>注意WHERE限定范围</strong> ，否则所有记录都将被更新</p>
+<h4 id="REPALCE函数"><a href="#REPALCE函数" class="headerlink" title="REPALCE函数"></a>REPALCE函数</h4><ul>
+<li>插入替换<ul>
+<li>似乎如果碰到unique key就会替换</li>
+<li><code>REPLACE INTO &lt;表名&gt; (&lt;字段...&gt;) VALUES &lt;新字段,...&gt;</code></li>
+</ul>
+</li>
+<li>replace()函数<ul>
+<li><code>REPALCE(&lt;object&gt;, &lt;search&gt;, &lt;replace&gt;)</code></li>
+<li>将内容<code>&lt;object&gt;</code>中<code>&lt;search&gt;</code>到的替换为<code>&lt;repalce&gt;</code></li>
+<li>实例<ul>
+<li><code>SELECT REPLACE(&#39;http://&#39;,&#39;http&#39;,&#39;https&#39;)</code></li>
+<li><code>UPDATE &lt;table_name&gt; SET name=replace(name,&#39;a&#39;,&#39;b&#39;)</code><ul>
+<li>将表中name字段中所有a替换成b</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><p><code>SELECT &lt;字段...&gt; FROM [数据库].&lt;表&gt; [WHERE statement] [LIMIT statement]</code></p>
+<h3 id="修改删除字段"><a href="#修改删除字段" class="headerlink" title="修改删除字段"></a>修改删除字段</h3><p><code>ALTER TABLE &lt;表名&gt; &lt;操作...&gt;</code>，如：</p>
+<ul>
+<li>新增, <code>ALTER TABLE &lt;表名&gt; ADD COlUMN &lt;字段名&gt; [定义...]</code></li>
+<li>删除字段，<code>ALTER TABLE &lt;表名&gt; DROP &lt;字段名&gt;</code>，如：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tbl_user_file DROP INDEX &#96;idx_user_file&#96;;</span><br></pre></td></tr></table></figure></li>
+<li>修改字段，<code>ALTER TABLE &lt;表名&gt; CHANGE &lt;旧字段名&gt; &lt;新字段名&gt; &lt;新数据类型&gt;;</code>  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_emp1 <span class="keyword">CHANGE</span> col1 col3 <span class="built_in">CHAR</span>(<span class="number">30</span>);</span><br></pre></td></tr></table></figure></li>
+<li>修改字段类型，<code>ALTER TABLE &lt;表名&gt; MODIFY &lt;字段名&gt; &lt;数据类型&gt;</code></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/03/universe/web/promise_async_and_wait/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -972,326 +1155,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/06/universe/config_lang/yaml_basic/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/06/universe/config_lang/yaml_basic/" class="post-title-link" itemprop="url">Yaml Basic</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-08-06 00:00:00 / Modified: 20:29:53" itemprop="dateCreated datePublished" datetime="2020-08-06T00:00:00+08:00">2020-08-06</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a href="https://yaml.org/spec/1.2/spec.html" target="_blank" rel="noopener">Offical Tutorial</a></p>
-<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><p><code>key: value</code></p>
-<p>Yaml will auto detect data type, but some time that’s what we don’t want. So you need  <strong>Type cast</strong> :</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">age:</span> <span class="type">!!str</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>type avaliable<ul>
-<li>str</li>
-<li>int</li>
-<li>float</li>
-<li>bool</li>
-<li>null</li>
-<li>ISO date type:<code>2020-1-1 11:11:22</code></li>
-<li>array</li>
-</ul>
-</li>
-</ul>
-<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><p><strong>Can not use TAB</strong> in yaml. Use indentation to grading and <code>-</code> char to sign as a array.</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">arr:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">item1</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">item11</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">item2</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">item21</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">item22</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><p><strong>Can not use TAB</strong> in yaml. Use indentation to grading but no <code>-</code> char.</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">person:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ring</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Long-string-value"><a href="#Long-string-value" class="headerlink" title="Long string value"></a>Long string value</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">message:</span></span><br><span class="line">  <span class="string">a</span> <span class="string">long</span> <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">msg</span></span><br></pre></td></tr></table></figure>
-
-<p>To end with <code>\n</code> </p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">message:</span> <span class="string">&gt;</span></span><br><span class="line">  <span class="string">a</span> <span class="string">long</span> <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">msg</span></span><br></pre></td></tr></table></figure>
-
-<p>To end with <code>\n</code> for each line </p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">message:</span> <span class="string">|</span></span><br><span class="line">  <span class="string">a</span> <span class="string">long</span> <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">long</span></span><br><span class="line">  <span class="string">long</span> <span class="string">msg</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">#a long long long\nlong long\nlong msg\n</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Use-Reference"><a href="#Use-Reference" class="headerlink" title="Use Reference"></a>Use Reference</h2><p>Assign with pointer</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">father:</span> <span class="meta">&amp;father_info</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ring</span></span><br><span class="line"></span><br><span class="line"><span class="attr">monitor:</span> <span class="meta">*father_info</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># value of monitor same as value of father</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="New-part"><a href="#New-part" class="headerlink" title="New part"></a>New part</h2><p>Yaml not allow you have dulplicate key. You can use <code>---</code> to statement in a new part</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">ring</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">ring</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="End-of-File"><a href="#End-of-File" class="headerlink" title="End of File"></a>End of File</h2><p>You can use <code>...</code> to tell yaml, this is the end.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/24/universe/web/react_note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/24/universe/web/react_note/" class="post-title-link" itemprop="url">React学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-07-24 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-24T00:00:00+08:00">2020-07-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-13 11:04:15" itemprop="dateModified" datetime="2020-08-13T11:04:15+08:00">2020-08-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>React是用于构建用户界面的javascript库</p>
-<ul>
-<li>特性<ul>
-<li>声明式编程<ul>
-<li>通过代码告诉计算机，你想的是什么，让计算机想出如何去做</li>
-<li>命令式编程：告诉计算机去做什么</li>
-</ul>
-</li>
-<li>组件化</li>
-<li>一次学会，随处编写</li>
-</ul>
-</li>
-</ul>
-<h2 id="Main-Concepts"><a href="#Main-Concepts" class="headerlink" title="Main Concepts"></a>Main Concepts</h2><h3 id="Rendering-Elements"><a href="#Rendering-Elements" class="headerlink" title="Rendering Elements"></a>Rendering Elements</h3><p>To rendering an element into a root DOM node like <code>&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</code>, pass both to <code>ReactDOM.render()</code>:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, world<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">ReactDOM.render(element, <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br></pre></td></tr></table></figure>
-
-<p>React elements are immutable. Once you create an element, you can’t change its children or attributes. React Only Updates What’s Necessary.</p>
-<p>With our knowledge so far, the only way to update the UI is to create a new element, and pass it to <code>ReactDOM.render()</code>.</p>
-<h3 id="Components-and-Props"><a href="#Components-and-Props" class="headerlink" title="Components and Props"></a>Components and Props</h3><p>Components are like JavaScript functions. <strong>They accept arbitrary inputs (called “props”) and return React elements</strong>.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>This function is valid React component because it accept a single “props” object and return a React element.</p>
-<p>You can also use an <code>ES6 class</code> to define a component:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="Rendering-a-Component"><a href="#Rendering-a-Component" class="headerlink" title="Rendering a Component"></a>Rendering a Component</h4><p>React element not only can represent DOM tags, but also can represent user-defined components.</p>
-<p><strong>When React sees an element representing a user-defined component, it pass JSX attributes and children to this component as a single object</strong>. We call this obj “props”.</p>
-<p>For example:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> element = <span class="xml"><span class="tag">&lt;<span class="name">Welcome</span> <span class="attr">name</span>=<span class="string">"Sara"</span> /&gt;</span></span>;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">  element,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="Props-are-Read-Only"><a href="#Props-are-Read-Only" class="headerlink" title="Props are Read-Only"></a>Props are Read-Only</h4><p>React is pretty flexible but it has a single strict rule:</p>
-<p><strong>All React components must act like pure functions with respect to their props</strong></p>
-<h3 id="State-and-Lifecycle"><a href="#State-and-Lifecycle" class="headerlink" title="State and Lifecycle"></a>State and Lifecycle</h3><p>State is similar to props, but it it private and fully controlled by the component.</p>
-<ul>
-<li>Converting a Function to a Class<ul>
-<li><ol>
-<li>Create an <code>ES6 class</code>, with the same name, that extends <code>React.Component</code></li>
-</ol>
-</li>
-<li><ol start="2">
-<li>Add a single empty method to it called <code>render()</code></li>
-</ol>
-</li>
-<li><ol start="3">
-<li>Move the body of the function into the <code>render()</code> method</li>
-</ol>
-</li>
-<li><ol start="4">
-<li>Replace <code>props</code> with <code>this.props</code> in the <code>render()</code> body</li>
-</ol>
-</li>
-<li><ol start="5">
-<li>Delete the remaining empty function declaration</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clock</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;Hello, world!&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">        &lt;h2&gt;It is &#123;this.props.date.toLocaleTimeString()&#125;.&lt;/</span>h2&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-
-
-<h4 id="Adding-Local-State-to-a-Class"><a href="#Adding-Local-State-to-a-Class" class="headerlink" title="Adding Local State to a Class"></a>Adding Local State to a Class</h4><ul>
-<li><ol>
-<li>Add a <code>class constructor</code> that assigns the initial <code>this.state</code><ul>
-<li>Class components should always call the base constructor with <code>props</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">date</span>: <span class="keyword">new</span> <span class="built_in">Date</span>()&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>Replace <code>this.props.date</code> with <code>this.state.date</code></li>
-</ol>
-</li>
-</ul>
-<h4 id="Adding-Lifecycle-Methods-to-a-Class"><a href="#Adding-Lifecycle-Methods-to-a-Class" class="headerlink" title="Adding Lifecycle Methods to a Class"></a>Adding Lifecycle Methods to a Class</h4><p>We can declare special methods on the component class to run some code when a component mounts and unmounts:</p>
-<ul>
-<li><code>componentDidMount()</code> method runs after the component output has been rendered to the DOM</li>
-<li><code>componentWillUnmount()</code></li>
-<li>Use <code>this.setState()</code> to schedule updates to the component local state:<ul>
-<li>like: <code>this.setState({date: new Date()})</code></li>
-</ul>
-</li>
-</ul>
-<h4 id="Using-State-Correctly"><a href="#Using-State-Correctly" class="headerlink" title="Using State Correctly"></a>Using State Correctly</h4><ul>
-<li><strong>Do Not Modify State Directly</strong> <ul>
-<li>WRONG: <code>this.state.comment = &quot;hello&quot;</code></li>
-<li>CORRECT: <code>this.setState({comment: &quot;hello&quot;})</code></li>
-<li>the only place where you can assign <code>this.state</code> is the constructor</li>
-</ul>
-</li>
-<li><strong>State Updates May Be Asynchronous</strong><ul>
-<li>React may batch multiple <code>setState()</code> calls into a single update for performance</li>
-<li>Because of that, you should not rely on their values for calculating the next state</li>
-<li><strong>To fix it, use a second form of <code>setState()</code> that accepts a function rather than an object</strong><ul>
-<li>the function will receive the previous state as the first argument, and the props as the time update is applied as the second argument</li>
-<li><code>this.setState((state, props)=&gt;{})</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="State-Updates-are-Merged"><a href="#State-Updates-are-Merged" class="headerlink" title="State Updates are Merged"></a>State Updates are Merged</h4><p><a href="https://reactjs.org/docs/state-and-lifecycle.html#state-updates-are-merged" target="_blank" rel="noopener">???</a></p>
-<h4 id="The-Date-Flows-Down"><a href="#The-Date-Flows-Down" class="headerlink" title="The Date Flows Down"></a>The Date Flows Down</h4><p>Both parent and children should not care if a certain component is stateful(class) or stateless(functionf). It is not accessible to any component other than the one that owns and sets it.</p>
-<p>A component may choose to pass its state down as props to its child components: <code>&lt;FormattedDate date={this.state.date} /&gt;</code></p>
-<p>This is commonly called a “top-down” or “unidirectional” data flow.</p>
-<h3 id="Handling-Events"><a href="#Handling-Events" class="headerlink" title="Handling Events"></a>Handling Events</h3><p>With JSX you pass a function as the handler, rather than string.</p>
-<p>the Html:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"activateLasers()"</span>&gt;</span></span><br><span class="line">  Activate Lasers</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>it is different in React</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;button onClick=&#123;activateLasers&#125;&gt;</span><br><span class="line">  Activate Lasers</span><br><span class="line">&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ActionLink</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleClick</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'The link was clicked.'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;a href=<span class="string">"#"</span> onClick=&#123;handleClick&#125;&gt;</span><br><span class="line">      Click me</span><br><span class="line">    &lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ Or</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">class Click extends React.Component&#123;</span></span><br><span class="line"><span class="regexp">  function handleClick(e) &#123;</span></span><br><span class="line"><span class="regexp">    e.preventDefault();</span></span><br><span class="line"><span class="regexp">    console.log('The link was clicked.');</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  render()&#123;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;a href="#" onClick=&#123;this.handleClick&#125;&gt;</span></span><br><span class="line"><span class="regexp">        Click me</span></span><br><span class="line"><span class="regexp">      &lt;/</span>a&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Here, <code>e</code> is a synthetic event. See the <a href="https://reactjs.org/docs/events.html" target="_blank" rel="noopener">SyntheticEvent</a> reference guide to learn more.</p>
-<p>In JavaScript, class methods are not <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind" target="_blank" rel="noopener">bound</a> by defaul.</p>
-<p>Generally, if you refer to a method without <code>()</code> after it, such as <code>onClick={this.handleClick}</code>, you should bind that method. <a href="https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/" target="_blank" rel="noopener">how funcions work in JavaScript</a>.</p>
-<h3 id="Conditional-Rendering"><a href="#Conditional-Rendering" class="headerlink" title="Conditional Rendering"></a>Conditional Rendering</h3><p>Use JavaScript operators like <code>if</code> or <code>conditonal operator</code> to Conditional Rendering.</p>
-<h3 id="Lists-and-Keys"><a href="#Lists-and-Keys" class="headerlink" title="Lists and Keys"></a>Lists and Keys</h3><h4 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h4><p>You can use <code>map()</code> to create <code>listItems</code> in React:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">const</span> listItems = numbers.map(<span class="function">(<span class="params">number</span>) =&gt;</span></span><br><span class="line">  &lt;li&gt;&#123;number&#125;&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
-
-<p>When you render them, you’ll be given a warning that a key should be provided for list items.</p>
-<h4 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h4><p>Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity.</p>
-<p>If you choose not to assign an explicit key to list items then React will default to using indexes as keys.</p>
-<h4 id="Extracting-Components-with-Keys"><a href="#Extracting-Components-with-Keys" class="headerlink" title="Extracting Components with Keys"></a>Extracting Components with Keys</h4><p>Keys only make sense in the context of the surrounding array.</p>
-<p>If you extract a ListItem components, you should keep the key on the <code>&lt;ListItem /&gt;</code> element, but not inside.</p>
-<h3 id="Forms"><a href="#Forms" class="headerlink" title="Forms"></a>Forms</h3><h4 id="Controlled-Components"><a href="#Controlled-Components" class="headerlink" title="Controlled Components"></a>Controlled Components</h4><p>An input form element whose value is controlled by React in this way is called a “controlled component”.</p>
-<p>With a controlled component, the input’s value is always driven by the React state. For example:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NameForm</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">value</span>: <span class="string">''</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.handleSubmit = <span class="keyword">this</span>.handleSubmit.bind(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleChange(event) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">value</span>: event.target.value&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleSubmit(event) &#123;</span><br><span class="line">    alert(<span class="string">'A name was submitted: '</span> + <span class="keyword">this</span>.state.value);</span><br><span class="line">    event.preventDefault();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;form onSubmit=&#123;<span class="keyword">this</span>.handleSubmit&#125;&gt;</span><br><span class="line">        &lt;label&gt;</span><br><span class="line">          Name:</span><br><span class="line">          &lt;input type=<span class="string">"text"</span> value=&#123;<span class="keyword">this</span>.state.value&#125; onChange=&#123;<span class="keyword">this</span>.handleChange&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/label&gt;</span></span><br><span class="line"><span class="regexp">        &lt;input type="submit" value="Submit" /</span>&gt;</span><br><span class="line">      &lt;<span class="regexp">/form&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>set <code>value</code> attribute<ul>
-<li>the displayed value will always be <code>this.state.value</code></li>
-</ul>
-</li>
-<li><code>handleChange</code> <ul>
-<li>runs on every keystroke to update the React state, the displayed value will update as the user types</li>
-</ul>
-</li>
-</ul>
-<h3 id="Composition-vs-Inheritance"><a href="#Composition-vs-Inheritance" class="headerlink" title="Composition vs Inheritance"></a>Composition vs Inheritance</h3><h4 id="Containment"><a href="#Containment" class="headerlink" title="Containment"></a>Containment</h4><p>Some component don’t know their children ahead of time. We recommend that such component use the special <code>children</code> prop to pass children elements directly into their output.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">E</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;props.children&#125;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function Hello()&#123;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">        &lt;E&gt;</span></span><br><span class="line"><span class="regexp">            &lt;h1&gt;hello&lt;/</span>h1&gt;</span><br><span class="line">        &lt;<span class="regexp">/E&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>Anything inside the <code>&lt;E&gt;</code> tag gets passed into the <code>E</code> component as <code>props.children</code>.</p>
-<p>Some time you might need multiple “holes” in a componnet. You can:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">E</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;div&gt;&#123;props.left&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">            &lt;div&gt;&#123;props.right&#125;&lt;/</span>div&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function Hello()&#123;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">        &lt;E</span></span><br><span class="line"><span class="regexp">          left=&#123;</span></span><br><span class="line"><span class="regexp">              &lt;h1&gt;hello&lt;/</span>h1&gt;</span><br><span class="line">          &#125;</span><br><span class="line">          right=&#123;</span><br><span class="line">              &lt;h1&gt;world&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">          &#125; /</span>&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Advanced"><a href="#Advanced" class="headerlink" title="Advanced"></a>Advanced</h2><p><a href="https://reactjs.org/docs/accessibility.html" target="_blank" rel="noopener">https://reactjs.org/docs/accessibility.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1357,12 +1224,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
