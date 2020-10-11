@@ -492,7 +492,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-10 21:19:05" itemprop="dateModified" datetime="2020-10-10T21:19:05+08:00">2020-10-10</time>
+                <time title="Modified: 2020-10-10 21:29:15" itemprop="dateModified" datetime="2020-10-10T21:29:15+08:00">2020-10-10</time>
               </span>
 
           
@@ -571,7 +571,29 @@
 </ul>
 </li>
 </ul>
-<h1 id="Lua高级编程"><a href="#Lua高级编程" class="headerlink" title="Lua高级编程"></a>Lua高级编程</h1><h2 id="metatable元表"><a href="#metatable元表" class="headerlink" title="metatable元表"></a>metatable元表</h2><p>我们无法直接对table进行操作，lua提供</p>
+<h1 id="Lua高级编程"><a href="#Lua高级编程" class="headerlink" title="Lua高级编程"></a>Lua高级编程</h1><h2 id="metatable元表"><a href="#metatable元表" class="headerlink" title="metatable元表"></a>metatable元表</h2><p>我们无法直接对table进行操作，lua提供元表允许我们改变table的行为，每个行为关联对应的元方法</p>
+<p>当lua试图对两个table进行操作时，先检查两者之一是否有元表，然后调用对应的方法</p>
+<ul>
+<li><code>setmetatable(table, metatable)</code>，把metatable设置位table的元表</li>
+<li><code>getmetatable(table)</code>，获取table的元表</li>
+</ul>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mytable = &#123;&#125;</span><br><span class="line">mymetatable = &#123;&#125;</span><br><span class="line"><span class="built_in">setmetatable</span>(mytable,mymetatable) <span class="comment">-- 把 mymetatable 设为 mytable 的元表</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 也可一行实现</span></span><br><span class="line">mytable = <span class="built_in">setmetatable</span>(&#123;&#125;,&#123;&#125;)</span><br><span class="line"><span class="comment">-- 然后获取元表来设置</span></span><br><span class="line"><span class="built_in">getmetatable</span>(mytable)</span><br></pre></td></tr></table></figure>
+
+<h2 id="元方法"><a href="#元方法" class="headerlink" title="元方法"></a>元方法</h2><ul>
+<li><code>__index</code>方法<ul>
+<li>当访问table时，一个键没有值，则寻找<code>__index</code>中对应键的值或调用<code>__index</code>函数</li>
+<li>如果<code>__index</code>是table，返回对应键的值，否则nil</li>
+<li>如果<code>__index</code>是两个参数(table, key)的函数，返回执行结果</li>
+</ul>
+</li>
+<li><code>__newindex</code>方法<ul>
+<li>当给table中一个缺少的索引赋值时，会执行<code>__newindex</code>方法(如果存在的话)，<strong>而不给这个索引赋值</strong></li>
+<li>如果<code>__newindex</code>是table，则最newindex中的table对应的索引赋值，而不对原table赋值</li>
+<li>如果<code>__newindex</code>是方法，则调用之</li>
+</ul>
+</li>
+<li><code>__add</code>…等元方法</li>
+</ul>
 
       
     </div>

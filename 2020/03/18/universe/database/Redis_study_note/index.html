@@ -28,7 +28,7 @@
 <meta property="og:description" content="Redis学习笔记基本认识 Redis 是单线程的, 也就是说在处理不当会导致阻塞 不要使用长命令, 如: keys *    特性 高速 内存中进行的   &lt;++&gt; &lt;++&gt; &lt;++&gt; &lt;++&gt; &lt;++&gt; &lt;++&gt;  通用命令get   command desc T(n)    keys [pattern] 根据通配符号检索">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-03-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:34:14.478Z">
+<meta property="article:modified_time" content="2020-10-11T08:36:58.201Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+                <time title="Modified: 2020-10-11 16:36:58" itemprop="dateModified" datetime="2020-10-11T16:36:58+08:00">2020-10-11</time>
               </span>
 
           
@@ -369,7 +369,7 @@
 <td>O(1)</td>
 </tr>
 </tbody></table>
-<h3 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h3><p>结构: key -&gt; (field -&gt; value)</p>
+<h3 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h3><p>语法: key -&gt; (field -&gt; value)。用于为哈希表中的字段赋值</p>
 <p>hash的所有命令都是h开头的<br>| command             | desc                         | T(n) |<br>|———————|——————————|——|<br>| hget                | &lt;++&gt;                         | &lt;++&gt; |<br>| hset                | &lt;++&gt;                         | &lt;++&gt; |<br>| hdel                | &lt;++&gt;                         | &lt;++&gt; |<br>| hexists key field   | &lt;++&gt;                         | &lt;++&gt; |<br>| hlen key            | count field                  | &lt;++&gt; |<br>| hmget               | &lt;++&gt;                         | &lt;++&gt; |<br>| hmset               | &lt;++&gt;                         | &lt;++&gt; |<br>| hincrby key value k | incrby k                     | &lt;++&gt; |<br>| hgetall             | get all (field,value) by key | O(n) |<br>| hvals key           | get all values by key        | &lt;++&gt; |<br>| hkeys key           | get all fields by key        | &lt;++&gt; |</p>
 <h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>结构: key -&gt; [list]</p>
 <p>list的所有命令都是l开头的<br>| command                                 | desc                                                    | T(n)   |<br>|—————————————–|———————————————————|——–|<br>| rpush key value1 value2 …             | 从列表右端插入                                          | O(1-n) |<br>| lpush key value1 value2 …             | 从列表左端插入                                          | O(1-n) |<br>| linsert key before/after value newvalue | 在指定的value前/后插入newvalue                          | O(n)   |<br>| lpop key                                | 从列表左边弹出                                          | O(1)   |<br>| lrem key count value                    | 从左边删除count个value, 删除重复元素, count&lt;0从右边删除 | O(n)   |<br>| ltrim key start end                     | 裁剪出制定范围的元素                                    | O(n)   |<br>| lrange key start end(包含end)           | 获取指定范围的元素                                      | O(n)   |<br>| lindex key index                        | 索引取出                                                | O(n)   |<br>| llen key                                |                                                         | O(1)   |<br>| lset key index newvalue                 | 按照索引修改指                                          | &lt;++&gt;   |</p>
