@@ -145,6 +145,574 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/universe/vim/vim_in_action/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/26/universe/vim/vim_in_action/" class="post-title-link" itemprop="url">vim实用技巧</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-26 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-26T00:00:00+08:00">2020-02-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-02 21:47:40" itemprop="dateModified" datetime="2020-10-02T21:47:40+08:00">2020-10-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vim实用技巧"><a href="#Vim实用技巧" class="headerlink" title="Vim实用技巧"></a>Vim实用技巧</h1><h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>o</td>
+<td>切换高亮中光标所在的端点</td>
+</tr>
+<tr>
+<td>.</td>
+<td>重复执行上一步操作</td>
+</tr>
+<tr>
+<td>%</td>
+<td>它代表当前文件中的所有行</td>
+</tr>
+<tr>
+<td>%</td>
+<td>可以在一组开, 闭括号间跳转</td>
+</tr>
+<tr>
+<td>m{mark}</td>
+<td>当前位置标记为{mark}以便以后跳转</td>
+</tr>
+<tr>
+<td>`{mark}</td>
+<td>跳到{mark}标记处</td>
+</tr>
+<tr>
+<td>qa</td>
+<td>录制宏到寄存器a</td>
+</tr>
+<tr>
+<td>qA</td>
+<td>往寄存器a中追加操作</td>
+</tr>
+<tr>
+<td>i/d{</td>
+<td>i for inside, a for around, 就可以用di/da等操作</td>
+</tr>
+<tr>
+<td>=i{</td>
+<td>=格式化?(缩进), inside {}</td>
+</tr>
+<tr>
+<td>:earlier/later 1m</td>
+<td>回到1min前/后</td>
+</tr>
+<tr>
+<td>c-z</td>
+<td>挂起vim,命令行下:$ fg可以恢复,jobs查看挂起的进程</td>
+</tr>
+<tr>
+<td>c-a/c-x</td>
+<td>数字加/减1</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>跳转到上一个/下一个段落</td>
+</tr>
+<tr>
+<td>q:, q/, q?</td>
+<td>打开命令历史</td>
+</tr>
+<tr>
+<td>gv</td>
+<td>选择上一次的选择</td>
+</tr>
+<tr>
+<td>g <c-a>/<c-v></td>
+<td>visual mode下</td>
+</tr>
+<tr>
+<td>:g/regex/ex</td>
+<td>run the Ex command only on teh line that match</td>
+</tr>
+<tr>
+<td>:v/regex/ex</td>
+<td>run the Ex command only on teh line not match</td>
+</tr>
+<tr>
+<td>:windo {ex}</td>
+<td>run ex on all windows</td>
+</tr>
+</tbody></table>
+<h2 id="状态保存"><a href="#状态保存" class="headerlink" title="状态保存"></a>状态保存</h2><table>
+<thead>
+<tr>
+<th>command</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>:mkview</td>
+<td>保留当前buffer的一些状态，如fold状态，小而精</td>
+</tr>
+<tr>
+<td>:loadview</td>
+<td>恢复当前buffer，mkview保留的状态</td>
+</tr>
+<tr>
+<td>:mksession</td>
+<td>保留当前vim状态成.vim文件，包括所有的window等，大而全。由于是.vim，可以通过source恢复</td>
+</tr>
+</tbody></table>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*</td>
+<td>向下查找光标停靠的词语</td>
+</tr>
+<tr>
+<td>#</td>
+<td>向上查找</td>
+</tr>
+<tr>
+<td>;</td>
+<td>重复上一次查找</td>
+</tr>
+<tr>
+<td>,</td>
+<td>反转方向重复上一次查找</td>
+</tr>
+<tr>
+<td>\ze和\ze</td>
+<td>匹配界定符, 匹配边界</td>
+</tr>
+</tbody></table>
+<h3 id="按正则表达式查找"><a href="#按正则表达式查找" class="headerlink" title="按正则表达式查找"></a>按正则表达式查找</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\v</td>
+<td>使用正则的特殊符号规则</td>
+</tr>
+<tr>
+<td>\V</td>
+<td>原意查找, 即.啊什么的不用反斜转意</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>用来匹配单词类字符, 包括字母,数字及符号</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>匹配单词类以外的所有字符</td>
+</tr>
+<tr>
+<td>\{num}</td>
+<td>引用被没对()捕获的子匹配 \0会引用整个匹配</td>
+</tr>
+<tr>
+<td>&lt;和&gt;</td>
+<td>\v模式中&lt;和&gt;用来匹配边界</td>
+</tr>
+</tbody></table>
+<h2 id="操作符-动作-操作"><a href="#操作符-动作-操作" class="headerlink" title="操作符 + 动作 = 操作"></a>操作符 + 动作 = 操作</h2><h3 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>c</td>
+<td>修改</td>
+</tr>
+<tr>
+<td>d</td>
+<td>删除</td>
+</tr>
+<tr>
+<td>y</td>
+<td>复制到寄存器</td>
+</tr>
+<tr>
+<td>g~</td>
+<td>反转大小写</td>
+</tr>
+<tr>
+<td>gu</td>
+<td>反转为小写</td>
+</tr>
+<tr>
+<td>gU</td>
+<td>反转为大写</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>增加缩进</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>减小缩进</td>
+</tr>
+<tr>
+<td>=</td>
+<td>自动缩进</td>
+</tr>
+<tr>
+<td>!</td>
+<td>使用外部程序</td>
+</tr>
+</tbody></table>
+<h3 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w</td>
+<td>向后一个单词</td>
+</tr>
+<tr>
+<td>W</td>
+<td>当前字串</td>
+</tr>
+<tr>
+<td>aw</td>
+<td>a word, 光标停靠的整个单词及一个空格</td>
+</tr>
+<tr>
+<td>ab</td>
+<td>一对圆括号</td>
+</tr>
+<tr>
+<td>aB</td>
+<td>一对花括号</td>
+</tr>
+<tr>
+<td>t</td>
+<td>to 到</td>
+</tr>
+<tr>
+<td>i”</td>
+<td>inside 在””中</td>
+</tr>
+<tr>
+<td>it</td>
+<td>inside tag <h1></h1></td>
+</tr>
+<tr>
+<td>p</td>
+<td>段落</td>
+</tr>
+<tr>
+<td>s</td>
+<td>句子</td>
+</tr>
+<tr>
+<td>@a</td>
+<td>宏a</td>
+</tr>
+</tbody></table>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>caw</td>
+<td>修改当期单词</td>
+</tr>
+<tr>
+<td>dta</td>
+<td>删除当前位置到字母啊</td>
+</tr>
+<tr>
+<td>以此类推</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="Ctrl-x补全"><a href="#Ctrl-x补全" class="headerlink" title="Ctrl+x补全"></a>Ctrl+x补全</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>c-x,c-r</td>
+<td>insert from a register</td>
+</tr>
+<tr>
+<td>c-x,c-a</td>
+<td>last inserted text</td>
+</tr>
+<tr>
+<td>c-x,c-]</td>
+<td>tag completion</td>
+</tr>
+<tr>
+<td>c-x,c-f</td>
+<td>filename completion</td>
+</tr>
+<tr>
+<td>c-x,c-p/c-n</td>
+<td>context-aware word completion</td>
+</tr>
+<tr>
+<td>c-x,c-l</td>
+<td>context-aware line completion</td>
+</tr>
+</tbody></table>
+<h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>“{register}</td>
+<td>制定寄存器{register}</td>
+</tr>
+<tr>
+<td>“”</td>
+<td>无名寄存器, 没指定寄存器情况下缺省使用</td>
+</tr>
+<tr>
+<td>“0</td>
+<td>复制专用寄存器</td>
+</tr>
+<tr>
+<td>“_</td>
+<td>黑洞寄存器, 有去无回</td>
+</tr>
+<tr>
+<td>“+</td>
+<td>X11剪贴板</td>
+</tr>
+<tr>
+<td>&lt;C-r&gt;{register}</td>
+<td>在在插入模式下插入寄存器内容</td>
+</tr>
+<tr>
+<td>:reg a</td>
+<td>查看寄存器a</td>
+</tr>
+<tr>
+<td>等等</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="Shell命令"><a href="#Shell命令" class="headerlink" title="Shell命令"></a>Shell命令</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%</td>
+<td>命令行中的%会展开成当前文件的完整路径</td>
+</tr>
+<tr>
+<td>:shell</td>
+<td>启动一个shell(输入exit返回vim)</td>
+</tr>
+<tr>
+<td>:!{cmd}</td>
+<td>在shell中执行{cmd}</td>
+</tr>
+<tr>
+<td>:read !{cmd}</td>
+<td>把{cmd}的标准输出插入到光标下方</td>
+</tr>
+<tr>
+<td>:[range]write !{cmd}</td>
+<td>以[range]作为{cmd}的标准输入</td>
+</tr>
+</tbody></table>
+<h2 id="分屏操作"><a href="#分屏操作" class="headerlink" title="分屏操作"></a>分屏操作</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;C-w&gt;=</td>
+<td>使得所有窗口等宽, 登高</td>
+</tr>
+<tr>
+<td>&lt;C-w&gt;_</td>
+<td>最大化活动窗口的高度</td>
+</tr>
+<tr>
+<td>&lt;C-w&gt;|</td>
+<td>最大化活动窗口的宽度</td>
+</tr>
+<tr>
+<td>&lt;C-w&gt;方向</td>
+<td>移动光标所在的窗口</td>
+</tr>
+</tbody></table>
+<h2 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>虚拟行, 位于第一行上方</td>
+</tr>
+<tr>
+<td>1</td>
+<td>文件第一行</td>
+</tr>
+<tr>
+<td>$</td>
+<td>最后一行</td>
+</tr>
+<tr>
+<td>.</td>
+<td>光标所在行</td>
+</tr>
+<tr>
+<td>‘m</td>
+<td>包含位置标记m的行</td>
+</tr>
+<tr>
+<td>‘&lt;</td>
+<td>高亮选取的起始行</td>
+</tr>
+<tr>
+<td>‘&gt;</td>
+<td>高亮选取的结束行</td>
+</tr>
+<tr>
+<td>%</td>
+<td>整个文件</td>
+</tr>
+</tbody></table>
+<h2 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h2><p>录制宏其实是把操作过程放入了一个寄存器中，如<code>qq</code>就是用寄存器q来录制宏。用<code>:reg q</code>可以查看内容。</p>
+<ul>
+<li><code>qq</code>：用寄存器q录制宏</li>
+<li><code>qQ</code>:往寄存器q中追加操作</li>
+<li><code>:put q</code>：把寄存器q的内容粘贴到文档，以便修改<ul>
+<li>Or <code>[&quot;x]p</code></li>
+</ul>
+</li>
+<li><code>:d q</code>：复制回寄存器<ul>
+<li><code>[&quot;x]d{motion}</code> delete text move over [into register x], like<code>&quot;qd3d</code>删除三行，到寄存器q中</li>
+</ul>
+</li>
+</ul>
+<h2 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h2><h3 id="利用-进行文件操作"><a href="#利用-进行文件操作" class="headerlink" title="利用%进行文件操作"></a>利用%进行文件操作</h3><p>只读寄存器%中储存有当前文件路径，通过关键字可以展开到绝对路径、所在目录等信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:echo expand(&#39;%:t&#39;)  &quot; 文件名</span><br><span class="line">:echo expand(&#39;%:p&#39;)  &quot; 绝对路径</span><br><span class="line">:echo expand(&#39;%:p:h&#39;) &quot; 所在目录</span><br><span class="line">:echo expand(&#39;%:p:h:t&#39;) &quot; 所在目录名</span><br></pre></td></tr></table></figure>
+
+<p> <strong>p表示path，h表示head，t表示tail</strong> </p>
+<h3 id="打开目录"><a href="#打开目录" class="headerlink" title="打开目录"></a>打开目录</h3><p>如果打开的是目录，则Vim会使用<code>Explore</code>打开。当然也可手动在一个文件中<code>:Explore</code>打开当前目录。</p>
+<ul>
+<li><code>:Sexplore</code>，水平分割打开目录</li>
+<li><code>:Vexplore</code>，垂直分割打开目录</li>
+</ul>
+<h1 id="Vim-Doc-File"><a href="#Vim-Doc-File" class="headerlink" title="Vim Doc File"></a>Vim Doc File</h1><h2 id="Insert模式下的快速操作"><a href="#Insert模式下的快速操作" class="headerlink" title="Insert模式下的快速操作"></a>Insert模式下的快速操作</h2><ul>
+<li>修正操作<ul>
+<li><code>&lt;c-w&gt;</code>，向后删除一个词</li>
+<li><code>&lt;c-u&gt;</code>，向前删除整行</li>
+</ul>
+</li>
+<li>从寄存器插入<ul>
+<li><code>&lt;c-r&gt;{reg}</code></li>
+<li><code>&lt;c-r&gt;&lt;c-r&gt;{reg}</code>，不翻译特殊字符，如回车、退格等</li>
+</ul>
+</li>
+<li>插入Digraphs<ul>
+<li><code>&lt;c-k&gt;{key}</code>，插入一个digraphs，如®等键盘没有的字符，具体key看<code>:digraphs</code></li>
+</ul>
+</li>
+<li>重复操作<ul>
+<li><code>&lt;c-a&gt;</code>，输入你上次在Insert模式下的输入</li>
+<li><code>&lt;c-@&gt;</code>，输入你上次在Insert模式下的输入，然后退出Insert模式</li>
+<li><code>&lt;c-y&gt;</code>，插入鼠标上方的字符</li>
+</ul>
+</li>
+<li>快速执行普通模式<ul>
+<li><code>&lt;c-o&gt;{cmd}</code></li>
+</ul>
+</li>
+<li><strong>Omni Completion</strong><ul>
+<li>building, see <code>compl-omni-filetype</code> and <code>ft-c-omni</code></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/25/universe/GDB_Usage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4993,119 +5561,6 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/14/universe/java/Spring_Boot_Note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/14/universe/java/Spring_Boot_Note/" class="post-title-link" itemprop="url">Spring Boot Note</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-14 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-14T00:00:00+08:00">2019-09-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Project that build with Maven</p>
-<h2 id="Quick-buile-a-Spring-Boot-project"><a href="#Quick-buile-a-Spring-Boot-project" class="headerlink" title="Quick buile a Spring Boot project"></a>Quick buile a Spring Boot project</h2><p>Use your IDE and new a project with Spring Initializer</p>
-<hr>
-<h2 id="Some-basic-operations"><a href="#Some-basic-operations" class="headerlink" title="Some basic operations"></a>Some basic operations</h2><h3 id="Creat-an-excutable-jar"><a href="#Creat-an-excutable-jar" class="headerlink" title="Creat an excutable jar"></a>Creat an excutable jar</h3><p>To create an excutable jar we neen to add the <code>spring-boot-maven-plugin</code> to our pom.xml.  </p>
-<p>Insert the following lines just below the <code>dependencis</code> section</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line">```  </span><br><span class="line">  </span><br><span class="line">and than run</span><br></pre></td></tr></table></figure>
-<p>mvn package</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">If you look in the &#96;target&#96; directory,you should see a JAR file.</span><br><span class="line"></span><br><span class="line">To run the JAR use the &#96;java -jar&#96;command.</span><br><span class="line"></span><br><span class="line">### Run with Maven Plugin</span><br></pre></td></tr></table></figure>
-<p>mvn spring-boot:run</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## About POM file</span><br><span class="line">###1. &lt;parent&gt;</span><br><span class="line">&#96;&#96;&#96; xml</span><br><span class="line">&lt;!-- example --&gt;</span><br><span class="line">&lt;parent&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-parent&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.1.8.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;relativePath&#x2F;&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">&lt;&#x2F;parent&gt;</span><br></pre></td></tr></table></figure>
-<p>Which is like the arbitration center of Spring Boot  </p>
-<p>###2. &lt;dependencis&gt;<br>This part is to import dependencis</p>
-<h4 id="starter"><a href="#starter" class="headerlink" title="starter"></a>starter</h4><p>Starters are a set of convenient dependency descriptors that you can include in your application.<br><a href="https://docs.spring.io/spring-boot/docs/2.1.8.RELEASE/reference/html/using-boot-build-systems.html#using-boot-starter" target="_blank" rel="noopener">https://docs.spring.io/spring-boot/docs/2.1.8.RELEASE/reference/html/using-boot-build-systems.html#using-boot-starter</a></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		...       </span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="Main-procedure-class-main-entrance-class"><a href="#Main-procedure-class-main-entrance-class" class="headerlink" title="Main procedure class,main entrance class"></a>Main procedure class,main entrance class</h2><h3 id="SpringBootApplication"><a href="#SpringBootApplication" class="headerlink" title="@SpringBootApplication"></a>@SpringBootApplication</h3><p>The <code>@SpringBootApplication</code> annotation is often placed on your main class, and it implicitly defines a base “search package” for certain items.  </p>
-<p>For example, if you are writing a JPA application, the package of the <code>@SpringBootApplication</code> annotated class is used to search for <code>@Entity</code> items.  </p>
-<p> Using a root package also allows component scan to apply only on your project. </p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">public class Application &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>below is the detail of @SpringBootApplication,which is like a gather.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@Target(&#123;ElementType.TYPE&#125;)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Documented</span><br><span class="line">@Inherited</span><br><span class="line">@SpringBootConfiguration</span><br><span class="line">@EnableAutoConfiguration</span><br><span class="line">@ComponentScan(</span><br><span class="line">    excludeFilters = &#123;@Filter(</span><br><span class="line">    type = FilterType.CUSTOM,</span><br><span class="line">    classes = &#123;TypeExcludeFilter.class&#125;</span><br><span class="line">), @Filter(</span><br><span class="line">    type = FilterType.CUSTOM,</span><br><span class="line">    classes = &#123;AutoConfigurationExcludeFilter.class&#125;</span><br><span class="line">)&#125;</span><br><span class="line">)</span><br><span class="line">public @interface SpringBootApplication &#123;</span><br></pre></td></tr></table></figure>
-
-<h3 id="SpringBootConfiguration"><a href="#SpringBootConfiguration" class="headerlink" title="@SpringBootConfiguration"></a>@SpringBootConfiguration</h3><ul>
-<li>@SpringBootConfiguration annotated class is an option class of Spring Boot.</li>
-</ul>
-<h3 id="EnableAutoConfiguration"><a href="#EnableAutoConfiguration" class="headerlink" title="@EnableAutoConfiguration"></a>@EnableAutoConfiguration</h3><p>Spring Boot auto-configuration attempts to automatically configure your Spring application based on the jar dependencies that you have added.    </p>
-<p>You need to opt-in to auto-configuration by adding the <code>@EnableAutoConfiguration</code> or <code>@SpringBootApplication</code> annotations to one of your @Configuration classes.<br>(Because the <code>@SpringBootConfiguration</code> have included @EnableAutoConfiguration,the auto-configuration wil automatically configure all component that in the same package with the <code>@SpringBootConfiguration</code>)</p>
-<hr>
-<h2 id="Configuration-file"><a href="#Configuration-file" class="headerlink" title="Configuration file"></a>Configuration file</h2><p>Spring Boot default configuration in <em>src/main/resources/</em>.<br><code>application.yml</code> or <code>application.properties</code></p>
-<h3 id="1-YAML-basic"><a href="#1-YAML-basic" class="headerlink" title="1.YAML basic"></a>1.YAML basic</h3><p>format like Python<br>key:(space)value </p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">	<span class="attr">port:</span> <span class="number">8081</span></span><br><span class="line">	<span class="attr">path:</span> <span class="string">/halo</span></span><br></pre></td></tr></table></figure>
-<p>do not ignore case</p>
-<h3 id="2-key-value"><a href="#2-key-value" class="headerlink" title="2. key: value"></a>2. key: value</h3><h4 id="Object-Map"><a href="#Object-Map" class="headerlink" title="Object,Map"></a>Object,Map</h4><p>key: value</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">friends:</span></span><br><span class="line">	<span class="string">name:ring</span></span><br><span class="line">	<span class="string">age:20</span></span><br><span class="line"><span class="string">```</span>  </span><br><span class="line"></span><br><span class="line"><span class="string">inline</span>	</span><br><span class="line"><span class="string">```</span> <span class="string">yml</span></span><br><span class="line"><span class="string">friends:&#123;name:ring,age:20&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h4><p>-value</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pets:</span></span><br><span class="line">	<span class="string">-cat</span></span><br><span class="line">	<span class="string">-dog</span></span><br></pre></td></tr></table></figure>
-
-<p>inline  </p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pet:</span> <span class="string">[dog,cat]</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ConfigurationProperties-prefix-“person”"><a href="#ConfigurationProperties-prefix-“person”" class="headerlink" title="@ConfigurationProperties(prefix = “person”)"></a>@ConfigurationProperties(prefix = “person”)</h3><p>Bind all properties in this class with the properties in configuration file<br><code>prefix = &quot;person&quot;</code> means bind class properties with person properties.  </p>
-<p>Only the component props can use the component function<code>@ConfigurationProperties</code>.  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XXX</span></span>&#123;</span><br></pre></td></tr></table></figure>
-
-<h3 id="PropertySource-value-“classpath-application2-yml’"><a href="#PropertySource-value-“classpath-application2-yml’" class="headerlink" title="@PropertySource(value = {“classpath:application2.yml’})"></a>@PropertySource(value = {“classpath:application2.yml’})</h3><p>Like @ConfigurationProperties ,but this can select another configuration file.  </p>
-<h3 id="ImportResource"><a href="#ImportResource" class="headerlink" title="@ImportResource"></a>@ImportResource</h3><p>Import Spring configuration file,and<br>……..</p>
-<hr>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -5175,12 +5630,12 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
