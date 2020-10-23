@@ -28,7 +28,7 @@
 <meta property="og:description" content="Git 操作基本操作初始化1git init   查看状态1git status   查看修改1git diff BRANCHNAME   查看提交记录1git log   添加修改并追踪12git add FILEgit add .  &#x2F;&#x2F; 添加所有   退回1234git resetgit reset --hard HEAD^ 退回到上一个版本git reset --hard HEAD~n 退">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-09-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-18T08:32:30.041Z">
+<meta property="article:modified_time" content="2020-10-21T16:49:20.080Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="tools, git">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-18 16:32:30" itemprop="dateModified" datetime="2020-10-18T16:32:30+08:00">2020-10-18</time>
+                <time title="Modified: 2020-10-22 00:49:20" itemprop="dateModified" datetime="2020-10-22T00:49:20+08:00">2020-10-22</time>
               </span>
 
           
@@ -226,17 +226,30 @@
 
 
 <h3 id="PR"><a href="#PR" class="headerlink" title="PR"></a>PR</h3><ul>
-<li><ol>
-<li>fork from rep</li>
-</ol>
+<li>fork到自己仓库</li>
+<li>clone自己仓库到电脑</li>
+<li>与源代码仓库建立连接<ul>
+<li><code>git remote add upstream &lt;url&gt;</code></li>
+<li>查看是否成功建立连接<code>git remote -v</code></li>
+</ul>
 </li>
-<li><ol start="2">
-<li>make some change on a new branch of the fork rep</li>
-</ol>
+<li>创建分支<ul>
+<li><code>git switch -c &lt;branch_name&gt;</code>或<code>git checkout -b &lt;branch&gt;</code></li>
+</ul>
 </li>
-<li><ol start="3">
-<li>commit and pr</li>
-</ol>
+<li>从其他仓库下载(先同步)<ul>
+<li><code>git fetch upstream</code></li>
+<li><code>git rebase upstream/&lt;branch&gt;</code></li>
+<li>然后提交到自己仓库提pr<code>git push &lt;origin&gt; &lt;branch&gt;</code></li>
+</ul>
+</li>
+<li>修改代码<ul>
+<li>提交当前分支到自己仓库<ul>
+<li><code>git push origin &lt;branch_name&gt;</code></li>
+</ul>
+</li>
+<li>提交pr</li>
+</ul>
 </li>
 </ul>
 <h3 id="不让git管理指定文件"><a href="#不让git管理指定文件" class="headerlink" title="不让git管理指定文件"></a>不让git管理指定文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.新建一个 .gitignore 文件</span><br><span class="line"></span><br><span class="line">2.写入不需要git管理等文件名</span><br><span class="line">// 但是git一旦追踪某个文件那就会一只追踪</span><br><span class="line">// 停止追踪 git rm --cached FILE</span><br></pre></td></tr></table></figure>
@@ -268,7 +281,12 @@
 <h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>一个文件被删除后git会检测到修改(工作区和版本库不一样)，可以使用<code>git rm</code>删除版本库中的记录。 <strong>git rm</strong> 是一样的效果</p>
 <p>如果版本库的文件没被删除，则可用<code>git checkout -- &lt;file&gt;</code>恢复，如果已经删除可以使用<code>git reset</code>的方法来unstage</p>
 <h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><p>git把版本穿成一条时间线，每条时间线就是一个分支，每个版本就是一个节点。当创建新分支dev时相当于创建了一个dev的指针指向当前节点，再把HEAD指向dev，然后就可以以此为基础往后建立时间线。</p>
+<p>缺省前缀(如<code>&lt;remote&gt;/&lt;branch&gt;</code>)的操作，默认对本地的branch操作，所以<code>fetch upstream</code>后log还看不到本地commit的变化，因为还在upstream里用<code>git log &lt;remote&gt;/&lt;bracn&gt;</code>查看</p>
 <ul>
+<li>查看分支信息和commit<ul>
+<li><code>git log --graph --pretty=oneline --abbrev-commit</code></li>
+</ul>
+</li>
 <li>建立分支<ul>
 <li><code>git branch &lt;branch_name&gt;</code></li>
 <li><code>git switch -c</code><ul>
@@ -350,7 +368,21 @@
 <p>标签只会储存在本地，如果要推送到远程，使用<code>git push &lt;origin&gt; &lt;tagname&gt;</code></p>
 <p>一次性推送所有标签<code>git push &lt;origin&gt; --tags</code></p>
 <p>删除远程标签(前提是本地标签已经删除):<code>git push &lt;origin&gt; :refs/tags/&lt;tagname&gt;</code></p>
-<h3 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h3><p>TODO</p>
+<h3 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h3><ul>
+<li>查看分支信息<ul>
+<li><code>git remote -v</code></li>
+</ul>
+</li>
+<li>推送分支<ul>
+<li><code>git push &lt;origin&gt; &lt;branch_name&gt;</code></li>
+</ul>
+</li>
+</ul>
+<p>当小伙伴 <strong>clone时，默认只能看到本地的master分支</strong>。要在dev分支上开发就需要建立远程<code>origin</code>的<code>dev</code>分支到本地：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b &lt;local_branch&gt; &lt;origin&gt;/&lt;remote_branch&gt;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 不能缺少&lt;local_branch&gt;，不然就变成了创建分支</span></span><br></pre></td></tr></table></figure>
+
+<p>如果git提示<code>no tracking information</code>，则说明本地分支和远程分支的连接关系没有建立，使用命令<code>git branch --set-upstream-to &lt;branch_name&gt; origin/&lt;branch_name&gt;</code>远程的branchname建立连接到本地的branchname</p>
+<h4 id="Rebase"><a href="#Rebase" class="headerlink" title="Rebase"></a>Rebase</h4><p>TODO</p>
 <h3 id="配置别名"><a href="#配置别名" class="headerlink" title="配置别名"></a>配置别名</h3><h2 id="搭建Git服务器"><a href="#搭建Git服务器" class="headerlink" title="搭建Git服务器"></a>搭建Git服务器</h2><p>todo</p>
 
     </div>
@@ -435,7 +467,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-操作"><span class="nav-number">1.</span> <span class="nav-text">Git 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">1.1.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">1.1.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看状态"><span class="nav-number">1.1.2.</span> <span class="nav-text">查看状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看修改"><span class="nav-number">1.1.3.</span> <span class="nav-text">查看修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看提交记录"><span class="nav-number">1.1.4.</span> <span class="nav-text">查看提交记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加修改并追踪"><span class="nav-number">1.1.5.</span> <span class="nav-text">添加修改并追踪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#退回"><span class="nav-number">1.1.6.</span> <span class="nav-text">退回</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加用户"><span class="nav-number">1.1.7.</span> <span class="nav-text">添加用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉取项目"><span class="nav-number">1.1.8.</span> <span class="nav-text">拉取项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加远程仓库"><span class="nav-number">1.1.9.</span> <span class="nav-text">添加远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交"><span class="nav-number">1.1.10.</span> <span class="nav-text">提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PR"><span class="nav-number">1.1.11.</span> <span class="nav-text">PR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不让git管理指定文件"><span class="nav-number">1.1.12.</span> <span class="nav-text">不让git管理指定文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git分支"><span class="nav-number">1.1.13.</span> <span class="nav-text">git分支</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶"><span class="nav-number">1.2.</span> <span class="nav-text">进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时间胶囊"><span class="nav-number">1.2.1.</span> <span class="nav-text">时间胶囊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增删改"><span class="nav-number">1.2.2.</span> <span class="nav-text">增删改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">1.2.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支管理"><span class="nav-number">1.2.4.</span> <span class="nav-text">分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分支管理策略"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">分支管理策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制特定提交而不合并分支"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">复制特定提交而不合并分支</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保存工作区"><span class="nav-number">1.2.5.</span> <span class="nav-text">保存工作区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签管理"><span class="nav-number">1.2.6.</span> <span class="nav-text">标签管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多人协作"><span class="nav-number">1.2.7.</span> <span class="nav-text">多人协作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置别名"><span class="nav-number">1.2.8.</span> <span class="nav-text">配置别名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建Git服务器"><span class="nav-number">1.3.</span> <span class="nav-text">搭建Git服务器</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-操作"><span class="nav-number">1.</span> <span class="nav-text">Git 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">1.1.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">1.1.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看状态"><span class="nav-number">1.1.2.</span> <span class="nav-text">查看状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看修改"><span class="nav-number">1.1.3.</span> <span class="nav-text">查看修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看提交记录"><span class="nav-number">1.1.4.</span> <span class="nav-text">查看提交记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加修改并追踪"><span class="nav-number">1.1.5.</span> <span class="nav-text">添加修改并追踪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#退回"><span class="nav-number">1.1.6.</span> <span class="nav-text">退回</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加用户"><span class="nav-number">1.1.7.</span> <span class="nav-text">添加用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉取项目"><span class="nav-number">1.1.8.</span> <span class="nav-text">拉取项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加远程仓库"><span class="nav-number">1.1.9.</span> <span class="nav-text">添加远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交"><span class="nav-number">1.1.10.</span> <span class="nav-text">提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PR"><span class="nav-number">1.1.11.</span> <span class="nav-text">PR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不让git管理指定文件"><span class="nav-number">1.1.12.</span> <span class="nav-text">不让git管理指定文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git分支"><span class="nav-number">1.1.13.</span> <span class="nav-text">git分支</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶"><span class="nav-number">1.2.</span> <span class="nav-text">进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时间胶囊"><span class="nav-number">1.2.1.</span> <span class="nav-text">时间胶囊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增删改"><span class="nav-number">1.2.2.</span> <span class="nav-text">增删改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">1.2.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支管理"><span class="nav-number">1.2.4.</span> <span class="nav-text">分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分支管理策略"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">分支管理策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制特定提交而不合并分支"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">复制特定提交而不合并分支</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保存工作区"><span class="nav-number">1.2.5.</span> <span class="nav-text">保存工作区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签管理"><span class="nav-number">1.2.6.</span> <span class="nav-text">标签管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多人协作"><span class="nav-number">1.2.7.</span> <span class="nav-text">多人协作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Rebase"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">Rebase</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置别名"><span class="nav-number">1.2.8.</span> <span class="nav-text">配置别名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建Git服务器"><span class="nav-number">1.3.</span> <span class="nav-text">搭建Git服务器</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
