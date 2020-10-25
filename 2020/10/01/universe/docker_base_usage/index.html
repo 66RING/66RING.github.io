@@ -28,7 +28,7 @@
 <meta property="og:description" content="Docker常用命令 docker ps [-a]，查看正在运行的[所有]容器 docker &lt;start|stop|rm&gt; &lt;ID|NAME&gt;，启动&#x2F;停止&#x2F;删除容器 docker rmi &lt;IMAGES&gt;，删除镜像   docker attach id，进入某个容器，使用exit退出容器时，容器也会停止 docker exec -it &lt;ID|NAME&amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-01T06:41:16.318Z">
+<meta property="article:modified_time" content="2020-10-23T13:09:52.288Z">
 <meta property="article:author" content="Travis TuRing">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
@@ -173,10 +173,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-10-01 00:00:00 / Modified: 14:41:16" itemprop="dateCreated datePublished" datetime="2020-10-01T00:00:00+08:00">2020-10-01</time>
+              <time title="Created: 2020-10-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-01T00:00:00+08:00">2020-10-01</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-23 21:09:52" itemprop="dateModified" datetime="2020-10-23T21:09:52+08:00">2020-10-23</time>
+              </span>
 
           
 
@@ -205,7 +211,18 @@
 <h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="配置容器"><a href="#配置容器" class="headerlink" title="配置容器"></a>配置容器</h3><ul>
 <li><ol>
 <li>交互式编辑<ul>
-<li><code>docker exec -it &lt;ID|NAME&gt; &lt;/bin/bash&gt;</code>，交互式进入，安装编辑器编辑对应的配置文件</li>
+<li><code>docker run -it &lt;ID|NAME&gt; &lt;/bin/bash&gt;</code>，交互式进入，安装编辑器编辑对应的配置文件<ul>
+<li>见<code>man docker &lt;COMMAND&gt;</code></li>
+<li><code>-i</code>表示启动一个可以交互的容器</li>
+<li><code>-t</code>表示分配一个pseudo-tty</li>
+<li><code>-d</code>(detach)表示后台启动</li>
+</ul>
+</li>
+<li>在一个TCP端口上绑定一个服务<ul>
+<li><code>-p ip:[hostPort]:containerPort | [hostPort:]containerPort</code></li>
+<li><code>-P</code>暴露容器所有端口到宿主机上的随机端口</li>
+</ul>
+</li>
 <li>安装ssh服务后，使用ssh进入编辑<ul>
 <li><ol>
 <li><code>apt-get install openssh-server</code></li>
@@ -228,6 +245,13 @@
 <li><ol start="2">
 <li><code>docker cp &lt;CONTAINER:/path/to/conf&gt; &lt;/source/file&gt;</code></li>
 </ol>
+</li>
+</ul>
+<h3 id="管理容器数据"><a href="#管理容器数据" class="headerlink" title="管理容器数据"></a>管理容器数据</h3><ul>
+<li>数据卷(volume)：<ul>
+<li><code>-v[=[[HOST-DIR:]CONTAINER-DIR[:OPTIONS]]]</code></li>
+<li>TODO</li>
+</ul>
 </li>
 </ul>
 
@@ -313,7 +337,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker常用命令"><span class="nav-number">1.</span> <span class="nav-text">Docker常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">2.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置容器"><span class="nav-number">2.1.</span> <span class="nav-text">配置容器</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker常用命令"><span class="nav-number">1.</span> <span class="nav-text">Docker常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">2.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置容器"><span class="nav-number">2.1.</span> <span class="nav-text">配置容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理容器数据"><span class="nav-number">2.2.</span> <span class="nav-text">管理容器数据</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
