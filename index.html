@@ -178,7 +178,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-25 22:49:42" itemprop="dateModified" datetime="2020-10-25T22:49:42+08:00">2020-10-25</time>
+                <time title="Modified: 2020-10-26 22:56:18" itemprop="dateModified" datetime="2020-10-26T22:56:18+08:00">2020-10-26</time>
               </span>
 
           
@@ -270,6 +270,34 @@
 </li>
 <li>知道了栈内存的分布，则可用内存寻址访问栈<ul>
 <li><code>movq 8(%rsp), %rdx</code>，把栈第二个元素存到rdx寄存器中</li>
+</ul>
+</li>
+</ul>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
+<li>算数运算符<ul>
+<li>常见的算数运算符有加减乘除，与或非异或，算数(<code>sa[l|r]</code>)逻辑(<code>sh[l|r]</code>)左右移等<ul>
+<li>这些运算符都会改变条件码，以实现条件控制</li>
+</ul>
+</li>
+<li>特殊的算数操作</li>
+</ul>
+</li>
+<li>条件码<ul>
+<li>常用条件码有：<ul>
+<li>CF：进位标志</li>
+<li>ZF：零标志</li>
+<li>SF：符号标志</li>
+</ul>
+</li>
+<li>不改变条件码的操作<ul>
+<li><code>cmp[b|w|l|q]</code>，与sub相同，只是不改变条件码</li>
+<li><code>test[b|w|l|q]</code>，与and相同，只是不改变条件码</li>
+</ul>
+</li>
+<li>访问条件码<ul>
+<li>根据条件码设置寄存器01，称为set操作，后缀指明 <strong>考虑的条件码组合</strong> ，如<code>setl R</code>(set less)将D设为<code>SF^OF</code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
