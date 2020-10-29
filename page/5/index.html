@@ -3961,7 +3961,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-20 17:19:50" itemprop="dateModified" datetime="2020-10-20T17:19:50+08:00">2020-10-20</time>
+                <time title="Modified: 2020-10-29 22:29:31" itemprop="dateModified" datetime="2020-10-29T22:29:31+08:00">2020-10-29</time>
               </span>
 
           
@@ -4558,7 +4558,83 @@
 </ul>
 </li>
 </ul>
-<h3 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h3><hr>
+<h3 id="哈夫曼树-Huffman"><a href="#哈夫曼树-Huffman" class="headerlink" title="哈夫曼树(Huffman)"></a>哈夫曼树(Huffman)</h3><p>两种编码方式</p>
+<ul>
+<li>等长编码<ul>
+<li>使用固定长度的位来对所有信号进行编码</li>
+<li>简单但并不是每个信号出现的频率是一样的，所有对于对于经常出现的信号，需要使用很多的资源</li>
+</ul>
+</li>
+<li>不等长编码<ul>
+<li>对于出现频率不同的信号可以采用不同长度的位进行编码</li>
+<li>节省资源，但为保证译码唯一性需要进行复杂的操作</li>
+</ul>
+</li>
+</ul>
+<p>我们可以使用二叉树来进行01编码，为了保证译码唯一性，则需要每个编码不能是其他任意一个编码的前缀。所以编码的结果必须都是出现在叶子节点。</p>
+<p>对于最优的编码，我们需要使得树的权值最小，那么权值大的节点应尽量靠近根节点，哈夫曼树就是为了解决最优编码问题产生的。</p>
+<p><strong>算法</strong> :对于一组带权节点，每次选取最小和次小的的节点从原数组中删除，然后它们权值的和组成新的节点加入到原数组中，它们成为这个新节点的孩子。如此循环</p>
+<p><strong>数据结构</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> weight;</span><br><span class="line">    <span class="keyword">int</span> parent;</span><br><span class="line">    <span class="keyword">int</span> Lchild;</span><br><span class="line">    <span class="keyword">int</span> Rchild;</span><br><span class="line">&#125; HNode;</span><br></pre></td></tr></table></figure>
+
+<p>由于哈夫曼树的两两节点合并组成的树，所以不会存在出度为1的节点，故共有2n-1个节点。开辟一个2n-1的数组，然后根据算法填充。</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>weight</th>
+<th>parent</th>
+<th>Lchild</th>
+<th>Rchild</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2n-2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>从没有标记父节点的节点中选择最小和次小的节点，组成新的节点，放入队尾</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化等操作</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=rear; i&lt;<span class="number">2</span>*n<span class="number">-1</span>; i++)&#123; </span><br><span class="line">    findNodes(nodes, <span class="built_in">min</span>, cmin); <span class="comment">// 从没有parent的节点中找出最小和次小的节点</span></span><br><span class="line">    nodes[<span class="built_in">min</span>].parent = i;</span><br><span class="line">    nodes[cmin].parent = i;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 插入尾部</span></span><br><span class="line">    nodes[i].weight = nodes[<span class="built_in">min</span>].weight + nodes[cmin].weight;</span><br><span class="line">    nodes[i].Lchild = <span class="built_in">min</span>;</span><br><span class="line">    nodes[i].Rchild = cmin;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">findNodes</span><span class="params">(HNode* arr, <span class="keyword">int</span>&amp; <span class="built_in">min</span>, <span class="keyword">int</span>&amp; cmin)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">min</span>=MAXINT;</span><br><span class="line">    <span class="keyword">int</span> cmin=MAXINT;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;arr.<span class="built_in">size</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i].parent == EMPTY)&#123;</span><br><span class="line">            <span class="keyword">if</span>(arr[i].weight &lt; <span class="built_in">min</span>)&#123;</span><br><span class="line">                cmin = <span class="built_in">min</span>;</span><br><span class="line">                <span class="built_in">min</span> = arr[i].weight;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(arr[i].weight &lt; cmin)&#123;</span><br><span class="line">                cmin = arr[i].weight;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造好哈夫曼树后，译码和编码操作就简单了。</p>
+<ul>
+<li>译码: <ul>
+<li>从根节点开始，0找左节点，1找右节点(与具体怎么建立的哈夫曼树有关)</li>
+<li>遇到叶子节点则得到译码结果</li>
+</ul>
+</li>
+<li>编码：<ul>
+<li>从叶子节点开始，向上寻找其父节点，如果节点是父节点的左孩子，则编码0，否则编码1，从尾向前填充</li>
+<li>如<code>***010\0</code></li>
+<li>找到根节点则将编码传出即可</li>
+</ul>
+</li>
+</ul>
+<hr>
 <h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h2 id="DFS深度优先搜索"><a href="#DFS深度优先搜索" class="headerlink" title="DFS深度优先搜索"></a>DFS深度优先搜索</h2><ul>
 <li>从一节点出发<ul>
 <li>非连通图分而治之</li>
