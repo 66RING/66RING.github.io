@@ -695,7 +695,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-10 21:29:15" itemprop="dateModified" datetime="2020-10-10T21:29:15+08:00">2020-10-10</time>
+                <time title="Modified: 2020-10-30 14:11:27" itemprop="dateModified" datetime="2020-10-30T14:11:27+08:00">2020-10-30</time>
               </span>
 
           
@@ -786,13 +786,19 @@
 <li><code>__index</code>方法<ul>
 <li>当访问table时，一个键没有值，则寻找<code>__index</code>中对应键的值或调用<code>__index</code>函数</li>
 <li>如果<code>__index</code>是table，返回对应键的值，否则nil</li>
-<li>如果<code>__index</code>是两个参数(table, key)的函数，返回执行结果</li>
+<li>如果<code>__index</code>是函数，返回执行结果<ul>
+<li>可以有两个参数(table, key)</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><code>__newindex</code>方法<ul>
 <li>当给table中一个缺少的索引赋值时，会执行<code>__newindex</code>方法(如果存在的话)，<strong>而不给这个索引赋值</strong></li>
 <li>如果<code>__newindex</code>是table，则最newindex中的table对应的索引赋值，而不对原table赋值</li>
-<li>如果<code>__newindex</code>是方法，则调用之</li>
+<li>如果<code>__newindex</code>是方法，则调用之<ul>
+<li>可以有三个参数(table, key, value)</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><code>__add</code>…等元方法</li>

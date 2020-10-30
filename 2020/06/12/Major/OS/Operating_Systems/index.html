@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/static/dir_node_struct.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/12/Major/OS/Operating_Systems/static/raid5.png">
 <meta property="article:published_time" content="2020-06-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-09T11:37:14.651Z">
+<meta property="article:modified_time" content="2020-10-30T06:25:47.762Z">
 <meta property="article:author" content="Travis TuRing">
 <meta property="article:tag" content="计算机,操作系统">
 <meta name="twitter:card" content="summary">
@@ -184,7 +184,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-09 19:37:14" itemprop="dateModified" datetime="2020-07-09T19:37:14+08:00">2020-07-09</time>
+                <time title="Modified: 2020-10-30 14:25:47" itemprop="dateModified" datetime="2020-10-30T14:25:47+08:00">2020-10-30</time>
               </span>
 
           
@@ -244,12 +244,12 @@
 <li>虚拟机</li>
 </ul>
 <h2 id="Part-2"><a href="#Part-2" class="headerlink" title="Part 2"></a>Part 2</h2><ul>
-<li>计算机启动</li>
-</ul>
-<p>os存放在硬盘中，需要bootload将它放入内存。bootloader又由bios负责放入内存。</p>
-<ul>
+<li>计算机启动<ul>
+<li>os存放在硬盘中，需要bootload将它放入内存。bootloader又由bios负责放入内存。</li>
 <li>bios提供各种支持：检测外设，初始化检查，把bootloader放入内存，让它执行</li>
 <li>bootloader：加载os，从硬盘到内存</li>
+</ul>
+</li>
 </ul>
 <p>应用间接与外设打交道，之所以应用不能直接访问外设是因为应用是不可信任的，而操作系统是可信任的;另一方面操作系统外为上层提供一致的接口，使得上层应用不用关注底层细节，通用可移植，提高效率。由此设计一下三个基本概念</p>
 <ul>
@@ -325,7 +325,7 @@
 <li>地址空间生成<ul>
 <li>cpu会根据逻辑地址查找物理地址，对应对应关系储存在MMU的表示映射关系的区域</li>
 <li>CPU执行某条指令时，ALU根据指令的内容发送请求，携带逻辑地址。CPU中的MMU查找MMU对应的物理地址</li>
-<li>逻辑地址和物理地址的联系又操作系统生成</li>
+<li><strong>逻辑地址和物理地址的联系又操作系统生成</strong></li>
 </ul>
 </li>
 <li>检查地址的安全<ul>
@@ -448,7 +448,7 @@
 <ul>
 <li>一个程序的物理地址空间是非连续的</li>
 <li>更好的内存利用和管理</li>
-<li>允许共享代码和数据</li>
+<li><strong>允许共享代码和数据</strong></li>
 <li>支持动态加载和动态链接</li>
 </ul>
 </li>
@@ -586,7 +586,7 @@
 <li>像交换技术那样，但做的更好，只对进程的部分内容在内存和外存之间进行交换</li>
 </ul>
 </li>
-<li><p>原理：利用程序的局部性</p>
+<li><p>原理：<strong>利用程序的局部性</strong></p>
 </li>
 <li><p>基本特征：</p>
 <ul>
@@ -599,7 +599,7 @@
 <ul>
 <li>基本思路：<ul>
 <li>当程序需要调入内存运行时，不是将程序的所有页都装入内存，而是只装如部分页，就可启动程序而运行</li>
-<li>在运行的过程中，如果发现运行的程序或要访问的数据不再内存，则发出缺页中断请求，系统在处理这个中断时，将外存中相应的页调入内存，使得程序能够运行</li>
+<li>在运行的过程中，如果发现运行的程序或要访问的数据不再内存，则<strong>发出缺页中断请求</strong>，系统在处理这个中断时，将外存中相应的页调入内存，使得程序能够运行</li>
 </ul>
 </li>
 </ul>
