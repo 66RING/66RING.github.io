@@ -343,10 +343,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-10-06 00:00:00 / Modified: 20:11:53" itemprop="dateCreated datePublished" datetime="2020-10-06T00:00:00+08:00">2020-10-06</time>
+              <time title="Created: 2020-10-06 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-06T00:00:00+08:00">2020-10-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-11-05 12:04:31" itemprop="dateModified" datetime="2020-11-05T12:04:31+08:00">2020-11-05</time>
+              </span>
 
           
 
@@ -369,6 +375,14 @@
 <li><code>(%w+)=(%w+)</code>，<code>()</code>分组，返回成对的，<code>+</code>找一个及以上</li>
 </ul>
 </li>
+</ul>
+</li>
+<li><code>string.find(str, substr, [init, [end]])</code><ul>
+<li>从字符串中搜索子串，返回位置索引，不存在返回nil</li>
+</ul>
+</li>
+<li><code>string.gsub(mainString,findString,replaceString,num)</code><ul>
+<li>替换，执行num次</li>
 </ul>
 </li>
 </ul>
@@ -422,7 +436,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-29 23:07:37" itemprop="dateModified" datetime="2020-10-29T23:07:37+08:00">2020-10-29</time>
+                <time title="Modified: 2020-11-06 21:33:25" itemprop="dateModified" datetime="2020-11-06T21:33:25+08:00">2020-11-06</time>
               </span>
 
           
@@ -487,6 +501,22 @@
 <li>删除字段，<code>ALTER TABLE &lt;表名&gt; DROP &lt;字段名&gt;</code>，如：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tbl_user_file DROP INDEX &#96;idx_user_file&#96;;</span><br></pre></td></tr></table></figure></li>
 <li>修改字段，<code>ALTER TABLE &lt;表名&gt; CHANGE &lt;旧字段名&gt; &lt;新字段名&gt; &lt;新数据类型&gt;;</code>  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_emp1 <span class="keyword">CHANGE</span> col1 col3 <span class="built_in">CHAR</span>(<span class="number">30</span>);</span><br></pre></td></tr></table></figure></li>
 <li>修改字段类型，<code>ALTER TABLE &lt;表名&gt; MODIFY &lt;字段名&gt; &lt;数据类型&gt;</code></li>
+</ul>
+<h3 id="简单运算"><a href="#简单运算" class="headerlink" title="简单运算"></a>简单运算</h3><h4 id="求和"><a href="#求和" class="headerlink" title="求和"></a>求和</h4><ul>
+<li><code>sum()</code>函数求和</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">    <span class="keyword">sum</span>( &lt;fild_name&gt; [+ &lt;fild_name&gt;...] ) <span class="keyword">AS</span> &lt;<span class="keyword">alias</span>&gt;</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    &lt;<span class="keyword">table</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>count()</code>计算总数，求平均</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">    <span class="keyword">sum</span>( &lt;fild_name&gt; [+ &lt;fild_name&gt;...] )/<span class="keyword">count</span>(*) <span class="keyword">AS</span> &lt;<span class="keyword">alias</span>&gt;</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    &lt;<span class="keyword">table</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>LIMIT &lt;range&gt;</code>限制范围<ul>
+<li>如找前3行<code>... LIMIT 0,3</code></li>
+</ul>
+</li>
 </ul>
 
       
