@@ -28,7 +28,7 @@
 <meta property="og:description" content="排序冒泡排序 比较大小,如果符合条件(升序)就交换两个元素的位置   每次执行N-1次 严格大&#x2F;小,保证了原序(稳定性) 没次能保证最大&#x2F;最小的元素会在最后   如果全程无交换,则说明有序了,跳出即可 $T&#x3D;O(x),x\in(N,N^2)$  插入排序 每次抽取一个元素,然后从序列末尾开始进行比较 若符合条件,往后移位,直到不符合条件跳出 然后插入元素  希尔排序对插入排序的改进,每次消除多个逆">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-11-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-29T14:29:31.450Z">
+<meta property="article:modified_time" content="2020-11-21T08:48:52.256Z">
 <meta property="article:author" content="Travis TuRing">
 <meta property="article:tag" content="算法, c&#x2F;c++">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-29 22:29:31" itemprop="dateModified" datetime="2020-10-29T22:29:31+08:00">2020-10-29</time>
+                <time title="Modified: 2020-11-21 16:48:52" itemprop="dateModified" datetime="2020-11-21T16:48:52+08:00">2020-11-21</time>
               </span>
 
           
@@ -221,9 +221,17 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(D=N/<span class="number">2</span>;D&gt;<span class="number">0</span>;D/=<span class="number">2</span>)&#123;  <span class="comment">// 希尔增量序列。Hibbard增量序列:Dk=2^k-1...等等</span></span><br><span class="line">    <span class="keyword">for</span>(p=D;p&lt;N;p++)&#123;  <span class="comment">// 插入排序</span></span><br><span class="line">        Tmp = A[p];</span><br><span class="line">        <span class="keyword">for</span>(i=p;i&gt;=D&amp;&amp;A[i-D]&gt;Tmp;i-=D)&#123;</span><br><span class="line">            A[i] = A[i-D];</span><br><span class="line">        &#125;</span><br><span class="line">        A[i] = Tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><h4 id="小-大顶堆"><a href="#小-大顶堆" class="headerlink" title="小/大顶堆"></a>小/大顶堆</h4><p>子节点比父节点小/大的二叉树  </p>
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><h4 id="小-大顶堆"><a href="#小-大顶堆" class="headerlink" title="小/大顶堆"></a>小/大顶堆</h4><p>子节点比父节点小/大的二叉树，有时也称为最小堆/最大堆</p>
 <p><strong>构建方法</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 法一：上浮下沉法(小顶堆为例)</span></span><br><span class="line"><span class="comment">// 从第一个非叶子节点开始，以它为子树，先自下而上把小的节点上浮，到达子树根节点后自上而下把大的节点下沉</span></span><br><span class="line"><span class="comment">// 知道根节点结束</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=len/<span class="number">2</span><span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">        <span class="keyword">int</span> t = j;</span><br><span class="line">        <span class="keyword">while</span>((t+<span class="number">1</span>)*<span class="number">2</span>&lt;=len)&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="built_in">min</span> = (t+<span class="number">1</span>)*<span class="number">2</span><span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">min</span>+<span class="number">1</span>&lt;len)&#123;</span><br><span class="line">                <span class="keyword">if</span>(heap[<span class="built_in">min</span>+<span class="number">1</span>]&lt;heap[<span class="built_in">min</span>])&#123;</span><br><span class="line">                    <span class="built_in">min</span>++; </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(heap[<span class="built_in">min</span>]&lt;heap[t])&#123;</span><br><span class="line">                swop(<span class="built_in">min</span>,t,heap);</span><br><span class="line">                t = <span class="built_in">min</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 法二：插入法</span></span><br><span class="line"><span class="comment">// 从根节点出发，若父节点比插入元素大，则调整位置，如此循环，保证父节点小于子节点</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    heap[<span class="number">0</span>] = <span class="number">-1000</span>;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=len;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;temp);</span><br><span class="line">        <span class="keyword">int</span> j;</span><br><span class="line">        <span class="keyword">for</span>(j=i;heap[j/<span class="number">2</span>]&gt;temp;j/=<span class="number">2</span>)&#123;</span><br><span class="line">            heap[j] = heap[j/<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        heap[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>法一：上浮下沉法(小顶堆为例)</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从第一个非叶子节点开始，以它为子树，先自下而上把小的节点上浮，到达子树根节点后自上而下把大的节点下沉</span></span><br><span class="line"><span class="comment">// 知道根节点结束</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=len/<span class="number">2</span><span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">        <span class="keyword">int</span> t = j;</span><br><span class="line">        <span class="keyword">while</span>((t+<span class="number">1</span>)*<span class="number">2</span>&lt;=len)&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="built_in">min</span> = (t+<span class="number">1</span>)*<span class="number">2</span><span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">min</span>+<span class="number">1</span>&lt;len)&#123;</span><br><span class="line">                <span class="keyword">if</span>(heap[<span class="built_in">min</span>+<span class="number">1</span>]&lt;heap[<span class="built_in">min</span>])&#123;</span><br><span class="line">                    <span class="built_in">min</span>++; </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(heap[<span class="built_in">min</span>]&lt;heap[t])&#123;</span><br><span class="line">                swop(<span class="built_in">min</span>,t,heap);</span><br><span class="line">                t = <span class="built_in">min</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>法二：插入法</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从根节点出发，若父节点比插入元素大，则调整位置，如此循环，保证父节点小于子节点</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span> *heap,<span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    heap[<span class="number">0</span>] = <span class="number">-1000</span>;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=len;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;temp);</span><br><span class="line">        <span class="keyword">int</span> j;</span><br><span class="line">        <span class="keyword">for</span>(j=i;heap[j/<span class="number">2</span>]&gt;temp;j/=<span class="number">2</span>)&#123;</span><br><span class="line">            heap[j] = heap[j/<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        heap[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <h4 id="利用小-大顶堆排序"><a href="#利用小-大顶堆排序" class="headerlink" title="利用小/大顶堆排序"></a>利用小/大顶堆排序</h4><ul>
@@ -349,7 +357,8 @@
 </li>
 </ul>
 <p><strong>删除时不能直接删除,会影响后续的查找。正确的删除是标记为删除,新的元素来时再替换</strong></p>
-<h3 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h3><p><strong>要点：</strong> </p>
+<h3 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h3><p>TODO: <strong>next</strong> 和 <strong>nextVal</strong> 数组</p>
+<p><strong>要点：</strong> </p>
 <ul>
 <li>前缀表next(或者说match)函数的创建</li>
 <li>动态规划</li>
@@ -880,13 +889,29 @@
 </ul>
 <h2 id="最短路问题"><a href="#最短路问题" class="headerlink" title="最短路问题"></a>最短路问题</h2><h3 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h3><p>解决单源路非递减顺序(没有负)最短路径问题</p>
 <ul>
+<li>初始化<ul>
 <li>对所有未检索的点进行标记:collected[v] = false</li>
-<li>从一点出发,记录所有邻接点,若邻接点加入后路径最短,则更新<ul>
-<li>类似BFS</li>
+<li>使用<code>dist[i]=INF</code>记录源点到节点i的最短距离<ul>
+<li><code>dist[src]=0</code></li>
 </ul>
 </li>
-<li>所有邻接点访问完后colleceted[v]=true,从下一个未检索的点继续循环,直到检索所有节点</li>
+<li>使用<code>path[i]</code>记录节点i的前驱节点，则从终点开始查找则得到最短路径</li>
 </ul>
+</li>
+<li><strong>从未收录的顶点中选择最dist最小者V</strong>(贪心),对于V的所有未收录的邻接点W,若以V为中间节点到W的路径更短，则更新dist[W]<ul>
+<li>可用 <strong>最小堆优化</strong> 选择dist最小者的过程。cpp中可以使用<code>priority_queue&lt;T&gt;</code></li>
+</ul>
+</li>
+<li>所有邻接点访问完后collected[v]=true,重复第2步，直到所有节点都访问</li>
+<li><strong>原理</strong> <ul>
+<li>TODO:为何要选dist最小者加入</li>
+</ul>
+</li>
+</ul>
+<p>如此一来这条路径也一定是源点到这些中途节点的最短路径。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Dijkstra</span><span class="params">(Vertex s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        V = 未收录顶点中dist最小者;   <span class="comment">// 非常重要的一步</span></span><br><span class="line">        <span class="keyword">if</span>(V未找到)&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        collected[V] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(V的每个邻接点 W)&#123;</span><br><span class="line">            <span class="keyword">if</span>(collected[W] == <span class="literal">false</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(dist[V]+E&lt;V,W&gt; &lt; dist[W])&#123;</span><br><span class="line">                    dist[W] = dist[V] + E&lt;V,W&gt;;</span><br><span class="line">                    path[W] = V;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 <h3 id="Floyd算法"><a href="#Floyd算法" class="headerlink" title="Floyd算法"></a>Floyd算法</h3><p>解决多源路非递减顺序最短路径问题   </p>
 <p>稠密图有优势  </p>
 <p>$T=O(V^3)$  </p>
@@ -1328,12 +1353,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">61</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

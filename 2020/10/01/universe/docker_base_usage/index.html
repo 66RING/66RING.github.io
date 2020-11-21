@@ -28,7 +28,7 @@
 <meta property="og:description" content="Docker常用命令 docker ps [-a]，查看正在运行的[所有]容器 docker &lt;start|stop|rm&gt; &lt;ID|NAME&gt;，启动&#x2F;停止&#x2F;删除容器 docker rmi &lt;IMAGES&gt;，删除镜像   docker attach id，进入某个容器，使用exit退出容器时，容器也会停止 docker exec -it &lt;ID|NAME&amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-15T03:56:43.680Z">
+<meta property="article:modified_time" content="2020-11-19T06:09:12.722Z">
 <meta property="article:author" content="Travis TuRing">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-15 11:56:43" itemprop="dateModified" datetime="2020-11-15T11:56:43+08:00">2020-11-15</time>
+                <time title="Modified: 2020-11-19 14:09:12" itemprop="dateModified" datetime="2020-11-19T14:09:12+08:00">2020-11-19</time>
               </span>
 
           
@@ -209,7 +209,7 @@
 </li>
 <li><code>docker inspect &lt;CONTAINER&gt;</code>查看详情</li>
 </ul>
-<h2 id="DockerFile语法"><a href="#DockerFile语法" class="headerlink" title="DockerFile语法"></a>DockerFile语法</h2><h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="配置容器"><a href="#配置容器" class="headerlink" title="配置容器"></a>配置容器</h3><ul>
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="配置容器"><a href="#配置容器" class="headerlink" title="配置容器"></a>配置容器</h3><ul>
 <li><ol>
 <li>交互式编辑<ul>
 <li><code>docker run -it &lt;ID|NAME&gt; &lt;/bin/bash&gt;</code>，交互式进入，安装编辑器编辑对应的配置文件<ul>
@@ -299,6 +299,97 @@
 </li>
 </ul>
 <h5 id="Link的原理"><a href="#Link的原理" class="headerlink" title="Link的原理"></a>Link的原理</h5><p>环境变量</p>
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<li>FROM<ul>
+<li><code>FROM &lt;image&gt;</code></li>
+<li>指定基于哪个镜像</li>
+</ul>
+</li>
+<li>RUN<ul>
+<li>shell形式：<code>RUN &lt;cmd&gt;</code></li>
+<li>exec形式：<code>RUN [&quot;exec&quot;, &quot;arg1&quot;, &quot;arg2&quot;]</code></li>
+<li>执行命令，<strong>在docker build时运行</strong></li>
+</ul>
+</li>
+<li>COPY<ul>
+<li><code>COPY [--chown=&lt;user&gt;:&lt;group&gt;] &lt;src&gt;... &lt;dst&gt;</code><ul>
+<li>同样源和目的也可使用exec形式传递</li>
+</ul>
+</li>
+<li>将文件或目录复制到容器中的指定目录</li>
+</ul>
+</li>
+<li>CMD<ul>
+<li>类似RUN，但运行的时间点不同</li>
+<li>在docker run时运行</li>
+<li><strong>指定启动容器时默认要运行的程序</strong></li>
+<li>CMD指令可以被docker run中exec指定的程序覆盖</li>
+<li>Dockerfile中有多个CMD，只有最后一个生效</li>
+</ul>
+</li>
+<li>ENTRYPOINT<ul>
+<li>类似CMD，但不会被dockr run中的命令行参数指定的指令覆盖，这些命令行参数会被当作参数传递给ENTRYPOINT指定的程序<ul>
+<li>一般通过CMD传入变参，然ENTRYPOINT执行，如  <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"nginx"</span>, <span class="string">"-c"</span>]  <span class="comment"># 定参</span></span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"/etc/nginx/nginx.conf"</span>] <span class="comment"># 变参  </span></span></span><br><span class="line"><span class="comment"># 这么就实现了不传参执行默认参数，传参覆盖参数执行</span></span><br></pre></td></tr></table></figure></li>
+<li>可以使用<code>--entrypoint</code>参数覆盖</li>
+</ul>
+</li>
+<li>Dockerfile中有多个ENTRYPOINT，只有最后一个生效</li>
+</ul>
+</li>
+<li>ENV<ul>
+<li><code>ENV &lt;key&gt; &lt;value&gt;</code>或<code>ENV &lt;key1&gt;=&lt;value1&gt; &lt;key2&gt;=&lt;value2&gt;</code></li>
+<li>设置环境变量，以在后序指令中使用<code>$&lt;key&gt;</code></li>
+</ul>
+</li>
+<li>ARG<ul>
+<li><code>ARG &lt;arg&gt;[=&lt;default&gt;]</code></li>
+<li>构造参数，作用同ENV，但作用域不同<ul>
+<li>ARG仅在Dockerfile中有效(即build中)</li>
+<li>可以使用<code>docker build --build-arg</code>覆盖</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>VOLUME<ul>
+<li><code>VOLUME [&quot;dir1&quot;, &quot;dir2&quot;...]</code>或<code>VOLUME &lt;dir&gt;</code></li>
+<li>定义匿名数据卷。如果启动容器时忘记挂载数据卷，就挂载到匿名数据卷<ul>
+<li>避免数据丢失</li>
+<li>避免容器不断变大</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>EXPOSE<ul>
+<li><code>EXPOSE &lt;port1&gt; [&lt;port2&gt;...]</code></li>
+<li>声明(暴露)端口。运行使用随机端口映射时，即<code>docker run -P</code>，会自动随机映射EXPOSE的端口</li>
+</ul>
+</li>
+<li>WORKDIR<ul>
+<li><code>WORKDIR &lt;dir&gt;</code></li>
+<li>指定运行时的主目录</li>
+</ul>
+</li>
+<li>USER<ul>
+<li><code>USER &lt;user&gt;[:&lt;group&gt;]</code></li>
+<li>指定运行使用的用户和用户组</li>
+</ul>
+</li>
+<li>ONBUILD<ul>
+<li>当前镜像构建时不执行，当当前进行作为其他镜像构建时才执行</li>
+</ul>
+</li>
+</ul>
+<h3 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h3><ul>
+<li><code>docker build -t &lt;image&gt;[:version]</code><ul>
+<li><code>--build-arg</code>指定构造参数</li>
+</ul>
+</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li>STOPSIGNAL用于指定容器退出的信号</li>
+<li>HEALTHCHECK用于指定容器健康检查的配置</li>
+<li>SHELL用于指定脚本如windows镜像需要指定CMD /S /C</li>
+</ul>
 
     </div>
 
@@ -382,7 +473,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker常用命令"><span class="nav-number">1.</span> <span class="nav-text">Docker常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DockerFile语法"><span class="nav-number">2.</span> <span class="nav-text">DockerFile语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">3.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置容器"><span class="nav-number">3.1.</span> <span class="nav-text">配置容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理容器"><span class="nav-number">3.2.</span> <span class="nav-text">管理容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#管理容器数据"><span class="nav-number">3.2.1.</span> <span class="nav-text">管理容器数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#管理容器通信"><span class="nav-number">3.2.2.</span> <span class="nav-text">管理容器通信</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Link的原理"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">Link的原理</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker常用命令"><span class="nav-number">1.</span> <span class="nav-text">Docker常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">2.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置容器"><span class="nav-number">2.1.</span> <span class="nav-text">配置容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理容器"><span class="nav-number">2.2.</span> <span class="nav-text">管理容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#管理容器数据"><span class="nav-number">2.2.1.</span> <span class="nav-text">管理容器数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#管理容器通信"><span class="nav-number">2.2.2.</span> <span class="nav-text">管理容器通信</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Link的原理"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">Link的原理</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile"><span class="nav-number">3.</span> <span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本语法"><span class="nav-number">3.1.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建镜像"><span class="nav-number">3.2.</span> <span class="nav-text">构建镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">3.3.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -396,12 +487,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">61</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
