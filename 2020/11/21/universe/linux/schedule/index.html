@@ -28,7 +28,7 @@
 <meta property="og:description" content="看爆！https:&#x2F;&#x2F;zorrozou.github.io&#x2F;  前置 进程分类 实时进程(runtime) 跟用户交互需要及时相应   普通进行 不需要那么及时，如编码解码等   对于不同类型的进程应该采用不同的调度方法，实时进程序需要及时响应   上下文切换 发生进程调度时，保存当前进程的信息后(如程序计数器，变量，寄存器等context)才能加载另一个进程。这个过程就是上下文切换    调度">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-11-20T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-21T12:47:20.811Z">
+<meta property="article:modified_time" content="2020-11-22T08:35:54.253Z">
 <meta property="article:author" content="Travis TuRing">
 <meta property="article:tag" content="linux, kernel">
 <meta name="twitter:card" content="summary">
@@ -173,10 +173,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-11-21 00:00:00 / Modified: 20:47:20" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+08:00">2020-11-21</time>
+              <time title="Created: 2020-11-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+08:00">2020-11-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-11-22 16:35:54" itemprop="dateModified" datetime="2020-11-22T16:35:54+08:00">2020-11-22</time>
+              </span>
 
           
 
@@ -256,7 +262,8 @@
 </ul>
 </li>
 <li><strong>nice值越高优先级越低</strong><ul>
-<li>简记：表示一个进程对别的进程的nice程度。一个进程对别的进程越好就越不会抢占cpu，得到的时间越少，优先级越低</li>
+<li>简记：一个nice的人往往是谦虚礼貌的，吃饭都是说”你先吃你先吃”，结果最后这个nice的人饿着了</li>
+<li>一个进程对别的进程越nice就越不会抢占cpu，得到的时间越少，优先级越低</li>
 </ul>
 </li>
 <li>可以通过<code>nice</code>命令设置进程优先级，<code>renice</code>命令来修改nice值</li>
@@ -277,12 +284,12 @@
 </ul>
 </li>
 <li>O(1)调度器<ul>
-<li>优先级被映射成一定bitmap，在一个优先级上有进程则对应的bitmap会置1，cpu可以通过位运算快速取出优先级最高的进程</li>
+<li>时间片分配，优先级被映射成一定bitmap，在一个优先级上有进程则对应的bitmap会置1，cpu可以通过位运算快速取出优先级最高的进程</li>
 </ul>
 </li>
 <li>CFS完全公平调度器<ul>
 <li>分时间片，每个进程相对公平</li>
-<li><strong>virtualtime</strong>，优先级高的进程虚拟时间增长慢，优先级低的进程虚拟时间增长慢<ul>
+<li><strong>vruntime</strong>，优先级高的进程虚拟时间增长慢，优先级低的进程虚拟时间增长慢<ul>
 <li>如高优先级进程分到时间片10ms，而虚拟时间1ms</li>
 </ul>
 </li>
@@ -290,6 +297,16 @@
 </ul>
 </li>
 </ul>
+<h3 id="O1调度"><a href="#O1调度" class="headerlink" title="O1调度"></a>O1调度</h3><p>TODO <a href="https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html" target="_blank" rel="noopener">https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html</a></p>
+<p>O1调度的Linux2.6开始引入的，到Linux 2.6.23之后替换成了CFS。</p>
+<p>使用两个队列，活动队列和过期(expire)队列</p>
+<h3 id="CFS"><a href="#CFS" class="headerlink" title="CFS"></a>CFS</h3><p>要做到完全公平，调度器要在一个较小的时间内把这n个进程调度执行一遍。这个较小的时间就是任意一个进程被调度的最大延迟时间，也叫做<strong>调度周期<code>sched_latency_ns</code></strong></p>
+<p>CPU只要对所有进程维护一个累积占用CPU时间数，就可以衡量出每个进程目前占用的CPU时间总量是多还是少，这个数字记录在 <strong>vruntime</strong> 中。进程以vruntime为key放到一个红黑数组成的队列中，每次调度都选择最左子树上的那个进程，即vruntime最少的进程，这样就能保证所有进程相对公平。</p>
+<h4 id="CFS的优先级"><a href="#CFS的优先级" class="headerlink" title="CFS的优先级"></a>CFS的优先级</h4><p>虽说完全公平，但CFS还是需要支持优先级的。优先级是通过时间消耗(vruntime增长)的快慢来决定的。高优先级进程时间增长慢，低优先级进程时间增长快。如低优先级的进程实际运行了1s，vruntime是1s，而高优先级的进程实际已经运行了10s，而vruntime才是1s，这样高优先级的进程就更大概率在最左子树，得到调度。</p>
+<p>调度并不在一个进程的vruntime大于最小vruntime的进程时发生，为了减少切换频率，CFS设计了<code>sched_min_granularity_ns</code>参数来设定进程执行之后的最小cpu占用时间。</p>
+<h4 id="新进程的vruntime值"><a href="#新进程的vruntime值" class="headerlink" title="新进程的vruntime值"></a>新进程的vruntime值</h4><p>当已经有多个进程执行的很长时间时，新起一个进程，并让它vruntime为0，这显然是不公平的。因为需要分配给它很多时间来追赶其他进程的vruntime。所有CFS对每个CPU的执行队列都维护了一个<code>min_vruntime</code>值，用于记录这个CPU执行队列的最小vruntime值。因此新进程vruntime不是直接设为0，而是以<code>min_vruntime</code>为基础进行调整。</p>
+<p>需要考虑的因素很多，如子进程是否要先于父进程执行、还要防止进程不停的fork来获得很多的执行时间</p>
+<p>TODO: <a href="https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html" target="_blank" rel="noopener">https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html</a></p>
 
     </div>
 
@@ -311,7 +328,10 @@
     <a href="/2020/11/21/universe/web/ajax_intro/" rel="prev" title="JQuery, fetch, axios">
       <i class="fa fa-chevron-left"></i> JQuery, fetch, axios
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/22/universe/operate/docekr_multi_container/" rel="next" title="docker多容器项目">
+      docker多容器项目 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -370,7 +390,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前置"><span class="nav-number">1.</span> <span class="nav-text">前置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调度算法"><span class="nav-number">2.</span> <span class="nav-text">调度算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程队列"><span class="nav-number">3.</span> <span class="nav-text">进程队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程优先级"><span class="nav-number">4.</span> <span class="nav-text">进程优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux调度器"><span class="nav-number">5.</span> <span class="nav-text">linux调度器</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前置"><span class="nav-number">1.</span> <span class="nav-text">前置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调度算法"><span class="nav-number">2.</span> <span class="nav-text">调度算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程队列"><span class="nav-number">3.</span> <span class="nav-text">进程队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程优先级"><span class="nav-number">4.</span> <span class="nav-text">进程优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux调度器"><span class="nav-number">5.</span> <span class="nav-text">linux调度器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#O1调度"><span class="nav-number">5.1.</span> <span class="nav-text">O1调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CFS"><span class="nav-number">5.2.</span> <span class="nav-text">CFS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CFS的优先级"><span class="nav-number">5.2.1.</span> <span class="nav-text">CFS的优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新进程的vruntime值"><span class="nav-number">5.2.2.</span> <span class="nav-text">新进程的vruntime值</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -384,7 +404,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -147,6 +147,161 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/22/universe/operate/CI_CD_intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/22/universe/operate/CI_CD_intro/" class="post-title-link" itemprop="url">CI/CD简介</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-22 00:00:00 / Modified: 11:57:00" itemprop="dateCreated datePublished" datetime="2020-11-22T00:00:00+08:00">2020-11-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="什么是CI-CD"><a href="#什么是CI-CD" class="headerlink" title="什么是CI/CD"></a>什么是CI/CD</h2><p>CI/CD：持续集成和持续交互。代码提交到代码仓库后自动触发一些自动化的流程。CI/CD的工具就是干这用的。</p>
+<ul>
+<li>什么是DevOps<ul>
+<li>DevOps是一种思想方法论，涵盖开发、测试、运维的整个过程。强调通过自动化的方法管理软件变更，软件集成</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plan    --&gt; code    --&gt; build  --&gt; test         Dev</span><br><span class="line">  ^                                 |</span><br><span class="line">  |                                 V</span><br><span class="line">monitor &lt;-- operate &lt;-- deploy &lt;-- release      Ops</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h3><ul>
+<li>原理：<ul>
+<li>代码提交到远程仓库</li>
+<li>如果检查到远程仓库有更新，则拉到本地然后执行构建脚本</li>
+</ul>
+</li>
+<li>在本机运行，所以需要一个自己的机器</li>
+</ul>
+<h3 id="TravisCI"><a href="#TravisCI" class="headerlink" title="TravisCI"></a>TravisCI</h3><p>TravisCI是github的一个合作伙伴，提供云端机器运行自动化脚本，通过TravisCI官网就能开启github项目的CI服务，之后要在项目中添加<code>.travis.yml</code>文件</p>
+<p><em>PS</em> : github自带类似的工具，github action</p>
+<p>基本用法：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .travis.yml</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">lang</span>  <span class="comment"># 写执行脚本前要先指定语言</span></span><br><span class="line"></span><br><span class="line"><span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">some</span> <span class="string">scirpt</span></span><br><span class="line"></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">some</span> <span class="string">scirpt</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="DaoCloud"><a href="#DaoCloud" class="headerlink" title="DaoCloud"></a>DaoCloud</h3><h4 id="测试阶段"><a href="#测试阶段" class="headerlink" title="测试阶段"></a>测试阶段</h4><p>同样是关注远程仓库，然后执行一些自动化的脚本。DaoCloud的云端的基于一个docker镜像的，所以在配置测试环境时可以选择合适的docker镜像。</p>
+<h4 id="构建阶段"><a href="#构建阶段" class="headerlink" title="构建阶段"></a>构建阶段</h4><p>在构建完成后会将镜像上传的daocloud的docker镜像仓库，方便以后通过<code>docker pull</code>部署到自己机器。当然可以在集群管理中配置主机，就可将主机绑定到daocloud平台，然后实现自动部署。</p>
+<h4 id="发布阶段"><a href="#发布阶段" class="headerlink" title="发布阶段"></a>发布阶段</h4><p>添加部署到主机</p>
+<p><em>PS</em> :daocloud还提供了内网穿透，通过合理配置就可通过访问daocloud的域名访问(即只http)部署在内网的应用了</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/22/universe/operate/docekr_multi_container/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/22/universe/operate/docekr_multi_container/" class="post-title-link" itemprop="url">docker多容器项目</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-22 00:00:00 / Modified: 15:24:19" itemprop="dateCreated datePublished" datetime="2020-11-22T00:00:00+08:00">2020-11-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="docker容器交互"><a href="#docker容器交互" class="headerlink" title="docker容器交互"></a>docker容器交互</h2><p>docker会通过一块虚拟的docker网卡为容器分配ip地址，即这些容器将在一个网段中，可以直接通过ip进行访问进行交互。但这里存在一个问题，我们需要手动登录一台机器查看ip，然后再另一台机器中访问，这在实际开发中是不可行的。</p>
+<p>更方便的交互方式是使用<code>--link &lt;name|id&gt;[:&lt;alias&gt;]</code>，这样就可以通过,如<code>curl &lt;alias&gt;</code>自动解析域名。其本质就是在<code>hosts</code>文件中加入了<code>ip &lt;alias&gt; &lt;id&gt;</code>，把别名了容器id映射到了指定容器的ip。</p>
+<p>看如下一个通信模型，只在nginx中暴露80端口，通过link的方式跟php通信，php又通过link的方式根mysql通信</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">nginx   link php expose 80</span><br><span class="line">  |</span><br><span class="line">  V</span><br><span class="line">php     link mysql</span><br><span class="line">  |</span><br><span class="line">  V</span><br><span class="line">mysql</span><br></pre></td></tr></table></figure>
+
+<p><strong>存在的问题</strong> 通过link的通信时，容器的启动顺序很关键(容器都没启动，link到哪？)。所以在以后的重启/部署时指令输起来将比较麻烦</p>
+<p>因此，可以将部署的指令记录到一个配置文件中，即使用<code>docker-compose</code></p>
+<h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><p>通过yml配置需要的服务，然后从yml中启动所有服务</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">version:</span> <span class="string">""</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">serv1:</span></span><br><span class="line">        <span class="attr">image:</span></span><br><span class="line">        <span class="attr">links:</span></span><br><span class="line">        <span class="attr">volumes:</span></span><br><span class="line">        <span class="attr">and_some_other_docker_option:</span></span><br><span class="line">    <span class="attr">serv2:</span></span><br><span class="line">        <span class="attr">build:</span> <span class="string">.</span>  <span class="comment"># 服务从dockerfile构建</span></span><br><span class="line">        <span class="attr">and_some_other_docker_option:</span></span><br></pre></td></tr></table></figure>
+
+<p><code>docker-compose up</code>启动</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/21/universe/linux/schedule/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -170,10 +325,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-11-21 00:00:00 / Modified: 20:47:20" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+08:00">2020-11-21</time>
+              <time title="Created: 2020-11-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+08:00">2020-11-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-11-22 16:35:54" itemprop="dateModified" datetime="2020-11-22T16:35:54+08:00">2020-11-22</time>
+              </span>
 
           
 
@@ -253,7 +414,8 @@
 </ul>
 </li>
 <li><strong>nice值越高优先级越低</strong><ul>
-<li>简记：表示一个进程对别的进程的nice程度。一个进程对别的进程越好就越不会抢占cpu，得到的时间越少，优先级越低</li>
+<li>简记：一个nice的人往往是谦虚礼貌的，吃饭都是说”你先吃你先吃”，结果最后这个nice的人饿着了</li>
+<li>一个进程对别的进程越nice就越不会抢占cpu，得到的时间越少，优先级越低</li>
 </ul>
 </li>
 <li>可以通过<code>nice</code>命令设置进程优先级，<code>renice</code>命令来修改nice值</li>
@@ -274,12 +436,12 @@
 </ul>
 </li>
 <li>O(1)调度器<ul>
-<li>优先级被映射成一定bitmap，在一个优先级上有进程则对应的bitmap会置1，cpu可以通过位运算快速取出优先级最高的进程</li>
+<li>时间片分配，优先级被映射成一定bitmap，在一个优先级上有进程则对应的bitmap会置1，cpu可以通过位运算快速取出优先级最高的进程</li>
 </ul>
 </li>
 <li>CFS完全公平调度器<ul>
 <li>分时间片，每个进程相对公平</li>
-<li><strong>virtualtime</strong>，优先级高的进程虚拟时间增长慢，优先级低的进程虚拟时间增长慢<ul>
+<li><strong>vruntime</strong>，优先级高的进程虚拟时间增长慢，优先级低的进程虚拟时间增长慢<ul>
 <li>如高优先级进程分到时间片10ms，而虚拟时间1ms</li>
 </ul>
 </li>
@@ -287,6 +449,16 @@
 </ul>
 </li>
 </ul>
+<h3 id="O1调度"><a href="#O1调度" class="headerlink" title="O1调度"></a>O1调度</h3><p>TODO <a href="https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html" target="_blank" rel="noopener">https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html</a></p>
+<p>O1调度的Linux2.6开始引入的，到Linux 2.6.23之后替换成了CFS。</p>
+<p>使用两个队列，活动队列和过期(expire)队列</p>
+<h3 id="CFS"><a href="#CFS" class="headerlink" title="CFS"></a>CFS</h3><p>要做到完全公平，调度器要在一个较小的时间内把这n个进程调度执行一遍。这个较小的时间就是任意一个进程被调度的最大延迟时间，也叫做<strong>调度周期<code>sched_latency_ns</code></strong></p>
+<p>CPU只要对所有进程维护一个累积占用CPU时间数，就可以衡量出每个进程目前占用的CPU时间总量是多还是少，这个数字记录在 <strong>vruntime</strong> 中。进程以vruntime为key放到一个红黑数组成的队列中，每次调度都选择最左子树上的那个进程，即vruntime最少的进程，这样就能保证所有进程相对公平。</p>
+<h4 id="CFS的优先级"><a href="#CFS的优先级" class="headerlink" title="CFS的优先级"></a>CFS的优先级</h4><p>虽说完全公平，但CFS还是需要支持优先级的。优先级是通过时间消耗(vruntime增长)的快慢来决定的。高优先级进程时间增长慢，低优先级进程时间增长快。如低优先级的进程实际运行了1s，vruntime是1s，而高优先级的进程实际已经运行了10s，而vruntime才是1s，这样高优先级的进程就更大概率在最左子树，得到调度。</p>
+<p>调度并不在一个进程的vruntime大于最小vruntime的进程时发生，为了减少切换频率，CFS设计了<code>sched_min_granularity_ns</code>参数来设定进程执行之后的最小cpu占用时间。</p>
+<h4 id="新进程的vruntime值"><a href="#新进程的vruntime值" class="headerlink" title="新进程的vruntime值"></a>新进程的vruntime值</h4><p>当已经有多个进程执行的很长时间时，新起一个进程，并让它vruntime为0，这显然是不公平的。因为需要分配给它很多时间来追赶其他进程的vruntime。所有CFS对每个CPU的执行队列都维护了一个<code>min_vruntime</code>值，用于记录这个CPU执行队列的最小vruntime值。因此新进程vruntime不是直接设为0，而是以<code>min_vruntime</code>为基础进行调整。</p>
+<p>需要考虑的因素很多，如子进程是否要先于父进程执行、还要防止进程不停的fork来获得很多的执行时间</p>
+<p>TODO: <a href="https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html" target="_blank" rel="noopener">https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html</a></p>
 
       
     </div>
@@ -998,238 +1170,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/05/universe/database/sql_base_usage/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/05/universe/database/sql_base_usage/" class="post-title-link" itemprop="url">SQL基本语句</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-10-05 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-05T00:00:00+08:00">2020-10-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-06 21:33:25" itemprop="dateModified" datetime="2020-11-06T21:33:25+08:00">2020-11-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`tbl_file`</span>(</span><br><span class="line">    <span class="string">`id`</span> <span class="built_in">INT</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span>(<span class="string">`id`</span>),</span><br><span class="line">    <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`idx_user_file`</span> (<span class="string">`user_name`</span>, <span class="string">`file_sha1`</span>),</span><br><span class="line">    <span class="keyword">KEY</span> <span class="string">`idx_status`</span> (<span class="string">`status`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>PRIMARY KEY(&lt;name&gt;)</code></li>
-<li><code>UNIQUE KEY &lt;name&gt; (&lt;name1...&gt;)</code>表示name1…中所有字段是唯一的，命名为name<ul>
-<li><code>INSERT IGNORE</code>时，要插入与unique相同的自动将会跳过</li>
-</ul>
-</li>
-<li><code>KEY &lt;name&gt; (&lt;name&gt;)</code></li>
-<li><code>SHOW CREATE TALBE &lt;table_name&gt;</code><ul>
-<li>显示键表过程</li>
-</ul>
-</li>
-</ul>
-<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><p><code>INSERT [INGORE] INTO &lt;表名&gt; &lt;字段名...&gt; VALUES &lt;字段对应值&gt;</code></p>
-<ul>
-<li><code>IGNORE</code>表示如果要插入的字段已存在，则忽略(不执行插入)</li>
-</ul>
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ul>
-<li>软删除<code>DELETE</code></li>
-<li>硬删除<code>DROP</code></li>
-</ul>
-<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><h4 id="UPDATE语句"><a href="#UPDATE语句" class="headerlink" title="UPDATE语句"></a>UPDATE语句</h4><p><code>UPDATE &lt;table_name&gt; SET &lt;column&gt;=&lt;value&gt;... WHERE &lt;column&gt;=&lt;value&gt;</code></p>
-<p> <strong>注意WHERE限定范围</strong> ，否则所有记录都将被更新</p>
-<h4 id="REPALCE函数"><a href="#REPALCE函数" class="headerlink" title="REPALCE函数"></a>REPALCE函数</h4><ul>
-<li>插入替换<ul>
-<li>似乎如果碰到unique key就会替换</li>
-<li><code>REPLACE INTO &lt;表名&gt; (&lt;字段...&gt;) VALUES &lt;新字段,...&gt;</code></li>
-</ul>
-</li>
-<li>replace()函数<ul>
-<li><code>REPALCE(&lt;object&gt;, &lt;search&gt;, &lt;replace&gt;)</code></li>
-<li>将内容<code>&lt;object&gt;</code>中<code>&lt;search&gt;</code>到的替换为<code>&lt;repalce&gt;</code></li>
-<li>实例<ul>
-<li><code>SELECT REPLACE(&#39;http://&#39;,&#39;http&#39;,&#39;https&#39;)</code></li>
-<li><code>UPDATE &lt;table_name&gt; SET name=replace(name,&#39;a&#39;,&#39;b&#39;)</code><ul>
-<li>将表中name字段中所有a替换成b</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><p><code>SELECT &lt;字段...&gt; FROM [数据库].&lt;表&gt; [WHERE statement] [LIMIT statement]</code></p>
-<h3 id="修改删除字段"><a href="#修改删除字段" class="headerlink" title="修改删除字段"></a>修改删除字段</h3><p><code>ALTER TABLE &lt;表名&gt; &lt;操作...&gt;</code>，如：</p>
-<ul>
-<li>新增, <code>ALTER TABLE &lt;表名&gt; ADD COlUMN &lt;字段名&gt; [定义...]</code></li>
-<li>删除字段，<code>ALTER TABLE &lt;表名&gt; DROP &lt;字段名&gt;</code>，如：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tbl_user_file DROP INDEX &#96;idx_user_file&#96;;</span><br></pre></td></tr></table></figure></li>
-<li>修改字段，<code>ALTER TABLE &lt;表名&gt; CHANGE &lt;旧字段名&gt; &lt;新字段名&gt; &lt;新数据类型&gt;;</code>  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_emp1 <span class="keyword">CHANGE</span> col1 col3 <span class="built_in">CHAR</span>(<span class="number">30</span>);</span><br></pre></td></tr></table></figure></li>
-<li>修改字段类型，<code>ALTER TABLE &lt;表名&gt; MODIFY &lt;字段名&gt; &lt;数据类型&gt;</code></li>
-</ul>
-<h3 id="简单运算"><a href="#简单运算" class="headerlink" title="简单运算"></a>简单运算</h3><h4 id="求和"><a href="#求和" class="headerlink" title="求和"></a>求和</h4><ul>
-<li><code>sum()</code>函数求和</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">    <span class="keyword">sum</span>( &lt;fild_name&gt; [+ &lt;fild_name&gt;...] ) <span class="keyword">AS</span> &lt;<span class="keyword">alias</span>&gt;</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    &lt;<span class="keyword">table</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>count()</code>计算总数，求平均</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">    <span class="keyword">sum</span>( &lt;fild_name&gt; [+ &lt;fild_name&gt;...] )/<span class="keyword">count</span>(*) <span class="keyword">AS</span> &lt;<span class="keyword">alias</span>&gt;</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    &lt;<span class="keyword">table</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>LIMIT &lt;range&gt;</code>限制范围<ul>
-<li>如找前3行<code>... LIMIT 0,3</code></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/03/universe/web/promise_async_and_wait/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/03/universe/web/promise_async_and_wait/" class="post-title-link" itemprop="url">Promise, async和wait的简单记录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-10-03 00:00:00 / Modified: 18:08:25" itemprop="dateCreated datePublished" datetime="2020-10-03T00:00:00+08:00">2020-10-03</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="为什么需要promise"><a href="#为什么需要promise" class="headerlink" title="为什么需要promise"></a>为什么需要promise</h2><p>有时候需要向函数中传入回调函数(异步操作结束后执行)，这么一来可能就会有多重函数嵌套的情况。这样的问题很明显：</p>
-<ul>
-<li>耦合度高</li>
-<li>解耦要传函数指针<ul>
-<li>安全考虑还需判断参数类型，可读性差</li>
-<li>如果传送匿名参数，可读性更差</li>
-</ul>
-</li>
-</ul>
-<h2 id="Promise写法"><a href="#Promise写法" class="headerlink" title="Promise写法"></a>Promise写法</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callRing</span>(<span class="params">success</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"calling Ring ..."</span>)</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (success) &#123;</span><br><span class="line">                resolve()</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                reject()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="number">3000</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">callRing(<span class="literal">true</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;&#125;) <span class="comment">// promise对象上的then方法。传入resolve函数</span></span><br><span class="line">    .catch(<span class="function"><span class="params">()</span>=&gt;</span>&#123;&#125;) <span class="comment">// promise对象上的catch方法。传入reject函数</span></span><br><span class="line">    <span class="comment">// 由于返回了promise对象，所以多次then调用是可行的</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>.then(function)</code>，传入promise对象的参数resolve和reject<ul>
-<li>当然，可以传入两个参数，即第二个参数就是reject。用来指定reject回调</li>
-</ul>
-</li>
-<li><code>.catch(function)</code><ul>
-<li>它就是then的第二个参数</li>
-<li>这么写能够处理执行resolve遇到异常的情况<ul>
-<li>如果resolve执行时遇到异常，将会条到<code>.catch</code>中</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>Promise还有很多用法：all，race等</strong></p>
-<h3 id="async、await"><a href="#async、await" class="headerlink" title="async、await"></a>async、await</h3><p>如果不喜欢.then这样的写法，可以使用async、await的写法</p>
-<p>async的本质就是promise的语法糖，标记了async的function里面可以执行await的同步方法，await后的代码要等待await执行完成。</p>
-<p>[猜]为什么promise能够做到同步呢？即.then().then()的同步原理</p>
-<ul>
-<li>当执行第一个promise时，是异步操作，最后才能返回promise。所以如果promise没返回就不会执行下一个</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// callRing函数不变</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 有await这个关键词的代码只能在一个async 定义的函数里执行</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">action</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">await</span> callRing(<span class="literal">true</span>) <span class="comment">// 如果是resolve则执行后续的代码</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"resolve"</span>)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e)&#123;</span><br><span class="line">        <span class="comment">// 如果reject则执行catch的代码</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"resolve"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">action()</span><br></pre></td></tr></table></figure>
-
-<p>或使用IIFE的写法，定义成匿名函数然后立即执行</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// callRing函数不变</span></span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">await</span> callRing(<span class="literal">true</span>) <span class="comment">// 如果是resolve则执行后续的代码</span></span><br><span class="line">        <span class="comment">// 否则抛出异常</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"resolve"</span>)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e)&#123;</span><br><span class="line">        <span class="comment">// 如果reject则执行catch的代码</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"resolve"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1295,7 +1239,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
