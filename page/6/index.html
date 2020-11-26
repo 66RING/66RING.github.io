@@ -147,6 +147,131 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/25/universe/GDB_Usage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/25/universe/GDB_Usage/" class="post-title-link" itemprop="url">GDB usage</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-25 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-25T00:00:00+08:00">2020-02-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-11-15 19:29:32" itemprop="dateModified" datetime="2020-11-15T19:29:32+08:00">2020-11-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Basic-Usage"><a href="#Basic-Usage" class="headerlink" title="Basic Usage"></a>Basic Usage</h1><ul>
+<li>Make sure compile file with <code>-g</code> option, which mean turn on debugging with gdb<ul>
+<li>like this: <code>gcc -g main.cpp -o main</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Debugging-with-GDB"><a href="#Debugging-with-GDB" class="headerlink" title="Debugging with GDB"></a>Debugging with GDB</h2><ul>
+<li>Open file<ul>
+<li>here are two way</li>
+<li><code>gdb &lt;file&gt;</code><ul>
+<li><code>gdb path/to/main</code></li>
+</ul>
+</li>
+<li><code>gdb</code> -&gt; <code>file path/to/main</code></li>
+</ul>
+</li>
+<li>Show list<ul>
+<li>use <code>l</code> command to show source code with line number</li>
+</ul>
+</li>
+<li>Add breakpoint<ul>
+<li>use <code>b &lt;LINENUM&gt;</code> to add breakpoint, such as <code>b 1</code> add breakpoint at line 1</li>
+<li>or use <code>b &lt;FUNCTIONNAME&gt;</code> to add breakpoint, such as <code>b main</code> add breakpoint at main function</li>
+</ul>
+</li>
+<li>Show breakpoint information<ul>
+<li><code>i b</code> i for information, b for breakpoint</li>
+</ul>
+</li>
+<li><strong>Inspect</strong><ul>
+<li>use <code>print, inspect or p [OPTION...] [EXP]</code> to print value of expression EXP<ul>
+<li>use <code>p a</code> will show information of variable <code>a</code> </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Delete breakpoint<ul>
+<li><code>d &lt;BREAKPOINTNUM&gt;</code> break point num from <code>i b</code></li>
+<li><code>i b</code> information will be like a order list. If delete a pointid in the previous, the next point will just add in the end of the idlist.</li>
+</ul>
+</li>
+<li>Run debug<ul>
+<li><code>r</code></li>
+</ul>
+</li>
+<li>Gdb controler<ul>
+<li><code>n</code> <strong>for next line</strong>, one step debugging</li>
+<li><code>s</code> <strong>for step into</strong>(one step)</li>
+<li><code>set args [parameter]</code> for command line args</li>
+</ul>
+</li>
+<li>Finish function and continue<ul>
+<li><code>finish</code> for finish function</li>
+<li><code>c</code> for continue until program exit or breakpoint</li>
+</ul>
+</li>
+<li>Quit gdb<ul>
+<li><code>q</code></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/25/universe/linux/linux_philosophy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -5111,259 +5236,6 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/08/universe/operate/git_usage/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/08/universe/operate/git_usage/" class="post-title-link" itemprop="url">git操作</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-08 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-08T00:00:00+08:00">2019-09-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-22 11:31:44" itemprop="dateModified" datetime="2020-11-22T11:31:44+08:00">2020-11-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Git-操作"><a href="#Git-操作" class="headerlink" title="Git 操作"></a>Git 操作</h1><h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="查看修改"><a href="#查看修改" class="headerlink" title="查看修改"></a>查看修改</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff BRANCHNAME</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="查看提交记录"><a href="#查看提交记录" class="headerlink" title="查看提交记录"></a>查看提交记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="添加修改并追踪"><a href="#添加修改并追踪" class="headerlink" title="添加修改并追踪"></a>添加修改并追踪</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add FILE</span><br><span class="line">git add .  // 添加所有</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="退回"><a href="#退回" class="headerlink" title="退回"></a>退回</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git reset</span><br><span class="line">git reset --hard HEAD^ 退回到上一个版本</span><br><span class="line">git reset --hard HEAD~n 退回到上n个版本</span><br><span class="line">git reset --hard sjaieral 退回某个版本</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "NAME"</span><br><span class="line">git config --global user.email "EMAIL"</span><br><span class="line">...等等</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="拉取项目"><a href="#拉取项目" class="headerlink" title="拉取项目"></a>拉取项目</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.获取工程</span><br><span class="line">git clone URL</span><br><span class="line"></span><br><span class="line">2.更新</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1.gibhub上创建一个仓库</span><br><span class="line"></span><br><span class="line">2.添加远程仓库</span><br><span class="line">git remote add origin ULR</span><br><span class="line"></span><br><span class="line">3.推到远程仓库</span><br><span class="line">git push --set-upstream origin master</span><br><span class="line">或者</span><br><span class="line">git push -u origin master</span><br><span class="line">// 然后登录</span><br><span class="line">// push master分支到origin仓库</span><br><span class="line"></span><br><span class="line">4.记住密码</span><br><span class="line">git config credential.helper store</span><br><span class="line">// 再次登录就可以记住了</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit // 会打开文件让你添加描述</span><br><span class="line">git commit -m "描述" // 快捷添加描述提交</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="PR"><a href="#PR" class="headerlink" title="PR"></a>PR</h3><ul>
-<li>fork到自己仓库</li>
-<li>clone自己仓库到电脑</li>
-<li>与源代码仓库建立连接<ul>
-<li><code>git remote add upstream &lt;url&gt;</code></li>
-<li>查看是否成功建立连接<code>git remote -v</code></li>
-</ul>
-</li>
-<li>创建分支<ul>
-<li><code>git switch -c &lt;branch_name&gt;</code>或<code>git checkout -b &lt;branch&gt;</code></li>
-</ul>
-</li>
-<li>从其他仓库下载(先同步)<ul>
-<li><code>git fetch upstream</code></li>
-<li><code>git rebase upstream/&lt;branch&gt;</code></li>
-<li>然后提交到自己仓库提pr<code>git push &lt;origin&gt; &lt;branch&gt;</code></li>
-</ul>
-</li>
-<li>修改代码<ul>
-<li>提交当前分支到自己仓库<ul>
-<li><code>git push origin &lt;branch_name&gt;</code></li>
-</ul>
-</li>
-<li>提交pr</li>
-</ul>
-</li>
-</ul>
-<h3 id="不让git管理指定文件"><a href="#不让git管理指定文件" class="headerlink" title="不让git管理指定文件"></a>不让git管理指定文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.新建一个 .gitignore 文件</span><br><span class="line"></span><br><span class="line">2.写入不需要git管理等文件名</span><br><span class="line">// 但是git一旦追踪某个文件那就会一只追踪</span><br><span class="line">// 停止追踪 git rm --cached FILE</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="git分支"><a href="#git分支" class="headerlink" title="git分支"></a>git分支</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1.创建分支</span><br><span class="line">git branch NAME</span><br><span class="line"></span><br><span class="line">2.切换分支</span><br><span class="line">git checkout NAME</span><br><span class="line"></span><br><span class="line">3.分支合并</span><br><span class="line">git merge NAME // 会把NAME分支合并到当前分支</span><br><span class="line"></span><br><span class="line">4.删除分支</span><br><span class="line">git branch -d NAME // -D强制删除</span><br><span class="line">// 主分支叫master</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><p>HEAD表示当前版本</p>
-<h3 id="时间胶囊"><a href="#时间胶囊" class="headerlink" title="时间胶囊"></a>时间胶囊</h3><ul>
-<li><code>git log</code>查看提交历史，确定版本号</li>
-<li><code>git reset --hard &lt;commit_id&gt;</code>退回到指定版本<ul>
-<li>退回后<code>git log</code>将找不到新版本的信息，但是不用担心本版仓库还在，只要找到对应的id就能回去</li>
-</ul>
-</li>
-<li><code>git reflog</code>查看命令历史</li>
-</ul>
-<h3 id="增删改"><a href="#增删改" class="headerlink" title="增删改"></a>增删改</h3><ul>
-<li>checkout<ul>
-<li><code>git checkout -- &lt;file&gt;</code>，撤销修改(checkout文件到本版原始的状态)</li>
-<li><code>--</code>是必要的，否则就是分支的切换</li>
-</ul>
-</li>
-<li>reset<ul>
-<li><code>git reset HEAD &lt;file&gt;</code>，reset文件在暂存区(stage)的状态(清出暂存区)，也就是unstaged</li>
-</ul>
-</li>
-</ul>
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>一个文件被删除后git会检测到修改(工作区和版本库不一样)，可以使用<code>git rm</code>删除版本库中的记录。 <strong>git rm</strong> 是一样的效果</p>
-<p>如果版本库的文件没被删除，则可用<code>git checkout -- &lt;file&gt;</code>恢复，如果已经删除可以使用<code>git reset</code>的方法来unstage</p>
-<h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><p>git把版本穿成一条时间线，每条时间线就是一个分支，每个版本就是一个节点。当创建新分支dev时相当于创建了一个dev的指针指向当前节点，再把HEAD指向dev，然后就可以以此为基础往后建立时间线。</p>
-<p>缺省前缀(如<code>&lt;remote&gt;/&lt;branch&gt;</code>)的操作，默认对本地的branch操作，所以<code>fetch upstream</code>后log还看不到本地commit的变化，因为还在upstream里用<code>git log &lt;remote&gt;/&lt;bracn&gt;</code>查看</p>
-<ul>
-<li>查看分支信息和commit<ul>
-<li><code>git log --graph --pretty=oneline --abbrev-commit</code></li>
-</ul>
-</li>
-<li>建立分支<ul>
-<li><code>git branch &lt;branch_name&gt;</code></li>
-<li><code>git switch -c</code><ul>
-<li><code>-c</code>表示新建并切换</li>
-</ul>
-</li>
-<li><code>git checkout -b &lt;branch_name&gt;</code><ul>
-<li><code>-b</code>表示新建并切换</li>
-<li>但是checkout命令又是撤销修改的命令，所以推荐使用switch</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>合并分支<ul>
-<li><code>git merge &lt;branch&gt;</code>把指定分支合并到但前分支</li>
-</ul>
-</li>
-</ul>
-<p>如果两个分支只形成一条时间线，则git可以<code>fast forward</code> “快速合并”，即<code>git merge dev</code>把HEAD和master的指针指向dev，即可</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|</span><br><span class="line">* (master)</span><br><span class="line">|</span><br><span class="line">* dev</span><br></pre></td></tr></table></figure>
-
-<p>如果分支有各自的提交，则git无法执行”快速合并”</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    |</span><br><span class="line">    * </span><br><span class="line">    | \</span><br><span class="line">dev *  * master</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="分支管理策略"><a href="#分支管理策略" class="headerlink" title="分支管理策略"></a>分支管理策略</h4><p>合并时，git会尽可能使用<code>Fast forward</code>模式，这模式下，删除分支后，会丢失部分分支信息。可以使用<code>--no-ff</code>参数来禁用<code>Fast forward</code>模式，以保留分支历史</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">初始情况</span><br><span class="line">|</span><br><span class="line">* master</span><br><span class="line">|</span><br><span class="line">* HEAD -&gt; dev</span><br><span class="line"></span><br><span class="line">Fast forward合并</span><br><span class="line">|</span><br><span class="line">*</span><br><span class="line">|</span><br><span class="line">* HEAD -&gt; dev, master</span><br><span class="line"></span><br><span class="line">no Fast forward合并</span><br><span class="line">|</span><br><span class="line">* </span><br><span class="line">| \</span><br><span class="line">|  * dev</span><br><span class="line">| /</span><br><span class="line">*  HEAD -&gt; master</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="复制特定提交而不合并分支"><a href="#复制特定提交而不合并分支" class="headerlink" title="复制特定提交而不合并分支"></a>复制特定提交而不合并分支</h4><p>如果一个bug早期就存在了，那每个分支上这个bug都存在。git提供了复制特定提交到当前分支的功能<code>cherry-pick &lt;commit_id&gt;</code></p>
-<p>这样一条命令就完成了修复bug，而不需要把分区合并</p>
-<h3 id="保存工作区"><a href="#保存工作区" class="headerlink" title="保存工作区"></a>保存工作区</h3><p>当你要修一个bug，但是你当前的工作没有完成(提交)时，使用<code>stash</code>功能可以把当前的工作现场保存起来。这样你转去修bug的时候就有一块干净的工作区了。</p>
-<ul>
-<li><code>git stash</code><ul>
-<li>保存当前工作现场</li>
-</ul>
-</li>
-<li><code>git stash list</code><ul>
-<li>查看以保存工作现场</li>
-</ul>
-</li>
-<li>工作现场恢复<ul>
-<li><code>git stash apply [stash_id]</code><ul>
-<li>这种恢复后不会删除stash内容，需要<code>git stash drop</code>删除</li>
-</ul>
-</li>
-<li><code>git stash pop [stash_id]</code><ul>
-<li>恢复的同时删除</li>
-</ul>
-</li>
-<li>stash是栈的结构，所以apply和drop的时候默认都是操作栈顶的stash</li>
-</ul>
-</li>
-</ul>
-<h3 id="标签管理"><a href="#标签管理" class="headerlink" title="标签管理"></a>标签管理</h3><p>tag就是给commit起一个容易记住的名字，tag和commit是绑定在一起的</p>
-<ul>
-<li><p><code>git tag &lt;name&gt; [commit_id]</code></p>
-<ul>
-<li>给一个commit一个为名tag，默认是当前commit</li>
-</ul>
-</li>
-<li><p><code>git tag -a &lt;name&gt; -m &lt;desc&gt; [commit_id]</code></p>
-<ul>
-<li>给<code>&lt;commit_id&gt;</code>(默认当前commit)创建一个带有说明信息<code>&lt;desc&gt;</code>的<code>&lt;name&gt;</code>标签</li>
-</ul>
-</li>
-<li><p><code>git show &lt;tagname&gt;</code></p>
-<ul>
-<li>显示tag信息</li>
-</ul>
-</li>
-<li><p><code>git tag -d &lt;tagname&gt;</code></p>
-<ul>
-<li>删除标签</li>
-</ul>
-<p><strong>注意</strong> ：标签是按字母排序的，而不是commit是时间顺序</p>
-</li>
-</ul>
-<p>标签只会储存在本地，如果要推送到远程，使用<code>git push &lt;origin&gt; &lt;tagname&gt;</code></p>
-<p>一次性推送所有标签<code>git push &lt;origin&gt; --tags</code></p>
-<p>删除远程标签(前提是本地标签已经删除):<code>git push &lt;origin&gt; :refs/tags/&lt;tagname&gt;</code></p>
-<h3 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h3><ul>
-<li>查看分支信息<ul>
-<li><code>git remote -v</code></li>
-</ul>
-</li>
-<li>推送分支<ul>
-<li><code>git push &lt;origin&gt; &lt;branch_name&gt;</code></li>
-</ul>
-</li>
-</ul>
-<p>当小伙伴 <strong>clone时，默认只能看到本地的master分支</strong>。要在dev分支上开发就需要建立远程<code>origin</code>的<code>dev</code>分支到本地：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b &lt;local_branch&gt; &lt;origin&gt;/&lt;remote_branch&gt;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 不能缺少&lt;local_branch&gt;，不然就变成了创建分支</span></span><br></pre></td></tr></table></figure>
-
-<p>如果git提示<code>no tracking information</code>，则说明本地分支和远程分支的连接关系没有建立，使用命令<code>git branch --set-upstream-to &lt;branch_name&gt; origin/&lt;branch_name&gt;</code>远程的branchname建立连接到本地的branchname</p>
-<h4 id="Rebase"><a href="#Rebase" class="headerlink" title="Rebase"></a>Rebase</h4><p>TODO</p>
-<h3 id="配置别名"><a href="#配置别名" class="headerlink" title="配置别名"></a>配置别名</h3><h2 id="搭建Git服务器"><a href="#搭建Git服务器" class="headerlink" title="搭建Git服务器"></a>搭建Git服务器</h2><p>todo</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -5433,12 +5305,12 @@ $$b^</code> = b - lr \times \frac{\partial{loss}}{\partial{b}}$$<br>这样就会
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">72</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">62</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
