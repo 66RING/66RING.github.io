@@ -147,6 +147,179 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/20/Major/OS/Computer_System_A_Programmer's_Perspective/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/20/Major/OS/Computer_System_A_Programmer's_Perspective/" class="post-title-link" itemprop="url">深入理解计算机系统脑图</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-20 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-20T00:00:00+08:00">2020-10-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-26 22:56:18" itemprop="dateModified" datetime="2020-10-26T22:56:18+08:00">2020-10-26</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="PART1-计算机系统漫游"><a href="#PART1-计算机系统漫游" class="headerlink" title="PART1: 计算机系统漫游"></a>PART1: 计算机系统漫游</h2><ul>
+<li>组成设备</li>
+</ul>
+<h2 id="PART3-程序的机器级表示"><a href="#PART3-程序的机器级表示" class="headerlink" title="PART3: 程序的机器级表示"></a>PART3: 程序的机器级表示</h2><ul>
+<li>一个可执行程序<ul>
+<li>编译过程<ul>
+<li>预处理</li>
+<li>编译</li>
+<li>汇编</li>
+<li>连接</li>
+</ul>
+</li>
+<li>编译细节<ul>
+<li><code>gcc -O[g|1|2] &lt;file&gt;</code>优化等级</li>
+<li>编译器优化可能会调整代码次序，源代码会严重变形，导致并发时不满足顺序一致性内存模型</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据格式<ul>
+<li>字节，字，双字，四字</li>
+<li>数据类型的汇编代码表示<ul>
+<li>b, w, l, q </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>操作数指示符<ul>
+<li>操作数可以是立即数值、寄存器值和来自内存的值</li>
+<li>立即数的形式<code>$Imm</code></li>
+<li>寄存器的形式<code>%r</code></li>
+<li>内存寻址的形式<code>Imm(rb, ri, si)</code><ul>
+<li>表示<code>M[Imm + R[rb] + R[ri]*si</code>，参数是可以省略的，如<code>(,%rcx,)</code></li>
+<li><code>M[]</code>表示取内存值，<code>R[]</code>表示取寄存器值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据传送指令<ul>
+<li><code>mov[数据大小]</code></li>
+</ul>
+</li>
+<li>几类寄存器的格式<ul>
+<li><code>r[a|b|c|d]x</code>、<code>eax</code>、<code>ax</code>、<code>al</code></li>
+<li><code>r[s|d]i</code>、<code>esi</code>、<code>si</code>、<code>sil</code></li>
+<li><code>r[b|s]p</code>、<code>esp</code>、<code>sp</code>、<code>spl</code></li>
+<li><code>r[8-9]</code>、<code>r8d</code>、<code>r8w</code>、<code>r8b</code></li>
+<li>简记：有r说明4字、e说明双字、l说明字节，剩下的就说明是单字</li>
+</ul>
+</li>
+<li>lea(load effective address)取有效地址<ul>
+<li><code>leaq 7(%rdi, %rsi, 4), %rax</code>，则<code>%rad=7+R[%rdi]+R[%rsi]*4</code></li>
+<li>处理用在取地址，还可以用在简单的加法和乘法</li>
+</ul>
+</li>
+</ul>
+<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">低地址：</span><br><span class="line">    栈顶：%rsp-&gt; |   |</span><br><span class="line">                |   |</span><br><span class="line">                .....</span><br><span class="line">    栈底        |   |</span><br><span class="line">高地址</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>pushq S</code>(4字)<ul>
+<li><code>R[%rsp] &lt;- R[%rsp]-8</code>，栈顶指针减8<ul>
+<li>相当于<code>subq $8, %rsp</code></li>
+</ul>
+</li>
+<li><code>M[R[%rsp]] &lt;- S</code>，入栈<ul>
+<li>相当于<code>movq %rbp, (%rsp)</code></li>
+</ul>
+</li>
+<li>区别在于<code>pushq</code>指令编码为1字节</li>
+</ul>
+</li>
+<li>弹出同理<ul>
+<li>出栈</li>
+<li>指针加</li>
+</ul>
+</li>
+<li>知道了栈内存的分布，则可用内存寻址访问栈<ul>
+<li><code>movq 8(%rsp), %rdx</code>，把栈第二个元素存到rdx寄存器中</li>
+</ul>
+</li>
+</ul>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
+<li>算数运算符<ul>
+<li>常见的算数运算符有加减乘除，与或非异或，算数(<code>sa[l|r]</code>)逻辑(<code>sh[l|r]</code>)左右移等<ul>
+<li>这些运算符都会改变条件码，以实现条件控制</li>
+</ul>
+</li>
+<li>特殊的算数操作</li>
+</ul>
+</li>
+<li>条件码<ul>
+<li>常用条件码有：<ul>
+<li>CF：进位标志</li>
+<li>ZF：零标志</li>
+<li>SF：符号标志</li>
+</ul>
+</li>
+<li>不改变条件码的操作<ul>
+<li><code>cmp[b|w|l|q]</code>，与sub相同，只是不改变条件码</li>
+<li><code>test[b|w|l|q]</code>，与and相同，只是不改变条件码</li>
+</ul>
+</li>
+<li>访问条件码<ul>
+<li>根据条件码设置寄存器01，称为set操作，后缀指明 <strong>考虑的条件码组合</strong> ，如<code>setl R</code>(set less)将D设为<code>SF^OF</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/06/universe/lua/lua_stl/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1225,74 +1398,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/09/universe/tech_tips/CAS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/09/universe/tech_tips/CAS/" class="post-title-link" itemprop="url">CAS简记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-09 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-09T00:00:00+08:00">2020-08-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-19 20:26:49" itemprop="dateModified" datetime="2020-10-19T20:26:49+08:00">2020-10-19</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="CAS-Compare-And-Swap"><a href="#CAS-Compare-And-Swap" class="headerlink" title="CAS(Compare And Swap)"></a>CAS(Compare And Swap)</h2><p>CAS是一种乐观锁。何谓悲观，编译器认为就是如果不严格同步线程调用则一定会产生异常，所以悲观锁会阻塞其他所有线程调用(互斥)。</p>
-<p>但是并不是所有操作都一定会产生异常，如多线程的读操作就不会。</p>
-<h3 id="CAS机制"><a href="#CAS机制" class="headerlink" title="CAS机制"></a>CAS机制</h3><p>在多线程对共享资源访问时比较共享资源当前的状态(newValue)和发起调用时的状态(oldValue)。如果状态一样则还没其他线程访问，这个线程(swap)改变共享资源的状态并访问，结束后再换会原来的状态；如果状态不一样则说明已被其他线程占用，进入自旋等待时机尝试再次访问。</p>
-<p>为了保证比较过程是安全的，CAS的compare操作必须的原子操作，所以开销是比切换到内核态调用mutex再切换会用户态是小很多的。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1362,12 +1467,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

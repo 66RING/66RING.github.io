@@ -147,6 +147,100 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/29/universe/linux/config_a_kernel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/29/universe/linux/config_a_kernel/" class="post-title-link" itemprop="url">如何配置linux内核</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-29 00:00:00 / Modified: 21:15:18" itemprop="dateCreated datePublished" datetime="2020-11-29T00:00:00+08:00">2020-11-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="如何配置linux内核"><a href="#如何配置linux内核" class="headerlink" title="如何配置linux内核"></a>如何配置linux内核</h2><p>linux内核提供许多自定义的选项</p>
+<p>因此你可以根据自己喜好定制的编译linux内核。这里以在centos8中编译centos8的内核为例。</p>
+<h3 id="准备内核源码"><a href="#准备内核源码" class="headerlink" title="准备内核源码"></a>准备内核源码</h3><blockquote>
+<p><a href="https://wiki.centos.org/zh/HowTos/I_need_the_Kernel_Source" target="_blank" rel="noopener">官方文档</a></p>
+</blockquote>
+<p>centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在<code>https://vault.centos.org/</code>下载对应的内核rpm包。如</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://vault.centos.org/8.1.1911/BaseOS/Source/SPackages/kernel-4.18.0-147.el8.src.rpm</span><br></pre></td></tr></table></figure>
+
+<p>然后使用rpm安装内核源码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-147.el8.src.rpm</span><br></pre></td></tr></table></figure>
+
+<p>这里可能会提示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: user mockbuild does not exist. using root</span><br></pre></td></tr></table></figure>
+
+<p>那就创建一个mockbuild用户</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd mockbuild</span><br></pre></td></tr></table></figure>
+
+<p>然后继续安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-147.el8.src.rpm</span><br></pre></td></tr></table></figure>
+
+<p>这时会在根目录会得到一个rpmbuild目录。在<code>~/rpmbuild/SPECS</code>中进行<code>rpmbuild</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/rpmbuild/SPECS</span><br><span class="line">rpmbuild -bp --target=$(uname -m) kernel.spec</span><br></pre></td></tr></table></figure>
+
+<p>这时可能会碰到依赖问题，需要安装很多依赖包，安装依赖后再次尝试<code>rpmbuild</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install audit-libs-devel binutils-devel elfutils-devel java-devel kabi-dw libcap-devel libcap-ng-devel llvm-toolset ncurses-devel newt-devel numactl-devel openssl-devel pciutils-devel python3-devel python3-docutils  xz-devel zlib-devel</span><br></pre></td></tr></table></figure>
+
+<p>这样一来就得到了内核源码了，在<code>~/rpmbuild/BUILD</code>目录下</p>
+<h3 id="自定义内核"><a href="#自定义内核" class="headerlink" title="自定义内核"></a>自定义内核</h3><p>在源码中使用<code>make menuconfig</code>可以进行内核选项的设置。当然也可以载入现成的配置文件。如本机(centos8)的内核配置文件就在<code>/boot/config-$(uname -r)</code>里。拷贝到源码所在目的<code>.config</code>文件，然后可以加载配置</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /boot/config-$(uname -r) ./.config</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
+
+<p><code>menuconfig</code>里面可以自己选择也可以使用默认或加载配置。做好你的选择后就可以开始编译了</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make -j 8</span><br><span class="line"><span class="comment"># 使用8核进行编译</span></span><br></pre></td></tr></table></figure>
+
+<p>最后编译安装，重启后就是新的内核了</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make modules_install</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/23/universe/linux/iptables/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1153,179 +1247,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/20/Major/OS/Computer_System_A_Programmer's_Perspective/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/20/Major/OS/Computer_System_A_Programmer's_Perspective/" class="post-title-link" itemprop="url">深入理解计算机系统脑图</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-10-20 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-20T00:00:00+08:00">2020-10-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-26 22:56:18" itemprop="dateModified" datetime="2020-10-26T22:56:18+08:00">2020-10-26</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="PART1-计算机系统漫游"><a href="#PART1-计算机系统漫游" class="headerlink" title="PART1: 计算机系统漫游"></a>PART1: 计算机系统漫游</h2><ul>
-<li>组成设备</li>
-</ul>
-<h2 id="PART3-程序的机器级表示"><a href="#PART3-程序的机器级表示" class="headerlink" title="PART3: 程序的机器级表示"></a>PART3: 程序的机器级表示</h2><ul>
-<li>一个可执行程序<ul>
-<li>编译过程<ul>
-<li>预处理</li>
-<li>编译</li>
-<li>汇编</li>
-<li>连接</li>
-</ul>
-</li>
-<li>编译细节<ul>
-<li><code>gcc -O[g|1|2] &lt;file&gt;</code>优化等级</li>
-<li>编译器优化可能会调整代码次序，源代码会严重变形，导致并发时不满足顺序一致性内存模型</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>数据格式<ul>
-<li>字节，字，双字，四字</li>
-<li>数据类型的汇编代码表示<ul>
-<li>b, w, l, q </li>
-</ul>
-</li>
-</ul>
-</li>
-<li>操作数指示符<ul>
-<li>操作数可以是立即数值、寄存器值和来自内存的值</li>
-<li>立即数的形式<code>$Imm</code></li>
-<li>寄存器的形式<code>%r</code></li>
-<li>内存寻址的形式<code>Imm(rb, ri, si)</code><ul>
-<li>表示<code>M[Imm + R[rb] + R[ri]*si</code>，参数是可以省略的，如<code>(,%rcx,)</code></li>
-<li><code>M[]</code>表示取内存值，<code>R[]</code>表示取寄存器值</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>数据传送指令<ul>
-<li><code>mov[数据大小]</code></li>
-</ul>
-</li>
-<li>几类寄存器的格式<ul>
-<li><code>r[a|b|c|d]x</code>、<code>eax</code>、<code>ax</code>、<code>al</code></li>
-<li><code>r[s|d]i</code>、<code>esi</code>、<code>si</code>、<code>sil</code></li>
-<li><code>r[b|s]p</code>、<code>esp</code>、<code>sp</code>、<code>spl</code></li>
-<li><code>r[8-9]</code>、<code>r8d</code>、<code>r8w</code>、<code>r8b</code></li>
-<li>简记：有r说明4字、e说明双字、l说明字节，剩下的就说明是单字</li>
-</ul>
-</li>
-<li>lea(load effective address)取有效地址<ul>
-<li><code>leaq 7(%rdi, %rsi, 4), %rax</code>，则<code>%rad=7+R[%rdi]+R[%rsi]*4</code></li>
-<li>处理用在取地址，还可以用在简单的加法和乘法</li>
-</ul>
-</li>
-</ul>
-<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">低地址：</span><br><span class="line">    栈顶：%rsp-&gt; |   |</span><br><span class="line">                |   |</span><br><span class="line">                .....</span><br><span class="line">    栈底        |   |</span><br><span class="line">高地址</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>pushq S</code>(4字)<ul>
-<li><code>R[%rsp] &lt;- R[%rsp]-8</code>，栈顶指针减8<ul>
-<li>相当于<code>subq $8, %rsp</code></li>
-</ul>
-</li>
-<li><code>M[R[%rsp]] &lt;- S</code>，入栈<ul>
-<li>相当于<code>movq %rbp, (%rsp)</code></li>
-</ul>
-</li>
-<li>区别在于<code>pushq</code>指令编码为1字节</li>
-</ul>
-</li>
-<li>弹出同理<ul>
-<li>出栈</li>
-<li>指针加</li>
-</ul>
-</li>
-<li>知道了栈内存的分布，则可用内存寻址访问栈<ul>
-<li><code>movq 8(%rsp), %rdx</code>，把栈第二个元素存到rdx寄存器中</li>
-</ul>
-</li>
-</ul>
-<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
-<li>算数运算符<ul>
-<li>常见的算数运算符有加减乘除，与或非异或，算数(<code>sa[l|r]</code>)逻辑(<code>sh[l|r]</code>)左右移等<ul>
-<li>这些运算符都会改变条件码，以实现条件控制</li>
-</ul>
-</li>
-<li>特殊的算数操作</li>
-</ul>
-</li>
-<li>条件码<ul>
-<li>常用条件码有：<ul>
-<li>CF：进位标志</li>
-<li>ZF：零标志</li>
-<li>SF：符号标志</li>
-</ul>
-</li>
-<li>不改变条件码的操作<ul>
-<li><code>cmp[b|w|l|q]</code>，与sub相同，只是不改变条件码</li>
-<li><code>test[b|w|l|q]</code>，与and相同，只是不改变条件码</li>
-</ul>
-</li>
-<li>访问条件码<ul>
-<li>根据条件码设置寄存器01，称为set操作，后缀指明 <strong>考虑的条件码组合</strong> ，如<code>setl R</code>(set less)将D设为<code>SF^OF</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1395,12 +1316,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
