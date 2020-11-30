@@ -664,7 +664,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-22 12:05:17" itemprop="dateModified" datetime="2020-11-22T12:05:17+08:00">2020-11-22</time>
+                <time title="Modified: 2020-11-30 15:44:00" itemprop="dateModified" datetime="2020-11-30T15:44:00+08:00">2020-11-30</time>
               </span>
 
           
@@ -699,7 +699,11 @@
 <li>见<code>man docker &lt;COMMAND&gt;</code></li>
 <li><code>-i</code>表示启动一个可以交互的容器</li>
 <li><code>-t</code>表示分配一个pseudo-tty</li>
-<li><code>-d</code>(detach)表示后台启动</li>
+<li><code>-d|--detach</code>表示后台启动一个容器</li>
+<li><code>-a|--attach</code>进入一个已经启动的容器<ul>
+<li>使用<code>c-p c-q</code>退出容器时保持运行</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>在一个TCP端口上绑定一个服务<ul>
@@ -731,7 +735,7 @@
 </ol>
 </li>
 <li><ol start="3">
-<li>保存镜像<ul>
+<li>保存容器为镜像<ul>
 <li><code>docker commit &lt;ID|NAME&gt; &lt;NEW_IMG&gt;</code><ul>
 <li>通过名字或id保存一个容器为镜像</li>
 </ul>
@@ -873,6 +877,22 @@
 <li>STOPSIGNAL用于指定容器退出的信号</li>
 <li>HEALTHCHECK用于指定容器健康检查的配置</li>
 <li>SHELL用于指定脚本如windows镜像需要指定CMD /S /C</li>
+</ul>
+<h2 id="Play-With-Dockerhub"><a href="#Play-With-Dockerhub" class="headerlink" title="Play With Dockerhub"></a>Play With Dockerhub</h2><ul>
+<li>创建一个帐号</li>
+<li>新建一个仓库</li>
+<li>登录<ul>
+<li><code>docker login</code></li>
+</ul>
+</li>
+<li>将容器/镜像保存为与仓库对应的镜像<ul>
+<li>如<code>66ring/centos:tagname</code></li>
+</ul>
+</li>
+<li>推到hub<ul>
+<li><code>docker push 66ring/centos:tagname</code></li>
+</ul>
+</li>
 </ul>
 
       
