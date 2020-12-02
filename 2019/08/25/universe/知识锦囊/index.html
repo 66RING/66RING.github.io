@@ -28,7 +28,7 @@
 <meta property="og:description" content="自然率倒霉事的概率墨菲定律问题引入-&gt;好看的人千篇一律，不好看的人各有千秋  好看-&gt;五官什么的都是好看的，又好看的概率低，全好看的概率P更低 不好看-&gt;其中一个不好看就不好看,概率1-P故。  验证是否正常的方法本福特定律自然数据的首位数规律  斐波那契数列符合—&gt;说明近似自然数据 数据是否造假—&gt;是否符合本福特定律证明 不严谨的证明 数据的增长量正比于存量 $\f">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-08-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:34:14.498Z">
+<meta property="article:modified_time" content="2020-12-01T14:25:54.652Z">
 <meta property="article:author" content="Travis TuRing">
 <meta property="article:tag" content="tools of life">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+                <time title="Modified: 2020-12-01 22:25:54" itemprop="dateModified" datetime="2020-12-01T22:25:54+08:00">2020-12-01</time>
               </span>
 
           
@@ -240,57 +240,6 @@
 <h4 id="expand"><a href="#expand" class="headerlink" title="expand"></a>expand</h4><p>$$<br>ax_1^3 + bx_2^2 + cx_3 + d = 0 \</p>
 <p>\begin{cases}<br>x_1 + x_2 + x_3 = -\frac{b}{a} \<br>x_1x_2 + x_1x_3 + x_2x_3 = \frac{c}{a} \<br>x_1x_2x_3 = -\frac{d}{a} \<br>\end{cases} \</p>
 <p>and\ so\ on …<br>$$</p>
-<h2 id="Anduin"><a href="#Anduin" class="headerlink" title="Anduin"></a>Anduin</h2><h2 id="Cryptography"><a href="#Cryptography" class="headerlink" title="Cryptography"></a>Cryptography</h2><h3 id="Symmetric-encryption"><a href="#Symmetric-encryption" class="headerlink" title="Symmetric encryption"></a>Symmetric encryption</h3><p>The classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.<br>+3 is <em>pre shared key</em>:PSK</p>
-<p>But how to let the receiver know what the PSK is?</p>
-<h3 id="Asymmetric-encryption"><a href="#Asymmetric-encryption" class="headerlink" title="Asymmetric encryption"></a>Asymmetric encryption</h3><p>Which can solve listening problem.</p>
-<p>Encryption with public key, decryption with private key. </p>
-<ul>
-<li>Public key<ul>
-<li>$A_0+public\ key \overset{en}{=} A_1$</li>
-</ul>
-</li>
-<li>Private key<ul>
-<li>$A_1+public\ key \overset{de}{=} A_0$</li>
-</ul>
-</li>
-</ul>
-<p>Such as, there are two guys:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A: What is you public key?</span><br><span class="line">B: pk</span><br><span class="line">Than A can encryption with public and than send the infomation to B.</span><br><span class="line">And B can use the his key to get the right infomation.</span><br><span class="line"></span><br><span class="line">What if the hacker has the public?</span><br><span class="line">So hacker can fake the infomation</span><br></pre></td></tr></table></figure>
-
-<h4 id="Private-key-encryption"><a href="#Private-key-encryption" class="headerlink" title="Private key encryption"></a>Private key encryption</h4><p>Encryption with private key, decryption with public key. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A: Here is my public key</span><br><span class="line">B: get</span><br><span class="line">A: message &#x3D;private encryption&#x3D;&gt; cipher</span><br><span class="line">B: cipher &#x3D;public decryption&#x3D;&gt; message</span><br><span class="line"></span><br><span class="line">But if hacker has your public key hacker can get you message too.</span><br><span class="line">hacker: cipher &#x3D;public decryption&#x3D;&gt; message.</span><br></pre></td></tr></table></figure>
-<h4 id="Use-both"><a href="#Use-both" class="headerlink" title="Use both"></a>Use both</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A: What is your public key?</span><br><span class="line">B: bk</span><br><span class="line">A: Ok. We are going to use Symmetric Encryption. The PSK is:psk.</span><br><span class="line"></span><br><span class="line">hacker don&#39;t have the private the so he don&#39;t know what to do.</span><br></pre></td></tr></table></figure>
-<p>But what <strong>if B IS NOT B</strong>?</p>
-<h4 id="Modern-HTTP-mode"><a href="#Modern-HTTP-mode" class="headerlink" title="Modern HTTP mode"></a>Modern HTTP mode</h4><p>In real life we may choose to trust police station. So it may help that police station tell you that B is B in the following way.</p>
-<p>The police station which we call it CA institution.</p>
-<ul>
-<li>Signature algorithm<ul>
-<li>encryption with CA’s private key</li>
-</ul>
-</li>
-<li>Check algorithm<ul>
-<li>decryption with CA’s public key</li>
-</ul>
-</li>
-<li>the whole process can be received but can’t be faked</li>
-</ul>
-<p>(we trust browser, browser trust CA)<br>| Roles   | browser(user), web, CA                                                                                             |<br>|———|——————————————————————————————————————–|<br>| web     | through a serise of process to get the CA certification.                                                           |<br>| CA      | signature this web with its private key and broadcast the public key, which we can use it to get infomation of web |<br>| browser | varify the web’s public key with CA’s public key and mark web is safe. (B is B)                                    |</p>
-<p>After we know B is B, we can encryption message with B’s public key.And tell B we are going to use PSK.And than we are safe.</p>
-<h3 id="Identity"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</h3><ul>
-<li>authentication<ul>
-<li>to prove you is you</li>
-</ul>
-</li>
-<li>authornization<ul>
-<li>to prove you have the permissions</li>
-</ul>
-</li>
-</ul>
-<p>As we know, a web app can use cookie implementate a identity function.<br>But a cookie is like a tag that server make on you. And in your next request, browser send send cookie with your request.<br>Which means <strong>you can choose to send it or not with technical means!</strong>. Such as delete local cookie to fake a unvoted tags.</p>
-<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><h3 id="Database-Security-tips"><a href="#Database-Security-tips" class="headerlink" title="Database Security(tips)"></a>Database Security(tips)</h3><p>We need to login, but we don’t need to save user’s password into database.<br>We can save this <code>hash(password)</code> and compare it.\o/</p>
-<h3 id="Use-Hash-on-Web-App"><a href="#Use-Hash-on-Web-App" class="headerlink" title="Use Hash on Web App"></a>Use Hash on Web App</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cache-&gt;browser:</span><br><span class="line">browser-&gt;nginx: request(Img)</span><br><span class="line">nginx--&gt;browser: Img &amp; ETag(hash) 200</span><br><span class="line">nginx-&gt;server: </span><br><span class="line">server--&gt;nginx: </span><br><span class="line">browser-&gt;cache: save Img</span><br><span class="line"></span><br><span class="line">browser-&gt;nginx: request(Img &amp; hash equals?)</span><br><span class="line">nginx-&gt;server: hash equals?</span><br><span class="line">server--&gt;nginx: yes</span><br><span class="line">nginx--&gt;browser: not modified 206</span><br><span class="line">browser-&gt;cache: search your cache</span><br><span class="line">cache-&gt;browser: here</span><br></pre></td></tr></table></figure>
-
-
 <h2 id="天文"><a href="#天文" class="headerlink" title="天文"></a>天文</h2><h3 id="发现系外行星的方法"><a href="#发现系外行星的方法" class="headerlink" title="发现系外行星的方法"></a>发现系外行星的方法</h3><h4 id="视像速度法"><a href="#视像速度法" class="headerlink" title="视像速度法"></a>视像速度法</h4><ul>
 <li>双星</li>
 <li>多普勒效益造成 红移/蓝移<ul>
@@ -390,7 +339,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#自然率"><span class="nav-number">1.</span> <span class="nav-text">自然率</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#倒霉事的概率"><span class="nav-number">1.1.</span> <span class="nav-text">倒霉事的概率</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#墨菲定律"><span class="nav-number">1.1.1.</span> <span class="nav-text">墨菲定律</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证是否正常的方法"><span class="nav-number">1.2.</span> <span class="nav-text">验证是否正常的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#本福特定律"><span class="nav-number">1.2.1.</span> <span class="nav-text">本福特定律</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#证明"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">证明</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学"><span class="nav-number">2.</span> <span class="nav-text">数学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#求最大公约数"><span class="nav-number">2.1.</span> <span class="nav-text">求最大公约数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贝祖数"><span class="nav-number">2.2.</span> <span class="nav-text">贝祖数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vieta-theorem"><span class="nav-number">2.3.</span> <span class="nav-text">Vieta theorem</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#expand"><span class="nav-number">2.3.1.</span> <span class="nav-text">expand</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Anduin"><span class="nav-number">3.</span> <span class="nav-text">Anduin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cryptography"><span class="nav-number">4.</span> <span class="nav-text">Cryptography</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Symmetric-encryption"><span class="nav-number">4.1.</span> <span class="nav-text">Symmetric encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asymmetric-encryption"><span class="nav-number">4.2.</span> <span class="nav-text">Asymmetric encryption</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Private-key-encryption"><span class="nav-number">4.2.1.</span> <span class="nav-text">Private key encryption</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Use-both"><span class="nav-number">4.2.2.</span> <span class="nav-text">Use both</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Modern-HTTP-mode"><span class="nav-number">4.2.3.</span> <span class="nav-text">Modern HTTP mode</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Identity"><span class="nav-number">4.3.</span> <span class="nav-text">Identity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash"><span class="nav-number">5.</span> <span class="nav-text">Hash</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Database-Security-tips"><span class="nav-number">5.1.</span> <span class="nav-text">Database Security(tips)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-Hash-on-Web-App"><span class="nav-number">5.2.</span> <span class="nav-text">Use Hash on Web App</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#天文"><span class="nav-number">6.</span> <span class="nav-text">天文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发现系外行星的方法"><span class="nav-number">6.1.</span> <span class="nav-text">发现系外行星的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#视像速度法"><span class="nav-number">6.1.1.</span> <span class="nav-text">视像速度法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#凌日法"><span class="nav-number">6.1.2.</span> <span class="nav-text">凌日法</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#自然率"><span class="nav-number">1.</span> <span class="nav-text">自然率</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#倒霉事的概率"><span class="nav-number">1.1.</span> <span class="nav-text">倒霉事的概率</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#墨菲定律"><span class="nav-number">1.1.1.</span> <span class="nav-text">墨菲定律</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证是否正常的方法"><span class="nav-number">1.2.</span> <span class="nav-text">验证是否正常的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#本福特定律"><span class="nav-number">1.2.1.</span> <span class="nav-text">本福特定律</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#证明"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">证明</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学"><span class="nav-number">2.</span> <span class="nav-text">数学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#求最大公约数"><span class="nav-number">2.1.</span> <span class="nav-text">求最大公约数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贝祖数"><span class="nav-number">2.2.</span> <span class="nav-text">贝祖数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vieta-theorem"><span class="nav-number">2.3.</span> <span class="nav-text">Vieta theorem</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#expand"><span class="nav-number">2.3.1.</span> <span class="nav-text">expand</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#天文"><span class="nav-number">3.</span> <span class="nav-text">天文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发现系外行星的方法"><span class="nav-number">3.1.</span> <span class="nav-text">发现系外行星的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#视像速度法"><span class="nav-number">3.1.1.</span> <span class="nav-text">视像速度法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#凌日法"><span class="nav-number">3.1.2.</span> <span class="nav-text">凌日法</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -404,12 +353,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-count">75</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
