@@ -748,7 +748,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-30 15:44:00" itemprop="dateModified" datetime="2020-11-30T15:44:00+08:00">2020-11-30</time>
+                <time title="Modified: 2020-12-02 19:16:13" itemprop="dateModified" datetime="2020-12-02T19:16:13+08:00">2020-12-02</time>
               </span>
 
           
@@ -871,7 +871,8 @@
 </ul>
 <p>TODO move to advanced</p>
 <h5 id="Link的原理"><a href="#Link的原理" class="headerlink" title="Link的原理"></a>Link的原理</h5><p>环境变量</p>
-<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p>Dockerfile是docker镜像的配置文件</p>
+<h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
 <li>FROM<ul>
 <li><code>FROM &lt;image&gt;</code></li>
 <li>指定基于哪个镜像</li>
@@ -917,7 +918,7 @@
 <li><code>ARG &lt;arg&gt;[=&lt;default&gt;]</code></li>
 <li>构造参数，作用同ENV，但作用域不同<ul>
 <li>ARG仅在Dockerfile中有效(即build中)</li>
-<li>可以使用<code>docker build --build-arg</code>覆盖</li>
+<li>可以使用<code>docker build --build-arg</code>覆盖，可以起到构建时传参的效果</li>
 </ul>
 </li>
 </ul>
@@ -938,7 +939,10 @@
 </li>
 <li>WORKDIR<ul>
 <li><code>WORKDIR &lt;dir&gt;</code></li>
-<li>指定运行时的主目录</li>
+<li>指定运行时的主目录<ul>
+<li>没有时自动创建</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>USER<ul>
@@ -948,6 +952,11 @@
 </li>
 <li>ONBUILD<ul>
 <li>当前镜像构建时不执行，当当前进行作为其他镜像构建时才执行</li>
+</ul>
+</li>
+<li>LABEL<ul>
+<li><code>LABEL [&lt;key&gt;=&lt;value&gt;...]</code></li>
+<li>为docker镜像设置些标签，起区分作用，用<code>docker inspect</code>查看</li>
 </ul>
 </li>
 </ul>
