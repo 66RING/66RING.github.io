@@ -147,6 +147,297 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/05/universe/linux/IPC/TODO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/05/universe/linux/IPC/TODO/" class="post-title-link" itemprop="url">universe/linux/IPC/TODO</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-05 15:40:00" itemprop="dateCreated datePublished" datetime="2020-12-05T15:40:00+08:00">2020-12-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="进程间通信的方式"><a href="#进程间通信的方式" class="headerlink" title="进程间通信的方式"></a>进程间通信的方式</h3><ul>
+<li><input disabled="" type="checkbox"> 消息队列</li>
+<li><input disabled="" type="checkbox"> 共享内存</li>
+<li><input checked="" disabled="" type="checkbox"> 管道</li>
+<li><input disabled="" type="checkbox"> socket</li>
+<li><input disabled="" type="checkbox"> signal</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/05/universe/linux/filesystem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/05/universe/linux/filesystem/" class="post-title-link" itemprop="url">linux文件系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-05 00:00:00 / Modified: 11:40:02" itemprop="dateCreated datePublished" datetime="2020-12-05T00:00:00+08:00">2020-12-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="filesystem"><a href="#filesystem" class="headerlink" title="filesystem"></a>filesystem</h2><h3 id="inode"><a href="#inode" class="headerlink" title="inode"></a>inode</h3><p>inode不存储数据内容，存储元数据信息，如类型、权限、拥有者、时间、链接数、文件内容位置等</p>
+<p>当文件系统(以下简称fs)格式化好后，inode会以数组的方式存储，每个元素是一个inode，inode-index就是对应的下标。fs除了生成inode数组还有生成一个map映射文件名和inode-index，使用文件名去map找对应的idx，就可以在inode数组里找到对应的文件元信息。</p>
+<p>inode中文件内容位置记录的是块的下标</p>
+<p>由于inode数组是有初始化大小的，所有存在inode用完的情况，即在有很多零碎文件的情况下。</p>
+<h4 id="查看inode情况"><a href="#查看inode情况" class="headerlink" title="查看inode情况"></a>查看inode情况</h4><ul>
+<li><code>df -i</code>可以查看inode数组，以及数组元素使用/剩余情况</li>
+<li><code>ls -i</code>可以查看文件夹文件对应的inode-index<ul>
+<li>文件访问的过程中，先找到文件的idx，然后去对应的inode数组中找元数据</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/05/universe/tech_tips/IO_multiplexing_intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/05/universe/tech_tips/IO_multiplexing_intro/" class="post-title-link" itemprop="url">IO多路复用select、poll、epoll介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-05 00:00:00 / Modified: 20:39:16" itemprop="dateCreated datePublished" datetime="2020-12-05T00:00:00+08:00">2020-12-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h2><p>在高并发环境(如网络服务器)中同时处理多个请求的能力就显得尤为重要。很多人可能第一印象就会想到多线程，但是多线程需要进行很多的上下文切换，连接很多时上下文切换的代价就很高。因此采用单线程，但是单线程如何处理并发请求呢？</p>
+<p>得益于DMA，多数据到来时直接内存访问，不会丢失数据，因此可以有后序内容</p>
+<p>以写一个网络服务器为例。每个网络连接在都是以文件描述符(以下简称fd)的形式存在</p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><ul>
+<li><ol>
+<li>准备文件描述符集合fds<ul>
+<li>用一个数组存储已经创建的文件描述符，一个文件描述符可以看作是一个随机数</li>
+<li>找出最大的文件描述符max</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>初始哈(置零)一个字节数组(bitmap)rset来表示哪个文件描述符有数据到来<ul>
+<li>rset默认1024位</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li><strong>将rset拷贝到内核态，由内核判断fd是否有数据</strong> <ul>
+<li>因为判断fd是要在内核态完成的，与其一个个切换然后查询，不然全部传入</li>
+<li>如果没有数据则内核会阻塞，直到有数据到来，将对应的rset置位然后返回</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>再根据rset判断文件描述符集合中是否有数据，读取有数据的描述符</li>
+</ol>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>字节数组大小有限</li>
+<li>每次rset都要清零</li>
+<li>拷贝到内核态任有一定开销</li>
+<li>解阻塞后仍需要遍历fds，O(n)复杂度</li>
+</ul>
+</li>
+</ul>
+<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><p>工作原理与select类似，做了一些改进</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> fd;</span><br><span class="line">    short events;   <span class="comment">// 表示要监听的事件</span></span><br><span class="line">    short revents;  <span class="comment">// 表示有无事件发生</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol>
+<li>准备文件描述符集合pollfds，用<code>pollfd</code>数组储存</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>同select传入内核检查，然后阻塞<ul>
+<li>当有事件发生时<code>revents</code>置位，返回</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>检查<code>revents</code>，有事件时进行处理，然后置零</li>
+</ol>
+</li>
+<li><p>改进</p>
+<ul>
+<li>用pollfd数组存储解决了大小问题</li>
+<li>让revents置零使得可重用，不用每次都全部置零</li>
+</ul>
+</li>
+</ul>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><ul>
+<li><ol>
+<li>创建一个特殊结构epfd用于存储文件描述符集合</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><strong>内核和用户会共享epfd的内存</strong></li>
+</ol>
+</li>
+<li><ol start="3">
+<li>当内核监听到事件发生时，对epfd中的元素进行重排，然后返回事件数<ul>
+<li>因为没有事件发生时会阻塞，所以解阻塞时一定有事件发生，而且事件一定排在前头</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>根据事件数n，遍历前n的事件即可</li>
+</ol>
+</li>
+<li><p>改进</p>
+<ul>
+<li>解决了内核态拷贝的开销</li>
+<li>解决了O(n)复杂度问题</li>
+</ul>
+</li>
+<li><p>应用</p>
+<ul>
+<li>redis</li>
+<li>nginx</li>
+<li>等</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/01/universe/web/https/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -178,7 +469,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-03 14:29:03" itemprop="dateModified" datetime="2020-12-03T14:29:03+08:00">2020-12-03</time>
+                <time title="Modified: 2020-12-05 11:10:11" itemprop="dateModified" datetime="2020-12-05T11:10:11+08:00">2020-12-05</time>
               </span>
 
           
@@ -289,10 +580,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-11-29 00:00:00 / Modified: 21:15:18" itemprop="dateCreated datePublished" datetime="2020-11-29T00:00:00+08:00">2020-11-29</time>
+              <time title="Created: 2020-11-29 00:00:00" itemprop="dateCreated datePublished" datetime="2020-11-29T00:00:00+08:00">2020-11-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-06 20:29:53" itemprop="dateModified" datetime="2020-12-06T20:29:53+08:00">2020-12-06</time>
+              </span>
 
           
 
@@ -332,7 +629,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install audit-libs-devel binutils-devel elfutils-devel java-devel kabi-dw libcap-devel libcap-ng-devel llvm-toolset ncurses-devel newt-devel numactl-devel openssl-devel pciutils-devel python3-devel python3-docutils  xz-devel zlib-devel</span><br></pre></td></tr></table></figure>
 
 <p>这样一来就得到了内核源码了，在<code>~/rpmbuild/BUILD</code>目录下</p>
-<h3 id="自定义内核"><a href="#自定义内核" class="headerlink" title="自定义内核"></a>自定义内核</h3><p>在源码中使用<code>make menuconfig</code>可以进行内核选项的设置。当然也可以载入现成的配置文件。如本机(centos8)的内核配置文件就在<code>/boot/config-$(uname -r)</code>里。拷贝到源码所在目的<code>.config</code>文件，然后可以加载配置</p>
+<h3 id="自定义内核"><a href="#自定义内核" class="headerlink" title="自定义内核"></a>自定义内核</h3><p>在源码中使用<code>make menuconfig</code>可以进行内核选项的设置，然后配置结果会保存在<code>.config</code>文件中，make时会根据<code>.config</code>的结果进行编译。当然也可以载入现成的配置文件。如本机(centos8)的内核配置文件就在<code>/boot/config-$(uname -r)</code>里。拷贝到源码所在目的<code>.config</code>文件，然后选择可以加载配置或者<code>make menuconfig</code>是选择LOAD加载指定文件</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /boot/config-$(uname -r) ./.config</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
 
 <p><code>menuconfig</code>里面可以自己选择也可以使用默认或加载配置。做好你的选择后就可以开始编译了</p>
@@ -787,7 +1084,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-22 16:35:54" itemprop="dateModified" datetime="2020-11-22T16:35:54+08:00">2020-11-22</time>
+                <time title="Modified: 2020-12-05 11:01:16" itemprop="dateModified" datetime="2020-12-05T11:01:16+08:00">2020-12-05</time>
               </span>
 
           
@@ -895,7 +1192,7 @@
 </li>
 <li>CFS完全公平调度器<ul>
 <li>分时间片，每个进程相对公平</li>
-<li><strong>vruntime</strong>，优先级高的进程虚拟时间增长慢，优先级低的进程虚拟时间增长慢<ul>
+<li><strong>vruntime</strong>，优先级高的进程虚拟时间增长慢，优先级低的进程虚拟时间增长快<ul>
 <li>如高优先级进程分到时间片10ms，而虚拟时间1ms</li>
 </ul>
 </li>
@@ -1016,272 +1313,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/15/universe/c/how_cpp_overload/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/15/universe/c/how_cpp_overload/" class="post-title-link" itemprop="url">重载是如何实现的</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-11-15 00:00:00 / Modified: 15:04:40" itemprop="dateCreated datePublished" datetime="2020-11-15T00:00:00+08:00">2020-11-15</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>overload可直译为重载，它是指我们可以定义一些名称相同的方法，通过定义不同的输入参数来区分这些方法，然后再调用时就会根据不同的参数样式，来选择合适的方法执行。</p>
-<p>–百度百科</p>
-</blockquote>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>重载本质上就是编译器根据原函数名和参数类型对原函数名进行改编，以区分接受不同参数的同名函数。</p>
-<p>看下面一段cpp代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.cpp</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    func(<span class="number">1</span>);</span><br><span class="line">    func(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>规定是不能定义两个同名函数的，但是如果是不同参数的同名函数就可以，这就是重载的作用。</p>
-<p>我们通过<code>objdump</code>查看反汇编查看源码来理解其中的原理。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -c a.cpp -o a.o</span><br><span class="line">objump -d a.o</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>gcc -c a.cpp -o a.o</code><ul>
-<li>这条命令用来汇编生成的目标文件<code>.o</code>结尾</li>
-</ul>
-</li>
-<li><code>objdump -d a.o</code><ul>
-<li><code>-d</code>反汇编我们刚才生成目标文件</li>
-</ul>
-</li>
-</ul>
-<p>反汇编后将会看到汇编代码，我们抓取我们的重点：接受不同参数的同名函数</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">0000000000000000 &lt;_Z4funci&gt;:</span><br><span class="line">   0:   55                      push   %rbp</span><br><span class="line">   1:   48 89 e5                mov    %rsp,%rbp</span><br><span class="line">   4:   89 7d fc                mov    %edi,-0x4(%rbp)</span><br><span class="line">   7:   90                      nop</span><br><span class="line">   8:   5d                      pop    %rbp</span><br><span class="line">   9:   c3                      retq</span><br><span class="line"></span><br><span class="line">000000000000000a &lt;_Z4funcii&gt;:</span><br><span class="line">   a:   55                      push   %rbp</span><br><span class="line">   b:   48 89 e5                mov    %rsp,%rbp</span><br><span class="line">   e:   89 7d fc                mov    %edi,-0x4(%rbp)</span><br><span class="line">  11:   89 75 f8                mov    %esi,-0x8(%rbp)</span><br><span class="line">  14:   90                      nop</span><br><span class="line">  15:   5d                      pop    %rbp</span><br><span class="line">  16:   c3                      retq</span><br></pre></td></tr></table></figure>
-
-<p>上面看到我们定义的两个同名函数<code>&lt;_Z4funci&gt;</code>和<code>&lt;_Z4funcii&gt;</code>，仔细一看好似有规律可寻。</p>
-<ul>
-<li><code>_Z</code>后跟的数字表示函数名的长度和函数名，这里是4对应后面<code>func</code>的长度</li>
-<li>在函数名的后面跟的就是参数的类型，这里我们分别是一个整形，和两个整形的函数所以就是<code>i</code>和<code>ii</code></li>
-</ul>
-<p>所以编译器通过这么一个简单的对函数名的改编(name mangling)就可以做到区分接受不同参数的同名函数的功能。</p>
-<p><strong>tips:</strong> 使用<code>c++filt</code>可以查看原函数名。</p>
-<p>看这么一个函数<code>void func(s string){}</code>，反汇编后的函数名为<code>&lt;_Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE&gt;</code>。</p>
-<p>使用<code>c++filt</code>查看其原函数名：<code>c++filt _Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> c++filt _Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE </span></span><br><span class="line">func(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;)</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/15/universe/linux/cron/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/15/universe/linux/cron/" class="post-title-link" itemprop="url">cron程序</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-11-15 00:00:00 / Modified: 20:54:02" itemprop="dateCreated datePublished" datetime="2020-11-15T00:00:00+08:00">2020-11-15</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="cron表达式"><a href="#cron表达式" class="headerlink" title="cron表达式"></a>cron表达式</h2><p>cron程序有如下五个字段：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">分  时  日  月  星期    [年]</span><br><span class="line">* * * * *  &lt;shell script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>语法如下</p>
-<ul>
-<li><code>*</code>，表示<strong>每一</strong><ul>
-<li><code>* 1 * 3 *</code>表示每年三月每天1点的每一分钟执行</li>
-</ul>
-</li>
-<li><code>,</code>，表示并列<ul>
-<li><code>1,3</code>表示1和3都执行</li>
-</ul>
-</li>
-<li><code>-</code>，表示连续<ul>
-<li><code>1-5</code>表示1-5这个区间执行</li>
-</ul>
-</li>
-<li><code>/</code>，表示整除时执行<ul>
-<li><code>*/2</code>表示<code>0 2 4...</code>时执行</li>
-<li><code>n/2</code>左边有数字的情况，表示减去该数字后被整除时执行</li>
-</ul>
-</li>
-<li>简写<ul>
-<li>为提高可读性，有的cron程序支持简写，如Wed表示星期三，Jul表示七月</li>
-<li>W表示工作日</li>
-<li>L表示最后一天</li>
-</ul>
-</li>
-<li>每秒<ul>
-<li>cron程序的字段中并没有提供秒，但是我们可以通过sleep来进行模拟</li>
-<li><code>* * * * * sleep n-1 echo &quot;hello&quot; &gt; &lt;FIlE&gt;</code>，这么的第一个sleep 0秒，第n个sleep n-1秒就可以模拟每秒执行的效果</li>
-</ul>
-</li>
-</ul>
-<h2 id="Linux环境使用"><a href="#Linux环境使用" class="headerlink" title="Linux环境使用"></a>Linux环境使用</h2><p>详见帮助文档</p>
-<ul>
-<li><code>crontab</code><ul>
-<li><code>-e</code>，编辑cron程序</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/15/universe/linux/curl/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/15/universe/linux/curl/" class="post-title-link" itemprop="url">curl基本使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-11-15 00:00:00 / Modified: 21:12:24" itemprop="dateCreated datePublished" datetime="2020-11-15T00:00:00+08:00">2020-11-15</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>等读完curl(如果有时间)，就改成curl all in one</p>
-<p>curl是一个http<strong>请求</strong>工具</p>
-<ul>
-<li><code>curl [options...] &lt;url&gt;</code><ul>
-<li><code>queryString</code></li>
-<li><code>-s | --silent</code>，不显示进度条</li>
-<li><code>-o | --output</code>，指定请求结果输出到的文件</li>
-<li><code>-H | --header</code>，设置请求头</li>
-<li><code>-d | --data</code>，设置请求携带的数据</li>
-<li><code>-X | --request</code>，设置请求使用的方法</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1351,12 +1382,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
