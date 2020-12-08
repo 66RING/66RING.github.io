@@ -2478,7 +2478,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-06 19:44:37" itemprop="dateModified" datetime="2020-12-06T19:44:37+08:00">2020-12-06</time>
+                <time title="Modified: 2020-12-07 20:02:50" itemprop="dateModified" datetime="2020-12-07T20:02:50+08:00">2020-12-07</time>
               </span>
 
           
@@ -2492,7 +2492,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h2><p>函数指针声明如下</p>
+          <h2 id="读取字符串"><a href="#读取字符串" class="headerlink" title="读取字符串"></a>读取字符串</h2><ul>
+<li>读取单个字符<ul>
+<li><code>getchar()</code>是<code>scanf(&quot;%c&quot;, c)</code>的简化版本，除了更简介无其他优势</li>
+<li><code>getche()</code>，没有缓冲区，输入一个字符后立即读取，不等待用户按回车</li>
+<li><code>getch()</code>，没有缓冲区，输入一个字符后立即读取，不等待用户按回车，区别于<code>getche</code>它<strong>没有回显</strong> </li>
+</ul>
+</li>
+<li>读取字符串<ul>
+<li><code>scanf(&quot;%s&quot;, str)</code>遇到空格后停止接收后面的字符串</li>
+<li><code>gets()</code>有缓冲区，可以读取空格，直到回车才会结束</li>
+<li><code>scanf(&quot;%[^\n]&quot;,str)</code>，可以读取带空格的字符串，直到回车才结束</li>
+</ul>
+</li>
+</ul>
+<h2 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h2><p>函数指针声明如下</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">返回值类型(*指针变量名)(参数列表)</span><br><span class="line"><span class="keyword">int</span>(*func_ptr)(<span class="keyword">int</span>, <span class="keyword">int</span>) = &amp; func; <span class="comment">// &amp;可以省略</span></span><br></pre></td></tr></table></figure>
 
 <p>上面声明了一个指向 <em>返回值为int，有两个int类型参数的函数</em> 的指针<code>func_ptr</code>，接下来就可以通过<code>func_ptr(int, int)</code>调用了</p>
@@ -2573,6 +2587,13 @@
 
 <h3 id="定义枚举变量"><a href="#定义枚举变量" class="headerlink" title="定义枚举变量"></a>定义枚举变量</h3><p>枚举变量是值可以用枚举类型中定义的名称赋值(当然也可以用任意int或unsigned int赋值，但这么做就失去了可读性)，如<code>enum day = MON</code>。定义枚举变量有三种方式</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先定义枚举类型再定义枚举变量</span></span><br><span class="line"><span class="keyword">enum</span> DAY</span><br><span class="line">&#123;</span><br><span class="line">    MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125;; </span><br><span class="line"><span class="keyword">enum</span> DAY day;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先定义枚举类型同时定义枚举变量</span></span><br><span class="line"><span class="keyword">enum</span> DAY</span><br><span class="line">&#123;</span><br><span class="line">    MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125; day; </span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略枚举类型名，直接定义枚举变量</span></span><br><span class="line"><span class="keyword">enum</span> </span><br><span class="line">&#123;</span><br><span class="line">    MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125; day;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="goto"><a href="#goto" class="headerlink" title="goto"></a>goto</h2><p>向后跳转</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">goto</span> label;</span><br><span class="line">..       |</span><br><span class="line">..       |</span><br><span class="line">label:  &lt;</span><br><span class="line">    statement;</span><br></pre></td></tr></table></figure>
+
+<p>向前跳转</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">label:         &lt;-|</span><br><span class="line">    statement    |</span><br><span class="line">..               |</span><br><span class="line">..               |</span><br><span class="line"><span class="keyword">goto</span> label;     -</span><br><span class="line">    statement;</span><br></pre></td></tr></table></figure>
 
 
 
