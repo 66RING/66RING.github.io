@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="如何配置linux内核linux内核提供许多自定义的选项 因此你可以根据自己喜好定制的编译linux内核。这里以在centos8中编译centos8的内核为例。 准备内核源码 官方文档  centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在https:&#x2F;&#x2F;vault.centos.org&#x2F;下载对应的内核rpm包。如 1wget https:&#x2F;&#x2F;vaul">
+  <meta name="description" content="如何配置linux内核linux内核提供许多自定义的选项 因此你可以根据自己喜好定制的编译linux内核。这里以在centos8中编译centos8的内核为例。 准备内核源码 官方文档  centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在https:&#x2F;&#x2F;vault.centos.org&#x2F;下载对应的内核rpm包(内核源码版本一定要和系统内核版本一致)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何配置linux内核">
 <meta property="og:url" content="http://yoursite.com/2020/11/29/universe/linux/config_a_kernel/index.html">
 <meta property="og:site_name" content="Ring&#39;s Blog">
-<meta property="og:description" content="如何配置linux内核linux内核提供许多自定义的选项 因此你可以根据自己喜好定制的编译linux内核。这里以在centos8中编译centos8的内核为例。 准备内核源码 官方文档  centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在https:&#x2F;&#x2F;vault.centos.org&#x2F;下载对应的内核rpm包。如 1wget https:&#x2F;&#x2F;vaul">
+<meta property="og:description" content="如何配置linux内核linux内核提供许多自定义的选项 因此你可以根据自己喜好定制的编译linux内核。这里以在centos8中编译centos8的内核为例。 准备内核源码 官方文档  centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在https:&#x2F;&#x2F;vault.centos.org&#x2F;下载对应的内核rpm包(内核源码版本一定要和系统内核版本一致)。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-11-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-12-06T12:29:53.635Z">
+<meta property="article:modified_time" content="2020-12-11T13:06:52.973Z">
 <meta property="article:author" content="Travis TuRing">
 <meta property="article:tag" content="linux, kernel">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-06 20:29:53" itemprop="dateModified" datetime="2020-12-06T20:29:53+08:00">2020-12-06</time>
+                <time title="Modified: 2020-12-11 21:06:52" itemprop="dateModified" datetime="2020-12-11T21:06:52+08:00">2020-12-11</time>
               </span>
 
           
@@ -200,11 +200,11 @@
 <h3 id="准备内核源码"><a href="#准备内核源码" class="headerlink" title="准备内核源码"></a>准备内核源码</h3><blockquote>
 <p><a href="https://wiki.centos.org/zh/HowTos/I_need_the_Kernel_Source" target="_blank" rel="noopener">官方文档</a></p>
 </blockquote>
-<p>centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在<code>https://vault.centos.org/</code>下载对应的内核rpm包。如</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://vault.centos.org/8.1.1911/BaseOS/Source/SPackages/kernel-4.18.0-147.el8.src.rpm</span><br></pre></td></tr></table></figure>
+<p>centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在<code>https://vault.centos.org/</code>下载对应的内核rpm包(<strong>内核源码版本一定要和系统内核版本一致</strong>)。如</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://vault.centos.org/8.3.2011/BaseOS/Source/SPackages/kernel-4.18.0-240.1.1.el8_3.src.rpm</span><br></pre></td></tr></table></figure>
 
 <p>然后使用rpm安装内核源码</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-147.el8.src.rpm</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-240.1.1.el8_3.src.rpm</span><br></pre></td></tr></table></figure>
 
 <p>这里可能会提示</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: user mockbuild does not exist. using root</span><br></pre></td></tr></table></figure>
@@ -213,7 +213,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd mockbuild</span><br></pre></td></tr></table></figure>
 
 <p>然后继续安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-147.el8.src.rpm</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-240.1.1.el8_3.src.rpm</span><br></pre></td></tr></table></figure>
 
 <p>这时会在根目录会得到一个rpmbuild目录。在<code>~/rpmbuild/SPECS</code>中进行<code>rpmbuild</code></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/rpmbuild/SPECS</span><br><span class="line">rpmbuild -bp --target=$(uname -m) kernel.spec</span><br></pre></td></tr></table></figure>
@@ -226,10 +226,13 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /boot/config-$(uname -r) ./.config</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
 
 <p><code>menuconfig</code>里面可以自己选择也可以使用默认或加载配置。做好你的选择后就可以开始编译了</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make -j 8</span><br><span class="line"><span class="comment"># 使用8核进行编译</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make -j 8</span><br><span class="line"><span class="comment"># -j [jobs]</span></span><br><span class="line"><span class="comment"># 指定同时能够运行的jobs(命令)的数量，如果-j选项没给出参数则不限制jobs数量</span></span><br></pre></td></tr></table></figure>
 
-<p>最后编译安装，重启后就是新的内核了</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make modules_install</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>安装模块，linux的模块是动态加载的，故模块安装和内核安装相互独立</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make modules_install</span><br></pre></td></tr></table></figure>
+
+<p>安装内核，重启后就是新的内核了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -328,7 +331,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

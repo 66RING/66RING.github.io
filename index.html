@@ -147,6 +147,165 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/07/universe/linux/insert_CASIO_into_linux_kernel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/07/universe/linux/insert_CASIO_into_linux_kernel/" class="post-title-link" itemprop="url">如何向linux内核插入新的调度器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-07 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-07T00:00:00+08:00">2020-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-11 14:07:03" itemprop="dateModified" datetime="2020-12-11T14:07:03+08:00">2020-12-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="如何向linux内核插入新的调度方法"><a href="#如何向linux内核插入新的调度方法" class="headerlink" title="如何向linux内核插入新的调度方法"></a>如何向linux内核插入新的调度方法</h2><p>这里演示以下如下向linux内核中插入一个线程的调度器：CASIO(<a href="www.TODO.com">源码</a>) </p>
+<p>TODO rebuild <strong>注意</strong> 现代版本的linux内核(4.18)中调度器的入口不再是<code>./kernel/sched.c</code>，而是在<code>core.c</code>，而调度类分离成<code>rt.c</code>，<code>idle.c</code>，<code>fair.c</code>，<code>stop_task.c</code>，<code>deadline.c</code>，对应5个调度器类</p>
+<h3 id="linux进程调度机制"><a href="#linux进程调度机制" class="headerlink" title="linux进程调度机制"></a>linux进程调度机制</h3><ul>
+<li>TODO <ul>
+<li><input disabled="" type="checkbox"> building…</li>
+<li><input disabled="" type="checkbox"> 需要重新整理<ul>
+<li>task重新描述一下</li>
+</ul>
+</li>
+<li>WHAT IS GENERIC SCHEDULER AND CORE SCHEDULER.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>两个调度器，generic scheduler和core scheduler</p>
+<ul>
+<li>TODO 干什么的</li>
+</ul>
+</li>
+<li><p>6种调度策略</p>
+<ul>
+<li>用于对不同类型的进程进行调度<ul>
+<li>比如<code>SCHED_NORMAL</code>和<code>SCHED_BATCH</code>调度普通的非实时进程, <code>SCHED_FIFO</code>和<code>SCHED_RR</code>和<code>SCHED_DEADLINE</code>则采用不同的调度策略调度实时进程, <code>SCHED_IDLE</code>则在系统空闲时调用idle进程</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>5个调度器类</p>
+</li>
+<li><p>generic调度器只器分配作用，不会参与进程的调度，而是完全交给进程的调度类处理</p>
+</li>
+<li><p>调度器不会直接操作进程，而是控制<strong>调度实体</strong></p>
+<ul>
+<li>一个调度实体是<code>sched_entity</code>的一个实例</li>
+<li>这样不单可以调度一个进程，还可以调度更大的抽象，如实现组调度(CPU时间先在组间分配，再在组内分配)</li>
+</ul>
+</li>
+</ul>
+<h4 id="运行队列"><a href="#运行队列" class="headerlink" title="运行队列"></a>运行队列</h4><p>每个CPU都会有单独的一个<code>run_queue</code>，核心调度器<code>core scheduler</code>用它来管理运行中的进程。</p>
+<h4 id="调度类"><a href="#调度类" class="headerlink" title="调度类"></a>调度类</h4><ul>
+<li>调度类决定下一个task是什么<ul>
+<li>内核提供了很多调度策略，而调度类就是以模块化的方式对这些调度策略的实现，调度类之间彼此互不打扰</li>
+<li>每个task都有自己的调度类，而调度类就负责管理它的</li>
+</ul>
+</li>
+<li><code>sched_class</code>结构体中的主要内容<ul>
+<li><code>enqueue_task</code>，新增一个进程到运行队列(这里所谓是队列是一种抽象，可以是更复杂的结构，如CFS的红黑树)<ul>
+<li>时机：进程从<code>sleep</code>装态到<code>runnable</code>状态时</li>
+<li>当进程在运行队列中注册后，其调度实体中<code>on_rq</code>字段置1</li>
+</ul>
+</li>
+<li><code>dequeue_task</code>，将一个进程出运行队列<ul>
+<li>时机：进程从<code>runnable</code>装态到<code>un-runnable</code>状态时，或者由内核引起(如优先级改变时)</li>
+</ul>
+</li>
+<li><code>pick_next_task</code>，让CPU执行一个任务(进程)<ul>
+<li>时机：<code>put_prev_task</code>后，当前任务别切换前</li>
+<li>TODO</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><p>TODO pass 还没详细进行</p>
+<p><code>task_struct</code>优先级由三个元素表示：<code>prio</code>和<code>normal_prio</code>表示进程的动态优先级，<code>static_prio</code>表示静态优先级。<code>rt_priority</code>表示实时进程的优先级。静态优先级在程序运行时就分配了，它可以通过系统调用：<code>nice</code>和<code>sched_setscheduler</code>修改。</p>
+<p><code>normal_priority</code>基于静态优先级和进程的调度策略，因此不同静态优先级会导致进程的不同<code>normal_priority</code>。如实时进程和非实时进程有别。</p>
+<h3 id="写入内核"><a href="#写入内核" class="headerlink" title="写入内核"></a>写入内核</h3><ul>
+<li>改动(都用CASIO标注)<ul>
+<li><code>/kernel/sched/sched.h</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>在配置文件<code>.config</code>中把CASIO调度打开，因为很多地方，如调度器入口文件，需要根据宏<code>CONFIG_SCHED_CASIO_POLICY</code>进行条件编译。在<code>Kconfig</code>中加入CASIO调度器选项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># .config</span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"># CASIO scheduler</span><br><span class="line">#</span><br><span class="line">CONFIG_SCHED_CASIO_POLICY&#x3D;y</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Kconfig</span><br><span class="line"></span><br><span class="line">menu &quot;CASIO scheduler&quot;</span><br><span class="line"></span><br><span class="line">config SCHED_CASIO_POLICY</span><br><span class="line">	bool &quot;CASIO scheduling policy&quot;</span><br><span class="line">	default y</span><br><span class="line">endmenu</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="准备头文件"><a href="#准备头文件" class="headerlink" title="准备头文件"></a>准备头文件</h4><p>准备头文件<code>sched.h</code>，为CASIO正常运行做准备，见patch文件<code>TODO上传patch文件</code></p>
+<p>对于调度类的优先级，可以在头文件<code>sched.h</code>中将最高优先级的调度器类<code>sched_class_highest</code>设为CASIO调度器类。在4.18的内核中默认的<code>sched_class_highest</code>会根据SMP(对称对处理)配置<code>CONFIG_SMP</code>决定</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span>	CONFIG_SCHED_CASIO_POLICY</span></span><br><span class="line">	<span class="meta">#<span class="meta-keyword">define</span> sched_class_highest (&amp;casio_sched_class)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">	<span class="comment">// statements like #define sched_class_highest (&amp;rt_sched_class)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>所属进程的优先级顺序为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop_sched_class -&gt; dl_sched_class -&gt; rt_sched_class -&gt; fair_sched_class -&gt; idle_sched_class</span><br></pre></td></tr></table></figure>
+
+<p>或者，CASIO调度类next是<code>rt_sched_class</code>，修改<code>dl_sched_class</code>的next为CASIO也是可以的</p>
+<p>TODO PASS</p>
+<h4 id="修改逻辑"><a href="#修改逻辑" class="headerlink" title="修改逻辑"></a>修改逻辑</h4><p>CASIO调度类next是<code>rt_sched_class</code>，修改<code>dl_sched_class</code>的next为CASIO也是可以的</p>
+<p>TODO</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h3><p>现在内核的结构变化很大，有些原本直接写在头文件的东西，现在可能仅仅在一小块作用域里。当然我可以无视条件编译直接定义，但是还是规范好吧随便加到个头文件欠妥，因为这个这个内核以后可能还要用来实验。</p>
+<p>CASIO需要这样一个结构，但是新版的内核中不再在头文件中定义这个。当然我仍可以在头文件中写这个，但是为了同一规范，我也应该把它定义在一个特定作用域中，应该在哪呢？这个是结构是干什么的呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> struct sched_param &#123;</span><br><span class="line"> 	int sched_priority;</span><br><span class="line">+</span><br><span class="line">+#ifdef	CONFIG_SCHED_CASIO_POLICY</span><br><span class="line">+	unsigned int	casio_id;</span><br><span class="line">+	unsigned long long deadline;</span><br><span class="line">+#endif</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/05/universe/linux/IPC/TODO/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -588,7 +747,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-06 20:29:53" itemprop="dateModified" datetime="2020-12-06T20:29:53+08:00">2020-12-06</time>
+                <time title="Modified: 2020-12-11 21:06:52" itemprop="dateModified" datetime="2020-12-11T21:06:52+08:00">2020-12-11</time>
               </span>
 
           
@@ -607,11 +766,11 @@
 <h3 id="准备内核源码"><a href="#准备内核源码" class="headerlink" title="准备内核源码"></a>准备内核源码</h3><blockquote>
 <p><a href="https://wiki.centos.org/zh/HowTos/I_need_the_Kernel_Source" target="_blank" rel="noopener">官方文档</a></p>
 </blockquote>
-<p>centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在<code>https://vault.centos.org/</code>下载对应的内核rpm包。如</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://vault.centos.org/8.1.1911/BaseOS/Source/SPackages/kernel-4.18.0-147.el8.src.rpm</span><br></pre></td></tr></table></figure>
+<p>centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在<code>https://vault.centos.org/</code>下载对应的内核rpm包(<strong>内核源码版本一定要和系统内核版本一致</strong>)。如</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://vault.centos.org/8.3.2011/BaseOS/Source/SPackages/kernel-4.18.0-240.1.1.el8_3.src.rpm</span><br></pre></td></tr></table></figure>
 
 <p>然后使用rpm安装内核源码</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-147.el8.src.rpm</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-240.1.1.el8_3.src.rpm</span><br></pre></td></tr></table></figure>
 
 <p>这里可能会提示</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: user mockbuild does not exist. using root</span><br></pre></td></tr></table></figure>
@@ -620,7 +779,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd mockbuild</span><br></pre></td></tr></table></figure>
 
 <p>然后继续安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-147.el8.src.rpm</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-240.1.1.el8_3.src.rpm</span><br></pre></td></tr></table></figure>
 
 <p>这时会在根目录会得到一个rpmbuild目录。在<code>~/rpmbuild/SPECS</code>中进行<code>rpmbuild</code></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/rpmbuild/SPECS</span><br><span class="line">rpmbuild -bp --target=$(uname -m) kernel.spec</span><br></pre></td></tr></table></figure>
@@ -633,10 +792,13 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /boot/config-$(uname -r) ./.config</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
 
 <p><code>menuconfig</code>里面可以自己选择也可以使用默认或加载配置。做好你的选择后就可以开始编译了</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make -j 8</span><br><span class="line"><span class="comment"># 使用8核进行编译</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make -j 8</span><br><span class="line"><span class="comment"># -j [jobs]</span></span><br><span class="line"><span class="comment"># 指定同时能够运行的jobs(命令)的数量，如果-j选项没给出参数则不限制jobs数量</span></span><br></pre></td></tr></table></figure>
 
-<p>最后编译安装，重启后就是新的内核了</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make modules_install</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>安装模块，linux的模块是动态加载的，故模块安装和内核安装相互独立</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make modules_install</span><br></pre></td></tr></table></figure>
+
+<p>安装内核，重启后就是新的内核了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
 
 
       
@@ -1225,94 +1387,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/21/universe/web/ajax_intro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/21/universe/web/ajax_intro/" class="post-title-link" itemprop="url">JQuery, fetch, axios</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-11-21 00:00:00 / Modified: 22:23:38" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+08:00">2020-11-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Ajax简介"><a href="#Ajax简介" class="headerlink" title="Ajax简介"></a>Ajax简介</h2><p>Ajax本质就是用来进行异步的请求提交，那是怎么个异步法？</p>
-<ul>
-<li>同步<ul>
-<li>跳转或新开一个页面</li>
-</ul>
-</li>
-<li>异步<ul>
-<li>页面局部变动，异步请求然后更新局部页面，而不更新整个页面</li>
-</ul>
-</li>
-</ul>
-<p>早期进行异步请求是通过XMLHttpRequest(xhr)，但是这种方法代码非常长，冗余严重。后来JQuery出现<code>$.ajax</code>，对xhr进行封装，又有了后来的fetch和axios。</p>
-<h2 id="JQuery"><a href="#JQuery" class="headerlink" title="JQuery"></a>JQuery</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本请求</span></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">    method: <span class="string">""</span>,</span><br><span class="line">    headers: &#123;<span class="string">"key"</span>: <span class="string">"value"</span>&#125;,</span><br><span class="line">    data: &#123;&#125;,</span><br><span class="line">    url: <span class="string">""</span>,</span><br><span class="line">    success: funciotn()&#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可简写方法</span></span><br><span class="line">$.<span class="keyword">get</span>(url, data, callback)</span><br><span class="line">$.post(url, data, callback)</span><br></pre></td></tr></table></figure>
-
-<p><em>PS</em> :默认使用表单形式提交，需要提交json数据数据时，在headers中设置<code>content-type:application/json</code>，然后data中传入<strong>json字符串</strong></p>
-<h2 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h2><p>现代的浏览器中一般都会自带fetch方法，不需要下载任何js包</p>
-<ul>
-<li>基本用法：<code>fetch(&quot;usl&quot;, {&lt;args&gt;})</code><ul>
-<li>返回一个promise对象</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">"url"</span>, &#123;</span><br><span class="line">    method: <span class="string">""</span>,</span><br><span class="line">    headers: &#123;&#125;,</span><br><span class="line">    body: <span class="string">""</span>,</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;&#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h2><p>不单单可以在前端使用，还可以通过nodejs在后端使用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">axios(&#123;</span><br><span class="line">    url: <span class="string">""</span>,</span><br><span class="line">    method: <span class="string">""</span>,</span><br><span class="line">    headers: &#123;&#125;,</span><br><span class="line">    data: &#123;&#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>同fetch一样返回promise对象，可以通过<code>then()</code>进一步处理</p>
-<p><em>PS</em> :默认使用json形式提交，需要表单提交数据数据时，在headers中设置form的header，如<code>content-type:application/x-www-form-urlencoded</code>，然后data中传入这种形式(查询字符串)的数据<code>&quot;a=123&amp;b=321&quot;</code></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1382,7 +1456,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
