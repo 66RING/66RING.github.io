@@ -628,7 +628,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-05 11:10:11" itemprop="dateModified" datetime="2020-12-05T11:10:11+08:00">2020-12-05</time>
+                <time title="Modified: 2020-12-13 20:10:49" itemprop="dateModified" datetime="2020-12-13T20:10:49+08:00">2020-12-13</time>
               </span>
 
           
@@ -681,7 +681,27 @@
 </li>
 <li>the whole process can be received but can’t be faked</li>
 </ul>
-<p>(we trust browser, browser trust CA)<br>| Roles   | browser(user), web, CA                                                                                             |<br>|———|——————————————————————————————————————–|<br>| web     | through a serise of process to get the CA certification.                                                           |<br>| CA      | signature this web with its private key and broadcast the public key, which we can use it to get infomation of web |<br>| browser | varify the web’s public key with CA’s public key and mark web is safe. (B is B)                                    |</p>
+<p>(we trust browser, browser trust CA) </p>
+<table>
+<thead>
+<tr>
+<th>Roles</th>
+<th>browser(user), web, CA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>web</td>
+<td>through a serise of process to get the CA certification.</td>
+</tr>
+<tr>
+<td>CA</td>
+<td>signature this web with its private key and broadcast the public key, which we can use it to get infomation of web</td>
+</tr>
+<tr>
+<td>browser</td>
+<td>varify the web’s public key with CA’s public key and mark web is safe. (B is B)</td>
+</tr>
+</tbody></table>
 <p>After we know B is B, we can encryption message with B’s public key.And tell B we are going to use PSK.And than we are safe.</p>
 <h3 id="Identity"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</h3><ul>
 <li>authentication<ul>
