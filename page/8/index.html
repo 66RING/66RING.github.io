@@ -248,7 +248,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-13 20:02:04" itemprop="dateModified" datetime="2020-12-13T20:02:04+08:00">2020-12-13</time>
+                <time title="Modified: 2020-12-14 19:27:44" itemprop="dateModified" datetime="2020-12-14T19:27:44+08:00">2020-12-14</time>
               </span>
 
           
@@ -265,25 +265,56 @@
           <h2 id="自然率"><a href="#自然率" class="headerlink" title="自然率"></a>自然率</h2><h3 id="倒霉事的概率"><a href="#倒霉事的概率" class="headerlink" title="倒霉事的概率"></a>倒霉事的概率</h3><h4 id="墨菲定律"><a href="#墨菲定律" class="headerlink" title="墨菲定律"></a>墨菲定律</h4><p>问题引入-&gt;好看的人千篇一律，不好看的人各有千秋</p>
 <ul>
 <li>好看-&gt;五官什么的都是好看的，又好看的概率低，全好看的概率P更低</li>
-<li>不好看-&gt;其中一个不好看就不好看,概率1-P<br>故。</li>
+<li>不好看-&gt;其中一个不好看就不好看,概率1-P</li>
 </ul>
-<h3 id="验证是否正常的方法"><a href="#验证是否正常的方法" class="headerlink" title="验证是否正常的方法"></a>验证是否正常的方法</h3><h4 id="本福特定律"><a href="#本福特定律" class="headerlink" title="本福特定律"></a>本福特定律</h4><p>自然数据的首位数规律</p>
+<p>故。</p>
+<h3 id="验证是否正常的方法"><a href="#验证是否正常的方法" class="headerlink" title="验证是否正常的方法"></a>验证是否正常的方法</h3><h4 id="本福特定律"><a href="#本福特定律" class="headerlink" title="本福特定律"></a>本福特定律</h4><p>对于自然的杂乱无章的数据首位是1的概率并不是$\frac19$，据本福特定律，b进制数中首位是n的概率为$log_{b}\frac{n+1}{n}$</p>
 <ul>
-<li>斐波那契数列符合—&gt;说明近似自然数据</li>
+<li>要求<ul>
+<li>非人为规律<ul>
+<li>如电话号码不满足</li>
+</ul>
+</li>
+<li>跨度要大，跨越几个数量级<ul>
+<li>如人是身高不满足</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>应用<ul>
+<li>视频播放量</li>
+<li>各个国家人口</li>
+<li>国土面积</li>
+<li>GDP</li>
+<li>斐波那契数列<ul>
+<li>说明近似自然数据</li>
+</ul>
+</li>
+<li>放射性元素半衰期</li>
+<li>大选</li>
+</ul>
+</li>
+</ul>
+<p>自然数据的首位数规律</p>
+<ul>
 <li>数据是否造假—&gt;是否符合本福特定律</li>
 </ul>
-<h5 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h5><ul>
-<li>不严谨的证明</li>
+<h5 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h5><p>一个不严谨的证明</p>
+<ul>
 <li>数据的增长量正比于存量 $\frac{\Delta N}{N\Delta t}$ = Constant<ul>
 <li>结论</li>
 <li>$N = N_0e^{ct}$</li>
 <li>$t = C\log_{10}\frac{N_2}{N_1}$</li>
 </ul>
 </li>
-<li>$t_1 = C\log_{10}\frac{2}{1}$ ,$t_1 = C\log_{10}\frac{3}{2}$ …1到2，2到3，3到… <ul>
+<li>$t_1 = C\log_{10}\frac{2}{1}$ ,$t_2 = C\log_{10}\frac{3}{2}$ …1到2，2到3，3到… <ul>
 <li>$t_n = C\log_{10}\frac{n+1}{n}$</li>
 <li>$T = t_1+t_2+…+t_n = C\log_{10}{10} = C$</li>
-<li>$P = \frac{t_1}{T}$ </li>
+<li>$P = \frac{t_n}{T}$ <ul>
+<li>$P_1 = \frac{t_1}{T} = lg2$ </li>
+<li>$P_n = \frac{t_n}{T} = lg\frac{n+1}{n}$ </li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

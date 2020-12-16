@@ -23,17 +23,17 @@
   <meta name="description" content="如何向linux内核插入新的调度方法这里演示以下如下向linux内核中插入一个线程的调度器：CASIO(源码)  TODO rebuild 注意 现代版本的linux内核(4.18)中调度器的入口不再是.&#x2F;kernel&#x2F;sched.c，而是在core.c，而调度类分离成rt.c，idle.c，fair.c，stop_task.c，deadline.c，对应5个调度器类 linux进程调度机制 TO">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何向linux内核插入新的调度器">
-<meta property="og:url" content="http://yoursite.com/2020/12/07/universe/linux/insert_CASIO_into_linux_kernel/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/12/07/universe/linux/project/insert_CASIO_into_linux_kernel/index.html">
 <meta property="og:site_name" content="Ring&#39;s Blog">
 <meta property="og:description" content="如何向linux内核插入新的调度方法这里演示以下如下向linux内核中插入一个线程的调度器：CASIO(源码)  TODO rebuild 注意 现代版本的linux内核(4.18)中调度器的入口不再是.&#x2F;kernel&#x2F;sched.c，而是在core.c，而调度类分离成rt.c，idle.c，fair.c，stop_task.c，deadline.c，对应5个调度器类 linux进程调度机制 TO">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-12-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-12-11T06:07:03.607Z">
+<meta property="article:modified_time" content="2020-12-15T16:41:39.806Z">
 <meta property="article:author" content="Travis TuRing">
 <meta property="article:tag" content="linux, kernel">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/12/07/universe/linux/insert_CASIO_into_linux_kernel/">
+<link rel="canonical" href="http://yoursite.com/2020/12/07/universe/linux/project/insert_CASIO_into_linux_kernel/">
 
 
 <script id="page-configurations">
@@ -151,7 +151,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/07/universe/linux/insert_CASIO_into_linux_kernel/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/07/universe/linux/project/insert_CASIO_into_linux_kernel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-11 14:07:03" itemprop="dateModified" datetime="2020-12-11T14:07:03+08:00">2020-12-11</time>
+                <time title="Modified: 2020-12-16 00:41:39" itemprop="dateModified" datetime="2020-12-16T00:41:39+08:00">2020-12-16</time>
               </span>
 
           
@@ -198,7 +198,8 @@
         <h2 id="如何向linux内核插入新的调度方法"><a href="#如何向linux内核插入新的调度方法" class="headerlink" title="如何向linux内核插入新的调度方法"></a>如何向linux内核插入新的调度方法</h2><p>这里演示以下如下向linux内核中插入一个线程的调度器：CASIO(<a href="www.TODO.com">源码</a>) </p>
 <p>TODO rebuild <strong>注意</strong> 现代版本的linux内核(4.18)中调度器的入口不再是<code>./kernel/sched.c</code>，而是在<code>core.c</code>，而调度类分离成<code>rt.c</code>，<code>idle.c</code>，<code>fair.c</code>，<code>stop_task.c</code>，<code>deadline.c</code>，对应5个调度器类</p>
 <h3 id="linux进程调度机制"><a href="#linux进程调度机制" class="headerlink" title="linux进程调度机制"></a>linux进程调度机制</h3><ul>
-<li>TODO <ul>
+<li><p>TODO </p>
+<ul>
 <li><input disabled="" type="checkbox"> building…</li>
 <li><input disabled="" type="checkbox"> 需要重新整理<ul>
 <li>task重新描述一下</li>
@@ -207,11 +208,34 @@
 <li>WHAT IS GENERIC SCHEDULER AND CORE SCHEDULER.</li>
 </ul>
 </li>
-</ul>
+<li><p>触发调度的时间</p>
 <ul>
+<li><ol>
+<li>进程休眠或者因为某些原因让出CPU</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>分时机制定期检查触发进程调度</li>
+</ol>
+</li>
+</ul>
+</li>
 <li><p>两个调度器，generic scheduler和core scheduler</p>
 <ul>
-<li>TODO 干什么的</li>
+<li>generic scheduler<ul>
+<li>generic scheduler起调度员的作用，负责选取调度类和底层的上下文切换</li>
+<li>generic调度器只器分配作用，不会参与进程的调度，而是完全交给进程的调度类处理</li>
+</ul>
+</li>
+<li>core scheduler<ul>
+<li>核心调度器用来管理运行队列中的活跃的任务，每个CPU都有一个自己的运行队列</li>
+</ul>
+</li>
+<li>调度器不会直接操作进程，而是控制<strong>调度实体</strong><ul>
+<li>一个调度实体是<code>sched_entity</code>的一个实例</li>
+<li>这样不单可以调度一个进程，还可以调度更大的抽象，如实现组调度(CPU时间先在组间分配，再在组内分配)</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>6种调度策略</p>
@@ -224,23 +248,19 @@
 </li>
 <li><p>5个调度器类</p>
 </li>
-<li><p>generic调度器只器分配作用，不会参与进程的调度，而是完全交给进程的调度类处理</p>
-</li>
-<li><p>调度器不会直接操作进程，而是控制<strong>调度实体</strong></p>
+</ul>
+<h4 id="运行队列"><a href="#运行队列" class="headerlink" title="运行队列"></a>运行队列</h4><p>每个CPU都会有单独的一个<code>run_queue</code>，核心调度器<code>core scheduler</code>用它来管理运行中的进程。<code>struct rq</code>有如下重要结构</p>
 <ul>
-<li>一个调度实体是<code>sched_entity</code>的一个实例</li>
-<li>这样不单可以调度一个进程，还可以调度更大的抽象，如实现组调度(CPU时间先在组间分配，再在组内分配)</li>
+<li><code>nr_running</code>，可运行进程的数量</li>
+<li>TODO</li>
 </ul>
-</li>
-</ul>
-<h4 id="运行队列"><a href="#运行队列" class="headerlink" title="运行队列"></a>运行队列</h4><p>每个CPU都会有单独的一个<code>run_queue</code>，核心调度器<code>core scheduler</code>用它来管理运行中的进程。</p>
 <h4 id="调度类"><a href="#调度类" class="headerlink" title="调度类"></a>调度类</h4><ul>
 <li>调度类决定下一个task是什么<ul>
 <li>内核提供了很多调度策略，而调度类就是以模块化的方式对这些调度策略的实现，调度类之间彼此互不打扰</li>
 <li>每个task都有自己的调度类，而调度类就负责管理它的</li>
 </ul>
 </li>
-<li><code>sched_class</code>结构体中的主要内容<ul>
+<li><code>sched_class</code>结构体中有许多函数指针，主要内容有<ul>
 <li><code>enqueue_task</code>，新增一个进程到运行队列(这里所谓是队列是一种抽象，可以是更复杂的结构，如CFS的红黑树)<ul>
 <li>时机：进程从<code>sleep</code>装态到<code>runnable</code>状态时</li>
 <li>当进程在运行队列中注册后，其调度实体中<code>on_rq</code>字段置1</li>
@@ -250,14 +270,33 @@
 <li>时机：进程从<code>runnable</code>装态到<code>un-runnable</code>状态时，或者由内核引起(如优先级改变时)</li>
 </ul>
 </li>
+<li><code>sched_yield</code>，主动触发调度</li>
+<li><code>check_preempt_curr</code>，如果必要的话可以用新唤起的进程抢占当前进程</li>
 <li><code>pick_next_task</code>，让CPU执行一个任务(进程)<ul>
 <li>时机：<code>put_prev_task</code>后，当前任务别切换前</li>
-<li>TODO</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+<h4 id="调度实体"><a href="#调度实体" class="headerlink" title="调度实体"></a>调度实体</h4><p>调度器通过调度实体来操作一个更大的抽象，而不局限于调度进程。有如下重要结构</p>
+<ul>
+<li><code>load</code>，定义每个调度实体的权值，每个调度实体的权值又会影响到运行队列的总权值</li>
+<li><code>run_node</code>，顾名思义，采用红黑树存储每个调度实体</li>
+<li><code>on_rq</code>，指明当前调度的实体是否在运行队列中</li>
+<li><code>sum_exec_runtime</code>，记录进程使用CPU的时间</li>
+<li><code>update_curr</code>，用于计算<code>sum_exec_runtime</code><ul>
+<li>用当前时间减去<code>exec_start</code>后将时间间隔加到sum中，然后用当前时间替换<code>exec_start</code>，开始新的循环</li>
+</ul>
+</li>
+<li><code>vruntime</code>，用于记录虚拟时间</li>
+<li><code>prev_exec_runtime</code>，当进程让出CPU后，当前的<code>sum_exec_runtime</code>会存到<code>prev_exec_runtime</code>中<ul>
+<li><code>prev_exec_runtime</code>，会在之后抢占中用到</li>
+<li>当然<code>sum_exec_runtime</code>仍然保持，没有重置</li>
+</ul>
+</li>
+</ul>
+<p>因为<code>task_struct</code>有<code>sched_entity</code>的实例，所以一个task是一个调度实体，这句话反过来就不成立。</p>
 <h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><p>TODO pass 还没详细进行</p>
 <p><code>task_struct</code>优先级由三个元素表示：<code>prio</code>和<code>normal_prio</code>表示进程的动态优先级，<code>static_prio</code>表示静态优先级。<code>rt_priority</code>表示实时进程的优先级。静态优先级在程序运行时就分配了，它可以通过系统调用：<code>nice</code>和<code>sched_setscheduler</code>修改。</p>
 <p><code>normal_priority</code>基于静态优先级和进程的调度策略，因此不同静态优先级会导致进程的不同<code>normal_priority</code>。如实时进程和非实时进程有别。</p>
@@ -370,7 +409,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何向linux内核插入新的调度方法"><span class="nav-number">1.</span> <span class="nav-text">如何向linux内核插入新的调度方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux进程调度机制"><span class="nav-number">1.1.</span> <span class="nav-text">linux进程调度机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#运行队列"><span class="nav-number">1.1.1.</span> <span class="nav-text">运行队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调度类"><span class="nav-number">1.1.2.</span> <span class="nav-text">调度类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优先级"><span class="nav-number">1.1.3.</span> <span class="nav-text">优先级</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写入内核"><span class="nav-number">1.2.</span> <span class="nav-text">写入内核</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置文件"><span class="nav-number">1.2.1.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备头文件"><span class="nav-number">1.2.2.</span> <span class="nav-text">准备头文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改逻辑"><span class="nav-number">1.2.3.</span> <span class="nav-text">修改逻辑</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题一"><span class="nav-number">2.1.</span> <span class="nav-text">问题一</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何向linux内核插入新的调度方法"><span class="nav-number">1.</span> <span class="nav-text">如何向linux内核插入新的调度方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux进程调度机制"><span class="nav-number">1.1.</span> <span class="nav-text">linux进程调度机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#运行队列"><span class="nav-number">1.1.1.</span> <span class="nav-text">运行队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调度类"><span class="nav-number">1.1.2.</span> <span class="nav-text">调度类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调度实体"><span class="nav-number">1.1.3.</span> <span class="nav-text">调度实体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优先级"><span class="nav-number">1.1.4.</span> <span class="nav-text">优先级</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写入内核"><span class="nav-number">1.2.</span> <span class="nav-text">写入内核</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置文件"><span class="nav-number">1.2.1.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备头文件"><span class="nav-number">1.2.2.</span> <span class="nav-text">准备头文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改逻辑"><span class="nav-number">1.2.3.</span> <span class="nav-text">修改逻辑</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题一"><span class="nav-number">2.1.</span> <span class="nav-text">问题一</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
