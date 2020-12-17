@@ -178,7 +178,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-16 00:41:39" itemprop="dateModified" datetime="2020-12-16T00:41:39+08:00">2020-12-16</time>
+                <time title="Modified: 2020-12-17 10:19:15" itemprop="dateModified" datetime="2020-12-17T10:19:15+08:00">2020-12-17</time>
               </span>
 
           
@@ -293,7 +293,7 @@
 </ul>
 </li>
 </ul>
-<p>因为<code>task_struct</code>有<code>sched_entity</code>的实例，所以一个task是一个调度实体，这句话反过来就不成立。</p>
+<p>因为<code>task_struct</code>中包含<code>sched_entity</code>的实例，所以一个task是一个调度实体，这句话反过来就不成立。</p>
 <h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><p>TODO pass 还没详细进行</p>
 <p><code>task_struct</code>优先级由三个元素表示：<code>prio</code>和<code>normal_prio</code>表示进程的动态优先级，<code>static_prio</code>表示静态优先级。<code>rt_priority</code>表示实时进程的优先级。静态优先级在程序运行时就分配了，它可以通过系统调用：<code>nice</code>和<code>sched_setscheduler</code>修改。</p>
 <p><code>normal_priority</code>基于静态优先级和进程的调度策略，因此不同静态优先级会导致进程的不同<code>normal_priority</code>。如实时进程和非实时进程有别。</p>
