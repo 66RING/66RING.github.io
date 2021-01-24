@@ -147,280 +147,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/24/universe/linux/project_like/about_mmap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/24/universe/linux/project_like/about_mmap/" class="post-title-link" itemprop="url">universe/linux/project_like/about_mmap</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-24 17:05:48" itemprop="dateCreated datePublished" datetime="2021-01-24T17:05:48+08:00">2021-01-24</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-execv函数地址映射流程分析"><a href="#1-execv函数地址映射流程分析" class="headerlink" title="1 execv函数地址映射流程分析"></a>1 execv函数地址映射流程分析</h2><h3 id="1-1-execv如何填充新进程的页表"><a href="#1-1-execv如何填充新进程的页表" class="headerlink" title="1.1 execv如何填充新进程的页表"></a>1.1 execv如何填充新进程的页表</h3><p>execv()中会调用<code>bprm_mm_init</code>函数准备一个<code>linux_binprm</code>结构体，该结构体用于描述新进程的各种信息，最后由<code>search_binary_handler</code>找到对应文件格式的处理程序加载执行<code>load_binary</code>。</p>
-<p>其中<code>bprm_mm_init</code>会执行如下流程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bprm_mm_init()</span><br><span class="line">    bprm-&gt;mm &#x3D; mm_alloc()</span><br><span class="line">        allocate_mm -&gt; kmem_cache_alloc(mm_cachep, GFP_KERNEL) &#x2F;&#x2F; 分配内存</span><br><span class="line">        mm_init  &#x2F;&#x2F; 初始化设置</span><br><span class="line">            mm_pgtables_init(mm) &#x2F;&#x2F; 置0</span><br><span class="line">            mm-&gt;pdg &#x3D; mm_alloc_pgd -&gt; pgd_alloc &#x2F;&#x2F; 申请pgd</span><br><span class="line">            init_new_context()   &#x2F;&#x2F; ???</span><br><span class="line">    __bprm_mm_init()   &#x2F;&#x2F; 初始化bprm：设置bprm-&gt;vma</span><br><span class="line">        vm_area_alloc</span><br><span class="line">            kmem_cache_zalloc (slab?)</span><br><span class="line">            vma_init</span><br><span class="line">        arch_bprm_mm_init</span><br></pre></td></tr></table></figure>
-
-<p><strong>什么时候填充的elf格式到页表?</strong> 虚页都映射到了正确的物理页</p>
-<p>好像pdg探测到都是0，所有应该的demand allocation?但不知道是用的哪个函数</p>
-<h3 id="1-2-execv中内存映射"><a href="#1-2-execv中内存映射" class="headerlink" title="1.2 execv中内存映射"></a>1.2 execv中内存映射</h3><p>内存映射的定义：将磁盘文件系统的文件的某一部分或者块设备文件映射到一段连续的内存，这样一来在内存上的改动就对应的转换成了对文件相应位置的改动。</p>
-<p>?? 文件数据的存储通常不是连续的，内核利用<code>address_space</code>结构，提供一组方法从backing store读取数据，将映射的数据表示成连续的线性取，提供给内存管理子系统。</p>
-<h4 id="1-2-1-vm-area-struct"><a href="#1-2-1-vm-area-struct" class="headerlink" title="1.2.1 vm_area_struct"></a>1.2.1 vm_area_struct</h4><p>linux使用<code>vm_area_struct</code>结构体来描述一段连续的、具有相同访问属性的虚存空间。内核会把相邻的，有相同属性的区域合并。</p>
-<p>一个进程是所有线性区是通过链表或树形结构连接起来的。<code>vm_area_struct</code>结构体中包含区域的起始和终止以及其他相关信息，也包含一个<code>vm_ops</code>指针用于引出所有可以对这个区域进程操作的函数。</p>
-<p>mmap函数的作用就是创建一个新的<code>vm_area_struct</code>，并将其与文件的物理存储联系起来。</p>
-<h4 id="1-2-2-address-space"><a href="#1-2-2-address-space" class="headerlink" title="1.2.2 address_space"></a>1.2.2 address_space</h4><p><code>address_space</code>用来管理文件(<code>struct inode</code>)映射到内存页面(<code>struct page</code>)。对应的<code>address_space_operations</code>就是用来操作该文件映射的操作。</p>
-<p>一个具体的文件在打开后，内核会在内存中为之建立一个<code>struct inode</code>结构，其中的<code>i_mapping</code>域指向一个<code>address_space</code>结构，这样，一个文件就对应一个<code>address_space</code>结构。</p>
-<h4 id="1-2-3-execv中内存映射的流程"><a href="#1-2-3-execv中内存映射的流程" class="headerlink" title="1.2.3 execv中内存映射的流程"></a>1.2.3 execv中内存映射的流程</h4><p>execv会执行<code>do_open_execat</code>打开文件，并填充相应file结构体，其中包括<code>file_operations</code>。然后<code>search_binary_handler</code>寻找对应格式的处理程序。</p>
-<p>对于elf格式的文件，对应的处理程序一般是<code>load_elf_binary</code>，所以<code>load_binary</code>函数指针指向<code>load_elf_binary</code>。在<code>load_elf_binary</code>中会执行<code>elf_map</code>建立与可执行文件的映射，<code>elf_map</code>执行流程如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">elf_map</span><br><span class="line">    vm_mmap-&gt;vm_mmap_pgoff</span><br><span class="line">        do_mmap_pgoff</span><br><span class="line">            do_mmap</span><br><span class="line">                get_unmapped_area  <span class="comment">// obtain addr to map to  </span></span><br><span class="line">            mmap_region</span><br><span class="line">                vm_area_alloc</span><br><span class="line">                    kmem_cache_zalloc   <span class="comment">// 分配vma空间</span></span><br><span class="line">                    vma_init(vma, mm)   <span class="comment">// 初始化vma</span></span><br><span class="line">                        vma-&gt;mm = mm;</span><br><span class="line">                        vma-&gt;vm_ops =  &amp;vm_operations_struct &#123;&#125;;</span><br><span class="line">                call_mmap(file, vma)  <span class="comment">// 调用file-&gt;op-&gt;mmap进行内存映射</span></span><br></pre></td></tr></table></figure>
-
-<p>主要做了这么几个事情：</p>
-<ul>
-<li>1 寻找一段空闲的满足要求的连续虚拟地址</li>
-<li>2 为这个虚拟区分配一个<code>vm_area_struct</code>结构</li>
-<li>3 初始化vma，插入vma链表或树中</li>
-<li>4 通过待映射的文件<code>struct file</code>找到对应的<code>file_operations</code>，调用<code>mmap(file, vma)</code>(在<code>call_mmap</code>这个宏中)建立映射</li>
-</ul>
-<p>不同的环境打开同一文件时会生成不同的<code>struct file</code>实例，如使用的是xfs文件系统，在生成file实例时<code>file_operations</code>用的就是<code>xfs_file_operations</code>类。其中会找到对应<code>address_space</code>中相应的read，write，mmap等方法。</p>
-<p>虚拟区域建立完成并完成了地址映射，但是没有将文件数据拷贝到主存。这是出于效率考虑的demand paging(按需调页)机制。当发现一段地址不存在物理页面时触发缺页异常，执行对应的调页方法(<code>vma-&gt;vm_ops-&gt;fault</code>)。</p>
-<p>该部分处理具体的方法依赖于映射到发生异常的地址空间（<code>address_space</code>中的文件，因此需要调用特定于文件的方法来获取数据。如xfs中该方法指向<code>vm-&gt;vm_ops-&gt;fault=xfs_filemap_fault</code></p>
-<p>再由<code>xfs_filemap_fault</code>执行对应文件的<code>filemap_fault</code>，其中<code>xfs_filemap_fault</code>，主要还是执行通用的<code>filemap_fault</code>方法，主要流程如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">xfs_filemap_fault</span><br><span class="line">    filemap_fault     <span class="comment">// xfs_filemap_fault中主要还是执行通用的filemap_fault</span></span><br><span class="line">        find_get_page <span class="comment">// 申请page，首先会看看有没有缓存</span></span><br><span class="line">        <span class="comment">// 如果没有缓存就先申请缓存</span></span><br><span class="line">            __page_cache_alloc</span><br><span class="line">        vmf-&gt;vma-&gt;vm_file-&gt;f_mapping-&gt;a_ops-&gt;readpage()  <span class="comment">// 使用文件对应的read方法执行映射操作</span></span><br><span class="line">            xfs_vm_readpage  <span class="comment">// readpage指针指向xfs_vm_readpage</span></span><br><span class="line">                mpage_readpage   <span class="comment">// xfs_vm_readpage底层调用mpage_readpage</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/24/universe/linux/project_like/page_cache_and_cache_management/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/24/universe/linux/project_like/page_cache_and_cache_management/" class="post-title-link" itemprop="url">universe/linux/project_like/page_cache_and_cache_management</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-24 17:05:48" itemprop="dateCreated datePublished" datetime="2021-01-24T17:05:48+08:00">2021-01-24</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="page-cache与缓存管理"><a href="#page-cache与缓存管理" class="headerlink" title="page cache与缓存管理"></a>page cache与缓存管理</h1><p>直接从磁盘访问文件会很慢，可以利用空闲的内存来缓存一些磁盘文件的内容，这部分用作缓存磁盘文件的内存就叫做page cache。</p>
-<h2 id="1-execv中的调用page-cache的流程"><a href="#1-execv中的调用page-cache的流程" class="headerlink" title="1 execv中的调用page cache的流程"></a>1 execv中的调用page cache的流程</h2><p>执行<code>read()</code>系统调用后，首先会查看page cache里有没有目标文件的内容，如果有(cache hit)，直接读取;如果没有(cache miss)再从磁盘上读取，放入page cache中。</p>
-<p>由于内存空间有限，page cache也采用按需掉页(demand paging)的策略，需要时再申请内存把文件部分内容缓存起来。</p>
-<p>每打开一个文件都会生成一个代表这个文件的<code>struct file</code>，但是文件的<code>struct inode</code>只有一个，inode才是文件的唯一标识，称为文件的owner。inode中含有指向<code>address_space</code>的指针。<code>address_space-&gt;a_ops</code>中包含一系列page和文件交互的方法，如<code>readapge()</code>，<code>writepage()</code>等。</p>
-<p>TODO: address space</p>
-<p>每个page都有其对应的文件，通过address space找到对应文件的操作方法。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">address_space</span> &#123;</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">inode</span>            *<span class="title">host</span>;</span>          <span class="comment">/* owner: inode, block_device */</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">radix_tree_root</span>  <span class="title">i_pages</span>;</span>        <span class="comment">/* cached pages */</span></span><br><span class="line">        <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">address_space_operations</span> *<span class="title">a_ops</span>;</span>   <span class="comment">/* methods */</span></span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>cache page采用radix tree结构存储，内核中使用<code>find_get_page</code>方法(对<code>pagecache_get_page</code>的封装)查找page。如果没找到就触发page fault，调用<code>__page_cache_alloc</code>在分配page，然后调用<code>add_to_page_cache(_lru)</code>加入page cache中。</p>
-<h2 id="2-页面替换算法-LRU-Least-Recently-Used"><a href="#2-页面替换算法-LRU-Least-Recently-Used" class="headerlink" title="2 页面替换算法:LRU(Least Recently Used)"></a>2 页面替换算法:LRU(Least Recently Used)</h2><p>LRU算法会换出最久未被使用的page。原理：根据程序的局部性原理，如果数据最近被访问过，那么它将来还被访问的概率也很高。</p>
-<p>linux中用两个双向链表来实现lru，一个active list，一个inactive list。如果page最近被使用，则在active list中，否则在inactive list中。两个链表都是采用FIFO原则，最近最久未被使用的page将在列表尾部，因此内存回收时会从inactive list尾部page进行回收。</p>
-<p><code>struct page</code>的page flags使用<code>PG_referenced</code>和<code>PG_active</code>两个标志位来识别页面活跃程度。</p>
-<p><code>PG_active</code>为1表示在active list，<code>PG_active</code>为0表示在inactive list。</p>
-<p>如果active list末尾page的<code>PG_referenced</code>为1则放回表头并置0;如果active list末尾page的<code>PG_referenced</code>为0，则表示最近未被使用，放入inactive list。</p>
-<p>如果inactive list末尾page的<code>PG_referenced</code>为0，表示在inactive list期间中未被使用过，因此回收。如果inactive list中page的<code>PG_referenced</code>为2，则放回active list。如果末尾page的<code>PG_referenced</code>为1，会根据不同机制做不同的策略。</p>
-<h3 id="2-1-lru-cache"><a href="#2-1-lru-cache" class="headerlink" title="2.1 lru cache"></a>2.1 lru cache</h3><p>可见page在active list和inacitve list中的切换是很频繁的，对于lru lock的竞争将会非常激烈。因此引入per-CPU的<strong>lru cache</strong>机制(使用<code>struct pagevec</code>表示)，换入换出的page先放在当前CPU的lru cache中，lru cache积累了<code>PAGEVEC_SIZE</code>个页面，再获取锁，批量转移。</p>
-<h3 id="2-2-refault"><a href="#2-2-refault" class="headerlink" title="2.2 refault"></a>2.2 refault</h3><p>一个page被回收后再次被访问。因此分配这个page是通过page fault产生的，回收后再次被访问到又会触发的的page fault，此时的page fault称为 <strong>refault</strong></p>
-<p>如果inactive list足够长，那一个inactive list中的page在回收前有更多的时间可能被访问到，从而减少refault的发生。</p>
-<p>当然由于内存有限，active list和inacitve list的长度需要权衡。</p>
-<h2 id="3-与kswapd的交互"><a href="#3-与kswapd的交互" class="headerlink" title="3 与kswapd的交互"></a>3 与kswapd的交互</h2><blockquote>
-<p>kswapd是linux中用于页面回收的内核线程。</p>
-</blockquote>
-<p>内存严重不足时需分配内存，需要回收一部分内存(如用来做page cache的内存)后才能分配给新的需求。直接启动的内存回收操作叫做<strong>direct reclaim</strong>。这种模式下内存分配会被内存回收操作阻塞，等待时间长。而很多page的回收往往伴随着IO操作，如dirty页的写回，这就加剧了等待时间。</p>
-<p>kswapd是linux中一种常见的回收机制，可以在内存压力不大时提前回收内存，维持空闲内存余量以减少内存压力大时发生缺页异常的负担。这种方式的内存回收又称为 <strong>background reclaim</strong> </p>
-<p>每个node对应一个kswapd内核线程，用于处理swap out、page cache等的回收和平衡acitve list和inacitve list等的任务。kswapd会调用<code>balance_pgdat()</code>来执行这些操作。</p>
-<p>调用流程如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">balance_pgdat</span><br><span class="line">    kswapd_shrink_node</span><br><span class="line">        shrink_node</span><br><span class="line">            shrink_node_memcg</span><br><span class="line">                shrink_list</span><br><span class="line">                    if(inactive_list_is_low)</span><br><span class="line">                        shrink_active_list</span><br><span class="line">                    else</span><br><span class="line">                        shrink_inactive_list</span><br><span class="line">                            shrink_page_list</span><br></pre></td></tr></table></figure>
-
-<p>当<code>inactive_list_is_low</code>inactive list中的page较少时，<code>shrink_active_list</code>将active list尾端的一些page移动到inactive list。inactive list的长度增加可以减少refault的概率。</p>
-<p>当inactive list中的page不是较少时。<code>shrink_inactive_list()-&gt;shrink_page_list()</code>从inactive list尾部移除选定数目的page进行回收。</p>
-<h3 id="3-1-watermark"><a href="#3-1-watermark" class="headerlink" title="3.1 watermark"></a>3.1 watermark</h3><p>至于什么时候触发kswapd，什么时候触发direct reclaim有watermark决定。</p>
-<p>当空闲内存大于一定值时kswapd就会休眠。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/19/universe/linux/project_like/process_destory/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/19/universe/linux/project_like/process_destory/" class="post-title-link" itemprop="url">universe/linux/project_like/process_destory</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-19 20:37:40" itemprop="dateCreated datePublished" datetime="2021-01-19T20:37:40+08:00">2021-01-19</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="进程退出和销毁过程分析"><a href="#进程退出和销毁过程分析" class="headerlink" title="进程退出和销毁过程分析"></a>进程退出和销毁过程分析</h1><p>结束一个进程的生命可以分为两个步骤：进程退出和进程销毁。进程退出主要是释放进程的资源，使进程称为僵死(<code>TASK_ZOMBIE</code>)状态;进程销毁主要是通过父进程，释放僵死进程的各种信息</p>
-<p>当前进程被设为<code>TASK_ZOMBIE</code>僵死状态后会向其父进程发生SIGCHLD信号，父进程收到SIGCHLD信号后父进程会销毁僵死状态的子进程。</p>
-<p>父进程通过调用<code>wait()</code>或<code>waitpid()</code>函数等待SIGCHLD处理僵死进程</p>
-<h2 id="1-进程退出"><a href="#1-进程退出" class="headerlink" title="1 进程退出"></a>1 进程退出</h2><p>进程退出通常的通过系统调用执行<code>do_exit</code>函数。简单的说<code>do_exit</code>主要执行如下流程：</p>
-<ul>
-<li>设置和重置标志位<ul>
-<li>如设置退出码<code>exit_code</code>，设置进程状态<code>TASK_ZOMBIE</code>，设置退出状态<code>PF_EXITING</code>等</li>
-</ul>
-</li>
-<li>释放资源<ul>
-<li>释放内存，信号量，打开的文件的描述符等</li>
-</ul>
-</li>
-<li>给子进程找养父<ul>
-<li>因为进程的销毁依赖于父进程，没有养父的孤儿进程将会造成资源浪费</li>
-</ul>
-</li>
-</ul>
-<p>主要会释放如下资源：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">exit_signals(); <span class="comment">// sets PF_EXITING</span></span><br><span class="line">exit_mm();      <span class="comment">// 释放内存和描述符 ?我不太明白mm和一个数组的内存的关系</span></span><br><span class="line">exit_sem();     <span class="comment">// 释放信号量</span></span><br><span class="line">exit_shm();</span><br><span class="line">exit_files();   <span class="comment">// 释放打开的描述符</span></span><br><span class="line">exit_fs();      <span class="comment">// 释放文件系统数据</span></span><br><span class="line">exit_task_namespace();</span><br><span class="line">exit_task_work();</span><br><span class="line">exit_thread();</span><br></pre></td></tr></table></figure>
-
-<p>最后通过<code>exit_notify()</code>向父进程发出SIGCHLD信号销毁进程，然后执行<code>do_task_dead()</code>调用<code>schedule()</code>触发调度，进程终止。</p>
-<p>下面主要分析进程退出的内存释放过程</p>
-<h3 id="1-1-退出过程的内存管理"><a href="#1-1-退出过程的内存管理" class="headerlink" title="1.1 退出过程的内存管理"></a>1.1 退出过程的内存管理</h3><p>进程的内存释放主要在<code>exit_mm</code>中的执行，其执行流程如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mm_release</span><br><span class="line">    deactivate_mm  <span class="comment">// 删除缓存的寄存器状态</span></span><br><span class="line">mmput()            <span class="comment">// 真正释放内存的函数</span></span><br><span class="line">    exit_mmap()</span><br><span class="line">        arch_exit_mmap</span><br><span class="line">        free_pgtables</span><br><span class="line">    mm_put_huge_zero_page()</span><br><span class="line">    mmdrop() -&gt; __mmdrop()  <span class="comment">// 释放内存描述符和pdg表</span></span><br><span class="line">        mm_free_pgd() -&gt; pgd_free</span><br><span class="line">        free_mm() -&gt; kmem_cache_free</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="2-进程销毁"><a href="#2-进程销毁" class="headerlink" title="2 进程销毁"></a>2 进程销毁</h2><p>进程终止后会处于僵死状态，需要父进程执行wait操作来回收进程描述符以及内核栈所占内存，同时把僵死进程从相关的各个表上移除。处理函数为<code>release_task</code></p>
-<p><code>release_task</code>主要有如下过程：</p>
-<ul>
-<li>递减进程数：<code>atomic_dec(&amp;p-&gt;user-&gt;processes)</code></li>
-<li>?如果进程被追踪，调用<code>ptrace_release_task</code>，把它从调试程序的<code>ptrace_children</code>链表中删除<ul>
-<li>底层调用<code>__ptrace_unlink</code></li>
-</ul>
-</li>
-<li><code>__exit_signal(p)</code>，删除所有挂起信号并释放<code>signal_struct</code>描述符</li>
-<li><code>__unhash_process</code></li>
-<li>调用<code>sched_exit()</code>函数来调整父进程的时间片</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/19/universe/linux/MM/TODO:buddy_system/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -488,6 +214,102 @@
 <p>当然，每次检查内存是否可以合并也会造成额外开销。</p>
 <h2 id="Buddy系统实现"><a href="#Buddy系统实现" class="headerlink" title="Buddy系统实现"></a>Buddy系统实现</h2><p>TODO</p>
 <p><a href="https://zhuanlan.zhihu.com/p/105589621" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/105589621</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/" class="post-title-link" itemprop="url">execv中的缓存管理分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-19 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-19T00:00:00+08:00">2021-01-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-24 17:13:24" itemprop="dateModified" datetime="2021-01-24T17:13:24+08:00">2021-01-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="page-cache与缓存管理"><a href="#page-cache与缓存管理" class="headerlink" title="page cache与缓存管理"></a>page cache与缓存管理</h1><p>直接从磁盘访问文件会很慢，可以利用空闲的内存来缓存一些磁盘文件的内容，这部分用作缓存磁盘文件的内存就叫做page cache。</p>
+<h2 id="1-execv中的调用page-cache的流程"><a href="#1-execv中的调用page-cache的流程" class="headerlink" title="1 execv中的调用page cache的流程"></a>1 execv中的调用page cache的流程</h2><p>执行<code>read()</code>系统调用后，首先会查看page cache里有没有目标文件的内容，如果有(cache hit)，直接读取;如果没有(cache miss)再从磁盘上读取，放入page cache中。</p>
+<p>由于内存空间有限，page cache也采用按需掉页(demand paging)的策略，需要时再申请内存把文件部分内容缓存起来。</p>
+<p>每打开一个文件都会生成一个代表这个文件的<code>struct file</code>，但是文件的<code>struct inode</code>只有一个，inode才是文件的唯一标识，称为文件的owner。inode中含有指向<code>address_space</code>的指针。<code>address_space-&gt;a_ops</code>中包含一系列page和文件交互的方法，如<code>readapge()</code>，<code>writepage()</code>等。</p>
+<p>TODO: address space</p>
+<p>每个page都有其对应的文件，通过address space找到对应文件的操作方法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">address_space</span> &#123;</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">inode</span>            *<span class="title">host</span>;</span>          <span class="comment">/* owner: inode, block_device */</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">radix_tree_root</span>  <span class="title">i_pages</span>;</span>        <span class="comment">/* cached pages */</span></span><br><span class="line">        <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">address_space_operations</span> *<span class="title">a_ops</span>;</span>   <span class="comment">/* methods */</span></span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>cache page采用radix tree结构存储，内核中使用<code>find_get_page</code>方法(对<code>pagecache_get_page</code>的封装)查找page。如果没找到就触发page fault，调用<code>__page_cache_alloc</code>在分配page，然后调用<code>add_to_page_cache(_lru)</code>加入page cache中。</p>
+<h2 id="2-页面替换算法-LRU-Least-Recently-Used"><a href="#2-页面替换算法-LRU-Least-Recently-Used" class="headerlink" title="2 页面替换算法:LRU(Least Recently Used)"></a>2 页面替换算法:LRU(Least Recently Used)</h2><p>LRU算法会换出最久未被使用的page。原理：根据程序的局部性原理，如果数据最近被访问过，那么它将来还被访问的概率也很高。</p>
+<p>linux中用两个双向链表来实现lru，一个active list，一个inactive list。如果page最近被使用，则在active list中，否则在inactive list中。两个链表都是采用FIFO原则，最近最久未被使用的page将在列表尾部，因此内存回收时会从inactive list尾部page进行回收。</p>
+<p><code>struct page</code>的page flags使用<code>PG_referenced</code>和<code>PG_active</code>两个标志位来识别页面活跃程度。</p>
+<p><code>PG_active</code>为1表示在active list，<code>PG_active</code>为0表示在inactive list。</p>
+<p>如果active list末尾page的<code>PG_referenced</code>为1则放回表头并置0;如果active list末尾page的<code>PG_referenced</code>为0，则表示最近未被使用，放入inactive list。</p>
+<p>如果inactive list末尾page的<code>PG_referenced</code>为0，表示在inactive list期间中未被使用过，因此回收。如果inactive list中page的<code>PG_referenced</code>为2，则放回active list。如果末尾page的<code>PG_referenced</code>为1，会根据不同机制做不同的策略。</p>
+<h3 id="2-1-lru-cache"><a href="#2-1-lru-cache" class="headerlink" title="2.1 lru cache"></a>2.1 lru cache</h3><p>可见page在active list和inacitve list中的切换是很频繁的，对于lru lock的竞争将会非常激烈。因此引入per-CPU的<strong>lru cache</strong>机制(使用<code>struct pagevec</code>表示)，换入换出的page先放在当前CPU的lru cache中，lru cache积累了<code>PAGEVEC_SIZE</code>个页面，再获取锁，批量转移。</p>
+<h3 id="2-2-refault"><a href="#2-2-refault" class="headerlink" title="2.2 refault"></a>2.2 refault</h3><p>一个page被回收后再次被访问。因此分配这个page是通过page fault产生的，回收后再次被访问到又会触发的的page fault，此时的page fault称为 <strong>refault</strong></p>
+<p>如果inactive list足够长，那一个inactive list中的page在回收前有更多的时间可能被访问到，从而减少refault的发生。</p>
+<p>当然由于内存有限，active list和inacitve list的长度需要权衡。</p>
+<h2 id="3-与kswapd的交互"><a href="#3-与kswapd的交互" class="headerlink" title="3 与kswapd的交互"></a>3 与kswapd的交互</h2><blockquote>
+<p>kswapd是linux中用于页面回收的内核线程。</p>
+</blockquote>
+<p>内存严重不足时需分配内存，需要回收一部分内存(如用来做page cache的内存)后才能分配给新的需求。直接启动的内存回收操作叫做<strong>direct reclaim</strong>。这种模式下内存分配会被内存回收操作阻塞，等待时间长。而很多page的回收往往伴随着IO操作，如dirty页的写回，这就加剧了等待时间。</p>
+<p>kswapd是linux中一种常见的回收机制，可以在内存压力不大时提前回收内存，维持空闲内存余量以减少内存压力大时发生缺页异常的负担。这种方式的内存回收又称为 <strong>background reclaim</strong> </p>
+<p>每个node对应一个kswapd内核线程，用于处理swap out、page cache等的回收和平衡acitve list和inacitve list等的任务。kswapd会调用<code>balance_pgdat()</code>来执行这些操作。</p>
+<p>调用流程如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">balance_pgdat</span><br><span class="line">    kswapd_shrink_node</span><br><span class="line">        shrink_node</span><br><span class="line">            shrink_node_memcg</span><br><span class="line">                shrink_list</span><br><span class="line">                    if(inactive_list_is_low)</span><br><span class="line">                        shrink_active_list</span><br><span class="line">                    else</span><br><span class="line">                        shrink_inactive_list</span><br><span class="line">                            shrink_page_list</span><br></pre></td></tr></table></figure>
+
+<p>当<code>inactive_list_is_low</code>inactive list中的page较少时，<code>shrink_active_list</code>将active list尾端的一些page移动到inactive list。inactive list的长度增加可以减少refault的概率。</p>
+<p>当inactive list中的page不是较少时。<code>shrink_inactive_list()-&gt;shrink_page_list()</code>从inactive list尾部移除选定数目的page进行回收。</p>
+<h3 id="3-1-watermark"><a href="#3-1-watermark" class="headerlink" title="3.1 watermark"></a>3.1 watermark</h3><p>至于什么时候触发kswapd，什么时候触发direct reclaim有watermark决定。</p>
+<p>当空闲内存大于一定值时kswapd就会休眠。</p>
 
       
     </div>
@@ -617,6 +439,102 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/18/universe/linux/project_like/about_mmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/18/universe/linux/project_like/about_mmap/" class="post-title-link" itemprop="url">execv中地址地址映射流程分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-18 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-18T00:00:00+08:00">2021-01-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-24 17:12:55" itemprop="dateModified" datetime="2021-01-24T17:12:55+08:00">2021-01-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-execv函数地址映射流程分析"><a href="#1-execv函数地址映射流程分析" class="headerlink" title="1 execv函数地址映射流程分析"></a>1 execv函数地址映射流程分析</h2><h3 id="1-1-execv如何填充新进程的页表"><a href="#1-1-execv如何填充新进程的页表" class="headerlink" title="1.1 execv如何填充新进程的页表"></a>1.1 execv如何填充新进程的页表</h3><p>execv()中会调用<code>bprm_mm_init</code>函数准备一个<code>linux_binprm</code>结构体，该结构体用于描述新进程的各种信息，最后由<code>search_binary_handler</code>找到对应文件格式的处理程序加载执行<code>load_binary</code>。</p>
+<p>其中<code>bprm_mm_init</code>会执行如下流程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bprm_mm_init()</span><br><span class="line">    bprm-&gt;mm &#x3D; mm_alloc()</span><br><span class="line">        allocate_mm -&gt; kmem_cache_alloc(mm_cachep, GFP_KERNEL) &#x2F;&#x2F; 分配内存</span><br><span class="line">        mm_init  &#x2F;&#x2F; 初始化设置</span><br><span class="line">            mm_pgtables_init(mm) &#x2F;&#x2F; 置0</span><br><span class="line">            mm-&gt;pdg &#x3D; mm_alloc_pgd -&gt; pgd_alloc &#x2F;&#x2F; 申请pgd</span><br><span class="line">            init_new_context()   &#x2F;&#x2F; ???</span><br><span class="line">    __bprm_mm_init()   &#x2F;&#x2F; 初始化bprm：设置bprm-&gt;vma</span><br><span class="line">        vm_area_alloc</span><br><span class="line">            kmem_cache_zalloc (slab?)</span><br><span class="line">            vma_init</span><br><span class="line">        arch_bprm_mm_init</span><br></pre></td></tr></table></figure>
+
+<p><strong>什么时候填充的elf格式到页表?</strong> 虚页都映射到了正确的物理页</p>
+<p>好像pdg探测到都是0，所有应该的demand allocation?但不知道是用的哪个函数</p>
+<h3 id="1-2-execv中内存映射"><a href="#1-2-execv中内存映射" class="headerlink" title="1.2 execv中内存映射"></a>1.2 execv中内存映射</h3><p>内存映射的定义：将磁盘文件系统的文件的某一部分或者块设备文件映射到一段连续的内存，这样一来在内存上的改动就对应的转换成了对文件相应位置的改动。</p>
+<p>?? 文件数据的存储通常不是连续的，内核利用<code>address_space</code>结构，提供一组方法从backing store读取数据，将映射的数据表示成连续的线性取，提供给内存管理子系统。</p>
+<h4 id="1-2-1-vm-area-struct"><a href="#1-2-1-vm-area-struct" class="headerlink" title="1.2.1 vm_area_struct"></a>1.2.1 vm_area_struct</h4><p>linux使用<code>vm_area_struct</code>结构体来描述一段连续的、具有相同访问属性的虚存空间。内核会把相邻的，有相同属性的区域合并。</p>
+<p>一个进程是所有线性区是通过链表或树形结构连接起来的。<code>vm_area_struct</code>结构体中包含区域的起始和终止以及其他相关信息，也包含一个<code>vm_ops</code>指针用于引出所有可以对这个区域进程操作的函数。</p>
+<p>mmap函数的作用就是创建一个新的<code>vm_area_struct</code>，并将其与文件的物理存储联系起来。</p>
+<h4 id="1-2-2-address-space"><a href="#1-2-2-address-space" class="headerlink" title="1.2.2 address_space"></a>1.2.2 address_space</h4><p><code>address_space</code>用来管理文件(<code>struct inode</code>)映射到内存页面(<code>struct page</code>)。对应的<code>address_space_operations</code>就是用来操作该文件映射的操作。</p>
+<p>一个具体的文件在打开后，内核会在内存中为之建立一个<code>struct inode</code>结构，其中的<code>i_mapping</code>域指向一个<code>address_space</code>结构，这样，一个文件就对应一个<code>address_space</code>结构。</p>
+<h4 id="1-2-3-execv中内存映射的流程"><a href="#1-2-3-execv中内存映射的流程" class="headerlink" title="1.2.3 execv中内存映射的流程"></a>1.2.3 execv中内存映射的流程</h4><p>execv会执行<code>do_open_execat</code>打开文件，并填充相应file结构体，其中包括<code>file_operations</code>。然后<code>search_binary_handler</code>寻找对应格式的处理程序。</p>
+<p>对于elf格式的文件，对应的处理程序一般是<code>load_elf_binary</code>，所以<code>load_binary</code>函数指针指向<code>load_elf_binary</code>。在<code>load_elf_binary</code>中会执行<code>elf_map</code>建立与可执行文件的映射，<code>elf_map</code>执行流程如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">elf_map</span><br><span class="line">    vm_mmap-&gt;vm_mmap_pgoff</span><br><span class="line">        do_mmap_pgoff</span><br><span class="line">            do_mmap</span><br><span class="line">                get_unmapped_area  <span class="comment">// obtain addr to map to  </span></span><br><span class="line">            mmap_region</span><br><span class="line">                vm_area_alloc</span><br><span class="line">                    kmem_cache_zalloc   <span class="comment">// 分配vma空间</span></span><br><span class="line">                    vma_init(vma, mm)   <span class="comment">// 初始化vma</span></span><br><span class="line">                        vma-&gt;mm = mm;</span><br><span class="line">                        vma-&gt;vm_ops =  &amp;vm_operations_struct &#123;&#125;;</span><br><span class="line">                call_mmap(file, vma)  <span class="comment">// 调用file-&gt;op-&gt;mmap进行内存映射</span></span><br></pre></td></tr></table></figure>
+
+<p>主要做了这么几个事情：</p>
+<ul>
+<li>1 寻找一段空闲的满足要求的连续虚拟地址</li>
+<li>2 为这个虚拟区分配一个<code>vm_area_struct</code>结构</li>
+<li>3 初始化vma，插入vma链表或树中</li>
+<li>4 通过待映射的文件<code>struct file</code>找到对应的<code>file_operations</code>，调用<code>mmap(file, vma)</code>(在<code>call_mmap</code>这个宏中)建立映射</li>
+</ul>
+<p>不同的环境打开同一文件时会生成不同的<code>struct file</code>实例，如使用的是xfs文件系统，在生成file实例时<code>file_operations</code>用的就是<code>xfs_file_operations</code>类。其中会找到对应<code>address_space</code>中相应的read，write，mmap等方法。</p>
+<p>虚拟区域建立完成并完成了地址映射，但是没有将文件数据拷贝到主存。这是出于效率考虑的demand paging(按需调页)机制。当发现一段地址不存在物理页面时触发缺页异常，执行对应的调页方法(<code>vma-&gt;vm_ops-&gt;fault</code>)。</p>
+<p>该部分处理具体的方法依赖于映射到发生异常的地址空间（<code>address_space</code>中的文件，因此需要调用特定于文件的方法来获取数据。如xfs中该方法指向<code>vm-&gt;vm_ops-&gt;fault=xfs_filemap_fault</code></p>
+<p>再由<code>xfs_filemap_fault</code>执行对应文件的<code>filemap_fault</code>，其中<code>xfs_filemap_fault</code>，主要还是执行通用的<code>filemap_fault</code>方法，主要流程如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">xfs_filemap_fault</span><br><span class="line">    filemap_fault     <span class="comment">// xfs_filemap_fault中主要还是执行通用的filemap_fault</span></span><br><span class="line">        find_get_page <span class="comment">// 申请page，首先会看看有没有缓存</span></span><br><span class="line">        <span class="comment">// 如果没有缓存就先申请缓存</span></span><br><span class="line">            __page_cache_alloc</span><br><span class="line">        vmf-&gt;vma-&gt;vm_file-&gt;f_mapping-&gt;a_ops-&gt;readpage()  <span class="comment">// 使用文件对应的read方法执行映射操作</span></span><br><span class="line">            xfs_vm_readpage  <span class="comment">// readpage指针指向xfs_vm_readpage</span></span><br><span class="line">                mpage_readpage   <span class="comment">// xfs_vm_readpage底层调用mpage_readpage</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/17/universe/operate/docker_the_underlying_technology/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -672,6 +590,109 @@
 <p>查看系统已有的控制组<code>ls /sys/fs/cgroup</code>。使用<code>cgcreate</code>创建一个自己的控制组(需要<code>libcgroup-tools</code>)，如<code>cg_test</code>。设置某个限制<code>echo 30000 &gt; ./cpu.cfs_quota_us</code>。然后将进程放入该组<code>cgclassify -g &lt;cgroup_name&gt; &lt;pid&gt;</code></p>
 <h3 id="Union-file-system"><a href="#Union-file-system" class="headerlink" title="Union file system"></a>Union file system</h3><p>Union file systems, or UnionFS, are file systems that operate by creating layers, making them very lightweight and fast. Docker Engine uses UnionFS to provide the building blocks for containers. Docker Engine can use multiple UnionFS variants, including AUFS, btrfs, vfs, and DeviceMapper.</p>
 <h3 id="Container-format"><a href="#Container-format" class="headerlink" title="Container format"></a>Container format</h3><p>docker将上述namespaces, cgroups, UnionFS组成称为container format。默认的container format是<code>libcontainer</code></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/15/universe/linux/project_like/process_destory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/15/universe/linux/project_like/process_destory/" class="post-title-link" itemprop="url">进程退出和销毁过程分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-15 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-15T00:00:00+08:00">2021-01-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-24 17:14:04" itemprop="dateModified" datetime="2021-01-24T17:14:04+08:00">2021-01-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="进程退出和销毁过程分析"><a href="#进程退出和销毁过程分析" class="headerlink" title="进程退出和销毁过程分析"></a>进程退出和销毁过程分析</h1><p>结束一个进程的生命可以分为两个步骤：进程退出和进程销毁。进程退出主要是释放进程的资源，使进程称为僵死(<code>TASK_ZOMBIE</code>)状态;进程销毁主要是通过父进程，释放僵死进程的各种信息</p>
+<p>当前进程被设为<code>TASK_ZOMBIE</code>僵死状态后会向其父进程发生SIGCHLD信号，父进程收到SIGCHLD信号后父进程会销毁僵死状态的子进程。</p>
+<p>父进程通过调用<code>wait()</code>或<code>waitpid()</code>函数等待SIGCHLD处理僵死进程</p>
+<h2 id="1-进程退出"><a href="#1-进程退出" class="headerlink" title="1 进程退出"></a>1 进程退出</h2><p>进程退出通常的通过系统调用执行<code>do_exit</code>函数。简单的说<code>do_exit</code>主要执行如下流程：</p>
+<ul>
+<li>设置和重置标志位<ul>
+<li>如设置退出码<code>exit_code</code>，设置进程状态<code>TASK_ZOMBIE</code>，设置退出状态<code>PF_EXITING</code>等</li>
+</ul>
+</li>
+<li>释放资源<ul>
+<li>释放内存，信号量，打开的文件的描述符等</li>
+</ul>
+</li>
+<li>给子进程找养父<ul>
+<li>因为进程的销毁依赖于父进程，没有养父的孤儿进程将会造成资源浪费</li>
+</ul>
+</li>
+</ul>
+<p>主要会释放如下资源：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">exit_signals(); <span class="comment">// sets PF_EXITING</span></span><br><span class="line">exit_mm();      <span class="comment">// 释放内存和描述符 ?我不太明白mm和一个数组的内存的关系</span></span><br><span class="line">exit_sem();     <span class="comment">// 释放信号量</span></span><br><span class="line">exit_shm();</span><br><span class="line">exit_files();   <span class="comment">// 释放打开的描述符</span></span><br><span class="line">exit_fs();      <span class="comment">// 释放文件系统数据</span></span><br><span class="line">exit_task_namespace();</span><br><span class="line">exit_task_work();</span><br><span class="line">exit_thread();</span><br></pre></td></tr></table></figure>
+
+<p>最后通过<code>exit_notify()</code>向父进程发出SIGCHLD信号销毁进程，然后执行<code>do_task_dead()</code>调用<code>schedule()</code>触发调度，进程终止。</p>
+<p>下面主要分析进程退出的内存释放过程</p>
+<h3 id="1-1-退出过程的内存管理"><a href="#1-1-退出过程的内存管理" class="headerlink" title="1.1 退出过程的内存管理"></a>1.1 退出过程的内存管理</h3><p>进程的内存释放主要在<code>exit_mm</code>中的执行，其执行流程如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mm_release</span><br><span class="line">    deactivate_mm  <span class="comment">// 删除缓存的寄存器状态</span></span><br><span class="line">mmput()            <span class="comment">// 真正释放内存的函数</span></span><br><span class="line">    exit_mmap()</span><br><span class="line">        arch_exit_mmap</span><br><span class="line">        free_pgtables</span><br><span class="line">    mm_put_huge_zero_page()</span><br><span class="line">    mmdrop() -&gt; __mmdrop()  <span class="comment">// 释放内存描述符和pdg表</span></span><br><span class="line">        mm_free_pgd() -&gt; pgd_free</span><br><span class="line">        free_mm() -&gt; kmem_cache_free</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-进程销毁"><a href="#2-进程销毁" class="headerlink" title="2 进程销毁"></a>2 进程销毁</h2><p>进程终止后会处于僵死状态，需要父进程执行wait操作来回收进程描述符以及内核栈所占内存，同时把僵死进程从相关的各个表上移除。处理函数为<code>release_task</code></p>
+<p><code>release_task</code>主要有如下过程：</p>
+<ul>
+<li>递减进程数：<code>atomic_dec(&amp;p-&gt;user-&gt;processes)</code></li>
+<li>?如果进程被追踪，调用<code>ptrace_release_task</code>，把它从调试程序的<code>ptrace_children</code>链表中删除<ul>
+<li>底层调用<code>__ptrace_unlink</code></li>
+</ul>
+</li>
+<li><code>__exit_signal(p)</code>，删除所有挂起信号并释放<code>signal_struct</code>描述符</li>
+<li><code>__unhash_process</code></li>
+<li>调用<code>sched_exit()</code>函数来调整父进程的时间片</li>
+</ul>
 
       
     </div>
@@ -1363,7 +1384,7 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

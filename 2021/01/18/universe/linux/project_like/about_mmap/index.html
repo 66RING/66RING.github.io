@@ -22,17 +22,18 @@
 
   <meta name="description" content="1 execv函数地址映射流程分析1.1 execv如何填充新进程的页表execv()中会调用bprm_mm_init函数准备一个linux_binprm结构体，该结构体用于描述新进程的各种信息，最后由search_binary_handler找到对应文件格式的处理程序加载执行load_binary。 其中bprm_mm_init会执行如下流程： 123456789101112bprm_mm_in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="universe&#x2F;linux&#x2F;project_like&#x2F;about_mmap">
-<meta property="og:url" content="http://yoursite.com/2021/01/24/universe/linux/project_like/about_mmap/index.html">
+<meta property="og:title" content="execv中地址地址映射流程分析">
+<meta property="og:url" content="http://yoursite.com/2021/01/18/universe/linux/project_like/about_mmap/index.html">
 <meta property="og:site_name" content="Ring&#39;s Blog">
 <meta property="og:description" content="1 execv函数地址映射流程分析1.1 execv如何填充新进程的页表execv()中会调用bprm_mm_init函数准备一个linux_binprm结构体，该结构体用于描述新进程的各种信息，最后由search_binary_handler找到对应文件格式的处理程序加载执行load_binary。 其中bprm_mm_init会执行如下流程： 123456789101112bprm_mm_in">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-01-24T09:05:48.381Z">
-<meta property="article:modified_time" content="2021-01-24T09:05:48.381Z">
+<meta property="article:published_time" content="2021-01-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-24T09:12:55.105Z">
 <meta property="article:author" content="Travis TuRing">
+<meta property="article:tag" content="linux, kernel, project">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2021/01/24/universe/linux/project_like/about_mmap/">
+<link rel="canonical" href="http://yoursite.com/2021/01/18/universe/linux/project_like/about_mmap/">
 
 
 <script id="page-configurations">
@@ -45,7 +46,7 @@
   };
 </script>
 
-  <title>universe/linux/project_like/about_mmap | Ring's Blog</title>
+  <title>execv中地址地址映射流程分析 | Ring's Blog</title>
   
 
 
@@ -150,7 +151,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/24/universe/linux/project_like/about_mmap/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/18/universe/linux/project_like/about_mmap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -163,7 +164,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          universe/linux/project_like/about_mmap
+          execv中地址地址映射流程分析
         </h1>
 
         <div class="post-meta">
@@ -173,8 +174,15 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2021-01-24 17:05:48" itemprop="dateCreated datePublished" datetime="2021-01-24T17:05:48+08:00">2021-01-24</time>
+              <time title="Created: 2021-01-18 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-18T00:00:00+08:00">2021-01-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-24 17:12:55" itemprop="dateModified" datetime="2021-01-24T17:12:55+08:00">2021-01-24</time>
+              </span>
 
           
 
@@ -227,6 +235,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux-kernel-project/" rel="tag"># linux, kernel, project</a>
+          </div>
 
         
 
@@ -234,10 +245,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/01/24/universe/linux/project_like/page_cache_and_cache_management/" rel="prev" title="universe/linux/project_like/page_cache_and_cache_management">
-      <i class="fa fa-chevron-left"></i> universe/linux/project_like/page_cache_and_cache_management
+    <a href="/2021/01/17/universe/operate/docker_the_underlying_technology/" rel="prev" title="Docker底层原理">
+      <i class="fa fa-chevron-left"></i> Docker底层原理
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/18/universe/linux/MM/TODO:slab/" rel="next" title="slab分配器">
+      slab分配器 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -315,7 +329,7 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -401,6 +415,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
