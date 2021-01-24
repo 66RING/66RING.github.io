@@ -857,6 +857,75 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/22/universe/operate/docekr_multi_container/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/22/universe/operate/docekr_multi_container/" class="post-title-link" itemprop="url">docker多容器项目</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-22 00:00:00 / Modified: 15:24:19" itemprop="dateCreated datePublished" datetime="2020-11-22T00:00:00+08:00">2020-11-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="docker容器交互"><a href="#docker容器交互" class="headerlink" title="docker容器交互"></a>docker容器交互</h2><p>docker会通过一块虚拟的docker网卡为容器分配ip地址，即这些容器将在一个网段中，可以直接通过ip进行访问进行交互。但这里存在一个问题，我们需要手动登录一台机器查看ip，然后再另一台机器中访问，这在实际开发中是不可行的。</p>
+<p>更方便的交互方式是使用<code>--link &lt;name|id&gt;[:&lt;alias&gt;]</code>，这样就可以通过,如<code>curl &lt;alias&gt;</code>自动解析域名。其本质就是在<code>hosts</code>文件中加入了<code>ip &lt;alias&gt; &lt;id&gt;</code>，把别名了容器id映射到了指定容器的ip。</p>
+<p>看如下一个通信模型，只在nginx中暴露80端口，通过link的方式跟php通信，php又通过link的方式根mysql通信</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">nginx   link php expose 80</span><br><span class="line">  |</span><br><span class="line">  V</span><br><span class="line">php     link mysql</span><br><span class="line">  |</span><br><span class="line">  V</span><br><span class="line">mysql</span><br></pre></td></tr></table></figure>
+
+<p><strong>存在的问题</strong> 通过link的通信时，容器的启动顺序很关键(容器都没启动，link到哪？)。所以在以后的重启/部署时指令输起来将比较麻烦</p>
+<p>因此，可以将部署的指令记录到一个配置文件中，即使用<code>docker-compose</code></p>
+<h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><p>通过yml配置需要的服务，然后从yml中启动所有服务</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">version:</span> <span class="string">""</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">serv1:</span></span><br><span class="line">        <span class="attr">image:</span></span><br><span class="line">        <span class="attr">links:</span></span><br><span class="line">        <span class="attr">volumes:</span></span><br><span class="line">        <span class="attr">and_some_other_docker_option:</span></span><br><span class="line">    <span class="attr">serv2:</span></span><br><span class="line">        <span class="attr">build:</span> <span class="string">.</span>  <span class="comment"># 服务从dockerfile构建</span></span><br><span class="line">        <span class="attr">and_some_other_docker_option:</span></span><br></pre></td></tr></table></figure>
+
+<p><code>docker-compose up</code>启动</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/22/universe/operate/CI_CD_intro/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -924,75 +993,6 @@
 <h4 id="构建阶段"><a href="#构建阶段" class="headerlink" title="构建阶段"></a>构建阶段</h4><p>在构建完成后会将镜像上传的daocloud的docker镜像仓库，方便以后通过<code>docker pull</code>部署到自己机器。当然可以在集群管理中配置主机，就可将主机绑定到daocloud平台，然后实现自动部署。</p>
 <h4 id="发布阶段"><a href="#发布阶段" class="headerlink" title="发布阶段"></a>发布阶段</h4><p>添加部署到主机</p>
 <p><em>PS</em> :daocloud还提供了内网穿透，通过合理配置就可通过访问daocloud的域名访问(即只http)部署在内网的应用了</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/22/universe/operate/docekr_multi_container/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/22/universe/operate/docekr_multi_container/" class="post-title-link" itemprop="url">docker多容器项目</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-11-22 00:00:00 / Modified: 15:24:19" itemprop="dateCreated datePublished" datetime="2020-11-22T00:00:00+08:00">2020-11-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="docker容器交互"><a href="#docker容器交互" class="headerlink" title="docker容器交互"></a>docker容器交互</h2><p>docker会通过一块虚拟的docker网卡为容器分配ip地址，即这些容器将在一个网段中，可以直接通过ip进行访问进行交互。但这里存在一个问题，我们需要手动登录一台机器查看ip，然后再另一台机器中访问，这在实际开发中是不可行的。</p>
-<p>更方便的交互方式是使用<code>--link &lt;name|id&gt;[:&lt;alias&gt;]</code>，这样就可以通过,如<code>curl &lt;alias&gt;</code>自动解析域名。其本质就是在<code>hosts</code>文件中加入了<code>ip &lt;alias&gt; &lt;id&gt;</code>，把别名了容器id映射到了指定容器的ip。</p>
-<p>看如下一个通信模型，只在nginx中暴露80端口，通过link的方式跟php通信，php又通过link的方式根mysql通信</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">nginx   link php expose 80</span><br><span class="line">  |</span><br><span class="line">  V</span><br><span class="line">php     link mysql</span><br><span class="line">  |</span><br><span class="line">  V</span><br><span class="line">mysql</span><br></pre></td></tr></table></figure>
-
-<p><strong>存在的问题</strong> 通过link的通信时，容器的启动顺序很关键(容器都没启动，link到哪？)。所以在以后的重启/部署时指令输起来将比较麻烦</p>
-<p>因此，可以将部署的指令记录到一个配置文件中，即使用<code>docker-compose</code></p>
-<h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><p>通过yml配置需要的服务，然后从yml中启动所有服务</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">version:</span> <span class="string">""</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">serv1:</span></span><br><span class="line">        <span class="attr">image:</span></span><br><span class="line">        <span class="attr">links:</span></span><br><span class="line">        <span class="attr">volumes:</span></span><br><span class="line">        <span class="attr">and_some_other_docker_option:</span></span><br><span class="line">    <span class="attr">serv2:</span></span><br><span class="line">        <span class="attr">build:</span> <span class="string">.</span>  <span class="comment"># 服务从dockerfile构建</span></span><br><span class="line">        <span class="attr">and_some_other_docker_option:</span></span><br></pre></td></tr></table></figure>
-
-<p><code>docker-compose up</code>启动</p>
 
       
     </div>
