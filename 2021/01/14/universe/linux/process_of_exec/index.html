@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="execv执行过程可执行程序的表示elf文件格式Linux下标准的可执行文件格式是ELF(Executable and Linking Format)，是一种对象文件的格式，用于定义不同类型的对象文件(Object files)中都放了什么东西、以及都以什么样的格式去放这些东西。 但是linux也支持其他不同的可执行程序格式, 各个可执行程序的执行方式不尽相同, 因此linux内核每种被注册的可执">
+<meta property="og:type" content="article">
+<meta property="og:title" content="execv的执行过程">
+<meta property="og:url" content="http://yoursite.com/2021/01/14/universe/linux/process_of_exec/index.html">
+<meta property="og:site_name" content="Ring&#39;s Blog">
+<meta property="og:description" content="execv执行过程可执行程序的表示elf文件格式Linux下标准的可执行文件格式是ELF(Executable and Linking Format)，是一种对象文件的格式，用于定义不同类型的对象文件(Object files)中都放了什么东西、以及都以什么样的格式去放这些东西。 但是linux也支持其他不同的可执行程序格式, 各个可执行程序的执行方式不尽相同, 因此linux内核每种被注册的可执">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-21T06:55:19.809Z">
+<meta property="article:author" content="Travis TuRing">
+<meta property="article:tag" content="linux, kernel, exec">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2021/01/14/universe/linux/process_of_exec/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>execv的执行过程 | Ring's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ring's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/14/universe/linux/process_of_exec/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          execv的执行过程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-14 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-14T00:00:00+08:00">2021-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-21 14:55:19" itemprop="dateModified" datetime="2021-01-21T14:55:19+08:00">2021-01-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="execv执行过程"><a href="#execv执行过程" class="headerlink" title="execv执行过程"></a>execv执行过程</h1><h2 id="可执行程序的表示"><a href="#可执行程序的表示" class="headerlink" title="可执行程序的表示"></a>可执行程序的表示</h2><h3 id="elf文件格式"><a href="#elf文件格式" class="headerlink" title="elf文件格式"></a>elf文件格式</h3><p>Linux下标准的可执行文件格式是ELF(Executable and Linking Format)，是一种对象文件的格式，用于定义不同类型的对象文件(Object files)中都放了什么东西、以及都以什么样的格式去放这些东西。</p>
+<p>但是linux也支持其他不同的可执行程序格式, 各个可执行程序的执行方式不尽相同, 因此linux内核每种被注册的可执行程序格式都用<code>linux_binfmt</code>来存储, 其中记录了可执行程序的加载和执行函数</p>
+<p>同时我们需要一种方法来保存可执行程序的信息, 比如可执行文件的路径, 运行的参数和环境变量等信息，即<code>linux_binprm</code>结构</p>
+<h3 id="linux-binprm结构体"><a href="#linux-binprm结构体" class="headerlink" title="linux_binprm结构体"></a>linux_binprm结构体</h3><p>使用<code>linux_binprm</code>结构来保存可执行程序的信息，如可执行程序路径、运行的参数和环境变量等。</p>
+<h3 id="linux-binfmt结构体"><a href="#linux-binfmt结构体" class="headerlink" title="linux_binfmt结构体"></a>linux_binfmt结构体</h3><p>linux内核中，每种被注册的可执行程序都用<code>linux_binfmt</code>来存储，用于记录可执行程序的加载和执行函数。</p>
+<p>linux支持其他不同格式的可执行程序，即linux能运行其他操作系统所编译的程序，因此linux内核使用<code>linux_binfmt</code>来描述各种可执行程序。其提供了3种方法来加载和执行可执行程序：</p>
+<ul>
+<li><code>load_binary</code><ul>
+<li>通过读存放在可执行文件中的信息为当前进程建立一个新的执行环境</li>
+</ul>
+</li>
+<li><code>load_shlib</code><ul>
+<li>用于动态的把一个共享库捆绑到一个已经在运行的进程, 这是由uselib()系统调用激活的</li>
+</ul>
+</li>
+<li><code>core_dump</code><ul>
+<li>在名为core的文件中, 存放当前进程的执行上下文. 这个文件通常是在进程接收到一个缺省操作为”dump”的信号时被创建的, 其格式取决于被执行程序的可执行类型</li>
+</ul>
+</li>
+</ul>
+<p>当执行一个可执行程序时，内核会<code>list_for_each_entry</code>遍历所有注册的<code>linux_binfmt</code>对象，对其调用<code>load_binary</code>方法来尝试加载，直到加载成功为止</p>
+<h2 id="execv执行过程-1"><a href="#execv执行过程-1" class="headerlink" title="execv执行过程"></a>execv执行过程</h2><p>执行<code>execv()</code>或<code>execve()</code>系统调用时，实际的调用内核的<code>do_execve()</code>函数。这个函数首先会打开目标映像文件，并从目标文件头部读入若干字节用于填充<code>linux_binprm</code>结构体。然后调用<code>search_binary_handler()</code>搜索linux支持的可执行文件类型队列，让各种可执行程序来认领和处理改类型的程序。如果类型匹配，则调用<code>load_binary</code>函数指针所指向的处理函数来处理目标映像文件。对于elf文件格式<code>load_binary</code>处理函数为<code>load_elf_binary</code>，故过程为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys_execve() &gt; do_execve() &gt; do_execveat_common &gt; search_binary_handler() &gt; load_elf_binary()</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="do-execveat-common执行"><a href="#do-execveat-common执行" class="headerlink" title="do_execveat_common执行"></a>do_execveat_common执行</h3><p><code>do_execveat_common</code>依次执行以下操作：</p>
+<ul>
+<li>调用<code>unshare_files()</code>为进程复制一份文件表</li>
+<li>调用<code>kzalloc()</code>分配一份<code>struct linux_binprm</code>结构体</li>
+<li>调用<code>open_exec()</code>查找并打开二进制文件</li>
+<li>调用<code>sched_exec()</code>找到最小负载的CPU，用来执行该二进制文件</li>
+<li>根据获取的信息，填充<code>struct linux_binprm</code>结构体中的file、filename、interp成员</li>
+<li>调用<code>bprm_mm_init()</code>创建进程的内存地址空间，为新程序初始化内存管理.并调用<code>init_new_context()</code>检查当前进程是否使用自定义的局部描述符表；如果是，那么分配和准备一个新的LDT</li>
+<li>填充<code>struct linux_binprm</code>结构体中的argc、envc成员</li>
+<li>调用<code>prepare_binprm()</code>检查该二进制文件的可执行权限；最后，<code>kernel_read()</code>读取二进制文件的头128字节（这些字节用于识别二进制文件的格式及其他信息，后续会使用到）</li>
+<li>调用<code>copy_strings_kernel()</code>从内核空间获取二进制文件的路径名称</li>
+<li>调用<code>copy_string()</code>从用户空间拷贝环境变量和命令行参数</li>
+<li>至此，二进制文件已经被打开，<code>struct linux_binprm</code>结构体中也记录了重要信息, 内核开始调用<code>exec_binprm</code>执行可执行程序</li>
+<li>释放<code>linux_binprm</code>数据结构，返回从该文件可执行格式的<code>load_binary</code>中获得的代码</li>
+</ul>
+<h3 id="exec-binprm识别并加载二进制程序"><a href="#exec-binprm识别并加载二进制程序" class="headerlink" title="exec_binprm识别并加载二进制程序"></a>exec_binprm识别并加载二进制程序</h3><p>每种格式的二进制文加对应一个<code>linux_binprm</code>结构体，<code>load_binary</code>成员负责识别该二进制文件的格式。</p>
+<p>使用<code>search_binary_handler</code>函数对<code>linux_binfmt</code>结构体链表(链表头为<code>formats</code>)扫描，并尝试每个<code>load_binary</code>函数，如果成功加载则对<code>formats</code>的扫描终止</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://blog.chinaunix.net/uid-12127321-id-2957869.html" target="_blank" rel="noopener">http://blog.chinaunix.net/uid-12127321-id-2957869.html</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux-kernel-exec/" rel="tag"># linux, kernel, exec</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/13/universe/linux/project_like/trace_flow/" rel="prev" title="使用systemtap实现进程的跟踪">
+      <i class="fa fa-chevron-left"></i> 使用systemtap实现进程的跟踪
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/17/universe/operate/docker_the_underlying_technology/" rel="next" title="Docker底层原理">
+      Docker底层原理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#execv执行过程"><span class="nav-number">1.</span> <span class="nav-text">execv执行过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可执行程序的表示"><span class="nav-number">1.1.</span> <span class="nav-text">可执行程序的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#elf文件格式"><span class="nav-number">1.1.1.</span> <span class="nav-text">elf文件格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-binprm结构体"><span class="nav-number">1.1.2.</span> <span class="nav-text">linux_binprm结构体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-binfmt结构体"><span class="nav-number">1.1.3.</span> <span class="nav-text">linux_binfmt结构体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#execv执行过程-1"><span class="nav-number">1.2.</span> <span class="nav-text">execv执行过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#do-execveat-common执行"><span class="nav-number">1.2.1.</span> <span class="nav-text">do_execveat_common执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exec-binprm识别并加载二进制程序"><span class="nav-number">1.2.2.</span> <span class="nav-text">exec_binprm识别并加载二进制程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.3.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Travis TuRing</p>
+  <div class="site-description" itemprop="description">Mens et Manus</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="使用systemtap实现进程的跟踪systemtap安装systemtap安装分为两个部分，一个是安装systemtap本身;另一个是安装对应的内核信息包(Kernel Information Packages)，否则systemtap将无法深入内核探测。 以下以在centos中安装为例。  安装systemtap 使用对应的包管理工具安装，如centos中yum install systemt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用systemtap实现进程的跟踪">
+<meta property="og:url" content="http://yoursite.com/2021/01/13/universe/linux/project_like/trace_flow/index.html">
+<meta property="og:site_name" content="Ring&#39;s Blog">
+<meta property="og:description" content="使用systemtap实现进程的跟踪systemtap安装systemtap安装分为两个部分，一个是安装systemtap本身;另一个是安装对应的内核信息包(Kernel Information Packages)，否则systemtap将无法深入内核探测。 以下以在centos中安装为例。  安装systemtap 使用对应的包管理工具安装，如centos中yum install systemt">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-15T11:12:16.349Z">
+<meta property="article:author" content="Travis TuRing">
+<meta property="article:tag" content="linux, systemtap, tool, kernel">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2021/01/13/universe/linux/project_like/trace_flow/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>使用systemtap实现进程的跟踪 | Ring's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ring's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/13/universe/linux/project_like/trace_flow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用systemtap实现进程的跟踪
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-13 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-13T00:00:00+08:00">2021-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-15 19:12:16" itemprop="dateModified" datetime="2021-01-15T19:12:16+08:00">2021-01-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="使用systemtap实现进程的跟踪"><a href="#使用systemtap实现进程的跟踪" class="headerlink" title="使用systemtap实现进程的跟踪"></a>使用systemtap实现进程的跟踪</h1><h2 id="systemtap安装"><a href="#systemtap安装" class="headerlink" title="systemtap安装"></a>systemtap安装</h2><p>systemtap安装分为两个部分，一个是安装systemtap本身;另一个是安装对应的内核信息包(Kernel Information Packages)，否则systemtap将无法深入内核探测。</p>
+<p>以下以在centos中安装为例。</p>
+<ul>
+<li>安装systemtap<ul>
+<li>使用对应的包管理工具安装，如centos中<code>yum install systemtap</code></li>
+</ul>
+</li>
+<li>安装内核信息包<ul>
+<li>需要注意的是安装的内核信息包需要与内核版本对应，如内核版本为4.18.0-147，就安装4.18.0-147的包</li>
+<li>使用<code>stap-prep</code>命名检查systemtap还需要哪些支持，一般需要安装如下几个信息包：<ul>
+<li>kernel-debuginfo<ul>
+<li>可以在<code>http://debuginfo.centos.org/8/x86_64/Packages/kernel-debuginfo-4.18.0-147.el8.x86_64.rpm</code>中下载</li>
+<li>然后安装<code>rpm -ivh</code></li>
+</ul>
+</li>
+<li>kernel-debuginfo-common<ul>
+<li><code>http://debuginfo.centos.org/8/x86_64/Packages/kernel-debuginfo-common-x86_64-4.18.0-147.el8.x86_64.rpm</code></li>
+</ul>
+</li>
+<li>kernel-devel</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="systemtap基本使用"><a href="#systemtap基本使用" class="headerlink" title="systemtap基本使用"></a>systemtap基本使用</h2><p>Systemtap的基本思路是监听事件(event)，并提供处理程序(handler)。当指定事件发生时，内核就会执行相应的处理程序。</p>
+<p>Systemtap内置了很多事件，为用户提供了简单的API，以方便地编写处理程序。</p>
+<p>语法类似C语言，探测事件的格式为：<code>probe event {statements}</code>。如我要探测哪个程序执行了内核中的<code>_do_fork</code>函数，可以这么写：</p>
+<figure class="highlight stp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">probe kernel.function(<span class="string">"_do_fork@kernel/fork.c"</span>)&#123;</span><br><span class="line">    printf(<span class="string">"%s: %s\n"</span>, execname(), ppfunc());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>kernel.function(PATTERN)</code>就是systemtap预置的一个事件，即当<code>PATTERN</code>匹配到的函数被调用是，触发对应的handler，这里是打印了调用的进程的名字<code>execname()</code>，和调用的函数名<code>ppfunc()</code>。PATTERN的格式是<code>func[@file] | func@file:linenumber</code>，支持正则表达式匹配。</p>
+<p>除了<code>kernel.function()</code>事件外，有其他很多内置的事件<a href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/scripts.html#systemtapscript-events" target="_blank" rel="noopener">详见此处</a>。内置的函数如<code>execname()</code>等的使用，<a href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/systemtapscript-handler.html#syscall-open" target="_blank" rel="noopener">详见此处</a>。这里列出一些常用值</p>
+<ul>
+<li>probe，”探测”<ul>
+<li><code>probe &lt;probe-point&gt; &lt;statement&gt;</code></li>
+<li><code>probe-point</code>指定了probe动作的时机，一旦探测是事件触发了，则probe将从此处插入内核或进程</li>
+</ul>
+</li>
+<li>API<ul>
+<li><code>begin</code>, systemtap 会话开始</li>
+<li><code>end</code>, systemtap 会话结束</li>
+<li><code>kernel.function(&quot;sys_xxx&quot;)</code>, 系统调用xx的入口</li>
+<li><code>kernel.function(&quot;sys_xxx&quot;).return</code>, 系统调用xx的返回</li>
+<li><code>timer.ms(300)</code>, 每300毫秒的定时器</li>
+<li><code>timer.profile</code>, 每个CPU上周期触发的定时器</li>
+<li><code>process(&quot;a.out&quot;).function(&quot;foo*&quot;)</code>, a.out 中函数名前缀为foo的函数信息</li>
+<li><code>process(&quot;a.out&quot;).statement(&quot;*@main.c:200&quot;)</code>, a.out中文件main.c 200行处的状态</li>
+</ul>
+</li>
+<li>常用可打印值<ul>
+<li><code>tid()</code>, 当前线程id</li>
+<li><code>pid()</code>, 当前进程id</li>
+<li><code>uid()</code>, 当前用户id</li>
+<li><code>execname()</code>, 当前进程名称</li>
+<li><code>cpu()</code>, 当前cpu编号</li>
+<li><code>gettimeofday_s()</code>, 秒时间戳</li>
+<li><code>get_cycles()</code>, 硬件周期计数器快照</li>
+<li><code>pp()</code>, 探测点事件名称</li>
+<li><code>ppfunc()</code>, 探测点触发的函数名称</li>
+<li><code>thread_indent(n)</code>，补充空格</li>
+<li><code>$$var</code>, 上下文中存在 $var，可以使用该变量</li>
+<li><code>[s]print_backtrace()</code>, 打印内核栈<ul>
+<li>带s会返回堆栈字符串</li>
+</ul>
+</li>
+<li><code>print_ubacktrace()</code>, 打印用户空间栈</li>
+</ul>
+</li>
+</ul>
+<h3 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h3><ul>
+<li>扫描所有探测点可用<code>stap -L|l</code>，如<ul>
+<li><code>stap -L &#39;kernel.function(*fork*)&#39;</code>，扫描所有包含fork的函数，并列出可用的变量</li>
+</ul>
+</li>
+<li>可以用<code>$</code>直接获取进程的全局变量，获取不到可以试试<code>@</code><ul>
+<li>如果变量不是本地变量可以这么引用<code>@var(&quot;varname@src/file.c&quot;)</code></li>
+</ul>
+</li>
+<li>用<code>$</code>或<code>@</code>后面跟数字来接收命令行参数<ul>
+<li><code>$</code>接收整型，<code>@</code>接收字符串</li>
+<li>后跟<code>#</code>表示参数数量</li>
+</ul>
+</li>
+<li>systemtap中无论是指针还是结构体都使用<code>-&gt;</code>访问成员</li>
+<li>输出整个结构体:变量结尾加一个或两个<code>$</code><ul>
+<li><code>$</code>后缀打印结构体</li>
+<li><code>$$</code>后缀打印结构体，如果结构体中包含复杂结构则将其展开</li>
+</ul>
+</li>
+<li>在return探测点可以用<code>&amp;return</code>获取返回值，inline函数无法安装return探测点</li>
+<li>使用<code>@cast()</code>来实现指针类型转换<ul>
+<li><code>@cast($var, &quot;new_type&quot;[, &quot;file_that_type_define&quot;])</code></li>
+</ul>
+</li>
+<li>同样使用<code>@cast</code>定义某个类型的变量，原理就是用<code>@cast</code>转换类型后赋值给一个变量<ul>
+<li><code>c = &amp;@cast($rev-&gt;data, &quot;ngx_connection_t&quot;)</code></li>
+</ul>
+</li>
+<li>对于多级指针如<code>**p</code>可以使用<code>[0]</code>来解引用<ul>
+<li><code>$p[0]-&gt;id</code></li>
+</ul>
+</li>
+<li>输出字符串指针<ul>
+<li>用户态使用：<code>user_string</code>,<code>user_string_n</code></li>
+<li>内核态使用：<code>kernel_string</code>,<code>kernel_string_n</code>,<code>user_string_quoted</code><ul>
+<li><code>user_string_quoted</code>是获取用户态传给内核的字符串，代码中一般有__user宏标记：</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>查看函数指针所指的函数名<ul>
+<li>获取一个地址所对应的符号</li>
+<li>用户态使用<code>usymname(FUNC_PTR)</code></li>
+<li>内核态使用<code>symname(FUNC_PTR)</code></li>
+</ul>
+</li>
+<li>修改进程中的变量<ul>
+<li><code>$var=value</code></li>
+<li>需要注意的是stap要加<code>-g</code>参数才能修改变量的值</li>
+</ul>
+</li>
+<li>查看代码执行执行路径<ul>
+<li><code>pp()</code>，输出当前被激活的探测点，即包括函数名、路径、行号等</li>
+</ul>
+</li>
+<li>关联数组<ul>
+<li>关联数组必须是全局变量，用global声明。最多支持9项索引域  <figure class="highlight stp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">global reads</span><br><span class="line">probe vfs.read &#123;</span><br><span class="line">    reads[execname(), pid()]++</span><br><span class="line">&#125;</span><br><span class="line">probe timer.s(<span class="number">3</span>) &#123;</span><br><span class="line">    foreach ([execname, pid] in reads) &#123;</span><br><span class="line">        printf(<span class="string">"%s(%d) : %d \n"</span>, execname, pid, reads[execname, pid])</span><br><span class="line">    &#125;</span><br><span class="line">    delete reads</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>可以使用<code>+</code>、<code>-</code>进行排序  <figure class="highlight stp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">global reads</span><br><span class="line">probe vfs.read &#123;</span><br><span class="line">    reads[execname(), pid()]++</span><br><span class="line">&#125;</span><br><span class="line">probe timer.s(<span class="number">3</span>) &#123;</span><br><span class="line">    foreach ([execname, pid+] in reads) &#123;</span><br><span class="line">        printf(<span class="string">"%s(%d) : %d \n"</span>, execname, pid, reads[execname, pid])</span><br><span class="line">    &#125;</span><br><span class="line">    delete reads</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>target()</code>，通过命令行<code>-x PID</code>传入id，作为target</li>
+<li>对于指向基础类型的指针，以下函数可以获取其内核态的数据<ul>
+<li><code>kernel_char(address)</code><ul>
+<li>从内核内存地址中获取char</li>
+</ul>
+</li>
+<li><code>kernel_short(address)</code></li>
+<li><code>kernel_int(address)</code></li>
+<li><code>kernel_long(address)</code></li>
+<li><code>kernel_string(address)</code></li>
+<li><code>kernel_string_n(address)</code><ul>
+<li>获取的string长度为n bytes</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>$$var</code>获取探测点的所有变量<ul>
+<li><code>$$locals</code>，<code>$$vars</code>的子集，仅包含本地变量</li>
+<li><code>$$parms</code>，<code>$$vars</code>的子集，仅包含函数参数变量</li>
+<li><code>$$return</code>，仅在return probe中有效</li>
+</ul>
+</li>
+</ul>
+<h2 id="追踪进程"><a href="#追踪进程" class="headerlink" title="追踪进程"></a>追踪进程</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">        fork();</span><br><span class="line">        sleep(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>假设有这么一个程序，调用<code>fork()</code>函数然后<code>sleep</code>一秒，重复3遍。要想追踪它底层是怎么一步一步地调用的，首先需要对操作系统有所了解。这里提供一个思路：fork函数会底层会调用<code>_do_fork</code>，而sleep底层会调用<code>do_nanosleep</code>。</p>
+<p>使用<code>systemtap</code>，扫描出大致的相关函数：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stap -l <span class="string">'kernel.function("*fork*")'</span></span><br></pre></td></tr></table></figure>
+
+<p>得到如下输出，同理可以扫描<code>do_nanosleep</code>相关函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ stap -l &#39;kernel.function(&quot;*fork*&quot;)&#39; </span><br><span class="line">kernel.function(&quot;__x64_sys_fork@kernel&#x2F;fork.c:2304&quot;) </span><br><span class="line">kernel.function(&quot;__x64_sys_vfork@kernel&#x2F;fork.c:2316&quot;) </span><br><span class="line">kernel.function(&quot;_do_fork@kernel&#x2F;fork.c:2209&quot;) </span><br><span class="line">kernel.function(&quot;anon_vma_fork@mm&#x2F;rmap.c:315&quot;) </span><br><span class="line">kernel.function(&quot;cgroup_can_fork@kernel&#x2F;cgroup&#x2F;cgroup.c:5804&quot;) </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>为了进一步精确调用trace流，可以根据扫描得到的函数信息(如函数名，函数路径，代码行等)，在<a href="https://lxr.missinglinkelectronics.com/linux" target="_blank" rel="noopener">LXR</a>阅读源码进行进一步挖掘，然后设置探测点。</p>
+<p>于是为了找出哪个程序调用了哪个函数就可以：</p>
+<figure class="highlight stp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">probe kernel.function(<span class="string">"_do_fork@kernel/fork.c"</span>)&#123;</span><br><span class="line">    printf(<span class="string">"%s: %s\n"</span>, execname(), ppfunc());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">probe kernel.function(<span class="string">"do_nanosleep@kernel/time/hrtimer.c:1678"</span>)&#123;</span><br><span class="line">    printf(<span class="string">"%s: %s\n"</span>, execname(), ppfunc());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux-systemtap-tool-kernel/" rel="tag"># linux, systemtap, tool, kernel</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/07/universe/linux/project_like/insert_CASIO_into_linux_kernel/" rel="prev" title="如何向linux内核插入新的调度器">
+      <i class="fa fa-chevron-left"></i> 如何向linux内核插入新的调度器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/14/universe/linux/process_of_exec/" rel="next" title="execv的执行过程">
+      execv的执行过程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用systemtap实现进程的跟踪"><span class="nav-number">1.</span> <span class="nav-text">使用systemtap实现进程的跟踪</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#systemtap安装"><span class="nav-number">1.1.</span> <span class="nav-text">systemtap安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#systemtap基本使用"><span class="nav-number">1.2.</span> <span class="nav-text">systemtap基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小技巧"><span class="nav-number">1.2.1.</span> <span class="nav-text">小技巧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#追踪进程"><span class="nav-number">1.3.</span> <span class="nav-text">追踪进程</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Travis TuRing</p>
+  <div class="site-description" itemprop="description">Mens et Manus</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

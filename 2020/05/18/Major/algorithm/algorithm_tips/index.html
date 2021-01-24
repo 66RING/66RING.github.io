@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="递归 从结束条件开始分析  字符串 遇到需要记录字符的情况，可以使用int a[26]代替map  双指针双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。  一般先对数组排序，然后从边界开始就能简单的定一议二  图判断二分图染色，然后使用bfs或dfs遍历所有节点，不应该存在相邻节点颜色一样。 复杂条件问题允许存在变量如判断一个字符串是否回文，而且允许删除一个字符">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法技巧">
+<meta property="og:url" content="http://yoursite.com/2020/05/18/Major/algorithm/algorithm_tips/index.html">
+<meta property="og:site_name" content="Ring&#39;s Blog">
+<meta property="og:description" content="递归 从结束条件开始分析  字符串 遇到需要记录字符的情况，可以使用int a[26]代替map  双指针双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。  一般先对数组排序，然后从边界开始就能简单的定一议二  图判断二分图染色，然后使用bfs或dfs遍历所有节点，不应该存在相邻节点颜色一样。 复杂条件问题允许存在变量如判断一个字符串是否回文，而且允许删除一个字符">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-22T07:18:17.205Z">
+<meta property="article:author" content="Travis TuRing">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/18/Major/algorithm/algorithm_tips/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>算法技巧 | Ring's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ring's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/18/Major/algorithm/algorithm_tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          算法技巧
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-18 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-18T00:00:00+08:00">2020-05-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-22 15:18:17" itemprop="dateModified" datetime="2020-10-22T15:18:17+08:00">2020-10-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><ul>
+<li>从结束条件开始分析</li>
+</ul>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><ul>
+<li>遇到需要记录字符的情况，可以使用<code>int a[26]</code>代替map</li>
+</ul>
+<h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><p>双指针的选择会出现在很多情况，如：快速排序算法m值的选择、列出排列组合的所有情况。</p>
+<ul>
+<li>一般先对数组排序，然后从边界开始就能简单的定一议二</li>
+</ul>
+<h2 id="图"><a href="#图" class="headerlink" title="图"></a>图</h2><h3 id="判断二分图"><a href="#判断二分图" class="headerlink" title="判断二分图"></a>判断二分图</h3><p>染色，然后使用bfs或dfs遍历所有节点，不应该存在相邻节点颜色一样。</p>
+<h2 id="复杂条件"><a href="#复杂条件" class="headerlink" title="复杂条件"></a>复杂条件</h2><h3 id="问题允许存在变量"><a href="#问题允许存在变量" class="headerlink" title="问题允许存在变量"></a>问题允许存在变量</h3><p>如判断一个字符串是否回文，而且允许删除一个字符。那么对于这个问题的变量就是如果要删除，是删除左边还是右边。但是主要的判断依旧是相同的<code>str[i++]==str[j--]</code>。</p>
+<p>所以可以分离主要的判断程序，在主程序中使用<code>||</code>运算符来解决变量引起的讨论。如：<code>return func(删左边)||func(删右边)</code></p>
+<h2 id="删除链表上第n个结点"><a href="#删除链表上第n个结点" class="headerlink" title="删除链表上第n个结点"></a>删除链表上第n个结点</h2><ul>
+<li>快慢指针，当快指针的next是空的时候，慢指针刚好指到倒数第n个节点</li>
+</ul>
+<h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><p>通常，涉及连续子数组问题的时候，我们使用前缀和来解决。</p>
+<p>我们令$P[i] = A[0] + A[1] + … + A[i]$。那么每个连续子数组的和sum(i,j)就可以写成$P[j] - P[i-1]（其中 0 &lt; i &lt; j;0 &lt; i &lt; j）$的形式。</p>
+<h3 id="任意范围连续元素的和"><a href="#任意范围连续元素的和" class="headerlink" title="任意范围连续元素的和"></a>任意范围连续元素的和</h3><p>两个前缀和相减就能得到任意范围连续元素的和，如前5个元素的前缀和间前3个元素的前缀和就得到4~5的和。</p>
+<h2 id="哨兵"><a href="#哨兵" class="headerlink" title="哨兵"></a>哨兵</h2><p>使用哨兵能简化我们的讨论，去掉不必要的分类讨论。如在链表中使用虚拟的头和尾，省去了分类讨论。</p>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><ul>
+<li>遍历一个 <strong>完整</strong> 的循环会节省很多讨论，何为完整，类似与判断波的一个完整周期</li>
+</ul>
+<h2 id="单向栈"><a href="#单向栈" class="headerlink" title="单向栈"></a>单向栈</h2><h2 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h2><ul>
+<li>计算一个数a的n次方<ul>
+<li>当n是偶数，我们先计算a的n/2次方，然后平方</li>
+<li>当n是奇数，我们先计算a的n-1次方，然后乘n</li>
+</ul>
+</li>
+</ul>
+<h2 id="运算模拟"><a href="#运算模拟" class="headerlink" title="运算模拟"></a>运算模拟</h2><p>使用链表模拟加减乘除时可以使用预处理以下将要运算的节点，都存在则正常进行，否则用一个无关数替代(乘法用1，加法用0等)，省去额外的判断。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/15/universe/c/cpp_level_up/" rel="prev" title="c++进阶">
+      <i class="fa fa-chevron-left"></i> c++进阶
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/21/universe/hacker_in_action/" rel="next" title="黑客攻防学习">
+      黑客攻防学习 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">2.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针"><span class="nav-number">3.</span> <span class="nav-text">双指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图"><span class="nav-number">4.</span> <span class="nav-text">图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断二分图"><span class="nav-number">4.1.</span> <span class="nav-text">判断二分图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂条件"><span class="nav-number">5.</span> <span class="nav-text">复杂条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题允许存在变量"><span class="nav-number">5.1.</span> <span class="nav-text">问题允许存在变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除链表上第n个结点"><span class="nav-number">6.</span> <span class="nav-text">删除链表上第n个结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前缀和"><span class="nav-number">7.</span> <span class="nav-text">前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#任意范围连续元素的和"><span class="nav-number">7.1.</span> <span class="nav-text">任意范围连续元素的和</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哨兵"><span class="nav-number">8.</span> <span class="nav-text">哨兵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环"><span class="nav-number">9.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单向栈"><span class="nav-number">10.</span> <span class="nav-text">单向栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速幂"><span class="nav-number">11.</span> <span class="nav-text">快速幂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运算模拟"><span class="nav-number">12.</span> <span class="nav-text">运算模拟</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Travis TuRing</p>
+  <div class="site-description" itemprop="description">Mens et Manus</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

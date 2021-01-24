@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="What is HttpsCryptography Symmetric encryptionThe classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.+3 is PSK(pre shared key) But how to let the receiver know what the PSK i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What Is Https">
+<meta property="og:url" content="http://yoursite.com/2020/12/01/universe/web/https/index.html">
+<meta property="og:site_name" content="Ring&#39;s Blog">
+<meta property="og:description" content="What is HttpsCryptography Symmetric encryptionThe classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.+3 is PSK(pre shared key) But how to let the receiver know what the PSK i">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-13T12:11:44.691Z">
+<meta property="article:author" content="Travis TuRing">
+<meta property="article:tag" content="web, http">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/12/01/universe/web/https/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>What Is Https | Ring's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ring's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/01/universe/web/https/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          What Is Https
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-01T00:00:00+08:00">2020-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-13 20:11:44" itemprop="dateModified" datetime="2020-12-13T20:11:44+08:00">2020-12-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="What-is-Https"><a href="#What-is-Https" class="headerlink" title="What is Https"></a>What is Https</h2><p>Cryptography</p>
+<h3 id="Symmetric-encryption"><a href="#Symmetric-encryption" class="headerlink" title="Symmetric encryption"></a>Symmetric encryption</h3><p>The classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.<br>+3 is <strong>PSK</strong>(pre shared key)</p>
+<p>But how to let the receiver know what the PSK is?</p>
+<h3 id="Asymmetric-encryption"><a href="#Asymmetric-encryption" class="headerlink" title="Asymmetric encryption"></a>Asymmetric encryption</h3><p>Which can solve listening problem.</p>
+<p>Encryption with public key, decryption with private key. </p>
+<ul>
+<li>Public key<ul>
+<li>$A_0+public\ key \overset{en}{=} A_1$</li>
+</ul>
+</li>
+<li>Private key<ul>
+<li>$A_1+private\ key \overset{de}{=} A_0$</li>
+</ul>
+</li>
+</ul>
+<p>Such as, there are two guys:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A: What is you public key?</span><br><span class="line">B: pk</span><br><span class="line">Than A can encryption with public and than send the infomation to B.</span><br><span class="line">And B can use the his key to get the right infomation.</span><br><span class="line"></span><br><span class="line">What if the hacker has the public?</span><br><span class="line">So hacker can fake the infomation</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Private-key-encryption"><a href="#Private-key-encryption" class="headerlink" title="Private key encryption"></a>Private key encryption</h4><p>Encryption with private key, decryption with public key. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A: Here is my public key</span><br><span class="line">B: get</span><br><span class="line">A: message &#x3D;private encryption&#x3D;&gt; cipher</span><br><span class="line">B: cipher &#x3D;public decryption&#x3D;&gt; message</span><br><span class="line"></span><br><span class="line">But if hacker has your public key hacker can get you message too.</span><br><span class="line">hacker: cipher &#x3D;public decryption&#x3D;&gt; message.</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="USE-BOTH"><a href="#USE-BOTH" class="headerlink" title="USE BOTH"></a>USE BOTH</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A: What is your public key?</span><br><span class="line">B: bk</span><br><span class="line">A: Ok. We are going to use Symmetric Encryption. The PSK is:psk.</span><br><span class="line"></span><br><span class="line">hacker don&#39;t have the private the so he don&#39;t know what to do.</span><br></pre></td></tr></table></figure>
+
+<p>Actually asymmetric encryption is not safe enough. What <strong>if B IS NOT B</strong>?</p>
+<h4 id="Modern-HTTPs-mode"><a href="#Modern-HTTPs-mode" class="headerlink" title="Modern HTTPs mode"></a>Modern HTTPs mode</h4><p>In real life we may choose to trust police station. So it may help that police station tell you that B is B in the following way.</p>
+<p>The police station here which we call it CA institution.</p>
+<ul>
+<li>Signature algorithm<ul>
+<li>encryption with CA’s private key</li>
+</ul>
+</li>
+<li>Check algorithm<ul>
+<li>decryption with CA’s public key</li>
+</ul>
+</li>
+<li>the whole process can be received but can’t be faked</li>
+</ul>
+<p>(we trust browser, browser trust CA) </p>
+<table>
+<thead>
+<tr>
+<th>Roles</th>
+<th>browser(user), web, CA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>web</td>
+<td>through a serise of process to get the CA certification.</td>
+</tr>
+<tr>
+<td>CA</td>
+<td>signature this web with its private key and broadcast the public key, which we can use it to get infomation of web</td>
+</tr>
+<tr>
+<td>browser</td>
+<td>varify the web’s public key with CA’s public key and mark web is safe. (B is B)</td>
+</tr>
+</tbody></table>
+<p>After we know B is B, we can encryption message with B’s public key.And tell B we are going to use PSK.And than we are safe.</p>
+<h3 id="Identity"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</h3><ul>
+<li>authentication<ul>
+<li>to prove you is you</li>
+</ul>
+</li>
+<li>authornization<ul>
+<li>to prove you have the permissions</li>
+</ul>
+</li>
+</ul>
+<p>As we know, a web app can use cookie implementate a identity function.<br>But a cookie is like a tag that server make on you. And in your next request, browser send send cookie with your request.<br>Which means <strong>you can choose to send it or not with technical means!</strong>. Such as delete local cookie to fake a unvoted tags.</p>
+<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><h3 id="Database-Security-tips"><a href="#Database-Security-tips" class="headerlink" title="Database Security(tips)"></a>Database Security(tips)</h3><p>We need to login, but we don’t need to save user’s password into database.<br>We can save this <code>hash(password)</code> and compare it.\o/</p>
+<h3 id="Use-Hash-on-Web-App"><a href="#Use-Hash-on-Web-App" class="headerlink" title="Use Hash on Web App"></a>Use Hash on Web App</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cache-&gt;browser:</span><br><span class="line">browser-&gt;nginx: request(Img)</span><br><span class="line">nginx--&gt;browser: Img &amp; ETag(hash) 200</span><br><span class="line">nginx-&gt;server: </span><br><span class="line">server--&gt;nginx: </span><br><span class="line">browser-&gt;cache: save Img</span><br><span class="line"></span><br><span class="line">browser-&gt;nginx: request(Img &amp; hash equals?)</span><br><span class="line">nginx-&gt;server: hash equals?</span><br><span class="line">server--&gt;nginx: yes</span><br><span class="line">nginx--&gt;browser: not modified 206</span><br><span class="line">browser-&gt;cache: search your cache</span><br><span class="line">cache-&gt;browser: here</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web-http/" rel="tag"># web, http</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/29/universe/linux/project_like/customize_a_kernel/" rel="prev" title="如何配置linux内核">
+      <i class="fa fa-chevron-left"></i> 如何配置linux内核
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/05/universe/tech_tips/IO_multiplexing_intro/" rel="next" title="IO多路复用select、poll、epoll介绍">
+      IO多路复用select、poll、epoll介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Https"><span class="nav-number">1.</span> <span class="nav-text">What is Https</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Symmetric-encryption"><span class="nav-number">1.1.</span> <span class="nav-text">Symmetric encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asymmetric-encryption"><span class="nav-number">1.2.</span> <span class="nav-text">Asymmetric encryption</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Private-key-encryption"><span class="nav-number">1.2.1.</span> <span class="nav-text">Private key encryption</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#USE-BOTH"><span class="nav-number">1.2.2.</span> <span class="nav-text">USE BOTH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Modern-HTTPs-mode"><span class="nav-number">1.2.3.</span> <span class="nav-text">Modern HTTPs mode</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Identity"><span class="nav-number">1.3.</span> <span class="nav-text">Identity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash"><span class="nav-number">2.</span> <span class="nav-text">Hash</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Database-Security-tips"><span class="nav-number">2.1.</span> <span class="nav-text">Database Security(tips)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-Hash-on-Web-App"><span class="nav-number">2.2.</span> <span class="nav-text">Use Hash on Web App</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Travis TuRing</p>
+  <div class="site-description" itemprop="description">Mens et Manus</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="密码学和数据安全导论可靠的密码体制必须遵守Auguste Kerekhoffs在1883年提出的一个假说，即Kerekhoffs原理:  即使密钥外的整个系统的一切都是公开的，这个密码体制也必须是安全的。尤其是即使攻击者知道系统的加密算法和解密算法，此系统也必须是安全的。  需要强调的是，设计上一个隐藏细节的系统看似是更安全的。但是历史经验告诉我们这样的系统其实是很脆弱的，系统的细节可以通过逆向工">
+<meta property="og:type" content="article">
+<meta property="og:title" content="密码学">
+<meta property="og:url" content="http://yoursite.com/2020/05/04/universe/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E5%AF%86%E7%A0%81%E5%AD%A6/index.html">
+<meta property="og:site_name" content="Ring&#39;s Blog">
+<meta property="og:description" content="密码学和数据安全导论可靠的密码体制必须遵守Auguste Kerekhoffs在1883年提出的一个假说，即Kerekhoffs原理:  即使密钥外的整个系统的一切都是公开的，这个密码体制也必须是安全的。尤其是即使攻击者知道系统的加密算法和解密算法，此系统也必须是安全的。  需要强调的是，设计上一个隐藏细节的系统看似是更安全的。但是历史经验告诉我们这样的系统其实是很脆弱的，系统的细节可以通过逆向工">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-15T13:34:14.498Z">
+<meta property="article:author" content="Travis TuRing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/04/universe/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E5%AF%86%E7%A0%81%E5%AD%A6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>密码学 | Ring's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ring's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/04/universe/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E5%AF%86%E7%A0%81%E5%AD%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          密码学
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-04 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-04T00:00:00+08:00">2020-05-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="密码学和数据安全导论"><a href="#密码学和数据安全导论" class="headerlink" title="密码学和数据安全导论"></a>密码学和数据安全导论</h2><p>可靠的密码体制必须遵守Auguste Kerekhoffs在1883年提出的一个假说，即Kerekhoffs原理:</p>
+<blockquote>
+<p>即使密钥外的整个系统的一切都是公开的，这个密码体制也必须是安全的。尤其是即使攻击者知道系统的加密算法和解密算法，此系统也必须是安全的。</p>
+</blockquote>
+<p>需要强调的是，设计上一个隐藏细节的系统看似是更安全的。但是历史经验告诉我们这样的系统其实是很脆弱的，系统的细节可以通过逆向工程破解。这就是说为什么即使攻击者知道加密算法，加密方案仍必须保持安全的原因。</p>
+<h3 id="模运算与多种古典密码"><a href="#模运算与多种古典密码" class="headerlink" title="模运算与多种古典密码"></a>模运算与多种古典密码</h3><h4 id="模运算"><a href="#模运算" class="headerlink" title="模运算"></a>模运算</h4><p>几乎所有的加密算法都是基于有限个元素的运算。模运算就是在有限个数集中执行运算的简单方法：</p>
+<p>定义：模运算</p>
+<blockquote>
+<p>假设$a, r, m \in Z$(其中Z是所有整数的集合)，并且m&gt;0。如果m除a-r，可记作：<br>$$a \equiv r \bmod m$$<br>其中m称为模数，r称为余数</p>
+</blockquote>
+<blockquote>
+<p>其中$a \equiv b (\bmod m)$表示a与b对于m同余</p>
+</blockquote>
+<h5 id="等价类中所有成员的等价行为"><a href="#等价类中所有成员的等价行为" class="headerlink" title="等价类中所有成员的等价行为"></a>等价类中所有成员的等价行为</h5><p>对于一个给定模数m，选择等价类中任何一个元素用于计算的结果都是一样的。因此我们可以选择等价类中最易于计算的一个元素进行模运算</p>
+<p>计算$3^8$模7的的结果：</p>
+<ul>
+<li>$3^8 = 6561 \equiv 2 \bmod 7$</li>
+<li>下面使用等价类进行计算<br>$$3^8 = 3^4 \cdot 3^4 = 81 \cdot 81$$</li>
+<li>然后将中间结果的81替换为同一等价类中的其他元素。在模数7的等价类中，最小的正元素是4(因为$81 = 11 \cdot 7 + 4$)，因此：<br>$$3^8 = 3^4 \cdot 3^4 \equiv 4 \cdot 4 \equiv 16 \bmod 7 \equiv 2 \bmod 7$$</li>
+</ul>
+<p>通用的规则是：应该尽量使用模化简，使计算的数值尽可能小，这样做总是极具计算优势</p>
+<h4 id="整数环"><a href="#整数环" class="headerlink" title="整数环"></a>整数环</h4><p>定义：环</p>
+<blockquote>
+<p>整数环$Z_m$由以下两部分组成：</p>
+<ul>
+<li><ol>
+<li>集合$Z_m = (0, 1, 2, …, m-1)$</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>两种操作”+”和”×”，使得所有的$a, b \in Z_m$有<ul>
+<li>1)$a + b \equiv c \bmod m, (c \in Z_m)$</li>
+<li>2)$a \times b \equiv d \bmod m, (d \in Z_m)$</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<p>环具有以下特征：</p>
+<ul>
+<li>如果环内任何两个数相加或相乘得到的结果始终在环内，那么这个环是封闭的</li>
+<li>加法和乘法是可结合的，例如对所有的$a, b, c \in Z_m$，都有$a + (b+c) = (a+b) + c$和$a \cdot (b \cdot c) = (a \cdot b) \cdot c$</li>
+<li>加法中存在中性元素0，使得对每个$a \in Z_m$都有$a + 0 \equiv a \bmod m$</li>
+<li>环中的任何元素a都存在一个负元素-a，使得$a + (-a) \equiv 0 \bmod m$，即加法逆元始终存在</li>
+<li>乘法中存在中性元素1，使得对每个$a \in Z_m$都有$a \times 1 \equiv a \bmod m$</li>
+<li>不是所有元素都存在乘法逆元，假设$a \in Z$，乘法逆元$a^{-1}$可以定义为：<br>$$a \times a^{-1} = 1 \mod m$$<br>如果某个元素的乘法逆元存在，则可以除以这个元素，因为$b/a \equiv b \cdot a^{-1} \bmod m$</li>
+<li>寻找逆元比较困难，可以通过一种简单的方法判断一个元素a的逆元是否存在：<ul>
+<li>当且仅当$gcd(a, m) = 1$，一个元素$a \in Z$存在乘法逆元$a^{01}$，其中gcd表示最大公约数(Greatest Common divisor)，$gcd(a, m) = 1$就表示a和m(模数)互质</li>
+</ul>
+</li>
+</ul>
+<h4 id="仿射密码"><a href="#仿射密码" class="headerlink" title="仿射密码"></a>仿射密码</h4><p>仿射密码是一种改善的移位密码，仿射密码的思路是将明文密码乘以密钥的一部分，然后再加上密钥的剩余部分</p>
+<p>定义：仿射加密</p>
+<blockquote>
+<p>假设$x, y ,a, b \in Z_26$(26个字母)</p>
+<p>加密：$e_k(x) = y \equiv a \cdot x + b \bmod 26$</p>
+<p>解密：$d_k(y) = x \equiv a^{-1} \cdot (y-b) \bmod 26$</p>
+<p>密钥为：$k = (a, b)$，且满足限制条件gcd(a, 26)=1</p>
+</blockquote>
+<p>gcd(a, 26)=1 这个限制是源于这样一个事实：加密时需要求密钥参数a的逆元。</p>
+<p>通过尝试所有$a^{-1}$的可能值，直到$a \cdot a^{-1} \equiv 1 \bmod 26$即可得到逆元</p>
+<p>因此仿射加密的确比移位加密复杂，但也是可暴力破解的<br>$$密钥空间 = (a的可能值) \times (b的可能值)$$</p>
+<h2 id="序列密码"><a href="#序列密码" class="headerlink" title="序列密码"></a>序列密码</h2><p>对称密码学分成分组密码和序列密码两部分</p>
+<ul>
+<li>序列密码<ul>
+<li>单独加密每个位</li>
+</ul>
+</li>
+<li>分组密码<ul>
+<li>每次使用相同的密钥加密整个明文位分组</li>
+</ul>
+</li>
+</ul>
+<h3 id="序列密码加密与解密"><a href="#序列密码加密与解密" class="headerlink" title="序列密码加密与解密"></a>序列密码加密与解密</h3><p>定义：序列密码</p>
+<blockquote>
+<p>明文、密文和密钥序列都是由单独的位组成，即$x_i, y_i, s_i \in {0, 1}$</p>
+<p>加密：$y_i \equiv x_i + s_i \bmod 2$</p>
+<p>解密：$x_i \equiv y_i + s_i \bmod 2$</p>
+</blockquote>
+<p>加密解密推导：加密和解密用的是相同的函数</p>
+<p>$$\begin{aligned}<br>d(y_i) &amp;\equiv y_i + s_i \bmod 2 \<br>&amp;\equiv x_i + s_i + s_i \bmod 2 \<br>&amp;\equiv x_i + 2s_i \bmod 2 \<br>&amp;\equiv x_i + 0 \bmod 2 \<br>&amp;\equiv x_i \bmod 2 \<br>\end{aligned}$$</p>
+<p>下面给出模2加法的真值表</p>
+<table>
+<thead>
+<tr>
+<th>$x_i$</th>
+<th>$s_i$</th>
+<th>$y_i \equiv x_i + s_i \bmod 2$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>事实上模2加法与异或XOR是等价的，密文为0或1的概率是完全相等的</p>
+<p>密钥序列$s_1, s_2, …,s_i$是序列密码安全的核心问题，在攻击者看来$s_i$必须的随机的</p>
+<h3 id="随机数与牢不可破的分组密码"><a href="#随机数与牢不可破的分组密码" class="headerlink" title="随机数与牢不可破的分组密码"></a>随机数与牢不可破的分组密码</h3><h4 id="随机数生成器"><a href="#随机数生成器" class="headerlink" title="随机数生成器"></a>随机数生成器</h4><ul>
+<li>真随机数生成器(TRNG)<ul>
+<li>TRNG的突出特征是它是输出是不可复制的<ul>
+<li>如拋100次硬币，世界上另一个人抛出和我相同的结果概率很低</li>
+</ul>
+</li>
+<li>TRNG都是基于物理过程，主要例子包括抛硬币等</li>
+</ul>
+</li>
+<li>(通用的)伪随机数生成器(PRNG)<ul>
+<li>PRNG从一个初始种子值开始通过各种计算得到序列</li>
+<li>PRNG并不是真正意义上的随机，因为它们是可以算出来的</li>
+<li>对PRNG的一个一般要求是：必须有良好的统计属性<ul>
+<li>即它的输出与真随机数序列相同</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>加密安全的伪随机数生成器(CSPRNG)<ul>
+<li>是一种不可预测的PRNG，即计算后续位在计算上是不可行的</li>
+</ul>
+</li>
+</ul>
+<h4 id="一次一密"><a href="#一次一密" class="headerlink" title="一次一密"></a>一次一密</h4><p>一个完美的密钥应该具有的特征：无条件安全。定义如下</p>
+<blockquote>
+<p>如果一个密码体制在无限计算资源的情况下也不能被破译，则说明它是无条件安全的或信息论上安全的</p>
+</blockquote>
+<p>一下是个简单的无条件安全的密码，这个密码是<strong>一次一密(OTP)</strong>，定义如下</p>
+<blockquote>
+<p>一个序列密码成为一次一密，必须满足一下条件：</p>
+<ul>
+<li><ol>
+<li>通过真随机数生成器得到密钥序列$s_1, s_2, …$</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>只有合法的通信方才知道密钥序列</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>每个密钥序列位$s_i$仅使用一次<br>一次一密是无条件安全的</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<p>证明OTP是无条件安全的方法如下</p>
+<p>$$\begin{aligned}<br>y_0 &amp;\equiv x_0 + s_0 \bmod 2 \<br>y_1 &amp;\equiv x_1 + s_1 \bmod 2 \<br>…<br>\end{aligned}$$</p>
+<p>每个单独的关系都是有两个未知数的线性等式模2,它们无法求解</p>
+<p>OTP缺点如下，导致它在实际中很少使用：</p>
+<ul>
+<li>需要真随机数生成器</li>
+<li>每个密钥序列使用一次，需要多次交换密钥序列</li>
+</ul>
+<h4 id="关于实际序列密码"><a href="#关于实际序列密码" class="headerlink" title="关于实际序列密码"></a>关于实际序列密码</h4><p>我们处理实际序列密码的方式就是使用伪随机数生成器(PRNG)代替真随机数生成器。实际上，所有已知的实际加密算法都不是无条件安全的。但是我们可以做到 <strong>计算安全</strong> </p>
+<p>定义：计算安全</p>
+<blockquote>
+<p>如果为破解一个密码体制，最好的一直算法需要至少t个操作，则说明次密码体制是计算安全的</p>
+</blockquote>
+<p>这个定义看似合理但是存在若干问题。首先人们不知道对应的最好算法是哪一个，因此我们不知道是否存在更强大的攻击。</p>
+<h5 id="利用PRNG构建密码流"><a href="#利用PRNG构建密码流" class="headerlink" title="利用PRNG构建密码流"></a>利用PRNG构建密码流</h5><p>虽然PRNG可以用来生成密钥流，但对于序列密码而言都不足够，考虑下面的例子：</p>
+<p>假设一个基于线性同余生成器的PRNG：</p>
+<p>$$\begin{aligned}<br>S_0 &amp;\equiv  seed \<br>S_{i+1} &amp;\equiv AS_i + B \bmod m, i = 0, 1, … \<br>\end{aligned}$$</p>
+<p>设其中选择的m为100位长，$S_i, A, B \in {0, 1, …, m-1}$，我们通过仔细选择这些参数是的此PRNG具有良好的统计属性。密钥包含值(A, B)，可可能包含种子$S_0$，并且每个值的长度都是100，总共密钥长度就为200位。发送方使用一下方式加密：</p>
+<p>$$y_i \equiv x_i + s_i \bmod 2$$</p>
+<p>其中$s_i$为PRNG输出符号$S_j$的二进制表示的位</p>
+<p>攻击者可以轻易发起攻击，如果攻击者知道明文的前300位(通过头文件、常用语等猜出部分明文)。那他可以利用下式计算密钥序列的前300位：</p>
+<p>$$s_i \equiv y_i + x_i \bmod m, i = 1, 2, …, 300$$</p>
+<p>于是就得到了:$S_1 = {s_1, …, s_{100}}, S_2 = {s_1, …, s_{200}}, S_3 = {s_3, …, s_{300}}$。攻击者现在可以得到两个等式：</p>
+<p>$$\begin{aligned}<br>S_2 \equiv AS_1 + B \bmod m \<br>S_3 \equiv AS_2 + B \bmod m<br>\end{aligned}$$</p>
+<p>对于一个基于$Z_m$的线性等式系统，拥有两个未知数A，B，我们可以得到：</p>
+<p>$$\begin{aligned}<br>A &amp;\equiv (S_2 - S_3)/(S_1 - S_2) \bmod m \<br>B &amp;\equiv S_2 - S_1(S_2 - S_3)/(S_1 - S_2) \bmod m<br>\end{aligned}$$</p>
+<p>在$gcd((S_1 - S_2), m) \neq 1$情况下可以得到多个解，如果已知明文的第四片段信息就可以唯一测出密钥。</p>
+<p>这种类型的攻击正是发明CSPRNG表示方法的原因</p>
+<h5 id="利用CSPRNG构建密钥序列"><a href="#利用CSPRNG构建密钥序列" class="headerlink" title="利用CSPRNG构建密钥序列"></a>利用CSPRNG构建密钥序列</h5><p>CSPRNG可以确保密钥序列是不可预测的，但是相当一部分在密码学之外的伪随机数生成器不是密码学安全的，因此我们需要使用专门的伪随机数生成器来生成密码序列</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/01/universe/vim/vimscript_backup/" rel="prev" title="learn vimscript the hard way">
+      <i class="fa fa-chevron-left"></i> learn vimscript the hard way
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/09/Major/assembly_language/" rel="next" title="汇编语言(Intel)">
+      汇编语言(Intel) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#密码学和数据安全导论"><span class="nav-number">1.</span> <span class="nav-text">密码学和数据安全导论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模运算与多种古典密码"><span class="nav-number">1.1.</span> <span class="nav-text">模运算与多种古典密码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模运算"><span class="nav-number">1.1.1.</span> <span class="nav-text">模运算</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#等价类中所有成员的等价行为"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">等价类中所有成员的等价行为</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#整数环"><span class="nav-number">1.1.2.</span> <span class="nav-text">整数环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#仿射密码"><span class="nav-number">1.1.3.</span> <span class="nav-text">仿射密码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列密码"><span class="nav-number">2.</span> <span class="nav-text">序列密码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序列密码加密与解密"><span class="nav-number">2.1.</span> <span class="nav-text">序列密码加密与解密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机数与牢不可破的分组密码"><span class="nav-number">2.2.</span> <span class="nav-text">随机数与牢不可破的分组密码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机数生成器"><span class="nav-number">2.2.1.</span> <span class="nav-text">随机数生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一次一密"><span class="nav-number">2.2.2.</span> <span class="nav-text">一次一密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于实际序列密码"><span class="nav-number">2.2.3.</span> <span class="nav-text">关于实际序列密码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#利用PRNG构建密码流"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">利用PRNG构建密码流</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#利用CSPRNG构建密钥序列"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">利用CSPRNG构建密钥序列</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Travis TuRing</p>
+  <div class="site-description" itemprop="description">Mens et Manus</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

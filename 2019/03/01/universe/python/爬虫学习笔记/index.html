@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="正则表达式 re解析模块最常规的匹配1234567import recontent &#x3D; &quot;hello 123 1234 world_this is a regex demo&quot;# re.match(pattern,string,flags &#x3D; 0)   pattern和string比返回booleanresult &#x3D; re.match(&#39;^hello\s\d\d\d\s\d&amp;#123;4&amp;#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/03/01/universe/python/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Ring&#39;s Blog">
+<meta property="og:description" content="正则表达式 re解析模块最常规的匹配1234567import recontent &#x3D; &quot;hello 123 1234 world_this is a regex demo&quot;# re.match(pattern,string,flags &#x3D; 0)   pattern和string比返回booleanresult &#x3D; re.match(&#39;^hello\s\d\d\d\s\d&amp;#123;4&amp;#125;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-02-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-15T13:34:14.498Z">
+<meta property="article:author" content="Travis TuRing">
+<meta property="article:tag" content="python, spider">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/03/01/universe/python/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>爬虫学习笔记 | Ring's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ring's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/universe/python/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          爬虫学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-01 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-01T00:00:00+08:00">2019-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="正则表达式-re解析模块"><a href="#正则表达式-re解析模块" class="headerlink" title="正则表达式 re解析模块"></a>正则表达式 re解析模块</h2><h3 id="最常规的匹配"><a href="#最常规的匹配" class="headerlink" title="最常规的匹配"></a>最常规的匹配</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">"hello 123 1234 world_this is a regex demo"</span></span><br><span class="line"><span class="comment"># re.match(pattern,string,flags = 0)   pattern和string比返回boolean</span></span><br><span class="line">result = re.match(<span class="string">'^hello\s\d\d\d\s\d&#123;4&#125;\s\w&#123;10&#125;.*demo$'</span>,content)</span><br><span class="line"><span class="comment">#   ^匹配字符串开头 空格 三个数分开读 空 四个数一起读 空格 匹配字母 .代替任意字符 指定结尾</span></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<h3 id="泛匹配"><a href="#泛匹配" class="headerlink" title="泛匹配"></a>泛匹配</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">"hello 123 1234 world_this is a regex demo"</span></span><br><span class="line">result = re.match(<span class="string">'^helle.*demo$'</span>,content)</span><br><span class="line"><span class="comment"># .*  匹配了中间所以字符 具体baidu</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="匹配目标"><a href="#匹配目标" class="headerlink" title="匹配目标"></a>匹配目标</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">"hello 123 1234 world_this is a regex demo"</span></span><br><span class="line">result =  re.match(<span class="string">'^hello\s(\d+)\sworld.*demo$'</span>,content)</span><br><span class="line">print(result.group(<span class="number">1</span>)) <span class="comment"># 第一个括号的内容</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="贪婪匹配"><a href="#贪婪匹配" class="headerlink" title="贪婪匹配"></a>贪婪匹配</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">"hello 123 1234 world_this is a regex demo"</span></span><br><span class="line">result =  re.match(<span class="string">'^he.*(\d+).*demo$'</span>,content)</span><br><span class="line">print(result.group(<span class="number">1</span>))</span><br><span class="line"><span class="comment"># 结果 4  因为he后4前都被.*匹配了 但是(\d+)要求至少一个数字</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="非贪婪匹配"><a href="#非贪婪匹配" class="headerlink" title="非贪婪匹配"></a>非贪婪匹配</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">"hello 123 1234 world_this is a regex demo"</span></span><br><span class="line">result =  re.match(<span class="string">'^he.*?(\d+).*demo$'</span>,content)</span><br><span class="line"><span class="comment">#                ?匹配0个或1个正则表达式，.*匹配了he后面的字母，数字前有个空格，那就被?匹配下来了</span></span><br><span class="line">print(result.group(<span class="number">1</span>))</span><br><span class="line"><span class="comment"># 结果 123 匹配尽可能少 碰到了数字就停止前面的匹配</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="匹配模式"><a href="#匹配模式" class="headerlink" title="匹配模式"></a>匹配模式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'''hello 123 1234 world_this is</span></span><br><span class="line"><span class="string">a regex demo</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">result =  re.match(<span class="string">'^he.*?(\d+).*?demo$'</span>,content)</span><br><span class="line">print(result)</span><br><span class="line"><span class="comment"># 结果None 因为.匹配不到换行符</span></span><br><span class="line">result =  re.match(<span class="string">'^he.*?(\d+).*?demo$'</span>,content,re.S)<span class="comment"># 加了这个参数就可匹配任意字符了</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 就像想要输出带有\n之类的字符串的话...</span></span><br><span class="line"><span class="comment"># 和传统的一样特殊字符前加 \  把特殊字符转义了</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content1 = <span class="string">'price is $5.00'</span></span><br><span class="line">result1 =  re.match(<span class="string">'price is $5.00'</span>,content)</span><br><span class="line">result2 =  re.match(<span class="string">'price is \$5\.00'</span>,content)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p>总结：尽量使用泛匹配，使用括号得到匹配目标，尽量使用非贪婪模式，要匹配换行符记得参数 re.S</p>
+<h3 id="re-search-vs-re-match"><a href="#re-search-vs-re-match" class="headerlink" title="re.search vs re.match"></a>re.search vs re.match</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># re.match从开头开始匹配 配不上就None</span></span><br><span class="line"><span class="comment"># re.search从第一个出现的字符开始匹配</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="re-findall"><a href="#re-findall" class="headerlink" title="re.findall"></a>re.findall</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 搜索全部，以列表形式返回所有能匹配的子串，列表的每个元素是个元组</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="re-sub"><a href="#re-sub" class="headerlink" title="re.sub"></a>re.sub</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 替换字符串中每一个匹配的子串,返回替换后的字符串</span></span><br><span class="line"><span class="comment">#            ^</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'hello 123 1234 world_this isa regex demo'</span></span><br><span class="line">result = re.sub(<span class="string">'\d+'</span>,<span class="string">'hhh'</span>,content)</span><br><span class="line">print(result)</span><br><span class="line"></span><br><span class="line"><span class="comment">####</span></span><br><span class="line"><span class="comment">#那如果要在原字符串上增加呢</span></span><br><span class="line"><span class="comment">#截取，拼接，替换</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'hello 123 1234 world_this isa regex demo'</span></span><br><span class="line">result = re.sub(<span class="string">'(\d+)'</span>,<span class="string">r'\1hhh'</span>,content)</span><br><span class="line"><span class="comment">#                ^存组    ^用\1取第一组，r是取消\的转义作用</span></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<h3 id="re-compile"><a href="#re-compile" class="headerlink" title="re.compile"></a>re.compile</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将正则字符串编译成正则表达式对象，！！！以便复用这个匹配模式</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'''hello 123 1234 world_this </span></span><br><span class="line"><span class="string">is a regex demo'''</span></span><br><span class="line">pattern = re.compile(<span class="string">'hello.*'</span>,re.S) <span class="comment"># 匹配模式存为了 pattren</span></span><br><span class="line">result = re.match(pattern,content)   <span class="comment"># 以后就能直接用这种方法</span></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<h2 id="BeautifulSoup"><a href="#BeautifulSoup" class="headerlink" title="BeautifulSoup"></a>BeautifulSoup</h2><h3 id="解析库"><a href="#解析库" class="headerlink" title="解析库"></a>解析库</h3><p>​        1.Python标准库   用法： BeatufulSoup(markup,’html.parser’)<br>​        2.lxml HTML解析器  用法： BeatufulSoup(markup,’lxml’)<br>​        3.lxml XML 解析器  用法： BeatufulSoup(markup,’xml’)<br>​        4.html5lib  用法： BeatufulSoup(markup,’html5lib’)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入</span></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeatufulSoup</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeatufulSoup</span><br><span class="line"></span><br><span class="line">html = <span class="string">'''</span></span><br><span class="line"><span class="string">   各种标签</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">soup = BeatifulSoup(html,<span class="string">'lxml'</span>)</span><br><span class="line">print(soup.prettify())  <span class="comment"># 格式化代码 自动补全</span></span><br><span class="line">print(soup.title.string) <span class="comment"># 打印title标签里面的内容</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="标签选择器"><a href="#标签选择器" class="headerlink" title="标签选择器"></a>标签选择器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用法同上的 title</span></span><br><span class="line"><span class="comment"># 只返回第一个匹配的结果</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="获取名称"><a href="#获取名称" class="headerlink" title="获取名称"></a>获取名称</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup.标签.name</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">soup.标签.attrs[<span class="string">'属性名称'</span>]</span><br><span class="line"><span class="comment">#也可</span></span><br><span class="line">soup.标签[<span class="string">'属性名称'</span>]</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取内容"><a href="#获取内容" class="headerlink" title="获取内容"></a>获取内容</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup.标签.string</span><br></pre></td></tr></table></figure>
+
+<h4 id="嵌套选择"><a href="#嵌套选择" class="headerlink" title="嵌套选择"></a>嵌套选择</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 标签是套娃娃的嘛 so</span></span><br><span class="line">soup.标签.标签. <span class="comment"># 标签的子标签</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="子节点和子孙节点"><a href="#子节点和子孙节点" class="headerlink" title="子节点和子孙节点"></a>子节点和子孙节点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1</span></span><br><span class="line">soup.标签.contents <span class="comment"># 获取标签所有的子节点  返回列表</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2</span></span><br><span class="line">soup.标签.children <span class="comment"># 迭代器</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3</span></span><br><span class="line">soup.标签.decendants <span class="comment"># 获取子孙节点(子的子也获取)  返回迭代器</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="父节点于祖先节点"><a href="#父节点于祖先节点" class="headerlink" title="父节点于祖先节点"></a>父节点于祖先节点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1</span></span><br><span class="line">soup.标签.parent <span class="comment"># 获取父节点</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2</span></span><br><span class="line">soup.标签.parent <span class="comment"># 获取所有祖先节点</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="兄弟节点"><a href="#兄弟节点" class="headerlink" title="兄弟节点"></a>兄弟节点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">soup.标签.next_siblings <span class="comment"># 获取后面的兄弟节点</span></span><br><span class="line">soup.标签.previous_siblings <span class="comment"># 获取前面的兄弟节点</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="标准选择器"><a href="#标准选择器" class="headerlink" title="标准选择器"></a>标准选择器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># find_all(name, attrs, recursive, text, **kwargs)</span></span><br><span class="line">可根据签名，属性，内容查找</span><br><span class="line">soup.find_all(<span class="string">'标签'</span>) <span class="comment"># 返回的是列表的形式，可层层嵌套</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="attrs"><a href="#attrs" class="headerlink" title="attrs"></a>attrs</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(attrs=&#123;<span class="string">'属性名'</span>:<span class="string">'属性值'</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="text"><a href="#text" class="headerlink" title="text"></a>text</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(text=<span class="string">'内容'</span>) <span class="comment"># 根据文本内容选择，返回内容的列表//好鸡肋</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="find扩展"><a href="#find扩展" class="headerlink" title="find扩展"></a>find扩展</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find：类似find_all，但只返回第一个匹配结果</span><br><span class="line">find_parent()  find_parents()</span><br><span class="line">find_next_siblings()....等等</span><br></pre></td></tr></table></figure>
+
+<h3 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过select()直接传入CSS选择器即可完成选择</span></span><br><span class="line"><span class="number">1.</span>选<span class="class"><span class="keyword">class</span></span></span><br><span class="line"><span class="class">2.选标签</span></span><br><span class="line"><span class="class">3.选<span class="title">id</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="获取内容-1"><a href="#获取内容-1" class="headerlink" title="获取内容"></a>获取内容</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.get_text()</span><br></pre></td></tr></table></figure>
+
+<h2 id="PyQuery"><a href="#PyQuery" class="headerlink" title="PyQuery"></a>PyQuery</h2><p>像jQuery</p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyquery <span class="keyword">import</span> PyQuery <span class="keyword">as</span> pq <span class="comment"># 导入</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="字符串初始化"><a href="#字符串初始化" class="headerlink" title="字符串初始化"></a>字符串初始化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用法同上的标签选择器 class记得点和空格...</span></span><br><span class="line">html = <span class="string">'''</span></span><br><span class="line"><span class="string">    &lt;div id="fakebox-container"&gt;</span></span><br><span class="line"><span class="string">      &lt;ul id="fakebox"&gt;</span></span><br><span class="line"><span class="string">        &lt;li id="fakebox-search-icon"&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li id="fakebox-text"&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;input id="fakebox-input" autocomplete="off" tabindex="-1" type="url" aria-hidden="true"&gt;</span></span><br><span class="line"><span class="string">        &lt;li id="fakebox-cursor"&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;button id="fakebox-microphone" hidden=""&gt;&lt;/button&gt;</span></span><br><span class="line"><span class="string">      &lt;/ul&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">doc = pq(html)</span><br><span class="line">print(doc(<span class="string">'标签'</span>))</span><br></pre></td></tr></table></figure>
+
+<h4 id="URL初始化"><a href="#URL初始化" class="headerlink" title="URL初始化"></a>URL初始化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">doc = pq(url=<span class="string">''</span>)</span><br><span class="line">print(doc(<span class="string">'标签'</span>))</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件初始化"><a href="#文件初始化" class="headerlink" title="文件初始化"></a>文件初始化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">doc = pq(filename=<span class="string">'路径'</span>)</span><br><span class="line">print(doc(<span class="string">'标签'</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本CSS选择器"><a href="#基本CSS选择器" class="headerlink" title="基本CSS选择器"></a>基本CSS选择器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">html = <span class="string">'''  '''</span></span><br><span class="line">doc = pq(html)</span><br><span class="line">print(doc(<span class="string">'#   .   签名'</span>)	) <span class="comment"># 可层级关系 空格隔开表嵌套，直接写在后表并列</span></span><br><span class="line"><span class="comment"># 按id找的前面加#   按class找的加.    标签找的直接签名   ps.class=''   id=''按内容找</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查找元素"><a href="#查找元素" class="headerlink" title="查找元素"></a>查找元素</h3><h4 id="子元素"><a href="#子元素" class="headerlink" title="子元素"></a>子元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">html = <span class="string">'''  '''</span></span><br><span class="line">doc = pq(html)</span><br><span class="line">items = doc(<span class="string">'.list'</span>)</span><br><span class="line">lis = items.find(<span class="string">'li'</span>) <span class="comment"># 找所有</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">items.children()</span><br></pre></td></tr></table></figure>
+
+<h4 id="父元素"><a href="#父元素" class="headerlink" title="父元素"></a>父元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">items.parent() <span class="comment"># 拿到父元素</span></span><br><span class="line">items.parents() <span class="comment"># 拿所有祖先  </span></span><br><span class="line"><span class="comment"># 括号内可用CSS选择器筛选</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="兄弟元素"><a href="#兄弟元素" class="headerlink" title="兄弟元素"></a>兄弟元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">items.siblings()  <span class="comment"># 也可选择器筛选</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lis = doc(<span class="string">'签名'</span>).items()  <span class="comment"># 生成一个生成器，那就可for了</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="获取信息"><a href="#获取信息" class="headerlink" title="获取信息"></a>获取信息</h3><h4 id="获取属性-1"><a href="#获取属性-1" class="headerlink" title="获取属性"></a>获取属性</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XXX.attr(<span class="string">'属性名'</span>) <span class="comment"># 和之前是一样的</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="获取文本"><a href="#获取文本" class="headerlink" title="获取文本"></a>获取文本</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.text()</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取HTML"><a href="#获取HTML" class="headerlink" title="获取HTML"></a>获取HTML</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.html()  <span class="comment"># 把里面的html(代码)获取出来</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="DOM操作"><a href="#DOM操作" class="headerlink" title="DOM操作"></a>DOM操作</h3><h4 id="addClass、removeClass"><a href="#addClass、removeClass" class="headerlink" title="addClass、removeClass"></a>addClass、removeClass</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.addClass </span><br><span class="line">.removeClass <span class="comment"># 增减class(某个标签的)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="attr、css"><a href="#attr、css" class="headerlink" title="attr、css"></a>attr、css</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.attr(<span class="string">'A'</span>,<span class="string">'B'</span>) <span class="comment"># 增加一个 A=B的属性，如果已经存在就覆盖掉</span></span><br><span class="line">。css(<span class="string">'A'</span>,<span class="string">'B'</span>) <span class="comment">#增加一个sytle (width:10px)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.remove() <span class="comment"># 删掉选中的内容</span></span><br></pre></td></tr></table></figure>
+
+<p>还有其他很多方法</p>
+<h3 id="伪类选择器"><a href="#伪类选择器" class="headerlink" title="伪类选择器"></a>伪类选择器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">doc = pq(html)</span><br><span class="line">doc(<span class="string">'标签:first-child'</span>) <span class="comment"># 等等</span></span><br><span class="line">doc(<span class="string">'标签:nth-child(n)'</span>) <span class="comment"># 低n个子</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Selenium"><a href="#Selenium" class="headerlink" title="Selenium"></a>Selenium</h2><p>自动化测试工具，支持多浏览器，爬虫中主要用了解决JavaScript渲染问题</p>
+<h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.wait <span class="keyword">import</span> WebDriverWait</span><br><span class="line"></span><br><span class="line">browser = webdriver.Chrome() <span class="comment"># 声明浏览器驱动对象，别的浏览器同理</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    browser.get(<span class="string">'https://www.baidu.com'</span>) <span class="comment"># 传入url，跳出浏览器，访问那个网址</span></span><br><span class="line">    input = browser.find_element_by_id(<span class="string">'kw'</span>) <span class="comment"># 通过id找出信息</span></span><br><span class="line">    input.send_keys(<span class="string">'Python'</span>) <span class="comment"># 向元素中发送一些键</span></span><br><span class="line">    input.send_keys(Keys.ENTER) <span class="comment"># 然后回车</span></span><br><span class="line">    wait = WebDriverWait(browser,<span class="number">10</span>) <span class="comment"># 等待</span></span><br><span class="line">    wait.until(EC.presence_of_element_located((By.ID,<span class="string">'content_left'</span>))) <span class="comment"># 等待id是con..那个元素被加载出来</span></span><br><span class="line">    print(browser.current_url) <span class="comment"># 打印出url</span></span><br><span class="line">    print(browser.get_cookies()) <span class="comment"># 打印</span></span><br><span class="line">    print(browser.page_source) <span class="comment">#打印源代码</span></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    browser.close()</span><br></pre></td></tr></table></figure>
+
+<h3 id="查找元素-1"><a href="#查找元素-1" class="headerlink" title="查找元素"></a>查找元素</h3><h4 id="查找单个元素"><a href="#查找单个元素" class="headerlink" title="查找单个元素"></a>查找单个元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.find_element_by_id(<span class="string">'id'</span>)</span><br><span class="line">.find_elements_by_css_selector(<span class="string">'#'</span>)</span><br><span class="line">.find_elements_by_xpath(<span class="string">''</span>) <span class="comment"># 等等很多方法</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 法2</span></span><br><span class="line"><span class="comment"># 例</span></span><br><span class="line">.find_elements(BY.ID,<span class="string">'id'</span>) <span class="comment">#上述方法的通用实现 根据BY的不同不同</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查找多个元素"><a href="#查找多个元素" class="headerlink" title="查找多个元素"></a>查找多个元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 同上只是用find_elements,返回列表</span></span><br><span class="line"><span class="comment">#                      ^</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="元素交互操作"><a href="#元素交互操作" class="headerlink" title="元素交互操作"></a>元素交互操作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入，点击等</span></span><br><span class="line">.send_keys(<span class="string">''</span>)</span><br><span class="line">.clear() <span class="comment"># 清空</span></span><br><span class="line">.click() <span class="comment"># 等等等等</span></span><br><span class="line"><span class="comment"># 更多在WebDriver API -&gt;webelement</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="交互动作"><a href="#交互动作" class="headerlink" title="交互动作"></a>交互动作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不同于上，是将动作附加的动作链中串行执行</span></span><br><span class="line"><span class="comment"># 更多...WebDriver API -&gt;Action Chains</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="执行JavaScript"><a href="#执行JavaScript" class="headerlink" title="执行JavaScript"></a>执行JavaScript</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">browser = webdriver.Chrome() </span><br><span class="line">browser.get(<span class="string">'https://www.baidu.com'</span>)</span><br><span class="line">browser.execute_script(<span class="string">'js代码'</span>) <span class="comment"># 这样传入js代码</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="获取元素信息"><a href="#获取元素信息" class="headerlink" title="获取元素信息"></a>获取元素信息</h3><h4 id="获取属性-2"><a href="#获取属性-2" class="headerlink" title="获取属性"></a>获取属性</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过find找到后</span></span><br><span class="line"><span class="comment"># .get_attribute('class') #获取class的属性</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="获取文本值"><a href="#获取文本值" class="headerlink" title="获取文本值"></a>获取文本值</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.text</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取ID、位置、标签名、大小"><a href="#获取ID、位置、标签名、大小" class="headerlink" title="获取ID、位置、标签名、大小"></a>获取ID、位置、标签名、大小</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.id</span><br><span class="line">.location</span><br><span class="line">.tag_name</span><br><span class="line">.size</span><br></pre></td></tr></table></figure>
+
+<h4 id="Frame"><a href="#Frame" class="headerlink" title="Frame"></a>Frame</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 雾</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="等待"><a href="#等待" class="headerlink" title="等待"></a>等待</h3><p>确保元素加载完全</p>
+<h4 id="隐式等待"><a href="#隐式等待" class="headerlink" title="隐式等待"></a>隐式等待</h4><p>到了一定时候发现元素还没加载出来，那继续等，超时抛出异常</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.implicitly_wait(等待时间)</span><br></pre></td></tr></table></figure>
+
+<h4 id="显示等待"><a href="#显示等待" class="headerlink" title="显示等待"></a>显示等待</h4><p>指定一个等待条件，指定一个最长等待时间，超时抛异常</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 有很多等待条件，如：</span></span><br><span class="line">title_is</span><br><span class="line">title_contains</span><br><span class="line"><span class="comment"># ...更多WebDriver API -&gt;Expected condition Support</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="前进后退"><a href="#前进后退" class="headerlink" title="前进后退"></a>前进后退</h3><p>浏览器的前进后退</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">browser.forward()</span><br><span class="line">browser.back()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.get_cookies()</span><br><span class="line">.add_cookies()</span><br><span class="line">.delete_all_cookise()</span><br><span class="line"><span class="comment"># 等等</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="选项卡管理"><a href="#选项卡管理" class="headerlink" title="选项卡管理"></a>选项卡管理</h3><p>（标签页）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过执行js控制</span></span><br><span class="line">.......</span><br></pre></td></tr></table></figure>
+
+<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 官方文档</span></span><br><span class="line"><span class="comment"># ...更多WebDriver API -&gt; Exception</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>pass</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python-spider/" rel="tag"># python, spider</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/01/26/universe/c/cpp_note/" rel="prev" title="c++学习笔记">
+      <i class="fa fa-chevron-left"></i> c++学习笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/03/01/universe/database/MongoDB/" rel="next" title="mongoDB usage">
+      mongoDB usage <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式-re解析模块"><span class="nav-number">1.</span> <span class="nav-text">正则表达式 re解析模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最常规的匹配"><span class="nav-number">1.1.</span> <span class="nav-text">最常规的匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛匹配"><span class="nav-number">1.2.</span> <span class="nav-text">泛匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#匹配目标"><span class="nav-number">1.3.</span> <span class="nav-text">匹配目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贪婪匹配"><span class="nav-number">1.4.</span> <span class="nav-text">贪婪匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非贪婪匹配"><span class="nav-number">1.5.</span> <span class="nav-text">非贪婪匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#匹配模式"><span class="nav-number">1.6.</span> <span class="nav-text">匹配模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转义"><span class="nav-number">1.7.</span> <span class="nav-text">转义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-search-vs-re-match"><span class="nav-number">1.8.</span> <span class="nav-text">re.search vs re.match</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-findall"><span class="nav-number">1.9.</span> <span class="nav-text">re.findall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-sub"><span class="nav-number">1.10.</span> <span class="nav-text">re.sub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-compile"><span class="nav-number">1.11.</span> <span class="nav-text">re.compile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeautifulSoup"><span class="nav-number">2.</span> <span class="nav-text">BeautifulSoup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解析库"><span class="nav-number">2.1.</span> <span class="nav-text">解析库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本用法"><span class="nav-number">2.2.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签选择器"><span class="nav-number">2.3.</span> <span class="nav-text">标签选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取名称"><span class="nav-number">2.3.1.</span> <span class="nav-text">获取名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取属性"><span class="nav-number">2.3.2.</span> <span class="nav-text">获取属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取内容"><span class="nav-number">2.3.3.</span> <span class="nav-text">获取内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌套选择"><span class="nav-number">2.3.4.</span> <span class="nav-text">嵌套选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子节点和子孙节点"><span class="nav-number">2.3.5.</span> <span class="nav-text">子节点和子孙节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#父节点于祖先节点"><span class="nav-number">2.3.6.</span> <span class="nav-text">父节点于祖先节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#兄弟节点"><span class="nav-number">2.3.7.</span> <span class="nav-text">兄弟节点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准选择器"><span class="nav-number">2.4.</span> <span class="nav-text">标准选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#attrs"><span class="nav-number">2.4.1.</span> <span class="nav-text">attrs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#text"><span class="nav-number">2.4.2.</span> <span class="nav-text">text</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find扩展"><span class="nav-number">2.4.3.</span> <span class="nav-text">find扩展</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS选择器"><span class="nav-number">2.5.</span> <span class="nav-text">CSS选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取内容-1"><span class="nav-number">2.6.</span> <span class="nav-text">获取内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PyQuery"><span class="nav-number">3.</span> <span class="nav-text">PyQuery</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">3.1.</span> <span class="nav-text">初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串初始化"><span class="nav-number">3.1.1.</span> <span class="nav-text">字符串初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#URL初始化"><span class="nav-number">3.1.2.</span> <span class="nav-text">URL初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件初始化"><span class="nav-number">3.1.3.</span> <span class="nav-text">文件初始化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本CSS选择器"><span class="nav-number">3.2.</span> <span class="nav-text">基本CSS选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找元素"><span class="nav-number">3.3.</span> <span class="nav-text">查找元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#子元素"><span class="nav-number">3.3.1.</span> <span class="nav-text">子元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#父元素"><span class="nav-number">3.3.2.</span> <span class="nav-text">父元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#兄弟元素"><span class="nav-number">3.3.3.</span> <span class="nav-text">兄弟元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历"><span class="nav-number">3.4.</span> <span class="nav-text">遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取信息"><span class="nav-number">3.5.</span> <span class="nav-text">获取信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取属性-1"><span class="nav-number">3.5.1.</span> <span class="nav-text">获取属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取文本"><span class="nav-number">3.5.2.</span> <span class="nav-text">获取文本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取HTML"><span class="nav-number">3.5.3.</span> <span class="nav-text">获取HTML</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM操作"><span class="nav-number">3.6.</span> <span class="nav-text">DOM操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#addClass、removeClass"><span class="nav-number">3.6.1.</span> <span class="nav-text">addClass、removeClass</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#attr、css"><span class="nav-number">3.6.2.</span> <span class="nav-text">attr、css</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#remove"><span class="nav-number">3.6.3.</span> <span class="nav-text">remove</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#伪类选择器"><span class="nav-number">3.7.</span> <span class="nav-text">伪类选择器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selenium"><span class="nav-number">4.</span> <span class="nav-text">Selenium</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本使用"><span class="nav-number">4.1.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找元素-1"><span class="nav-number">4.2.</span> <span class="nav-text">查找元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查找单个元素"><span class="nav-number">4.2.1.</span> <span class="nav-text">查找单个元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找多个元素"><span class="nav-number">4.2.2.</span> <span class="nav-text">查找多个元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元素交互操作"><span class="nav-number">4.3.</span> <span class="nav-text">元素交互操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交互动作"><span class="nav-number">4.4.</span> <span class="nav-text">交互动作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行JavaScript"><span class="nav-number">4.5.</span> <span class="nav-text">执行JavaScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取元素信息"><span class="nav-number">4.6.</span> <span class="nav-text">获取元素信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取属性-2"><span class="nav-number">4.6.1.</span> <span class="nav-text">获取属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取文本值"><span class="nav-number">4.6.2.</span> <span class="nav-text">获取文本值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取ID、位置、标签名、大小"><span class="nav-number">4.6.3.</span> <span class="nav-text">获取ID、位置、标签名、大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Frame"><span class="nav-number">4.6.4.</span> <span class="nav-text">Frame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等待"><span class="nav-number">4.7.</span> <span class="nav-text">等待</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#隐式等待"><span class="nav-number">4.7.1.</span> <span class="nav-text">隐式等待</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#显示等待"><span class="nav-number">4.7.2.</span> <span class="nav-text">显示等待</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前进后退"><span class="nav-number">4.8.</span> <span class="nav-text">前进后退</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookies"><span class="nav-number">4.9.</span> <span class="nav-text">Cookies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选项卡管理"><span class="nav-number">4.10.</span> <span class="nav-text">选项卡管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常处理"><span class="nav-number">4.11.</span> <span class="nav-text">异常处理</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Travis TuRing</p>
+  <div class="site-description" itemprop="description">Mens et Manus</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

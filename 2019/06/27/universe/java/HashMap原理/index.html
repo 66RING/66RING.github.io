@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="基本hashmap有数组+链表组成 基于红黑树的hashmap就是当链表达到一定长度时把链表变成红黑树 向map中put元素，如果key重复，会覆盖并把老的元素返回出来 12345678910| array | 1 | 2 | ... | N ||-------|---|---|-----|---|  |       |   |   |     |     |       |   |   |">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap原理">
+<meta property="og:url" content="http://yoursite.com/2019/06/27/universe/java/HashMap%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Ring&#39;s Blog">
+<meta property="og:description" content="基本hashmap有数组+链表组成 基于红黑树的hashmap就是当链表达到一定长度时把链表变成红黑树 向map中put元素，如果key重复，会覆盖并把老的元素返回出来 12345678910| array | 1 | 2 | ... | N ||-------|---|---|-----|---|  |       |   |   |     |     |       |   |   |">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-06-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-29T12:21:04.313Z">
+<meta property="article:author" content="Travis TuRing">
+<meta property="article:tag" content="java, hashmap">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/06/27/universe/java/HashMap%E5%8E%9F%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>HashMap原理 | Ring's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ring's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/universe/java/HashMap%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HashMap原理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-06-27 00:00:00" itemprop="dateCreated datePublished" datetime="2019-06-27T00:00:00+08:00">2019-06-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-29 20:21:04" itemprop="dateModified" datetime="2020-06-29T20:21:04+08:00">2020-06-29</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h2><p>hashmap有数组+链表组成</p>
+<p>基于红黑树的hashmap就是当链表达到一定长度时把链表变成红黑树</p>
+<p>向map中put元素，如果key重复，会覆盖并把老的元素返回出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">| array | 1 | 2 | ... | N |</span><br><span class="line">|-------|---|---|-----|---|</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |   </span><br><span class="line"> 链表   value</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">        value</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>hashmap初始化数组容量的时候必须的一个二的幂次方数<ul>
+<li>这样方便控制取值范围<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2^k-1会得到一个全是1的二进制数：0001 1111</span><br><span class="line">用这个数与hash code与运算即可以截断hash code，只保留低位k-1位</span><br><span class="line">0000 0111</span><br><span class="line">0101 1010</span><br><span class="line">---------</span><br><span class="line">0000 0010</span><br><span class="line"></span><br><span class="line">高位数先右移在与这个111与运算就可得到想要的任意位</span><br><span class="line">提高散列性，防止链表过长，提高get的效率</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<p>取小于一个数的最大二次幂算法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">func (int i)&#123;</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 1)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 2)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 4)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 8)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 16)</span><br><span class="line">    return i-(i &gt;&gt;&gt; 1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return前的一系列移位操作把有效位全部变成了1</span><br><span class="line">在用结果减去移1位后的结果(i&gt;&gt;&gt;1)，就得到只有最高位为1</span><br><span class="line"></span><br><span class="line">        0001 ****</span><br><span class="line">&gt;&gt;1      0000 1***</span><br><span class="line">        ---------</span><br><span class="line">        0001 1***</span><br><span class="line">&gt;&gt;2     0000 0110</span><br><span class="line">...直到int的64位都保</span><br><span class="line">        0001 1111</span><br><span class="line">        0000 1111</span><br><span class="line">    res</span><br></pre></td></tr></table></figure>
+
+<p>扩容时：新建数组 -&gt; 迁移到新数组</p>
+<h3 id="多线程的情况"><a href="#多线程的情况" class="headerlink" title="多线程的情况"></a>多线程的情况</h3><p>在多线程情况下，扩容时可能会同时创建多个个数组。在JDK1.7中会出现问题</p>
+<h3 id="put-key-value-方法"><a href="#put-key-value-方法" class="headerlink" title="put(key, value)方法"></a>put(key, value)方法</h3><ul>
+<li>确定下标<ul>
+<li><code>hashcode &amp; (lenght-1)</code></li>
+<li>因为hashmap的长度只会是2的次幂，所以减1后每一个有效位(除了最高有效位)都是1</li>
+</ul>
+</li>
+<li>解决哈希冲突<ul>
+<li>计算hashcode的时候，有可能会得到同样的值，这时候发生哈希冲突</li>
+<li>链表法<ul>
+<li>插入在链表头部(1.7)</li>
+</ul>
+</li>
+<li>再散列法</li>
+</ul>
+</li>
+</ul>
+<h3 id="get-key-方法"><a href="#get-key-方法" class="headerlink" title="get(key)方法"></a>get(key)方法</h3><ul>
+<li>计算下标</li>
+<li>找到key对应的值<ul>
+<li>如果是链表法解决的哈希冲突则<ul>
+<li>遍历寻找key</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><p>ConcurrentHashMap解决多线程情况下出现的问题</p>
+<p>ConcurrentHashMap使用一个并发级别来指定多少个元素共享一个锁，ConcurrentHashMap称这个所为segment。</p>
+<ul>
+<li>初始化<ul>
+<li>根据并发级别来确定segment的容量，一个segment对象就相当于一个小的hashmap</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java-hashmap/" rel="tag"># java, hashmap</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/05/universe/utils/" rel="prev" title="markdown utils">
+      <i class="fa fa-chevron-left"></i> markdown utils
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/05/universe/go/Golang_note/" rel="next" title="Golang基础">
+      Golang基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本"><span class="nav-number">1.</span> <span class="nav-text">基本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程的情况"><span class="nav-number">1.1.</span> <span class="nav-text">多线程的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put-key-value-方法"><span class="nav-number">1.2.</span> <span class="nav-text">put(key, value)方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-key-方法"><span class="nav-number">1.3.</span> <span class="nav-text">get(key)方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentHashMap"><span class="nav-number">2.</span> <span class="nav-text">ConcurrentHashMap</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Travis TuRing</p>
+  <div class="site-description" itemprop="description">Mens et Manus</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

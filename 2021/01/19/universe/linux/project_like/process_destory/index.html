@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="进程退出和销毁过程分析结束一个进程的生命可以分为两个步骤：进程退出和进程销毁。进程退出主要是释放进程的资源，使进程称为僵死(TASK_ZOMBIE)状态;进程销毁主要是通过父进程，释放僵死进程的各种信息 当前进程被设为TASK_ZOMBIE僵死状态后会向其父进程发生SIGCHLD信号，父进程收到SIGCHLD信号后父进程会销毁僵死状态的子进程。 父进程通过调用wait()或waitpid()函数等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="universe&#x2F;linux&#x2F;project_like&#x2F;process_destory">
+<meta property="og:url" content="http://yoursite.com/2021/01/19/universe/linux/project_like/process_destory/index.html">
+<meta property="og:site_name" content="Ring&#39;s Blog">
+<meta property="og:description" content="进程退出和销毁过程分析结束一个进程的生命可以分为两个步骤：进程退出和进程销毁。进程退出主要是释放进程的资源，使进程称为僵死(TASK_ZOMBIE)状态;进程销毁主要是通过父进程，释放僵死进程的各种信息 当前进程被设为TASK_ZOMBIE僵死状态后会向其父进程发生SIGCHLD信号，父进程收到SIGCHLD信号后父进程会销毁僵死状态的子进程。 父进程通过调用wait()或waitpid()函数等">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-19T12:37:40.716Z">
+<meta property="article:modified_time" content="2021-01-19T12:37:40.716Z">
+<meta property="article:author" content="Travis TuRing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2021/01/19/universe/linux/project_like/process_destory/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>universe/linux/project_like/process_destory | Ring's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ring's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/19/universe/linux/project_like/process_destory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          universe/linux/project_like/process_destory
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-19 20:37:40" itemprop="dateCreated datePublished" datetime="2021-01-19T20:37:40+08:00">2021-01-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="进程退出和销毁过程分析"><a href="#进程退出和销毁过程分析" class="headerlink" title="进程退出和销毁过程分析"></a>进程退出和销毁过程分析</h1><p>结束一个进程的生命可以分为两个步骤：进程退出和进程销毁。进程退出主要是释放进程的资源，使进程称为僵死(<code>TASK_ZOMBIE</code>)状态;进程销毁主要是通过父进程，释放僵死进程的各种信息</p>
+<p>当前进程被设为<code>TASK_ZOMBIE</code>僵死状态后会向其父进程发生SIGCHLD信号，父进程收到SIGCHLD信号后父进程会销毁僵死状态的子进程。</p>
+<p>父进程通过调用<code>wait()</code>或<code>waitpid()</code>函数等待SIGCHLD处理僵死进程</p>
+<h2 id="1-进程退出"><a href="#1-进程退出" class="headerlink" title="1 进程退出"></a>1 进程退出</h2><p>进程退出通常的通过系统调用执行<code>do_exit</code>函数。简单的说<code>do_exit</code>主要执行如下流程：</p>
+<ul>
+<li>设置和重置标志位<ul>
+<li>如设置退出码<code>exit_code</code>，设置进程状态<code>TASK_ZOMBIE</code>，设置退出状态<code>PF_EXITING</code>等</li>
+</ul>
+</li>
+<li>释放资源<ul>
+<li>释放内存，信号量，打开的文件的描述符等</li>
+</ul>
+</li>
+<li>给子进程找养父<ul>
+<li>因为进程的销毁依赖于父进程，没有养父的孤儿进程将会造成资源浪费</li>
+</ul>
+</li>
+</ul>
+<p>主要会释放如下资源：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">exit_signals(); <span class="comment">// sets PF_EXITING</span></span><br><span class="line">exit_mm();      <span class="comment">// 释放内存和描述符 ?我不太明白mm和一个数组的内存的关系</span></span><br><span class="line">exit_sem();     <span class="comment">// 释放信号量</span></span><br><span class="line">exit_shm();</span><br><span class="line">exit_files();   <span class="comment">// 释放打开的描述符</span></span><br><span class="line">exit_fs();      <span class="comment">// 释放文件系统数据</span></span><br><span class="line">exit_task_namespace();</span><br><span class="line">exit_task_work();</span><br><span class="line">exit_thread();</span><br></pre></td></tr></table></figure>
+
+<p>最后通过<code>exit_notify()</code>向父进程发出SIGCHLD信号销毁进程，然后执行<code>do_task_dead()</code>调用<code>schedule()</code>触发调度，进程终止。</p>
+<p>下面主要分析进程退出的内存释放过程</p>
+<h3 id="1-1-退出过程的内存管理"><a href="#1-1-退出过程的内存管理" class="headerlink" title="1.1 退出过程的内存管理"></a>1.1 退出过程的内存管理</h3><p>进程的内存释放主要在<code>exit_mm</code>中的执行，其执行流程如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mm_release</span><br><span class="line">    deactivate_mm  <span class="comment">// 删除缓存的寄存器状态</span></span><br><span class="line">mmput()            <span class="comment">// 真正释放内存的函数</span></span><br><span class="line">    exit_mmap()</span><br><span class="line">        arch_exit_mmap</span><br><span class="line">        free_pgtables</span><br><span class="line">    mm_put_huge_zero_page()</span><br><span class="line">    mmdrop() -&gt; __mmdrop()  <span class="comment">// 释放内存描述符和pdg表</span></span><br><span class="line">        mm_free_pgd() -&gt; pgd_free</span><br><span class="line">        free_mm() -&gt; kmem_cache_free</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-进程销毁"><a href="#2-进程销毁" class="headerlink" title="2 进程销毁"></a>2 进程销毁</h2><p>进程终止后会处于僵死状态，需要父进程执行wait操作来回收进程描述符以及内核栈所占内存，同时把僵死进程从相关的各个表上移除。处理函数为<code>release_task</code></p>
+<p><code>release_task</code>主要有如下过程：</p>
+<ul>
+<li>递减进程数：<code>atomic_dec(&amp;p-&gt;user-&gt;processes)</code></li>
+<li>?如果进程被追踪，调用<code>ptrace_release_task</code>，把它从调试程序的<code>ptrace_children</code>链表中删除<ul>
+<li>底层调用<code>__ptrace_unlink</code></li>
+</ul>
+</li>
+<li><code>__exit_signal(p)</code>，删除所有挂起信号并释放<code>signal_struct</code>描述符</li>
+<li><code>__unhash_process</code></li>
+<li>调用<code>sched_exit()</code>函数来调整父进程的时间片</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/19/universe/linux/MM/TODO:buddy_system/" rel="prev" title="Buddy系统的原理及实现">
+      <i class="fa fa-chevron-left"></i> Buddy系统的原理及实现
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/24/universe/linux/project_like/page_cache_and_cache_management/" rel="next" title="universe/linux/project_like/page_cache_and_cache_management">
+      universe/linux/project_like/page_cache_and_cache_management <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进程退出和销毁过程分析"><span class="nav-number">1.</span> <span class="nav-text">进程退出和销毁过程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-进程退出"><span class="nav-number">1.1.</span> <span class="nav-text">1 进程退出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-退出过程的内存管理"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 退出过程的内存管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-进程销毁"><span class="nav-number">1.2.</span> <span class="nav-text">2 进程销毁</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Travis TuRing</p>
+  <div class="site-description" itemprop="description">Mens et Manus</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="简介React是用于构建用户界面的javascript库  特性 声明式编程 通过代码告诉计算机，你想的是什么，让计算机想出如何去做 命令式编程：告诉计算机去做什么   组件化 一次学会，随处编写    Main ConceptsRendering ElementsTo rendering an element into a root DOM node like &lt;div id&#x3D;&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React学习笔记">
+<meta property="og:url" content="http://yoursite.com/2020/07/24/universe/web/react_note/index.html">
+<meta property="og:site_name" content="Ring&#39;s Blog">
+<meta property="og:description" content="简介React是用于构建用户界面的javascript库  特性 声明式编程 通过代码告诉计算机，你想的是什么，让计算机想出如何去做 命令式编程：告诉计算机去做什么   组件化 一次学会，随处编写    Main ConceptsRendering ElementsTo rendering an element into a root DOM node like &lt;div id&#x3D;&quot;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-13T03:04:15.987Z">
+<meta property="article:author" content="Travis TuRing">
+<meta property="article:tag" content="web, react">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/07/24/universe/web/react_note/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>React学习笔记 | Ring's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ring's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/24/universe/web/react_note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-24 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-24T00:00:00+08:00">2020-07-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-13 11:04:15" itemprop="dateModified" datetime="2020-08-13T11:04:15+08:00">2020-08-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>React是用于构建用户界面的javascript库</p>
+<ul>
+<li>特性<ul>
+<li>声明式编程<ul>
+<li>通过代码告诉计算机，你想的是什么，让计算机想出如何去做</li>
+<li>命令式编程：告诉计算机去做什么</li>
+</ul>
+</li>
+<li>组件化</li>
+<li>一次学会，随处编写</li>
+</ul>
+</li>
+</ul>
+<h2 id="Main-Concepts"><a href="#Main-Concepts" class="headerlink" title="Main Concepts"></a>Main Concepts</h2><h3 id="Rendering-Elements"><a href="#Rendering-Elements" class="headerlink" title="Rendering Elements"></a>Rendering Elements</h3><p>To rendering an element into a root DOM node like <code>&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</code>, pass both to <code>ReactDOM.render()</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, world<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">ReactDOM.render(element, <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br></pre></td></tr></table></figure>
+
+<p>React elements are immutable. Once you create an element, you can’t change its children or attributes. React Only Updates What’s Necessary.</p>
+<p>With our knowledge so far, the only way to update the UI is to create a new element, and pass it to <code>ReactDOM.render()</code>.</p>
+<h3 id="Components-and-Props"><a href="#Components-and-Props" class="headerlink" title="Components and Props"></a>Components and Props</h3><p>Components are like JavaScript functions. <strong>They accept arbitrary inputs (called “props”) and return React elements</strong>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This function is valid React component because it accept a single “props” object and return a React element.</p>
+<p>You can also use an <code>ES6 class</code> to define a component:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Rendering-a-Component"><a href="#Rendering-a-Component" class="headerlink" title="Rendering a Component"></a>Rendering a Component</h4><p>React element not only can represent DOM tags, but also can represent user-defined components.</p>
+<p><strong>When React sees an element representing a user-defined component, it pass JSX attributes and children to this component as a single object</strong>. We call this obj “props”.</p>
+<p>For example:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> element = <span class="xml"><span class="tag">&lt;<span class="name">Welcome</span> <span class="attr">name</span>=<span class="string">"Sara"</span> /&gt;</span></span>;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">  element,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Props-are-Read-Only"><a href="#Props-are-Read-Only" class="headerlink" title="Props are Read-Only"></a>Props are Read-Only</h4><p>React is pretty flexible but it has a single strict rule:</p>
+<p><strong>All React components must act like pure functions with respect to their props</strong></p>
+<h3 id="State-and-Lifecycle"><a href="#State-and-Lifecycle" class="headerlink" title="State and Lifecycle"></a>State and Lifecycle</h3><p>State is similar to props, but it it private and fully controlled by the component.</p>
+<ul>
+<li>Converting a Function to a Class<ul>
+<li><ol>
+<li>Create an <code>ES6 class</code>, with the same name, that extends <code>React.Component</code></li>
+</ol>
+</li>
+<li><ol start="2">
+<li>Add a single empty method to it called <code>render()</code></li>
+</ol>
+</li>
+<li><ol start="3">
+<li>Move the body of the function into the <code>render()</code> method</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>Replace <code>props</code> with <code>this.props</code> in the <code>render()</code> body</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>Delete the remaining empty function declaration</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clock</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;Hello, world!&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">        &lt;h2&gt;It is &#123;this.props.date.toLocaleTimeString()&#125;.&lt;/</span>h2&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Adding-Local-State-to-a-Class"><a href="#Adding-Local-State-to-a-Class" class="headerlink" title="Adding Local State to a Class"></a>Adding Local State to a Class</h4><ul>
+<li><ol>
+<li>Add a <code>class constructor</code> that assigns the initial <code>this.state</code><ul>
+<li>Class components should always call the base constructor with <code>props</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">date</span>: <span class="keyword">new</span> <span class="built_in">Date</span>()&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>Replace <code>this.props.date</code> with <code>this.state.date</code></li>
+</ol>
+</li>
+</ul>
+<h4 id="Adding-Lifecycle-Methods-to-a-Class"><a href="#Adding-Lifecycle-Methods-to-a-Class" class="headerlink" title="Adding Lifecycle Methods to a Class"></a>Adding Lifecycle Methods to a Class</h4><p>We can declare special methods on the component class to run some code when a component mounts and unmounts:</p>
+<ul>
+<li><code>componentDidMount()</code> method runs after the component output has been rendered to the DOM</li>
+<li><code>componentWillUnmount()</code></li>
+<li>Use <code>this.setState()</code> to schedule updates to the component local state:<ul>
+<li>like: <code>this.setState({date: new Date()})</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="Using-State-Correctly"><a href="#Using-State-Correctly" class="headerlink" title="Using State Correctly"></a>Using State Correctly</h4><ul>
+<li><strong>Do Not Modify State Directly</strong> <ul>
+<li>WRONG: <code>this.state.comment = &quot;hello&quot;</code></li>
+<li>CORRECT: <code>this.setState({comment: &quot;hello&quot;})</code></li>
+<li>the only place where you can assign <code>this.state</code> is the constructor</li>
+</ul>
+</li>
+<li><strong>State Updates May Be Asynchronous</strong><ul>
+<li>React may batch multiple <code>setState()</code> calls into a single update for performance</li>
+<li>Because of that, you should not rely on their values for calculating the next state</li>
+<li><strong>To fix it, use a second form of <code>setState()</code> that accepts a function rather than an object</strong><ul>
+<li>the function will receive the previous state as the first argument, and the props as the time update is applied as the second argument</li>
+<li><code>this.setState((state, props)=&gt;{})</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="State-Updates-are-Merged"><a href="#State-Updates-are-Merged" class="headerlink" title="State Updates are Merged"></a>State Updates are Merged</h4><p><a href="https://reactjs.org/docs/state-and-lifecycle.html#state-updates-are-merged" target="_blank" rel="noopener">???</a></p>
+<h4 id="The-Date-Flows-Down"><a href="#The-Date-Flows-Down" class="headerlink" title="The Date Flows Down"></a>The Date Flows Down</h4><p>Both parent and children should not care if a certain component is stateful(class) or stateless(functionf). It is not accessible to any component other than the one that owns and sets it.</p>
+<p>A component may choose to pass its state down as props to its child components: <code>&lt;FormattedDate date={this.state.date} /&gt;</code></p>
+<p>This is commonly called a “top-down” or “unidirectional” data flow.</p>
+<h3 id="Handling-Events"><a href="#Handling-Events" class="headerlink" title="Handling Events"></a>Handling Events</h3><p>With JSX you pass a function as the handler, rather than string.</p>
+<p>the Html:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"activateLasers()"</span>&gt;</span></span><br><span class="line">  Activate Lasers</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>it is different in React</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;button onClick=&#123;activateLasers&#125;&gt;</span><br><span class="line">  Activate Lasers</span><br><span class="line">&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ActionLink</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleClick</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'The link was clicked.'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;a href=<span class="string">"#"</span> onClick=&#123;handleClick&#125;&gt;</span><br><span class="line">      Click me</span><br><span class="line">    &lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ Or</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">class Click extends React.Component&#123;</span></span><br><span class="line"><span class="regexp">  function handleClick(e) &#123;</span></span><br><span class="line"><span class="regexp">    e.preventDefault();</span></span><br><span class="line"><span class="regexp">    console.log('The link was clicked.');</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  render()&#123;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;a href="#" onClick=&#123;this.handleClick&#125;&gt;</span></span><br><span class="line"><span class="regexp">        Click me</span></span><br><span class="line"><span class="regexp">      &lt;/</span>a&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Here, <code>e</code> is a synthetic event. See the <a href="https://reactjs.org/docs/events.html" target="_blank" rel="noopener">SyntheticEvent</a> reference guide to learn more.</p>
+<p>In JavaScript, class methods are not <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind" target="_blank" rel="noopener">bound</a> by defaul.</p>
+<p>Generally, if you refer to a method without <code>()</code> after it, such as <code>onClick={this.handleClick}</code>, you should bind that method. <a href="https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/" target="_blank" rel="noopener">how funcions work in JavaScript</a>.</p>
+<h3 id="Conditional-Rendering"><a href="#Conditional-Rendering" class="headerlink" title="Conditional Rendering"></a>Conditional Rendering</h3><p>Use JavaScript operators like <code>if</code> or <code>conditonal operator</code> to Conditional Rendering.</p>
+<h3 id="Lists-and-Keys"><a href="#Lists-and-Keys" class="headerlink" title="Lists and Keys"></a>Lists and Keys</h3><h4 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h4><p>You can use <code>map()</code> to create <code>listItems</code> in React:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">const</span> listItems = numbers.map(<span class="function">(<span class="params">number</span>) =&gt;</span></span><br><span class="line">  &lt;li&gt;&#123;number&#125;&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+
+<p>When you render them, you’ll be given a warning that a key should be provided for list items.</p>
+<h4 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h4><p>Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity.</p>
+<p>If you choose not to assign an explicit key to list items then React will default to using indexes as keys.</p>
+<h4 id="Extracting-Components-with-Keys"><a href="#Extracting-Components-with-Keys" class="headerlink" title="Extracting Components with Keys"></a>Extracting Components with Keys</h4><p>Keys only make sense in the context of the surrounding array.</p>
+<p>If you extract a ListItem components, you should keep the key on the <code>&lt;ListItem /&gt;</code> element, but not inside.</p>
+<h3 id="Forms"><a href="#Forms" class="headerlink" title="Forms"></a>Forms</h3><h4 id="Controlled-Components"><a href="#Controlled-Components" class="headerlink" title="Controlled Components"></a>Controlled Components</h4><p>An input form element whose value is controlled by React in this way is called a “controlled component”.</p>
+<p>With a controlled component, the input’s value is always driven by the React state. For example:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NameForm</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">value</span>: <span class="string">''</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.handleSubmit = <span class="keyword">this</span>.handleSubmit.bind(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleChange(event) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">value</span>: event.target.value&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleSubmit(event) &#123;</span><br><span class="line">    alert(<span class="string">'A name was submitted: '</span> + <span class="keyword">this</span>.state.value);</span><br><span class="line">    event.preventDefault();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;form onSubmit=&#123;<span class="keyword">this</span>.handleSubmit&#125;&gt;</span><br><span class="line">        &lt;label&gt;</span><br><span class="line">          Name:</span><br><span class="line">          &lt;input type=<span class="string">"text"</span> value=&#123;<span class="keyword">this</span>.state.value&#125; onChange=&#123;<span class="keyword">this</span>.handleChange&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/label&gt;</span></span><br><span class="line"><span class="regexp">        &lt;input type="submit" value="Submit" /</span>&gt;</span><br><span class="line">      &lt;<span class="regexp">/form&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>set <code>value</code> attribute<ul>
+<li>the displayed value will always be <code>this.state.value</code></li>
+</ul>
+</li>
+<li><code>handleChange</code> <ul>
+<li>runs on every keystroke to update the React state, the displayed value will update as the user types</li>
+</ul>
+</li>
+</ul>
+<h3 id="Composition-vs-Inheritance"><a href="#Composition-vs-Inheritance" class="headerlink" title="Composition vs Inheritance"></a>Composition vs Inheritance</h3><h4 id="Containment"><a href="#Containment" class="headerlink" title="Containment"></a>Containment</h4><p>Some component don’t know their children ahead of time. We recommend that such component use the special <code>children</code> prop to pass children elements directly into their output.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">E</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;props.children&#125;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function Hello()&#123;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">        &lt;E&gt;</span></span><br><span class="line"><span class="regexp">            &lt;h1&gt;hello&lt;/</span>h1&gt;</span><br><span class="line">        &lt;<span class="regexp">/E&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Anything inside the <code>&lt;E&gt;</code> tag gets passed into the <code>E</code> component as <code>props.children</code>.</p>
+<p>Some time you might need multiple “holes” in a componnet. You can:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">E</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;div&gt;&#123;props.left&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">            &lt;div&gt;&#123;props.right&#125;&lt;/</span>div&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function Hello()&#123;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">        &lt;E</span></span><br><span class="line"><span class="regexp">          left=&#123;</span></span><br><span class="line"><span class="regexp">              &lt;h1&gt;hello&lt;/</span>h1&gt;</span><br><span class="line">          &#125;</span><br><span class="line">          right=&#123;</span><br><span class="line">              &lt;h1&gt;world&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">          &#125; /</span>&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Advanced"><a href="#Advanced" class="headerlink" title="Advanced"></a>Advanced</h2><p><a href="https://reactjs.org/docs/accessibility.html" target="_blank" rel="noopener">https://reactjs.org/docs/accessibility.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web-react/" rel="tag"># web, react</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/23/universe/lua/lua_in_ten_min/" rel="prev" title="lua学习笔记">
+      <i class="fa fa-chevron-left"></i> lua学习笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/06/universe/config_lang/yaml_basic/" rel="next" title="Yaml Basic">
+      Yaml Basic <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Main-Concepts"><span class="nav-number">2.</span> <span class="nav-text">Main Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Rendering-Elements"><span class="nav-number">2.1.</span> <span class="nav-text">Rendering Elements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Components-and-Props"><span class="nav-number">2.2.</span> <span class="nav-text">Components and Props</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Rendering-a-Component"><span class="nav-number">2.2.1.</span> <span class="nav-text">Rendering a Component</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Props-are-Read-Only"><span class="nav-number">2.2.2.</span> <span class="nav-text">Props are Read-Only</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#State-and-Lifecycle"><span class="nav-number">2.3.</span> <span class="nav-text">State and Lifecycle</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Adding-Local-State-to-a-Class"><span class="nav-number">2.3.1.</span> <span class="nav-text">Adding Local State to a Class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Adding-Lifecycle-Methods-to-a-Class"><span class="nav-number">2.3.2.</span> <span class="nav-text">Adding Lifecycle Methods to a Class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Using-State-Correctly"><span class="nav-number">2.3.3.</span> <span class="nav-text">Using State Correctly</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#State-Updates-are-Merged"><span class="nav-number">2.3.4.</span> <span class="nav-text">State Updates are Merged</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-Date-Flows-Down"><span class="nav-number">2.3.5.</span> <span class="nav-text">The Date Flows Down</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Handling-Events"><span class="nav-number">2.4.</span> <span class="nav-text">Handling Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conditional-Rendering"><span class="nav-number">2.5.</span> <span class="nav-text">Conditional Rendering</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lists-and-Keys"><span class="nav-number">2.6.</span> <span class="nav-text">Lists and Keys</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Lists"><span class="nav-number">2.6.1.</span> <span class="nav-text">Lists</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Keys"><span class="nav-number">2.6.2.</span> <span class="nav-text">Keys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Extracting-Components-with-Keys"><span class="nav-number">2.6.3.</span> <span class="nav-text">Extracting Components with Keys</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forms"><span class="nav-number">2.7.</span> <span class="nav-text">Forms</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Controlled-Components"><span class="nav-number">2.7.1.</span> <span class="nav-text">Controlled Components</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Composition-vs-Inheritance"><span class="nav-number">2.8.</span> <span class="nav-text">Composition vs Inheritance</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Containment"><span class="nav-number">2.8.1.</span> <span class="nav-text">Containment</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advanced"><span class="nav-number">3.</span> <span class="nav-text">Advanced</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Travis TuRing</p>
+  <div class="site-description" itemprop="description">Mens et Manus</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

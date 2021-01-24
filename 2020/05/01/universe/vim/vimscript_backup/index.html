@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Remenber to use :h &lt;arg&gt; for help Ref: https:&#x2F;&#x2F;learnvimscriptthehardway.stevelosh.com&#x2F; BasicEcho :echo &quot;hello&quot; :echom &quot;hello&quot;  区别在于echom会将消息放入消息队列中:messages Setting option :s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="learn vimscript the hard way">
+<meta property="og:url" content="http://yoursite.com/2020/05/01/universe/vim/vimscript_backup/index.html">
+<meta property="og:site_name" content="Ring&#39;s Blog">
+<meta property="og:description" content="Remenber to use :h &lt;arg&gt; for help Ref: https:&#x2F;&#x2F;learnvimscriptthehardway.stevelosh.com&#x2F; BasicEcho :echo &quot;hello&quot; :echom &quot;hello&quot;  区别在于echom会将消息放入消息队列中:messages Setting option :s">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-20T12:39:27.336Z">
+<meta property="article:author" content="Travis TuRing">
+<meta property="article:tag" content="backup, vim, vimscript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/01/universe/vim/vimscript_backup/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>learn vimscript the hard way | Ring's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ring's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/01/universe/vim/vimscript_backup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Travis TuRing">
+      <meta itemprop="description" content="Mens et Manus">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ring's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          learn vimscript the hard way
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-01T00:00:00+08:00">2020-05-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-09-20 20:39:27" itemprop="dateModified" datetime="2020-09-20T20:39:27+08:00">2020-09-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Remenber to use <code>:h &lt;arg&gt;</code> for help</p>
+<p>Ref: <a href="https://learnvimscriptthehardway.stevelosh.com/" target="_blank" rel="noopener">https://learnvimscriptthehardway.stevelosh.com/</a></p>
+<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><h3 id="Echo"><a href="#Echo" class="headerlink" title="Echo"></a>Echo</h3><ul>
+<li><code>:echo &quot;hello&quot;</code></li>
+<li><code>:echom &quot;hello&quot;</code></li>
+</ul>
+<p>区别在于echom会将消息放入消息队列中<code>:messages</code></p>
+<h3 id="Setting-option"><a href="#Setting-option" class="headerlink" title="Setting option"></a>Setting option</h3><ul>
+<li><code>:set &lt;name&gt;=&lt;value&gt;</code><ul>
+<li><code>:set &lt;name&gt;?</code>可以查看设置的情况</li>
+</ul>
+</li>
+</ul>
+<h3 id="Abbreviations"><a href="#Abbreviations" class="headerlink" title="Abbreviations"></a>Abbreviations</h3><ul>
+<li><code>iabbrev adn and</code></li>
+</ul>
+<p>在输入模式下输入adn，然后空格会发现变成了and</p>
+<h3 id="Buffer-Local-Options"><a href="#Buffer-Local-Options" class="headerlink" title="Buffer-Local Options"></a>Buffer-Local Options</h3><ul>
+<li>local mapping<ul>
+<li>like <code>:map &lt;buffer&gt; D dd</code>, the <code>&lt;buffer&gt;</code>told vim only consider that mapping when we are in the buffer where we dedine it</li>
+</ul>
+</li>
+<li>local leader<ul>
+<li><code>&lt;localleader&gt;</code> instead of <code>&lt;leader&gt;</code></li>
+</ul>
+</li>
+<li>setting<ul>
+<li><code>setlocal &lt;name&gt;</code></li>
+</ul>
+</li>
+<li>shadowing  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:nnoremap &lt;buffer&gt; Q x</span><br><span class="line">:nnoremap          Q dd</span><br></pre></td></tr></table></figure>
+<ul>
+<li>first mapping is more specific, so the second not work</li>
+</ul>
+</li>
+</ul>
+<h3 id="Autocommands"><a href="#Autocommands" class="headerlink" title="Autocommands"></a>Autocommands</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">autocmd</span> BufNewFile * :<span class="keyword">write</span></span><br><span class="line">         ^          ^ ^</span><br><span class="line">         |          | |</span><br><span class="line">         |          | The <span class="keyword">command</span> <span class="keyword">to</span> run.</span><br><span class="line">         |          |</span><br><span class="line">         |          A <span class="string">"patterns"</span> <span class="keyword">to</span> <span class="built_in">filter</span> the event.</span><br><span class="line">         |</span><br><span class="line">         The <span class="string">"events"</span> <span class="keyword">to</span> watch <span class="keyword">for</span>.</span><br></pre></td></tr></table></figure>
+
+<p><code>:help autocmd-events</code></p>
+<h4 id="Autocommands-Group"><a href="#Autocommands-Group" class="headerlink" title="Autocommands Group"></a>Autocommands Group</h4><p>It is possible to create duplicate autocommands, so if you try running the following command:<code>:autocmd BufWrite * :sleep 200m</code> three times. Vim will sleep 600m.</p>
+<p>Use <code>augroup</code> is the same</p>
+<ul>
+<li>Clearing Groups<ul>
+<li><code>autocmd!</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">augroup</span> testgroup</span><br><span class="line">:    autocmd!</span><br><span class="line">:    <span class="keyword">autocmd</span> BufWrite * :<span class="keyword">echom</span> <span class="string">"Cats"</span></span><br><span class="line">:<span class="keyword">augroup</span> END</span><br><span class="line">we enter the testgroup group, immediately clear it(gourp), <span class="built_in">and</span> <span class="keyword">no</span> more dup autocommands before any more</span><br></pre></td></tr></table></figure>
+
+<p><code>:help autocmd-groups</code></p>
+<h3 id="Operator-Pending-Mapping"><a href="#Operator-Pending-Mapping" class="headerlink" title="Operator-Pending Mapping"></a>Operator-Pending Mapping</h3><ul>
+<li>like <code>:onoremap p i(</code>, when we run <code>dp</code> it was like saying “delete parameters”, which vim translates to “delete inside parentheses”</li>
+</ul>
+<h3 id="Status-Lines"><a href="#Status-Lines" class="headerlink" title="Status Lines"></a>Status Lines</h3><ul>
+<li><code>:set statusline=%f\ -\ FileType:\ %y</code></li>
+<li><code>:set statusline+=</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:set statusline&#x3D;%l    &quot; Current line</span><br><span class="line">:set statusline+&#x3D;&#x2F;    &quot; Separator</span><br><span class="line">:set statusline+&#x3D;%L   &quot; Total lines</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>width and padding<ul>
+<li><code>:set statusline=Current:\ %4l\ Total:\ %4L</code>, like this<ul>
+<li><code>Current:   12 Total:  223</code></li>
+</ul>
+</li>
+<li><code>:set statusline=Current:\ %-4l\ Total:\ %-4L</code><ul>
+<li><code>Current: 12   Total: 223</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Programming-Language"><a href="#Programming-Language" class="headerlink" title="Programming Language"></a>Programming Language</h2><ul>
+<li>set up folding for Vimscript files: <code>set foldmethod=&lt;value&gt;</code></li>
+</ul>
+<p>Add lines before and after that autocommands group so that it look like thik:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">" Vimscript file settings ---------------------- &#123;&#123;&#123;</span></span><br><span class="line"><span class="keyword">augroup</span> filetype_vim</span><br><span class="line">    autocmd!</span><br><span class="line">    <span class="keyword">autocmd</span> FileType <span class="keyword">vim</span> <span class="keyword">setlocal</span> foldmethod=marker</span><br><span class="line"><span class="keyword">augroup</span> END</span><br><span class="line"><span class="comment">" &#125;&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>In normal mode, type <code>za</code>. Vim will fold/unfold the lines starting at the one containting <code>3{</code> and ending at <code>3}</code></p>
+<p><code>:h foldlevelstart</code></p>
+<h3 id="Multiple-Line-Statements"><a href="#Multiple-Line-Statements" class="headerlink" title="Multiple-Line Statements"></a>Multiple-Line Statements</h3><p>like</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">augroup</span> testgroup</span><br><span class="line">:    <span class="keyword">autocmd</span> BufWrite * :<span class="keyword">echom</span> <span class="string">"Baz"</span></span><br><span class="line">:<span class="keyword">augroup</span> END</span><br></pre></td></tr></table></figure>
+
+<p>You can write this as three separate lines in a Vimscript file. Or you can separate each line with a pipe character <code>|</code>. Like this.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">echom</span> <span class="string">"foo"</span> | <span class="keyword">echom</span> <span class="string">"bar"</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><ul>
+<li><code>let</code> to init or assignment a variable(call it var below)</li>
+<li><code>unlet</code> to delete a var</li>
+<li><code>unlet</code> to delete a var and ignore warnning, if var did not exist</li>
+</ul>
+<p>You can add a prefix before :var to define its scope, like this</p>
+<h4 id="Options-as-Variables"><a href="#Options-as-Variables" class="headerlink" title="Options as Variables"></a>Options as Variables</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">set</span> textwidth=<span class="number">80</span></span><br><span class="line">:<span class="keyword">echo</span> &amp;textwidth</span><br></pre></td></tr></table></figure>
+
+<p>Using an ampersand in front of a name tells Vim that you’re referring to the option, not a variable that happens to have the same name</p>
+<h4 id="Registers-as-Variables"><a href="#Registers-as-Variables" class="headerlink" title="Registers as Variables"></a>Registers as Variables</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">let</span> @a = <span class="string">"hello!"</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>:echo @&quot;</code>, unnamed register, which is where text you yank</li>
+<li><code>:echo @/</code>, echo search pattern you just use</li>
+</ul>
+<h4 id="Variables-Scoping"><a href="#Variables-Scoping" class="headerlink" title="Variables Scoping"></a>Variables Scoping</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">g:var  # as global</span><br><span class="line">a:var  # as a function arg</span><br><span class="line">l:var  # as a function var</span><br><span class="line">b:var  # as buffer var</span><br><span class="line">w:var  # as window var</span><br><span class="line">t:var  # as tab var</span><br><span class="line">s:var  # as script var, which useful in this script only</span><br><span class="line">v:var  # as vim build-in var</span><br></pre></td></tr></table></figure>
+
+<p><code>:h internal-variables</code></p>
+<h3 id="Conditionals"><a href="#Conditionals" class="headerlink" title="Conditionals"></a>Conditionals</h3><p>Any decision making you do in your coding will be done with <code>if</code>s.</p>
+<h4 id="Basic-If"><a href="#Basic-If" class="headerlink" title="Basic If"></a>Basic If</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">if</span> <span class="number">1</span></span><br><span class="line">:    <span class="keyword">echom</span> <span class="string">"One"</span></span><br><span class="line">:<span class="keyword">elseif</span> <span class="string">"nope"</span></span><br><span class="line">:    <span class="keyword">echom</span> <span class="string">"elseif"</span></span><br><span class="line">:<span class="keyword">else</span></span><br><span class="line">:    <span class="keyword">echom</span> <span class="string">"finally"</span></span><br><span class="line">:<span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+
+<p>Vim dose not necessarily treat a non-empty string as “truthly”.</p>
+<p>try this</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">echom</span> <span class="string">"hello"</span> + <span class="number">10</span></span><br><span class="line">:<span class="keyword">echom</span> <span class="string">"10hello"</span> + <span class="number">10</span></span><br><span class="line">:<span class="keyword">echom</span> <span class="string">"hello10"</span> + <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Vim will try to coerce variables (and literals) when necessary. When 10 + “20foo” is evaluated Vim will convert “20foo” to an integer (which results in 20) and then add it to 10.</li>
+<li>Strings that start with a number are coerced to that number, otherwise they’re coerced to 0.</li>
+<li>Vim will execute the body of an if statement when its condition evaluates to a non-zero integer, after all coercion takes place.</li>
+</ul>
+<h4 id="Comparisons"><a href="#Comparisons" class="headerlink" title="Comparisons"></a>Comparisons</h4><p>Vim is case senitive so <code>&quot;foo&quot; != &quot;FOO&quot;</code>. But if you <code>:set ignorecase</code>, vim is case insenitive.</p>
+<p>So to be code defensively you can nevertrust the <code>==</code> comparison. A bare <code>==</code> should never appear in you plugins’ code. Vim has two extra sets of comparison operators to deal with this.</p>
+<ul>
+<li><code>==?</code> is the “case-insenitive”, no matter what user has set</li>
+<li><code>==#</code> is the “case-senitive”, no matter what user has set</li>
+</ul>
+<h4 id="String-comparison"><a href="#String-comparison" class="headerlink" title="String comparison"></a>String comparison</h4><ul>
+<li><code>&lt;string&gt; == &lt;string&gt;</code> equal</li>
+<li><code>&lt;string&gt; != &lt;string&gt;</code> not equal</li>
+<li><code>&lt;string&gt; =~ &lt;pattern&gt;</code> matching pattern</li>
+<li><code>&lt;string&gt; !~ &lt;pattern&gt;</code> not matching pattern</li>
+<li><code>&lt;operator&gt;#</code> matching with case</li>
+<li><code>&lt;operator&gt;?</code> matching with ignorecase</li>
+</ul>
+<p><code>&lt;string&gt;.&lt;string&gt;</code> to connect string</p>
+<h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><p> <strong>Vimscript functions must start with a capital letter if they are unscoped!</strong> </p>
+<p>Use <code>function</code> keywork to define a function, use <code>function!</code> to overwire a function. Be attention, function need to begin with capital letter.</p>
+<ul>
+<li><code>:echo Function()</code> if Function has no return, vim will implicit return 0</li>
+<li><code>:delfunction &lt;function&gt;</code> to delete a function</li>
+<li><code>:call &lt;function&gt;</code> to call a function </li>
+</ul>
+<h4 id="Function-Arguments"><a href="#Function-Arguments" class="headerlink" title="Function Arguments"></a>Function Arguments</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DisplayName</span><span class="params">(name)</span></span></span><br><span class="line">  <span class="keyword">echom</span> <span class="string">"Hello!  My name is:"</span></span><br><span class="line">  <span class="keyword">echom</span> <span class="variable">a:name</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<p>Notice the <code>a:</code> in the name of the variable represents a variable scope. And it tell vim that they’re in the argument scope.</p>
+<h4 id="Varargs"><a href="#Varargs" class="headerlink" title="Varargs"></a>Varargs</h4><p>Vimscript call take variable-length argument lists.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Varg</span><span class="params">(...)</span></span></span><br><span class="line">  <span class="keyword">echom</span> <span class="variable">a:0</span></span><br><span class="line">  <span class="keyword">echom</span> <span class="variable">a:1</span></span><br><span class="line">  <span class="keyword">echo</span> <span class="variable">a:000</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">call</span> Varg(<span class="string">"a"</span>, <span class="string">"b"</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>a:0</code> will be set to the number of extra arguments you were given</li>
+<li><code>a:1</code> will be set to the first extra argument</li>
+<li><code>a:000</code> will be set to a list containing all the extra arguments</li>
+</ul>
+<h4 id="Assignment"><a href="#Assignment" class="headerlink" title="Assignment"></a>Assignment</h4><p>Vimscript not allow you to reassign argument variables.Try running the follow commands, vim will throw an error. And you need a temp var.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">:<span class="function"><span class="keyword">function</span> <span class="title">Assign</span><span class="params">(foo)</span></span></span><br><span class="line">:  <span class="keyword">let</span> <span class="variable">a:foo</span> = <span class="string">"Nope"</span></span><br><span class="line">:  <span class="keyword">echom</span> <span class="variable">a:foo</span></span><br><span class="line">:<span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line">:<span class="keyword">call</span> Assign(<span class="string">"test"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>Vimscritp use <code>.</code> to connect strings. Use <code>\</code> to escape sequences.</p>
+<p>Using single quotes tell vim that you want string exactly as-is, with no escape sequences. And two single quotes in a row will produce one single quote. <code>:echom &#39;That&#39;&#39;s enough.&#39;</code></p>
+<h4 id="String-Functions"><a href="#String-Functions" class="headerlink" title="String Functions"></a>String Functions</h4><ul>
+<li>Length<ul>
+<li><code>strlen(&quot;foo&quot;)</code></li>
+<li><code>len(&quot;foo&quot;)</code></li>
+</ul>
+</li>
+<li>Splitting: splits a String into a List<ul>
+<li><code>split(&quot;String&quot;, separator)</code>, separator is “whitespace” by default</li>
+</ul>
+</li>
+<li>Joining: join a List into a String<ul>
+<li><code>join(List, connector)</code></li>
+</ul>
+</li>
+<li>Case<ul>
+<li><code>tolower(&quot;String&quot;)</code></li>
+<li><code>toupper(&quot;String&quot;)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Execute"><a href="#Execute" class="headerlink" title="Execute"></a>Execute</h3><p>The <code>execute</code> command is user to evaluate a string as if it were a Vimscripte command.</p>
+<h4 id="Normal"><a href="#Normal" class="headerlink" title="Normal"></a>Normal</h4><p>Try run</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">nnoremap</span> G dd</span><br><span class="line">:<span class="keyword">normal</span> G</span><br></pre></td></tr></table></figure>
+
+<p>Vim will delete the current line. The <code>normal</code> command will take into account any mapping that exist.</p>
+<p>Vim has a <code>normal!</code> command to avoid user mapping. So write Vimscript should  <strong>always</strong> use <code>normal!</code>.</p>
+<p>The problem is that <code>normal!</code> dosen’t parse special character sequences like <code>&lt;cr&gt;</code>. Combining <code>normal!</code> with <code>execute</code> fixes that problem. Like this:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">execute</span> <span class="string">"normal! gg/print\&lt;cr&gt;"</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Demos"><a href="#Demos" class="headerlink" title="Demos"></a>Demos</h3><h4 id="Grep-Operation-Part-One"><a href="#Grep-Operation-Part-One" class="headerlink" title="Grep Operation, Part One"></a>Grep Operation, Part One</h4><p><code>:nnoremap &lt;leader&gt;g :grep -R &#39;&lt;cWORD&gt;&#39; %&lt;cr&gt;</code></p>
+<h5 id="Escaping-Shell-Command-Argument"><a href="#Escaping-Shell-Command-Argument" class="headerlink" title="Escaping Shell Command Argument"></a>Escaping Shell Command Argument</h5><p>Try the mapping on the word <code>that&#39;s</code>. It won’t work, because the single quote inside the word interferes with the quotes in the grep command!</p>
+<p>To get around this we can use Vim’s <code>shellescape</code> function. <code>:h shellescape()</code> and <code>:h escape</code></p>
+<p>The problem is that <strong>Vim performed the <code>shellescape()</code> call before it expended out special string like <code>&lt;cword&gt;</code>.</strong> So <code>:echom shellescape(&quot;&lt;cWORD&gt;&quot;)</code> is literally output <code>&#39;&lt;cword&gt;&#39;</code></p>
+<p>To fix this we’ll <strong>use the <code>expand()</code> function to force th expansion of <code>&lt;cword&gt;</code> into the actual string</strong> before it gets passed to <code>shellescape</code>.</p>
+<p>try following over the word like <code>that&#39;s</code>:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">echom</span> <span class="built_in">expand</span>(<span class="string">"&lt;cWORD&gt;"</span>)</span><br><span class="line">:<span class="keyword">echom</span> <span class="built_in">shellescape</span>(<span class="built_in">expand</span>(<span class="string">"&lt;cWORD&gt;"</span>))</span><br></pre></td></tr></table></figure>
+
+<p>Finally, try <code>:nnoremap &lt;leader&gt;g :silent execute &quot;grep! -R &quot; . shellescape(expand(&quot;&lt;cWORD&gt;&quot;)) . &quot; .&quot;&lt;cr&gt;:copen&lt;cr&gt;</code></p>
+<ul>
+<li><code>:h copen</code>, <ul>
+<li>Open a window to show the current list of errors</li>
+</ul>
+</li>
+<li><code>:h silent</code><ul>
+<li>The <code>silent</code> command just runs the command that follows it while hiding any messages it would normally display</li>
+</ul>
+</li>
+</ul>
+<h4 id="Grep-Operator-Part-Two"><a href="#Grep-Operator-Part-Two" class="headerlink" title="Grep Operator, Part Two"></a>Grep Operator, Part Two</h4><ul>
+<li>Create a File<ul>
+<li>Inside <code>.vim/plugin</code> create file named <code>grep-operato.vim</code></li>
+<li>This is where you’ll place the code.</li>
+</ul>
+</li>
+<li>Skeleton<ul>
+<li>To create a new Vim operator you’ll start with two components:a function and a mapping  <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="keyword">set</span> operatorfunc=GrepOperator<span class="symbol">&lt;cr&gt;</span>g@</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">GrepOperator</span><span class="params">(type)</span></span></span><br><span class="line">    <span class="keyword">echom</span> <span class="string">"Test"</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure></li>
+<li>we set the <code>operatorfunc</code> option to our function</li>
+<li>then we run <code>g@</code> which calls this function as an operator<ul>
+<li><strong>try type <code>g@</code> in normal mode</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Visual Mode<ul>
+<li>Add another mapping <code>vnoremap &lt;leader&gt;g :&lt;c-u&gt;call GrepOperator(visualmode())&lt;cr&gt;</code><ul>
+<li><code>&lt;c-u&gt;</code> to say “delete from the cursor to the bebginning of the line”</li>
+<li><strong><code>visualmode()</code> is a built-in Vim function</strong> that return a one-character string representing the last type of visual mode. “v、V and Crtl-v”</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="Motion-type"><a href="#Motion-type" class="headerlink" title="Motion type"></a>Motion type</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="keyword">set</span> operatorfunc=GrepOperator<span class="symbol">&lt;cr&gt;</span>g@</span><br><span class="line"><span class="keyword">vnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="symbol">&lt;c-u&gt;</span><span class="keyword">call</span> GrepOperator(<span class="built_in">visualmode</span>())<span class="symbol">&lt;cr&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">GrepOperator</span><span class="params">(type)</span></span></span><br><span class="line">    <span class="keyword">echom</span> <span class="variable">a:type</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Pressing <code>viw&lt;leader&gt;g</code> echoes <code>v</code> because we were in characterwise visual mode.</li>
+<li>Pressing <code>Vjj&lt;leader&gt;g</code> echoes <code>V</code> because we were in linewise visual mode.</li>
+<li>Pressing <code>&lt;leader&gt;giw</code> echoes <code>char</code> because we used a characterwise motion with the operator.</li>
+<li>Pressing <code>&lt;leader&gt;gG</code> echoes <code>line</code> because we used a linewise motion with the operator.</li>
+</ul>
+<h5 id="Copying-the-Text"><a href="#Copying-the-Text" class="headerlink" title="Copying the Text"></a>Copying the Text</h5><p>Edit a function look like this:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="keyword">set</span> operatorfunc=GrepOperator<span class="symbol">&lt;cr&gt;</span>g@</span><br><span class="line"><span class="keyword">vnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="symbol">&lt;c-u&gt;</span><span class="keyword">call</span> GrepOperator(<span class="built_in">visualmode</span>())<span class="symbol">&lt;cr&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">GrepOperator</span><span class="params">(type)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="variable">a:type</span> ==# <span class="string">'v'</span></span><br><span class="line">        <span class="keyword">execute</span> <span class="string">"normal! `&lt;v`&gt;y"</span></span><br><span class="line">    <span class="keyword">elseif</span> <span class="variable">a:type</span> ==# <span class="string">'char'</span></span><br><span class="line">        <span class="keyword">execute</span> <span class="string">"normal! `[v`]y"</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">echom</span> <span class="built_in">shellescape</span>(@@)</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>==#</code> case-sensitive comparison</li>
+<li><strong><code>normal!</code> dose two things</strong>:<ul>
+<li>Visually select the range of text we want by:<ul>
+<li>Moving to mark at the beginning of the range.</li>
+<li>Entering characterwise visual mode.</li>
+<li>Moving to the mark at the end of the range.</li>
+</ul>
+</li>
+<li>Yanking the visually selected text.</li>
+</ul>
+</li>
+<li><code>@@</code> is the “unnamed” register: the one that Vim places text into then yank or delete by default</li>
+</ul>
+<h4 id="Grep-Operator-Part-Three"><a href="#Grep-Operator-Part-Three" class="headerlink" title="Grep Operator, Part Three"></a>Grep Operator, Part Three</h4><p><strong>Namespacing</strong> </p>
+<p>Our script create a function named <code>GrepOperator</code> in the global namespace.</p>
+<p>We can avoid polluting the global namespace by tweaking a couple of lines in our code.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="keyword">set</span> operatorfunc=<span class="symbol">&lt;SID&gt;</span>GrepOperator<span class="symbol">&lt;cr&gt;</span>g@</span><br><span class="line"><span class="keyword">vnoremap</span> <span class="symbol">&lt;leader&gt;</span>g :<span class="symbol">&lt;c-u&gt;</span><span class="keyword">call</span> <span class="symbol">&lt;SID&gt;</span>GrepOperator(<span class="built_in">visualmode</span>())<span class="symbol">&lt;cr&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">s</span>:<span class="title">GrepOperator</span><span class="params">(type)</span></span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>modified the function name to start with <code>s:</code> which places it in the current script’s namespace</li>
+<li>modified the mapping and prepended the <code>GrepOperator</code> function name with <code>&lt;SID&gt;</code> so they could find the function.<ul>
+<li>If we hadn’t done this they would have tried to find the function in the global namespace, which wouldn’t have worked</li>
+</ul>
+</li>
+</ul>
+<p><code>:h &lt;SID&gt;</code></p>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>Vim List is much like python.</p>
+<ul>
+<li>Lists<ul>
+<li><code>:echo [&#39;foo&#39;, 3, &#39;bar&#39;]</code></li>
+<li><code>:echo [&#39;foo&#39;, [3, &#39;bar&#39;]]</code> of course can be nested</li>
+</ul>
+</li>
+<li>Indexing<ul>
+<li><code>:echo [0, [1, 2]][1]</code> will display <code>[1, 2]</code></li>
+<li><code>:echo [0, [1, 2]][-2]</code> will display <code>0</code></li>
+</ul>
+</li>
+<li>Slicing<ul>
+<li><code>:echo [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;][0:2]</code></li>
+<li><code>:echo [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;][:2]</code></li>
+</ul>
+</li>
+<li>Concatenation<ul>
+<li><code>:echo [&#39;a&#39;, &#39;b&#39;] + [&#39;c&#39;]</code></li>
+</ul>
+</li>
+<li>Built-in List Function<ul>
+<li><code>:call add(list, &#39;b&#39;)</code> append <code>b</code> </li>
+<li><code>:echo len(list)</code></li>
+<li><code>:echo get(foo, 100, &#39;default&#39;)</code><ul>
+<li>The <code>get</code> function will get the item at the given index from the given list, or return the given default value if the index is out of range in the list.</li>
+</ul>
+</li>
+<li><code>:echo index(foo, &#39;b&#39;)</code><ul>
+<li>return the first index of <code>b</code>, or <code>-1</code> if not in list</li>
+</ul>
+</li>
+<li><code>:echo join(list, &#39;--&#39;)</code> join item in list together into a string</li>
+<li><code>:call reverse(list)</code></li>
+</ul>
+</li>
+</ul>
+<p><code>:h functions</code></p>
+<h3 id="Looping"><a href="#Looping" class="headerlink" title="Looping"></a>Looping</h3><ul>
+<li>For Loops  <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i in [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">endfor</span></span><br></pre></td></tr></table></figure></li>
+<li>While Loops  <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">c</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">c</span> &lt;= <span class="number">4</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">c</span> += <span class="number">1</span></span><br><span class="line"><span class="keyword">endfor</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h3 id="Dictionaries"><a href="#Dictionaries" class="headerlink" title="Dictionaries"></a>Dictionaries</h3><ul>
+<li>Dictionaries<ul>
+<li><code>:echo {&#39;a&#39;: 1, 100: &#39;foo&#39;}</code></li>
+</ul>
+</li>
+<li>Indexing<ul>
+<li><code>:echo {&#39;a&#39;: 1, 100: &#39;foo&#39;,}[&#39;a&#39;]</code></li>
+<li>Or Javascritp-style “dot” <code>:echo {&#39;a&#39;: 1, 100: &#39;foo&#39;,}.a</code></li>
+</ul>
+</li>
+<li>Assigning and Adding <code>:let foo = {&#39;a&#39;: 1}</code><ul>
+<li>Assigning: <code>:let foo.a = 100</code> </li>
+<li>Add: <code>:let foo.b = 200</code></li>
+</ul>
+</li>
+<li>Removing Entries<ul>
+<li><code>:let test = remove(foo, &#39;a&#39;)</code><ul>
+<li>Remove the entry with the given key</li>
+<li>And return the removed value</li>
+</ul>
+</li>
+<li><code>unlet foo.b</code><ul>
+<li>Also removes entries, but you can’t use the value</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Dictionary Functions<ul>
+<li><code>:echom get({&#39;a&#39;: 100}, &#39;b&#39;, &#39;default&#39;)</code><ul>
+<li>just like get function for lists</li>
+</ul>
+</li>
+<li><code>:echom has_key({&#39;a&#39;: 100}, &#39;a&#39;)</code><ul>
+<li>return <code>0</code> as falsy</li>
+</ul>
+</li>
+<li><code>:echo items({&#39;a&#39;: 100, &#39;b&#39;: 200})</code><ul>
+<li>You can pull the key-value pairs out of a dict with <code>item</code></li>
+<li>display like <code>[[&#39;a&#39;, 100], [&#39;b&#39;, 200]]</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Toggling"><a href="#Toggling" class="headerlink" title="Toggling"></a>Toggling</h3><p>For boolean options we can use <code>set someoption!</code> to “toggle” the option.If we want to toggle a non-boolean option we’ll need to do a bit more work.</p>
+<p>Like this. Remember Vim treats the 0 as falsy and any other number as truthy</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">FoldColumnToggle</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">if</span> &amp;foldcolumn</span><br><span class="line">        <span class="keyword">setlocal</span> foldcolumn=<span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">setlocal</span> foldcolumn=<span class="number">4</span></span><br><span class="line">    <span class="keyword">endif</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line"><span class="comment">" Or</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">QuickfixToggle</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="variable">g:quickfix_is_open</span></span><br><span class="line">        <span class="keyword">cclose</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">g:quickfix_is_open</span> = <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">copen</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">g:quickfix_is_open</span> = <span class="number">1</span></span><br><span class="line">    <span class="keyword">endif</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>:h wincmd</code></li>
+<li><code>:h winnr()</code></li>
+</ul>
+<h3 id="Functional-Programming"><a href="#Functional-Programming" class="headerlink" title="Functional Programming"></a>Functional Programming</h3><h4 id="Immutable-Data-Structures"><a href="#Immutable-Data-Structures" class="headerlink" title="Immutable Data Structures"></a>Immutable Data Structures</h4><p>Vim dosen’t have any immutable collections, but by create some helper functions we can fake it to some degree.</p>
+<p>Like this:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">Sorted</span><span class="params">(l)</span></span></span><br><span class="line">    <span class="keyword">let</span> new_list = <span class="built_in">deepcopy</span>(<span class="variable">a:l</span>)</span><br><span class="line">    <span class="keyword">call</span> <span class="keyword">sort</span>(new_list)</span><br><span class="line">    <span class="keyword">return</span> new_list</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<p>Vim’s <code>sort()</code> sorts the list in place, so we create a full copy so original list won’t changed.</p>
+<h4 id="Functions-as-Variables"><a href="#Functions-as-Variables" class="headerlink" title="Functions as Variables"></a>Functions as Variables</h4><p>Vimscript supports using variables to store functions, but the syntax is a bit obtuse.</p>
+<p>If a Vimscript variable refers to a function it must start with a capital letter.</p>
+<h4 id="Higher-Order-Functions"><a href="#Higher-Order-Functions" class="headerlink" title="Higher-Order Functions"></a>Higher-Order Functions</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">Mapped</span><span class="params">(fn, l)</span></span></span><br><span class="line">    <span class="keyword">let</span> new_list = <span class="built_in">deepcopy</span>(<span class="variable">a:l</span>)</span><br><span class="line">    <span class="keyword">call</span> <span class="keyword">map</span>(new_list, <span class="built_in">string</span>(<span class="variable">a:fn</span>) . <span class="string">'(v:val)'</span>)</span><br><span class="line">    <span class="keyword">return</span> new_list</span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line">:h <span class="keyword">map</span>()</span><br><span class="line">:h <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Paths"><a href="#Paths" class="headerlink" title="Paths"></a>Paths</h3><ul>
+<li>Relative Paths<ul>
+<li><code>:echom expand(&#39;%&#39;)</code>. <code>%</code>means the file you’re editing.</li>
+</ul>
+</li>
+<li>Absolute Paths<ul>
+<li><code>:echom expand(&#39;%:p&#39;)</code>. The <code>:p</code> in the string tells Vim that you want the absolute path.</li>
+<li><code>:echo fnamemodify(&#39;foo.txt&#39;, &#39;:p&#39;)</code> did the same. <code>fnamemodify()</code> is a Vim function that’s more flexible than <code>expand()</code> in that you can specify any file name, not just special stirngs.</li>
+</ul>
+</li>
+<li>Listing Files<ul>
+<li><code>:echo split(globpath(&#39;.&#39;, &#39;*&#39;), &#39;\n&#39;)</code>, list of files in a specific directory(here is all files of current dir).</li>
+<li>You can recursively list file with <code>**</code>:<code>:echo split(globpath(&#39;.&#39;, &#39;**&#39;), &#39;\n&#39;)</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Creating-a-Full-Plugin"><a href="#Creating-a-Full-Plugin" class="headerlink" title="Creating a Full Plugin"></a>Creating a Full Plugin</h2><h3 id="Basic-Layout"><a href="#Basic-Layout" class="headerlink" title="Basic Layout"></a>Basic Layout</h3><ul>
+<li>Files in <code>~/.vim/colors</code> are treated as color schemes</li>
+<li>Files in <code>~/.vim/plugin</code> will each be run once every time Vim starts</li>
+<li>Files in <code>~/.vim/ftdetect</code> will also be run every time you start Vim<ul>
+<li><code>ftdetect</code> stands for “filetype detection”</li>
+<li>The file in this dir should set up autocommmands that detect and set the <code>filetype</code> of files</li>
+</ul>
+</li>
+<li>Files in <code>~/.vim/ftplugin</code>. When Vim sets a buffer’s <code>filetype</code> to a value it then looks for a file(or dir) in <code>ftplugin</code> that matches and run it.<ul>
+<li>The naming of these files matters!</li>
+<li>Because these files are run every time a buffer’s filetype is set they must only set buffer-local options! If they set options globally they would overwrite them for all open buffers!</li>
+</ul>
+</li>
+<li>Files in <code>~/.vim/indent</code> are a lot like <code>ftplugin</code> files. They get loaded based on their names.</li>
+<li>Files in <code>~/.vim/compiler</code> work exactly like <code>indent</code> files.<ul>
+<li>They should set compiler-related options in the current buffer based on their names</li>
+</ul>
+</li>
+<li>Files in <code>~/.vim/after</code> Files in this dir will be loaded every time Vim start, but after the file in <code>~/.vim/plugin</code></li>
+<li>Files in <code>~/.vim/autoload</code> </li>
+<li>Files in <code>~/.vim/syntax</code> When Vim sets a buffer’s <code>filetype</code> to a value it then looks for a file(or dir) in <code>syntax</code> that matches and run it.</li>
+<li>Files in <code>~/.vim/doc</code> is where you can add doc for your plugin</li>
+</ul>
+<h3 id="Runtimepath"><a href="#Runtimepath" class="headerlink" title="Runtimepath"></a>Runtimepath</h3><p>Much like <code>PATH</code> on <code>Linux/Unix/BSD</code> systems, Vim has the runtimepath setting which tells it where to find files to load.</p>
+<p><code>:set runtimepath?</code></p>
+<p>So a plugin manager automatically add paths to your <code>runtimepath</code> when you load vim</p>
+<h3 id="Detecting-Filetype"><a href="#Detecting-Filetype" class="headerlink" title="Detecting Filetype"></a>Detecting Filetype</h3><p>Vim dosen’t what a <code>.type</code> file is yet.</p>
+<p>Create <code>ftdetect/TYPE.vim</code></p>
+<p><code>au BufNewFile,BufRead *.TYPE set filetype=TYPE</code></p>
+<h3 id="Basic-Syntax-Highlighting"><a href="#Basic-Syntax-Highlighting" class="headerlink" title="Basic Syntax Highlighting"></a>Basic Syntax Highlighting</h3><ul>
+<li><code>:help syn-keyword</code></li>
+<li><code>:help iskeyword</code></li>
+<li><code>:help group-name</code></li>
+<li><code>:help syntax</code></li>
+</ul>
+<p>Create a <code>syntax/potion.vim</code> file and set you buffer filetype to potion <code>:set filetype=potion</code>. The <code>to</code>, <code>times</code> and <code>if</code> words will be highlighted as keywords.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">syntax</span> keyword potionKeyword <span class="keyword">to</span> times</span><br><span class="line"><span class="keyword">syntax</span> keyword potionKeyword <span class="keyword">if</span></span><br><span class="line"><span class="keyword">highlight</span> link potionKeyword Keyword</span><br></pre></td></tr></table></figure>
+
+<p>These two lines show the basic structure of simple sytax highlight in Vim.</p>
+<ul>
+<li>You first define a “chunk” of syntax using <code>syntax keyword</code> or a related command (which we’ll talk about later)</li>
+<li>You then link “chunks” to highlighting groups. A highlighting group is something you define in a color scheme, for example “function names should be blue”.</li>
+</ul>
+<h4 id="Highlighting-Functions"><a href="#Highlighting-Functions" class="headerlink" title="Highlighting Functions"></a>Highlighting Functions</h4><p>Another standard Vim highlighting group is <code>Function</code>.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">syntax</span> keyword potionFunction <span class="keyword">print</span> <span class="keyword">join</span> <span class="built_in">string</span></span><br><span class="line"><span class="keyword">highlight</span> link potionFunction Function</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Advanced-Syntax-Highlighting"><a href="#Advanced-Syntax-Highlighting" class="headerlink" title="Advanced Syntax Highlighting"></a>Advanced Syntax Highlighting</h4><p>Because some character not in <code>iskeyword</code> we need to use a regular expression to match it. We’ll do this with <code>syntax match</code> instead of <code>syntax keyword</code>.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">syntax</span> <span class="keyword">match</span> potionComment <span class="string">"\v#.*$"</span></span><br><span class="line"><span class="keyword">highlight</span> link potionComment Comment</span><br></pre></td></tr></table></figure>
+
+<p>We use <code>syntax match</code> which tells Vim to match regexes instead of literal keywords.</p>
+<h4 id="Highlighting-Operators"><a href="#Highlighting-Operators" class="headerlink" title="Highlighting Operators"></a>Highlighting Operators</h4><p>Another part we need to regexes to highlight is operators. <code>:h group-name</code></p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">syntax</span> <span class="keyword">match</span> potionOperator <span class="string">"\v-\="</span></span><br><span class="line"><span class="keyword">highlight</span> link potionOperator Operator</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Highlighting-Strings"><a href="#Highlighting-Strings" class="headerlink" title="Highlighting Strings"></a>Highlighting Strings</h4><p><code>:help syn-region</code></p>
+<p>To highlight strings, we’ll use the <code>syntax region</code> command.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">syntax</span> region potionString start=/\v<span class="string">"/ skip=/\v\\./ end=/\v"</span>/</span><br><span class="line"><span class="keyword">highlight</span> link potionString String</span><br></pre></td></tr></table></figure>
+
+<p>You’ll see the string between “” is highlighted!</p>
+<ul>
+<li>Regions hava a “start” pattern and an “end” pattern that specify where they start and end</li>
+<li>The <code>skip</code> argument tells Vim to ignore this matching region<ul>
+<li>The “skip” argument to <code>syntax region</code> allow us to handle string escapes like <code>&quot;she said: \&quot;hello\&quot;!&quot;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Basic-Folding"><a href="#Basic-Folding" class="headerlink" title="Basic Folding"></a>Basic Folding</h3><ul>
+<li><code>:help usr_28</code></li>
+<li><code>:help fold-XXX</code></li>
+</ul>
+<ul>
+<li>Manual<ul>
+<li>You create the folds by hand and they stored in RAM. When you close Vim they go away.</li>
+</ul>
+</li>
+<li>Marker<ul>
+<li>Vim folds your code based on characters in the actual text.</li>
+<li>Usually these characters put in comments (like<code>3{</code>), but in some languages you can get away with using something in the language’s syntax itself, like <code>{</code> in javascript file.</li>
+<li>It may seem ugly to clutter up your code with comments, but it let you hand-craft folds for a specific file.</li>
+</ul>
+</li>
+<li>Diff<ul>
+<li>A special folding mode used when diff’ing files.</li>
+</ul>
+</li>
+<li>Expr<ul>
+<li>This lets you use a custom piece of Vimscript to define where folds occur.</li>
+</ul>
+</li>
+<li>Indent<ul>
+<li>Vim uses your code’s indentation to determine folds.</li>
+</ul>
+</li>
+</ul>
+<p><code>setlocal foldmethod=&lt;method&gt;</code> and play around with <code>zR</code>, <code>zM</code>, <code>za</code>, <code>zf</code>…</p>
+<h4 id="Advanced-Folding"><a href="#Advanced-Folding" class="headerlink" title="Advanced Folding"></a>Advanced Folding</h4><ul>
+<li>Folding Theory<ul>
+<li>Each line of code in a file has a “foldlevel”. This is always either zero or a positive interger.</li>
+<li>Lines with a foldlevel of zero are never include in any fold</li>
+<li>Adjacant line with the same foldlevel are folded togerther</li>
+<li>If a fold level X is closed, any subsequent lines with a foldlevel greater then or equal to X are folded along with it until you reach a line with a level less than X.</li>
+</ul>
+</li>
+</ul>
+<h5 id="Expr-Folding"><a href="#Expr-Folding" class="headerlink" title="Expr Folding"></a>Expr Folding</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">setlocal</span> foldmethod=expr</span><br><span class="line"><span class="keyword">setlocal</span> foldexpr=GetPotionFold(<span class="variable">v:lnum</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">GetFold</span><span class="params">(lnum)</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'0'</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>first line tells Vim to use <code>expr</code> folding</li>
+<li>second line defines the expression Vim should use to get the foldlevel of a line<ul>
+<li>When Vim runs the expression it will set <code>v:lnum</code> to the line number of the ling it wants to know about.</li>
+</ul>
+</li>
+<li>The expr function return a String and not an Integer</li>
+</ul>
+<p>Our funciont return <code>&#39;0&#39;</code> for every lines, so Vim won’t fold andthing at all.</p>
+<h5 id="Blank-Lines"><a href="#Blank-Lines" class="headerlink" title="Blank Lines"></a>Blank Lines</h5><p>Modify the <code>GetFold</code> function to look like this:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">GetPotionFold</span><span class="params">(lnum)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">getline</span>(<span class="variable">a:lnum</span>) =~? <span class="string">'\v^\s*$'</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'-1'</span></span><br><span class="line">    <span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'0'</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Use <code>getline(a:lnum)</code> to get the content of the current line as a String.<ul>
+<li>This regex <code>\v^\s*$</code> will match “beginning of line, any number of whitespace characters, end of line”</li>
+</ul>
+</li>
+</ul>
+<h5 id="Special-Foldlevels"><a href="#Special-Foldlevels" class="headerlink" title="Special Foldlevels"></a>Special Foldlevels</h5><p>Your custom folding expression can return one of a few “special” strings that tell Vim how to fold the line.</p>
+<p><code>-1</code> is one of these special strings. It tells Vim that the level of this line is “underfined”, which means “the foldlevel of this line is equal to the foldlevel of the line above or below it”</p>
+<h5 id="An-Indentation-Level-Helper"><a href="#An-Indentation-Level-Helper" class="headerlink" title="An Indentation Level Helper"></a>An Indentation Level Helper</h5><p>To tackle non-blank lines we’ll need to know their indentation level.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">IndentLevel</span><span class="params">(lnum)</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">indent</span>(<span class="variable">a:lnum</span>) / &amp;<span class="built_in">shiftwidth</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<p>And run <code>:echom IndentLevel(1)</code> to see line 1 indent level.</p>
+<h3 id="Section-Movement-Theory"><a href="#Section-Movement-Theory" class="headerlink" title="Section Movement Theory"></a>Section Movement Theory</h3><p>If you’ve never used Vim’s section movement commands(like: <code>[[</code>, <code>]]</code>, <code>[]</code>, <code>][</code>) take a second and read <code>:help section</code></p>
+<h4 id="Nroff-Files"><a href="#Nroff-Files" class="headerlink" title="Nroff Files"></a>Nroff Files</h4><p>The four “section movement” commands are conceptually meant to move around between “sections” of a file.</p>
+<p>These commands are designed to work with <a href="https://en.wikipedia.org/wiki/Nroff" target="_blank" rel="noopener">nroff files</a> by default.</p>
+<h3 id="External-Commands"><a href="#External-Commands" class="headerlink" title="External Commands"></a>External Commands</h3><p>The <code>:!</code> command (pronounced “bang”) in Vim runs external commands and display their output on the screen.</p>
+<p>Vim doesn’t pass any input to the command then run this way: <code>:!cat</code></p>
+<p>To run an external command without the <code>Press ENTER or type command to continue</code> prompt, use <code>:silent !</code>. Note that this command is <code>:silent !</code> and not <code>:silent!</code></p>
+<h4 id="system"><a href="#system" class="headerlink" title="system()"></a>system()</h4><p>The <code>system()</code> Vim function takes a command string as a parameter and returns the output of that command as String.</p>
+<p>You can pass a second string as an argument to <code>system()</code>. Run the following command: <code>:echom system(&quot;wc -c&quot;, &quot;abcdefg&quot;)</code></p>
+<p>If you pass a second argument like this, Vim will write it to a temporary file and pipe it into the command on standard input.</p>
+<h4 id="Scratch-Splits"><a href="#Scratch-Splits" class="headerlink" title="Scratch Splits"></a>Scratch Splits</h4><p><code>:split BufferName</code> create an new splite for a buffer named <code>BufferName</code></p>
+<h4 id="append"><a href="#append" class="headerlink" title="append()"></a>append()</h4><p>The <code>append()</code> Vim function takes two arguments: a line number to append after, and a list of Strings to append as lines. For example:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">call</span> <span class="keyword">append</span>(<span class="number">3</span>, [<span class="string">"foo"</span>, <span class="string">"bar"</span>])</span><br></pre></td></tr></table></figure>
+
+<p><code>:help append()</code></p>
+<h4 id="split"><a href="#split" class="headerlink" title="split()"></a>split()</h4><p><code>split()</code> takes a String to split and regular expression to find the split points.</p>
+<p><code>:help split()</code></p>
+<h3 id="Autoloading"><a href="#Autoloading" class="headerlink" title="Autoloading"></a>Autoloading</h3><p><code>:help autoload</code></p>
+<p>Autoload lets you delay loading code until it’s actually needed.</p>
+<p>Look at the following command:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">call</span> somefile#Hello()</span><br></pre></td></tr></table></figure>
+
+<p>If this function has already been loaded, Vim will simply call it normally. Otherwise Vim will look for a file called <code>autoload/somefile.vim</code>.</p>
+<p>If this file exists, Vim will load/source that file. It will then try to call the function normally.</p>
+<p>Inside this file, the function should be defined like this:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">somefile</span>#<span class="title">Hello</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment">" ...</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
+
+<p>You can use multiple <code>#</code> characters in the function name like <code>:call myplugin#somefile#Hello()</code>. And it will look for <code>autoload/myplugin/somefile.vim</code></p>
+<p>If a autoload function like <code>somefile#Hello()</code> has been loaded, Vim doesn’t need to reload the file to call it. </p>
+<p>If <code>somefile#A()</code> has been load and <code>somefile#B()</code> doesn’t load. At that time, you rewrite function A. Without closing Vim and call funcion B, Vim will reload this file and your modify in function A will be update.</p>
+<h3 id="Documentetion"><a href="#Documentetion" class="headerlink" title="Documentetion"></a>Documentetion</h3><h4 id="How-Documentetion-Works"><a href="#How-Documentetion-Works" class="headerlink" title="How Documentetion Works"></a>How Documentetion Works</h4><p>A documentation <code>filetype=help</code>.</p>
+<p>Create a file called <code>doc/somefile.txt</code> in you plugin repo. This is where we’ll write help for our plugin.</p>
+<p>Open this file in Vim and run <code>:set filetype=help</code> so you can see the syntax highlighting as you type.</p>
+<h4 id="Help-Header"><a href="#Help-Header" class="headerlink" title="Help Header"></a>Help Header</h4><p>The format of help files is a matter of personal taste, but better to be popular with the modern Vimscript community.</p>
+<ul>
+<li>The first line of the file should contain the filename of the help file.<ul>
+<li><code>*myhelp.txt* functionality for the potion programming language</code></li>
+</ul>
+</li>
+<li>Surrounding a word witd asterisks in a help file create a “tag” that can be jumped to.<ul>
+<li>Run <code>:Helptags</code> to rebuild the index of help tags, and then open a new Vim window and run <code>:help myhelp.txt</code>. Vim will open your help document like any other one.</li>
+</ul>
+</li>
+<li>Title, description, authors and something<ul>
+<li>The <code>~</code> characters at the end of the lines ensure that Vim dosen’t try to highlight or hide individual characters inside the art.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">====================================================</span><br><span class="line">CONTENTS                                            *PotionContents*</span><br><span class="line"></span><br><span class="line">    <span class="number">1</span>. Usage ................ |PotionUsage|</span><br><span class="line">    <span class="number">2</span>. Mappings ............. |PotionMappings|</span><br><span class="line">    <span class="number">3</span>. License .............. |PotionLicense|</span><br><span class="line">    <span class="number">4</span>. Bugs ................. |PotionBugs|</span><br><span class="line">    <span class="number">5</span>. Contributing ......... |PotionContributing|</span><br><span class="line">    <span class="number">6</span>. Changelog ............ |PotionChangelog|</span><br><span class="line">    <span class="number">7</span>. Credits .............. |PotionCredits|</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>The line of <code>=</code> character will be syntax highlight. Use to divide.<ul>
+<li>You can also use line of <code>-</code></li>
+</ul>
+</li>
+<li>The <code>*PotionContents*</code> will create another tag, so run <code>:help PotionContents</code> to go directly to the table of contents.</li>
+<li>Each of the word surrounded by <code>|</code> create a ling to a tag<ul>
+<li>Users can press <code>&lt;c-]&gt;</code> in the file file to jump to the tag, Or click with mouse</li>
+</ul>
+</li>
+</ul>
+<h3 id="The-Command-Command"><a href="#The-Command-Command" class="headerlink" title="The Command Command"></a>The Command Command</h3><p>Read <code>:help user-commands</code></p>
+<p>Some plugin hava commands like <code>:Gdiff</code> and leave it up to the user to decide how to call them.</p>
+<p>Commands like this are create with the <code>:command</code> command.</p>
+<h3 id="Omnicomplete"><a href="#Omnicomplete" class="headerlink" title="Omnicomplete"></a>Omnicomplete</h3><ul>
+<li><code>:help ins-completion</code></li>
+<li><code>:help omnifunc</code></li>
+<li><code>:help compl-omni</code></li>
+</ul>
+<p>Vim offer a number of different ways to complete text. The most powerful of them is “omnicomplete” which let you call a custom Vimscirpt function to determin completions.</p>
+<h3 id="Compiler-Support"><a href="#Compiler-Support" class="headerlink" title="Compiler Support"></a>Compiler Support</h3><p>Read <code>:help quickfix.txt</code></p>
+<p>Vim offer much deeper support for interacting with compilers, including parsing compile error.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/backup-vim-vimscript/" rel="tag"># backup, vim, vimscript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/14/universe/the_nature_of_code/" rel="prev" title="用processing模拟自然系统">
+      <i class="fa fa-chevron-left"></i> 用processing模拟自然系统
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/04/universe/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="next" title="密码学">
+      密码学 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic"><span class="nav-number">1.</span> <span class="nav-text">Basic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Echo"><span class="nav-number">1.1.</span> <span class="nav-text">Echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting-option"><span class="nav-number">1.2.</span> <span class="nav-text">Setting option</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Abbreviations"><span class="nav-number">1.3.</span> <span class="nav-text">Abbreviations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer-Local-Options"><span class="nav-number">1.4.</span> <span class="nav-text">Buffer-Local Options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Autocommands"><span class="nav-number">1.5.</span> <span class="nav-text">Autocommands</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Autocommands-Group"><span class="nav-number">1.5.1.</span> <span class="nav-text">Autocommands Group</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Operator-Pending-Mapping"><span class="nav-number">1.6.</span> <span class="nav-text">Operator-Pending Mapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Status-Lines"><span class="nav-number">1.7.</span> <span class="nav-text">Status Lines</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Programming-Language"><span class="nav-number">2.</span> <span class="nav-text">Programming Language</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiple-Line-Statements"><span class="nav-number">2.1.</span> <span class="nav-text">Multiple-Line Statements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Variables"><span class="nav-number">2.2.</span> <span class="nav-text">Variables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Options-as-Variables"><span class="nav-number">2.2.1.</span> <span class="nav-text">Options as Variables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Registers-as-Variables"><span class="nav-number">2.2.2.</span> <span class="nav-text">Registers as Variables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Variables-Scoping"><span class="nav-number">2.2.3.</span> <span class="nav-text">Variables Scoping</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conditionals"><span class="nav-number">2.3.</span> <span class="nav-text">Conditionals</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Basic-If"><span class="nav-number">2.3.1.</span> <span class="nav-text">Basic If</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Comparisons"><span class="nav-number">2.3.2.</span> <span class="nav-text">Comparisons</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String-comparison"><span class="nav-number">2.3.3.</span> <span class="nav-text">String comparison</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function"><span class="nav-number">2.4.</span> <span class="nav-text">Function</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Function-Arguments"><span class="nav-number">2.4.1.</span> <span class="nav-text">Function Arguments</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Varargs"><span class="nav-number">2.4.2.</span> <span class="nav-text">Varargs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Assignment"><span class="nav-number">2.4.3.</span> <span class="nav-text">Assignment</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">2.5.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String-Functions"><span class="nav-number">2.5.1.</span> <span class="nav-text">String Functions</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Execute"><span class="nav-number">2.6.</span> <span class="nav-text">Execute</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Normal"><span class="nav-number">2.6.1.</span> <span class="nav-text">Normal</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demos"><span class="nav-number">2.7.</span> <span class="nav-text">Demos</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Grep-Operation-Part-One"><span class="nav-number">2.7.1.</span> <span class="nav-text">Grep Operation, Part One</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Escaping-Shell-Command-Argument"><span class="nav-number">2.7.1.1.</span> <span class="nav-text">Escaping Shell Command Argument</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Grep-Operator-Part-Two"><span class="nav-number">2.7.2.</span> <span class="nav-text">Grep Operator, Part Two</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Motion-type"><span class="nav-number">2.7.2.1.</span> <span class="nav-text">Motion type</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Copying-the-Text"><span class="nav-number">2.7.2.2.</span> <span class="nav-text">Copying the Text</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Grep-Operator-Part-Three"><span class="nav-number">2.7.3.</span> <span class="nav-text">Grep Operator, Part Three</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List"><span class="nav-number">2.8.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Looping"><span class="nav-number">2.9.</span> <span class="nav-text">Looping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dictionaries"><span class="nav-number">2.10.</span> <span class="nav-text">Dictionaries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Toggling"><span class="nav-number">2.11.</span> <span class="nav-text">Toggling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Functional-Programming"><span class="nav-number">2.12.</span> <span class="nav-text">Functional Programming</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Immutable-Data-Structures"><span class="nav-number">2.12.1.</span> <span class="nav-text">Immutable Data Structures</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Functions-as-Variables"><span class="nav-number">2.12.2.</span> <span class="nav-text">Functions as Variables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Higher-Order-Functions"><span class="nav-number">2.12.3.</span> <span class="nav-text">Higher-Order Functions</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Paths"><span class="nav-number">2.13.</span> <span class="nav-text">Paths</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-a-Full-Plugin"><span class="nav-number">3.</span> <span class="nav-text">Creating a Full Plugin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Layout"><span class="nav-number">3.1.</span> <span class="nav-text">Basic Layout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Runtimepath"><span class="nav-number">3.2.</span> <span class="nav-text">Runtimepath</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Detecting-Filetype"><span class="nav-number">3.3.</span> <span class="nav-text">Detecting Filetype</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Syntax-Highlighting"><span class="nav-number">3.4.</span> <span class="nav-text">Basic Syntax Highlighting</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Highlighting-Functions"><span class="nav-number">3.4.1.</span> <span class="nav-text">Highlighting Functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Advanced-Syntax-Highlighting"><span class="nav-number">3.4.2.</span> <span class="nav-text">Advanced Syntax Highlighting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Highlighting-Operators"><span class="nav-number">3.4.3.</span> <span class="nav-text">Highlighting Operators</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Highlighting-Strings"><span class="nav-number">3.4.4.</span> <span class="nav-text">Highlighting Strings</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Folding"><span class="nav-number">3.5.</span> <span class="nav-text">Basic Folding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Advanced-Folding"><span class="nav-number">3.5.1.</span> <span class="nav-text">Advanced Folding</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Expr-Folding"><span class="nav-number">3.5.1.1.</span> <span class="nav-text">Expr Folding</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Blank-Lines"><span class="nav-number">3.5.1.2.</span> <span class="nav-text">Blank Lines</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Special-Foldlevels"><span class="nav-number">3.5.1.3.</span> <span class="nav-text">Special Foldlevels</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#An-Indentation-Level-Helper"><span class="nav-number">3.5.1.4.</span> <span class="nav-text">An Indentation Level Helper</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Section-Movement-Theory"><span class="nav-number">3.6.</span> <span class="nav-text">Section Movement Theory</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Nroff-Files"><span class="nav-number">3.6.1.</span> <span class="nav-text">Nroff Files</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#External-Commands"><span class="nav-number">3.7.</span> <span class="nav-text">External Commands</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#system"><span class="nav-number">3.7.1.</span> <span class="nav-text">system()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scratch-Splits"><span class="nav-number">3.7.2.</span> <span class="nav-text">Scratch Splits</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#append"><span class="nav-number">3.7.3.</span> <span class="nav-text">append()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#split"><span class="nav-number">3.7.4.</span> <span class="nav-text">split()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Autoloading"><span class="nav-number">3.8.</span> <span class="nav-text">Autoloading</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Documentetion"><span class="nav-number">3.9.</span> <span class="nav-text">Documentetion</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#How-Documentetion-Works"><span class="nav-number">3.9.1.</span> <span class="nav-text">How Documentetion Works</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Help-Header"><span class="nav-number">3.9.2.</span> <span class="nav-text">Help Header</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">3.9.3.</span> <span class="nav-text">Table of Contents</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Command-Command"><span class="nav-number">3.10.</span> <span class="nav-text">The Command Command</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Omnicomplete"><span class="nav-number">3.11.</span> <span class="nav-text">Omnicomplete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compiler-Support"><span class="nav-number">3.12.</span> <span class="nav-text">Compiler Support</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Travis TuRing</p>
+  <div class="site-description" itemprop="description">Mens et Manus</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
