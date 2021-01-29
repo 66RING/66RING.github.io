@@ -1,1498 +1,1939 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta name="description" content="Mens et Manus">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ring&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/page/9/index.html">
-<meta property="og:site_name" content="Ring&#39;s Blog">
-<meta property="og:description" content="Mens et Manus">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="Travis TuRing">
-<meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="http://yoursite.com/page/9/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'en'
-  };
-</script>
-
-  <title>Ring's Blog</title>
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+      
+        <meta name="robots" content="noindex,follow">
+      
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
   
 
+  <!-- 页面元数据 -->
+  
+  <title>Ring&#39;s Blog</title>
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
 
 
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Ring's Blog</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
+  <body>
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
           
+            <img no-lazy class='logo' src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png'/>
+          
+          
+          
+        </a>
+      
 
-          <div class="content index posts-expand">
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
           
-            <a href="/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/" class="post-title-link" itemprop="url">knowledge universe</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-25 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-25T00:00:00+08:00">2019-08-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-14 19:27:44" itemprop="dateModified" datetime="2020-12-14T19:27:44+08:00">2020-12-14</time>
-              </span>
-
           
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
 
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper  dock' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Volantis</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/v4/getting-started/"
+              
+              
+              id="v4getting-started">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>文档</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>博客</p>
+            </a>
+          
+            <a href="https://github.com/volantis-x/hexo-theme-volantis/"
+              
+              
+              id="https:githubcomvolantis-xhexo-theme-volantis">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
         </div>
-      </header>
+    
+  
+  </div>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
 
+<div class='l_main'>
+  
+  <section class="post-list">
+    
+    
       
-          <h2 id="自然率"><a href="#自然率" class="headerlink" title="自然率"></a>自然率</h2><h3 id="倒霉事的概率"><a href="#倒霉事的概率" class="headerlink" title="倒霉事的概率"></a>倒霉事的概率</h3><h4 id="墨菲定律"><a href="#墨菲定律" class="headerlink" title="墨菲定律"></a>墨菲定律</h4><p>问题引入-&gt;好看的人千篇一律，不好看的人各有千秋</p>
-<ul>
-<li>好看-&gt;五官什么的都是好看的，又好看的概率低，全好看的概率P更低</li>
-<li>不好看-&gt;其中一个不好看就不好看,概率1-P</li>
-</ul>
-<p>故。</p>
-<h3 id="验证是否正常的方法"><a href="#验证是否正常的方法" class="headerlink" title="验证是否正常的方法"></a>验证是否正常的方法</h3><h4 id="本福特定律"><a href="#本福特定律" class="headerlink" title="本福特定律"></a>本福特定律</h4><p>对于自然的杂乱无章的数据首位是1的概率并不是$\frac19$，据本福特定律，b进制数中首位是n的概率为$log_{b}\frac{n+1}{n}$</p>
-<ul>
-<li>要求<ul>
-<li>非人为规律<ul>
-<li>如电话号码不满足</li>
-</ul>
-</li>
-<li>跨度要大，跨越几个数量级<ul>
-<li>如人是身高不满足</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>应用<ul>
-<li>视频播放量</li>
-<li>各个国家人口</li>
-<li>国土面积</li>
-<li>GDP</li>
-<li>斐波那契数列<ul>
-<li>说明近似自然数据</li>
-</ul>
-</li>
-<li>放射性元素半衰期</li>
-<li>大选</li>
-</ul>
-</li>
-</ul>
-<p>自然数据的首位数规律</p>
-<ul>
-<li>数据是否造假—&gt;是否符合本福特定律</li>
-</ul>
-<h5 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h5><p>一个不严谨的证明</p>
-<ul>
-<li>数据的增长量正比于存量 $\frac{\Delta N}{N\Delta t}$ = Constant<ul>
-<li>结论</li>
-<li>$N = N_0e^{ct}$</li>
-<li>$t = C\log_{10}\frac{N_2}{N_1}$</li>
-</ul>
-</li>
-<li>$t_1 = C\log_{10}\frac{2}{1}$ ,$t_2 = C\log_{10}\frac{3}{2}$ …1到2，2到3，3到… <ul>
-<li>$t_n = C\log_{10}\frac{n+1}{n}$</li>
-<li>$T = t_1+t_2+…+t_n = C\log_{10}{10} = C$</li>
-<li>$P = \frac{t_n}{T}$ <ul>
-<li>$P_1 = \frac{t_1}{T} = lg2$ </li>
-<li>$P_n = \frac{t_n}{T} = lg\frac{n+1}{n}$ </li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h2><h3 id="求最大公约数"><a href="#求最大公约数" class="headerlink" title="求最大公约数"></a>求最大公约数</h3><ul>
-<li>图解法<ul>
-<li>矩形填充正方形,最小正方形的边长就是最大公约数</li>
-</ul>
-</li>
-<li>辗转相除法<ul>
-<li>证明<br>被除数a,余数r,除数b,公约数d<br>$r=a-bk$<br>若d|a,且d|b (a|b表示a是b的约数);则d|r<br>则找a和b的最大公约数d,就相当于找b和r的最大公约数  </li>
-</ul>
-</li>
-</ul>
-<h3 id="贝祖数"><a href="#贝祖数" class="headerlink" title="贝祖数"></a>贝祖数</h3><ul>
-<li>贝祖定理<br>方程$ax+by=m(a,b,m\in z)$x,y有解的充要条件是:m是a,b最大公约数的倍数。x,y就是贝祖数</li>
-<li>贝祖数的求法<ul>
-<li>$a\div{b}=k…r$<br>$r = a-bk$<br>a,b又可当做新的r。多组x,y就出来了</li>
-</ul>
-</li>
-</ul>
-<h3 id="Vieta-theorem"><a href="#Vieta-theorem" class="headerlink" title="Vieta theorem"></a>Vieta theorem</h3><p>$$\begin{aligned}<br>ax^2 + bx + c = 0 \<br>x_1 + x_2 = -\frac{b}{a};  x_1x_2 = \frac{c}{a}<br>\end{aligned}$$</p>
-<p><strong>tips</strong><br>$$\begin{aligned}<br>let\ x_1=a-u, x_2=a+u \<br>x_1x_2=(a-u)(a+u) = a^2 - u^2<br>\end{aligned}$$<br>and so can get $x$ quickly.</p>
-<h4 id="expand"><a href="#expand" class="headerlink" title="expand"></a>expand</h4><p>$$<br>ax_1^3 + bx_2^2 + cx_3 + d = 0 \</p>
-<p>\begin{cases}<br>x_1 + x_2 + x_3 = -\frac{b}{a} \<br>x_1x_2 + x_1x_3 + x_2x_3 = \frac{c}{a} \<br>x_1x_2x_3 = -\frac{d}{a} \<br>\end{cases} \</p>
-<p>and\ so\ on …<br>$$</p>
-<h2 id="天文"><a href="#天文" class="headerlink" title="天文"></a>天文</h2><h3 id="发现系外行星的方法"><a href="#发现系外行星的方法" class="headerlink" title="发现系外行星的方法"></a>发现系外行星的方法</h3><h4 id="视像速度法"><a href="#视像速度法" class="headerlink" title="视像速度法"></a>视像速度法</h4><ul>
-<li>双星</li>
-<li>多普勒效益造成 红移/蓝移<ul>
-<li>说明有恒星周期性运动</li>
-<li>说明有双星系统</li>
-</ul>
-</li>
-<li>故恒星旁有行星</li>
-</ul>
-<h4 id="凌日法"><a href="#凌日法" class="headerlink" title="凌日法"></a>凌日法</h4><ul>
-<li>类似日食原理的，亮度的周期性变化</li>
-<li>从周期中得到各种数据<ul>
-<li>但存在角度问题</li>
-</ul>
-</li>
-</ul>
-
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2019/08/27/universe/go/golang%E6%93%8D%E4%BD%9C%20mgov2%E7%AF%87/">
+        golang操作 mgov2篇
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        打开mongo123456789101112import(  "gopkg.in/mgo.v2")	url:="mongodb://localhost:27017"  // 不登录mongo的	url:="mongodb://root:password@localhost:27017/登录的用户名" // 登录mongo的	session,err:=mgo.Dial(url)	defer s...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2019-08-27</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/08/27/universe/go/golang%E6%93%8D%E4%BD%9C%20mgov2%E7%AF%87/'>
+            Read More
+          </a>
+        </div>
       
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/08/universe/go/Golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/08/universe/go/Golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/" class="post-title-link" itemprop="url">Golang交叉编译</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-08 17:52:45" itemprop="dateCreated datePublished" datetime="2019-08-08T17:52:45+08:00">2019-08-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-29 15:32:42" itemprop="dateModified" datetime="2020-08-29T15:32:42+08:00">2020-08-29</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a><center>交叉编译<center></h1><p>所谓交叉编译就是在一个平台生成另一个平台的可执行文件。</p>
-<ul>
-<li>通过<code>go tool dist list</code>查看支持情况</li>
-<li>步骤：<ul>
-<li><ol>
-<li>设置目标平台以win-&gt;linux为例<code>set GOOS=linux</code></li>
-</ol>
-</li>
-<li><ol start="2">
-<li>设置目标的GPU<code>set GOARCH amd64</code></li>
-</ol>
-</li>
-<li><ol start="3">
-<li><code>go build</code></li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h2><p>1.生产可执行文件    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 指定目标环境</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build XXX</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2.后台运行与关闭</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 生产可执行程序</span><br><span class="line">nohup 程序路径 &amp;  &#x2F;&#x2F;后台运行,然后会在当前目录生成nohup.out问及文件，记录输出到内容</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 不生成可执行程序</span><br><span class="line">nohup go run name &amp;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;进程控制</span><br><span class="line">ps –aux     &#x2F;&#x2F;查看进程</span><br><span class="line">ps –ef | grep name &#x2F;&#x2F;查看name的进程</span><br><span class="line">kill PID &#x2F;&#x2F;关闭杀掉</span><br></pre></td></tr></table></figure>
-
-<p>2.开机自启</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>3.传文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp FILE NAME@IP:&#x2F;root&#x2F;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/05/universe/go/Golang_note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/05/universe/go/Golang_note/" class="post-title-link" itemprop="url">Golang基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-05 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-05T00:00:00+08:00">2019-08-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-19 20:36:28" itemprop="dateModified" datetime="2020-09-19T20:36:28+08:00">2020-09-19</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>非零基础笔记，掌握c的基础上记录</p>
-<h3 id="GO-mod的使用"><a href="#GO-mod的使用" class="headerlink" title="GO mod的使用"></a>GO mod的使用</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> mod init</span><br><span class="line"><span class="keyword">go</span> mod tidy</span><br><span class="line"><span class="string">"当然要设置好代言"</span></span><br><span class="line"><span class="string">"https://goproxy.io"</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line">import &quot;fmt&quot; &#x2F;&#x2F;import了就必须使用</span><br><span class="line">&#x2F;&#x2F; 不用写；</span><br><span class="line">func main()&#123; &#x2F;&#x2F;这个括号不能换行</span><br><span class="line">		a :&#x3D; 10 &#x2F;&#x2F;:&#x3D;是自动识别类型的</span><br><span class="line">		b,c :&#x3D; 20,30</span><br><span class="line">		var b int &#x2F;&#x2F;var 变量名 类型</span><br><span class="line">		fmt.Println() &#x2F;&#x2F;自动换行</span><br><span class="line">		fmt.Printf() &#x2F;&#x2F;格式化输出，同c</span><br><span class="line">		 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量"></a>匿名变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i,_ :&#x3D; 10,20 &#x2F;&#x2F; _表示匿名变量 配合函数返回值才有优势  多返回值+占位</span><br></pre></td></tr></table></figure>
-
-<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const a int &#x3D; 10</span><br><span class="line">aonst b &#x3D; 20 &#x2F;&#x2F; 没有:&#x3D; ,也自动推到类型</span><br></pre></td></tr></table></figure>
-
-<h3 id="多个变量或常量到定义"><a href="#多个变量或常量到定义" class="headerlink" title="多个变量或常量到定义"></a>多个变量或常量到定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var(</span><br><span class="line">		a int</span><br><span class="line">		b float64</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">const(</span><br><span class="line">		a int &#x3D; 1</span><br><span class="line">		b float64 &#x3D;1.2 &#x2F;&#x2F;或者直接&#x3D;让它自动推到类型</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<h3 id="iota枚举"><a href="#iota枚举" class="headerlink" title="iota枚举"></a>iota枚举</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">const(</span><br><span class="line">		a &#x3D; iota</span><br><span class="line">		b &#x3D; iota</span><br><span class="line">		c &#x3D; iota</span><br><span class="line">)</span><br><span class="line">		1.iota常量自动生成器，每一行自动加一</span><br><span class="line">		2.iota给常量赋值</span><br><span class="line">		3iota遇到新的const时重置为0</span><br><span class="line">		4.可只写一个iota</span><br><span class="line">		const	(</span><br><span class="line">		  a &#x3D; iota</span><br><span class="line">		  b</span><br><span class="line">		  c</span><br><span class="line">		)</span><br><span class="line">		5.如果同一行，值都一样</span><br><span class="line">		const(</span><br><span class="line">				i &#x3D; iota</span><br><span class="line">				j1,j2,j3 &#x3D; iota,iota,iota  &#x2F;&#x2F;一样</span><br><span class="line">				k &#x3D; iota</span><br><span class="line">		)</span><br></pre></td></tr></table></figure>
-
-<h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type i int &#x2F;&#x2F;给int取个别名i</span><br><span class="line">  ^</span><br></pre></td></tr></table></figure>
-
-<h3 id="if特性"><a href="#if特性" class="headerlink" title="if特性"></a>if特性</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;支持初始化</span><br><span class="line">if a:&#x3D;0;a&lt;10&#123;</span><br><span class="line">		^			^	分号隔开</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="switch-case-fallthrough"><a href="#switch-case-fallthrough" class="headerlink" title="switch-case-fallthrough"></a>switch-case-fallthrough</h3><p>​                                ^跳出，相当于break<br>​        支持一个初始化语句,</p>
-<h3 id="range迭代"><a href="#range迭代" class="headerlink" title="range迭代"></a>range迭代</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str:&#x3D;&quot;abd&quot;</span><br><span class="line">for i,data :&#x3D; range str&#123; &#x2F;&#x2F;第一期是位置str[]，第二个是值</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func 函数名(a int,b string参数列表)(a1 type1,a2 type2返回类型)&#123;</span><br><span class="line">	函数体</span><br><span class="line">	return v1,v2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;不定参数列表</span><br><span class="line">func funcName(a ...int)&#123;</span><br><span class="line">							...int^不定参数类型，必须放在最后</span><br><span class="line">							像一个列表</span><br><span class="line">							可以for i,data :&#x3D;range a&#123;</span><br><span class="line">							</span><br><span class="line">							&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;常用写法</span><br><span class="line">func name()(res int)&#123;</span><br><span class="line">		res &#x3D; 666</span><br><span class="line">		return  &#x2F;&#x2F;有返回值必须返回嘛，所在go中可以这样写</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="函数也是一种数据类型"><a href="#函数也是一种数据类型" class="headerlink" title="函数也是一种数据类型"></a>函数也是一种数据类型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;故可以用type重命名</span><br><span class="line">type newname func(a,b int) int&#123;</span><br><span class="line">&#125;</span><br><span class="line">var a newname</span><br><span class="line">a &#x3D; (1,2)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;回调函数，例</span><br><span class="line">func cala(a,b int, fuc newname) int &#123;</span><br><span class="line">	fuc(a, b)</span><br><span class="line">&#125; &#x2F;&#x2F;                 ^多态了</span><br><span class="line">func main()&#123;</span><br><span class="line">	cala(1,2,add)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>###匿名函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">f1 :&#x3D; func()&#123; &#x2F;&#x2F;没有参数，闭包可捕获到外层到变量，影响到外面</span><br><span class="line">			&#x2F;&#x2F;不管变量到作用域，只要闭包还在使用他，变量就还在</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;匿名函数定义了就要有东西来接</span><br><span class="line">&#x2F;&#x2F;不然这么写</span><br><span class="line">func()&#123;</span><br><span class="line">&#125;()</span><br><span class="line">  ^这个括号表示传进去到参数，然后直接调用</span><br></pre></td></tr></table></figure>
-<p>###defer</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.延迟调用，函数结束前(那一刻)调用</span><br><span class="line">2.先写到后调用</span><br><span class="line">3.多个defer调用时，哪怕其中有个出了错，其他仍然会执行</span><br><span class="line">4.相当于先按顺序读，然后默默记住，再倒序输出</span><br></pre></td></tr></table></figure>
-<p>###获取命令行参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.导入包</span><br><span class="line">import &quot;os&quot;</span><br><span class="line"></span><br><span class="line">2.接收传入的参数 &#x2F;&#x2F;全都是以字符串形式</span><br><span class="line">str :&#x3D; os.Args  &lt;这个表示</span><br><span class="line">tips:可用不定参数接，可用range迭代接</span><br></pre></td></tr></table></figure>
-<p>###导入包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">同一个目录包名必须一样</span><br><span class="line">同一个目录调用别的文件的函数无需包名</span><br><span class="line">不同目录包名不一样</span><br><span class="line">调用的别的包的函数首字母必须大写</span><br><span class="line"></span><br><span class="line">1.除传统写法还可</span><br><span class="line">import(</span><br><span class="line">	&quot;&quot;</span><br><span class="line">	&quot;&quot;</span><br><span class="line">) </span><br><span class="line"></span><br><span class="line">2.起别名</span><br><span class="line">import 别名 &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">3.  .操作</span><br><span class="line">import . &quot;fmt&quot; &#x2F;&#x2F;调用函数无需通过包名</span><br><span class="line"></span><br><span class="line">4.忽略次包名</span><br><span class="line">import _ &quot;fmt&quot;</span><br><span class="line">这个操作时为了调用包中的init函数</span><br></pre></td></tr></table></figure>
-<p>###init函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">导入一个包就先执行一个包的init函数</span><br><span class="line">func init()&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">所以 import _ &quot;&quot; 操作的目的时调用init函数而不用其他函数</span><br></pre></td></tr></table></figure>
-
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;指定下标初始化</span><br><span class="line">d :&#x3D; [5]int&#123;2: 10,4: 2&#125;</span><br><span class="line">						^指定的下标</span><br><span class="line">						</span><br><span class="line">&#x2F;&#x2F;数组比较</span><br><span class="line">比较类型和每个元素</span><br><span class="line">&#x2F;&#x2F;同类型的数组可以赋值</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;数组做函数参数-&gt;拷贝，值传递</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;数组指针防止值传递^</span><br><span class="line">p *[7]int</span><br><span class="line">(*p)[0]  &lt;-注意写法</span><br></pre></td></tr></table></figure>
-
-<h3 id="随机数的使用"><a href="#随机数的使用" class="headerlink" title="随机数的使用"></a>随机数的使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. import</span><br><span class="line">2. 设置种子 &#x2F;&#x2F;种子参数一样产生的随机数一样</span><br></pre></td></tr></table></figure>
-
-<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">array :&#x3D; [...]int&#123;10, 20, 30, 0, 0&#125;</span><br><span class="line">slice :&#x3D; array[low:high:max]  &#x2F;&#x2F;切片</span><br><span class="line">low-&gt;起点</span><br><span class="line">high-&gt;终点 &#x2F;&#x2F;不包括</span><br><span class="line">长度&#x3D;high - low</span><br><span class="line">容量&#x3D;max - low  &#x2F;&#x2F;意义不明</span><br><span class="line"></span><br><span class="line">创建方式：</span><br><span class="line">1.传统方式</span><br><span class="line">	s1 :&#x3D; []int&#123;1,2,3&#125; &#x2F;&#x2F;自动推到类型同时初始化</span><br><span class="line">2.make函数</span><br><span class="line">	s2 :&#x3D; make([]int, len, cap)</span><br><span class="line">						^切片类型      ^默认不写和len一样</span><br><span class="line"></span><br><span class="line">切片操作</span><br><span class="line">类似python</span><br><span class="line">操作某个元素和数组操作一样</span><br><span class="line">append函数，向后追加，自动以两倍容量扩容</span><br><span class="line">copy函数，copy(目标切片， 原切切片)</span><br><span class="line"></span><br><span class="line">！！！切片做函数参数！！！</span><br><span class="line">引用传递，会影响到外面</span><br></pre></td></tr></table></figure>
-
-<h3 id="切片和数组的区别-amp-amp-关系"><a href="#切片和数组的区别-amp-amp-关系" class="headerlink" title="切片和数组的区别&amp;&amp;关系"></a>切片和数组的区别&amp;&amp;关系</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">数组长度固定，切片[]里面为空或...长度可以不固定</span><br><span class="line">a :&#x3D; [7]int&#123;&#125;</span><br><span class="line">s :&#x3D; []int&#123;&#125; &lt;-	切片</span><br><span class="line"></span><br><span class="line">对切片操作会影响到底层数组</span><br></pre></td></tr></table></figure>
-
-<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">格式： map[keyType]valueType</span><br><span class="line">创建方式</span><br><span class="line">1. var m1 map[int]string</span><br><span class="line"></span><br><span class="line">2. m2 :&#x3D; make(map[int]string) </span><br><span class="line"></span><br><span class="line">3. m2 :&#x3D; make(map[int]string, len) &#x2F;&#x2F;指定容量，自动扩容，提前分配提高效率</span><br></pre></td></tr></table></figure>
-
-<h3 id="int和string的转换"><a href="#int和string的转换" class="headerlink" title="int和string的转换"></a>int和string的转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#string到int  </span><br><span class="line">int,err:&#x3D;strconv.Atoi(string)  </span><br><span class="line">#string到int64  </span><br><span class="line">int64, err :&#x3D; strconv.ParseInt(string, 10, 64)  </span><br><span class="line">#int到string  </span><br><span class="line">string:&#x3D;strconv.Itoa(int)  </span><br><span class="line">#int64到string  </span><br><span class="line">string:&#x3D;strconv.FormatInt(int64,10) </span><br><span class="line"></span><br><span class="line">同类型之间转换，比如int64到int，直接int(int64)即可；</span><br></pre></td></tr></table></figure>
-
-<h3 id="接收复杂的类型一般自定义结构体"><a href="#接收复杂的类型一般自定义结构体" class="headerlink" title="接收复杂的类型一般自定义结构体"></a>接收复杂的类型一般自定义结构体</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">因为http只能传字符串，所以前端要传json的话要先把json转换成json字符串</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-
-<h2 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h2><h3 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h3><p><code>go func{}</code>以并发形式执行而不需等待执行完成</p>
-<p>当一个goroutine尝试在一个channel上发送(<code>ch&lt;- expression</code>)或接收(<code>&lt;-ch</code>)时，这个goroutine会阻塞在调用处，直到另一个goroutine从这个channel中接受或发送。</p>
-<h3 id="箭头符-lt"><a href="#箭头符-lt" class="headerlink" title="箭头符:&lt;-"></a>箭头符:&lt;-</h3><p>goroutine是golang中在语言级别实现的轻量级线程，仅仅利用 go 就能立刻起一个新线程。多线程会引入线程之间的同步问题，在golang中可以使用channel作为同步的工具。</p>
-<p>通过channel可以实现两个goroutine之间的通信。</p>
-<p>创建一个channel， <code>make(chan TYPE {, NUM})</code> , TYPE指的是channel中传输的数据类型，第二个参数是可选的，指的是channel的容量大小。</p>
-<p>向channel传入数据， <code>CHAN &lt;- DATA</code> , CHAN 指的是目的channel即收集数据的一方， DATA 则是要传的数据。</p>
-<p>从channel读取数据， <code>DATA := &lt;-CHAN</code> ，和向channel传入数据相反，在数据输送箭头的右侧的是channel，形象地展现了数据从‘隧道’流出到变量里。</p>
-<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><h3 id="参数绑定"><a href="#参数绑定" class="headerlink" title="参数绑定"></a>参数绑定</h3><p>以gin框架为例</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span>&#123;</span><br><span class="line">    Name <span class="keyword">string</span>  <span class="string">`json:"name" form:"name" binding:required`</span></span><br><span class="line">    Age <span class="keyword">int</span>    <span class="string">`json:"age" form:"age"`</span></span><br><span class="line">    Address <span class="keyword">string</span>  <span class="string">`json:"address" form:"addr"`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>``</code>之间的标记表明了了映射关系和数据来源，这样使用gin的<code>bind</code>函数就可生成Person实例。<code>json</code>标记表明了映射成json时使用的名称如name，而不是Name，或使用json中的对应字段完成映射。<code>form</code>标记表明了从表单中获取映射。<code>required</code>标记表明了必须要有这个参数，没有会报错。当然binding等标记还有其他用法，和自定义，详见官方文档。</p>
-<p>gin的这个binding功能使用了第三方的验证器，validator。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/universe/java/HashMap%E5%8E%9F%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/06/27/universe/java/HashMap%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">HashMap原理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-06-27 00:00:00" itemprop="dateCreated datePublished" datetime="2019-06-27T00:00:00+08:00">2019-06-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-29 20:21:04" itemprop="dateModified" datetime="2020-06-29T20:21:04+08:00">2020-06-29</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h2><p>hashmap有数组+链表组成</p>
-<p>基于红黑树的hashmap就是当链表达到一定长度时把链表变成红黑树</p>
-<p>向map中put元素，如果key重复，会覆盖并把老的元素返回出来</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">| array | 1 | 2 | ... | N |</span><br><span class="line">|-------|---|---|-----|---|</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |   </span><br><span class="line"> 链表   value</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">        value</span><br><span class="line">  |       |   |   |     |   </span><br><span class="line">  |       |   |   |     |</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>hashmap初始化数组容量的时候必须的一个二的幂次方数<ul>
-<li>这样方便控制取值范围<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2^k-1会得到一个全是1的二进制数：0001 1111</span><br><span class="line">用这个数与hash code与运算即可以截断hash code，只保留低位k-1位</span><br><span class="line">0000 0111</span><br><span class="line">0101 1010</span><br><span class="line">---------</span><br><span class="line">0000 0010</span><br><span class="line"></span><br><span class="line">高位数先右移在与这个111与运算就可得到想要的任意位</span><br><span class="line">提高散列性，防止链表过长，提高get的效率</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<p>取小于一个数的最大二次幂算法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">func (int i)&#123;</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 1)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 2)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 4)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 8)</span><br><span class="line">    i |&#x3D; (i &gt;&gt; 16)</span><br><span class="line">    return i-(i &gt;&gt;&gt; 1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return前的一系列移位操作把有效位全部变成了1</span><br><span class="line">在用结果减去移1位后的结果(i&gt;&gt;&gt;1)，就得到只有最高位为1</span><br><span class="line"></span><br><span class="line">        0001 ****</span><br><span class="line">&gt;&gt;1      0000 1***</span><br><span class="line">        ---------</span><br><span class="line">        0001 1***</span><br><span class="line">&gt;&gt;2     0000 0110</span><br><span class="line">...直到int的64位都保</span><br><span class="line">        0001 1111</span><br><span class="line">        0000 1111</span><br><span class="line">    res</span><br></pre></td></tr></table></figure>
-
-<p>扩容时：新建数组 -&gt; 迁移到新数组</p>
-<h3 id="多线程的情况"><a href="#多线程的情况" class="headerlink" title="多线程的情况"></a>多线程的情况</h3><p>在多线程情况下，扩容时可能会同时创建多个个数组。在JDK1.7中会出现问题</p>
-<h3 id="put-key-value-方法"><a href="#put-key-value-方法" class="headerlink" title="put(key, value)方法"></a>put(key, value)方法</h3><ul>
-<li>确定下标<ul>
-<li><code>hashcode &amp; (lenght-1)</code></li>
-<li>因为hashmap的长度只会是2的次幂，所以减1后每一个有效位(除了最高有效位)都是1</li>
-</ul>
-</li>
-<li>解决哈希冲突<ul>
-<li>计算hashcode的时候，有可能会得到同样的值，这时候发生哈希冲突</li>
-<li>链表法<ul>
-<li>插入在链表头部(1.7)</li>
-</ul>
-</li>
-<li>再散列法</li>
-</ul>
-</li>
-</ul>
-<h3 id="get-key-方法"><a href="#get-key-方法" class="headerlink" title="get(key)方法"></a>get(key)方法</h3><ul>
-<li>计算下标</li>
-<li>找到key对应的值<ul>
-<li>如果是链表法解决的哈希冲突则<ul>
-<li>遍历寻找key</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><p>ConcurrentHashMap解决多线程情况下出现的问题</p>
-<p>ConcurrentHashMap使用一个并发级别来指定多少个元素共享一个锁，ConcurrentHashMap称这个所为segment。</p>
-<ul>
-<li>初始化<ul>
-<li>根据并发级别来确定segment的容量，一个segment对象就相当于一个小的hashmap</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/05/universe/utils/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/05/universe/utils/" class="post-title-link" itemprop="url">markdown utils</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-05 00:00:00" itemprop="dateCreated datePublished" datetime="2019-04-05T00:00:00+08:00">2019-04-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>$\sqrt{3x-1}+(1+x)^2$</p>
-<p>$$\begin{array}{c}</p>
-<p>\nabla \times \vec{\mathbf{B}} -, \frac1c, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp;<br>= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} &amp; = 4 \pi \rho \</p>
-<p>\nabla \times \vec{\mathbf{E}}, +, \frac1c, \frac{\partial\vec{\mathbf{B}}}{\partial t} &amp; = \vec{\mathbf{0}} \</p>
-<p>\nabla \cdot \vec{\mathbf{B}} &amp; = 0</p>
-<p>\end{array}$$</p>
-<p>$$\begin{aligned}<br>loss &amp;= H(p,q) \<br>&amp;= -\sum{P_1(x) \log_2{Q_1(x)}} \<br>&amp;= -\log_2{0.4}  \<br>&amp;= 0.916<br>\end{aligned}<br>$$</p>
-<p>$$f(x)=<br>\begin{cases}<br>0&amp; \text{x=0}\<br>1&amp; \text{x!=0}<br>\end{cases}$$</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">    dateFormat DD-MM-YYY</span><br><span class="line">    axisFormat %d&#x2F;%m&#x2F;%y</span><br><span class="line"></span><br><span class="line">    title Example</span><br><span class="line">    section example section</span><br><span class="line">    activity :active, 01-02-2019, 03-08-2019</span><br><span class="line">    city :active, 01-02-2019, 03-08-2020</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">other-&gt;Andrew: Says Says to China</span><br><span class="line">Andrew-&gt;China: Says</span><br><span class="line">Note right of China: China thinks\nabout it</span><br><span class="line">China--&gt;Andrew: How are you?</span><br><span class="line">Andrew-&gt;&gt;China: I am good thanks!</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">st&#x3D;&gt;start: Start|past:&gt;http:&#x2F;&#x2F;www.google.com[blank]</span><br><span class="line">e&#x3D;&gt;end: End|future:&gt;http:&#x2F;&#x2F;www.google.com</span><br><span class="line">op1&#x3D;&gt;operation: My Operation|past</span><br><span class="line">op2&#x3D;&gt;operation: Stuff|current</span><br><span class="line">sub1&#x3D;&gt;subroutine: My Subroutine|invalid</span><br><span class="line">cond&#x3D;&gt;condition: Yes</span><br><span class="line">or No?|approved:&gt;http:&#x2F;&#x2F;www.google.com</span><br><span class="line">c2&#x3D;&gt;condition: Good idea|rejected</span><br><span class="line">io&#x3D;&gt;inputoutput: catch something...|future</span><br><span class="line"></span><br><span class="line">st-&gt;op1(right)-&gt;cond</span><br><span class="line">cond(yes, right)-&gt;c2</span><br><span class="line">cond(no)-&gt;sub1(left)-&gt;op1</span><br><span class="line">c2(yes)-&gt;io-&gt;e</span><br><span class="line">c2(no)-&gt;op2-&gt;e</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;type&quot;: &quot;pie&quot;,</span><br><span class="line">  &quot;data&quot;: &#123;</span><br><span class="line">    &quot;labels&quot;: [</span><br><span class="line">      &quot;Red&quot;,</span><br><span class="line">      &quot;Blue&quot;,</span><br><span class="line">      &quot;Yellow&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;datasets&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;data&quot;: [</span><br><span class="line">          300,</span><br><span class="line">          50,</span><br><span class="line">          100</span><br><span class="line">        ],</span><br><span class="line">        &quot;backgroundColor&quot;: [</span><br><span class="line">          &quot;#FF6384&quot;,</span><br><span class="line">          &quot;#36A2EB&quot;,</span><br><span class="line">          &quot;#FFCE56&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;hoverBackgroundColor&quot;: [</span><br><span class="line">          &quot;#FF6384&quot;,</span><br><span class="line">          &quot;#36A2EB&quot;,</span><br><span class="line">          &quot;#FFCE56&quot;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;options&quot;: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/universe/database/MongoDB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/01/universe/database/MongoDB/" class="post-title-link" itemprop="url">mongoDB usage</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-01 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-01T00:00:00+08:00">2019-03-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-22 11:32:53" itemprop="dateModified" datetime="2020-11-22T11:32:53+08:00">2020-11-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="结构"><a href="#结构" class="headerlink" title="结构:"></a>结构:</h3><p>-db(database)<br>-collections<br>-document</p>
-<h3 id="基本指令"><a href="#基本指令" class="headerlink" title="基本指令:"></a>基本指令:</h3><p>-show db<br>-use &lt;数据库名&gt;<br>    -进入指定数据库<br>-db<br>    -显示当前数据库<br>-show collections<br>    -显示数据库里所有的集合</p>
-<h3 id="数据库CRUD-增删改查-操作："><a href="#数据库CRUD-增删改查-操作：" class="headerlink" title="数据库CRUD(增删改查)操作："></a>数据库CRUD(增删改查)操作：</h3><p>-向数据库中写入文档<br>        db.<collection>.insert(doc)</p>
-<p>-查询集合中的文档<br>        db.<collection>.find() #括号里写条件{add:’asf’}等<br>        db.<collection>.find().count()#查询数量</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/universe/python/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/01/universe/python/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">爬虫学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-01 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-01T00:00:00+08:00">2019-03-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-15 21:34:14" itemprop="dateModified" datetime="2020-06-15T21:34:14+08:00">2020-06-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="正则表达式-re解析模块"><a href="#正则表达式-re解析模块" class="headerlink" title="正则表达式 re解析模块"></a>正则表达式 re解析模块</h2><h3 id="最常规的匹配"><a href="#最常规的匹配" class="headerlink" title="最常规的匹配"></a>最常规的匹配</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">"hello 123 1234 world_this is a regex demo"</span></span><br><span class="line"><span class="comment"># re.match(pattern,string,flags = 0)   pattern和string比返回boolean</span></span><br><span class="line">result = re.match(<span class="string">'^hello\s\d\d\d\s\d&#123;4&#125;\s\w&#123;10&#125;.*demo$'</span>,content)</span><br><span class="line"><span class="comment">#   ^匹配字符串开头 空格 三个数分开读 空 四个数一起读 空格 匹配字母 .代替任意字符 指定结尾</span></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-
-<h3 id="泛匹配"><a href="#泛匹配" class="headerlink" title="泛匹配"></a>泛匹配</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">"hello 123 1234 world_this is a regex demo"</span></span><br><span class="line">result = re.match(<span class="string">'^helle.*demo$'</span>,content)</span><br><span class="line"><span class="comment"># .*  匹配了中间所以字符 具体baidu</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="匹配目标"><a href="#匹配目标" class="headerlink" title="匹配目标"></a>匹配目标</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">"hello 123 1234 world_this is a regex demo"</span></span><br><span class="line">result =  re.match(<span class="string">'^hello\s(\d+)\sworld.*demo$'</span>,content)</span><br><span class="line">print(result.group(<span class="number">1</span>)) <span class="comment"># 第一个括号的内容</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="贪婪匹配"><a href="#贪婪匹配" class="headerlink" title="贪婪匹配"></a>贪婪匹配</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">"hello 123 1234 world_this is a regex demo"</span></span><br><span class="line">result =  re.match(<span class="string">'^he.*(\d+).*demo$'</span>,content)</span><br><span class="line">print(result.group(<span class="number">1</span>))</span><br><span class="line"><span class="comment"># 结果 4  因为he后4前都被.*匹配了 但是(\d+)要求至少一个数字</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="非贪婪匹配"><a href="#非贪婪匹配" class="headerlink" title="非贪婪匹配"></a>非贪婪匹配</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">"hello 123 1234 world_this is a regex demo"</span></span><br><span class="line">result =  re.match(<span class="string">'^he.*?(\d+).*demo$'</span>,content)</span><br><span class="line"><span class="comment">#                ?匹配0个或1个正则表达式，.*匹配了he后面的字母，数字前有个空格，那就被?匹配下来了</span></span><br><span class="line">print(result.group(<span class="number">1</span>))</span><br><span class="line"><span class="comment"># 结果 123 匹配尽可能少 碰到了数字就停止前面的匹配</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="匹配模式"><a href="#匹配模式" class="headerlink" title="匹配模式"></a>匹配模式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'''hello 123 1234 world_this is</span></span><br><span class="line"><span class="string">a regex demo</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">result =  re.match(<span class="string">'^he.*?(\d+).*?demo$'</span>,content)</span><br><span class="line">print(result)</span><br><span class="line"><span class="comment"># 结果None 因为.匹配不到换行符</span></span><br><span class="line">result =  re.match(<span class="string">'^he.*?(\d+).*?demo$'</span>,content,re.S)<span class="comment"># 加了这个参数就可匹配任意字符了</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 就像想要输出带有\n之类的字符串的话...</span></span><br><span class="line"><span class="comment"># 和传统的一样特殊字符前加 \  把特殊字符转义了</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content1 = <span class="string">'price is $5.00'</span></span><br><span class="line">result1 =  re.match(<span class="string">'price is $5.00'</span>,content)</span><br><span class="line">result2 =  re.match(<span class="string">'price is \$5\.00'</span>,content)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-
-<p>总结：尽量使用泛匹配，使用括号得到匹配目标，尽量使用非贪婪模式，要匹配换行符记得参数 re.S</p>
-<h3 id="re-search-vs-re-match"><a href="#re-search-vs-re-match" class="headerlink" title="re.search vs re.match"></a>re.search vs re.match</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># re.match从开头开始匹配 配不上就None</span></span><br><span class="line"><span class="comment"># re.search从第一个出现的字符开始匹配</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="re-findall"><a href="#re-findall" class="headerlink" title="re.findall"></a>re.findall</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 搜索全部，以列表形式返回所有能匹配的子串，列表的每个元素是个元组</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="re-sub"><a href="#re-sub" class="headerlink" title="re.sub"></a>re.sub</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 替换字符串中每一个匹配的子串,返回替换后的字符串</span></span><br><span class="line"><span class="comment">#            ^</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'hello 123 1234 world_this isa regex demo'</span></span><br><span class="line">result = re.sub(<span class="string">'\d+'</span>,<span class="string">'hhh'</span>,content)</span><br><span class="line">print(result)</span><br><span class="line"></span><br><span class="line"><span class="comment">####</span></span><br><span class="line"><span class="comment">#那如果要在原字符串上增加呢</span></span><br><span class="line"><span class="comment">#截取，拼接，替换</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'hello 123 1234 world_this isa regex demo'</span></span><br><span class="line">result = re.sub(<span class="string">'(\d+)'</span>,<span class="string">r'\1hhh'</span>,content)</span><br><span class="line"><span class="comment">#                ^存组    ^用\1取第一组，r是取消\的转义作用</span></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-
-<h3 id="re-compile"><a href="#re-compile" class="headerlink" title="re.compile"></a>re.compile</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将正则字符串编译成正则表达式对象，！！！以便复用这个匹配模式</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'''hello 123 1234 world_this </span></span><br><span class="line"><span class="string">is a regex demo'''</span></span><br><span class="line">pattern = re.compile(<span class="string">'hello.*'</span>,re.S) <span class="comment"># 匹配模式存为了 pattren</span></span><br><span class="line">result = re.match(pattern,content)   <span class="comment"># 以后就能直接用这种方法</span></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-
-<h2 id="BeautifulSoup"><a href="#BeautifulSoup" class="headerlink" title="BeautifulSoup"></a>BeautifulSoup</h2><h3 id="解析库"><a href="#解析库" class="headerlink" title="解析库"></a>解析库</h3><p>​        1.Python标准库   用法： BeatufulSoup(markup,’html.parser’)<br>​        2.lxml HTML解析器  用法： BeatufulSoup(markup,’lxml’)<br>​        3.lxml XML 解析器  用法： BeatufulSoup(markup,’xml’)<br>​        4.html5lib  用法： BeatufulSoup(markup,’html5lib’)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入</span></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeatufulSoup</span><br></pre></td></tr></table></figure>
-
-<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeatufulSoup</span><br><span class="line"></span><br><span class="line">html = <span class="string">'''</span></span><br><span class="line"><span class="string">   各种标签</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">soup = BeatifulSoup(html,<span class="string">'lxml'</span>)</span><br><span class="line">print(soup.prettify())  <span class="comment"># 格式化代码 自动补全</span></span><br><span class="line">print(soup.title.string) <span class="comment"># 打印title标签里面的内容</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="标签选择器"><a href="#标签选择器" class="headerlink" title="标签选择器"></a>标签选择器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用法同上的 title</span></span><br><span class="line"><span class="comment"># 只返回第一个匹配的结果</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="获取名称"><a href="#获取名称" class="headerlink" title="获取名称"></a>获取名称</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup.标签.name</span><br></pre></td></tr></table></figure>
-
-<h4 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">soup.标签.attrs[<span class="string">'属性名称'</span>]</span><br><span class="line"><span class="comment">#也可</span></span><br><span class="line">soup.标签[<span class="string">'属性名称'</span>]</span><br></pre></td></tr></table></figure>
-
-<h4 id="获取内容"><a href="#获取内容" class="headerlink" title="获取内容"></a>获取内容</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup.标签.string</span><br></pre></td></tr></table></figure>
-
-<h4 id="嵌套选择"><a href="#嵌套选择" class="headerlink" title="嵌套选择"></a>嵌套选择</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 标签是套娃娃的嘛 so</span></span><br><span class="line">soup.标签.标签. <span class="comment"># 标签的子标签</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="子节点和子孙节点"><a href="#子节点和子孙节点" class="headerlink" title="子节点和子孙节点"></a>子节点和子孙节点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1</span></span><br><span class="line">soup.标签.contents <span class="comment"># 获取标签所有的子节点  返回列表</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2</span></span><br><span class="line">soup.标签.children <span class="comment"># 迭代器</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3</span></span><br><span class="line">soup.标签.decendants <span class="comment"># 获取子孙节点(子的子也获取)  返回迭代器</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="父节点于祖先节点"><a href="#父节点于祖先节点" class="headerlink" title="父节点于祖先节点"></a>父节点于祖先节点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1</span></span><br><span class="line">soup.标签.parent <span class="comment"># 获取父节点</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2</span></span><br><span class="line">soup.标签.parent <span class="comment"># 获取所有祖先节点</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="兄弟节点"><a href="#兄弟节点" class="headerlink" title="兄弟节点"></a>兄弟节点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">soup.标签.next_siblings <span class="comment"># 获取后面的兄弟节点</span></span><br><span class="line">soup.标签.previous_siblings <span class="comment"># 获取前面的兄弟节点</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="标准选择器"><a href="#标准选择器" class="headerlink" title="标准选择器"></a>标准选择器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># find_all(name, attrs, recursive, text, **kwargs)</span></span><br><span class="line">可根据签名，属性，内容查找</span><br><span class="line">soup.find_all(<span class="string">'标签'</span>) <span class="comment"># 返回的是列表的形式，可层层嵌套</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="attrs"><a href="#attrs" class="headerlink" title="attrs"></a>attrs</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(attrs=&#123;<span class="string">'属性名'</span>:<span class="string">'属性值'</span>&#125;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="text"><a href="#text" class="headerlink" title="text"></a>text</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(text=<span class="string">'内容'</span>) <span class="comment"># 根据文本内容选择，返回内容的列表//好鸡肋</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="find扩展"><a href="#find扩展" class="headerlink" title="find扩展"></a>find扩展</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find：类似find_all，但只返回第一个匹配结果</span><br><span class="line">find_parent()  find_parents()</span><br><span class="line">find_next_siblings()....等等</span><br></pre></td></tr></table></figure>
-
-<h3 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过select()直接传入CSS选择器即可完成选择</span></span><br><span class="line"><span class="number">1.</span>选<span class="class"><span class="keyword">class</span></span></span><br><span class="line"><span class="class">2.选标签</span></span><br><span class="line"><span class="class">3.选<span class="title">id</span></span></span><br></pre></td></tr></table></figure>
-
-<h3 id="获取内容-1"><a href="#获取内容-1" class="headerlink" title="获取内容"></a>获取内容</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.get_text()</span><br></pre></td></tr></table></figure>
-
-<h2 id="PyQuery"><a href="#PyQuery" class="headerlink" title="PyQuery"></a>PyQuery</h2><p>像jQuery</p>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyquery <span class="keyword">import</span> PyQuery <span class="keyword">as</span> pq <span class="comment"># 导入</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="字符串初始化"><a href="#字符串初始化" class="headerlink" title="字符串初始化"></a>字符串初始化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用法同上的标签选择器 class记得点和空格...</span></span><br><span class="line">html = <span class="string">'''</span></span><br><span class="line"><span class="string">    &lt;div id="fakebox-container"&gt;</span></span><br><span class="line"><span class="string">      &lt;ul id="fakebox"&gt;</span></span><br><span class="line"><span class="string">        &lt;li id="fakebox-search-icon"&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li id="fakebox-text"&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;input id="fakebox-input" autocomplete="off" tabindex="-1" type="url" aria-hidden="true"&gt;</span></span><br><span class="line"><span class="string">        &lt;li id="fakebox-cursor"&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;button id="fakebox-microphone" hidden=""&gt;&lt;/button&gt;</span></span><br><span class="line"><span class="string">      &lt;/ul&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">doc = pq(html)</span><br><span class="line">print(doc(<span class="string">'标签'</span>))</span><br></pre></td></tr></table></figure>
-
-<h4 id="URL初始化"><a href="#URL初始化" class="headerlink" title="URL初始化"></a>URL初始化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">doc = pq(url=<span class="string">''</span>)</span><br><span class="line">print(doc(<span class="string">'标签'</span>))</span><br></pre></td></tr></table></figure>
-
-<h4 id="文件初始化"><a href="#文件初始化" class="headerlink" title="文件初始化"></a>文件初始化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">doc = pq(filename=<span class="string">'路径'</span>)</span><br><span class="line">print(doc(<span class="string">'标签'</span>))</span><br></pre></td></tr></table></figure>
-
-<h3 id="基本CSS选择器"><a href="#基本CSS选择器" class="headerlink" title="基本CSS选择器"></a>基本CSS选择器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">html = <span class="string">'''  '''</span></span><br><span class="line">doc = pq(html)</span><br><span class="line">print(doc(<span class="string">'#   .   签名'</span>)	) <span class="comment"># 可层级关系 空格隔开表嵌套，直接写在后表并列</span></span><br><span class="line"><span class="comment"># 按id找的前面加#   按class找的加.    标签找的直接签名   ps.class=''   id=''按内容找</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="查找元素"><a href="#查找元素" class="headerlink" title="查找元素"></a>查找元素</h3><h4 id="子元素"><a href="#子元素" class="headerlink" title="子元素"></a>子元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">html = <span class="string">'''  '''</span></span><br><span class="line">doc = pq(html)</span><br><span class="line">items = doc(<span class="string">'.list'</span>)</span><br><span class="line">lis = items.find(<span class="string">'li'</span>) <span class="comment"># 找所有</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">items.children()</span><br></pre></td></tr></table></figure>
-
-<h4 id="父元素"><a href="#父元素" class="headerlink" title="父元素"></a>父元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">items.parent() <span class="comment"># 拿到父元素</span></span><br><span class="line">items.parents() <span class="comment"># 拿所有祖先  </span></span><br><span class="line"><span class="comment"># 括号内可用CSS选择器筛选</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="兄弟元素"><a href="#兄弟元素" class="headerlink" title="兄弟元素"></a>兄弟元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">items.siblings()  <span class="comment"># 也可选择器筛选</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lis = doc(<span class="string">'签名'</span>).items()  <span class="comment"># 生成一个生成器，那就可for了</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="获取信息"><a href="#获取信息" class="headerlink" title="获取信息"></a>获取信息</h3><h4 id="获取属性-1"><a href="#获取属性-1" class="headerlink" title="获取属性"></a>获取属性</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XXX.attr(<span class="string">'属性名'</span>) <span class="comment"># 和之前是一样的</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="获取文本"><a href="#获取文本" class="headerlink" title="获取文本"></a>获取文本</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.text()</span><br></pre></td></tr></table></figure>
-
-<h4 id="获取HTML"><a href="#获取HTML" class="headerlink" title="获取HTML"></a>获取HTML</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.html()  <span class="comment"># 把里面的html(代码)获取出来</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="DOM操作"><a href="#DOM操作" class="headerlink" title="DOM操作"></a>DOM操作</h3><h4 id="addClass、removeClass"><a href="#addClass、removeClass" class="headerlink" title="addClass、removeClass"></a>addClass、removeClass</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.addClass </span><br><span class="line">.removeClass <span class="comment"># 增减class(某个标签的)</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="attr、css"><a href="#attr、css" class="headerlink" title="attr、css"></a>attr、css</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.attr(<span class="string">'A'</span>,<span class="string">'B'</span>) <span class="comment"># 增加一个 A=B的属性，如果已经存在就覆盖掉</span></span><br><span class="line">。css(<span class="string">'A'</span>,<span class="string">'B'</span>) <span class="comment">#增加一个sytle (width:10px)</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.remove() <span class="comment"># 删掉选中的内容</span></span><br></pre></td></tr></table></figure>
-
-<p>还有其他很多方法</p>
-<h3 id="伪类选择器"><a href="#伪类选择器" class="headerlink" title="伪类选择器"></a>伪类选择器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">doc = pq(html)</span><br><span class="line">doc(<span class="string">'标签:first-child'</span>) <span class="comment"># 等等</span></span><br><span class="line">doc(<span class="string">'标签:nth-child(n)'</span>) <span class="comment"># 低n个子</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Selenium"><a href="#Selenium" class="headerlink" title="Selenium"></a>Selenium</h2><p>自动化测试工具，支持多浏览器，爬虫中主要用了解决JavaScript渲染问题</p>
-<h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.wait <span class="keyword">import</span> WebDriverWait</span><br><span class="line"></span><br><span class="line">browser = webdriver.Chrome() <span class="comment"># 声明浏览器驱动对象，别的浏览器同理</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    browser.get(<span class="string">'https://www.baidu.com'</span>) <span class="comment"># 传入url，跳出浏览器，访问那个网址</span></span><br><span class="line">    input = browser.find_element_by_id(<span class="string">'kw'</span>) <span class="comment"># 通过id找出信息</span></span><br><span class="line">    input.send_keys(<span class="string">'Python'</span>) <span class="comment"># 向元素中发送一些键</span></span><br><span class="line">    input.send_keys(Keys.ENTER) <span class="comment"># 然后回车</span></span><br><span class="line">    wait = WebDriverWait(browser,<span class="number">10</span>) <span class="comment"># 等待</span></span><br><span class="line">    wait.until(EC.presence_of_element_located((By.ID,<span class="string">'content_left'</span>))) <span class="comment"># 等待id是con..那个元素被加载出来</span></span><br><span class="line">    print(browser.current_url) <span class="comment"># 打印出url</span></span><br><span class="line">    print(browser.get_cookies()) <span class="comment"># 打印</span></span><br><span class="line">    print(browser.page_source) <span class="comment">#打印源代码</span></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    browser.close()</span><br></pre></td></tr></table></figure>
-
-<h3 id="查找元素-1"><a href="#查找元素-1" class="headerlink" title="查找元素"></a>查找元素</h3><h4 id="查找单个元素"><a href="#查找单个元素" class="headerlink" title="查找单个元素"></a>查找单个元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.find_element_by_id(<span class="string">'id'</span>)</span><br><span class="line">.find_elements_by_css_selector(<span class="string">'#'</span>)</span><br><span class="line">.find_elements_by_xpath(<span class="string">''</span>) <span class="comment"># 等等很多方法</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 法2</span></span><br><span class="line"><span class="comment"># 例</span></span><br><span class="line">.find_elements(BY.ID,<span class="string">'id'</span>) <span class="comment">#上述方法的通用实现 根据BY的不同不同</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="查找多个元素"><a href="#查找多个元素" class="headerlink" title="查找多个元素"></a>查找多个元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 同上只是用find_elements,返回列表</span></span><br><span class="line"><span class="comment">#                      ^</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="元素交互操作"><a href="#元素交互操作" class="headerlink" title="元素交互操作"></a>元素交互操作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入，点击等</span></span><br><span class="line">.send_keys(<span class="string">''</span>)</span><br><span class="line">.clear() <span class="comment"># 清空</span></span><br><span class="line">.click() <span class="comment"># 等等等等</span></span><br><span class="line"><span class="comment"># 更多在WebDriver API -&gt;webelement</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="交互动作"><a href="#交互动作" class="headerlink" title="交互动作"></a>交互动作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不同于上，是将动作附加的动作链中串行执行</span></span><br><span class="line"><span class="comment"># 更多...WebDriver API -&gt;Action Chains</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="执行JavaScript"><a href="#执行JavaScript" class="headerlink" title="执行JavaScript"></a>执行JavaScript</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">browser = webdriver.Chrome() </span><br><span class="line">browser.get(<span class="string">'https://www.baidu.com'</span>)</span><br><span class="line">browser.execute_script(<span class="string">'js代码'</span>) <span class="comment"># 这样传入js代码</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="获取元素信息"><a href="#获取元素信息" class="headerlink" title="获取元素信息"></a>获取元素信息</h3><h4 id="获取属性-2"><a href="#获取属性-2" class="headerlink" title="获取属性"></a>获取属性</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过find找到后</span></span><br><span class="line"><span class="comment"># .get_attribute('class') #获取class的属性</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="获取文本值"><a href="#获取文本值" class="headerlink" title="获取文本值"></a>获取文本值</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.text</span><br></pre></td></tr></table></figure>
-
-<h4 id="获取ID、位置、标签名、大小"><a href="#获取ID、位置、标签名、大小" class="headerlink" title="获取ID、位置、标签名、大小"></a>获取ID、位置、标签名、大小</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.id</span><br><span class="line">.location</span><br><span class="line">.tag_name</span><br><span class="line">.size</span><br></pre></td></tr></table></figure>
-
-<h4 id="Frame"><a href="#Frame" class="headerlink" title="Frame"></a>Frame</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 雾</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="等待"><a href="#等待" class="headerlink" title="等待"></a>等待</h3><p>确保元素加载完全</p>
-<h4 id="隐式等待"><a href="#隐式等待" class="headerlink" title="隐式等待"></a>隐式等待</h4><p>到了一定时候发现元素还没加载出来，那继续等，超时抛出异常</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.implicitly_wait(等待时间)</span><br></pre></td></tr></table></figure>
-
-<h4 id="显示等待"><a href="#显示等待" class="headerlink" title="显示等待"></a>显示等待</h4><p>指定一个等待条件，指定一个最长等待时间，超时抛异常</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 有很多等待条件，如：</span></span><br><span class="line">title_is</span><br><span class="line">title_contains</span><br><span class="line"><span class="comment"># ...更多WebDriver API -&gt;Expected condition Support</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="前进后退"><a href="#前进后退" class="headerlink" title="前进后退"></a>前进后退</h3><p>浏览器的前进后退</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">browser.forward()</span><br><span class="line">browser.back()</span><br></pre></td></tr></table></figure>
-
-<h3 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.get_cookies()</span><br><span class="line">.add_cookies()</span><br><span class="line">.delete_all_cookise()</span><br><span class="line"><span class="comment"># 等等</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="选项卡管理"><a href="#选项卡管理" class="headerlink" title="选项卡管理"></a>选项卡管理</h3><p>（标签页）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过执行js控制</span></span><br><span class="line">.......</span><br></pre></td></tr></table></figure>
-
-<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 官方文档</span></span><br><span class="line"><span class="comment"># ...更多WebDriver API -&gt; Exception</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>pass</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/26/universe/c/cpp_note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/26/universe/c/cpp_note/" class="post-title-link" itemprop="url">c++学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-26 00:00:00" itemprop="dateCreated datePublished" datetime="2019-01-26T00:00:00+08:00">2019-01-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-22 11:33:28" itemprop="dateModified" datetime="2020-11-22T11:33:28+08:00">2020-11-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="构造函数-amp-析构函数"><a href="#构造函数-amp-析构函数" class="headerlink" title="构造函数&amp;析构函数"></a>构造函数&amp;析构函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造方法</span></span><br><span class="line"><span class="comment">//法1</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">    A()&#123;...&#125;  <span class="comment">//构造函数</span></span><br><span class="line">    ~A()&#123;...&#125; <span class="comment">//析构函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//法2</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">    A();</span><br><span class="line">    ~A();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">A::A()&#123;...&#125;</span><br><span class="line">A::~A()&#123;...&#125;</span><br><span class="line"><span class="comment">//法3</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line"> 	A():a(),b()&#123;&#125;  <span class="comment">//构造函数初始化列表，只能对非静态成员初始化，a(),b()表示括号里的赋给外的</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="c-中貌似会用很多指针！！"><a href="#c-中貌似会用很多指针！！" class="headerlink" title="c++中貌似会用很多指针！！"></a>c++中貌似会用很多指针！！</h3><p>​    *p    p-&gt;</p>
-<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//继承方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>:</span><span class="keyword">public</span> A&#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="访问限制"><a href="#访问限制" class="headerlink" title="访问限制"></a>访问限制</h3><p>​        private：private成员只能由类成员（类内，类外main什么的就不）和友元（friend）访问<br>​        protected：子类能用<br>​        friend(友元)：？</p>
-<h3 id="内联函数inline"><a href="#内联函数inline" class="headerlink" title="内联函数inline"></a>内联函数inline</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//目的...</span></span><br><span class="line"><span class="comment">//内联函数和普通函数的区别在于：当编译器处理调用内联函数的语句时，不会将该语句编译成函数调用的指令，而是直接将整个函数体的代码插人调用语句处</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;<span class="built_in">cout</span>&lt;&lt;<span class="string">"hh"</span>;&#125; <span class="comment">//用inline关键字修饰</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    func();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//相当于</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"hh"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="覆盖-amp-隐藏"><a href="#覆盖-amp-隐藏" class="headerlink" title="覆盖&amp;隐藏"></a>覆盖&amp;隐藏</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//※虚函数 virtual用法</span></span><br><span class="line">overriding(覆盖)</span><br><span class="line">    特征：</span><br><span class="line">    	<span class="number">1.</span>子类覆盖父类函数</span><br><span class="line">    	<span class="number">2.</span>函数名和参数名都相同</span><br><span class="line">    	<span class="number">3.</span>父类被覆盖函数是虚函数(<span class="keyword">virtual</span>),因为如果不是(<span class="keyword">virtual</span>)的那就会发生namehidden</span><br><span class="line">    </span><br><span class="line">namehidden(隐藏)</span><br><span class="line">    特征:</span><br><span class="line">		<span class="number">1.</span>子类隐藏了父类的函数(还存在)</span><br><span class="line">        <span class="number">2.</span>子类与父类函数名相同但参数不同的父类函数将被隐藏</span><br><span class="line">        <span class="number">3.</span>子类函数与父类函数的名称相同，参数也相同，但是父类函数没有(<span class="keyword">virtual</span>)，父类函数被隐藏，故如果向上转型，将仍然调用的是子类的方法</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="re-C-抽象类"><a href="#re-C-抽象类" class="headerlink" title="re?C++抽象类"></a>re?C++抽象类</h3><p>1.含有<strong>纯</strong>虚拟函数的类称为抽象类&amp;&amp;不能生成实例<br>2.纯虚函数是在基类中声明的虚函数，它在基类中没有定义，但要求任何派生类都要定义自己的实现方法。在基类中<strong>实现纯虚函数的方法是在函数原型后加“=0”</strong><br>3.如果派生类没有重新定义纯虚函数，而派生类只是继承基类的纯虚函数，则这个派生类仍然还是一个 抽象类。如果派生类中给出了基类纯虚函数的实现，则该派生类就不再是抽象类了，它是一个可以建立对象的具体类了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//纯虚函数的写法-&gt;virtual (返回类型) (名) = 0;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="const-vs-const"><a href="#const-vs-const" class="headerlink" title="const* vs *const"></a>const* vs *const</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//主要看const是在*前还是*后</span></span><br><span class="line"><span class="number">1.</span><span class="keyword">const</span>*的情况，<span class="keyword">const</span>在前修饰*</span><br><span class="line">	=&gt;  *是什么？是指针。指针是什么？指针是有指向的，代表指向的那个东西。故<span class="keyword">const</span>在*前就是指针是<span class="keyword">const</span>的，即指向的那个东西是<span class="keyword">const</span>的，所以不能在=别的。</span><br><span class="line">	</span><br><span class="line"><span class="number">2.</span>*<span class="keyword">const</span>的情况，<span class="keyword">const</span>在*后修饰后面的变量</span><br><span class="line">	=&gt; 那。。那个变量是什么呢？是地址。所以一个<span class="keyword">const</span>的地址就是说初始化后b不能在改变，也就是b不能在等于别的&amp;a</span><br><span class="line">	<span class="keyword">int</span> *<span class="keyword">const</span> b = &amp;a;  <span class="comment">//初始化是取出地址初始化的嘛，所以b就是那个地址，前面的int *const都是修饰b的</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h3><p>​        extern也可用来进行链接指定；也可以置于变量或者函数前，以标示变量或者函数的定义在别的文件中，提示编译器遇到此变量和函数时在其他模块中寻找其定义。<br>即有以下两个作用：<br>​                1.与“C”连用，如extern “C” void fun();告诉编译器按C的规则去翻译<br>​                2.修饰声明全局变量或函数，其声明的变量和函数可以在其它模块中使用，注意，这只是一个声明而不是定义，具体的定义要在具体的定义中完成</p>
-<h3 id="类中-f-const-f-gt-类是const时用f-const那个-类似重载"><a href="#类中-f-const-f-gt-类是const时用f-const那个-类似重载" class="headerlink" title="类中 f() const  ?   f()  ==&gt;类是const时用f() const那个(类似重载)"></a>类中 f() const  ?   f()  ==&gt;类是const时用f() const那个(类似重载)</h3><h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">定义：</span><br><span class="line">	引用变量是一个别名，也就是说，它是某个已存在变量的另一个名字。一旦把引用初始化为某个变量，就可以使用该引用名称或变量名称来指向变量。</span><br><span class="line">	</span><br><span class="line">引用vs指针：</span><br><span class="line">	<span class="number">1.</span>不存在空引用。引用必须连接到一块合法的内存。</span><br><span class="line">	<span class="number">2.</span>一旦引用被初始化为一个对象，就不能被指向到另一个对象。指针可以在任何时候指向到另一个对象。</span><br><span class="line">	<span class="number">3.</span>引用必须在创建时被初始化。指针可以在任何时间被初始化。</span><br><span class="line">	</span><br><span class="line">引用创建:</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">char</span> a;</span><br><span class="line"><span class="keyword">char</span>&amp; b = a;<span class="comment">//1.必须初始化  2.指向对象(a)以存在</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="拷贝构造"><a href="#拷贝构造" class="headerlink" title="拷贝构造"></a>拷贝构造</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">### </span><br><span class="line">c++初始化用（）和用=是等价的；如A的构造函数A(<span class="keyword">int</span> x)可以A(<span class="number">10</span>)也可A = <span class="number">10</span>，同理其他类型！！！所以初始化一个类，如A a时  A a = b;相当于用b来初始化a（默认是复制粘贴成员（<span class="keyword">private</span>的不会复制），但也可把他重写A(<span class="keyword">const</span> A&amp; x)&#123;&#125;这个重载就叫拷贝构造；</span><br><span class="line">好习惯 写个类就写一个拷贝构造</span><br><span class="line">###</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">拷贝构造函数是一种特殊的构造函数，它在创建对象时，是使用同一类中之前创建的对象来初始化新创建的对象。拷贝构造函数通常用于：</span><br><span class="line">	<span class="number">1.</span>通过使用另一个同类型的对象来初始化新创建的对象。</span><br><span class="line">	<span class="number">2.</span>复制对象把它作为参数传递给函数。</span><br><span class="line">	<span class="number">3.</span>复制对象，并从函数返回这个对象。</span><br><span class="line">	</span><br><span class="line">如果在类中没有定义拷贝构造函数，编译器会自行定义一个。如果类带有指针变量，并有动态内存分配，则它必须有一个拷贝构造函数。拷贝构造函数的最常见形式如下：</span><br><span class="line"></span><br><span class="line">classname (<span class="keyword">const</span> classname &amp;obj) &#123; <span class="comment">//传一个引用，所谓拷贝就是说不会修改原来的，只是用一个对象去初始化另一个对象</span></span><br><span class="line">   <span class="comment">// 构造函数的主体</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><p>​        静态方法只能访问静态变量<br>​        静态成员可用类名访问::(类似python的类方法)因为它属于整个类 而不是某个对象 因此没有this<br>​        static变量有全局的生存期</p>
-<h3 id="重载运算符"><a href="#重载运算符" class="headerlink" title="重载运算符"></a>重载运算符</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> +-*/%&lt;&gt;!==等  <span class="number">30</span> <span class="number">31</span> <span class="number">32</span> <span class="number">33</span></span><br><span class="line">用关键字 <span class="keyword">operator</span> 修饰要重载的运算符，如</span><br><span class="line"><span class="keyword">operator</span> * (...)&#123;&#125;  <span class="comment">//重载了*</span></span><br><span class="line">运算符左边的变量叫reciver，决定用哪个的运算符来运算，就像取A的成员i =&gt;A.i</span><br><span class="line">如 x+y  ===&gt;  x.<span class="keyword">operator</span>+（y）</span><br><span class="line"><span class="comment">//exp1:成员函数</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">String</span> classname::<span class="keyword">operator</span> * (<span class="keyword">const</span> <span class="keyword">String</span>&amp; that)&#123;&#125; <span class="comment">//也可定义在类中</span></span><br><span class="line">   ^返回类型&amp;&amp;保证不修改算子(++ -- =等不用<span class="keyword">const</span>) ^类中(说明<span class="keyword">this</span>-&gt;可用);</span><br><span class="line"></span><br><span class="line"><span class="comment">//exp2:全局函数</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">String</span> classname::<span class="keyword">operator</span> + (<span class="keyword">const</span> <span class="keyword">String</span> a,<span class="keyword">const</span> <span class="keyword">String</span> b)&#123;&#125;</span><br><span class="line">	<span class="comment">//这个好像会自动把参数放到两边？</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="初始化-赋值"><a href="#初始化-赋值" class="headerlink" title="初始化!=赋值"></a>初始化!=赋值</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="explicit-amp-implicit"><a href="#explicit-amp-implicit" class="headerlink" title="explicit&amp;implicit"></a>explicit&amp;implicit</h3><p>​    首先, C++中的explicit关键字只能用于修饰只有一个参数的类构造函数, 它的作用是表明该构造函数是显示的, 而非隐式的(所以不会自动调用), 跟它相对应的另一个关键字是implicit, 意思是隐藏的,类构造函数默认情况下即声明为implicit(隐式).</p>
-<p>左右移&lt;&lt;  &gt;&gt;</p>
-<h3 id="模板-amp-amp-泛型-amp-amp-标准模板"><a href="#模板-amp-amp-泛型-amp-amp-标准模板" class="headerlink" title="模板&amp;&amp;泛型&amp;&amp;标准模板"></a>模板&amp;&amp;泛型&amp;&amp;标准模板</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数模板</span></span><br><span class="line"><span class="comment">//template &lt;class T&gt; re-type func(T x,T y)&#123;&#125; &lt;-跟在template后，就是函数模板，T代表一个类型,就会自动根据T的类型变化</span></span><br><span class="line"><span class="comment">//或使用template &lt;typename T&gt;</span></span><br><span class="line"><span class="comment">//使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">39</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">20</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Max(i, j): "</span> &lt;&lt; Max(i, j) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//自动根据类型来</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> f1 = <span class="number">13.5</span>; </span><br><span class="line"><span class="keyword">double</span> f2 = <span class="number">20.7</span>; </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Max(f1, f2): "</span> &lt;&lt; Max(f1, f2) &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s1 = <span class="string">"Hello"</span>; </span><br><span class="line"><span class="built_in">string</span> s2 = <span class="string">"World"</span>; </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Max(s1, s2): "</span> &lt;&lt; Max(s1, s2) &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">//类模板(同理</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">classname</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> T;<span class="keyword">char</span> T;<span class="function">T <span class="title">func</span><span class="params">()</span></span>&#123;&#125;....</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用=&gt;在实例化的时候指定类型</span></span><br><span class="line">classname&lt;T&gt; a;</span><br><span class="line"></span><br><span class="line"><span class="comment">//标准模板 如 (标准)类模板---&gt; vector&lt;type&gt;</span></span><br><span class="line">Vector：Vector 是一个类模板。不是一种数据类型。 Vector&lt;<span class="keyword">int</span>&gt;是一种数据类型。</span><br><span class="line"><span class="comment">//一、 定义和初始化</span></span><br><span class="line">Vector&lt;T&gt; v1; <span class="comment">//默认构造函数v1为空</span></span><br><span class="line"><span class="function">Vector&lt;T&gt; <span class="title">v2</span><span class="params">(v1)</span></span>;<span class="comment">//v2是v1的一个副本(拷贝构造?)</span></span><br><span class="line"><span class="function">Vector&lt;T&gt; <span class="title">v3</span><span class="params">(n,i)</span></span>;<span class="comment">//v3包含n个值为i的元素</span></span><br><span class="line"><span class="function">Vector&lt;T&gt; <span class="title">v4</span><span class="params">(n)</span></span>; <span class="comment">//v4含有n个值为0的元素</span></span><br><span class="line"><span class="comment">//二、 值初始化</span></span><br><span class="line"><span class="comment">//1&gt; 如果没有指定元素初始化式，标准库自行提供一个初始化值进行值初始化。</span></span><br><span class="line"><span class="comment">//2&gt; 如果保存的式含有构造函数的类类型的元素，标准库使用该类型的构造函数初始化。</span></span><br><span class="line"><span class="comment">//3&gt; 如果保存的式没有构造函数的类类型的元素，标准库产生一个带初始值的对象，使用这个对象进行值初始化。</span></span><br><span class="line"><span class="comment">//三、Vector对象最重要的几种操作</span></span><br><span class="line"><span class="comment">//1. v.push_back(t) 在数组的最后添加一个值为t的数据</span></span><br><span class="line"><span class="comment">//2. v.size() 当前使用数据的大小</span></span><br><span class="line"><span class="comment">//3. v.empty() 判断vector是否为空</span></span><br><span class="line"><span class="comment">//4. v[n] 返回v中位置为n的元素</span></span><br><span class="line"><span class="comment">//5. v1=v2 把v1的元素替换为v2元素的副本</span></span><br><span class="line"><span class="comment">//6. v1==v2 判断v1与v2是否相等</span></span><br><span class="line"><span class="comment">//7. ！=、&lt;、&lt;=、&gt;、&gt;= 保持这些操作符惯有含义</span></span><br></pre></td></tr></table></figure>
-
-<p>模板只是为编译器指出了要怎么做，并不会减少实际的代码量。编译器会根据模板的类型生成函数。</p>
-<h3 id="实例化和具体化"><a href="#实例化和具体化" class="headerlink" title="实例化和具体化"></a>实例化和具体化</h3><h4 id="隐式实例化"><a href="#隐式实例化" class="headerlink" title="隐式实例化"></a>隐式实例化</h4><p>编译器使用模板为特定类型生成函数定义时，的到的是模板实例(instantiation)。</p>
-<p>在使用模板函数时，编译器会根据参数的类型自动对函数进行定义，这种实例化的方式称为 <strong>隐式实例化</strong>。如</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T&amp; a, T$ b)</span></span>; <span class="comment">//或者使用 &lt;class T&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a, b;</span><br><span class="line"><span class="keyword">double</span> c, d;</span><br><span class="line"></span><br><span class="line">Swap(a, b);</span><br><span class="line">Swap(c, d);  <span class="comment">// 根据参数实例化函数(int 或 double)</span></span><br><span class="line">Swap(a, c);  <span class="comment">// 隐式实例化在这种情况就不行了，因为模板要求两个参数类型相同，因此需要显示实例化</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T&amp; a, T$ b)</span></span>&#123;</span><br><span class="line">    A</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="显示实例化"><a href="#显示实例化" class="headerlink" title="显示实例化"></a>显示实例化</h4><p>这意味着直接命令编译器生成特定的实例，其语法是</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> <span class="keyword">void</span> Swap&lt;<span class="keyword">double</span>&gt;(<span class="keyword">double</span>, <span class="keyword">double</span>);  <span class="comment">// 编译器看到这种声明后，使用模板生成一个double类型的实例</span></span><br></pre></td></tr></table></figure>
-
-<p>也可在程序中调用函数来进行显示实例化</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; Swap&lt;<span class="keyword">double</span>&gt;(a, c);  <span class="comment">// 因为使用的是double类型的实例，所以上面两个参数不一致的问题的到解决，因为int可以赋值给double</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="具体化"><a href="#具体化" class="headerlink" title="具体化"></a>具体化</h4><p>具体化是具体对模板中某特定类型生成函数，具体化使用下面两个等价声明之一：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;&gt; <span class="keyword">void</span> Swap&lt;<span class="keyword">int</span>&gt;(<span class="keyword">int</span>&amp;, <span class="keyword">int</span>&amp;);</span><br><span class="line"><span class="keyword">template</span> &lt;&gt; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(<span class="keyword">int</span>&amp;, <span class="keyword">int</span>&amp;)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T&amp; a, T$ b)</span></span>&#123;</span><br><span class="line">    A</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;&gt; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(class&amp;, class&amp;)</span></span>&#123;  <span class="comment">// 使用具体化函数处理特定类型</span></span><br><span class="line">    B</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><p>​        try catch throw(类似java 只是说明有抛出时用的是throw而不是throws)<br>​        支持异常再抛出<br>​        catch(…)捕所有<br>​        异常声明列表 void func() throw (type1,type2,type3..) 可有多个</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/03/universe/python/pipenv_manual/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/03/universe/python/pipenv_manual/" class="post-title-link" itemprop="url">pip venv tools usage</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-03 00:00:00" itemprop="dateCreated datePublished" datetime="2019-01-03T00:00:00+08:00">2019-01-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-24 23:27:28" itemprop="dateModified" datetime="2020-07-24T23:27:28+08:00">2020-07-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Virtualenvwrapper"><a href="#Virtualenvwrapper" class="headerlink" title="Virtualenvwrapper"></a>Virtualenvwrapper</h1><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install virtualenvwrapper</span><br></pre></td></tr></table></figure>
-
-<p>Some environment variable</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> WORKON_HOME=~/Envs  <span class="comment"># specify home of venv</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> VIRTUALENVWRAPPER_PYTHON=/usr/<span class="built_in">local</span>/bin/python3  <span class="comment"># specify defaul python version </span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /usr/<span class="built_in">local</span>/bin/virtualenvwrapper.sh  <span class="comment"># active virtualenvwrapper when open terminal</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><ul>
-<li>New venv<ul>
-<li><code>mkvirtualenv your_venv_name --python=python_version</code></li>
-</ul>
-</li>
-<li>Active/Switch between venvs<ul>
-<li><code>workon your_venv_name</code></li>
-</ul>
-</li>
-<li>Quit<ul>
-<li><code>deactivate</code></li>
-</ul>
-</li>
-<li>Delete<ul>
-<li><code>rmvirtualenv your_venv_name</code></li>
-</ul>
-</li>
-<li>List All<ul>
-<li><code>lsvirtualenv</code></li>
-</ul>
-</li>
-<li>Hook<ul>
-<li>This hook is sourced after this virtualenv is activated</li>
-<li>Specify in <code>your_venv_home/your_venv_name/bin/postactive</code></li>
-</ul>
-</li>
-</ul>
-<h1 id="Pipenv-Usage"><a href="#Pipenv-Usage" class="headerlink" title="Pipenv Usage"></a>Pipenv Usage</h1><h2 id="Install-1"><a href="#Install-1" class="headerlink" title="Install"></a>Install</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pipenv</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Usage-1"><a href="#Usage-1" class="headerlink" title="Usage"></a>Usage</h2><p>Quick Start</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd     myproject</span><br><span class="line">pipenv install  # create virtual environment</span><br><span class="line">pipenv install request  #  or install module</span><br><span class="line">pipenv --venv  # show location of this virtual environmenfuzzy findert</span><br><span class="line">pipenv --py    # show location of this python interpreter</span><br><span class="line">pipenv shell  # activate</span><br></pre></td></tr></table></figure>
-
-<p>Create a new project using Python 3.7, specifically</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv --python 3.7</span><br></pre></td></tr></table></figure>
-
-<p>Remove project virtualenv (inferred from current directory):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv --rm</span><br></pre></td></tr></table></figure>
-
-<p>Install all dependencies for a project (including dev):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --dev</span><br></pre></td></tr></table></figure>
-
-<p>Create a lockfile containing pre-releases:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv lock --pre</span><br></pre></td></tr></table></figure>
-
-<p>Show a graph of your installed dependencies:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv graph</span><br></pre></td></tr></table></figure>
-
-<p>Check your installed dependencies for security vulnerabilities:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv check</span><br></pre></td></tr></table></figure>
-
-<p>Install a local setup.py into your virtual environment/Pipfile:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install -e .</span><br></pre></td></tr></table></figure>
-
-<p>Use a lower-level pip command:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run pip freeze</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Activate"><a href="#Activate" class="headerlink" title="Activate"></a>Activate</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipenv shell</span><br><span class="line">python --version</span><br></pre></td></tr></table></figure>
-
-<h2 id="Use-pypi-mirror"><a href="#Use-pypi-mirror" class="headerlink" title="Use pypi-mirror"></a>Use pypi-mirror</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --pypi-mirror https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple</span><br></pre></td></tr></table></figure>
-
-<p>OR edit Pipfile</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[[source]]</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&quot;</span><br><span class="line">verify_ssl &#x3D; true</span><br><span class="line">name &#x3D; &quot;pypi&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span>
-  </nav>
-
-
+</div>
 
           </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Travis TuRing</p>
-  <div class="site-description" itemprop="description">Mens et Manus</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
         
-          <span class="site-state-item-count">89</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">72</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
       
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/">
+        knowledge universe
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        自然率倒霉事的概率墨菲定律问题引入-&gt;好看的人千篇一律，不好看的人各有千秋
 
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
+好看-&gt;五官什么的都是好看的，又好看的概率低，全好看的概率P更低
+不好看-&gt;其中一个不好看就不好看,概率1-P
 
+故。
+验证是否正常的方法本福特定律对于自然的杂乱无章的数据首位是1的概率并不是$\frac19$，据本福特定律，b进制数中首位是n的概率为$log_{b}\frac{n+1}{n}$
+...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2019-08-25</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/08/25/universe/%E7%9F%A5%E8%AF%86%E9%94%A6%E5%9B%8A/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2019/08/08/universe/go/Golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">
+        Golang交叉编译
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        交叉编译所谓交叉编译就是在一个平台生成另一个平台的可执行文件。
+
+通过go tool dist list查看支持情况
+步骤：
+
+设置目标平台以win-&gt;linux为例set GOOS=linux
+
+
+
+设置目标的GPUset GOARCH amd64
+
+
+
+go build
+
+
+
+
+
+实战1.生产可执行文件    
+12&#x2F;&#x2F; 指定目标环境CGO_ENABLED&#x...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2019-08-08</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/08/08/universe/go/Golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2019/08/05/universe/go/Golang_note/">
+        Golang基础
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        非零基础笔记，掌握c的基础上记录
+GO mod的使用1234go mod initgo mod tidy"当然要设置好代言""https://goproxy.io"
+
+基本1234567891011package mainimport &quot;fmt&quot; &#x2F;&#x2F;import了就必须使用&#x2F;&#x2F; 不用写；func main()&#123; &#x2...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2019-08-05</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/08/05/universe/go/Golang_note/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2019/06/27/universe/java/HashMap%E5%8E%9F%E7%90%86/">
+        HashMap原理
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        基本hashmap有数组+链表组成
+基于红黑树的hashmap就是当链表达到一定长度时把链表变成红黑树
+向map中put元素，如果key重复，会覆盖并把老的元素返回出来
+12345678910| array | 1 | 2 | ... | N ||-------|---|---|-----|---|  |       |   |   |     |     |       |   |   |...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2019-06-27</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/06/27/universe/java/HashMap%E5%8E%9F%E7%90%86/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2019/04/05/universe/utils/">
+        markdown utils
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        $\sqrt{3x-1}+(1+x)^2$
+$$\begin{array}{c}
+\nabla \times \vec{\mathbf{B}} -, \frac1c, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp;= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2019-04-05</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/04/05/universe/utils/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2019/03/01/universe/database/MongoDB/">
+        mongoDB usage
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        结构:-db(database)-collections-document
+基本指令:-show db-use &lt;数据库名&gt;    -进入指定数据库-db    -显示当前数据库-show collections    -显示数据库里所有的集合
+数据库CRUD(增删改查)操作：-向数据库中写入文档        db..insert(doc)
+-查询集合中的文档        d...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2019-03-01</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/03/01/universe/database/MongoDB/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2019/03/01/universe/python/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        爬虫学习笔记
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        正则表达式 re解析模块最常规的匹配1234567import recontent = "hello 123 1234 world_this is a regex demo"# re.match(pattern,string,flags = 0)   pattern和string比返回booleanresult = re.match('^hello\s\d\d\d\s\d&#123;4&#1...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2019-03-01</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/03/01/universe/python/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2019/01/26/universe/c/cpp_note/">
+        c++学习笔记
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        构造函数&amp;析构函数1234567891011121314151617181920//构造方法//法1class A&#123;    A()&#123;...&#125;  //构造函数    ~A()&#123;...&#125; //析构函数&#125;//法2class A&#123;    A();    ~A();&#125;A::A()&#123;...&#125;A::...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2019-01-26</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/01/26/universe/c/cpp_note/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2019/01/03/universe/python/pipenv_manual/">
+        pip venv tools usage
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        VirtualenvwrapperInstall1pip install virtualenvwrapper
+
+Some environment variable
+12345export WORKON_HOME=~/Envs  # specify home of venvexport VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3  # spe...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2019-01-03</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/01/03/universe/python/pipenv_manual/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+    
+  </section>
+  
+    
+      <br>
+      <div class="prev-next">
+        
+          <a class="prev" rel="prev" href="/page/8/">
+            <section class="post prev white-box shadow" >
+              <i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous&nbsp;
+            </section>
+          </a>
+        
+        <p class="current">
+          9 / 9
+        </p>
+        
+      </div>
+    
+  
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+<section class="widget blogger shadow desktop mobile">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box rectangle' href='/about/'>
+          <img no-lazy src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">Ring's Blog</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="mailto:me@xxx.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://github.com/volantis-x/"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="/"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+  
+
+  
+    
     
 
   
 
-</body>
+  
+    
+    
+  
+
+  <section class="widget tagcloud shadow desktop mobile">
+    
+  <header>
+    
+      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+    
+  </header>
+
+
+    <div class='content'>
+      <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/OS/" style="font-size: 14px; color: #999">OS</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 15.25px; color: #919191">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 15.25px; color: #919191">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c-c/" style="font-size: 20.25px; color: #6f6f6f">c/c++</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 17.75px; color: #808080">database</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16.5px; color: #888">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 15.25px; color: #919191">exec</a> <a href="/tags/filesystem/" style="font-size: 14px; color: #999">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/gcc/" style="font-size: 14px; color: #999">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 21.5px; color: #666">go</a> <a href="/tags/gui/" style="font-size: 15.25px; color: #919191">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/java/" style="font-size: 17.75px; color: #808080">java</a> <a href="/tags/javascript/" style="font-size: 16.5px; color: #888">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.75px; color: #5e5e5e">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lua/" style="font-size: 15.25px; color: #919191">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 14px; color: #999">mm</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.75px; color: #808080">network</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 21.5px; color: #666">operate</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 17.75px; color: #808080">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 21.5px; color: #666">python</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 15.25px; color: #919191">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tech/" style="font-size: 21.5px; color: #666">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 14px; color: #999">tips</a> <a href="/tags/tool/" style="font-size: 16.5px; color: #888">tool</a> <a href="/tags/tools/" style="font-size: 22.75px; color: #5e5e5e">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/typescript/" style="font-size: 15.25px; color: #919191">typescript</a> <a href="/tags/vim/" style="font-size: 16.5px; color: #888">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/web/" style="font-size: 19px; color: #777">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 15.25px; color: #919191">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15.25px; color: #919191">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
+    </div>
+  </section>
+
+
+  
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=false;
+  pdata.postTitle="";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":null,"appKey":null,"meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
 </html>

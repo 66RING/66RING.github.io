@@ -1,1588 +1,1980 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta name="description" content="Mens et Manus">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ring&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="Ring&#39;s Blog">
-<meta property="og:description" content="Mens et Manus">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="Travis TuRing">
-<meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="http://yoursite.com/page/2/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'en'
-  };
-</script>
-
-  <title>Ring's Blog</title>
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+      
+        <meta name="robots" content="noindex,follow">
+      
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
   
 
+  <!-- 页面元数据 -->
+  
+  <title>Ring&#39;s Blog</title>
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
 
 
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Ring's Blog</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
+  <body>
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
           
+            <img no-lazy class='logo' src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png'/>
+          
+          
+          
+        </a>
+      
 
-          <div class="content index posts-expand">
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/05/universe/linux/filesystem/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
           
-            <a href="/2020/12/05/universe/linux/filesystem/" class="post-title-link" itemprop="url">linux文件系统</a>
-        </h2>
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
               
-
-              <time title="Created: 2020-12-05 00:00:00 / Modified: 11:40:02" itemprop="dateCreated datePublished" datetime="2020-12-05T00:00:00+08:00">2020-12-05</time>
-            </span>
-
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="filesystem"><a href="#filesystem" class="headerlink" title="filesystem"></a>filesystem</h2><h3 id="inode"><a href="#inode" class="headerlink" title="inode"></a>inode</h3><p>inode不存储数据内容，存储元数据信息，如类型、权限、拥有者、时间、链接数、文件内容位置等</p>
-<p>当文件系统(以下简称fs)格式化好后，inode会以数组的方式存储，每个元素是一个inode，inode-index就是对应的下标。fs除了生成inode数组还有生成一个map映射文件名和inode-index，使用文件名去map找对应的idx，就可以在inode数组里找到对应的文件元信息。</p>
-<p>inode中文件内容位置记录的是块的下标</p>
-<p>由于inode数组是有初始化大小的，所有存在inode用完的情况，即在有很多零碎文件的情况下。</p>
-<h4 id="查看inode情况"><a href="#查看inode情况" class="headerlink" title="查看inode情况"></a>查看inode情况</h4><ul>
-<li><code>df -i</code>可以查看inode数组，以及数组元素使用/剩余情况</li>
-<li><code>ls -i</code>可以查看文件夹文件对应的inode-index<ul>
-<li>文件访问的过程中，先找到文件的idx，然后去对应的inode数组中找元数据</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/05/universe/tech_tips/IO_multiplexing_intro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/05/universe/tech_tips/IO_multiplexing_intro/" class="post-title-link" itemprop="url">IO多路复用select、poll、epoll介绍</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+            
               
-
-              <time title="Created: 2020-12-05 00:00:00 / Modified: 20:39:16" itemprop="dateCreated datePublished" datetime="2020-12-05T00:00:00+08:00">2020-12-05</time>
-            </span>
-
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h2><p>在高并发环境(如网络服务器)中同时处理多个请求的能力就显得尤为重要。很多人可能第一印象就会想到多线程，但是多线程需要进行很多的上下文切换，连接很多时上下文切换的代价就很高。因此采用单线程，但是单线程如何处理并发请求呢？</p>
-<p>得益于DMA，多数据到来时直接内存访问，不会丢失数据，因此可以有后序内容</p>
-<p>以写一个网络服务器为例。每个网络连接在都是以文件描述符(以下简称fd)的形式存在</p>
-<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><ul>
-<li><ol>
-<li>准备文件描述符集合fds<ul>
-<li>用一个数组存储已经创建的文件描述符，一个文件描述符可以看作是一个随机数</li>
-<li>找出最大的文件描述符max</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>初始哈(置零)一个字节数组(bitmap)rset来表示哪个文件描述符有数据到来<ul>
-<li>rset默认1024位</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol start="3">
-<li><strong>将rset拷贝到内核态，由内核判断fd是否有数据</strong> <ul>
-<li>因为判断fd是要在内核态完成的，与其一个个切换然后查询，不然全部传入</li>
-<li>如果没有数据则内核会阻塞，直到有数据到来，将对应的rset置位然后返回</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol start="4">
-<li>再根据rset判断文件描述符集合中是否有数据，读取有数据的描述符</li>
-</ol>
-</li>
-<li><p>缺点</p>
-<ul>
-<li>字节数组大小有限</li>
-<li>每次rset都要清零</li>
-<li>拷贝到内核态任有一定开销</li>
-<li>解阻塞后仍需要遍历fds，O(n)复杂度</li>
-</ul>
-</li>
-</ul>
-<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><p>工作原理与select类似，做了一些改进</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> fd;</span><br><span class="line">    short events;   <span class="comment">// 表示要监听的事件</span></span><br><span class="line">    short revents;  <span class="comment">// 表示有无事件发生</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><ol>
-<li>准备文件描述符集合pollfds，用<code>pollfd</code>数组储存</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>同select传入内核检查，然后阻塞<ul>
-<li>当有事件发生时<code>revents</code>置位，返回</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>检查<code>revents</code>，有事件时进行处理，然后置零</li>
-</ol>
-</li>
-<li><p>改进</p>
-<ul>
-<li>用pollfd数组存储解决了大小问题</li>
-<li>让revents置零使得可重用，不用每次都全部置零</li>
-</ul>
-</li>
-</ul>
-<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><ul>
-<li><ol>
-<li>创建一个特殊结构epfd用于存储文件描述符集合</li>
-</ol>
-</li>
-<li><ol start="2">
-<li><strong>内核和用户会共享epfd的内存</strong></li>
-</ol>
-</li>
-<li><ol start="3">
-<li>当内核监听到事件发生时，对epfd中的元素进行重排，然后返回事件数<ul>
-<li>因为没有事件发生时会阻塞，所以解阻塞时一定有事件发生，而且事件一定排在前头</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol start="4">
-<li>根据事件数n，遍历前n的事件即可</li>
-</ol>
-</li>
-<li><p>改进</p>
-<ul>
-<li>解决了内核态拷贝的开销</li>
-<li>解决了O(n)复杂度问题</li>
-</ul>
-</li>
-<li><p>应用</p>
-<ul>
-<li>redis</li>
-<li>nginx</li>
-<li>等</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/01/universe/web/https/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/01/universe/web/https/" class="post-title-link" itemprop="url">What Is Https</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-01T00:00:00+08:00">2020-12-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-13 20:11:44" itemprop="dateModified" datetime="2020-12-13T20:11:44+08:00">2020-12-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="What-is-Https"><a href="#What-is-Https" class="headerlink" title="What is Https"></a>What is Https</h2><p>Cryptography</p>
-<h3 id="Symmetric-encryption"><a href="#Symmetric-encryption" class="headerlink" title="Symmetric encryption"></a>Symmetric encryption</h3><p>The classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.<br>+3 is <strong>PSK</strong>(pre shared key)</p>
-<p>But how to let the receiver know what the PSK is?</p>
-<h3 id="Asymmetric-encryption"><a href="#Asymmetric-encryption" class="headerlink" title="Asymmetric encryption"></a>Asymmetric encryption</h3><p>Which can solve listening problem.</p>
-<p>Encryption with public key, decryption with private key. </p>
-<ul>
-<li>Public key<ul>
-<li>$A_0+public\ key \overset{en}{=} A_1$</li>
-</ul>
-</li>
-<li>Private key<ul>
-<li>$A_1+private\ key \overset{de}{=} A_0$</li>
-</ul>
-</li>
-</ul>
-<p>Such as, there are two guys:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A: What is you public key?</span><br><span class="line">B: pk</span><br><span class="line">Than A can encryption with public and than send the infomation to B.</span><br><span class="line">And B can use the his key to get the right infomation.</span><br><span class="line"></span><br><span class="line">What if the hacker has the public?</span><br><span class="line">So hacker can fake the infomation</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="Private-key-encryption"><a href="#Private-key-encryption" class="headerlink" title="Private key encryption"></a>Private key encryption</h4><p>Encryption with private key, decryption with public key. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A: Here is my public key</span><br><span class="line">B: get</span><br><span class="line">A: message &#x3D;private encryption&#x3D;&gt; cipher</span><br><span class="line">B: cipher &#x3D;public decryption&#x3D;&gt; message</span><br><span class="line"></span><br><span class="line">But if hacker has your public key hacker can get you message too.</span><br><span class="line">hacker: cipher &#x3D;public decryption&#x3D;&gt; message.</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="USE-BOTH"><a href="#USE-BOTH" class="headerlink" title="USE BOTH"></a>USE BOTH</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A: What is your public key?</span><br><span class="line">B: bk</span><br><span class="line">A: Ok. We are going to use Symmetric Encryption. The PSK is:psk.</span><br><span class="line"></span><br><span class="line">hacker don&#39;t have the private the so he don&#39;t know what to do.</span><br></pre></td></tr></table></figure>
-
-<p>Actually asymmetric encryption is not safe enough. What <strong>if B IS NOT B</strong>?</p>
-<h4 id="Modern-HTTPs-mode"><a href="#Modern-HTTPs-mode" class="headerlink" title="Modern HTTPs mode"></a>Modern HTTPs mode</h4><p>In real life we may choose to trust police station. So it may help that police station tell you that B is B in the following way.</p>
-<p>The police station here which we call it CA institution.</p>
-<ul>
-<li>Signature algorithm<ul>
-<li>encryption with CA’s private key</li>
-</ul>
-</li>
-<li>Check algorithm<ul>
-<li>decryption with CA’s public key</li>
-</ul>
-</li>
-<li>the whole process can be received but can’t be faked</li>
-</ul>
-<p>(we trust browser, browser trust CA) </p>
-<table>
-<thead>
-<tr>
-<th>Roles</th>
-<th>browser(user), web, CA</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>web</td>
-<td>through a serise of process to get the CA certification.</td>
-</tr>
-<tr>
-<td>CA</td>
-<td>signature this web with its private key and broadcast the public key, which we can use it to get infomation of web</td>
-</tr>
-<tr>
-<td>browser</td>
-<td>varify the web’s public key with CA’s public key and mark web is safe. (B is B)</td>
-</tr>
-</tbody></table>
-<p>After we know B is B, we can encryption message with B’s public key.And tell B we are going to use PSK.And than we are safe.</p>
-<h3 id="Identity"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</h3><ul>
-<li>authentication<ul>
-<li>to prove you is you</li>
-</ul>
-</li>
-<li>authornization<ul>
-<li>to prove you have the permissions</li>
-</ul>
-</li>
-</ul>
-<p>As we know, a web app can use cookie implementate a identity function.<br>But a cookie is like a tag that server make on you. And in your next request, browser send send cookie with your request.<br>Which means <strong>you can choose to send it or not with technical means!</strong>. Such as delete local cookie to fake a unvoted tags.</p>
-<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><h3 id="Database-Security-tips"><a href="#Database-Security-tips" class="headerlink" title="Database Security(tips)"></a>Database Security(tips)</h3><p>We need to login, but we don’t need to save user’s password into database.<br>We can save this <code>hash(password)</code> and compare it.\o/</p>
-<h3 id="Use-Hash-on-Web-App"><a href="#Use-Hash-on-Web-App" class="headerlink" title="Use Hash on Web App"></a>Use Hash on Web App</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cache-&gt;browser:</span><br><span class="line">browser-&gt;nginx: request(Img)</span><br><span class="line">nginx--&gt;browser: Img &amp; ETag(hash) 200</span><br><span class="line">nginx-&gt;server: </span><br><span class="line">server--&gt;nginx: </span><br><span class="line">browser-&gt;cache: save Img</span><br><span class="line"></span><br><span class="line">browser-&gt;nginx: request(Img &amp; hash equals?)</span><br><span class="line">nginx-&gt;server: hash equals?</span><br><span class="line">server--&gt;nginx: yes</span><br><span class="line">nginx--&gt;browser: not modified 206</span><br><span class="line">browser-&gt;cache: search your cache</span><br><span class="line">cache-&gt;browser: here</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/29/universe/linux/project_like/customize_a_kernel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/29/universe/linux/project_like/customize_a_kernel/" class="post-title-link" itemprop="url">如何配置linux内核</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-29 00:00:00" itemprop="dateCreated datePublished" datetime="2020-11-29T00:00:00+08:00">2020-11-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-20 09:50:24" itemprop="dateModified" datetime="2020-12-20T09:50:24+08:00">2020-12-20</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="如何配置linux内核"><a href="#如何配置linux内核" class="headerlink" title="如何配置linux内核"></a>如何配置linux内核</h2><p>linux内核提供许多自定义的选项</p>
-<p>因此你可以根据自己喜好定制的编译linux内核。这里以在centos8中编译centos8的内核为例。</p>
-<h3 id="准备内核源码"><a href="#准备内核源码" class="headerlink" title="准备内核源码"></a>准备内核源码</h3><blockquote>
-<p><a href="https://wiki.centos.org/zh/HowTos/I_need_the_Kernel_Source" target="_blank" rel="noopener">官方文档</a></p>
-</blockquote>
-<p>centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在<code>https://vault.centos.org/</code>下载对应的内核rpm包(<strong>内核源码版本一定要和系统内核版本一致</strong>)。如</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://vault.centos.org/8.3.2011/BaseOS/Source/SPackages/kernel-4.18.0-240.1.1.el8_3.src.rpm</span><br></pre></td></tr></table></figure>
-
-<p>然后使用rpm安装内核源码</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-240.1.1.el8_3.src.rpm</span><br></pre></td></tr></table></figure>
-
-<p>这里可能会提示</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: user mockbuild does not exist. using root</span><br></pre></td></tr></table></figure>
-
-<p>那就创建一个mockbuild用户</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd mockbuild</span><br></pre></td></tr></table></figure>
-
-<p>然后继续安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -i kernel-4.18.0-240.1.1.el8_3.src.rpm</span><br></pre></td></tr></table></figure>
-
-<p>这时会在根目录会得到一个rpmbuild目录。在<code>~/rpmbuild/SPECS</code>中进行<code>rpmbuild</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/rpmbuild/SPECS</span><br><span class="line">rpmbuild -bp --target=$(uname -m) kernel.spec</span><br></pre></td></tr></table></figure>
-
-<p>这时可能会碰到依赖问题，需要安装很多依赖包，安装依赖后再次尝试<code>rpmbuild</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install audit-libs-devel binutils-devel elfutils-devel java-devel kabi-dw libcap-devel libcap-ng-devel llvm-toolset ncurses-devel newt-devel numactl-devel openssl-devel pciutils-devel python3-devel python3-docutils  xz-devel zlib-devel</span><br></pre></td></tr></table></figure>
-
-<p>这样一来就得到了内核源码了，在<code>~/rpmbuild/BUILD</code>目录下</p>
-<h3 id="自定义内核"><a href="#自定义内核" class="headerlink" title="自定义内核"></a>自定义内核</h3><p>在源码中使用<code>make menuconfig</code>可以进行内核选项的设置，然后配置结果会保存在<code>.config</code>文件中，make时会根据<code>.config</code>的结果进行编译。当然也可以载入现成的配置文件。如本机(centos8)的内核配置文件就在<code>/boot/config-$(uname -r)</code>里。拷贝到源码所在目的<code>.config</code>文件，然后选择可以加载配置或者<code>make menuconfig</code>是选择LOAD加载指定文件</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /boot/config-$(uname -r) ./.config</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
-
-<p><code>menuconfig</code>里面可以自己选择也可以使用默认或加载配置。做好你的选择后就可以开始编译了</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make -j 8</span><br><span class="line"><span class="comment"># -j [jobs]</span></span><br><span class="line"><span class="comment"># 指定同时能够运行的jobs(命令)的数量，如果-j选项没给出参数则不限制jobs数量</span></span><br></pre></td></tr></table></figure>
-
-<p>安装模块，linux的模块是动态加载的，故模块安装和内核安装相互独立</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make modules_install</span><br></pre></td></tr></table></figure>
-
-<p>安装内核，重启后就是新的内核了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/23/universe/linux/iptables/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/23/universe/linux/iptables/" class="post-title-link" itemprop="url">iptables使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-23 00:00:00" itemprop="dateCreated datePublished" datetime="2020-11-23T00:00:00+08:00">2020-11-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-29 16:06:35" itemprop="dateModified" datetime="2020-11-29T16:06:35+08:00">2020-11-29</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>对网络上一些数据包通过表的形式进行限定或修改</p>
-</blockquote>
-<h2 id="三种表"><a href="#三种表" class="headerlink" title="三种表"></a>三种表</h2><ul>
-<li><del>Mangle</del><ul>
-<li>一般在操作系统级别操作，这里讨论</li>
-</ul>
-</li>
-<li>filter，过滤器<ul>
-<li>对进出的数据包进行过滤</li>
-</ul>
-</li>
-<li>nat，网络地址转换<ul>
-<li>转换目的地址和目的端口，以及源地址源端口，做数据包转发</li>
-<li>如修改进入机器数据包的目的地址，使其转发到其他机器</li>
-</ul>
-</li>
-</ul>
-<p>iptables以链的形式组织配置规则, <code>iptables -t &lt;table&gt; -L</code>，就可以列出对应表中的规则</p>
-<h3 id="filter表"><a href="#filter表" class="headerlink" title="filter表"></a>filter表</h3><p>查看一下filter表的内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo iptables -t filter -L</span><br><span class="line">Chain INPUT (policy ACCEPT)  # policy 表默认，这里全部接受</span><br><span class="line">target     prot opt source               destination</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy DROP)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br></pre></td></tr></table></figure>
-
-<p>INPUT，OUTPUT，FORWARD就是filter表默认的三个链。进入的数据包就通过INPUT这个链来过滤，出去的数据包通过OUTPUT这个链来过滤。而FORWARD是在中间环节(路由)做的过滤，与nat表有关。</p>
-<ul>
-<li>字段<ul>
-<li>target，表示规则类型(即使用的方法ACCEPT，DROP等)</li>
-<li>prot，表示协议</li>
-<li>opt，一些额外的选项</li>
-<li>source，源地址端口</li>
-<li>destination，目的地址端口</li>
-</ul>
-</li>
-<li>设置规则<code>iptables [OPTIONS...]</code><ul>
-<li><code>-t &lt;table&gt;</code>，设置<code>table</code>表</li>
-<li><code>-A &lt;Chain&gt;</code>，将规则append到指定链上，插在末尾</li>
-<li><code>-I &lt;Chain&gt; rulenum</code>，将规则insert到指定链上，插在第rulenum条，默认1</li>
-<li><code>-D &lt;Chain&gt; rulenum</code>，删除链上第rulenum条规则</li>
-<li><code>-j &lt;target&gt;</code>，指定规则的类型，ACCEPT，DROP等</li>
-<li><code>-p &lt;protocol&gt;</code>，过滤的协议<ul>
-<li><code>--dport &lt;dest_port&gt;</code>，过滤的目的端口</li>
-</ul>
-</li>
-<li><code>-d &lt;dest&gt;</code>，过滤的目的地址</li>
-<li>例：<code>iptables -t filter -A INPUT -j DROP -p tcp --dport 8081</code><ul>
-<li>如果收到一个包，这个包的目的端口是8081，用的tcp协议，则丢弃</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="nat表"><a href="#nat表" class="headerlink" title="nat表"></a>nat表</h3><p>nat表包含如下内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo iptables -t nat -L</span><br><span class="line">Chain PREROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line"></span><br><span class="line">Chain POSTROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br></pre></td></tr></table></figure>
-
-<p>当本机作为中间人做端口转发时，数据包经过如下路径1。如果是通过本机直接发出或接收数据包，即不是做转发，则不会经过<code>PREROUTING</code>和<code>POSTROUTING</code>的完整流程，修改源地址和目的地址需要使用nat表的<code>OUTPUT</code>和<code>INPUT</code>链</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. packet in --&gt; PREROUTING(改目的) --&gt; FORWARD --&gt; POSTROUTING(改源) --&gt; packet out</span><br><span class="line">2. packet in --&gt; INPUT --&gt; APP</span><br><span class="line">3. APP --&gt; OUTPUT --&gt; packet out</span><br></pre></td></tr></table></figure>
-
-<p>PREROUTING表示路由之前，用于改目的地址;POSTROUTING表示路由之后，用于改源。</p>
-<ul>
-<li>设置规则<code>iptables [OPTIONS...]</code><ul>
-<li><code>-j DNAT</code>，对目的进行转换<ul>
-<li><code>--to &lt;ip:port&gt;</code>，转换到ip</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><code>-j SNAT</code>，对源进行转换<ul>
-<li><code>--to &lt;ip:port&gt;</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p>要求: 把192.168.0.12:7788端口的数据包转发到192.168.0.11:7799。如在192.168.0.11:7799开了一个nginx服务，现要在192.168.0.12:7788中访问</p>
-<ul>
-<li>服务器1<ul>
-<li>外网ip：123.121.0.3</li>
-<li>内网ip：192.168.0.11</li>
-</ul>
-</li>
-<li>服务器2：<ul>
-<li>内网ip：192.168.0.12<ul>
-<li>7788端口提供服务</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>要求</strong>：<ul>
-<li>设使用ip为1.2.3.4:5的机器访问</li>
-<li><ol>
-<li>通过外网访问服务器1的7799端口来获取服务器2中7788端口的服务</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>服务器1本地访问192.168.0.11:7799端口来访问服务器2中7788端口的服务</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<p><em>PS</em>，请求是发送的，别忘了处理响应。</p>
-<h4 id="要求1"><a href="#要求1" class="headerlink" title="要求1"></a>要求1</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当前机器：服务器1</span></span><br><span class="line"></span><br><span class="line">iptables -t nat -A PREROUTING -p tcp -d 123.121.0.3 --dport 7799 -j DNAT --to 192.168.0.12:7788</span><br><span class="line"><span class="comment"># 当请求服务器1 7799端口时，转发到服务器2的7788端口</span></span><br><span class="line"></span><br><span class="line">iptables -t nat -A POSTROUTING -p tcp --d 192.168.0.12 7799 -j SNAT --to 192.168.0.11</span><br><span class="line"></span><br><span class="line">iptables -t filter -A FORWARD -j ACCPET</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>时期</th>
-<th>操作</th>
-<th>源ip:port</th>
-<th>目的ip:port</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>packet in</td>
-<td>访问</td>
-<td>1.2.3.4:5</td>
-<td>123.121.0.3:7799</td>
-</tr>
-<tr>
-<td>PREROUTING</td>
-<td>DNAT</td>
-<td>1.2.3.4:5</td>
-<td>192.168.0.12:7788</td>
-</tr>
-<tr>
-<td>routing decision</td>
-<td>判断是否转发</td>
-<td>1.2.3.4:5</td>
-<td>192.168.0.12:7788</td>
-</tr>
-<tr>
-<td>POSTROUTING</td>
-<td>SNAT</td>
-<td>123.121.0.3:X</td>
-<td>192.168.0.12:7788</td>
-</tr>
-<tr>
-<td>packet out</td>
-<td>转发</td>
-<td>123.121.0.3:X</td>
-<td>192.168.0.12:7788</td>
-</tr>
-</tbody></table>
-<h4 id="要求2"><a href="#要求2" class="headerlink" title="要求2"></a>要求2</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当前机器：服务器1</span></span><br><span class="line"></span><br><span class="line">iptables -t nat -A OUTPUT -p tcp -d 192.168.0.11 --dport 7799 -j DNAT --to 192.168.0.12:7788</span><br><span class="line">iptables -t nat -A OUTPUT -p tcp -d 123.121.0.3 --dport 7799 -j DNAT --to 192.168.0.12:7788</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当请求服务器1 7799端口时，转发到服务器2的7788端口</span></span><br><span class="line"><span class="comment"># 因为是本地访问，不会经过PREROUTING的过程，因此只能通过OUTPUT链转发</span></span><br><span class="line"></span><br><span class="line">iptables -t filter -A FORWARD -j ACCPET</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>时期</th>
-<th>操作</th>
-<th>源ip:port</th>
-<th>目的ip:port</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>packet in</td>
-<td>访问</td>
-<td>192.168.0.11:X</td>
-<td>192.168.0.11:7799</td>
-</tr>
-<tr>
-<td>OUTPUT</td>
-<td>DNAT</td>
-<td>192.168.0.11:X</td>
-<td>192.168.0.12:7788</td>
-</tr>
-<tr>
-<td>packet out</td>
-<td>转发</td>
-<td>192.168.0.11:X</td>
-<td>192.168.0.12:7788</td>
-</tr>
-</tbody></table>
-<h4 id="开启内核转发"><a href="#开启内核转发" class="headerlink" title="开启内核转发"></a>开启内核转发</h4><p>去掉注释<code>/etc/sysctl.conf</code>，使生效<code>sudo sysctl -p</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># net.ipv4.ipv4_forward=1</span></span><br></pre></td></tr></table></figure>
-
-<p>或临时修改</p>
-<p><code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward</code></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/22/universe/operate/docekr_multi_container/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/22/universe/operate/docekr_multi_container/" class="post-title-link" itemprop="url">docker多容器项目</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+            
               
-
-              <time title="Created: 2020-11-22 00:00:00 / Modified: 15:24:19" itemprop="dateCreated datePublished" datetime="2020-11-22T00:00:00+08:00">2020-11-22</time>
-            </span>
-
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="docker容器交互"><a href="#docker容器交互" class="headerlink" title="docker容器交互"></a>docker容器交互</h2><p>docker会通过一块虚拟的docker网卡为容器分配ip地址，即这些容器将在一个网段中，可以直接通过ip进行访问进行交互。但这里存在一个问题，我们需要手动登录一台机器查看ip，然后再另一台机器中访问，这在实际开发中是不可行的。</p>
-<p>更方便的交互方式是使用<code>--link &lt;name|id&gt;[:&lt;alias&gt;]</code>，这样就可以通过,如<code>curl &lt;alias&gt;</code>自动解析域名。其本质就是在<code>hosts</code>文件中加入了<code>ip &lt;alias&gt; &lt;id&gt;</code>，把别名了容器id映射到了指定容器的ip。</p>
-<p>看如下一个通信模型，只在nginx中暴露80端口，通过link的方式跟php通信，php又通过link的方式根mysql通信</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">nginx   link php expose 80</span><br><span class="line">  |</span><br><span class="line">  V</span><br><span class="line">php     link mysql</span><br><span class="line">  |</span><br><span class="line">  V</span><br><span class="line">mysql</span><br></pre></td></tr></table></figure>
-
-<p><strong>存在的问题</strong> 通过link的通信时，容器的启动顺序很关键(容器都没启动，link到哪？)。所以在以后的重启/部署时指令输起来将比较麻烦</p>
-<p>因此，可以将部署的指令记录到一个配置文件中，即使用<code>docker-compose</code></p>
-<h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><p>通过yml配置需要的服务，然后从yml中启动所有服务</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">version:</span> <span class="string">""</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">serv1:</span></span><br><span class="line">        <span class="attr">image:</span></span><br><span class="line">        <span class="attr">links:</span></span><br><span class="line">        <span class="attr">volumes:</span></span><br><span class="line">        <span class="attr">and_some_other_docker_option:</span></span><br><span class="line">    <span class="attr">serv2:</span></span><br><span class="line">        <span class="attr">build:</span> <span class="string">.</span>  <span class="comment"># 服务从dockerfile构建</span></span><br><span class="line">        <span class="attr">and_some_other_docker_option:</span></span><br></pre></td></tr></table></figure>
-
-<p><code>docker-compose up</code>启动</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/22/universe/operate/CI_CD_intro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/22/universe/operate/CI_CD_intro/" class="post-title-link" itemprop="url">CI/CD简介</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+            
               
-
-              <time title="Created: 2020-11-22 00:00:00 / Modified: 11:57:00" itemprop="dateCreated datePublished" datetime="2020-11-22T00:00:00+08:00">2020-11-22</time>
-            </span>
-
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="什么是CI-CD"><a href="#什么是CI-CD" class="headerlink" title="什么是CI/CD"></a>什么是CI/CD</h2><p>CI/CD：持续集成和持续交互。代码提交到代码仓库后自动触发一些自动化的流程。CI/CD的工具就是干这用的。</p>
-<ul>
-<li>什么是DevOps<ul>
-<li>DevOps是一种思想方法论，涵盖开发、测试、运维的整个过程。强调通过自动化的方法管理软件变更，软件集成</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plan    --&gt; code    --&gt; build  --&gt; test         Dev</span><br><span class="line">  ^                                 |</span><br><span class="line">  |                                 V</span><br><span class="line">monitor &lt;-- operate &lt;-- deploy &lt;-- release      Ops</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h3><ul>
-<li>原理：<ul>
-<li>代码提交到远程仓库</li>
-<li>如果检查到远程仓库有更新，则拉到本地然后执行构建脚本</li>
-</ul>
-</li>
-<li>在本机运行，所以需要一个自己的机器</li>
-</ul>
-<h3 id="TravisCI"><a href="#TravisCI" class="headerlink" title="TravisCI"></a>TravisCI</h3><p>TravisCI是github的一个合作伙伴，提供云端机器运行自动化脚本，通过TravisCI官网就能开启github项目的CI服务，之后要在项目中添加<code>.travis.yml</code>文件</p>
-<p><em>PS</em> : github自带类似的工具，github action</p>
-<p>基本用法：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .travis.yml</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">lang</span>  <span class="comment"># 写执行脚本前要先指定语言</span></span><br><span class="line"></span><br><span class="line"><span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">some</span> <span class="string">scirpt</span></span><br><span class="line"></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">some</span> <span class="string">scirpt</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="DaoCloud"><a href="#DaoCloud" class="headerlink" title="DaoCloud"></a>DaoCloud</h3><h4 id="测试阶段"><a href="#测试阶段" class="headerlink" title="测试阶段"></a>测试阶段</h4><p>同样是关注远程仓库，然后执行一些自动化的脚本。DaoCloud的云端的基于一个docker镜像的，所以在配置测试环境时可以选择合适的docker镜像。</p>
-<h4 id="构建阶段"><a href="#构建阶段" class="headerlink" title="构建阶段"></a>构建阶段</h4><p>在构建完成后会将镜像上传的daocloud的docker镜像仓库，方便以后通过<code>docker pull</code>部署到自己机器。当然可以在集群管理中配置主机，就可将主机绑定到daocloud平台，然后实现自动部署。</p>
-<h4 id="发布阶段"><a href="#发布阶段" class="headerlink" title="发布阶段"></a>发布阶段</h4><p>添加部署到主机</p>
-<p><em>PS</em> :daocloud还提供了内网穿透，通过合理配置就可通过访问daocloud的域名访问(即只http)部署在内网的应用了</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/21/universe/linux/TODO:schedule/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/21/universe/linux/TODO:schedule/" class="post-title-link" itemprop="url">linux进程调度机制</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+08:00">2020-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-05 11:01:16" itemprop="dateModified" datetime="2020-12-05T11:01:16+08:00">2020-12-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>看爆！<a href="https://zorrozou.github.io/" target="_blank" rel="noopener">https://zorrozou.github.io/</a></p>
-</blockquote>
-<h2 id="前置"><a href="#前置" class="headerlink" title="前置"></a>前置</h2><ul>
-<li>进程分类<ul>
-<li>实时进程(runtime)<ul>
-<li>跟用户交互需要及时相应</li>
-</ul>
-</li>
-<li>普通进行<ul>
-<li>不需要那么及时，如编码解码等</li>
-</ul>
-</li>
-<li>对于不同类型的进程应该采用不同的调度方法，实时进程序需要及时响应</li>
-</ul>
-</li>
-<li>上下文切换<ul>
-<li>发生进程调度时，保存当前进程的信息后(如程序计数器，变量，寄存器等context)才能加载另一个进程。这个过程就是上下文切换</li>
-</ul>
-</li>
-</ul>
-<h2 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h2><ul>
-<li>FIFO<ul>
-<li>实现简单，但需要等待前面进程执行完才能执行后面的。what if前面是一个要执行很长时间的进程</li>
-</ul>
-</li>
-<li>STF(Shortest Time First)<ul>
-<li>整体等待时间下降，但如果是长时间进程先到达时短时间进程还是需要等待</li>
-</ul>
-</li>
-</ul>
-<p>上面的调度算法都是<strong>非抢占</strong>的，一个执行完成才会执行下一个进程，都会导致个别进程需要长时间等待</p>
-<ul>
-<li>STCF(Shortest Time-to-Completion First)，短快优先<ul>
-<li><strong>会抢占</strong> 。如p1需要100ms，当p1执行了10ms，p2到来只需要10ms，所有会先执行p2，再调度回p1<ul>
-<li>抢占：一个进程未必执行完才会执行另一个</li>
-</ul>
-</li>
-<li>但这样会执行时间长的进程可能会由于抢占而饥饿</li>
-</ul>
-</li>
-<li>RR(Round robin)，轮循<ul>
-<li>每个进程执行一小段时间片然后切换</li>
-</ul>
-</li>
-</ul>
-<h2 id="进程队列"><a href="#进程队列" class="headerlink" title="进程队列"></a>进程队列</h2><ul>
-<li>全局队列<ul>
-<li>早期多核cpu下使用全局队列保存进程，因此调度时需要加锁，加锁机制导致这种方式性能很低。</li>
-</ul>
-</li>
-<li>局部队列<ul>
-<li>每个cpu有自己的队列，进程在多个队列中负载均衡</li>
-</ul>
-</li>
-</ul>
-<h2 id="进程优先级"><a href="#进程优先级" class="headerlink" title="进程优先级"></a>进程优先级</h2><ul>
-<li>优先级越小优先级越高<ul>
-<li>用位图表示有优先级时从低到高找(find first)更快</li>
-</ul>
-</li>
-<li><strong>nice值</strong><ul>
-<li>linux中用户可以设置nice值来 <strong>影响优先级</strong> (priority)，范围到<code>[-20, 19]</code><ul>
-<li><code>ps -l</code>，PRI字段可看到优先级，NI字段可看到nice值</li>
-</ul>
-</li>
-<li><strong>nice值越高优先级越低</strong><ul>
-<li>简记：一个nice的人往往是谦虚礼貌的，吃饭都是说”你先吃你先吃”，结果最后这个nice的人饿着了</li>
-<li>一个进程对别的进程越nice就越不会抢占cpu，得到的时间越少，优先级越低</li>
-</ul>
-</li>
-<li>可以通过<code>nice</code>命令设置进程优先级，<code>renice</code>命令来修改nice值</li>
-</ul>
-</li>
-<li>静态优先级<ul>
-<li>选择权在用户，用户可以设置nice值来影响优先级</li>
-</ul>
-</li>
-<li>动态优先级<ul>
-<li>选择权在内核，内核根据一些机制调整优先级，如超时的进程会受到降低优先级的惩罚</li>
-</ul>
-</li>
-</ul>
-<h2 id="linux调度器"><a href="#linux调度器" class="headerlink" title="linux调度器"></a>linux调度器</h2><ul>
-<li><del>O(n)调度器</del><ul>
-<li>起初采用线性表遍历寻找最高优先级进程O(n)，效率很低</li>
-</ul>
-</li>
-<li>O(1)调度器<ul>
-<li>时间片分配，优先级被映射成一定bitmap，在一个优先级上有进程则对应的bitmap会置1，cpu可以通过位运算快速取出优先级最高的进程</li>
-</ul>
-</li>
-<li>CFS完全公平调度器<ul>
-<li>分时间片，每个进程相对公平</li>
-<li><strong>vruntime</strong>，优先级高的进程虚拟时间增长慢，优先级低的进程虚拟时间增长快<ul>
-<li>如高优先级进程分到时间片10ms，而虚拟时间1ms</li>
-</ul>
-</li>
-<li>取红黑树中虚拟时间最短(优先级最高)的进程进行调度</li>
-</ul>
-</li>
-</ul>
-<h3 id="O1调度"><a href="#O1调度" class="headerlink" title="O1调度"></a>O1调度</h3><p>TODO <a href="https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html" target="_blank" rel="noopener">https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html</a></p>
-<p>O1调度的Linux2.6开始引入的，到Linux 2.6.23之后替换成了CFS。</p>
-<p>使用两个队列，活动队列和过期(expire)队列</p>
-<h3 id="CFS"><a href="#CFS" class="headerlink" title="CFS"></a>CFS</h3><p>要做到完全公平，调度器要在一个较小的时间内把这n个进程调度执行一遍。这个较小的时间就是任意一个进程被调度的最大延迟时间，也叫做<strong>调度周期<code>sched_latency_ns</code></strong></p>
-<p>CPU只要对所有进程维护一个累积占用CPU时间数，就可以衡量出每个进程目前占用的CPU时间总量是多还是少，这个数字记录在 <strong>vruntime</strong> 中。进程以vruntime为key放到一个红黑数组成的队列中，每次调度都选择最左子树上的那个进程，即vruntime最少的进程，这样就能保证所有进程相对公平。</p>
-<h4 id="CFS的优先级"><a href="#CFS的优先级" class="headerlink" title="CFS的优先级"></a>CFS的优先级</h4><p>虽说完全公平，但CFS还是需要支持优先级的。优先级是通过时间消耗(vruntime增长)的快慢来决定的。高优先级进程时间增长慢，低优先级进程时间增长快。如低优先级的进程实际运行了1s，vruntime是1s，而高优先级的进程实际已经运行了10s，而vruntime才是1s，这样高优先级的进程就更大概率在最左子树，得到调度。</p>
-<p>调度并不在一个进程的vruntime大于最小vruntime的进程时发生，为了减少切换频率，CFS设计了<code>sched_min_granularity_ns</code>参数来设定进程执行之后的最小cpu占用时间。</p>
-<h4 id="新进程的vruntime值"><a href="#新进程的vruntime值" class="headerlink" title="新进程的vruntime值"></a>新进程的vruntime值</h4><p>当已经有多个进程执行的很长时间时，新起一个进程，并让它vruntime为0，这显然是不公平的。因为需要分配给它很多时间来追赶其他进程的vruntime。所有CFS对每个CPU的执行队列都维护了一个<code>min_vruntime</code>值，用于记录这个CPU执行队列的最小vruntime值。因此新进程vruntime不是直接设为0，而是以<code>min_vruntime</code>为基础进行调整。</p>
-<p>需要考虑的因素很多，如子进程是否要先于父进程执行、还要防止进程不停的fork来获得很多的执行时间</p>
-<p>TODO: <a href="https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html" target="_blank" rel="noopener">https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/21/universe/web/ajax_intro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/21/universe/web/ajax_intro/" class="post-title-link" itemprop="url">JQuery, fetch, axios</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+            
               
-
-              <time title="Created: 2020-11-21 00:00:00 / Modified: 22:23:38" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+08:00">2020-11-21</time>
-            </span>
-
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Ajax简介"><a href="#Ajax简介" class="headerlink" title="Ajax简介"></a>Ajax简介</h2><p>Ajax本质就是用来进行异步的请求提交，那是怎么个异步法？</p>
-<ul>
-<li>同步<ul>
-<li>跳转或新开一个页面</li>
-</ul>
-</li>
-<li>异步<ul>
-<li>页面局部变动，异步请求然后更新局部页面，而不更新整个页面</li>
-</ul>
-</li>
-</ul>
-<p>早期进行异步请求是通过XMLHttpRequest(xhr)，但是这种方法代码非常长，冗余严重。后来JQuery出现<code>$.ajax</code>，对xhr进行封装，又有了后来的fetch和axios。</p>
-<h2 id="JQuery"><a href="#JQuery" class="headerlink" title="JQuery"></a>JQuery</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本请求</span></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">    method: <span class="string">""</span>,</span><br><span class="line">    headers: &#123;<span class="string">"key"</span>: <span class="string">"value"</span>&#125;,</span><br><span class="line">    data: &#123;&#125;,</span><br><span class="line">    url: <span class="string">""</span>,</span><br><span class="line">    success: funciotn()&#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可简写方法</span></span><br><span class="line">$.<span class="keyword">get</span>(url, data, callback)</span><br><span class="line">$.post(url, data, callback)</span><br></pre></td></tr></table></figure>
-
-<p><em>PS</em> :默认使用表单形式提交，需要提交json数据数据时，在headers中设置<code>content-type:application/json</code>，然后data中传入<strong>json字符串</strong></p>
-<h2 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h2><p>现代的浏览器中一般都会自带fetch方法，不需要下载任何js包</p>
-<ul>
-<li>基本用法：<code>fetch(&quot;usl&quot;, {&lt;args&gt;})</code><ul>
-<li>返回一个promise对象</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">"url"</span>, &#123;</span><br><span class="line">    method: <span class="string">""</span>,</span><br><span class="line">    headers: &#123;&#125;,</span><br><span class="line">    body: <span class="string">""</span>,</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;&#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h2><p>不单单可以在前端使用，还可以通过nodejs在后端使用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">axios(&#123;</span><br><span class="line">    url: <span class="string">""</span>,</span><br><span class="line">    method: <span class="string">""</span>,</span><br><span class="line">    headers: &#123;&#125;,</span><br><span class="line">    data: &#123;&#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>同fetch一样返回promise对象，可以通过<code>then()</code>进一步处理</p>
-<p><em>PS</em> :默认使用json形式提交，需要表单提交数据数据时，在headers中设置form的header，如<code>content-type:application/x-www-form-urlencoded</code>，然后data中传入这种形式(查询字符串)的数据<code>&quot;a=123&amp;b=321&quot;</code></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/15/universe/c/how_cpp_overload/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/15/universe/c/how_cpp_overload/" class="post-title-link" itemprop="url">重载是如何实现的</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+            
               
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
 
-              <time title="Created: 2020-11-15 00:00:00 / Modified: 15:04:40" itemprop="dateCreated datePublished" datetime="2020-11-15T00:00:00+08:00">2020-11-15</time>
-            </span>
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper  dock' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Volantis</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/v4/getting-started/"
+              
+              
+              id="v4getting-started">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>文档</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>博客</p>
+            </a>
+          
+            <a href="https://github.com/volantis-x/hexo-theme-volantis/"
+              
+              
+              id="https:githubcomvolantis-xhexo-theme-volantis">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
 
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
           
 
-        </div>
-      </header>
+<div class='l_main'>
+  
+  <section class="post-list">
+    
+    
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/12/05/universe/linux/IPC/TODO/">
+        universe/linux/IPC/TODO
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        进程间通信的方式
+ 消息队列
+ 共享内存
+ 管道
+ socket
+ signal
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>overload可直译为重载，它是指我们可以定义一些名称相同的方法，通过定义不同的输入参数来区分这些方法，然后再调用时就会根据不同的参数样式，来选择合适的方法执行。</p>
-<p>–百度百科</p>
-</blockquote>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>重载本质上就是编译器根据原函数名和参数类型对原函数名进行改编，以区分接受不同参数的同名函数。</p>
-<p>看下面一段cpp代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.cpp</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    func(<span class="number">1</span>);</span><br><span class="line">    func(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>规定是不能定义两个同名函数的，但是如果是不同参数的同名函数就可以，这就是重载的作用。</p>
-<p>我们通过<code>objdump</code>查看反汇编查看源码来理解其中的原理。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -c a.cpp -o a.o</span><br><span class="line">objump -d a.o</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>gcc -c a.cpp -o a.o</code><ul>
-<li>这条命令用来汇编生成的目标文件<code>.o</code>结尾</li>
-</ul>
-</li>
-<li><code>objdump -d a.o</code><ul>
-<li><code>-d</code>反汇编我们刚才生成目标文件</li>
-</ul>
-</li>
-</ul>
-<p>反汇编后将会看到汇编代码，我们抓取我们的重点：接受不同参数的同名函数</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">0000000000000000 &lt;_Z4funci&gt;:</span><br><span class="line">   0:   55                      push   %rbp</span><br><span class="line">   1:   48 89 e5                mov    %rsp,%rbp</span><br><span class="line">   4:   89 7d fc                mov    %edi,-0x4(%rbp)</span><br><span class="line">   7:   90                      nop</span><br><span class="line">   8:   5d                      pop    %rbp</span><br><span class="line">   9:   c3                      retq</span><br><span class="line"></span><br><span class="line">000000000000000a &lt;_Z4funcii&gt;:</span><br><span class="line">   a:   55                      push   %rbp</span><br><span class="line">   b:   48 89 e5                mov    %rsp,%rbp</span><br><span class="line">   e:   89 7d fc                mov    %edi,-0x4(%rbp)</span><br><span class="line">  11:   89 75 f8                mov    %esi,-0x8(%rbp)</span><br><span class="line">  14:   90                      nop</span><br><span class="line">  15:   5d                      pop    %rbp</span><br><span class="line">  16:   c3                      retq</span><br></pre></td></tr></table></figure>
-
-<p>上面看到我们定义的两个同名函数<code>&lt;_Z4funci&gt;</code>和<code>&lt;_Z4funcii&gt;</code>，仔细一看好似有规律可寻。</p>
-<ul>
-<li><code>_Z</code>后跟的数字表示函数名的长度和函数名，这里是4对应后面<code>func</code>的长度</li>
-<li>在函数名的后面跟的就是参数的类型，这里我们分别是一个整形，和两个整形的函数所以就是<code>i</code>和<code>ii</code></li>
-</ul>
-<p>所以编译器通过这么一个简单的对函数名的改编(name mangling)就可以做到区分接受不同参数的同名函数的功能。</p>
-<p><strong>tips:</strong> 使用<code>c++filt</code>可以查看原函数名。</p>
-<p>看这么一个函数<code>void func(s string){}</code>，反汇编后的函数名为<code>&lt;_Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE&gt;</code>。</p>
-<p>使用<code>c++filt</code>查看其原函数名：<code>c++filt _Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> c++filt _Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE </span></span><br><span class="line">func(std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;)</span><br></pre></td></tr></table></figure>
-
-
-
-
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-12-05</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/12/05/universe/linux/IPC/TODO/'>
+            Read More
+          </a>
+        </div>
       
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
   
 
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-
+</div>
 
           </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Travis TuRing</p>
-  <div class="site-description" itemprop="description">Mens et Manus</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
         
-          <span class="site-state-item-count">89</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">72</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
       
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/12/05/universe/linux/filesystem/">
+        linux文件系统
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        filesysteminodeinode不存储数据内容，存储元数据信息，如类型、权限、拥有者、时间、链接数、文件内容位置等
+当文件系统(以下简称fs)格式化好后，inode会以数组的方式存储，每个元素是一个inode，inode-index就是对应的下标。fs除了生成inode数组还有生成一个map映射文件名和inode-index，使用文件名去map找对应的idx，就可以在inode数组里...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-12-05</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/12/05/universe/linux/filesystem/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
 
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
+</div>
 
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/12/05/universe/tech_tips/IO_multiplexing_intro/">
+        IO多路复用select、poll、epoll介绍
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        IO多路复用在高并发环境(如网络服务器)中同时处理多个请求的能力就显得尤为重要。很多人可能第一印象就会想到多线程，但是多线程需要进行很多的上下文切换，连接很多时上下文切换的代价就很高。因此采用单线程，但是单线程如何处理并发请求呢？
+得益于DMA，多数据到来时直接内存访问，不会丢失数据，因此可以有后序内容
+以写一个网络服务器为例。每个网络连接在都是以文件描述符(以下简称fd)的形式存在
+sel...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-12-05</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/12/05/universe/tech_tips/IO_multiplexing_intro/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/12/01/universe/web/https/">
+        What Is Https
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        What is HttpsCryptography
+Symmetric encryptionThe classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.+3 is PSK(pre shared key)
+But how to let the receiver know what the PS...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-12-01</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/12/01/universe/web/https/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/11/29/universe/linux/project_like/customize_a_kernel/">
+        如何配置linux内核
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        如何配置linux内核linux内核提供许多自定义的选项
+因此你可以根据自己喜好定制的编译linux内核。这里以在centos8中编译centos8的内核为例。
+准备内核源码
+官方文档
+
+centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在https://vault.centos.org/下载对应的内核rpm包(内核源码版本一定要和系统内核版本一...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-11-29</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/11/29/universe/linux/project_like/customize_a_kernel/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/11/23/universe/linux/iptables/">
+        iptables使用
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        
+对网络上一些数据包通过表的形式进行限定或修改
+
+三种表
+Mangle
+一般在操作系统级别操作，这里讨论
+
+
+filter，过滤器
+对进出的数据包进行过滤
+
+
+nat，网络地址转换
+转换目的地址和目的端口，以及源地址源端口，做数据包转发
+如修改进入机器数据包的目的地址，使其转发到其他机器
+
+
+
+iptables以链的形式组织配置规则, iptables -t &lt;table&gt; -L...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-11-23</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/11/23/universe/linux/iptables/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/11/22/universe/operate/CI_CD_intro/">
+        CI/CD简介
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        什么是CI/CDCI/CD：持续集成和持续交互。代码提交到代码仓库后自动触发一些自动化的流程。CI/CD的工具就是干这用的。
+
+什么是DevOps
+DevOps是一种思想方法论，涵盖开发、测试、运维的整个过程。强调通过自动化的方法管理软件变更，软件集成
+
+
+
+1234plan    --&gt; code    --&gt; build  --&gt; test         Dev  ^...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-11-22</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/11/22/universe/operate/CI_CD_intro/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/11/22/universe/operate/docekr_multi_container/">
+        docker多容器项目
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        docker容器交互docker会通过一块虚拟的docker网卡为容器分配ip地址，即这些容器将在一个网段中，可以直接通过ip进行访问进行交互。但这里存在一个问题，我们需要手动登录一台机器查看ip，然后再另一台机器中访问，这在实际开发中是不可行的。
+更方便的交互方式是使用--link &lt;name|id&gt;[:&lt;alias&gt;]，这样就可以通过,如curl &lt;alia...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-11-22</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/11/22/universe/operate/docekr_multi_container/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/11/21/universe/linux/TODO:schedule/">
+        linux进程调度机制
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        
+看爆！https://zorrozou.github.io/
+
+前置
+进程分类
+实时进程(runtime)
+跟用户交互需要及时相应
+
+
+普通进行
+不需要那么及时，如编码解码等
+
+
+对于不同类型的进程应该采用不同的调度方法，实时进程序需要及时响应
+
+
+上下文切换
+发生进程调度时，保存当前进程的信息后(如程序计数器，变量，寄存器等context)才能加载另一个进程。这个过程就是上下文切换
+
+
+...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-11-21</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/11/21/universe/linux/TODO:schedule/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/11/21/universe/web/ajax_intro/">
+        JQuery, fetch, axios
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        Ajax简介Ajax本质就是用来进行异步的请求提交，那是怎么个异步法？
+
+同步
+跳转或新开一个页面
+
+
+异步
+页面局部变动，异步请求然后更新局部页面，而不更新整个页面
+
+
+
+早期进行异步请求是通过XMLHttpRequest(xhr)，但是这种方法代码非常长，冗余严重。后来JQuery出现$.ajax，对xhr进行封装，又有了后来的fetch和axios。
+JQuery12345678910...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-11-21</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/11/21/universe/web/ajax_intro/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+    
+  </section>
+  
+    
+      <br>
+      <div class="prev-next">
+        
+          <a class="prev" rel="prev" href="/">
+            <section class="post prev white-box shadow" >
+              <i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous&nbsp;
+            </section>
+          </a>
+        
+        <p class="current">
+          2 / 9
+        </p>
+        
+          <a class="next" rel="next" href="/page/3/">
+            <section class="post next white-box shadow">
+              &nbsp;Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i>
+            </section>
+          </a>
+        
+      </div>
+    
+  
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+<section class="widget blogger shadow desktop mobile">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box rectangle' href='/about/'>
+          <img no-lazy src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">Ring's Blog</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="mailto:me@xxx.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://github.com/volantis-x/"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="/"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+  
+
+  
+    
     
 
   
 
-</body>
+  
+    
+    
+  
+
+  <section class="widget tagcloud shadow desktop mobile">
+    
+  <header>
+    
+      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+    
+  </header>
+
+
+    <div class='content'>
+      <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/OS/" style="font-size: 14px; color: #999">OS</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 15.25px; color: #919191">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 15.25px; color: #919191">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c-c/" style="font-size: 20.25px; color: #6f6f6f">c/c++</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 17.75px; color: #808080">database</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16.5px; color: #888">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 15.25px; color: #919191">exec</a> <a href="/tags/filesystem/" style="font-size: 14px; color: #999">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/gcc/" style="font-size: 14px; color: #999">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 21.5px; color: #666">go</a> <a href="/tags/gui/" style="font-size: 15.25px; color: #919191">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/java/" style="font-size: 17.75px; color: #808080">java</a> <a href="/tags/javascript/" style="font-size: 16.5px; color: #888">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.75px; color: #5e5e5e">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lua/" style="font-size: 15.25px; color: #919191">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 14px; color: #999">mm</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.75px; color: #808080">network</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 21.5px; color: #666">operate</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 17.75px; color: #808080">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 21.5px; color: #666">python</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 15.25px; color: #919191">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tech/" style="font-size: 21.5px; color: #666">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 14px; color: #999">tips</a> <a href="/tags/tool/" style="font-size: 16.5px; color: #888">tool</a> <a href="/tags/tools/" style="font-size: 22.75px; color: #5e5e5e">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/typescript/" style="font-size: 15.25px; color: #919191">typescript</a> <a href="/tags/vim/" style="font-size: 16.5px; color: #888">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/web/" style="font-size: 19px; color: #777">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 15.25px; color: #919191">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15.25px; color: #919191">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
+    </div>
+  </section>
+
+
+  
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=false;
+  pdata.postTitle="";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":null,"appKey":null,"meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
 </html>

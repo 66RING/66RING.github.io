@@ -1,1530 +1,2126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta name="description" content="Mens et Manus">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ring&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Ring&#39;s Blog">
-<meta property="og:description" content="Mens et Manus">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="Travis TuRing">
-<meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="http://yoursite.com/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'en'
-  };
-</script>
-
-  <title>Ring's Blog</title>
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+      
+        <meta name="robots" content="index,follow">
+      
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
   
 
+  <!-- 页面元数据 -->
+  
+  <title>Ring&#39;s Blog</title>
+  
+
+  
+    <meta name="description" content="Mens et Manus">
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
 
 
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Ring's Blog</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
+  <body>
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
+<header id="l_header" class="l_header auto shadow blur " style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
           
+            <img no-lazy class='logo' src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png'/>
+          
+          
+          
+        </a>
+      
 
-          <div class="content index posts-expand">
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/19/universe/linux/MM/TODO:buddy_system/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
           
-            <a href="/2021/01/19/universe/linux/MM/TODO:buddy_system/" class="post-title-link" itemprop="url">Buddy系统的原理及实现</a>
-        </h2>
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
               
-
-              <time title="Created: 2021-01-19 00:00:00 / Modified: 14:43:55" itemprop="dateCreated datePublished" datetime="2021-01-19T00:00:00+08:00">2021-01-19</time>
-            </span>
-
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Buddy系统的原理及实现"><a href="#Buddy系统的原理及实现" class="headerlink" title="Buddy系统的原理及实现"></a>Buddy系统的原理及实现</h1><p>在介绍buddy系统前先做个铺垫：空闲链表和内存池。</p>
-<h2 id="空闲列表"><a href="#空闲列表" class="headerlink" title="空闲列表"></a>空闲列表</h2><p>内存中的空闲内存块以列表的形式组织起来，称为free list。需要内存分配时扫描列表的空闲内存块，从空闲列表中移除，释放时再放回。这里就会存在不同的内存块选择策略：</p>
-<ul>
-<li>First fir<ul>
-<li>取最先遇到的大小足够的块</li>
-</ul>
-</li>
-<li>Best fit<ul>
-<li>取和申请内存大小最接近的</li>
-</ul>
-</li>
-<li>Worst fit<ul>
-<li>取和申请内存大小最不接近的</li>
-</ul>
-</li>
-</ul>
-<h2 id="内存池"><a href="#内存池" class="headerlink" title="内存池"></a>内存池</h2><p>空闲列表效率不高且容易产生大量内存碎片，而内存池则是将大内存分成若干小内存块(如32, 64, 128字节)，同一大小的内存以空闲列表的发生连接：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">| 32 | -&gt; | 32 | -&gt; | 32 |</span><br><span class="line">  |                    </span><br><span class="line">| 64 | -&gt; | 64 | -&gt; | 64 |</span><br><span class="line">  |                    </span><br><span class="line">| 128| -&gt; | 128| -&gt; | 128|</span><br><span class="line">  |</span><br></pre></td></tr></table></figure>
-
-<p>每次分配内存从大小最接近的内存池中选择一个分配。</p>
-<p>这样减少空闲列表的长度，提高效率，但是内存块设置过多过少都会造成浪费。对不同系统需要不同的配置，不通用。</p>
-<h2 id="Buddy系统原理"><a href="#Buddy系统原理" class="headerlink" title="Buddy系统原理"></a>Buddy系统原理</h2><p>在内存池的基础上，buddy系统(伙伴系统)会将 <strong>相邻的</strong> 内存块合并，形成新的大小的内存块，然后移动到新大小对应的空闲列表上。</p>
-<p>申请内存时，如果申请的尺寸或略大的尺寸有空闲，则直接分配;如果空闲的尺寸比申请的尺寸大得多，如申请128空闲512，则会将512分成一块268，和两块128。其中一块128用于分配。如此剩下的一块268和一块128内存块就归到对应大小的空闲列表。</p>
-<p>释放内存时，如果没有相邻的空闲内存，则将释放的内存块放入其对应大小的空闲列表。如果有相邻，则把相邻的内存合并成新的大内存，放入对应大小的空闲列表。</p>
-<p>物理上，内存块是连续的;逻辑上，内存块是由空闲列表连接的。</p>
-<p>当然，每次检查内存是否可以合并也会造成额外开销。</p>
-<h2 id="Buddy系统实现"><a href="#Buddy系统实现" class="headerlink" title="Buddy系统实现"></a>Buddy系统实现</h2><p>TODO</p>
-<p><a href="https://zhuanlan.zhihu.com/p/105589621" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/105589621</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/" class="post-title-link" itemprop="url">execv中的缓存管理分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-19 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-19T00:00:00+08:00">2021-01-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-24 17:13:24" itemprop="dateModified" datetime="2021-01-24T17:13:24+08:00">2021-01-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="page-cache与缓存管理"><a href="#page-cache与缓存管理" class="headerlink" title="page cache与缓存管理"></a>page cache与缓存管理</h1><p>直接从磁盘访问文件会很慢，可以利用空闲的内存来缓存一些磁盘文件的内容，这部分用作缓存磁盘文件的内存就叫做page cache。</p>
-<h2 id="1-execv中的调用page-cache的流程"><a href="#1-execv中的调用page-cache的流程" class="headerlink" title="1 execv中的调用page cache的流程"></a>1 execv中的调用page cache的流程</h2><p>执行<code>read()</code>系统调用后，首先会查看page cache里有没有目标文件的内容，如果有(cache hit)，直接读取;如果没有(cache miss)再从磁盘上读取，放入page cache中。</p>
-<p>由于内存空间有限，page cache也采用按需掉页(demand paging)的策略，需要时再申请内存把文件部分内容缓存起来。</p>
-<p>每打开一个文件都会生成一个代表这个文件的<code>struct file</code>，但是文件的<code>struct inode</code>只有一个，inode才是文件的唯一标识，称为文件的owner。inode中含有指向<code>address_space</code>的指针。<code>address_space-&gt;a_ops</code>中包含一系列page和文件交互的方法，如<code>readapge()</code>，<code>writepage()</code>等。</p>
-<p>TODO: address space</p>
-<p>每个page都有其对应的文件，通过address space找到对应文件的操作方法。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">address_space</span> &#123;</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">inode</span>            *<span class="title">host</span>;</span>          <span class="comment">/* owner: inode, block_device */</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">radix_tree_root</span>  <span class="title">i_pages</span>;</span>        <span class="comment">/* cached pages */</span></span><br><span class="line">        <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">address_space_operations</span> *<span class="title">a_ops</span>;</span>   <span class="comment">/* methods */</span></span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>cache page采用radix tree结构存储，内核中使用<code>find_get_page</code>方法(对<code>pagecache_get_page</code>的封装)查找page。如果没找到就触发page fault，调用<code>__page_cache_alloc</code>在分配page，然后调用<code>add_to_page_cache(_lru)</code>加入page cache中。</p>
-<h2 id="2-页面替换算法-LRU-Least-Recently-Used"><a href="#2-页面替换算法-LRU-Least-Recently-Used" class="headerlink" title="2 页面替换算法:LRU(Least Recently Used)"></a>2 页面替换算法:LRU(Least Recently Used)</h2><p>LRU算法会换出最久未被使用的page。原理：根据程序的局部性原理，如果数据最近被访问过，那么它将来还被访问的概率也很高。</p>
-<p>linux中用两个双向链表来实现lru，一个active list，一个inactive list。如果page最近被使用，则在active list中，否则在inactive list中。两个链表都是采用FIFO原则，最近最久未被使用的page将在列表尾部，因此内存回收时会从inactive list尾部page进行回收。</p>
-<p><code>struct page</code>的page flags使用<code>PG_referenced</code>和<code>PG_active</code>两个标志位来识别页面活跃程度。</p>
-<p><code>PG_active</code>为1表示在active list，<code>PG_active</code>为0表示在inactive list。</p>
-<p>如果active list末尾page的<code>PG_referenced</code>为1则放回表头并置0;如果active list末尾page的<code>PG_referenced</code>为0，则表示最近未被使用，放入inactive list。</p>
-<p>如果inactive list末尾page的<code>PG_referenced</code>为0，表示在inactive list期间中未被使用过，因此回收。如果inactive list中page的<code>PG_referenced</code>为2，则放回active list。如果末尾page的<code>PG_referenced</code>为1，会根据不同机制做不同的策略。</p>
-<h3 id="2-1-lru-cache"><a href="#2-1-lru-cache" class="headerlink" title="2.1 lru cache"></a>2.1 lru cache</h3><p>可见page在active list和inacitve list中的切换是很频繁的，对于lru lock的竞争将会非常激烈。因此引入per-CPU的<strong>lru cache</strong>机制(使用<code>struct pagevec</code>表示)，换入换出的page先放在当前CPU的lru cache中，lru cache积累了<code>PAGEVEC_SIZE</code>个页面，再获取锁，批量转移。</p>
-<h3 id="2-2-refault"><a href="#2-2-refault" class="headerlink" title="2.2 refault"></a>2.2 refault</h3><p>一个page被回收后再次被访问。因此分配这个page是通过page fault产生的，回收后再次被访问到又会触发的的page fault，此时的page fault称为 <strong>refault</strong></p>
-<p>如果inactive list足够长，那一个inactive list中的page在回收前有更多的时间可能被访问到，从而减少refault的发生。</p>
-<p>当然由于内存有限，active list和inacitve list的长度需要权衡。</p>
-<h2 id="3-与kswapd的交互"><a href="#3-与kswapd的交互" class="headerlink" title="3 与kswapd的交互"></a>3 与kswapd的交互</h2><blockquote>
-<p>kswapd是linux中用于页面回收的内核线程。</p>
-</blockquote>
-<p>内存严重不足时需分配内存，需要回收一部分内存(如用来做page cache的内存)后才能分配给新的需求。直接启动的内存回收操作叫做<strong>direct reclaim</strong>。这种模式下内存分配会被内存回收操作阻塞，等待时间长。而很多page的回收往往伴随着IO操作，如dirty页的写回，这就加剧了等待时间。</p>
-<p>kswapd是linux中一种常见的回收机制，可以在内存压力不大时提前回收内存，维持空闲内存余量以减少内存压力大时发生缺页异常的负担。这种方式的内存回收又称为 <strong>background reclaim</strong> </p>
-<p>每个node对应一个kswapd内核线程，用于处理swap out、page cache等的回收和平衡acitve list和inacitve list等的任务。kswapd会调用<code>balance_pgdat()</code>来执行这些操作。</p>
-<p>调用流程如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">balance_pgdat</span><br><span class="line">    kswapd_shrink_node</span><br><span class="line">        shrink_node</span><br><span class="line">            shrink_node_memcg</span><br><span class="line">                shrink_list</span><br><span class="line">                    if(inactive_list_is_low)</span><br><span class="line">                        shrink_active_list</span><br><span class="line">                    else</span><br><span class="line">                        shrink_inactive_list</span><br><span class="line">                            shrink_page_list</span><br></pre></td></tr></table></figure>
-
-<p>当<code>inactive_list_is_low</code>inactive list中的page较少时，<code>shrink_active_list</code>将active list尾端的一些page移动到inactive list。inactive list的长度增加可以减少refault的概率。</p>
-<p>当inactive list中的page不是较少时。<code>shrink_inactive_list()-&gt;shrink_page_list()</code>从inactive list尾部移除选定数目的page进行回收。</p>
-<h3 id="3-1-watermark"><a href="#3-1-watermark" class="headerlink" title="3.1 watermark"></a>3.1 watermark</h3><p>至于什么时候触发kswapd，什么时候触发direct reclaim有watermark决定。</p>
-<p>当空闲内存大于一定值时kswapd就会休眠。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/18/universe/linux/MM/TODO:slab/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/18/universe/linux/MM/TODO:slab/" class="post-title-link" itemprop="url">slab分配器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-18 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-18T00:00:00+08:00">2021-01-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-19 15:19:51" itemprop="dateModified" datetime="2021-01-19T15:19:51+08:00">2021-01-19</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>!TODO!</p>
-<h2 id="slab分配器"><a href="#slab分配器" class="headerlink" title="slab分配器"></a>slab分配器</h2><p>slab分配器的两个功能：</p>
-<ul>
-<li>1 TODO减少内部碎片</li>
-<li>2 作为高速缓存，存储内核中经常被分配并释放的对象</li>
-</ul>
-<blockquote>
-<p>Jeff Bonwick 发现对内核中普通对象进行初始化所需的时间超过了对其进行分配和释放所需的时间。因此他的结论是不应该将内存释放回一个全局的内存池，而是将内存保持为针对特定目而初始化的状态</p>
-</blockquote>
-<p>当需要时内核会在直接从slab分配器的高速缓存中获取一个已经初始化了的对象，用完后不是释放它，而是放回slab分配器中。后续的内存分配不需要执行初始化函数。</p>
-<h3 id="slab分配器的结构"><a href="#slab分配器的结构" class="headerlink" title="slab分配器的结构"></a>slab分配器的结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cache_chain</span><br><span class="line">  |</span><br><span class="line">kmem_cache  -&gt;  [ slab, slab, slab, ... ]</span><br><span class="line">  |                |</span><br><span class="line">kmem_cache      [ object, object, object, ... ]</span><br></pre></td></tr></table></figure>
-
-<p>每个cache都是一段连续的内存空间，通常使用<code>kmalloc()</code>分配。对象数目较多时不利用动态调整。因此每个cache分成了若干slabs，同一cache中的slabs储存相同的对象。一个cache用<code>struct kmem_cache</code>结构体表示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kmem_cache</span>&#123;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>一段缓存的所有slab分为3类，存在3个列表中：<code>slabs_free</code>(所有)对象空闲的列表，<code>slabs_partial</code>部分对象空闲的列表, <code>slabs_full</code>对象用尽的列表。</p>
-<p>因为cache是连续的，所有每个slab都是一个连续的内存块(一个或多个连续页，通常为一页)，它们被分配成一个个对象。</p>
-<p>一个缓存包含多个slab，一个slab包含多个对象用于分配。当一个slab中的对象分配完后会被放入<code>slabs_full</code>列表，同理一个slab可以在3个列表中移动。</p>
-<h3 id="内核函数"><a href="#内核函数" class="headerlink" title="内核函数"></a>内核函数</h3><h4 id="为一个创建缓存kmem-cache-create"><a href="#为一个创建缓存kmem-cache-create" class="headerlink" title="为一个创建缓存kmem_cache_create"></a>为一个创建缓存kmem_cache_create</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kmem_cache</span> *</span></span><br><span class="line"><span class="class"><span class="title">kmem_cache_create</span>(<span class="title">const</span> <span class="title">char</span> *<span class="title">name</span>, <span class="title">unsigned</span> <span class="title">int</span> <span class="title">size</span>, <span class="title">unsigned</span> <span class="title">int</span> <span class="title">align</span>,</span></span><br><span class="line"><span class="class">                <span class="title">slab_flags_t</span> <span class="title">flags</span>, <span class="title">void</span> (*<span class="title">ctor</span>)(<span class="title">void</span> *))</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>name：对象的名称</li>
-<li>size：缓存对象的大小</li>
-<li>align：对其的大小</li>
-<li>flags：分配掩码</li>
-<li>ctor：对象的构造函数</li>
-</ul>
-<p>主要流程如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kmem_cache_create-----------------------进行合法性检查，以及是否有现成slab描述符可用</span><br><span class="line">    do_kmem_cache_create----------------将主要参数配置到slab描述符，然后将得到的描述符加入slab_caches全局链表中。</span><br><span class="line">        __kmem_cache_create-------------是创建slab描述符的核心进行对齐操作，计算需要页面，对象数目，对slab着色等等操作。</span><br><span class="line">            calculate_slab_order--------计算slab对象需要的大小，以及一个slab描述符需要多少page</span><br><span class="line">            setup_cpu_cache-------------继续配置slab描述符</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="分配slab对象kmem-cache-alloc"><a href="#分配slab对象kmem-cache-alloc" class="headerlink" title="分配slab对象kmem_cache_alloc"></a>分配slab对象kmem_cache_alloc</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">kmem_cache_alloc</span><span class="params">(struct kmem_cache *cachep, <span class="keyword">gfp_t</span> flags)</span></span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>cachep：对象所在缓存</li>
-<li>flags：一组标志</li>
-</ul>
-<h4 id="释放对象kmem-cache-free"><a href="#释放对象kmem-cache-free" class="headerlink" title="释放对象kmem_cache_free"></a>释放对象kmem_cache_free</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmem_cache_free</span><span class="params">(struct kmem_cache *cachep, <span class="keyword">void</span> *objp)</span></span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>cachep：对象所在缓存</li>
-<li>objp：释放的对象</li>
-</ul>
-<h4 id="销毁缓存kmem-cache-destroy"><a href="#销毁缓存kmem-cache-destroy" class="headerlink" title="销毁缓存kmem_cache_destroy"></a>销毁缓存kmem_cache_destroy</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmem_cache_destroy</span><span class="params">( struct kmem_cache *cachep )</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>内核模块被卸载时执行，销毁缓存并从<code>cache_chain</code>链表上移除</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/18/universe/linux/project_like/about_mmap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/18/universe/linux/project_like/about_mmap/" class="post-title-link" itemprop="url">execv中地址地址映射流程分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-18 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-18T00:00:00+08:00">2021-01-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-24 17:12:55" itemprop="dateModified" datetime="2021-01-24T17:12:55+08:00">2021-01-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-execv函数地址映射流程分析"><a href="#1-execv函数地址映射流程分析" class="headerlink" title="1 execv函数地址映射流程分析"></a>1 execv函数地址映射流程分析</h2><h3 id="1-1-execv如何填充新进程的页表"><a href="#1-1-execv如何填充新进程的页表" class="headerlink" title="1.1 execv如何填充新进程的页表"></a>1.1 execv如何填充新进程的页表</h3><p>execv()中会调用<code>bprm_mm_init</code>函数准备一个<code>linux_binprm</code>结构体，该结构体用于描述新进程的各种信息，最后由<code>search_binary_handler</code>找到对应文件格式的处理程序加载执行<code>load_binary</code>。</p>
-<p>其中<code>bprm_mm_init</code>会执行如下流程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bprm_mm_init()</span><br><span class="line">    bprm-&gt;mm &#x3D; mm_alloc()</span><br><span class="line">        allocate_mm -&gt; kmem_cache_alloc(mm_cachep, GFP_KERNEL) &#x2F;&#x2F; 分配内存</span><br><span class="line">        mm_init  &#x2F;&#x2F; 初始化设置</span><br><span class="line">            mm_pgtables_init(mm) &#x2F;&#x2F; 置0</span><br><span class="line">            mm-&gt;pdg &#x3D; mm_alloc_pgd -&gt; pgd_alloc &#x2F;&#x2F; 申请pgd</span><br><span class="line">            init_new_context()   &#x2F;&#x2F; ???</span><br><span class="line">    __bprm_mm_init()   &#x2F;&#x2F; 初始化bprm：设置bprm-&gt;vma</span><br><span class="line">        vm_area_alloc</span><br><span class="line">            kmem_cache_zalloc (slab?)</span><br><span class="line">            vma_init</span><br><span class="line">        arch_bprm_mm_init</span><br></pre></td></tr></table></figure>
-
-<p><strong>什么时候填充的elf格式到页表?</strong> 虚页都映射到了正确的物理页</p>
-<p>好像pdg探测到都是0，所有应该的demand allocation?但不知道是用的哪个函数</p>
-<h3 id="1-2-execv中内存映射"><a href="#1-2-execv中内存映射" class="headerlink" title="1.2 execv中内存映射"></a>1.2 execv中内存映射</h3><p>内存映射的定义：将磁盘文件系统的文件的某一部分或者块设备文件映射到一段连续的内存，这样一来在内存上的改动就对应的转换成了对文件相应位置的改动。</p>
-<p>?? 文件数据的存储通常不是连续的，内核利用<code>address_space</code>结构，提供一组方法从backing store读取数据，将映射的数据表示成连续的线性取，提供给内存管理子系统。</p>
-<h4 id="1-2-1-vm-area-struct"><a href="#1-2-1-vm-area-struct" class="headerlink" title="1.2.1 vm_area_struct"></a>1.2.1 vm_area_struct</h4><p>linux使用<code>vm_area_struct</code>结构体来描述一段连续的、具有相同访问属性的虚存空间。内核会把相邻的，有相同属性的区域合并。</p>
-<p>一个进程是所有线性区是通过链表或树形结构连接起来的。<code>vm_area_struct</code>结构体中包含区域的起始和终止以及其他相关信息，也包含一个<code>vm_ops</code>指针用于引出所有可以对这个区域进程操作的函数。</p>
-<p>mmap函数的作用就是创建一个新的<code>vm_area_struct</code>，并将其与文件的物理存储联系起来。</p>
-<h4 id="1-2-2-address-space"><a href="#1-2-2-address-space" class="headerlink" title="1.2.2 address_space"></a>1.2.2 address_space</h4><p><code>address_space</code>用来管理文件(<code>struct inode</code>)映射到内存页面(<code>struct page</code>)。对应的<code>address_space_operations</code>就是用来操作该文件映射的操作。</p>
-<p>一个具体的文件在打开后，内核会在内存中为之建立一个<code>struct inode</code>结构，其中的<code>i_mapping</code>域指向一个<code>address_space</code>结构，这样，一个文件就对应一个<code>address_space</code>结构。</p>
-<h4 id="1-2-3-execv中内存映射的流程"><a href="#1-2-3-execv中内存映射的流程" class="headerlink" title="1.2.3 execv中内存映射的流程"></a>1.2.3 execv中内存映射的流程</h4><p>execv会执行<code>do_open_execat</code>打开文件，并填充相应file结构体，其中包括<code>file_operations</code>。然后<code>search_binary_handler</code>寻找对应格式的处理程序。</p>
-<p>对于elf格式的文件，对应的处理程序一般是<code>load_elf_binary</code>，所以<code>load_binary</code>函数指针指向<code>load_elf_binary</code>。在<code>load_elf_binary</code>中会执行<code>elf_map</code>建立与可执行文件的映射，<code>elf_map</code>执行流程如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">elf_map</span><br><span class="line">    vm_mmap-&gt;vm_mmap_pgoff</span><br><span class="line">        do_mmap_pgoff</span><br><span class="line">            do_mmap</span><br><span class="line">                get_unmapped_area  <span class="comment">// obtain addr to map to  </span></span><br><span class="line">            mmap_region</span><br><span class="line">                vm_area_alloc</span><br><span class="line">                    kmem_cache_zalloc   <span class="comment">// 分配vma空间</span></span><br><span class="line">                    vma_init(vma, mm)   <span class="comment">// 初始化vma</span></span><br><span class="line">                        vma-&gt;mm = mm;</span><br><span class="line">                        vma-&gt;vm_ops =  &amp;vm_operations_struct &#123;&#125;;</span><br><span class="line">                call_mmap(file, vma)  <span class="comment">// 调用file-&gt;op-&gt;mmap进行内存映射</span></span><br></pre></td></tr></table></figure>
-
-<p>主要做了这么几个事情：</p>
-<ul>
-<li>1 寻找一段空闲的满足要求的连续虚拟地址</li>
-<li>2 为这个虚拟区分配一个<code>vm_area_struct</code>结构</li>
-<li>3 初始化vma，插入vma链表或树中</li>
-<li>4 通过待映射的文件<code>struct file</code>找到对应的<code>file_operations</code>，调用<code>mmap(file, vma)</code>(在<code>call_mmap</code>这个宏中)建立映射</li>
-</ul>
-<p>不同的环境打开同一文件时会生成不同的<code>struct file</code>实例，如使用的是xfs文件系统，在生成file实例时<code>file_operations</code>用的就是<code>xfs_file_operations</code>类。其中会找到对应<code>address_space</code>中相应的read，write，mmap等方法。</p>
-<p>虚拟区域建立完成并完成了地址映射，但是没有将文件数据拷贝到主存。这是出于效率考虑的demand paging(按需调页)机制。当发现一段地址不存在物理页面时触发缺页异常，执行对应的调页方法(<code>vma-&gt;vm_ops-&gt;fault</code>)。</p>
-<p>该部分处理具体的方法依赖于映射到发生异常的地址空间（<code>address_space</code>中的文件，因此需要调用特定于文件的方法来获取数据。如xfs中该方法指向<code>vm-&gt;vm_ops-&gt;fault=xfs_filemap_fault</code></p>
-<p>再由<code>xfs_filemap_fault</code>执行对应文件的<code>filemap_fault</code>，其中<code>xfs_filemap_fault</code>，主要还是执行通用的<code>filemap_fault</code>方法，主要流程如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">xfs_filemap_fault</span><br><span class="line">    filemap_fault     <span class="comment">// xfs_filemap_fault中主要还是执行通用的filemap_fault</span></span><br><span class="line">        find_get_page <span class="comment">// 申请page，首先会看看有没有缓存</span></span><br><span class="line">        <span class="comment">// 如果没有缓存就先申请缓存</span></span><br><span class="line">            __page_cache_alloc</span><br><span class="line">        vmf-&gt;vma-&gt;vm_file-&gt;f_mapping-&gt;a_ops-&gt;readpage()  <span class="comment">// 使用文件对应的read方法执行映射操作</span></span><br><span class="line">            xfs_vm_readpage  <span class="comment">// readpage指针指向xfs_vm_readpage</span></span><br><span class="line">                mpage_readpage   <span class="comment">// xfs_vm_readpage底层调用mpage_readpage</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/17/universe/operate/docker_the_underlying_technology/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/17/universe/operate/docker_the_underlying_technology/" class="post-title-link" itemprop="url">Docker底层原理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+            
               
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
 
-              <time title="Created: 2021-01-17 00:00:00 / Modified: 11:31:23" itemprop="dateCreated datePublished" datetime="2021-01-17T00:00:00+08:00">2021-01-17</time>
-            </span>
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper  dock' style="display: ;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Volantis</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/v4/getting-started/"
+              
+              
+              id="v4getting-started">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>文档</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>博客</p>
+            </a>
+          
+            <a href="https://github.com/volantis-x/hexo-theme-volantis/"
+              
+              
+              id="https:githubcomvolantis-xhexo-theme-volantis">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
 
+          <div id="scroll-down" style="display: ;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
           
 
-        </div>
-      </header>
-
+<div class='l_main'>
+  
+  <section class="post-list">
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-          <h2 id="Docker底层原理"><a href="#Docker底层原理" class="headerlink" title="Docker底层原理"></a>Docker底层原理</h2><p><a href="https://docs.docker.com/get-started/overview/#the-underlying-technology" target="_blank" rel="noopener">Ref</a></p>
-<p>Docker使用linux内核的一些特性来实现其一些功能</p>
-<h3 id="Namespaces"><a href="#Namespaces" class="headerlink" title="Namespaces"></a>Namespaces</h3><p>Docker使用命名空间(Namespaces)来隔离工作区，一个隔离的工作区就称为一个容器。当启动一个容器时docker就会为该容器设置一系列namespaces。</p>
-<p>docker使用如下的命名空间:</p>
-<ul>
-<li>The <code>pid namespace</code>: 进程隔离</li>
-<li>The <code>net namespace</code>: 管理网卡</li>
-<li>The <code>ipc namespace</code>: 管理对IPC资源的访问</li>
-<li>The <code>mnt namespace</code>: 管理文件系统挂载点</li>
-<li>The <code>uts namespace</code>: 隔离内核和版本标识(UTS: Unix Timesharing System).</li>
-</ul>
-<p>可以在<code>/proc/PID/ns</code>下查看进程的命名空间，观察发现一般情况下宿主机上的进程，进程空间是一样的。而docker启动的进程命名空间与主机隔离。</p>
-<h3 id="Control-groups-cgroups"><a href="#Control-groups-cgroups" class="headerlink" title="Control groups(cgroups)"></a>Control groups(cgroups)</h3><p>cgroups用来对一组进程进行资源限制。cgroups让docker可以共享硬件资源，同时也可以做些限制和约束。如你可以限制某个容器的可用内存。</p>
-<p>查看系统已有的控制组<code>ls /sys/fs/cgroup</code>。使用<code>cgcreate</code>创建一个自己的控制组(需要<code>libcgroup-tools</code>)，如<code>cg_test</code>。设置某个限制<code>echo 30000 &gt; ./cpu.cfs_quota_us</code>。然后将进程放入该组<code>cgclassify -g &lt;cgroup_name&gt; &lt;pid&gt;</code></p>
-<h3 id="Union-file-system"><a href="#Union-file-system" class="headerlink" title="Union file system"></a>Union file system</h3><p>Union file systems, or UnionFS, are file systems that operate by creating layers, making them very lightweight and fast. Docker Engine uses UnionFS to provide the building blocks for containers. Docker Engine can use multiple UnionFS variants, including AUFS, btrfs, vfs, and DeviceMapper.</p>
-<h3 id="Container-format"><a href="#Container-format" class="headerlink" title="Container format"></a>Container format</h3><p>docker将上述namespaces, cgroups, UnionFS组成称为container format。默认的container format是<code>libcontainer</code></p>
-
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+    
+    
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/01/27/universe/linux/project_like/about_RUP/">
+        RUP简介以及常用模型
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        RUP有时候用户需求难以捉摸，甚至连用户自己都理不清，RUP就提供了一系列模板方便我们快速地获取用户的需求。用户只需要像填写表格一样把公式化的内容填上，再套用对应的模板，建立一系列模型，就能快速地系统地开发。
+为此RUP还定义了一些术语来通用的建模和描述业务。
+1.1 什么叫迭代增量式iteration incrementation开发将整个开发工作组织成一系列小的项目，被称为一系列迭代。根...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-01-27</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/01/27/universe/linux/project_like/about_RUP/'>
+            Read More
+          </a>
+        </div>
       
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/15/universe/linux/project_like/process_destory/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/15/universe/linux/project_like/process_destory/" class="post-title-link" itemprop="url">进程退出和销毁过程分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-15 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-15T00:00:00+08:00">2021-01-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-24 17:14:04" itemprop="dateModified" datetime="2021-01-24T17:14:04+08:00">2021-01-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="进程退出和销毁过程分析"><a href="#进程退出和销毁过程分析" class="headerlink" title="进程退出和销毁过程分析"></a>进程退出和销毁过程分析</h1><p>结束一个进程的生命可以分为两个步骤：进程退出和进程销毁。进程退出主要是释放进程的资源，使进程称为僵死(<code>TASK_ZOMBIE</code>)状态;进程销毁主要是通过父进程，释放僵死进程的各种信息</p>
-<p>当前进程被设为<code>TASK_ZOMBIE</code>僵死状态后会向其父进程发生SIGCHLD信号，父进程收到SIGCHLD信号后父进程会销毁僵死状态的子进程。</p>
-<p>父进程通过调用<code>wait()</code>或<code>waitpid()</code>函数等待SIGCHLD处理僵死进程</p>
-<h2 id="1-进程退出"><a href="#1-进程退出" class="headerlink" title="1 进程退出"></a>1 进程退出</h2><p>进程退出通常的通过系统调用执行<code>do_exit</code>函数。简单的说<code>do_exit</code>主要执行如下流程：</p>
-<ul>
-<li>设置和重置标志位<ul>
-<li>如设置退出码<code>exit_code</code>，设置进程状态<code>TASK_ZOMBIE</code>，设置退出状态<code>PF_EXITING</code>等</li>
-</ul>
-</li>
-<li>释放资源<ul>
-<li>释放内存，信号量，打开的文件的描述符等</li>
-</ul>
-</li>
-<li>给子进程找养父<ul>
-<li>因为进程的销毁依赖于父进程，没有养父的孤儿进程将会造成资源浪费</li>
-</ul>
-</li>
-</ul>
-<p>主要会释放如下资源：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">exit_signals(); <span class="comment">// sets PF_EXITING</span></span><br><span class="line">exit_mm();      <span class="comment">// 释放内存和描述符 ?我不太明白mm和一个数组的内存的关系</span></span><br><span class="line">exit_sem();     <span class="comment">// 释放信号量</span></span><br><span class="line">exit_shm();</span><br><span class="line">exit_files();   <span class="comment">// 释放打开的描述符</span></span><br><span class="line">exit_fs();      <span class="comment">// 释放文件系统数据</span></span><br><span class="line">exit_task_namespace();</span><br><span class="line">exit_task_work();</span><br><span class="line">exit_thread();</span><br></pre></td></tr></table></figure>
-
-<p>最后通过<code>exit_notify()</code>向父进程发出SIGCHLD信号销毁进程，然后执行<code>do_task_dead()</code>调用<code>schedule()</code>触发调度，进程终止。</p>
-<p>下面主要分析进程退出的内存释放过程</p>
-<h3 id="1-1-退出过程的内存管理"><a href="#1-1-退出过程的内存管理" class="headerlink" title="1.1 退出过程的内存管理"></a>1.1 退出过程的内存管理</h3><p>进程的内存释放主要在<code>exit_mm</code>中的执行，其执行流程如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mm_release</span><br><span class="line">    deactivate_mm  <span class="comment">// 删除缓存的寄存器状态</span></span><br><span class="line">mmput()            <span class="comment">// 真正释放内存的函数</span></span><br><span class="line">    exit_mmap()</span><br><span class="line">        arch_exit_mmap</span><br><span class="line">        free_pgtables</span><br><span class="line">    mm_put_huge_zero_page()</span><br><span class="line">    mmdrop() -&gt; __mmdrop()  <span class="comment">// 释放内存描述符和pdg表</span></span><br><span class="line">        mm_free_pgd() -&gt; pgd_free</span><br><span class="line">        free_mm() -&gt; kmem_cache_free</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="2-进程销毁"><a href="#2-进程销毁" class="headerlink" title="2 进程销毁"></a>2 进程销毁</h2><p>进程终止后会处于僵死状态，需要父进程执行wait操作来回收进程描述符以及内核栈所占内存，同时把僵死进程从相关的各个表上移除。处理函数为<code>release_task</code></p>
-<p><code>release_task</code>主要有如下过程：</p>
-<ul>
-<li>递减进程数：<code>atomic_dec(&amp;p-&gt;user-&gt;processes)</code></li>
-<li>?如果进程被追踪，调用<code>ptrace_release_task</code>，把它从调试程序的<code>ptrace_children</code>链表中删除<ul>
-<li>底层调用<code>__ptrace_unlink</code></li>
-</ul>
-</li>
-<li><code>__exit_signal(p)</code>，删除所有挂起信号并释放<code>signal_struct</code>描述符</li>
-<li><code>__unhash_process</code></li>
-<li>调用<code>sched_exit()</code>函数来调整父进程的时间片</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/14/universe/linux/process_of_exec/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/14/universe/linux/process_of_exec/" class="post-title-link" itemprop="url">execv的执行过程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-14 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-14T00:00:00+08:00">2021-01-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-21 14:55:19" itemprop="dateModified" datetime="2021-01-21T14:55:19+08:00">2021-01-21</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="execv执行过程"><a href="#execv执行过程" class="headerlink" title="execv执行过程"></a>execv执行过程</h1><h2 id="可执行程序的表示"><a href="#可执行程序的表示" class="headerlink" title="可执行程序的表示"></a>可执行程序的表示</h2><h3 id="elf文件格式"><a href="#elf文件格式" class="headerlink" title="elf文件格式"></a>elf文件格式</h3><p>Linux下标准的可执行文件格式是ELF(Executable and Linking Format)，是一种对象文件的格式，用于定义不同类型的对象文件(Object files)中都放了什么东西、以及都以什么样的格式去放这些东西。</p>
-<p>但是linux也支持其他不同的可执行程序格式, 各个可执行程序的执行方式不尽相同, 因此linux内核每种被注册的可执行程序格式都用<code>linux_binfmt</code>来存储, 其中记录了可执行程序的加载和执行函数</p>
-<p>同时我们需要一种方法来保存可执行程序的信息, 比如可执行文件的路径, 运行的参数和环境变量等信息，即<code>linux_binprm</code>结构</p>
-<h3 id="linux-binprm结构体"><a href="#linux-binprm结构体" class="headerlink" title="linux_binprm结构体"></a>linux_binprm结构体</h3><p>使用<code>linux_binprm</code>结构来保存可执行程序的信息，如可执行程序路径、运行的参数和环境变量等。</p>
-<h3 id="linux-binfmt结构体"><a href="#linux-binfmt结构体" class="headerlink" title="linux_binfmt结构体"></a>linux_binfmt结构体</h3><p>linux内核中，每种被注册的可执行程序都用<code>linux_binfmt</code>来存储，用于记录可执行程序的加载和执行函数。</p>
-<p>linux支持其他不同格式的可执行程序，即linux能运行其他操作系统所编译的程序，因此linux内核使用<code>linux_binfmt</code>来描述各种可执行程序。其提供了3种方法来加载和执行可执行程序：</p>
-<ul>
-<li><code>load_binary</code><ul>
-<li>通过读存放在可执行文件中的信息为当前进程建立一个新的执行环境</li>
-</ul>
-</li>
-<li><code>load_shlib</code><ul>
-<li>用于动态的把一个共享库捆绑到一个已经在运行的进程, 这是由uselib()系统调用激活的</li>
-</ul>
-</li>
-<li><code>core_dump</code><ul>
-<li>在名为core的文件中, 存放当前进程的执行上下文. 这个文件通常是在进程接收到一个缺省操作为”dump”的信号时被创建的, 其格式取决于被执行程序的可执行类型</li>
-</ul>
-</li>
-</ul>
-<p>当执行一个可执行程序时，内核会<code>list_for_each_entry</code>遍历所有注册的<code>linux_binfmt</code>对象，对其调用<code>load_binary</code>方法来尝试加载，直到加载成功为止</p>
-<h2 id="execv执行过程-1"><a href="#execv执行过程-1" class="headerlink" title="execv执行过程"></a>execv执行过程</h2><p>执行<code>execv()</code>或<code>execve()</code>系统调用时，实际的调用内核的<code>do_execve()</code>函数。这个函数首先会打开目标映像文件，并从目标文件头部读入若干字节用于填充<code>linux_binprm</code>结构体。然后调用<code>search_binary_handler()</code>搜索linux支持的可执行文件类型队列，让各种可执行程序来认领和处理改类型的程序。如果类型匹配，则调用<code>load_binary</code>函数指针所指向的处理函数来处理目标映像文件。对于elf文件格式<code>load_binary</code>处理函数为<code>load_elf_binary</code>，故过程为:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys_execve() &gt; do_execve() &gt; do_execveat_common &gt; search_binary_handler() &gt; load_elf_binary()</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="do-execveat-common执行"><a href="#do-execveat-common执行" class="headerlink" title="do_execveat_common执行"></a>do_execveat_common执行</h3><p><code>do_execveat_common</code>依次执行以下操作：</p>
-<ul>
-<li>调用<code>unshare_files()</code>为进程复制一份文件表</li>
-<li>调用<code>kzalloc()</code>分配一份<code>struct linux_binprm</code>结构体</li>
-<li>调用<code>open_exec()</code>查找并打开二进制文件</li>
-<li>调用<code>sched_exec()</code>找到最小负载的CPU，用来执行该二进制文件</li>
-<li>根据获取的信息，填充<code>struct linux_binprm</code>结构体中的file、filename、interp成员</li>
-<li>调用<code>bprm_mm_init()</code>创建进程的内存地址空间，为新程序初始化内存管理.并调用<code>init_new_context()</code>检查当前进程是否使用自定义的局部描述符表；如果是，那么分配和准备一个新的LDT</li>
-<li>填充<code>struct linux_binprm</code>结构体中的argc、envc成员</li>
-<li>调用<code>prepare_binprm()</code>检查该二进制文件的可执行权限；最后，<code>kernel_read()</code>读取二进制文件的头128字节（这些字节用于识别二进制文件的格式及其他信息，后续会使用到）</li>
-<li>调用<code>copy_strings_kernel()</code>从内核空间获取二进制文件的路径名称</li>
-<li>调用<code>copy_string()</code>从用户空间拷贝环境变量和命令行参数</li>
-<li>至此，二进制文件已经被打开，<code>struct linux_binprm</code>结构体中也记录了重要信息, 内核开始调用<code>exec_binprm</code>执行可执行程序</li>
-<li>释放<code>linux_binprm</code>数据结构，返回从该文件可执行格式的<code>load_binary</code>中获得的代码</li>
-</ul>
-<h3 id="exec-binprm识别并加载二进制程序"><a href="#exec-binprm识别并加载二进制程序" class="headerlink" title="exec_binprm识别并加载二进制程序"></a>exec_binprm识别并加载二进制程序</h3><p>每种格式的二进制文加对应一个<code>linux_binprm</code>结构体，<code>load_binary</code>成员负责识别该二进制文件的格式。</p>
-<p>使用<code>search_binary_handler</code>函数对<code>linux_binfmt</code>结构体链表(链表头为<code>formats</code>)扫描，并尝试每个<code>load_binary</code>函数，如果成功加载则对<code>formats</code>的扫描终止</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="http://blog.chinaunix.net/uid-12127321-id-2957869.html" target="_blank" rel="noopener">http://blog.chinaunix.net/uid-12127321-id-2957869.html</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/13/universe/linux/project_like/trace_flow/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/13/universe/linux/project_like/trace_flow/" class="post-title-link" itemprop="url">使用systemtap实现进程的跟踪</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-13 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-13T00:00:00+08:00">2021-01-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-15 19:12:16" itemprop="dateModified" datetime="2021-01-15T19:12:16+08:00">2021-01-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="使用systemtap实现进程的跟踪"><a href="#使用systemtap实现进程的跟踪" class="headerlink" title="使用systemtap实现进程的跟踪"></a>使用systemtap实现进程的跟踪</h1><h2 id="systemtap安装"><a href="#systemtap安装" class="headerlink" title="systemtap安装"></a>systemtap安装</h2><p>systemtap安装分为两个部分，一个是安装systemtap本身;另一个是安装对应的内核信息包(Kernel Information Packages)，否则systemtap将无法深入内核探测。</p>
-<p>以下以在centos中安装为例。</p>
-<ul>
-<li>安装systemtap<ul>
-<li>使用对应的包管理工具安装，如centos中<code>yum install systemtap</code></li>
-</ul>
-</li>
-<li>安装内核信息包<ul>
-<li>需要注意的是安装的内核信息包需要与内核版本对应，如内核版本为4.18.0-147，就安装4.18.0-147的包</li>
-<li>使用<code>stap-prep</code>命名检查systemtap还需要哪些支持，一般需要安装如下几个信息包：<ul>
-<li>kernel-debuginfo<ul>
-<li>可以在<code>http://debuginfo.centos.org/8/x86_64/Packages/kernel-debuginfo-4.18.0-147.el8.x86_64.rpm</code>中下载</li>
-<li>然后安装<code>rpm -ivh</code></li>
-</ul>
-</li>
-<li>kernel-debuginfo-common<ul>
-<li><code>http://debuginfo.centos.org/8/x86_64/Packages/kernel-debuginfo-common-x86_64-4.18.0-147.el8.x86_64.rpm</code></li>
-</ul>
-</li>
-<li>kernel-devel</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="systemtap基本使用"><a href="#systemtap基本使用" class="headerlink" title="systemtap基本使用"></a>systemtap基本使用</h2><p>Systemtap的基本思路是监听事件(event)，并提供处理程序(handler)。当指定事件发生时，内核就会执行相应的处理程序。</p>
-<p>Systemtap内置了很多事件，为用户提供了简单的API，以方便地编写处理程序。</p>
-<p>语法类似C语言，探测事件的格式为：<code>probe event {statements}</code>。如我要探测哪个程序执行了内核中的<code>_do_fork</code>函数，可以这么写：</p>
-<figure class="highlight stp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">probe kernel.function(<span class="string">"_do_fork@kernel/fork.c"</span>)&#123;</span><br><span class="line">    printf(<span class="string">"%s: %s\n"</span>, execname(), ppfunc());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>其中<code>kernel.function(PATTERN)</code>就是systemtap预置的一个事件，即当<code>PATTERN</code>匹配到的函数被调用是，触发对应的handler，这里是打印了调用的进程的名字<code>execname()</code>，和调用的函数名<code>ppfunc()</code>。PATTERN的格式是<code>func[@file] | func@file:linenumber</code>，支持正则表达式匹配。</p>
-<p>除了<code>kernel.function()</code>事件外，有其他很多内置的事件<a href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/scripts.html#systemtapscript-events" target="_blank" rel="noopener">详见此处</a>。内置的函数如<code>execname()</code>等的使用，<a href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/systemtapscript-handler.html#syscall-open" target="_blank" rel="noopener">详见此处</a>。这里列出一些常用值</p>
-<ul>
-<li>probe，”探测”<ul>
-<li><code>probe &lt;probe-point&gt; &lt;statement&gt;</code></li>
-<li><code>probe-point</code>指定了probe动作的时机，一旦探测是事件触发了，则probe将从此处插入内核或进程</li>
-</ul>
-</li>
-<li>API<ul>
-<li><code>begin</code>, systemtap 会话开始</li>
-<li><code>end</code>, systemtap 会话结束</li>
-<li><code>kernel.function(&quot;sys_xxx&quot;)</code>, 系统调用xx的入口</li>
-<li><code>kernel.function(&quot;sys_xxx&quot;).return</code>, 系统调用xx的返回</li>
-<li><code>timer.ms(300)</code>, 每300毫秒的定时器</li>
-<li><code>timer.profile</code>, 每个CPU上周期触发的定时器</li>
-<li><code>process(&quot;a.out&quot;).function(&quot;foo*&quot;)</code>, a.out 中函数名前缀为foo的函数信息</li>
-<li><code>process(&quot;a.out&quot;).statement(&quot;*@main.c:200&quot;)</code>, a.out中文件main.c 200行处的状态</li>
-</ul>
-</li>
-<li>常用可打印值<ul>
-<li><code>tid()</code>, 当前线程id</li>
-<li><code>pid()</code>, 当前进程id</li>
-<li><code>uid()</code>, 当前用户id</li>
-<li><code>execname()</code>, 当前进程名称</li>
-<li><code>cpu()</code>, 当前cpu编号</li>
-<li><code>gettimeofday_s()</code>, 秒时间戳</li>
-<li><code>get_cycles()</code>, 硬件周期计数器快照</li>
-<li><code>pp()</code>, 探测点事件名称</li>
-<li><code>ppfunc()</code>, 探测点触发的函数名称</li>
-<li><code>thread_indent(n)</code>，补充空格</li>
-<li><code>$$var</code>, 上下文中存在 $var，可以使用该变量</li>
-<li><code>[s]print_backtrace()</code>, 打印内核栈<ul>
-<li>带s会返回堆栈字符串</li>
-</ul>
-</li>
-<li><code>print_ubacktrace()</code>, 打印用户空间栈</li>
-</ul>
-</li>
-</ul>
-<h3 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h3><ul>
-<li>扫描所有探测点可用<code>stap -L|l</code>，如<ul>
-<li><code>stap -L &#39;kernel.function(*fork*)&#39;</code>，扫描所有包含fork的函数，并列出可用的变量</li>
-</ul>
-</li>
-<li>可以用<code>$</code>直接获取进程的全局变量，获取不到可以试试<code>@</code><ul>
-<li>如果变量不是本地变量可以这么引用<code>@var(&quot;varname@src/file.c&quot;)</code></li>
-</ul>
-</li>
-<li>用<code>$</code>或<code>@</code>后面跟数字来接收命令行参数<ul>
-<li><code>$</code>接收整型，<code>@</code>接收字符串</li>
-<li>后跟<code>#</code>表示参数数量</li>
-</ul>
-</li>
-<li>systemtap中无论是指针还是结构体都使用<code>-&gt;</code>访问成员</li>
-<li>输出整个结构体:变量结尾加一个或两个<code>$</code><ul>
-<li><code>$</code>后缀打印结构体</li>
-<li><code>$$</code>后缀打印结构体，如果结构体中包含复杂结构则将其展开</li>
-</ul>
-</li>
-<li>在return探测点可以用<code>&amp;return</code>获取返回值，inline函数无法安装return探测点</li>
-<li>使用<code>@cast()</code>来实现指针类型转换<ul>
-<li><code>@cast($var, &quot;new_type&quot;[, &quot;file_that_type_define&quot;])</code></li>
-</ul>
-</li>
-<li>同样使用<code>@cast</code>定义某个类型的变量，原理就是用<code>@cast</code>转换类型后赋值给一个变量<ul>
-<li><code>c = &amp;@cast($rev-&gt;data, &quot;ngx_connection_t&quot;)</code></li>
-</ul>
-</li>
-<li>对于多级指针如<code>**p</code>可以使用<code>[0]</code>来解引用<ul>
-<li><code>$p[0]-&gt;id</code></li>
-</ul>
-</li>
-<li>输出字符串指针<ul>
-<li>用户态使用：<code>user_string</code>,<code>user_string_n</code></li>
-<li>内核态使用：<code>kernel_string</code>,<code>kernel_string_n</code>,<code>user_string_quoted</code><ul>
-<li><code>user_string_quoted</code>是获取用户态传给内核的字符串，代码中一般有__user宏标记：</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>查看函数指针所指的函数名<ul>
-<li>获取一个地址所对应的符号</li>
-<li>用户态使用<code>usymname(FUNC_PTR)</code></li>
-<li>内核态使用<code>symname(FUNC_PTR)</code></li>
-</ul>
-</li>
-<li>修改进程中的变量<ul>
-<li><code>$var=value</code></li>
-<li>需要注意的是stap要加<code>-g</code>参数才能修改变量的值</li>
-</ul>
-</li>
-<li>查看代码执行执行路径<ul>
-<li><code>pp()</code>，输出当前被激活的探测点，即包括函数名、路径、行号等</li>
-</ul>
-</li>
-<li>关联数组<ul>
-<li>关联数组必须是全局变量，用global声明。最多支持9项索引域  <figure class="highlight stp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">global reads</span><br><span class="line">probe vfs.read &#123;</span><br><span class="line">    reads[execname(), pid()]++</span><br><span class="line">&#125;</span><br><span class="line">probe timer.s(<span class="number">3</span>) &#123;</span><br><span class="line">    foreach ([execname, pid] in reads) &#123;</span><br><span class="line">        printf(<span class="string">"%s(%d) : %d \n"</span>, execname, pid, reads[execname, pid])</span><br><span class="line">    &#125;</span><br><span class="line">    delete reads</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>可以使用<code>+</code>、<code>-</code>进行排序  <figure class="highlight stp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">global reads</span><br><span class="line">probe vfs.read &#123;</span><br><span class="line">    reads[execname(), pid()]++</span><br><span class="line">&#125;</span><br><span class="line">probe timer.s(<span class="number">3</span>) &#123;</span><br><span class="line">    foreach ([execname, pid+] in reads) &#123;</span><br><span class="line">        printf(<span class="string">"%s(%d) : %d \n"</span>, execname, pid, reads[execname, pid])</span><br><span class="line">    &#125;</span><br><span class="line">    delete reads</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><code>target()</code>，通过命令行<code>-x PID</code>传入id，作为target</li>
-<li>对于指向基础类型的指针，以下函数可以获取其内核态的数据<ul>
-<li><code>kernel_char(address)</code><ul>
-<li>从内核内存地址中获取char</li>
-</ul>
-</li>
-<li><code>kernel_short(address)</code></li>
-<li><code>kernel_int(address)</code></li>
-<li><code>kernel_long(address)</code></li>
-<li><code>kernel_string(address)</code></li>
-<li><code>kernel_string_n(address)</code><ul>
-<li>获取的string长度为n bytes</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>$$var</code>获取探测点的所有变量<ul>
-<li><code>$$locals</code>，<code>$$vars</code>的子集，仅包含本地变量</li>
-<li><code>$$parms</code>，<code>$$vars</code>的子集，仅包含函数参数变量</li>
-<li><code>$$return</code>，仅在return probe中有效</li>
-</ul>
-</li>
-</ul>
-<h2 id="追踪进程"><a href="#追踪进程" class="headerlink" title="追踪进程"></a>追踪进程</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">        fork();</span><br><span class="line">        sleep(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>假设有这么一个程序，调用<code>fork()</code>函数然后<code>sleep</code>一秒，重复3遍。要想追踪它底层是怎么一步一步地调用的，首先需要对操作系统有所了解。这里提供一个思路：fork函数会底层会调用<code>_do_fork</code>，而sleep底层会调用<code>do_nanosleep</code>。</p>
-<p>使用<code>systemtap</code>，扫描出大致的相关函数：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stap -l <span class="string">'kernel.function("*fork*")'</span></span><br></pre></td></tr></table></figure>
-
-<p>得到如下输出，同理可以扫描<code>do_nanosleep</code>相关函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ stap -l &#39;kernel.function(&quot;*fork*&quot;)&#39; </span><br><span class="line">kernel.function(&quot;__x64_sys_fork@kernel&#x2F;fork.c:2304&quot;) </span><br><span class="line">kernel.function(&quot;__x64_sys_vfork@kernel&#x2F;fork.c:2316&quot;) </span><br><span class="line">kernel.function(&quot;_do_fork@kernel&#x2F;fork.c:2209&quot;) </span><br><span class="line">kernel.function(&quot;anon_vma_fork@mm&#x2F;rmap.c:315&quot;) </span><br><span class="line">kernel.function(&quot;cgroup_can_fork@kernel&#x2F;cgroup&#x2F;cgroup.c:5804&quot;) </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>为了进一步精确调用trace流，可以根据扫描得到的函数信息(如函数名，函数路径，代码行等)，在<a href="https://lxr.missinglinkelectronics.com/linux" target="_blank" rel="noopener">LXR</a>阅读源码进行进一步挖掘，然后设置探测点。</p>
-<p>于是为了找出哪个程序调用了哪个函数就可以：</p>
-<figure class="highlight stp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">probe kernel.function(<span class="string">"_do_fork@kernel/fork.c"</span>)&#123;</span><br><span class="line">    printf(<span class="string">"%s: %s\n"</span>, execname(), ppfunc());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">probe kernel.function(<span class="string">"do_nanosleep@kernel/time/hrtimer.c:1678"</span>)&#123;</span><br><span class="line">    printf(<span class="string">"%s: %s\n"</span>, execname(), ppfunc());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/07/universe/linux/project_like/insert_CASIO_into_linux_kernel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/07/universe/linux/project_like/insert_CASIO_into_linux_kernel/" class="post-title-link" itemprop="url">如何向linux内核插入新的调度器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-07 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-07T00:00:00+08:00">2020-12-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-12 15:12:20" itemprop="dateModified" datetime="2021-01-12T15:12:20+08:00">2021-01-12</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="如何向linux内核插入新的调度方法"><a href="#如何向linux内核插入新的调度方法" class="headerlink" title="如何向linux内核插入新的调度方法"></a>如何向linux内核插入新的调度方法</h2><p>这里演示以下如下向linux内核中插入一个线程的调度器：CASIO(<a href="www.TODO.com">源码</a>) </p>
-<p>TODO rebuild <strong>注意</strong> 现代版本的linux内核(4.18)中调度器的入口不再是<code>./kernel/sched.c</code>，而是在<code>core.c</code>，而调度类分离成<code>rt.c</code>，<code>idle.c</code>，<code>fair.c</code>，<code>stop_task.c</code>，<code>deadline.c</code>，对应5个调度器类</p>
-<h3 id="linux进程调度机制"><a href="#linux进程调度机制" class="headerlink" title="linux进程调度机制"></a>linux进程调度机制</h3><ul>
-<li><p>TODO </p>
-<ul>
-<li><input disabled="" type="checkbox"> building…</li>
-<li><input disabled="" type="checkbox"> 需要重新整理<ul>
-<li>task重新描述一下</li>
-</ul>
-</li>
-<li>WHAT IS GENERIC SCHEDULER AND CORE SCHEDULER.</li>
-</ul>
-</li>
-<li><p>触发调度的时间</p>
-<ul>
-<li><ol>
-<li>进程休眠或者因为某些原因让出CPU</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>分时机制定期检查触发进程调度</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>两个调度器，generic scheduler和core scheduler</p>
-<ul>
-<li>generic scheduler<ul>
-<li>generic scheduler起调度员的作用，负责选取调度类和底层的上下文切换</li>
-<li>generic调度器只器分配作用，不会参与进程的调度，而是完全交给进程的调度类处理</li>
-</ul>
-</li>
-<li>core scheduler<ul>
-<li>核心调度器用来管理运行队列中的活跃的任务，每个CPU都有一个自己的运行队列</li>
-</ul>
-</li>
-<li>调度器不会直接操作进程，而是控制<strong>调度实体</strong><ul>
-<li>一个调度实体是<code>sched_entity</code>的一个实例</li>
-<li>这样不单可以调度一个进程，还可以调度更大的抽象，如实现组调度(CPU时间先在组间分配，再在组内分配)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>6种调度策略</p>
-<ul>
-<li>用于对不同类型的进程进行调度<ul>
-<li>比如<code>SCHED_NORMAL</code>和<code>SCHED_BATCH</code>调度普通的非实时进程, <code>SCHED_FIFO</code>和<code>SCHED_RR</code>和<code>SCHED_DEADLINE</code>则采用不同的调度策略调度实时进程, <code>SCHED_IDLE</code>则在系统空闲时调用idle进程</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>5个调度器类</p>
-</li>
-</ul>
-<h4 id="运行队列"><a href="#运行队列" class="headerlink" title="运行队列"></a>运行队列</h4><p>每个CPU都会有单独的一个<code>run_queue</code>，核心调度器<code>core scheduler</code>用它来管理运行中的进程。<code>struct rq</code>有如下重要结构</p>
-<ul>
-<li><code>nr_running</code>，可运行进程的数量</li>
-<li>TODO</li>
-</ul>
-<h4 id="调度类"><a href="#调度类" class="headerlink" title="调度类"></a>调度类</h4><ul>
-<li>调度类决定下一个task是什么<ul>
-<li>内核提供了很多调度策略，而调度类就是以模块化的方式对这些调度策略的实现，调度类之间彼此互不打扰</li>
-<li>每个task都有自己的调度类，而调度类就负责管理它的</li>
-</ul>
-</li>
-<li><code>sched_class</code>结构体中有许多函数指针，主要内容有<ul>
-<li><code>enqueue_task</code>，新增一个进程到运行队列(这里所谓是队列是一种抽象，可以是更复杂的结构，如CFS的红黑树)<ul>
-<li>时机：进程从<code>sleep</code>装态到<code>runnable</code>状态时</li>
-<li>当进程在运行队列中注册后，其调度实体中<code>on_rq</code>字段置1</li>
-</ul>
-</li>
-<li><code>dequeue_task</code>，将一个进程出运行队列<ul>
-<li>时机：进程从<code>runnable</code>装态到<code>un-runnable</code>状态时，或者由内核引起(如优先级改变时)</li>
-</ul>
-</li>
-<li><code>sched_yield</code>，主动触发调度</li>
-<li><code>check_preempt_curr</code>，如果必要的话可以用新唤起的进程抢占当前进程</li>
-<li><code>pick_next_task</code>，让CPU执行一个任务(进程)<ul>
-<li>时机：<code>put_prev_task</code>后，当前任务别切换前</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="调度实体"><a href="#调度实体" class="headerlink" title="调度实体"></a>调度实体</h4><p>调度器通过调度实体来操作一个更大的抽象，而不局限于调度进程。有如下重要结构</p>
-<ul>
-<li><code>load</code>，定义每个调度实体的权值，每个调度实体的权值又会影响到运行队列的总权值</li>
-<li><code>run_node</code>，顾名思义，采用红黑树存储每个调度实体</li>
-<li><code>on_rq</code>，指明当前调度的实体是否在运行队列中</li>
-<li><code>sum_exec_runtime</code>，记录进程使用CPU的时间</li>
-<li><code>update_curr</code>，用于计算<code>sum_exec_runtime</code><ul>
-<li>用当前时间减去<code>exec_start</code>后将时间间隔加到sum中，然后用当前时间替换<code>exec_start</code>，开始新的循环</li>
-</ul>
-</li>
-<li><code>vruntime</code>，用于记录虚拟时间</li>
-<li><code>prev_exec_runtime</code>，当进程让出CPU后，当前的<code>sum_exec_runtime</code>会存到<code>prev_exec_runtime</code>中<ul>
-<li><code>prev_exec_runtime</code>，会在之后抢占中用到</li>
-<li>当然<code>sum_exec_runtime</code>仍然保持，没有重置</li>
-</ul>
-</li>
-</ul>
-<p>因为<code>task_struct</code>中包含<code>sched_entity</code>的实例，所以一个task是一个调度实体，这句话反过来就不成立。</p>
-<h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><p>TODO pass 还没详细进行</p>
-<p><code>task_struct</code>优先级由三个元素表示：<code>prio</code>和<code>normal_prio</code>表示进程的动态优先级，<code>static_prio</code>表示静态优先级。<code>rt_priority</code>表示实时进程的优先级。静态优先级在程序运行时就分配了，它可以通过系统调用：<code>nice</code>和<code>sched_setscheduler</code>修改。</p>
-<p><code>normal_priority</code>基于静态优先级和进程的调度策略，因此不同静态优先级会导致进程的不同<code>normal_priority</code>。如实时进程和非实时进程有别。</p>
-<h3 id="写入内核"><a href="#写入内核" class="headerlink" title="写入内核"></a>写入内核</h3><ul>
-<li>改动(都用CASIO标注)<ul>
-<li><code>/kernel/sched/sched.h</code></li>
-</ul>
-</li>
-</ul>
-<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>在配置文件<code>.config</code>中把CASIO调度打开，因为很多地方，如调度器入口文件，需要根据宏<code>CONFIG_SCHED_CASIO_POLICY</code>进行条件编译。在<code>Kconfig</code>中加入CASIO调度器选项</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># .config</span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"># CASIO scheduler</span><br><span class="line">#</span><br><span class="line">CONFIG_SCHED_CASIO_POLICY&#x3D;y</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Kconfig</span><br><span class="line"></span><br><span class="line">menu &quot;CASIO scheduler&quot;</span><br><span class="line"></span><br><span class="line">config SCHED_CASIO_POLICY</span><br><span class="line">	bool &quot;CASIO scheduling policy&quot;</span><br><span class="line">	default y</span><br><span class="line">endmenu</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="准备头文件"><a href="#准备头文件" class="headerlink" title="准备头文件"></a>准备头文件</h4><p>准备头文件<code>sched.h</code>，为CASIO正常运行做准备，见patch文件<code>TODO上传patch文件</code></p>
-<p>对于调度类的优先级，可以在头文件<code>sched.h</code>中将最高优先级的调度器类<code>sched_class_highest</code>设为CASIO调度器类。在4.18的内核中默认的<code>sched_class_highest</code>会根据SMP(对称对处理)配置<code>CONFIG_SMP</code>决定</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span>	CONFIG_SCHED_CASIO_POLICY</span></span><br><span class="line">	<span class="meta">#<span class="meta-keyword">define</span> sched_class_highest (&amp;casio_sched_class)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">	<span class="comment">// statements like #define sched_class_highest (&amp;rt_sched_class)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-<p>所属进程的优先级顺序为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop_sched_class -&gt; dl_sched_class -&gt; rt_sched_class -&gt; fair_sched_class -&gt; idle_sched_class</span><br></pre></td></tr></table></figure>
-
-<p>或者，CASIO调度类next是<code>rt_sched_class</code>，修改<code>dl_sched_class</code>的next为CASIO也是可以的</p>
-<p>TODO PASS</p>
-<h4 id="修改逻辑"><a href="#修改逻辑" class="headerlink" title="修改逻辑"></a>修改逻辑</h4><p>CASIO调度类next是<code>rt_sched_class</code>，修改<code>dl_sched_class</code>的next为CASIO也是可以的</p>
-<p>TODO</p>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h3><p>现在内核的结构变化很大，有些原本直接写在头文件的东西，现在可能仅仅在一小块作用域里。当然我可以无视条件编译直接定义，但是还是规范好吧随便加到个头文件欠妥，因为这个这个内核以后可能还要用来实验。</p>
-<p>CASIO需要这样一个结构，但是新版的内核中不再在头文件中定义这个。当然我仍可以在头文件中写这个，但是为了同一规范，我也应该把它定义在一个特定作用域中，应该在哪呢？这个是结构是干什么的呢？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> struct sched_param &#123;</span><br><span class="line"> 	int sched_priority;</span><br><span class="line">+</span><br><span class="line">+#ifdef	CONFIG_SCHED_CASIO_POLICY</span><br><span class="line">+	unsigned int	casio_id;</span><br><span class="line">+	unsigned long long deadline;</span><br><span class="line">+#endif</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/05/universe/linux/IPC/TODO/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Travis TuRing">
-      <meta itemprop="description" content="Mens et Manus">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ring's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/05/universe/linux/IPC/TODO/" class="post-title-link" itemprop="url">universe/linux/IPC/TODO</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-05 15:40:00" itemprop="dateCreated datePublished" datetime="2020-12-05T15:40:00+08:00">2020-12-05</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="进程间通信的方式"><a href="#进程间通信的方式" class="headerlink" title="进程间通信的方式"></a>进程间通信的方式</h3><ul>
-<li><input disabled="" type="checkbox"> 消息队列</li>
-<li><input disabled="" type="checkbox"> 共享内存</li>
-<li><input checked="" disabled="" type="checkbox"> 管道</li>
-<li><input disabled="" type="checkbox"> socket</li>
-<li><input disabled="" type="checkbox"> signal</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-
+</div>
 
           </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Travis TuRing</p>
-  <div class="site-description" itemprop="description">Mens et Manus</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
         
-          <span class="site-state-item-count">89</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">72</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Travis TuRing</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
       
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/01/19/universe/linux/MM/TODO:buddy_system/">
+        Buddy系统的原理及实现
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        Buddy系统的原理及实现在介绍buddy系统前先做个铺垫：空闲链表和内存池。
+空闲列表内存中的空闲内存块以列表的形式组织起来，称为free list。需要内存分配时扫描列表的空闲内存块，从空闲列表中移除，释放时再放回。这里就会存在不同的内存块选择策略：
 
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
+First fir
+取最先遇到的大小足够的块
 
+
+Best fit
+取和申请内存大小最接近的
+
+
+Worst fit
+取和申请内存大小最...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-01-19</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/01/19/universe/linux/MM/TODO:buddy_system/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/">
+        execv中的缓存管理分析
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        page cache与缓存管理直接从磁盘访问文件会很慢，可以利用空闲的内存来缓存一些磁盘文件的内容，这部分用作缓存磁盘文件的内存就叫做page cache。
+1 execv中的调用page cache的流程执行read()系统调用后，首先会查看page cache里有没有目标文件的内容，如果有(cache hit)，直接读取;如果没有(cache miss)再从磁盘上读取，放入page ca...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-01-19</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/01/18/universe/linux/MM/TODO:slab/">
+        slab分配器
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        !TODO!
+slab分配器slab分配器的两个功能：
+
+1 TODO减少内部碎片
+2 作为高速缓存，存储内核中经常被分配并释放的对象
+
+
+Jeff Bonwick 发现对内核中普通对象进行初始化所需的时间超过了对其进行分配和释放所需的时间。因此他的结论是不应该将内存释放回一个全局的内存池，而是将内存保持为针对特定目而初始化的状态
+
+当需要时内核会在直接从slab分配器的高速缓存中获取一个已...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-01-18</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/01/18/universe/linux/MM/TODO:slab/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/01/18/universe/linux/project_like/about_mmap/">
+        execv中地址地址映射流程分析
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        1 execv函数地址映射流程分析1.1 execv如何填充新进程的页表execv()中会调用bprm_mm_init函数准备一个linux_binprm结构体，该结构体用于描述新进程的各种信息，最后由search_binary_handler找到对应文件格式的处理程序加载执行load_binary。
+其中bprm_mm_init会执行如下流程：
+123456789101112bprm_mm...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-01-18</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/01/18/universe/linux/project_like/about_mmap/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/01/17/universe/operate/docker_the_underlying_technology/">
+        Docker底层原理
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        Docker底层原理Ref
+Docker使用linux内核的一些特性来实现其一些功能
+NamespacesDocker使用命名空间(Namespaces)来隔离工作区，一个隔离的工作区就称为一个容器。当启动一个容器时docker就会为该容器设置一系列namespaces。
+docker使用如下的命名空间:
+
+The pid namespace: 进程隔离
+The net namespace:...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-01-17</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/01/17/universe/operate/docker_the_underlying_technology/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/01/15/universe/linux/project_like/process_destory/">
+        进程退出和销毁过程分析
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        进程退出和销毁过程分析结束一个进程的生命可以分为两个步骤：进程退出和进程销毁。进程退出主要是释放进程的资源，使进程称为僵死(TASK_ZOMBIE)状态;进程销毁主要是通过父进程，释放僵死进程的各种信息
+当前进程被设为TASK_ZOMBIE僵死状态后会向其父进程发生SIGCHLD信号，父进程收到SIGCHLD信号后父进程会销毁僵死状态的子进程。
+父进程通过调用wait()或waitpid()...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-01-15</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/01/15/universe/linux/project_like/process_destory/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/01/14/universe/linux/process_of_exec/">
+        execv的执行过程
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        execv执行过程可执行程序的表示elf文件格式Linux下标准的可执行文件格式是ELF(Executable and Linking Format)，是一种对象文件的格式，用于定义不同类型的对象文件(Object files)中都放了什么东西、以及都以什么样的格式去放这些东西。
+但是linux也支持其他不同的可执行程序格式, 各个可执行程序的执行方式不尽相同, 因此linux内核每种被注册...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-01-14</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/01/14/universe/linux/process_of_exec/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/01/13/universe/linux/project_like/trace_flow/">
+        使用systemtap实现进程的跟踪
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        使用systemtap实现进程的跟踪systemtap安装systemtap安装分为两个部分，一个是安装systemtap本身;另一个是安装对应的内核信息包(Kernel Information Packages)，否则systemtap将无法深入内核探测。
+以下以在centos中安装为例。
+
+安装systemtap
+使用对应的包管理工具安装，如centos中yum install syst...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-01-13</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/01/13/universe/linux/project_like/trace_flow/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/12/07/universe/linux/project_like/insert_CASIO_into_linux_kernel/">
+        如何向linux内核插入新的调度器
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        如何向linux内核插入新的调度方法这里演示以下如下向linux内核中插入一个线程的调度器：CASIO(源码) 
+TODO rebuild 注意 现代版本的linux内核(4.18)中调度器的入口不再是./kernel/sched.c，而是在core.c，而调度类分离成rt.c，idle.c，fair.c，stop_task.c，deadline.c，对应5个调度器类
+linux进程调度机制...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-12-07</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/12/07/universe/linux/project_like/insert_CASIO_into_linux_kernel/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+    
+  </section>
+  
+    
+      <br>
+      <div class="prev-next">
+        
+        <p class="current">
+          1 / 9
+        </p>
+        
+          <a class="next" rel="next" href="/page/2/">
+            <section class="post next white-box shadow">
+              &nbsp;Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i>
+            </section>
+          </a>
+        
+      </div>
+    
+  
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+<section class="widget blogger shadow desktop mobile">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box rectangle' href='/about/'>
+          <img no-lazy src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">Ring's Blog</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="mailto:me@xxx.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://github.com/volantis-x/"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="/"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+  
+
+  
+    
     
 
   
 
-</body>
+  
+    
+    
+  
+
+  <section class="widget tagcloud shadow desktop mobile">
+    
+  <header>
+    
+      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+    
+  </header>
+
+
+    <div class='content'>
+      <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/OS/" style="font-size: 14px; color: #999">OS</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 15.25px; color: #919191">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 15.25px; color: #919191">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c-c/" style="font-size: 20.25px; color: #6f6f6f">c/c++</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 17.75px; color: #808080">database</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16.5px; color: #888">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 15.25px; color: #919191">exec</a> <a href="/tags/filesystem/" style="font-size: 14px; color: #999">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/gcc/" style="font-size: 14px; color: #999">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 21.5px; color: #666">go</a> <a href="/tags/gui/" style="font-size: 15.25px; color: #919191">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/java/" style="font-size: 17.75px; color: #808080">java</a> <a href="/tags/javascript/" style="font-size: 16.5px; color: #888">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.75px; color: #5e5e5e">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lua/" style="font-size: 15.25px; color: #919191">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 14px; color: #999">mm</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.75px; color: #808080">network</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 21.5px; color: #666">operate</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 17.75px; color: #808080">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 21.5px; color: #666">python</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 15.25px; color: #919191">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tech/" style="font-size: 21.5px; color: #666">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 14px; color: #999">tips</a> <a href="/tags/tool/" style="font-size: 16.5px; color: #888">tool</a> <a href="/tags/tools/" style="font-size: 22.75px; color: #5e5e5e">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/typescript/" style="font-size: 15.25px; color: #919191">typescript</a> <a href="/tags/vim/" style="font-size: 16.5px; color: #888">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/web/" style="font-size: 19px; color: #777">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 15.25px; color: #919191">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15.25px; color: #919191">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
+    </div>
+  </section>
+
+
+  
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=false;
+  pdata.postTitle="";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.remove("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":null,"appKey":null,"meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
 </html>
