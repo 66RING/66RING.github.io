@@ -535,15 +535,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><p>分页是将逻辑地址和物理地址切分成很多片，减少了内碎片。逻辑内存中的片叫做页，物理内存中的片叫做页帧(page frame)</p>
 <p>而页表就是维护页到页帧映射关系的表。页表主要会存储两个信息：页和其对应的页帧。当然还会存储很多信息，如读写权限，是否可用，是否dirty等。</p>
 <p>每个进程都需要维护一个页表</p>
-<h3 id="内存映射的过程"><a href="#内存映射的过程" class="headerlink" title="内存映射的过程"></a>内存映射的过程</h3><p>如果机器和程序都是32位的，并且有256MB内存，页的大小为4kb。看如下逻辑地址：</p>
+<ul>
+<li>页：将逻辑地址划分成若干页面</li>
+<li>页表项：在页表中一个页号对应的物理块称为一个页表项，页表项的数目等于页面的数目</li>
+</ul>
+<h3 id="内存映射的过程"><a href="#内存映射的过程" class="headerlink" title="内存映射的过程"></a>内存映射的过程</h3><p>如果机器和程序都是32位(2^32这么多的逻辑区间，可以看成以2B为单位，在逻辑中是B为单位，在物理中是以bit为单位)的，并且有256MB内存，页的大小为4k( <strong>注意，这里4k不等于4kb，4k表示的是2^12的逻辑空间，是一个区间，为了说明方便以下每位逻辑空间都称为位，但不是bit的意思</strong> )。看如下逻辑地址：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x000011a3</span><br></pre></td></tr></table></figure>
 
-<p>由于每个页大小的4kb的，所有4k对齐需要12位的偏移量(4kb占12位)。因此：</p>
+<p>由于每个页大小的4k的，后12位将是空闲的，所有4k对齐需要逻辑上12位的偏移量。因此：</p>
 <ul>
-<li>逻辑地址32bit=20bit页号+12bit偏移</li>
-<li>物理地址24bit(256MB内存)=16bit帧号+12bit偏移</li>
+<li>逻辑地址32位=20位页号+12位偏移</li>
+<li>物理地址28位(256MB内存)=16位帧号+12位偏移</li>
 </ul>
-<p>从<code>0x000011a3</code>可以看出，页号(前20bit)为<code>0x00001</code>，偏移(后12bit)为<code>0x1a3</code></p>
+<p>从<code>0x000011a3</code>可以看出，页号(前20位)为<code>0x00001</code>，偏移(后12位)为<code>0x1a3</code></p>
 <p>就可以根据页号去寻找帧号了，加入页号和帧号映射关系如下：</p>
 <table>
 <thead>
@@ -559,10 +563,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </tbody></table>
 <p>就会找到00f3这一帧，然后根据偏移量1a3从这一帧中找到对应地址。</p>
 <p>如果对应地址缺页，则会触发缺页中断。进入内核态(异常/中断型)，从磁盘换入或加载内存并填写到内存中，并填写帧号，然后重新进行寻址过程。</p>
-<p>TODO: below</p>
 <h2 id="内存的优化"><a href="#内存的优化" class="headerlink" title="内存的优化"></a>内存的优化</h2><p>要真正获取一个内存中的内容实际需要加载两次内存，一次是读取页表，一次是根据页表找到对应内存,因此可以进行时间上的优化。而每个进程都需要维护一个页表，页表本身也是占内存空间的，因此可以进行空间优化。</p>
-<h3 id="空间优化"><a href="#空间优化" class="headerlink" title="空间优化"></a>空间优化</h3><p>分页页占用内存，所以引入多级页表</p>
-<p>如上32位的系统和程序，</p>
+<h3 id="空间优化"><a href="#空间优化" class="headerlink" title="空间优化"></a>空间优化</h3><p>分页页占用内存，所以引入多级页表。</p>
+<p>如上32位的系统和程序，一个程序要访问所有逻辑空间需要2^20个页面，对应2^20个页表项。如果每个页表项占4B的空间(32bit=4B)，则一个程序维护的页表将占用4MB的物理内存。4MB看起来很小，但是操作系统是要运行很多程序的。</p>
+<p>如果使用多级页表，将23位分为4位，4位，12位的分级方式，最后一级指向物理地址。第一级指向第二级，第二级指向第三级。</p>
+<p>如果发现第一级只有3项指向第二级，且第二级的都有效，则只需要3*2^4=48个页表项。</p>
 <h3 id="时间优化"><a href="#时间优化" class="headerlink" title="时间优化"></a>时间优化</h3><p>将最常访问的几个(一般8-128个左右)页表项储存到访问速度更快的硬件中，一般是在MMU，这个小表的名称为*<em>TLB (Translation Lookaside Buffer) *</em>。寻址会先寻找TLB，miss后再查PT。</p>
 <h2 id="分段"><a href="#分段" class="headerlink" title="分段"></a>分段</h2><p>程序内部的内存管理： <strong>分段</strong>。每个段有很多页，页表中存储段号和页号唯一映射物理地址帧号，即通过段号和页找找到唯一映射的帧号。</p>
 <p>不过这种段页结合的模式逐渐被淘汰了，即硬件层面的抛弃。但仍然保留了段的概念，只是程序方面便于运算，并不影响分页式内存管理。</p>
@@ -604,7 +609,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-02-10T21:24:15+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-02-10T22:16:39+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：Feb 10, 2021</p>
