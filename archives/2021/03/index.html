@@ -5,6 +5,8 @@
   <!-- SEO相关 -->
   
     
+      <meta name="robots" content="noindex,follow">
+    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -22,9 +24,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>slab分配器 - Ring&#39;s Blog</title>
-  
-    <meta name="keywords" content="linux,kernel,memory management">
+  <title>Archive: 2021/3 - Ring&#39;s Blog</title>
   
 
   
@@ -104,7 +104,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur " style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -375,7 +375,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper post dock' style="display: none;">
+        <div id="half" class='cover-wrapper  dock' style="display: ;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
           
@@ -451,314 +451,71 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 
 <div class='l_main'>
-  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
-  
-
-
-  
-  <div class="article-meta" id="top">
+	
+		
+  <section class="post-list">
     
-    
-    
-      <h1 class="title">
-        slab分配器
-      </h1>
-      <div class='new-meta-box'>
-        
-          
-            
-<div class='new-meta-item author'>
-  <a class='author' href="/" rel="nofollow">
-    <img no-lazy src="">
-    <p>请设置文章作者</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Jan 18, 2021</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-  <div class="new-meta-item browse leancloud">
-    <a class='notlink'>
       
-      <div id="lc-pv" data-title="slab分配器" data-path="/2021/01/18/universe/linux/MM/TODO:slab/">
-        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
-        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
-        次浏览
-      </div>
-    </a>
-  </div>
-
-
+        
           
         
-      </div>
+      
+    
+    
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/03/03/universe/linux/FS/journaled_file_system/">
+        日志型文件系统
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        日志型文件系统试想这么一个场景，磁盘正在写data block或data bitmaps或inodes时发生了crash，要如何保证数据的一致性呢？这时使用 日志journaling 就是一个很好的解决方案。
+原理在真正更新磁盘数据前，会先往磁盘写入一些信息，这些信息用于描述接下来的任务，这种方式被称为 write-ahead loggind。
+当发生crash时就可以通过记录的信息回溯cr...
+      
     
   </div>
-
-
   
-  
-  <p>!TODO!</p>
-<h2 id="slab分配器"><a href="#slab分配器" class="headerlink" title="slab分配器"></a>slab分配器</h2><p>slab分配器的两个功能：</p>
-<ul>
-<li>1 TODO减少内部碎片</li>
-<li>2 作为高速缓存，存储内核中经常被分配并释放的对象</li>
-</ul>
-<blockquote>
-<p>Jeff Bonwick 发现对内核中普通对象进行初始化所需的时间超过了对其进行分配和释放所需的时间。因此他的结论是不应该将内存释放回一个全局的内存池，而是将内存保持为针对特定目而初始化的状态</p>
-</blockquote>
-<p>当需要时内核会在直接从slab分配器的高速缓存中获取一个已经初始化了的对象，用完后不是释放它，而是放回slab分配器中。后续的内存分配不需要执行初始化函数。</p>
-<h3 id="slab分配器的结构"><a href="#slab分配器的结构" class="headerlink" title="slab分配器的结构"></a>slab分配器的结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cache_chain</span><br><span class="line">  |</span><br><span class="line">kmem_cache  -&gt;  [ slab, slab, slab, ... ]</span><br><span class="line">  |                |</span><br><span class="line">kmem_cache      [ object, object, object, ... ]</span><br></pre></td></tr></table></figure>
-
-<p>每个cache都是一段连续的内存空间，通常使用<code>kmalloc()</code>分配。对象数目较多时不利用动态调整。因此每个cache分成了若干slabs，同一cache中的slabs储存相同的对象。一个cache用<code>struct kmem_cache</code>结构体表示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kmem_cache</span>&#123;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>一段缓存的所有slab分为3类，存在3个列表中：<code>slabs_free</code>(所有)对象空闲的列表，<code>slabs_partial</code>部分对象空闲的列表, <code>slabs_full</code>对象用尽的列表。</p>
-<p>因为cache是连续的，所有每个slab都是一个连续的内存块(一个或多个连续页，通常为一页)，它们被分配成一个个对象。</p>
-<p>一个缓存包含多个slab，一个slab包含多个对象用于分配。当一个slab中的对象分配完后会被放入<code>slabs_full</code>列表，同理一个slab可以在3个列表中移动。</p>
-<h3 id="内核函数"><a href="#内核函数" class="headerlink" title="内核函数"></a>内核函数</h3><h4 id="为一个创建缓存kmem-cache-create"><a href="#为一个创建缓存kmem-cache-create" class="headerlink" title="为一个创建缓存kmem_cache_create"></a>为一个创建缓存kmem_cache_create</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kmem_cache</span> *</span></span><br><span class="line"><span class="class"><span class="title">kmem_cache_create</span>(<span class="title">const</span> <span class="title">char</span> *<span class="title">name</span>, <span class="title">unsigned</span> <span class="title">int</span> <span class="title">size</span>, <span class="title">unsigned</span> <span class="title">int</span> <span class="title">align</span>,</span></span><br><span class="line"><span class="class">                <span class="title">slab_flags_t</span> <span class="title">flags</span>, <span class="title">void</span> (*<span class="title">ctor</span>)(<span class="title">void</span> *))</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>name：对象的名称</li>
-<li>size：缓存对象的大小</li>
-<li>align：对其的大小</li>
-<li>flags：分配掩码</li>
-<li>ctor：对象的构造函数</li>
-</ul>
-<p>主要流程如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kmem_cache_create-----------------------进行合法性检查，以及是否有现成slab描述符可用</span><br><span class="line">    do_kmem_cache_create----------------将主要参数配置到slab描述符，然后将得到的描述符加入slab_caches全局链表中。</span><br><span class="line">        __kmem_cache_create-------------是创建slab描述符的核心进行对齐操作，计算需要页面，对象数目，对slab着色等等操作。</span><br><span class="line">            calculate_slab_order--------计算slab对象需要的大小，以及一个slab描述符需要多少page</span><br><span class="line">            setup_cpu_cache-------------继续配置slab描述符</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="分配slab对象kmem-cache-alloc"><a href="#分配slab对象kmem-cache-alloc" class="headerlink" title="分配slab对象kmem_cache_alloc"></a>分配slab对象kmem_cache_alloc</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">kmem_cache_alloc</span><span class="params">(struct kmem_cache *cachep, <span class="keyword">gfp_t</span> flags)</span></span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>cachep：对象所在缓存</li>
-<li>flags：一组标志</li>
-</ul>
-<h4 id="释放对象kmem-cache-free"><a href="#释放对象kmem-cache-free" class="headerlink" title="释放对象kmem_cache_free"></a>释放对象kmem_cache_free</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmem_cache_free</span><span class="params">(struct kmem_cache *cachep, <span class="keyword">void</span> *objp)</span></span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>cachep：对象所在缓存</li>
-<li>objp：释放的对象</li>
-</ul>
-<h4 id="销毁缓存kmem-cache-destroy"><a href="#销毁缓存kmem-cache-destroy" class="headerlink" title="销毁缓存kmem_cache_destroy"></a>销毁缓存kmem_cache_destroy</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmem_cache_destroy</span><span class="params">( struct kmem_cache *cachep )</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>内核模块被卸载时执行，销毁缓存并从<code>cache_chain</code>链表上移除</p>
-
-  
-  
-    
-    <div class='footer'>
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-03-03</time>
+        
+      </div>
       
-      
-      
-        <div class='copyright'>
-          <blockquote>
-            
-              
-                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
-
-              
-            
-              
-                <p>本文永久链接是：<a href=http://yoursite.com/2021/01/18/universe/linux/MM/TODO:slab/>http://yoursite.com/2021/01/18/universe/linux/MM/TODO:slab/</a></p>
-              
-            
-          </blockquote>
+        <div>
+          <a class='readmore' href='/2021/03/03/universe/linux/FS/journaled_file_system/'>
+            Read More
+          </a>
         </div>
       
-      
     </div>
   
-  
-    
 
-
-  <div class='article-meta' id="bottom">
-    <div class='new-meta-box'>
-      
-        
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-01-26T10:29:38+08:00">
-  <a class='notlink'>
-    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Jan 26, 2021</p>
-  </a>
 </div>
 
+          </div>
         
       
-        
-          
+    
+  </section>
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/linux/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>linux</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/kernel/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>kernel</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/memory-management/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>memory management</p></a></div>
-
-
-        
-      
-        
-          
-  <div class="new-meta-item share -mob-share-list">
-  <div class="-mob-share-list share-body">
     
-      
-        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
-          
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2021/01/18/universe/linux/MM/TODO:slab/&title=slab分配器 - Ring's Blog&summary="
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,666">
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
-          
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2021/01/18/universe/linux/MM/TODO:slab/&title=slab分配器 - Ring's Blog&summary="
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,666">
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
-          
-          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2021/01/18/universe/linux/MM/TODO:slab/&title=slab分配器 - Ring's Blog&summary="
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,666">
-          
-        </a>
-      
-    
-      
-    
-      
-    
-  </div>
-</div>
-
-
-
-        
-      
-    </div>
-  </div>
-
-
-  
   
 
-  
-    <div class="prev-next">
-      
-        <a class='prev' href='/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>execv中的缓存管理分析</p>
-          <p class='content'>page cache与缓存管理直接从磁盘访问文件会很慢，可以利用空闲的内存来缓存一些磁盘文件的内容，这部分用作缓存磁盘文件的内存就叫做page cache。
-1 execv中的调用page ca...</p>
-        </a>
-      
-      
-        <a class='next' href='/2021/01/18/universe/linux/project_like/about_mmap/'>
-          <p class='title'>execv中地址地址映射流程分析<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>1 execv函数地址映射流程分析1.1 execv如何填充新进程的页表execv()中会调用bprm_mm_init函数准备一个linux_binprm结构体，该结构体用于描述新进程的各种信息...</p>
-        </a>
-      
-    </div>
-  
-</article>
 
-
-  
-
-  <article class="post white-box reveal shadow" id="comments">
-    <p ct><i class='fas fa-comments'></i> 评论</p>
-    
-    <div id="valine_container" class="valine_thread">
-  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
-</div>
-
-  </article>
-
-
-
-
-
-  <script>
-  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    // 文章章节标题不能为 “MathJax” ，否则会报错。
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-
-
+	
 </div>
 <aside class='l_side'>
   
@@ -766,28 +523,103 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
 
+<section class="widget blogger shadow desktop mobile">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box rectangle' href='/about/'>
+          <img no-lazy src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">Ring's Blog</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="mailto:me@xxx.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://github.com/volantis-x/"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="/"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
 
+  
 
-  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+  
+    
+    
+
+  
+
+  
+    
+    
+  
+
+  <section class="widget tagcloud shadow desktop mobile">
     
   <header>
     
-      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
     
   </header>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#slab分配器"><span class="toc-text">slab分配器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#slab分配器的结构"><span class="toc-text">slab分配器的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内核函数"><span class="toc-text">内核函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为一个创建缓存kmem-cache-create"><span class="toc-text">为一个创建缓存kmem_cache_create</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分配slab对象kmem-cache-alloc"><span class="toc-text">分配slab对象kmem_cache_alloc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#释放对象kmem-cache-free"><span class="toc-text">释放对象kmem_cache_free</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#销毁缓存kmem-cache-destroy"><span class="toc-text">销毁缓存kmem_cache_destroy</span></a></li></ol></li></ol></li></ol>
+      <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/OS/" style="font-size: 14px; color: #999">OS</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 15.11px; color: #919191">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 15.11px; color: #919191">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c-c/" style="font-size: 19.56px; color: #737373">c/c++</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 17.33px; color: #828282">database</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16.22px; color: #8a8a8a">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 15.11px; color: #919191">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 15.11px; color: #919191">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/gcc/" style="font-size: 14px; color: #999">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 20.67px; color: #6c6c6c">go</a> <a href="/tags/gui/" style="font-size: 15.11px; color: #919191">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 17.33px; color: #828282">java</a> <a href="/tags/javascript/" style="font-size: 16.22px; color: #8a8a8a">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.89px; color: #5d5d5d">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lua/" style="font-size: 15.11px; color: #919191">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 15.11px; color: #919191">mm</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.33px; color: #828282">network</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 20.67px; color: #6c6c6c">operate</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 17.33px; color: #828282">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 20.67px; color: #6c6c6c">python</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 15.11px; color: #919191">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tech/" style="font-size: 20.67px; color: #6c6c6c">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 14px; color: #999">tips</a> <a href="/tags/tool/" style="font-size: 16.22px; color: #8a8a8a">tool</a> <a href="/tags/tools/" style="font-size: 21.78px; color: #646464">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/typescript/" style="font-size: 15.11px; color: #919191">typescript</a> <a href="/tags/vim/" style="font-size: 16.22px; color: #8a8a8a">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/web/" style="font-size: 18.44px; color: #7b7b7b">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 15.11px; color: #919191">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15.11px; color: #919191">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
     </div>
   </section>
 
 
   
 
+  
+
 
 </aside>
-
 
 
 		  
@@ -796,14 +628,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <script>
   window.pdata={}
-  pdata.ispage=true;
-  pdata.postTitle="slab分配器";
+  pdata.ispage=false;
+  pdata.postTitle="";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.add("show");
+  l_header.classList.remove("show");
   
 </script>
 
