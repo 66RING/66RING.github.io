@@ -611,19 +611,11 @@ b, w, l, q
   <div class='md'>
     
       
-        string
+        base_G_G是lua中的一个全局变量，其中保存了lua语言中几乎所有的全局函数和变量
+如果全局变量(或函数)存在的话，可以使用_G[&quot;VAR&quot;]获取到全局变量。但不能获取到局部变量。可以通过_G[&quot;VAR&quot;]=local_var将局部变量转变为全局变量
+string
 string.gmatch(s, pattern)
-返回一个迭代器函数，每次调用这个函数，返回一个在字符串s找到的下一个pattern描述的子串。没找到返回nil
-类型类似正则表达式(或者就是)
-%a查找一个字母
-%w查找一个数字或字母
-%d查找一个数字
-(%w+)=(%w+)，()分组，返回成对的，+找一个及以上
-
-
-
-
-string.find(str, substr, [i...
+返回一个迭代器函数，每次调用这...
       
     
   </div>
