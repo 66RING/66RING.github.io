@@ -22,7 +22,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>C语言碎片知识 - Ring&#39;s Blog</title>
+  <title>c/cpp语言碎片知识 - Ring&#39;s Blog</title>
   
     <meta name="keywords" content="c/c++">
   
@@ -461,7 +461,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title">
-        C语言碎片知识
+        c/cpp语言碎片知识
       </h1>
       <div class='new-meta-box'>
         
@@ -496,7 +496,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="C语言碎片知识" data-path="/2019/12/04/universe/c/c_fragments/">
+      <div id="lc-pv" data-title="c/cpp语言碎片知识" data-path="/2019/12/04/universe/c/c_fragments/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -514,7 +514,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h2 id="读取字符串"><a href="#读取字符串" class="headerlink" title="读取字符串"></a>读取字符串</h2><ul>
+  <h1 id="c"><a href="#c" class="headerlink" title="c"></a>c</h1><h2 id="读写"><a href="#读写" class="headerlink" title="读写"></a>读写</h2><h3 id="读取字符串"><a href="#读取字符串" class="headerlink" title="读取字符串"></a>读取字符串</h3><ul>
 <li>读取单个字符<ul>
 <li><code>getchar()</code>是<code>scanf(&quot;%c&quot;, c)</code>的简化版本，除了更简介无其他优势</li>
 <li><code>getche()</code>，没有缓冲区，输入一个字符后立即读取，不等待用户按回车</li>
@@ -528,6 +528,51 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 </ul>
+<h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><h4 id="打开-关闭文件"><a href="#打开-关闭文件" class="headerlink" title="打开/关闭文件"></a>打开/关闭文件</h4><p>打开或新建一个文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">FILE *<span class="title">fopen</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span> * filename, <span class="keyword">const</span> <span class="keyword">char</span> * mode )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mode:<ul>
+<li>r, <strong>只读</strong>方式打开，文件必须存在</li>
+<li>w, <strong>只写</strong>方式打开，文件存在则清空文件内容从头写，否则新建并打开</li>
+<li>a, <strong>只写追加</strong></li>
+<li>r+, <strong>可读写</strong>方式打开，不同w会清空文件内容，文件必须存在</li>
+<li>w+, <strong>可读写</strong>方式打开，其他同w</li>
+<li>a+, <strong>可读写</strong>方式打开，其他同a</li>
+<li>如果打开二进制文件需要加个<code>b</code>，如<code>rb</code></li>
+</ul>
+</li>
+</ul>
+<p>关闭文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fclose</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果关闭发生错误返回EOF</p>
+<h4 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h4><p>写入一个字符，成功返回写入的字符，错误返回EOF</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputc</span><span class="params">( <span class="keyword">int</span> c, FILE *fp )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>写入字符串，成功返回非负，错误返回EOF</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputs</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span> *s, FILE *fp )</span></span>;</span><br><span class="line"><span class="comment">// or 格式化写入</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fprintf</span><span class="params">(FILE *fp,<span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h4><p>读取一个字符，成功返回该字符，错误返回EOF</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fgetc</span><span class="params">( FILE * fp )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>从流中读取n-1个字符并拷贝到buff，并追加一个null终止字符串。如果读到<code>\n</code>或EOF则会提前返回</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">fgets</span><span class="params">( <span class="keyword">char</span> *buf, <span class="keyword">int</span> n, FILE *fp )</span></span>;</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fscanf</span><span class="params">(FILE *fp, <span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 函数来从文件中读取字符串，但是在遇到第一个空格和换行符时，它会停止读取。</span></span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="重定向文件流"><a href="#重定向文件流" class="headerlink" title="重定向文件流"></a>重定向文件流</h4><p>TODO</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function">FILE *<span class="title">freopen</span><span class="params">(<span class="keyword">char</span> *filename, <span class="keyword">char</span> *mode, FILE *stream)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>filename，欲打开的文件路径</li>
+<li>mode</li>
+<li>stream，已经打开的文件指针，如stdin，stdout等</li>
+</ul>
+<p>tips:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 把in.txt内容作为标准出入</span></span><br><span class="line">freopen(<span class="string">"in.txt"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line"><span class="comment">// 把标准输出重定向到out.txt</span></span><br><span class="line">freopen(<span class="string">"out.txt"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br></pre></td></tr></table></figure>
+
+
 <h2 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h2><p>函数指针声明如下</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">返回值类型(*指针变量名)(参数列表)</span><br><span class="line"><span class="keyword">int</span>(*func_ptr)(<span class="keyword">int</span>, <span class="keyword">int</span>) = &amp; func; <span class="comment">// &amp;可以省略</span></span><br></pre></td></tr></table></figure>
 
@@ -721,6 +766,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>法四：定义时乱序赋值(C++风格)</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span> <span class="title">p</span> = &#123;</span></span><br><span class="line">    age : <span class="number">18</span>;</span><br><span class="line">    weight : <span class="number">110</span>;</span><br><span class="line">    name : <span class="string">"ring"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h1 id="cpp"><a href="#cpp" class="headerlink" title="cpp"></a>cpp</h1><h2 id="cpp类初始化"><a href="#cpp类初始化" class="headerlink" title="cpp类初始化"></a>cpp类初始化</h2><h3 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h3><p>写法:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> Age;</span><br><span class="line">    <span class="built_in">string</span> Name;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    A(<span class="keyword">int</span> age, <span class="built_in">string</span> name):</span><br><span class="line">        Age(age),</span><br><span class="line">        Name(name)</span><br><span class="line">    &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>推荐类初始化使用初始化列表，如果构造函数写出这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A(<span class="keyword">int</span> age, <span class="built_in">string</span> name)&#123;</span><br><span class="line">    Age = age;</span><br><span class="line">    Name = name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种做法不是最佳的，是赋值操作（伪初始化）。因为初始化发生在构造函数本体之前，default构造函数(即调用类型的拷贝函数)为成员设初值，然后再立即赋值，这样显然default构造函数的操作就浪费了。因此使用初始化列表只调用一次设值，比较高效。</p>
+
   
   
     
@@ -754,10 +807,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-05T22:05:26+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-13T17:50:44+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Mar 5, 2021</p>
+    <p>更新于：Mar 13, 2021</p>
   </a>
 </div>
 
@@ -779,7 +832,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/12/04/universe/c/c_fragments/&title=C语言碎片知识 - Ring's Blog&summary="
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/12/04/universe/c/c_fragments/&title=c/cpp语言碎片知识 - Ring's Blog&summary="
           
           >
           
@@ -791,7 +844,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2019/12/04/universe/c/c_fragments/&title=C语言碎片知识 - Ring's Blog&summary="
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2019/12/04/universe/c/c_fragments/&title=c/cpp语言碎片知识 - Ring's Blog&summary="
           
           >
           
@@ -803,7 +856,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/12/04/universe/c/c_fragments/&title=C语言碎片知识 - Ring's Blog&summary="
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/12/04/universe/c/c_fragments/&title=c/cpp语言碎片知识 - Ring's Blog&summary="
           
           >
           
@@ -947,7 +1000,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#读取字符串"><span class="toc-text">读取字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数指针"><span class="toc-text">函数指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#回调函数"><span class="toc-text">回调函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#static"><span class="toc-text">static</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#宏"><span class="toc-text">宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件编译"><span class="toc-text">条件编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举enum"><span class="toc-text">枚举enum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义枚举变量"><span class="toc-text">定义枚举变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goto"><span class="toc-text">goto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统调用"><span class="toc-text">系统调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mmap"><span class="toc-text">mmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep"><span class="toc-text">sleep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exec"><span class="toc-text">exec</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#execv"><span class="toc-text">execv</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结构体初始化"><span class="toc-text">结构体初始化</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#读写"><span class="toc-text">读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读取字符串"><span class="toc-text">读取字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件读写"><span class="toc-text">文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#打开-关闭文件"><span class="toc-text">打开&#x2F;关闭文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写入文件"><span class="toc-text">写入文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件读取"><span class="toc-text">文件读取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重定向文件流"><span class="toc-text">重定向文件流</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数指针"><span class="toc-text">函数指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#回调函数"><span class="toc-text">回调函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#static"><span class="toc-text">static</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#宏"><span class="toc-text">宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件编译"><span class="toc-text">条件编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举enum"><span class="toc-text">枚举enum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义枚举变量"><span class="toc-text">定义枚举变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goto"><span class="toc-text">goto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统调用"><span class="toc-text">系统调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mmap"><span class="toc-text">mmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep"><span class="toc-text">sleep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exec"><span class="toc-text">exec</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#execv"><span class="toc-text">execv</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结构体初始化"><span class="toc-text">结构体初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp类初始化"><span class="toc-text">cpp类初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化列表"><span class="toc-text">初始化列表</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -966,7 +1019,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="C语言碎片知识";
+  pdata.postTitle="c/cpp语言碎片知识";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
