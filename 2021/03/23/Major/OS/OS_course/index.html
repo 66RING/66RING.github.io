@@ -24,7 +24,7 @@
   
   <title>操作系统笔记 - Ring&#39;s Blog</title>
   
-    <meta name="keywords" content="tags">
+    <meta name="keywords" content="OS">
   
 
   
@@ -527,9 +527,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <p><strong>注意pv操作是先 +- 资源再判断</strong></p>
 <ul>
-<li>P：申请资源，value-1，减1后value&lt;0，表示资源已被占用，放入等待队列</li>
-<li>V：释放资源，value+1，加1后value&lt;=0，表示有proc在等待队列等待该资源，唤醒一个proc</li>
-<li>即，应该维持资源大于0，否则就是要入等待队列或唤醒</li>
+<li>P：申请资源，value-1，减1后value&lt;0，表示资源已被占用，放入等待队列<ul>
+<li>小于0就记录了有多少想用但没能用，0刚好用完</li>
+</ul>
+</li>
+<li>V：释放资源，value+1，加1后value&lt;=0，表示有proc在等待队列等待该资源，唤醒一个proc<ul>
+<li>归还资源后还不大于0，说明还有proc想资源</li>
+</ul>
+</li>
 <li>共用sem：常用于实现资源互斥，初值value设为1，有PV操作</li>
 <li>私用sem：常用于进程间同步，初值设为0或n，一个proc中只有P或V操作，剩下的P或V操作在另一个proc完成</li>
 </ul>
@@ -572,7 +577,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-24T00:58:35+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-24T13:58:04+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：Mar 24, 2021</p>
@@ -584,7 +589,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/tags/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>tags</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/OS/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>OS</p></a></div>
 
 
         
@@ -614,6 +619,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
     <div class="prev-next">
+      
+        <a class='prev' href='/2021/03/24/Major/communication_and_networking/communication_and_networking/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>communication andr networking笔记</p>
+          <p class='content'>数据和信号模拟与数字
+模拟数据：连续状态的信息
+数字数据：离散状态的信息
+
+
+复合信号
+
+单一正弦波在数据通信中没有作用，我们需要发送复合信号，复合信号由许多简单正弦波组成
+基础频率或第一谐波：...</p>
+        </a>
       
       
         <a class='next' href='/2021/03/03/universe/linux/FS/journaled_file_system/'>

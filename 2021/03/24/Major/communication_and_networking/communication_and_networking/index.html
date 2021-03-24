@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -24,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>Tag: tags - Ring&#39;s Blog</title>
+  <title>communication andr networking笔记 - Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="network">
   
 
   
@@ -375,7 +375,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper  dock' style="display: none;">
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
           
@@ -450,81 +450,331 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
-
 <div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
   
+
+
+  
+  <div class="article-meta" id="top">
     
-      
-  <section class="post-list">
     
-      
+    
+      <h1 class="title">
+        communication andr networking笔记
+      </h1>
+      <div class='new-meta-box'>
         
           
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>请设置文章作者</p>
+  </a>
+</div>
+
+          
         
-      
-    
-    
-      
+          
+            
+
+          
         
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/03/23/Major/OS/OS_course/">
-        操作系统笔记
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Mar 24, 2021</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
       
-        进程管理并发proc特点进程定义进程组成PCB信息proc基本状态进程控制语proc调度proc调度时机proc调度算法临界资源共享资源，但一次应该只能有一个proc使用
-
-互斥：对临界资源的竞争
-临界区(Critical Section, CS)
-进程中涉及到临界资源的 程序段 称为临界区，一次只能有一个proc进入临界区，进程间互斥，退出临界区或换别的proc进入
-
-
-
-信号量与PV操作...
-      
-    
+      <div id="lc-pv" data-title="communication andr networking笔记" data-path="/2021/03/24/Major/communication_and_networking/communication_and_networking/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
   </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-03-23</time>
+
+
+          
         
       </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="数据和信号"><a href="#数据和信号" class="headerlink" title="数据和信号"></a>数据和信号</h1><h2 id="模拟与数字"><a href="#模拟与数字" class="headerlink" title="模拟与数字"></a>模拟与数字</h2><ul>
+<li>模拟数据：连续状态的信息</li>
+<li>数字数据：离散状态的信息</li>
+</ul>
+<ul>
+<li><p>复合信号</p>
+<ul>
+<li>单一正弦波在数据通信中没有作用，我们需要发送复合信号，复合信号由许多简单正弦波组成</li>
+<li><strong>基础频率或第一谐波</strong>：频率与复合信号一样的正弦波</li>
+<li><strong>第N谐波</strong>：频率是基础频率的N倍</li>
+</ul>
+</li>
+<li><p>带宽：<strong>复合信号的带宽是信号最高频率和最低频率的差值</strong></p>
+</li>
+<li><p>数字信号：</p>
+<ul>
+<li>一个有L个电平的信号可以表示$log_2L$个位</li>
+</ul>
+</li>
+</ul>
+<p>如有4个电平，可以表示2个位：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">电平</span><br><span class="line">4    11</span><br><span class="line">3    10</span><br><span class="line">2    01</span><br><span class="line">1    00</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>比特率</strong>：一秒钟发送的位数，单位：<strong>每秒位(bps)</strong></li>
+<li>位长：一个位在传输介质上的距离<ul>
+<li>位长=传播速度x位持续时间</li>
+</ul>
+</li>
+</ul>
+<h3 id="数字信号的传输"><a href="#数字信号的传输" class="headerlink" title="数字信号的传输"></a>数字信号的传输</h3><p>数字信号是无穷大带宽的复合模拟信号。两种方法传输数字信号：基带传输和宽带传输</p>
+<h4 id="基带传输"><a href="#基带传输" class="headerlink" title="基带传输"></a>基带传输</h4><p>todo p59</p>
+<p>基带传输通过通道发送数字信号，不转换成模拟信号</p>
+<h4 id="宽带传输"><a href="#宽带传输" class="headerlink" title="宽带传输"></a>宽带传输</h4><p>todo</p>
+<p>宽带传输或调制把数字信号转变为模拟信号。调制允许我们使用 <strong>带通通道</strong> ，即带宽不从0开始的通道。</p>
+<h2 id="传输减损"><a href="#传输减损" class="headerlink" title="传输减损"></a>传输减损</h2><ul>
+<li>衰减<ul>
+<li>克服介质的阻抗需要放热，能量损失，需要使用信号放大器放大</li>
+<li><strong>分贝(dB)</strong> 用于计算两种信号或同一信号在不同位置直接的相对强度</li>
+<li>功率表示：$dB = 10 \log_{10} \frac{P2}{P1}$</li>
+<li>用电压表示：$dB = 20 \log_{10} \frac{V2}{V1}$</li>
+</ul>
+</li>
+<li>失真<ul>
+<li>不同频率成分在介质中有自己从传播速度，在终点时有各自的延迟</li>
+</ul>
+</li>
+<li>噪声<ul>
+<li><strong>信噪比SNR</strong></li>
+<li>$SNR = \frac{平均信号功率}{平均噪声功率}$ 是功率比</li>
+<li>用分贝描述：$SNR_{dB} = 10 \log_{10} SNR$</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据速率限制"><a href="#数据速率限制" class="headerlink" title="数据速率限制"></a>数据速率限制</h2><h3 id="无噪声通道：奈奎斯特比特率"><a href="#无噪声通道：奈奎斯特比特率" class="headerlink" title="无噪声通道：奈奎斯特比特率"></a>无噪声通道：奈奎斯特比特率</h3><p>对于无噪声通过，理论上最大比特率：</p>
+<p>$$比特率 = 2 \times 带宽 \times \log_2 L$$</p>
+<p>但是如果电平数L很大，接收方会很难区分不同电平，从而削弱系统可靠性。<strong>电平数应该是2的幂</strong> </p>
+<h3 id="噪声通道：香农容量定理"><a href="#噪声通道：香农容量定理" class="headerlink" title="噪声通道：香农容量定理"></a>噪声通道：香农容量定理</h3><p>噪声通道理论上的最高数据传输速率：</p>
+<p>$$通道容量 = 带宽 \times \log_2 {(1+SNR)}$$</p>
+<p>无论使用多少个电平，都不可能获得比通道容量更高的数据速率</p>
+<h3 id="两者结合"><a href="#两者结合" class="headerlink" title="两者结合"></a>两者结合</h3><p>todo</p>
+<p><strong>香农容量定理给出了数据速率的上限，奈奎斯特公式给出所需的电平数</strong> </p>
+<p>eg: </p>
+<h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><ul>
+<li><p>带宽</p>
+<ul>
+<li>以赫兹衡量：即复合信号的频率范围，即通道能通过信号的频率范围</li>
+<li>bps衡量：每秒发送的位数</li>
+<li>todo  p70</li>
+</ul>
+</li>
+<li><p>吞吐量</p>
+<ul>
+<li>吞吐量是发送速率的<strong>实际衡量值</strong>，带宽是链路的潜在衡量值</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>延迟 = 传播时间+传输时间+排队时间+处理时间<ul>
+<li>传播时间 = 距离 / 传播速度<ul>
+<li>一个位从源到目的的用时</li>
+</ul>
+</li>
+<li>传输时间 = 报文长度 / 带宽<ul>
+<li>从报文第一个位到达到最后一个位到达的用时</li>
+</ul>
+</li>
+<li>排队时间</li>
+</ul>
+</li>
+<li>带宽与延迟的乘积 = 充满链路的位的个数 todo p72</li>
+</ul>
+<h1 id="数字传输"><a href="#数字传输" class="headerlink" title="数字传输"></a>数字传输</h1><ul>
+<li>数字数据：存储在计算机中的数据</li>
+<li>数字信号：数据在链路中传播的形式</li>
+</ul>
+<h2 id="线路编码"><a href="#线路编码" class="headerlink" title="线路编码"></a>线路编码</h2><p>将数字数据转换为数字信号的过程</p>
+<ul>
+<li>数据元素：位</li>
+<li>信号元素：数据元素的载体，我们传输不会一次只传输一位(电平L能传$log_2 L$个位)</li>
+<li>比率r：每个信号元素承载的数据元素的数量</li>
+</ul>
+
+  
+  
+    
+    <div class='footer'>
       
-        <div>
-          <a class='readmore' href='/2021/03/23/Major/OS/OS_course/'>
-            Read More
-          </a>
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://yoursite.com/2021/03/24/Major/communication_and_networking/communication_and_networking/>http://yoursite.com/2021/03/24/Major/communication_and_networking/communication_and_networking/</a></p>
+              
+            
+          </blockquote>
         </div>
+      
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-24T18:48:53+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：Mar 24, 2021</p>
+  </a>
 </div>
 
-          </div>
         
       
-    
-  </section>
+        
+          
   
-    
-  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/network/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>network</p></a></div>
 
 
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
   
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/03/23/Major/OS/OS_course/'>
+          <p class='title'>操作系统笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>进程管理并发proc特点进程定义进程组成PCB信息proc基本状态进程控制语proc调度proc调度时机proc调度算法临界资源共享资源，但一次应该只能有一个proc使用
+
+互斥：对临界资源的竞...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
 </div>
 <aside class='l_side'>
   
@@ -532,103 +782,28 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
 
-<section class="widget blogger shadow desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box rectangle' href='/about/'>
-          <img no-lazy src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Diego%20Brando.JPG'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-        
-        
-          <p><span id="jinrishici-sentence">Ring's Blog</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/atom.xml"
-              class="social fas fa-rss flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:travisturing403@gmail.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/66RING"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="/"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
 
-  
 
-  
-    
-    
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow desktop mobile">
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/OS/" style="font-size: 14px; color: #999">OS</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 15.11px; color: #919191">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 15.11px; color: #919191">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c-c/" style="font-size: 19.56px; color: #737373">c/c++</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 17.33px; color: #828282">database</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16.22px; color: #8a8a8a">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 15.11px; color: #919191">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 15.11px; color: #919191">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/gcc/" style="font-size: 14px; color: #999">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 20.67px; color: #6c6c6c">go</a> <a href="/tags/gui/" style="font-size: 15.11px; color: #919191">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 17.33px; color: #828282">java</a> <a href="/tags/javascript/" style="font-size: 16.22px; color: #8a8a8a">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.89px; color: #5d5d5d">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lua/" style="font-size: 15.11px; color: #919191">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 15.11px; color: #919191">mm</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.33px; color: #828282">network</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 20.67px; color: #6c6c6c">operate</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 17.33px; color: #828282">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 20.67px; color: #6c6c6c">python</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 15.11px; color: #919191">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tags/" style="font-size: 14px; color: #999">tags</a> <a href="/tags/tech/" style="font-size: 20.67px; color: #6c6c6c">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 14px; color: #999">tips</a> <a href="/tags/tool/" style="font-size: 16.22px; color: #8a8a8a">tool</a> <a href="/tags/tools/" style="font-size: 21.78px; color: #646464">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/typescript/" style="font-size: 15.11px; color: #919191">typescript</a> <a href="/tags/vim/" style="font-size: 16.22px; color: #8a8a8a">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/web/" style="font-size: 18.44px; color: #7b7b7b">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 15.11px; color: #919191">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15.11px; color: #919191">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模拟与数字"><span class="toc-text">模拟与数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数字信号的传输"><span class="toc-text">数字信号的传输</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基带传输"><span class="toc-text">基带传输</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#宽带传输"><span class="toc-text">宽带传输</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传输减损"><span class="toc-text">传输减损</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据速率限制"><span class="toc-text">数据速率限制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无噪声通道：奈奎斯特比特率"><span class="toc-text">无噪声通道：奈奎斯特比特率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#噪声通道：香农容量定理"><span class="toc-text">噪声通道：香农容量定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两者结合"><span class="toc-text">两者结合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能"><span class="toc-text">性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线路编码"><span class="toc-text">线路编码</span></a></li></ol>
     </div>
   </section>
 
 
   
 
-  
-
 
 </aside>
+
 
 
 		  
@@ -637,8 +812,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="communication andr networking笔记";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
