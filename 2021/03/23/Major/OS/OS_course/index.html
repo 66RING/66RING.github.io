@@ -514,9 +514,97 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><h3 id="并发proc特点"><a href="#并发proc特点" class="headerlink" title="并发proc特点"></a>并发proc特点</h3><h3 id="进程定义"><a href="#进程定义" class="headerlink" title="进程定义"></a>进程定义</h3><h3 id="进程组成"><a href="#进程组成" class="headerlink" title="进程组成"></a>进程组成</h3><h3 id="PCB信息"><a href="#PCB信息" class="headerlink" title="PCB信息"></a>PCB信息</h3><h3 id="proc基本状态"><a href="#proc基本状态" class="headerlink" title="proc基本状态"></a>proc基本状态</h3><h3 id="进程控制语"><a href="#进程控制语" class="headerlink" title="进程控制语"></a>进程控制语</h3><h3 id="proc调度"><a href="#proc调度" class="headerlink" title="proc调度"></a>proc调度</h3><h4 id="proc调度时机"><a href="#proc调度时机" class="headerlink" title="proc调度时机"></a>proc调度时机</h4><h4 id="proc调度算法"><a href="#proc调度算法" class="headerlink" title="proc调度算法"></a>proc调度算法</h4><h3 id="临界资源"><a href="#临界资源" class="headerlink" title="临界资源"></a>临界资源</h3><p>共享资源，但一次应该只能有一个proc使用</p>
+  <h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><ul>
+<li>并发proc特点<ul>
+<li>执行顺序不确定</li>
+<li>todo</li>
+</ul>
+</li>
+<li>进程定义<ul>
+<li>todo</li>
+</ul>
+</li>
+<li>进程组成<ul>
+<li>程序段</li>
+<li>数据段</li>
+<li>PCB</li>
+</ul>
+</li>
+</ul>
+<h3 id="PCB信息"><a href="#PCB信息" class="headerlink" title="PCB信息"></a>PCB信息</h3><ul>
+<li>标识<ul>
+<li>proc标识</li>
+<li>父标识</li>
+<li>用户标识</li>
+<li>等</li>
+</ul>
+</li>
+<li>现场信息<ul>
+<li>reg信息</li>
+<li>堆栈指针</li>
+<li>等</li>
+</ul>
+</li>
+<li>控制信息<ul>
+<li>proc状态</li>
+<li>调度信息</li>
+<li>DS信息<ul>
+<li>数据结构：如父指针</li>
+</ul>
+</li>
+<li>队列信息<ul>
+<li>pcb地址，如运行队列</li>
+</ul>
+</li>
+<li>位置信息<ul>
+<li>内存位置</li>
+</ul>
+</li>
+<li>通信信息<ul>
+<li>消息队列</li>
+</ul>
+</li>
+<li>等</li>
+</ul>
+</li>
+</ul>
+<h3 id="proc基本状态"><a href="#proc基本状态" class="headerlink" title="proc基本状态"></a>proc基本状态</h3><p>最基本的，可细化的状态</p>
+<ul>
+<li>运行</li>
+<li>就绪<ul>
+<li>就绪态不能到等待态，要运行才能控制</li>
+</ul>
+</li>
+<li>阻塞(等待)<ul>
+<li>等待态不能直接到达运行态，要先就绪</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>进程控制语：原语<ul>
+<li>机器指令构成的程序段的自己，控制proc执行</li>
+<li>不可分割</li>
+</ul>
+</li>
+</ul>
+<h3 id="proc调度"><a href="#proc调度" class="headerlink" title="proc调度"></a>proc调度</h3><ul>
+<li>proc调度时机<ul>
+<li>proc执行完</li>
+<li>IO等原因</li>
+<li>执行某原语</li>
+<li>被抢占</li>
+<li>时间用完</li>
+</ul>
+</li>
+<li>proc调度算法<ul>
+<li>todo</li>
+</ul>
+</li>
+</ul>
+<h3 id="临界资源"><a href="#临界资源" class="headerlink" title="临界资源"></a>临界资源</h3><p>共享资源，但一次应该只能有一个proc使用</p>
 <ul>
 <li>互斥：对临界资源的竞争</li>
+<li>同步： 有合作任务的proc直接需要同步，如p2需要p1的结果才能进行，则p1制约p2</li>
 <li>临界区(Critical Section, CS)<ul>
 <li>进程中涉及到临界资源的 <strong>程序段</strong> 称为临界区，一次只能有一个proc进入临界区，进程间互斥，退出临界区或换别的proc进入</li>
 </ul>
@@ -541,8 +629,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>经典同步互斥模型：设进程p1, p2, p3。缓冲区b1, b2，容量都为1，即只能存一份数据。p2需要等待p1将结果写入b1，p3需要等待p2将结果写入b2</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">信号量S1, S2表示缓冲区的读。Sb1, Sb2表示缓冲区的写。Sm1，Sm2表示锁</span><br><span class="line">初值：S1&#x3D;S2&#x3D;0, Sb1&#x3D;Sb2&#x3D;1, Sm1&#x3D;Sm2&#x3D;1</span><br><span class="line"></span><br><span class="line">p1          p2          p3</span><br><span class="line">------------ loop -------------</span><br><span class="line">P(Sb1)      P(S1)       P(S2)</span><br><span class="line">P(Sm1)      P(Sm1)      P(Sm2)</span><br><span class="line">写入b1      读b1        读b2</span><br><span class="line">V(Sm1)      V(Sm1)      V(Sm2)</span><br><span class="line">V(S1)       V(Sb1)      V(Sb2)</span><br><span class="line">            P(Sb2)</span><br><span class="line">            P(Sm2)</span><br><span class="line">            写b2</span><br><span class="line">            V(Sm2)</span><br><span class="line">------------ loop -------------</span><br><span class="line">           </span><br><span class="line">p2要等于p1处理的结果，因此p1没处理完时p2申请读缓冲区P(S1)将会进入等待队列</span><br><span class="line">待p1发出可读V(S1)后p2才会执行</span><br><span class="line">p3同理</span><br><span class="line"></span><br><span class="line">当p1执行完一个循环，想要执行下一个循环时，如果发现p2还没读取缓冲区数据，则P(Sb1)会让其进入等待队列</span><br></pre></td></tr></table></figure>
 
-
-<h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>有合作任务的proc直接需要同步，如p2需要p1的结果才能进行，则p1制约p2</p>
+<p>todo读写者问题</p>
 
   
   
@@ -577,10 +664,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-24T13:58:04+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-26T12:04:15+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Mar 24, 2021</p>
+    <p>更新于：Mar 26, 2021</p>
   </a>
 </div>
 
@@ -732,7 +819,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程管理"><span class="toc-text">进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#并发proc特点"><span class="toc-text">并发proc特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程定义"><span class="toc-text">进程定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程组成"><span class="toc-text">进程组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PCB信息"><span class="toc-text">PCB信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc基本状态"><span class="toc-text">proc基本状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程控制语"><span class="toc-text">进程控制语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc调度"><span class="toc-text">proc调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#proc调度时机"><span class="toc-text">proc调度时机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#proc调度算法"><span class="toc-text">proc调度算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#临界资源"><span class="toc-text">临界资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信号量与PV操作"><span class="toc-text">信号量与PV操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同步"><span class="toc-text">同步</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程管理"><span class="toc-text">进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PCB信息"><span class="toc-text">PCB信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc基本状态"><span class="toc-text">proc基本状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc调度"><span class="toc-text">proc调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#临界资源"><span class="toc-text">临界资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信号量与PV操作"><span class="toc-text">信号量与PV操作</span></a></li></ol></li></ol></li></ol>
     </div>
   </section>
 
