@@ -573,12 +573,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 把in.txt内容作为标准出入</span></span><br><span class="line">freopen(<span class="string">"in.txt"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line"><span class="comment">// 把标准输出重定向到out.txt</span></span><br><span class="line">freopen(<span class="string">"out.txt"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h2><p>函数指针声明如下</p>
+<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>函数指针声明如下</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">返回值类型(*指针变量名)(参数列表)</span><br><span class="line"><span class="keyword">int</span>(*func_ptr)(<span class="keyword">int</span>, <span class="keyword">int</span>) = &amp; func; <span class="comment">// &amp;可以省略</span></span><br></pre></td></tr></table></figure>
 
 <p>上面声明了一个指向 <em>返回值为int，有两个int类型参数的函数</em> 的指针<code>func_ptr</code>，接下来就可以通过<code>func_ptr(int, int)</code>调用了</p>
-<h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><p>函数指针变量作为某个函数的参数，即别人的函数执行时调用你实现的函数</p>
-<h2 id="static"><a href="#static" class="headerlink" title="static"></a>static</h2><p>static有如下功能</p>
+<h4 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h4><p>函数指针变量作为某个函数的参数，即别人的函数执行时调用你实现的函数</p>
+<h3 id="void"><a href="#void" class="headerlink" title="void*"></a>void*</h3><p>void指针可以指向任意类型的数据，<strong>赋值给void指针无需强制类型转换</strong> 。但是void指针赋值给其他类型就需要强制类型转换了。一个常见的例子就是<code>malloc</code>函数，它就是返回一个<code>void*</code>，这给使用带来了很大的灵活性。</p>
+<p>利用void指针的性质，可以用在函数中接收任意参数。常见的如内存操作<code>void * memcpy(void *dest, const void *src, size_t len)</code>。显然内存才不管什么类型，只管操作一片区域。</p>
+<ul>
+<li>ANSI C标准不允许对void指针进行如<code>++</code>等的操作，因为无类型就不知道一次操作几个字节</li>
+<li>GNU标准运行对void指针进行运算操作，认为<code>void*</code>和<code>char*</code>是一样的</li>
+</ul>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><p>static有如下功能</p>
 <ul>
 <li><ol>
 <li>隐藏变量<ul>
@@ -603,7 +609,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ol>
 </li>
 </ul>
-<h2 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h2><p>简单的讲，宏就是把一个缩略语(宏，macro)指定成任何一段文本。预处理时会用定义和文本把这个缩略语替换掉。</p>
+<h3 id="枚举enum"><a href="#枚举enum" class="headerlink" title="枚举enum"></a>枚举enum</h3><p>用符号名称代表常数，提高程序可读性。枚举常量是int类型的，因此任何int类型使用的地方都可以用它。定义枚举类型方法如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> 枚举名 &#123;枚举元素<span class="number">1</span>, 枚举元素<span class="number">2</span>,...&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>需要注意的是</strong> 第一个枚举元素默认为0，后续元素在前一个元素上加1。</p>
+<p>可以在声明时指定枚举元素的值，没指定值的元素会在前一个元素的值上加1</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> H &#123;A, B=<span class="number">3</span>, C, D=<span class="number">7</span>, E&#125;;</span><br><span class="line"><span class="comment">// A=0, B=3, C=4, D=7, E=8</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="定义枚举变量"><a href="#定义枚举变量" class="headerlink" title="定义枚举变量"></a>定义枚举变量</h4><p>枚举变量是值可以用枚举类型中定义的名称赋值(当然也可以用任意int或unsigned int赋值，但这么做就失去了可读性)，如<code>enum day = MON</code>。定义枚举变量有三种方式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先定义枚举类型再定义枚举变量</span></span><br><span class="line"><span class="keyword">enum</span> DAY</span><br><span class="line">&#123;</span><br><span class="line">    MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125;; </span><br><span class="line"><span class="keyword">enum</span> DAY day;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先定义枚举类型同时定义枚举变量</span></span><br><span class="line"><span class="keyword">enum</span> DAY</span><br><span class="line">&#123;</span><br><span class="line">    MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125; day; </span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略枚举类型名，直接定义枚举变量</span></span><br><span class="line"><span class="keyword">enum</span> </span><br><span class="line">&#123;</span><br><span class="line">    MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125; day;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><h3 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h3><p>简单的讲，宏就是把一个缩略语(宏，macro)指定成任何一段文本。预处理时会用定义和文本把这个缩略语替换掉。</p>
 <ul>
 <li>没有参数的宏<ul>
 <li><code>#define 宏名称 文本</code></li>
@@ -641,21 +659,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 </ul>
-<h2 id="条件编译"><a href="#条件编译" class="headerlink" title="条件编译"></a>条件编译</h2><p>不同平台提供的api不同，根据平台编译代码是必须的</p>
+<h3 id="条件编译"><a href="#条件编译" class="headerlink" title="条件编译"></a>条件编译</h3><p>不同平台提供的api不同，根据平台编译代码是必须的</p>
 <p><code>#if</code>, <code>#elif</code>, <code>#else</code>, <code>#endif</code>都是预处理命令，这些操作都是在预处理阶段完成的，多余的代码以及宏都不会参与编译，保证正确性还缩小了体积。</p>
 <p><code>#ifdef</code>，意思是如果宏被定义过，<code>#ifndef</code>则是它的非</p>
 <p>需要注意的是<code>#if</code>后面跟的是”整型常量表达式”，而<code>#ifdef</code>和<code>#ifndef</code>后面只能跟宏名</p>
-<h2 id="枚举enum"><a href="#枚举enum" class="headerlink" title="枚举enum"></a>枚举enum</h2><p>用符号名称代表常数，提高程序可读性。枚举常量是int类型的，因此任何int类型使用的地方都可以用它。定义枚举类型方法如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> 枚举名 &#123;枚举元素<span class="number">1</span>, 枚举元素<span class="number">2</span>,...&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><strong>需要注意的是</strong> 第一个枚举元素默认为0，后续元素在前一个元素上加1。</p>
-<p>可以在声明时指定枚举元素的值，没指定值的元素会在前一个元素的值上加1</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> H &#123;A, B=<span class="number">3</span>, C, D=<span class="number">7</span>, E&#125;;</span><br><span class="line"><span class="comment">// A=0, B=3, C=4, D=7, E=8</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="定义枚举变量"><a href="#定义枚举变量" class="headerlink" title="定义枚举变量"></a>定义枚举变量</h3><p>枚举变量是值可以用枚举类型中定义的名称赋值(当然也可以用任意int或unsigned int赋值，但这么做就失去了可读性)，如<code>enum day = MON</code>。定义枚举变量有三种方式</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先定义枚举类型再定义枚举变量</span></span><br><span class="line"><span class="keyword">enum</span> DAY</span><br><span class="line">&#123;</span><br><span class="line">    MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125;; </span><br><span class="line"><span class="keyword">enum</span> DAY day;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先定义枚举类型同时定义枚举变量</span></span><br><span class="line"><span class="keyword">enum</span> DAY</span><br><span class="line">&#123;</span><br><span class="line">    MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125; day; </span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略枚举类型名，直接定义枚举变量</span></span><br><span class="line"><span class="keyword">enum</span> </span><br><span class="line">&#123;</span><br><span class="line">    MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125; day;</span><br></pre></td></tr></table></figure>
-
-
 <h2 id="goto"><a href="#goto" class="headerlink" title="goto"></a>goto</h2><p>跳转然后继续顺序执行。</p>
 <ul>
 <li>向后跳转</li>
@@ -807,10 +814,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-13T17:50:44+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-03T21:45:56+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Mar 13, 2021</p>
+    <p>更新于：Apr 3, 2021</p>
   </a>
 </div>
 
@@ -964,7 +971,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#读写"><span class="toc-text">读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读取字符串"><span class="toc-text">读取字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件读写"><span class="toc-text">文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#打开-关闭文件"><span class="toc-text">打开&#x2F;关闭文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写入文件"><span class="toc-text">写入文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件读取"><span class="toc-text">文件读取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重定向文件流"><span class="toc-text">重定向文件流</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数指针"><span class="toc-text">函数指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#回调函数"><span class="toc-text">回调函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#static"><span class="toc-text">static</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#宏"><span class="toc-text">宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件编译"><span class="toc-text">条件编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举enum"><span class="toc-text">枚举enum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义枚举变量"><span class="toc-text">定义枚举变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goto"><span class="toc-text">goto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统调用"><span class="toc-text">系统调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mmap"><span class="toc-text">mmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep"><span class="toc-text">sleep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exec"><span class="toc-text">exec</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#execv"><span class="toc-text">execv</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结构体初始化"><span class="toc-text">结构体初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp类初始化"><span class="toc-text">cpp类初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化列表"><span class="toc-text">初始化列表</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#读写"><span class="toc-text">读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读取字符串"><span class="toc-text">读取字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件读写"><span class="toc-text">文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#打开-关闭文件"><span class="toc-text">打开&#x2F;关闭文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写入文件"><span class="toc-text">写入文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件读取"><span class="toc-text">文件读取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重定向文件流"><span class="toc-text">重定向文件流</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指针"><span class="toc-text">指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数指针"><span class="toc-text">函数指针</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#回调函数"><span class="toc-text">回调函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#void"><span class="toc-text">void*</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变量"><span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#static"><span class="toc-text">static</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#枚举enum"><span class="toc-text">枚举enum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义枚举变量"><span class="toc-text">定义枚举变量</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译"><span class="toc-text">编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#宏"><span class="toc-text">宏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#条件编译"><span class="toc-text">条件编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goto"><span class="toc-text">goto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统调用"><span class="toc-text">系统调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mmap"><span class="toc-text">mmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep"><span class="toc-text">sleep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exec"><span class="toc-text">exec</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#execv"><span class="toc-text">execv</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结构体初始化"><span class="toc-text">结构体初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp类初始化"><span class="toc-text">cpp类初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化列表"><span class="toc-text">初始化列表</span></a></li></ol></li></ol>
     </div>
   </section>
 
