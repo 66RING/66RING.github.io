@@ -534,18 +534,26 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>use <code>l</code> command to show source code with line number</li>
 </ul>
 </li>
-<li>Add breakpoint<ul>
+<li>breakpoint<ul>
 <li>use <code>b &lt;LINENUM&gt;</code> to add breakpoint, such as <code>b 1</code> add breakpoint at line 1</li>
 <li>or use <code>b &lt;FUNCTIONNAME&gt;</code> to add breakpoint, such as <code>b main</code> add breakpoint at main function</li>
+<li><code>b &lt;[file:]linenum|[file:]funciont&gt;</code></li>
+<li><code>tb[reak]</code> for a temporary breakpoint</li>
 </ul>
 </li>
 <li>Show breakpoint information<ul>
 <li><code>i b</code> i for information, b for breakpoint</li>
+<li><code>clear [[file:]function|[file:]lennum]</code> to clean all breakpoint</li>
+<li><code>rb[reak] REGEXP</code> set breakpoint for all function matching REGEXP</li>
+<li><code>ignore N COUNT</code> ignore bp 1 for COUNT times </li>
 </ul>
 </li>
 <li><strong>Inspect</strong><ul>
 <li>use <code>print, inspect or p [OPTION...] [EXP]</code> to print value of expression EXP<ul>
 <li>use <code>p a</code> will show information of variable <code>a</code> </li>
+<li><code>p [/FMT]</code> print with specified format</li>
+<li><code>p ARRAY[@len]</code> print arrary with len element</li>
+<li><code>p [&#39;file&#39;::]var</code> print var in specified file</li>
 </ul>
 </li>
 </ul>
@@ -556,13 +564,16 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 <li>Run debug<ul>
-<li><code>r</code></li>
+<li><code>r [args...]</code></li>
 </ul>
 </li>
 <li>Gdb controler<ul>
-<li><code>n</code> <strong>for next line</strong>, one step debugging</li>
+<li><code>n [N]</code> <strong>for next line</strong>, one step debugging</li>
 <li><code>s</code> <strong>for step into</strong>(one step)</li>
+<li><code>u|until [LINENUM|FUNC|ADDR|if condition]</code></li>
 <li><code>set args [parameter]</code> for command line args</li>
+<li><code>return &lt;value&gt;</code> finish function and return <code>&lt;value&gt;</code></li>
+<li><code>call &lt;function&gt;</code> call specified function</li>
 </ul>
 </li>
 <li>Finish function and continue<ul>
@@ -585,7 +596,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 <li><strong>Watchpoints</strong>, Catchpoint… and so on<ul>
-<li>You can use a watchpoint to stop execution whenever the value of an expression changes.</li>
+<li>You can use a watchpoint to stop execution whenever the value of an expression <strong>changes</strong>.</li>
 <li><code>watch *&lt;addr&gt;</code> or <code>watch &lt;value&gt;</code></li>
 <li><code>info watchpoints</code> to print info of watchpoints</li>
 </ul>
@@ -634,10 +645,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-01-26T10:37:20+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-03T11:51:55+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Jan 26, 2021</p>
+    <p>更新于：Apr 3, 2021</p>
   </a>
 </div>
 

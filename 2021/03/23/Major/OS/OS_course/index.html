@@ -630,6 +630,90 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">信号量S1, S2表示缓冲区的读。Sb1, Sb2表示缓冲区的写。Sm1，Sm2表示锁</span><br><span class="line">初值：S1&#x3D;S2&#x3D;0, Sb1&#x3D;Sb2&#x3D;1, Sm1&#x3D;Sm2&#x3D;1</span><br><span class="line"></span><br><span class="line">p1          p2          p3</span><br><span class="line">------------ loop -------------</span><br><span class="line">P(Sb1)      P(S1)       P(S2)</span><br><span class="line">P(Sm1)      P(Sm1)      P(Sm2)</span><br><span class="line">写入b1      读b1        读b2</span><br><span class="line">V(Sm1)      V(Sm1)      V(Sm2)</span><br><span class="line">V(S1)       V(Sb1)      V(Sb2)</span><br><span class="line">            P(Sb2)</span><br><span class="line">            P(Sm2)</span><br><span class="line">            写b2</span><br><span class="line">            V(Sm2)</span><br><span class="line">------------ loop -------------</span><br><span class="line">           </span><br><span class="line">p2要等于p1处理的结果，因此p1没处理完时p2申请读缓冲区P(S1)将会进入等待队列</span><br><span class="line">待p1发出可读V(S1)后p2才会执行</span><br><span class="line">p3同理</span><br><span class="line"></span><br><span class="line">当p1执行完一个循环，想要执行下一个循环时，如果发现p2还没读取缓冲区数据，则P(Sb1)会让其进入等待队列</span><br></pre></td></tr></table></figure>
 
 <p>todo读写者问题</p>
+<h4 id="管程"><a href="#管程" class="headerlink" title="管程"></a>管程</h4><p>为了让开发者在<strong>互斥</strong>逻辑的设计中解脱，引入管程。管程是一种编程语言构件，进入管程的互斥由 <strong>编译器</strong> 负责，用户无需关心如何实现互斥。</p>
+<ul>
+<li>缺点：<ul>
+<li>只有几种编程语言支持，兼容性不好</li>
+<li>无法解决同步问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="进程间相互作用"><a href="#进程间相互作用" class="headerlink" title="进程间相互作用"></a>进程间相互作用</h3><h3 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h3><ul>
+<li>按数据多少分<ul>
+<li>低级通信，只传状态或整型数值，信息量少</li>
+<li>高级通信，能传大批量数据</li>
+</ul>
+</li>
+<li>按通信方式分<ul>
+<li>直接通信，信息直接给发送方</li>
+<li>间接通信，通过接收双方之外的共享结构传递</li>
+</ul>
+</li>
+</ul>
+<h4 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h4><p>在内存中指定一块区域用来共享存储，各进程可以申请一个存储段，并申请时提交 <strong>关键字</strong> 。系统根据关键字返回，查找/分配，然后将该存储区映射到进程的逻辑空间，此后进程可以直接访问共享内存。</p>
+<p>使用共享内存时需要注意同步互斥的问题</p>
+<h4 id="消息传递"><a href="#消息传递" class="headerlink" title="消息传递"></a>消息传递</h4><p>通过系统的发送(Send)原语和接收(Receive)原语，实现进程间通信。发送原语将消息挂到接收进程的消息队列末尾。接收进程用接收原语从消息队列头取走消息。</p>
+<h4 id="信箱"><a href="#信箱" class="headerlink" title="信箱"></a>信箱</h4><p>信箱是用来对一定数量的消息进程缓存，每个信箱用标识符区分。一个信箱可以被多个进程共享，实现消息的广播发送。</p>
+<h4 id="管道pipe"><a href="#管道pipe" class="headerlink" title="管道pipe"></a>管道pipe</h4><p>管道是一种<strong>共享文件</strong> 模式，基于文件系统，以 <strong>先进先出</strong> 的方式实现消息<strong>单向</strong> 传递。</p>
+<p>UNIX系统管道的创建通过<code>pipe()</code>函数实现。该函数返回分别用于读、写操作的 <strong>文件描述符</strong> <code>fd[0], fd[1]</code>。读管道时，利用<code>fd[0]</code>文件描述符从管道读取字节，写管道时，利用<code>fd[1]</code>向管道写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----------------------------------+</span><br><span class="line">read(fd[0])    &lt;--      write(fd[1])</span><br><span class="line">+----------------------------------+</span><br><span class="line"></span><br><span class="line">读写读写</span><br><span class="line">0是读，1是写</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果要双向通信需要定义两个管道</li>
+<li><strong>只适用于父子进程间通信</strong></li>
+</ul>
+<p>观察下面一段程序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> father[] = &#123;<span class="string">"message from father"</span>&#125;;</span><br><span class="line">    <span class="keyword">char</span> child[] = &#123;<span class="string">"message from child"</span>&#125;;</span><br><span class="line">    <span class="keyword">char</span> buff[<span class="number">50</span>];</span><br><span class="line">    <span class="keyword">int</span> chan1[<span class="number">2</span>], chan2[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> pid;</span><br><span class="line"></span><br><span class="line">    pipe(chan1);</span><br><span class="line">    pipe(chan2);</span><br><span class="line">    <span class="keyword">while</span>((pid=fork())==<span class="number">-1</span>);   <span class="comment">// 如果fork返回-1，一直尝试创建，直达创建子进程成功</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(pid)&#123;  <span class="comment">// pid&gt;0表示是父进程执行，pid=子进程pid</span></span><br><span class="line">        <span class="built_in">close</span>(chan1[<span class="number">0</span>]);</span><br><span class="line">        <span class="built_in">close</span>(chan2[<span class="number">1</span>]);</span><br><span class="line">        <span class="built_in">write</span>(chan1[<span class="number">1</span>], father, <span class="built_in">strlen</span>(father));</span><br><span class="line">        <span class="built_in">close</span>(chan1[<span class="number">1</span>]);</span><br><span class="line">        <span class="built_in">read</span>(chan2[<span class="number">0</span>], buff, <span class="number">50</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"father process: %s\n"</span>, buff);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;   <span class="comment">// 否则子进程执行</span></span><br><span class="line">        <span class="built_in">close</span>(chan1[<span class="number">1</span>]);</span><br><span class="line">        <span class="built_in">close</span>(chan2[<span class="number">0</span>]);</span><br><span class="line">        <span class="built_in">read</span>(chan1[<span class="number">0</span>], buff, <span class="number">50</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"child process: %s\n"</span>, buff);</span><br><span class="line">        <span class="built_in">write</span>(chan2[<span class="number">1</span>], child, <span class="built_in">strlen</span>(child));</span><br><span class="line">        <span class="built_in">close</span>(chan2[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述程序中，涉及的知识点：</p>
+<ul>
+<li><code>fork()</code><ul>
+<li>返回值大于0，表示父进程在执行，返回值为子进程pid</li>
+<li>返回值等于0，表示子进程在执行</li>
+<li>返回值小于0，表示出错</li>
+<li>在fork时子进程会拷贝父进程，拷贝父进程的资源、PCB、状态等</li>
+<li>之后再申请资源，都是在各自进程PCB上相互独立的操作</li>
+</ul>
+</li>
+<li>父子进程中的<code>close()</code>只是关闭了 <strong>当前进程对资源的使用状态</strong>，而不是关闭共享的管道<ul>
+<li>一旦子进程创建，它就与父进程独立开来了，可以认为状态独立，但是资源 <strong>指向</strong> 的都是同一个，所以是同一个管道，可以用共享资源通信</li>
+</ul>
+</li>
+<li>父子进程同步<ul>
+<li>可以使用<code>wait()</code>和<code>waitfor()</code>函数，会等待某个子进程终止，然后返回子进程pid</li>
+</ul>
+</li>
+</ul>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>如果以进程作为调度的基本单位，则进程间调度的工作量将会很大(如很多资源来回切换)，开销较大。</p>
+<p>因此以 <strong>线程</strong> 作为调度的基本单位，调度不再是进程间调度，而是进程内的 <strong>线程间的调度</strong> 。</p>
+<p>一个进程内部可以有多个线程，在多线程环境下一个进程打开的资源在 <strong>线程间共享</strong>，使得线程间调度不再不用资源来回切换，只需要记录线程的上下文，大大降低了开销。</p>
+<blockquote>
+<p>不同于进程间的共享，进程间共享是生成子进程前的资源共享，生成子进程后各自申请的自己将相互独立。而线程将的资源随时都是共享的。</p>
+</blockquote>
+<p>多线程模型可以看成这么一个结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 多线程模型：一个进程中的内容</span><br><span class="line">|-----|</span><br><span class="line">| PCB |</span><br><span class="line">|-----|</span><br><span class="line">同一份资源、状态</span><br><span class="line"></span><br><span class="line">|--------------|</span><br><span class="line">| 用户地址空间 |</span><br><span class="line">|--------------|</span><br><span class="line"></span><br><span class="line">多个共享</span><br><span class="line">|------------|  |------------|  |------------|</span><br><span class="line">| 线程控制块 |  | 线程控制块 |  | 线程控制块 |</span><br><span class="line">|------------|  |------------|  |------------|</span><br><span class="line">| 用户栈     |  | 用户栈     |  | 用户栈     |</span><br><span class="line">| 核心栈     |  | 核心栈     |  | 核心栈     |</span><br><span class="line">|------------|  |------------|  |------------|</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
   
@@ -664,10 +748,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-26T12:04:15+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-02T17:05:59+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Mar 26, 2021</p>
+    <p>更新于：Apr 2, 2021</p>
   </a>
 </div>
 
@@ -708,8 +792,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class="prev-next">
       
         <a class='prev' href='/2021/03/24/Major/communication_and_networking/communication_and_networking/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>communication andr networking笔记</p>
-          <p class='content'>数据和信号模拟与数字
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>communication and networking笔记</p>
+          <p class='content'>TODO第二章数据和信号模拟与数字
 模拟数据：连续状态的信息
 数字数据：离散状态的信息
 
@@ -717,7 +801,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 复合信号
 
 单一正弦波在数据通信中没有作用，我们需要发送复合信号，复合信号由许多简单正弦波组成
-基础频率或第一谐波：...</p>
+基础频...</p>
         </a>
       
       
@@ -819,7 +903,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程管理"><span class="toc-text">进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PCB信息"><span class="toc-text">PCB信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc基本状态"><span class="toc-text">proc基本状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc调度"><span class="toc-text">proc调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#临界资源"><span class="toc-text">临界资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信号量与PV操作"><span class="toc-text">信号量与PV操作</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程管理"><span class="toc-text">进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PCB信息"><span class="toc-text">PCB信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc基本状态"><span class="toc-text">proc基本状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc调度"><span class="toc-text">proc调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#临界资源"><span class="toc-text">临界资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信号量与PV操作"><span class="toc-text">信号量与PV操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管程"><span class="toc-text">管程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程间相互作用"><span class="toc-text">进程间相互作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程通信"><span class="toc-text">进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#共享内存"><span class="toc-text">共享内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#消息传递"><span class="toc-text">消息传递</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信箱"><span class="toc-text">信箱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管道pipe"><span class="toc-text">管道pipe</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程"><span class="toc-text">线程</span></a></li></ol></li></ol>
     </div>
   </section>
 
