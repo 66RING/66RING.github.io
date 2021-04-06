@@ -670,7 +670,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </li>
 </ul>
 <h4 id="双相编码：曼彻斯特编码和差分曼彻斯特编码"><a href="#双相编码：曼彻斯特编码和差分曼彻斯特编码" class="headerlink" title="双相编码：曼彻斯特编码和差分曼彻斯特编码"></a>双相编码：曼彻斯特编码和差分曼彻斯特编码</h4><p>双相编码利用了RZ的思想和NRZ的思想</p>
-<img src="./static/Bi-Phase_Space.jpg" class="lazyload" data-srcset="./static/Bi-Phase_Space.jpg" srcset="data:image/png;base64,666" width="50%" align="right"/>
+<img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/Bi-Phase_Space.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/Bi-Phase_Space.jpg" srcset="data:image/png;base64,666" width="50%" align="right"/>
 
 <p><strong>位中间总是发生跳变</strong></p>
 <ul>
@@ -691,7 +691,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </li>
 </ul>
 <h4 id="双极性方案：多电平二进制"><a href="#双极性方案：多电平二进制" class="headerlink" title="双极性方案：多电平二进制"></a>双极性方案：多电平二进制</h4><p>一个数据元素的电平是0，另一个元素的电平在正负值间<strong>交替</strong></p>
-<img src="./static/AMI.jpg" class="lazyload" data-srcset="./static/AMI.jpg" srcset="data:image/png;base64,666" width="50%" align="right"/>
+<img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/AMI.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/AMI.jpg" srcset="data:image/png;base64,666" width="50%" align="right"/>
 
 <ul>
 <li><strong>AMI(交替传号反转编码)</strong> ：传号指的是1，表示交替的1的反应<ul>
@@ -724,10 +724,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </li>
 </ul>
 <p>todo</p>
-<h5 id="2B1Q方案"><a href="#2B1Q方案" class="headerlink" title="2B1Q方案"></a>2B1Q方案</h5><div align=center><img src="./static/2B1Q.jpg" class="lazyload" data-srcset="./static/2B1Q.jpg" srcset="data:image/png;base64,666" width="60%"/></div>
+<h5 id="2B1Q方案"><a href="#2B1Q方案" class="headerlink" title="2B1Q方案"></a>2B1Q方案</h5><div align=center><img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/2B1Q.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/2B1Q.jpg" srcset="data:image/png;base64,666" width="60%"/></div>
 
 
-<h5 id="8B6T方案"><a href="#8B6T方案" class="headerlink" title="8B6T方案"></a>8B6T方案</h5><h5 id="4D-PAM5方案"><a href="#4D-PAM5方案" class="headerlink" title="4D-PAM5方案"></a>4D-PAM5方案</h5><h5 id="多线路传输：MLT-3"><a href="#多线路传输：MLT-3" class="headerlink" title="多线路传输：MLT-3"></a>多线路传输：MLT-3</h5><div align=center><img src="./static/summary_of_line_coding.jpg" class="lazyload" data-srcset="./static/summary_of_line_coding.jpg" srcset="data:image/png;base64,666" width="100%"/></div>
+<h5 id="8B6T方案"><a href="#8B6T方案" class="headerlink" title="8B6T方案"></a>8B6T方案</h5><h5 id="4D-PAM5方案"><a href="#4D-PAM5方案" class="headerlink" title="4D-PAM5方案"></a>4D-PAM5方案</h5><h5 id="多线路传输：MLT-3"><a href="#多线路传输：MLT-3" class="headerlink" title="多线路传输：MLT-3"></a>多线路传输：MLT-3</h5><div align=center><img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/summary_of_line_coding.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/summary_of_line_coding.jpg" srcset="data:image/png;base64,666" width="100%"/></div>
 
 
 <h3 id="块编码"><a href="#块编码" class="headerlink" title="块编码"></a>块编码</h3><p>把m位块变为n位块，n&gt;m，给出一些<strong>冗余来做同步和差错检查等功能</strong>。也称为 <strong>mB/nB编码</strong> ，B表示二，故一般是二元的。</p>
@@ -754,7 +754,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>发送方将mB映射成nB编码发送，接收方收到后再由nB反映射成mB解码。</p>
 <h4 id="4B-5B方案：4个二元变5个二元"><a href="#4B-5B方案：4个二元变5个二元" class="headerlink" title="4B/5B方案：4个二元变5个二元"></a>4B/5B方案：4个二元变5个二元</h4><p>4B/5B与NRZ-I组合使用，NRZ-I很好的信号速率，但是存在全0时的同步问题。一种解决方案就是在<strong>使用NRZ-I编码前4B/5B改变位流</strong></p>
 <p>4B/5B的解决方案：4B/5B的编码性质是前导0不会超过1个，后缀的0不超过两个，因此任意两组组合最多有3个连续的0。有$2^5 - 2^4 = 16$个的冗余可以用来检错和控制。再多余的，收到的话就说明传输出错。</p>
-<img src="./static/map_of_4B5B.jpg" class="lazyload" data-srcset="./static/map_of_4B5B.jpg" srcset="data:image/png;base64,666" width="60%" align="right"/>
+<img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/map_of_4B5B.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/map_of_4B5B.jpg" srcset="data:image/png;base64,666" width="60%" align="right"/>
 
 <ul>
 <li>方案分析<ul>
@@ -800,7 +800,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 </ul>
-<img src="./static/HDB3.jpg" class="lazyload" data-srcset="./static/HDB3.jpg" srcset="data:image/png;base64,666" width="50%"/>
+<img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/HDB3.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/HDB3.jpg" srcset="data:image/png;base64,666" width="50%"/>
 
 
 <h2 id="模拟信号到数字信号转换"><a href="#模拟信号到数字信号转换" class="headerlink" title="模拟信号到数字信号转换"></a>模拟信号到数字信号转换</h2><p>主要有两种技术：脉冲码调制(PCM)和delta调制</p>
@@ -851,7 +851,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 </ul>
-<div align=center><img src="./static/PCM.jpg" class="lazyload" data-srcset="./static/PCM.jpg" srcset="data:image/png;base64,666" width="60%"/></div>
+<div align=center><img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/PCM.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/PCM.jpg" srcset="data:image/png;base64,666" width="60%"/></div>
 
 <p>量化误差改变了信号的信噪比，根据香农理论，这减小了上限容量。<strong>量化误差对信号$SNR_{dB}$的影响缺绝于量化级别L或每个样本的位数$n_b$</strong> </p>
 <p>$$SNR{dB} = 6.02n_B + 1.76 dB$$</p>
@@ -893,7 +893,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-04T15:00:07+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-04T15:11:01+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：Apr 4, 2021</p>

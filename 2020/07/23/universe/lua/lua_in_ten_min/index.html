@@ -588,7 +588,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 </ul>
-<h1 id="Lua高级编程"><a href="#Lua高级编程" class="headerlink" title="Lua高级编程"></a>Lua高级编程</h1><h2 id="metatable元表"><a href="#metatable元表" class="headerlink" title="metatable元表"></a>metatable元表</h2><p>我们无法直接对table进行操作，lua提供元表允许我们改变table的行为，每个行为关联对应的元方法</p>
+<h1 id="Lua高级编程"><a href="#Lua高级编程" class="headerlink" title="Lua高级编程"></a>Lua高级编程</h1><h2 id="metatable元表"><a href="#metatable元表" class="headerlink" title="metatable元表"></a>metatable元表</h2><p>我们无法直接对table进行操作，lua提供元表允许我们改变table的行为，即我们通过控制元表来控制table，而不是直接控制table。每个行为关联对应的元方法</p>
 <p>当lua试图对两个table进行操作时，先检查两者之一是否有元表，然后调用对应的方法</p>
 <ul>
 <li><code>setmetatable(table, metatable)</code>，把metatable设置位table的元表</li>
@@ -651,10 +651,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-28T10:50:08+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-04T15:44:15+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Mar 28, 2021</p>
+    <p>更新于：Apr 4, 2021</p>
   </a>
 </div>
 
