@@ -694,26 +694,97 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 多线程模型：一个进程中的内容</span><br><span class="line">|-----|</span><br><span class="line">| PCB |</span><br><span class="line">|-----|</span><br><span class="line">同一份资源、状态</span><br><span class="line"></span><br><span class="line">|--------------|</span><br><span class="line">| 用户地址空间 |</span><br><span class="line">|--------------|</span><br><span class="line"></span><br><span class="line">多个共享</span><br><span class="line">|------------|  |------------|  |------------|</span><br><span class="line">| 线程控制块 |  | 线程控制块 |  | 线程控制块 |</span><br><span class="line">|------------|  |------------|  |------------|</span><br><span class="line">| 用户栈     |  | 用户栈     |  | 用户栈     |</span><br><span class="line">| 核心栈     |  | 核心栈     |  | 核心栈     |</span><br><span class="line">|------------|  |------------|  |------------|</span><br></pre></td></tr></table></figure>
 
 
+<h4 id="线程的实现机制"><a href="#线程的实现机制" class="headerlink" title="线程的实现机制"></a>线程的实现机制</h4><p>线程的实现有用户级线程(ULT)和内核级线程(KLT)</p>
+<h5 id="用户级线程"><a href="#用户级线程" class="headerlink" title="用户级线程"></a>用户级线程</h5><ul>
+<li>应用程序完成所有线程的管理，只需提供线程库即可在任意系统执行</li>
+<li><strong>内核感知不到ULT的存在</strong></li>
+<li>线程切换不需要内核态</li>
+<li>调度是由程序定</li>
+<li>优点<ul>
+<li>应用程序完成所有线程的管理，只需提供线程库即可在任意系统执行</li>
+<li>开销较KLT小</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>由于内核感知不到ULT，所以当一个ULT阻塞时会将进程阻塞，从而进程的所有线程阻塞<ul>
+<li>因为处理器是分配给进程的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a href="todo">ULT</a></p>
+<h5 id="内核级线程"><a href="#内核级线程" class="headerlink" title="内核级线程"></a>内核级线程</h5><ul>
+<li>所有线程有内核管理</li>
+<li>没有线程库，有内核提供API</li>
+<li>内核维护进程和线程的上下文，线程间切换需要内核支持</li>
+<li>优点<ul>
+<li>多处理器下内核可以同时调度一个进程中的多个线程(可感知的)</li>
+<li>阻塞是在线程的阻塞</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>线程切换需要内核支持，开销较大</li>
+</ul>
+</li>
+</ul>
+<p><a href="todo">KLT</a></p>
+<h5 id="ULT和KLT结合"><a href="#ULT和KLT结合" class="headerlink" title="ULT和KLT结合"></a>ULT和KLT结合</h5><p>同时使用ULT和KLT，CPU先分配给内核线程，再由内核线程分配给用户级线程。一个进程可以分配多个KLT。因此实现一个线程阻塞时同一个进程的其他线程还可进行</p>
+<h3 id="UNIX进程模型"><a href="#UNIX进程模型" class="headerlink" title="UNIX进程模型"></a>UNIX进程模型</h3><p>UNIX进程由三部分组成：proc结构(常驻内存的PCB)，数据段(执行时用到的数据)，正文段(程序代码)。进程加载时系统创建相应的数据和堆栈段，并加入一些进程控制信息。</p>
+<p>其中proc表和text表是常驻内存的。</p>
+<ul>
+<li><strong>每个进程对应proc表中的一个表项</strong></li>
+<li><strong>text表存放共享正文段的起始块号</strong> ，可以让若干进程共享</li>
+<li>数据段由进程系统数据区、数据栈和用户堆栈组成<ul>
+<li>进程系统数据区属于内核态，由user和核心栈组成<ul>
+<li>user是进程扩充控制块，是对proc内容的补充，需要时才调入内存</li>
+<li>核心栈是进程进入核心态时，系统使用的栈</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h4><p>UNIX采用动态优先数调度算法，优先数计算规则如为：进程优先级为<code>0~127</code>之间的整数， <strong>优先数越大，优先级越低</strong> ，计算公式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p_pri &#x3D; p_cpu&#x2F;2 + PUSER + p_nice + NZERO</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>PUSER和NZERO是系统设置</li>
+<li><code>p_cpu</code>表示该进程最近一次cpu连续使用的时间，使用时间<code>p_cpu</code>增加，优先级降低</li>
+<li><code>p_nice</code>可以由用户设置</li>
+</ul>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><blockquote>
+<p>死锁就像两个过独木桥的人，同时站在桥中央，两个人都等待对方让路</p>
+</blockquote>
+<p>死锁产生与系统资源数，资源分配策略，进程申请资源的时机等多个因素有关，解决死锁问题需要全方位考虑</p>
+<h3 id="产生死锁的4的必要条件"><a href="#产生死锁的4的必要条件" class="headerlink" title="产生死锁的4的必要条件"></a>产生死锁的4的必要条件</h3><ul>
+<li>资源独占，互斥使用</li>
+<li>非剥夺式，资源不可抢占<ul>
+<li>即使进程处于阻塞态，它所占有的资源也不能被其他进程使用，其他进程需要等它释放</li>
+</ul>
+</li>
+<li>零散请求<ul>
+<li>申请资源不是集中性的一次申请所有资源， <strong>进程在已经占用资源的情况下，又申请资源得不到满足时，并不会释放已占用的资源</strong></li>
+</ul>
+</li>
+<li>循环等待，等待资源的进程形成了一个封闭的环路</li>
+</ul>
+<p>由于是产生死锁的必要条件，因此<strong>打破之一就能防止死锁</strong></p>
+<h3 id="产生死锁的实例"><a href="#产生死锁的实例" class="headerlink" title="产生死锁的实例"></a>产生死锁的实例</h3><h4 id="P-V操作不当"><a href="#P-V操作不当" class="headerlink" title="P,V操作不当"></a>P,V操作不当</h4><p>设两资源S1，S2，初值都是0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">T1          T2</span><br><span class="line">P(S2)       P(S1)</span><br><span class="line">V(S1)       V(S2)</span><br></pre></td></tr></table></figure>
 
 
+<h4 id="资源申请顺序不当"><a href="#资源申请顺序不当" class="headerlink" title="资源申请顺序不当"></a>资源申请顺序不当</h4><p>同样两资源S1，S2，初值是1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">T1                  T2</span><br><span class="line">P(S1)               P(S2)</span><br><span class="line">申请扫描仪器        申请打印机</span><br><span class="line">P(S2)               P(S1)</span><br><span class="line">申请打印机          申请扫描仪</span><br><span class="line">V(S1)               V(S2)</span><br><span class="line">V(S2)               V(S1)</span><br></pre></td></tr></table></figure>
 
+<p>环路死锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">     S2</span><br><span class="line">T1   -&gt;   T2</span><br><span class="line"> ^        |  S1</span><br><span class="line"> |S1      v</span><br><span class="line">T1   &lt;-   T1</span><br><span class="line">     S2</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>若T1<code>P(S1)</code>成功后调度到T2，且T2成功<code>P(S2)</code>，这种情况将会发生死锁。而<strong>若执行顺序改变，将可能避免死锁</strong></p>
+<ul>
+<li>零散请求</li>
+</ul>
+<h4 id="资源分配不当因此死锁"><a href="#资源分配不当因此死锁" class="headerlink" title="资源分配不当因此死锁"></a>资源分配不当因此死锁</h4><p>设系统有9个资源，4个进程。每个进程需要4个资源才能完成执行。现若每个进程分配2个资源，系统还剩1个资源，谁都无法完成执行，导致死锁。</p>
+<p>显然，如果顺序适当是可以避免死锁的</p>
 
   
   
@@ -748,10 +819,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-02T17:05:59+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-06T20:05:23+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Apr 2, 2021</p>
+    <p>更新于：Apr 6, 2021</p>
   </a>
 </div>
 
@@ -903,7 +974,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程管理"><span class="toc-text">进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PCB信息"><span class="toc-text">PCB信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc基本状态"><span class="toc-text">proc基本状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc调度"><span class="toc-text">proc调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#临界资源"><span class="toc-text">临界资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信号量与PV操作"><span class="toc-text">信号量与PV操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管程"><span class="toc-text">管程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程间相互作用"><span class="toc-text">进程间相互作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程通信"><span class="toc-text">进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#共享内存"><span class="toc-text">共享内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#消息传递"><span class="toc-text">消息传递</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信箱"><span class="toc-text">信箱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管道pipe"><span class="toc-text">管道pipe</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程"><span class="toc-text">线程</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程管理"><span class="toc-text">进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PCB信息"><span class="toc-text">PCB信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc基本状态"><span class="toc-text">proc基本状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc调度"><span class="toc-text">proc调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#临界资源"><span class="toc-text">临界资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信号量与PV操作"><span class="toc-text">信号量与PV操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管程"><span class="toc-text">管程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程间相互作用"><span class="toc-text">进程间相互作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程通信"><span class="toc-text">进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#共享内存"><span class="toc-text">共享内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#消息传递"><span class="toc-text">消息传递</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信箱"><span class="toc-text">信箱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管道pipe"><span class="toc-text">管道pipe</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程"><span class="toc-text">线程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#线程的实现机制"><span class="toc-text">线程的实现机制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#用户级线程"><span class="toc-text">用户级线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#内核级线程"><span class="toc-text">内核级线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ULT和KLT结合"><span class="toc-text">ULT和KLT结合</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UNIX进程模型"><span class="toc-text">UNIX进程模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程调度"><span class="toc-text">进程调度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁"><span class="toc-text">死锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#产生死锁的4的必要条件"><span class="toc-text">产生死锁的4的必要条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#产生死锁的实例"><span class="toc-text">产生死锁的实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#P-V操作不当"><span class="toc-text">P,V操作不当</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源申请顺序不当"><span class="toc-text">资源申请顺序不当</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源分配不当因此死锁"><span class="toc-text">资源分配不当因此死锁</span></a></li></ol></li></ol></li></ol>
     </div>
   </section>
 
