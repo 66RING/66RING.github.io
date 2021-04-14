@@ -785,7 +785,86 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h4 id="资源分配不当因此死锁"><a href="#资源分配不当因此死锁" class="headerlink" title="资源分配不当因此死锁"></a>资源分配不当因此死锁</h4><p>设系统有9个资源，4个进程。每个进程需要4个资源才能完成执行。现若每个进程分配2个资源，系统还剩1个资源，谁都无法完成执行，导致死锁。</p>
 <p>显然，如果顺序适当是可以避免死锁的</p>
+<h4 id="临时资源的死锁"><a href="#临时资源的死锁" class="headerlink" title="临时资源的死锁"></a>临时资源的死锁</h4><h3 id="解决死锁的方案"><a href="#解决死锁的方案" class="headerlink" title="解决死锁的方案"></a>解决死锁的方案</h3><ul>
+<li>鸵鸟策略<ul>
+<li>不加理会，认为处理死锁的代价是比死锁产生的代价高</li>
+</ul>
+</li>
+<li>不让死锁发生<ul>
+<li>静态策略：进程创建时为其分配所有资源<ul>
+<li>有效，易于实现。但资源浪费，所有进程都满足最大资源数时才能执行</li>
+</ul>
+</li>
+<li>动态策略：进程执行时改变资源的分配情况<ul>
+<li>资源利用率高，但实现复杂</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>让死锁发生<ul>
+<li>死锁发生后事后补救</li>
+</ul>
+</li>
+</ul>
+<h4 id="死锁的预防"><a href="#死锁的预防" class="headerlink" title="死锁的预防"></a>死锁的预防</h4><p>死锁的预防策略是以<strong>破坏死锁产生的必要条件</strong>为目的的，对资源的申请加以限制。</p>
+<ul>
+<li>破坏”互斥”条件<ul>
+<li>todo 对所有资源进行spooling操作</li>
+<li>分析：</li>
+</ul>
+</li>
+<li>破坏”不可剥夺”条件<ul>
+<li>进程申请的资源得不到满足时，进程可以回收请求，转去做其他工作 <ul>
+<li>法1：申请资源得不到满足时，释放已经占用的资源。如还没用完，则以后申请</li>
+<li>法2：优先级高的进程可以强迫优先级低的进程释放资源</li>
+</ul>
+</li>
+<li>分析：<ul>
+<li>需要保存”资源使用”的现场，以便以后申请恢复。需要更多的时间空间</li>
+<li>只适用于处理机和储存器资源</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>破坏”零散请求”条件<ul>
+<li>静态分配策略，一个进程所需的所有资源都得到满足才能执行</li>
+<li>分析：<ul>
+<li>资源利用率低，如只在开始用以下也要等到进程结束才释放</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>破坏”循环等待”条件<ul>
+<li>系统根据一定的策略给资源编号，进程必须从小到大的顺序申请资源，并进程占有的资源号小于申请的资源号才能申请</li>
+<li>分析：<ul>
+<li>按照资源编号的顺序使用资源可能与实际资源的使用顺序不同，使得先申请的资源因暂时不用而闲置很久</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="死锁的避免"><a href="#死锁的避免" class="headerlink" title="死锁的避免"></a>死锁的避免</h4><p>死锁的避免策略是用 <strong>动态的办法判断</strong> 资源和系统的使用情况，在分配之前判断是否会发生死锁，如果会发生死锁则不予分配资源。</p>
+<ul>
+<li>安全状态：多个进程动态申请资源时，系统按某种顺序分配资源，最终可以顺利完成<ul>
+<li>安全状态一定不会发生死锁</li>
+</ul>
+</li>
+<li>不安全状态：不存在一种分配顺序使得每个进程都能顺利完成<ul>
+<li>不安全状态不一定会死锁，但死锁一定处于不安全状态</li>
+</ul>
+</li>
+</ul>
+<h5 id="单项资源的银行家算法"><a href="#单项资源的银行家算法" class="headerlink" title="单项资源的银行家算法"></a>单项资源的银行家算法</h5><p>银行家算法是一种 <strong>资源分配时</strong> 避免死锁的方法。</p>
+<p>假设资源数(银行家的资金)为10，现有4个进程(客户)a、b、c、d分别需要资源数4、5、6、7。假设他们处于如下状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;用户名&gt; &lt;已用资金&gt; &lt;最大资金&gt; &lt;仍需资金&gt;</span><br><span class="line"></span><br><span class="line">剩余资金：4</span><br><span class="line">|---|---|---|---|</span><br><span class="line">| a | 1 | 4 | 3 |</span><br><span class="line">| b | 2 | 5 | 3 |</span><br><span class="line">| c | 1 | 6 | 5 |</span><br><span class="line">| d | 2 | 7 | 5 |</span><br><span class="line">|---|---|---|---|</span><br><span class="line"></span><br><span class="line">如果先分配给a，a可以顺利执行，a释放资源</span><br><span class="line"></span><br><span class="line">剩余资金：5</span><br><span class="line">|---|---|---|---|</span><br><span class="line">| a | - | - | - |</span><br><span class="line">| b | 2 | 5 | 3 |</span><br><span class="line">| c | 1 | 6 | 5 |</span><br><span class="line">| d | 2 | 7 | 5 |</span><br><span class="line">|---|---|---|---|</span><br><span class="line"></span><br><span class="line">接下来先分配给谁都能够顺利执行</span><br></pre></td></tr></table></figure>
 
+<p>但是如果先分配给c，c不但不能顺利执行，剩余资源也用完了，导致处于不安全状态。其他顺同理。</p>
+<h5 id="多项资源的银行家算法"><a href="#多项资源的银行家算法" class="headerlink" title="多项资源的银行家算法"></a>多项资源的银行家算法</h5><p>类似单项资源的情况，把一个进程所需的所有类型的资源的数量以向量的形式组织，每个向量视作份需求，则有退化成但资源模式。</p>
+<p>如：资源R1、R2、R3、R4分别表示5台打印机、7个手写板、8台扫描仪、9个读卡器。5个进程T1、T2、T3、T4、T5。设某时刻剩余资源和设备所需处于如下状态:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">avaliable &#x3D; (2, 2, 1, 2)  &#x2F;&#x2F; 因为可能别的子系统还在用，把整个满足的部分给出去了，剩下这点</span><br><span class="line"></span><br><span class="line">&lt;进程，所需&gt;</span><br><span class="line">|------|----|----|----|----|</span><br><span class="line">| Proc | R1 | R2 | R3 | R4 |</span><br><span class="line">| T1   | 2  | 3  | 1  | 0  |</span><br><span class="line">| T2   | 1  | 1  | 0  | 3  |</span><br><span class="line">| T3   | 1  | 2  | 1  | 0  |</span><br><span class="line">| T4   | 0  | 3  | 2  | 0  |</span><br><span class="line">| T5   | 0  | 3  | 2  | 0  |</span><br><span class="line">|------|----|----|----|----|</span><br><span class="line"></span><br><span class="line">显然安全的顺序可以是：T3-&gt;...-&gt;...</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="死锁的检测和解除"><a href="#死锁的检测和解除" class="headerlink" title="死锁的检测和解除"></a>死锁的检测和解除</h5>
   
   
     
@@ -819,10 +898,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-06T20:05:23+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-09T20:12:12+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Apr 6, 2021</p>
+    <p>更新于：Apr 9, 2021</p>
   </a>
 </div>
 
@@ -974,7 +1053,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程管理"><span class="toc-text">进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PCB信息"><span class="toc-text">PCB信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc基本状态"><span class="toc-text">proc基本状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc调度"><span class="toc-text">proc调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#临界资源"><span class="toc-text">临界资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信号量与PV操作"><span class="toc-text">信号量与PV操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管程"><span class="toc-text">管程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程间相互作用"><span class="toc-text">进程间相互作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程通信"><span class="toc-text">进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#共享内存"><span class="toc-text">共享内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#消息传递"><span class="toc-text">消息传递</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信箱"><span class="toc-text">信箱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管道pipe"><span class="toc-text">管道pipe</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程"><span class="toc-text">线程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#线程的实现机制"><span class="toc-text">线程的实现机制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#用户级线程"><span class="toc-text">用户级线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#内核级线程"><span class="toc-text">内核级线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ULT和KLT结合"><span class="toc-text">ULT和KLT结合</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UNIX进程模型"><span class="toc-text">UNIX进程模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程调度"><span class="toc-text">进程调度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁"><span class="toc-text">死锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#产生死锁的4的必要条件"><span class="toc-text">产生死锁的4的必要条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#产生死锁的实例"><span class="toc-text">产生死锁的实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#P-V操作不当"><span class="toc-text">P,V操作不当</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源申请顺序不当"><span class="toc-text">资源申请顺序不当</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源分配不当因此死锁"><span class="toc-text">资源分配不当因此死锁</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程管理"><span class="toc-text">进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PCB信息"><span class="toc-text">PCB信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc基本状态"><span class="toc-text">proc基本状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc调度"><span class="toc-text">proc调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#临界资源"><span class="toc-text">临界资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#信号量与PV操作"><span class="toc-text">信号量与PV操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管程"><span class="toc-text">管程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程间相互作用"><span class="toc-text">进程间相互作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程通信"><span class="toc-text">进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#共享内存"><span class="toc-text">共享内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#消息传递"><span class="toc-text">消息传递</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信箱"><span class="toc-text">信箱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管道pipe"><span class="toc-text">管道pipe</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程"><span class="toc-text">线程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#线程的实现机制"><span class="toc-text">线程的实现机制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#用户级线程"><span class="toc-text">用户级线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#内核级线程"><span class="toc-text">内核级线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ULT和KLT结合"><span class="toc-text">ULT和KLT结合</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UNIX进程模型"><span class="toc-text">UNIX进程模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程调度"><span class="toc-text">进程调度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁"><span class="toc-text">死锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#产生死锁的4的必要条件"><span class="toc-text">产生死锁的4的必要条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#产生死锁的实例"><span class="toc-text">产生死锁的实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#P-V操作不当"><span class="toc-text">P,V操作不当</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源申请顺序不当"><span class="toc-text">资源申请顺序不当</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源分配不当因此死锁"><span class="toc-text">资源分配不当因此死锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#临时资源的死锁"><span class="toc-text">临时资源的死锁</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决死锁的方案"><span class="toc-text">解决死锁的方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#死锁的预防"><span class="toc-text">死锁的预防</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#死锁的避免"><span class="toc-text">死锁的避免</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#单项资源的银行家算法"><span class="toc-text">单项资源的银行家算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#多项资源的银行家算法"><span class="toc-text">多项资源的银行家算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#死锁的检测和解除"><span class="toc-text">死锁的检测和解除</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
   </section>
 

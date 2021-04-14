@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>使用qemu启动基于open risc的虚拟机 - Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="qemu">
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/eye.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Mens et Manus</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>首页</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>档归</p>
+            </a>
+          
+            <a href="https://github.com/66RING"
+              
+              
+              id="https:githubcom66RING">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        使用qemu启动基于open risc的虚拟机
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>请设置文章作者</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Dec 5, 2020</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="使用qemu启动基于open risc的虚拟机" data-path="/2020/12/05/universe/qemu/open_risc_qemu/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="使用qemu启动虚拟机"><a href="#使用qemu启动虚拟机" class="headerlink" title="使用qemu启动虚拟机"></a>使用qemu启动虚拟机</h1><h2 id="安装qemu"><a href="#安装qemu" class="headerlink" title="安装qemu"></a>安装qemu</h2><p>可能需要的依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autoconf automake autotools-dev curl libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev git</span><br></pre></td></tr></table></figure>
+
+<p>下载qemu源文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;qemu&#x2F;qemu</span><br></pre></td></tr></table></figure>
+
+<p>进入qemu目录<code>cd qemu</code>，配置qemu</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;configure --target-list&#x3D;&#39;or1k-softmmu or1k-linux-user&#39;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>xxx-softmmu</code>，内存管理单元模拟</li>
+<li><code>xxx-user</code>，用户空间模拟</li>
+<li>为何没有内核空间模拟?</li>
+</ul>
+<p>编译安装qemu</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make -j</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装基于open-risc的linux"><a href="#安装基于open-risc的linux" class="headerlink" title="安装基于open risc的linux"></a>安装基于open risc的linux</h2><h3 id="从源码编译linux"><a href="#从源码编译linux" class="headerlink" title="从源码编译linux"></a>从源码编译linux</h3><ul>
+<li>1.安装编译所需工具链<ul>
+<li>binaries：<a href="https://github.com/openrisc/or1k-gcc/releases" target="_blank" rel="noopener">https://github.com/openrisc/or1k-gcc/releases</a></li>
+<li>building：<a href="https://github.com/stffrdhrn/or1k-toolchain-build" target="_blank" rel="noopener">https://github.com/stffrdhrn/or1k-toolchain-build</a></li>
+<li>其他toolchains：<a href="https://openrisc.io/software" target="_blank" rel="noopener">https://openrisc.io/software</a></li>
+<li>或编译好的：<a href="https://toolchains.bootlin.com/releases_openrisc.html" target="_blank" rel="noopener">https://toolchains.bootlin.com/releases_openrisc.html</a></li>
+</ul>
+</li>
+<li>2.编译指定架构的内核<ul>
+<li>使用默认配置<code>make ARCH=openrisc CROSS_COMPILE=&quot;or1k-linux-&quot; defconfig</code></li>
+<li>编译<code>make ARCH=openrisc CROSS_COMPILE=&quot;or1k-linux-&quot;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="使用现成的编译好的linux"><a href="#使用现成的编译好的linux" class="headerlink" title="使用现成的编译好的linux"></a>使用现成的编译好的linux</h3><p>如果编译安装基于open risc的linux过于费时，可以使用现成的已经编译号的linux</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;shorne.noip.me&#x2F;downloads&#x2F;or1k-linux-5.0.gz</span><br></pre></td></tr></table></figure>
+
+<p>解压缩</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gunzip or1k-linux-5.0.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="制作根文件系统"><a href="#制作根文件系统" class="headerlink" title="制作根文件系统"></a>制作根文件系统</h2><p>有多种方式制作根文件系统，这里使用busybox制作。</p>
+<p>下载busybox源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;busybox.net&#x2F;downloads&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>进入源码目录，配置busybox</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make CROSS_COMPILE&#x3D;&quot;or1k-linux-&quot; menuconfig</span><br><span class="line"># or1k-linux- 是你目标架构系统需要的工具链</span><br></pre></td></tr></table></figure>
+
+<p>进入配置菜单，将<code>Settings</code>中的<code>Build Options</code>中的<code>Build static binary (no shared libs)</code>选中并保存配置，退出。</p>
+<p>编译安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make CROSS_COMPILE&#x3D;&quot;or1k-linux-&quot;</span><br><span class="line">make CROSS_COMPILE&#x3D;&quot;or1k-linux-&quot; install</span><br></pre></td></tr></table></figure>
+
+<p>之后在源码目录下会多出<code>_install</code>文件夹。</p>
+<h3 id="制作一个最小的文件系统"><a href="#制作一个最小的文件系统" class="headerlink" title="制作一个最小的文件系统"></a>制作一个最小的文件系统</h3><p>使用<code>qemu-img</code>创建一个分区，并安装文件系统</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">qemu-img create rootfs.img  1g</span><br><span class="line">mkfs.ext4 rootfs.img   &#x2F;&#x2F; 制作ext4格式的文件系统</span><br></pre></td></tr></table></figure>
+
+<p>将<code>_install</code>文件夹下的东西拷贝到文件系统中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir rootfs</span><br><span class="line">sudo mount -o loop rootfs.img  rootfs</span><br><span class="line">cd rootfs</span><br><span class="line">sudo cp -r ..&#x2F;busyboxsource&#x2F;_install&#x2F;* .</span><br><span class="line">sudo mkdir proc sys dev etc etc&#x2F;init.d</span><br></pre></td></tr></table></figure>
+
+<p>另外还要创建一个简单的init的RC文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd etc&#x2F;init.d&#x2F;</span><br><span class="line">sudo touch rcS</span><br><span class="line">sudo vi rcS</span><br></pre></td></tr></table></figure>
+
+<p>编辑该文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line">mount -t proc none &#x2F;proc</span><br><span class="line">mount -t sysfs none &#x2F;sys</span><br><span class="line">&#x2F;sbin&#x2F;mdev -s</span><br></pre></td></tr></table></figure>
+
+<p>然后修改 rcS 文件权限，加上可执行权限，这样当 busybox 的init 运行起来后，就能运行这个 /etc/init.d/rcS 脚本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x rcS</span><br></pre></td></tr></table></figure>
+
+<p>最后退出 rootfs 目录并卸载文件系统：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo umount rootfs</span><br></pre></td></tr></table></figure>
+
+<p>至此，文件系统就制作完成了。</p>
+<h2 id="启动虚拟机"><a href="#启动虚拟机" class="headerlink" title="启动虚拟机"></a>启动虚拟机</h2><p>使用编译好的qemu启动linux</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-or1k -cpu or1200 -M or1k-sim -kernel or1k-linux-5.0 -serial stdio -nographic -monitor none</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参数说明<ul>
+<li><code>qemu-system-</code>，用于模拟不同的硬件平台，这里是OpenRISC，所以是<code>qemu-system-or1k</code></li>
+<li><code>-cpu</code>，指定虚拟cpu型号</li>
+<li><code>-M</code>，指定虚拟机类型</li>
+<li><code>-m</code>，指定虚拟机内存大小</li>
+<li><code>-kernel</code>，指定内核镜像</li>
+<li><code>-serial</code>，重定向串口到宿主机的设备</li>
+<li><code>-nographic</code>，通常，QEMU使用SDL显示VGA输出，使用这个选项，使qemu成为简单的命令行应用程序</li>
+<li><code>-monitor</code>，重定向显示器到宿主机的设备</li>
+<li><code>-S</code>，在内核入口打断点</li>
+<li><code>-s</code>，等待gdb连接，默认开启1234端口</li>
+</ul>
+</li>
+</ul>
+<h1 id="qemu工作原理"><a href="#qemu工作原理" class="headerlink" title="qemu工作原理"></a>qemu工作原理</h1><h2 id="qemu虚拟机原理"><a href="#qemu虚拟机原理" class="headerlink" title="qemu虚拟机原理"></a>qemu虚拟机原理</h2><p>利用CPU硬件提供的虚拟化支持，做硬件加速，如果虚拟机(guest)和宿主机(host)的架构相同，虚拟机的指令可以直接在host运行，在将结果告诉guest。这里是用上了kvm:linux内核的虚拟化支持，如果遇到kvm无法处理的操作时(如io处理)会退出kvm并交给qemu处理。</p>
+<p>qemu处理，那要将guest机的指令翻译成host机器的指令然后在host机执行，最后再将执行结果告诉guest机。</p>
+<h2 id="qemu模拟硬件原理"><a href="#qemu模拟硬件原理" class="headerlink" title="qemu模拟硬件原理"></a>qemu模拟硬件原理</h2><p>计算机本质上就是一个能在特定位置读写并作出响应的机器。只要通过软件模拟这个读写过程，并且作出响应的相应。那么在虚拟机看来，它就拥有一个实实在在的硬件。这就涉及到qemu的QOM。</p>
+<h2 id="QOM-qemu-object-module"><a href="#QOM-qemu-object-module" class="headerlink" title="QOM, qemu object module"></a>QOM, qemu object module</h2><p>QOM创建可以分为四步</p>
+<ul>
+<li>将TypeInfo注册TypeImpl</li>
+<li>实例化ObjectClass<ul>
+<li>The base for all classes.</li>
+</ul>
+</li>
+<li>实例化Object<ul>
+<li>The base for all objects.</li>
+</ul>
+</li>
+<li>添加Property</li>
+</ul>
+<p>总的来说，根据TypeInfo创建TypeImpl ，然后根据TypeImpl创建对应的ObjectClass，再根据TypeImpl创建对应的Object，ObjectClass和Object都有自己的Property</p>
+<h3 id="自定义Object"><a href="#自定义Object" class="headerlink" title="自定义Object"></a>自定义Object</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">MyDevice</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    DeviceState parent;  <span class="comment">//父对象必须是该对象数据结构的第一个属性，以便实现父对象向子对象的cast</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> reg0, reg1, reg2;  <span class="comment">// 定义设备的寄存器</span></span><br><span class="line">&#125; MyDevice;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="QOM中的多态"><a href="#QOM中的多态" class="headerlink" title="QOM中的多态"></a>QOM中的多态</h4><p><strong>C中的继承的一种实现方式：父类对象为结构体的第一成员</strong> ，C标准确保结构体的第一个成员位于0字节，可以直接进行类型转换。</p>
+<p>看下面一段代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">ObjectClass</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    Type type;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;ObjectClass;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Object</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ObjectClass *<span class="class"><span class="keyword">class</span>;</span>  <span class="comment">// 没有祖父，所以可以用指针</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;Object;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">MyDevice</span> &#123;</span></span><br><span class="line">    Object parent_obj;</span><br><span class="line">    <span class="keyword">int</span> reg0, reg1;</span><br><span class="line">&#125; PCITestDevState;</span><br></pre></td></tr></table></figure>
+
+<p>从父类到子类的关系是<code>ObjectClass-&gt;Object-&gt;MyDevice</code>，在内存中是这样的：</p>
+<p><img src="./inheritance.jpg" class="lazyload" data-srcset="./inheritance.jpg" srcset="data:image/png;base64,666" alt="inheritance"></p>
+<p>因此在要类型转换时取相应大小的内存就能得到对应的类。如从子类转变为父类或祖父类。</p>
+<h3 id="ObjectClass注册与初始化"><a href="#ObjectClass注册与初始化" class="headerlink" title="ObjectClass注册与初始化"></a>ObjectClass注册与初始化</h3><p>TypeImpl的创建，用户通过定义TypeInfo类型，然后调用<code>type_register</code>或<code>type_register_static</code>调用<code>type_init</code>宏注册到全局hash表中，最后通过定义的<code>TyepInfo</code>类型创建TypeImpl对象。如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> TypeInfo my_device_info = &#123;</span><br><span class="line">    .name = <span class="string">"name"</span>,  <span class="comment">// 类名，作为hash表的key，value就是生成的TypeImpl</span></span><br><span class="line">    .parent = <span class="string">"parent"</span>,  <span class="comment">// 父类名</span></span><br><span class="line">    .instance_size = <span class="keyword">sizeof</span>(MyDevice),</span><br><span class="line">    .class_size = <span class="keyword">sizeof</span>(MyDevice),</span><br><span class="line">    .instance_init = my_init,   <span class="comment">// 实例(设备)初始化</span></span><br><span class="line">    .class_init = my_device_class_init, <span class="comment">// 类初始化动作，如重写父类函数等</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">my_device_register_types</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    type_register_static(&amp;my_device_info); <span class="comment">// 注册，用于生成TypeImpl实例</span></span><br><span class="line">    <span class="comment">// 或者 type_register(&amp;my_device_info);</span></span><br><span class="line">&#125;</span><br><span class="line">type_init(my_device_register_types)</span><br></pre></td></tr></table></figure>
+
+<p>在QEMU启动阶段<code>vl.c:main()</code>，注册的函数会在<code>module_call_init(MODULE_INIT_QOM)</code>中执行。<code>name</code>字段定义我们启动时参数<code>-device</code>后面的值</p>
+<h3 id="类初始化"><a href="#类初始化" class="headerlink" title="类初始化"></a>类初始化</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="title">type_initialize</span><span class="params">(TypeImpl *ti)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 分配空间等</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 初始化</span></span><br><span class="line">    ti-&gt;class_init(ti-&gt;class, ti-&gt;class_data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过将自定义<code>TypeInfo</code>注册到全局哈希表后，就可以根据哈希表初始化，通过调用<code>type_initialize</code>每一个类分配内存空间和初始化(如给<code>ObjectClass</code>分配空间和初始化)，如果有<code>parent</code>则会递归调用<code>type_initialize</code>调用父类的初始化函数</p>
+<p>类初始化函数指针由<code>.class_init</code>成员接收。<code>type_initialize</code>会调用类的<code>.class_init</code>成员。相当于 <strong>构造函数</strong> ，但是多数oop语言支持的重写需要我们在该构造函数中修改指针的值。如我们实现了父类的虚拟方法，就可以获取父类引用并给父类成员赋值，一般就是重写父类的虚拟方法，如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_device_class_init</span><span class="params">(ObjectClass *klass, <span class="keyword">void</span> *class_data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    DeviceClass *dc = DEVICE_CLASS(klass);  <span class="comment">// 使用引用修改，原地修改故相当于实现父类虚拟函数，覆盖原有类的方法</span></span><br><span class="line">    dc-&gt;reset = my_device_reset;  <span class="comment">// 设备复位</span></span><br><span class="line">    dc-&gt;realize = my_device_realize; <span class="comment">// Object初始化函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>派生类中可以将类原有的虚拟函数指针保存起来，以便以后恢复，保证父类原有的虚拟函数指针不会丢失。</p>
+<p>因为C语言保证结构体的第一个成员始于0字节，而所有对象的父类都是其第一个成员，所以我们可以直接进行类型转换。</p>
+<p>将一个父类的指针直接转换为子类的指针是不安全的，为了安全校验从Type实例的父类型转换成子类，各类需要提供强制类型转换的宏，如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DeviceClass *dc = DEVICE_CLASS(klass);</span><br></pre></td></tr></table></figure>
+
+<p>这些宏都由<code>OBJECT_CLASS_CHECK()</code>封装，其中一个例子如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* include/hw/qdev-core.h */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEVICE_CLASS(klass) OBJECT_CLASS_CHECK(DeviceClass, (klass), TYPE_DEVICE)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* include/qom/object.h */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * OBJECT_CLASS_CHECK:</span></span><br><span class="line"><span class="comment"> * @class_type: The C type to use for the return value.</span></span><br><span class="line"><span class="comment"> * @class: A derivative class of @class_type to cast.</span></span><br><span class="line"><span class="comment"> * @name: the QOM typename of @class_type.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * A type safe version of @object_class_dynamic_cast_assert.  This macro is</span></span><br><span class="line"><span class="comment"> * typically wrapped by each type to perform type safe casts of a class to a</span></span><br><span class="line"><span class="comment"> * specific class type.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> OBJECT_CLASS_CHECK(class_type, class, name) \</span></span><br><span class="line">    ((class_type *)object_class_dynamic_cast_assert(OBJECT_CLASS(class), (name), \</span><br><span class="line">                                               __FILE__, __LINE__, __func__))</span><br></pre></td></tr></table></figure>
+
+<p>可见安全的类型转换的宏定义通过封装<code>object_class_dynamic_cast_assert</code>实现</p>
+<h3 id="Object创建"><a href="#Object创建" class="headerlink" title="Object创建"></a>Object创建</h3><p>通过<code>type_init</code>，自定义的类型的<code>ObjectClass</code>就准备好了，其包含Object初始化需要的一些操作，所以叫<code>ObjectClass</code>。</p>
+<p>而Type的<code>Object</code>实例只有在 <strong>QEMU命令行中添加<code>-device</code>选项时才会创建</strong> 。主要是在构造函数重写父类的<code>(ObjectClass)-&gt;realize</code>，再由<code>realize</code>完成主要的Object创建，但有的也会通过<code>.instance_init</code>函数指针完成。</p>
+<p><code>ObjectClass</code>和<code>Object</code>通过<code>Object</code>的<code>class</code>字段联系。</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p><code>ObjectClass</code>和<code>Object</code>结构都有一个<code>GHashTable</code>类型的<code>properties</code>成员，用于存储<code>属性名</code>到<code>ObjectProperty</code>的映射</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">ObjectProperty</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    gchar *name;</span><br><span class="line">    gchar *type;</span><br><span class="line">    gchar *description;</span><br><span class="line">    ObjectPropertyAccessor *<span class="built_in">get</span>;</span><br><span class="line">    ObjectPropertyAccessor *<span class="built_in">set</span>;</span><br><span class="line">    ObjectPropertyResolve *resolve;</span><br><span class="line">    ObjectPropertyRelease *<span class="built_in">release</span>;</span><br><span class="line">    <span class="keyword">void</span> *opaque;</span><br><span class="line">&#125; ObjectProperty;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="静态属性"><a href="#静态属性" class="headerlink" title="静态属性"></a>静态属性</h4><p>静态属性在初始化过程就加入到了<code>props</code>中，类对象(<code>ObjectClass</code>)中通过调用<code>object_property_add</code>函数将属性添加在类实例对象(<code>Object</code>)的<code>properties</code>成员中。</p>
+<p>而类对象<code>ObjectClass</code>的<code>props</code>成员会在<code>class_init</code>中设置。如:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> Property stm32f2xx_usart_properties[] = &#123;</span><br><span class="line">    DEFINE_PROP_CHR(<span class="string">"chardev"</span>, STM32F2XXUsartState, chr),</span><br><span class="line">    DEFINE_PROP_END_OF_LIST(),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">stm32f2xx_usart_class_init</span><span class="params">(ObjectClass *klass, <span class="keyword">void</span> *data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    DeviceClass *dc = DEVICE_CLASS(klass);</span><br><span class="line"></span><br><span class="line">    dc-&gt;reset = stm32f2xx_usart_reset;</span><br><span class="line">    dc-&gt;props = stm32f2xx_usart_properties;</span><br><span class="line">    dc-&gt;realize = stm32f2xx_usart_realize;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看属性:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-&lt;arch&gt; -device &lt;module name&gt;,?</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="动态属性"><a href="#动态属性" class="headerlink" title="动态属性"></a>动态属性</h4><p>动态属性是在运行时添加的属性，如用户通过参数传入一个设备，需要作为属性和其他设备关联起来</p>
+<h5 id="child"><a href="#child" class="headerlink" title="child"></a>child</h5><p><code>child</code>实现了组成(composition)关系，表示一个设备(parent)创建了另一个设备(child)，parent掌握child的声明周期，负责向其发送事件。一个device只能有一个parent，但可以有多个child，构成一棵组合树：</p>
+<p>通过<code>object_property_add_child</code>添加child：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">object_property_add           </span><br><span class="line">将 child 作为 obj 的属性，属性名name，类型为 &quot;child&lt;child的类名&gt;&quot;，同时getter为object_get_child_property，没有setter</span><br><span class="line">child-&gt;parent &#x3D; obj</span><br></pre></td></tr></table></figure>
+
+<p>例如 <code>x86_cpu_realizefn =&gt; x86_cpu_apic_create =&gt; object_property_add_child(OBJECT(cpu), &quot;lapic&quot;, OBJECT(cpu-&gt;apic_state), &amp;error_abort)</code> 将创建 APICCommonState ，并设置为 X86CPU 的child。</p>
+<h5 id="link"><a href="#link" class="headerlink" title="link"></a>link</h5><p>link实现了backlink关系，表示一个设备引用了另外一个设备，是一种松散的联系。两个设备之间能有多个link关系，可以进行修改。它完善了组合树，使其构成构成了一幅有向图。</p>
+<p>通过<code>object_property_add_link</code>添加link：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">创建 LinkProperty ，填充目标(child)的信息</span><br><span class="line">object_property_add</span><br><span class="line">将 LinkProperty 作为 obj 的属性，属性名name，类型为 &quot;link&lt;child的类名&gt;&quot;，同时getter为 object_get_link_property 。如果传入了check函数，则需要回调，设置setter为 object_set_link_property</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><p><a href="https://wiki.qemu.org/Documentation/Platforms/OpenRISC" target="_blank" rel="noopener">安装参考</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/e1a4b5b808e0" target="_blank" rel="noopener">使用入门</a>**</p>
+</li>
+</ul>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://yoursite.com/2020/12/05/universe/qemu/open_risc_qemu/>http://yoursite.com/2020/12/05/universe/qemu/open_risc_qemu/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-14T18:32:17+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：Apr 14, 2021</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/qemu/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>qemu</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2020/12/05/universe/linux/FS/filesystem/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>linux文件系统</p>
+          <p class='content'>文件系统原理为了高效组织、管理和使用磁盘上的数据，需要独立的文件系统。
+文件系统的组成通常磁盘上的数据是要与内存交互的(内存映射)，而内存一个页的大小是4KB，所以磁盘一般按照4KB进行划分。一...</p>
+        </a>
+      
+      
+        <a class='next' href='/2020/12/01/universe/web/https/'>
+          <p class='title'>What Is Https<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>What is HttpsCryptography
+Symmetric encryptionThe classic style is: $abc \overset{+3}{\underset{-...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装qemu"><span class="toc-text">安装qemu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装基于open-risc的linux"><span class="toc-text">安装基于open risc的linux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从源码编译linux"><span class="toc-text">从源码编译linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用现成的编译好的linux"><span class="toc-text">使用现成的编译好的linux</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作根文件系统"><span class="toc-text">制作根文件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#制作一个最小的文件系统"><span class="toc-text">制作一个最小的文件系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动虚拟机"><span class="toc-text">启动虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qemu虚拟机原理"><span class="toc-text">qemu虚拟机原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qemu模拟硬件原理"><span class="toc-text">qemu模拟硬件原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QOM-qemu-object-module"><span class="toc-text">QOM, qemu object module</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义Object"><span class="toc-text">自定义Object</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#QOM中的多态"><span class="toc-text">QOM中的多态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ObjectClass注册与初始化"><span class="toc-text">ObjectClass注册与初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类初始化"><span class="toc-text">类初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object创建"><span class="toc-text">Object创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#属性"><span class="toc-text">属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#静态属性"><span class="toc-text">静态属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态属性"><span class="toc-text">动态属性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#child"><span class="toc-text">child</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#link"><span class="toc-text">link</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="使用qemu启动基于open risc的虚拟机";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":null,"appKey":null,"meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>
