@@ -24,7 +24,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>Archive: 2020/8 - Ring&#39;s Blog</title>
+  <title>Tag: softmmu - Ring&#39;s Blog</title>
   
 
   
@@ -104,7 +104,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur " style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -375,7 +375,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="half" class='cover-wrapper  dock' style="display: ;">
+        <div id="full" class='cover-wrapper  dock' style="display: none;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
           
@@ -450,27 +450,17 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
+
 <div class='l_main'>
-	
-		
+  
+    
+      
   <section class="post-list">
     
       
         
           
         
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
       
     
     
@@ -484,16 +474,17 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
-      <a href="/2020/08/20/universe/js_ts/this_and_arrow_function/">
-        This和箭头函数
+      <a href="/2021/04/13/universe/qemu/qemu_softmmu/">
+        QEMU的内存模拟
       </a>
     </h2>
   
   <div class='md'>
     
       
-        ThisThis用于访问当前方法所属的对象，取决于调用的对象如：
-12345678910111213141516let obj = &#123;    a: 12,    fn()&#123;        console.log(this)    &#125;&#125;// 或者形如let obj = &#123;    a: 12,&#125;obj.fn = function()&#...
+        QEMU softmmu虚拟机(Guest)内存模拟的首要任务是将虚拟机虚拟地址(GVA)转换成实际存储的宿主机(Host)的物理地址(HPA)。
+虚拟机提供了虚拟的硬件环境，GVA到到虚拟机物理地址(GPA)的过程可以由Guest OS完成，而QEMU要做的就是提供一个GPA到HPA的转换的实现。
+123456789101112131415             GVA         ...
       
     
   </div>
@@ -501,352 +492,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-08-20</time>
+        <time>2021-04-13</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/08/20/universe/js_ts/this_and_arrow_function/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/08/20/universe/tech_tips/what_is_dll/">
-        什么是dll
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        什么是DLLDLL(Dynamic Link Library)，动态链接库，linux下是.so文件，win下是.dll文件。
-之所以需要库，是因为可以进行代码解耦和代码重用，由库文件对外提供服务，如exe调用dll。还有一个作用就是在不希望别人看到源码但需要使用我们的功能时隐藏源码。
-
-静态库
-win下是.lib文件，linux下是.a文件
-它作为程序的一个模块，在链接期间被合并到程序中
-...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-08-20</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/08/20/universe/tech_tips/what_is_dll/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/08/17/universe/go/golang_mem_alignment/">
-        Golang内存对齐
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Golang内存对齐Cpu要想读取数据，需要通过 地址总线 把地址传输给内存。内存准备好数据输出到 数据总线 ，交给CPU。
-每根地址总线能表示一位，8根地址总线就能表示8位二进制数，即256个地址。因为表示不了更大的地址，所以就用不了更大的内存。
-每次操作一字节太慢，那就加宽数据总线，要想一次操作一字节就至少需要32位数据总线。8字节就64位。这里每次操作的字节数就是所谓的  机器字长 。...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-08-17</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/08/17/universe/go/golang_mem_alignment/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/08/11/universe/go/gui_programming/gui_programming/">
-        Golang gui 编程笔记
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        基本结构
-初始化
-用户设置
-
-创建主窗口
-win := gtk.NewWindow(gtk.WINDOW_TOPLEVEL)
-
-
-
-
-
-设置窗口属性
-win.SetTitle(&quot;gtk go&quot;)
-win.SetSizeRequest(400, 320)
-
-
-
-
-
-创建容器控件(固定布局、任意布局)
-layout := gtk.NewFixed()
-
-
-
-
-
-布局添加到窗口...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-08-11</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/08/11/universe/go/gui_programming/gui_programming/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/08/09/universe/tech_tips/CAS/">
-        CAS简记
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        CAS(Compare And Swap)CAS是一种乐观锁。何谓悲观，编译器认为就是如果不严格同步线程调用则一定会产生异常，所以悲观锁会阻塞其他所有线程调用(互斥)。
-但是并不是所有操作都一定会产生异常，如多线程的读操作就不会。
-CAS机制在多线程对共享资源访问时比较共享资源当前的状态(newValue)和发起调用时的状态(oldValue)。如果状态一样则还没其他线程访问，这个线程(sw...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-08-09</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/08/09/universe/tech_tips/CAS/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/08/08/universe/web/jwt/">
-        jwt原理
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        传统的基于token的用户验证
-
-用户登录
-服务返回token，并在服务端保存token
-
-
-
-
-
-用户验证
-用户再次访问时需要携带token，比较数据库中的token
-
-
-
-
-
-Json Web Token
-
-用户登录
-服务返回token，但不保存token
-
-
-
-
-
-用户验证
-用户再次访问时需要携带token，再做token校验
-
-
-
-
-
-jwt实现过程
-
-用户提交用户名和密码，如果登录...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-08-08</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/08/08/universe/web/jwt/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/08/06/universe/config_lang/yaml_basic/">
-        Yaml Basic
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Offical Tutorial
-Basickey: value
-Yaml will auto detect data type, but some time that’s what we don’t want. So you need  Type cast :
-1age: !!str 10
-
-
-type avaliable
-str
-int
-float
-bool
-null
-ISO date ...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-08-06</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/08/06/universe/config_lang/yaml_basic/'>
+          <a class='readmore' href='/2021/04/13/universe/qemu/qemu_softmmu/'>
             Read More
           </a>
         </div>
@@ -866,7 +517,8 @@ ISO date ...
   
 
 
-	
+    
+  
 </div>
 <aside class='l_side'>
   
@@ -986,7 +638,7 @@ ISO date ...
 
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.remove("show");
+  l_header.classList.add("show");
   
 </script>
 
