@@ -5,6 +5,8 @@
   <!-- SEO相关 -->
   
     
+      <meta name="robots" content="noindex,follow">
+    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -22,9 +24,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>communication and networking笔记 - Ring&#39;s Blog</title>
-  
-    <meta name="keywords" content="network">
+  <title>Archive: 2000 - Ring&#39;s Blog</title>
   
 
   
@@ -104,7 +104,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur " style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -375,7 +375,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper post dock' style="display: none;">
+        <div id="half" class='cover-wrapper  dock' style="display: ;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
           
@@ -451,501 +451,40 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 
 <div class='l_main'>
-  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
-  
-
-
-  
-  <div class="article-meta" id="top">
+	
+		
+  <section class="post-list">
     
-    
-    
-      <h1 class="title">
-        communication and networking笔记
-      </h1>
-      <div class='new-meta-box'>
-        
-          
-            
-<div class='new-meta-item author'>
-  <a class='author' href="/" rel="nofollow">
-    <img no-lazy src="">
-    <p>请设置文章作者</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Mar 24, 2021</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-  <div class="new-meta-item browse leancloud">
-    <a class='notlink'>
       
-      <div id="lc-pv" data-title="communication and networking笔记" data-path="/2021/03/24/Major/communication_and_networking/communication_and_networking/">
-        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
-        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
-        次浏览
-      </div>
-    </a>
-  </div>
-
-
+        
           
         
-      </div>
+          
+        
+          
+        
+      
     
-  </div>
-
-
+    
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
   
   
-  <h1 id="TODO第二章"><a href="#TODO第二章" class="headerlink" title="TODO第二章"></a>TODO第二章</h1><h1 id="数据和信号"><a href="#数据和信号" class="headerlink" title="数据和信号"></a>数据和信号</h1><h2 id="模拟与数字"><a href="#模拟与数字" class="headerlink" title="模拟与数字"></a>模拟与数字</h2><ul>
-<li>模拟数据：连续状态的信息</li>
-<li>数字数据：离散状态的信息</li>
-</ul>
-<ul>
-<li><p>复合信号</p>
-<ul>
-<li>单一正弦波在数据通信中没有作用，我们需要发送复合信号，复合信号由许多简单正弦波组成</li>
-<li><strong>基础频率或第一谐波</strong>：频率与复合信号一样的正弦波</li>
-<li><strong>第N谐波</strong>：频率是基础频率的N倍</li>
-</ul>
-</li>
-<li><p>带宽：<strong>复合信号的带宽是信号最高频率和最低频率的差值</strong></p>
-</li>
-<li><p>数字信号：</p>
-<ul>
-<li>一个有L个电平的信号可以表示$log_2L$个位</li>
-</ul>
-</li>
-</ul>
-<p>如有4个电平，可以表示2个位：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">电平</span><br><span class="line">4    11</span><br><span class="line">3    10</span><br><span class="line">2    01</span><br><span class="line">1    00</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>比特率</strong>：一秒钟发送的位数，单位：<strong>每秒位(bps)</strong></li>
-<li>位长：一个位在传输介质上的距离<ul>
-<li>位长=传播速度x位持续时间</li>
-</ul>
-</li>
-</ul>
-<h3 id="数字信号的传输"><a href="#数字信号的传输" class="headerlink" title="数字信号的传输"></a>数字信号的传输</h3><p>数字信号是无穷大带宽的复合模拟信号。两种方法传输数字信号：基带传输和宽带传输</p>
-<h4 id="基带传输"><a href="#基带传输" class="headerlink" title="基带传输"></a>基带传输</h4><p>todo p59</p>
-<p>基带传输通过通道发送数字信号，不转换成模拟信号</p>
-<h4 id="宽带传输"><a href="#宽带传输" class="headerlink" title="宽带传输"></a>宽带传输</h4><p>todo</p>
-<p>宽带传输或调制把数字信号转变为模拟信号。调制允许我们使用 <strong>带通通道</strong> ，即带宽不从0开始的通道。</p>
-<h2 id="传输减损"><a href="#传输减损" class="headerlink" title="传输减损"></a>传输减损</h2><ul>
-<li>衰减<ul>
-<li>克服介质的阻抗需要放热，能量损失，需要使用信号放大器放大</li>
-<li><strong>分贝(dB)</strong> 用于计算两种信号或同一信号在不同位置直接的相对强度</li>
-<li>功率表示：$dB = 10 \log_{10} \frac{P2}{P1}$</li>
-<li>用电压表示：$dB = 20 \log_{10} \frac{V2}{V1}$</li>
-</ul>
-</li>
-<li>失真<ul>
-<li>不同频率成分在介质中有自己从传播速度，在终点时有各自的延迟</li>
-</ul>
-</li>
-<li>噪声<ul>
-<li><strong>信噪比SNR</strong></li>
-<li>$SNR = \frac{平均信号功率}{平均噪声功率}$ 是功率比</li>
-<li>用分贝描述：$SNR_{dB} = 10 \log_{10} SNR$</li>
-<li>如果<code>SNR+1几乎与SNR相当</code>，则$log_2(1+SNR) \approx \frac{SNR_{dB}}{3}$</li>
-</ul>
-</li>
-</ul>
-<h2 id="数据速率限制"><a href="#数据速率限制" class="headerlink" title="数据速率限制"></a>数据速率限制</h2><h3 id="无噪声通道：奈奎斯特比特率"><a href="#无噪声通道：奈奎斯特比特率" class="headerlink" title="无噪声通道：奈奎斯特比特率"></a>无噪声通道：奈奎斯特比特率</h3><p>对于无噪声通过，<strong>理论上最大比特率</strong>：</p>
-<p>$$比特率 = 2 \times 带宽 \times \log_2 L$$</p>
-<p>但是如果电平数L很大，接收方会很难区分不同电平，从而削弱系统可靠性。<strong>电平数应该是2的幂</strong> </p>
-<h3 id="噪声通道：香农容量定理"><a href="#噪声通道：香农容量定理" class="headerlink" title="噪声通道：香农容量定理"></a>噪声通道：香农容量定理</h3><p><strong>噪声通道理论上的最高数据传输速率</strong>：</p>
-<p>$$通道容量 = 带宽 \times \log_2 {(1+SNR)}$$</p>
-<p>无论使用多少个电平，都不可能获得比通道容量更高的数据速率</p>
-<h3 id="两者结合"><a href="#两者结合" class="headerlink" title="两者结合"></a>两者结合</h3><p>todo</p>
-<p><strong>香农容量定理给出了数据速率的上限，奈奎斯特公式给出所需的电平数</strong> </p>
-<p>eg: </p>
-<h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><ul>
-<li><p>带宽</p>
-<ul>
-<li>以赫兹衡量：即复合信号的频率范围，即通道能通过信号的频率范围</li>
-<li>bps衡量：每秒发送的位数</li>
-<li>todo  p70</li>
-</ul>
-</li>
-<li><p>吞吐量</p>
-<ul>
-<li>吞吐量是发送速率的<strong>实际衡量值</strong>，带宽是链路的潜在衡量值</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>延迟 = 传播时间+传输时间+排队时间+处理时间<ul>
-<li>传播时间 = 距离 / 传播速度<ul>
-<li>一个位从源到目的的用时</li>
-</ul>
-</li>
-<li>传输时间 = 报文长度 / 带宽<ul>
-<li>从报文第一个位到达到最后一个位到达的用时</li>
-</ul>
-</li>
-<li>排队时间</li>
-</ul>
-</li>
-<li>带宽与延迟的乘积 = 充满链路的位的个数 todo p72</li>
-</ul>
-<h1 id="数字传输"><a href="#数字传输" class="headerlink" title="数字传输"></a>数字传输</h1><ul>
-<li>数字数据：存储在计算机中的数据</li>
-<li>数字信号：数据在链路中传播的形式</li>
-</ul>
-<h2 id="线路编码：数字信号到数组信号转换"><a href="#线路编码：数字信号到数组信号转换" class="headerlink" title="线路编码：数字信号到数组信号转换"></a>线路编码：数字信号到数组信号转换</h2><p>将数字数据转换为数字信号的过程</p>
-<ul>
-<li>数据元素(date element)：位</li>
-<li>信号元素(signal element)：<strong>数据元素的载体</strong> ，我们传输不会一次只传输一位(电平L能传$log_2 L$个位)</li>
-<li>比率r：每个信号元素承载的数据元素的数量</li>
-<li>数据速率(data rate)：<strong>S</strong> (单位bps) todo</li>
-<li>信号速率(signal rate)：<strong>B</strong> (单位波特率baud rate/脉冲速率/调制速率) todo</li>
-</ul>
-<p>数据速率相当于一辆车的载货能力，信号速率相当于公路上行驶的车辆数目，由于宽带有限，信号速率低一点，数据速率应该高一点。</p>
-<p><strong>信号元素计算公式</strong></p>
-<p>$$S = c \times N \times \frac1r (baud)$$</p>
-<p>其中S表示信号元素数，c表示具体情况的情形因子，N表示数据速率，r表示比率</p>
-<blockquote>
-<p><strong>例</strong>：</p>
-<p>最小带宽可以由上式子得出： $B_{min} = c \times N \times \frac1r (baud)$</p>
-<p>既然最小带宽，那一定是从0开始算才最小嘛(低通)，每个频率能送一个种信号元素，那S个信号元素就是最小带宽啦</p>
-</blockquote>
-<h3 id="基线偏移"><a href="#基线偏移" class="headerlink" title="基线偏移"></a>基线偏移</h3><ul>
-<li><strong>基线</strong>：收到的信号功率的运行平均值<ul>
-<li>接收方将输入与基线比较来<strong>确定数据元素的值</strong></li>
-</ul>
-</li>
-<li><strong>基线偏移</strong>：显然，连续的0或1会引起信号功率的平均值发生变化，称为 <strong>基线偏移</strong> </li>
-<li><strong>DC问题</strong>：连续的0或1说明电平不变，即频率很低，接近直流，给非低通带来传输问题</li>
-<li>自同步：接收方应与发送方的 <strong>位间隔</strong> 对应，这样才能正确的解析<ul>
-<li>如发送方一秒只发送1位，而接收方一秒接受2位，那信号由<code>x 变为了 xx</code></li>
-<li>可以在传输的数据中保存定时信息来实现自同步</li>
-</ul>
-</li>
-</ul>
-<h3 id="线路编码方案"><a href="#线路编码方案" class="headerlink" title="线路编码方案"></a>线路编码方案</h3><h4 id="不归零-NRZ"><a href="#不归零-NRZ" class="headerlink" title="不归零(NRZ)"></a>不归零(NRZ)</h4><p>定正表示1，负表示0，<strong>位中间不归零</strong></p>
-<h5 id="单极编码"><a href="#单极编码" class="headerlink" title="单极编码"></a>单极编码</h5><p>所有信号电平只在时间轴的一边，要么大于等于0，要么小于等于0</p>
-<h5 id="极性编码"><a href="#极性编码" class="headerlink" title="极性编码"></a>极性编码</h5><p>信号电平可以在时间中的两边</p>
-<h5 id="极性不归零"><a href="#极性不归零" class="headerlink" title="极性不归零"></a>极性不归零</h5><ul>
-<li>NRZ-L(NRZ电平编码)：电平决定位值</li>
-<li>NRZ-I(NRZ反向编码)：没有跳变位值是0，有跳变位值是1</li>
-<li>基线偏移问题<ul>
-<li>NRZ-L：全0或全1时，存在基线偏移问题，存在DC问题</li>
-<li>NRZ-I：全0时，存在基线偏移问题，存在DC问题</li>
-</ul>
-</li>
-<li>方案分析：<ul>
-<li>有较号的信号速率</li>
-<li>缺点：如果极性改变(如双绞线意外改变)，NRZ-L会把0解释为1，把1解释为0</li>
-</ul>
-</li>
-</ul>
-<h4 id="归零编码-RZ"><a href="#归零编码-RZ" class="headerlink" title="归零编码(RZ)"></a>归零编码(RZ)</h4><p>当NRZ发生不同步时，接收方不知道一位合适结束，下一个何时开始，因此引入归零编码。</p>
-<p>RZ编码使用三个值：正、负、0，电平信号 <strong>可以在位中变化</strong>，但是存在以下缺点：</p>
-<ul>
-<li>方案分析：存在的问题<ul>
-<li>要两个信号编码一位，需要更大的带宽</li>
-<li>同RZ编码，极性改变会导致0和1的误判</li>
-<li>用三个电平表示，生成和分辨的成本都提高了</li>
-<li><strong>所有不再使用了</strong> 由双相编码替代</li>
-</ul>
-</li>
-</ul>
-<h4 id="双相编码：曼彻斯特编码和差分曼彻斯特编码"><a href="#双相编码：曼彻斯特编码和差分曼彻斯特编码" class="headerlink" title="双相编码：曼彻斯特编码和差分曼彻斯特编码"></a>双相编码：曼彻斯特编码和差分曼彻斯特编码</h4><p>双相编码利用了RZ的思想和NRZ的思想</p>
-<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/Bi-Phase_Space.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/Bi-Phase_Space.jpg" srcset="data:image/png;base64,666" width="50%" align="right"/>
-
-<p><strong>位中间总是发生跳变</strong></p>
-<ul>
-<li><strong>曼彻斯特编码</strong> : RZ+NRZ-L<ul>
-<li>前半电平保持一个水平，后半电平变为另一个水平，位中间是跳变的，但是没有0位</li>
-</ul>
-</li>
-<li><strong>差分曼彻斯特编码</strong> ：RZ+NRZ-I<ul>
-<li>位值开始时确定一个值。如果下一位0，位中<strong>跳变后不跳回</strong>；如果下一位是1，位中<strong>跳变后跳回</strong>原位。</li>
-</ul>
-</li>
-<li>分析<ul>
-<li>解决基线问题：每位中间总是跳变</li>
-<li>DC问题：无DC成分</li>
-<li>自同步：中间的跳变可以用来同步间隔</li>
-<li>信号速率较NRZ差</li>
-</ul>
-</li>
-</ul>
-<h4 id="双极性方案：多电平二进制"><a href="#双极性方案：多电平二进制" class="headerlink" title="双极性方案：多电平二进制"></a>双极性方案：多电平二进制</h4><p>一个数据元素的电平是0，另一个元素的电平在正负值间<strong>交替</strong></p>
-<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/AMI.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/AMI.jpg" srcset="data:image/png;base64,666" width="50%" align="right"/>
-
-<ul>
-<li><strong>AMI(交替传号反转编码)</strong> ：传号指的是1，表示交替的1的反应<ul>
-<li>0是用电位0表示，下一个1的电位是最后一个1的电位的反，即交替。<ul>
-<li>如最后一个1电位是-1，则下一个1电位是1</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>伪三元编码：AMI的变型<ul>
-<li>1是用电位0表示，下一个0的电位是最后一个0的电位的反，即交替。</li>
-</ul>
-</li>
-<li>方案分析<ul>
-<li>双极方案是NRZ的替代，信号速率相同，但不存在DC成分</li>
-</ul>
-</li>
-</ul>
-<h4 id="多电平方案-todo：-redo"><a href="#多电平方案-todo：-redo" class="headerlink" title="多电平方案 todo： redo"></a>多电平方案 todo： redo</h4><p>实际线路中我们想要增加数据速率，降低信号速率。因此多点平方案的目标就是将m个数据元素的模式编码成n个信号元素模式，<strong>增加波特的位数</strong>。</p>
-<p>如果m位数据元素只有0，1两种，则有$2^m$种组合。</p>
-<p>不同信号可以用不同电平表示，如果有L个不同电平，就有$L^n$种信号模式。</p>
-<p>如果$2^m &lt; L^n$数据模式只占信号模式的子集，$2^m &gt; L^n$数据编码不可能。</p>
-<ul>
-<li>用<code>mBnL</code>表示不同的编码类型<ul>
-<li>m表示二进制模式的长度，一般用数字</li>
-<li>B表示二进制数据，一般用字母(B表示2，T表示3，Q表示4…)</li>
-<li>n表示信号模式长度，一般用数字</li>
-<li>L表示信号电平，一般用字母</li>
-</ul>
-</li>
-</ul>
-<p>todo</p>
-<h5 id="2B1Q方案"><a href="#2B1Q方案" class="headerlink" title="2B1Q方案"></a>2B1Q方案</h5><div align=center><img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/2B1Q.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/2B1Q.jpg" srcset="data:image/png;base64,666" width="60%"/></div>
-
-
-<h5 id="8B6T方案"><a href="#8B6T方案" class="headerlink" title="8B6T方案"></a>8B6T方案</h5><h5 id="4D-PAM5方案"><a href="#4D-PAM5方案" class="headerlink" title="4D-PAM5方案"></a>4D-PAM5方案</h5><h5 id="多线路传输：MLT-3"><a href="#多线路传输：MLT-3" class="headerlink" title="多线路传输：MLT-3"></a>多线路传输：MLT-3</h5><div align=center><img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/summary_of_line_coding.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/summary_of_line_coding.jpg" srcset="data:image/png;base64,666" width="100%"/></div>
-
-
-<h3 id="块编码"><a href="#块编码" class="headerlink" title="块编码"></a>块编码</h3><p>把m位块变为n位块，n&gt;m，给出一些<strong>冗余来做同步和差错检查等功能</strong>。也称为 <strong>mB/nB编码</strong> ，B表示二，故一般是二元的。</p>
-<ul>
-<li>步骤<ul>
-<li><ol>
-<li>分组：分成许多m位编码的组</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>置换：每组用对应的n位编码替换m位编码<ul>
-<li>n编码往往设计得有特殊的功能</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>组合：用n位的组组成新的流</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<p>发送方将mB映射成nB编码发送，接收方收到后再由nB反映射成mB解码。</p>
-<h4 id="4B-5B方案：4个二元变5个二元"><a href="#4B-5B方案：4个二元变5个二元" class="headerlink" title="4B/5B方案：4个二元变5个二元"></a>4B/5B方案：4个二元变5个二元</h4><p>4B/5B与NRZ-I组合使用，NRZ-I很好的信号速率，但是存在全0时的同步问题。一种解决方案就是在<strong>使用NRZ-I编码前4B/5B改变位流</strong></p>
-<p>4B/5B的解决方案：4B/5B的编码性质是前导0不会超过1个，后缀的0不超过两个，因此任意两组组合最多有3个连续的0。有$2^5 - 2^4 = 16$个的冗余可以用来检错和控制。再多余的，收到的话就说明传输出错。</p>
-<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/map_of_4B5B.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/map_of_4B5B.jpg" srcset="data:image/png;base64,666" width="60%" align="right"/>
-
-<ul>
-<li>方案分析<ul>
-<li>增加了NRZ-I的信号速录：4 to 5，1.25倍，但优于两相方案</li>
-<li>解决了NRZ-I在全0时的同步问题</li>
-<li>没有解决DC问题，还是有连续不变的信号的</li>
-</ul>
-</li>
-</ul>
-<h4 id="8B-10B方案"><a href="#8B-10B方案" class="headerlink" title="8B/10B方案"></a>8B/10B方案</h4><p>类似4B/5B方案，有更强的检错和控制能力。当然还做了些优化：</p>
-<ul>
-<li>高5位用5B/6B，低3位用3B/4B<ul>
-<li>组合使用，简化映射表</li>
-</ul>
-</li>
-<li>为防止连续0和连续1，编码使用不均等性控制器<ul>
-<li>如果观察到0比1多，那么当前块的所有位取反，即提供了不均等信检错</li>
-</ul>
-</li>
-</ul>
-<h3 id="扰动"><a href="#扰动" class="headerlink" title="扰动"></a>扰动</h3><p>由于带宽要求，两相编码不适用于长距离通信。块编码和NRZ线路编码存在DC问题，也不适用于长距离编码。双极编码AMI有窄带宽且没有DC成分，但是存在连续0的不同步问题。因此，<strong>如果避免了AMI的连续0就能让AMI适用于长距离</strong>。</p>
-<p><strong>扰动就是一种不增加位数并提供同步，一种把0电平脉冲置换成其他电平组合的来提供同步的技术</strong>。系统基于定义好的扰动规则插入所需脉冲。两种通用扰动技术：B8ZS和HDB3</p>
-<h4 id="B8ZS：8零置换的双极编码方案"><a href="#B8ZS：8零置换的双极编码方案" class="headerlink" title="B8ZS：8零置换的双极编码方案"></a>B8ZS：8零置换的双极编码方案</h4><p>8个连续的0电平会被替换成<code>000VB0VB</code></p>
-<ul>
-<li>V表示违反，要<strong>违反AMI的编码规则给出非零电平</strong>(因为之前说是改造AMI嘛)</li>
-<li>B表示双极，表示要与<strong>AMI规则相一致给出非零电平</strong>(1交替/传号交替)</li>
-<li>简记：V与前一个非零脉冲相同极性，B与前一个非零脉冲(V)相反极性</li>
-</ul>
-<p>如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">     1 | 0 | 0 | 0 | 0 | 0  | 0 | 0  | 0</span><br><span class="line">       |   |   |   |   |    |   |    | </span><br><span class="line">       |   |   |   |   |    |   |    | </span><br><span class="line">     1 | 0 | 0 | 0 | 1 | -1 | 0 | -1 | 1</span><br><span class="line">                     V   B        V    B</span><br><span class="line">                     ^</span><br><span class="line">违反，最后一个非零是1，根据AMI应该是-1。故称违反</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>方案分析<ul>
-<li>平衡了正负电平，维持了DC平衡</li>
-</ul>
-</li>
-</ul>
-<h4 id="HDB3"><a href="#HDB3" class="headerlink" title="HDB3"></a>HDB3</h4><p>比B8ZS技术更保守， <strong>4个连续零置换，被置换为000V或B00V</strong>，两种不同置换方式是为了<strong>维持每次置换后非零脉冲为偶数</strong></p>
-<ul>
-<li>置换规则<ul>
-<li>之前的(包括之前的置换后)非零脉冲数是奇数，则用000V，奇变偶</li>
-<li>之前的非零脉冲数是偶数，则用B00V，保持偶</li>
-</ul>
-</li>
-</ul>
-<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/HDB3.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/HDB3.jpg" srcset="data:image/png;base64,666" width="50%"/>
-
-
-<h2 id="模拟信号到数字信号转换"><a href="#模拟信号到数字信号转换" class="headerlink" title="模拟信号到数字信号转换"></a>模拟信号到数字信号转换</h2><p>主要有两种技术：脉冲码调制(PCM)和delta调制</p>
-<h3 id="脉冲码调制-PCM"><a href="#脉冲码调制-PCM" class="headerlink" title="脉冲码调制(PCM)"></a>脉冲码调制(PCM)</h3><ul>
-<li>过程<ul>
-<li>对模拟信号进行<strong>采样</strong></li>
-<li>对采用后的信号进行<strong>量化</strong></li>
-<li>对量化后的值<strong>编码</strong>成位流</li>
-</ul>
-</li>
-</ul>
-<h4 id="采样"><a href="#采样" class="headerlink" title="采样"></a>采样</h4><ul>
-<li>采样率(sampling rate)：每隔$T_s$秒采样，则$\frac{1}{T_2}$称为采样率/采样频率</li>
-<li>采用过程有时称为 <strong>脉冲振幅调制</strong> </li>
-</ul>
-<p>显然为了能够还原原始信号，采样率应有所要求。 <strong>奎奈斯特定理：</strong> 一个必要条件是<strong>采样速率(sampling rate)至少是原始信号中最高频率的两倍</strong></p>
-<ul>
-<li>$f_s = 2 \times f_{max}$称为<strong>奎奈斯特速率</strong></li>
-<li>$f_s = 4 \times f_{max}$称为2倍奎奈斯特速率</li>
-</ul>
-<h4 id="量化"><a href="#量化" class="headerlink" title="量化"></a>量化</h4><p>采样得到的值可能无限介于某个区间，都不相同，无法用于编码，因此需要量。</p>
-<ul>
-<li>过程<ul>
-<li><ol>
-<li>假定原始模拟信号瞬间振幅介于$V_{min}$和$V_{max}$</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>把范围划分为L个区，每个区间高度$(Delta)\Delta = \frac{V_{max}-V_{minf}}{L}$</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>分配0-L-1的量化值到每个区的中点</li>
-</ol>
-</li>
-<li><ol start="4">
-<li>样本振幅近似为量化值</li>
-</ol>
-</li>
-</ul>
-</li>
-<li>定义<ul>
-<li>量化等级：L(等级数)取决于模拟信号振幅和我们需要准确恢复的程度</li>
-<li>量化误差(标准化误差)：标准化量化值 - 标准化PAM值</li>
-<li>标准化PAM值(振幅)：$实际振幅/\Delta$</li>
-<li>标准化量化值：标准化PAM值所在区间区间的中间值</li>
-<li>量化码：对量化电平编码</li>
-</ul>
-</li>
-</ul>
-<div align=center><img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/PCM.jpg" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/PCM.jpg" srcset="data:image/png;base64,666" width="60%"/></div>
-
-<p>量化误差改变了信号的信噪比，根据香农理论，这减小了上限容量。<strong>量化误差对信号$SNR_{dB}$的影响缺绝于量化级别L或每个样本的位数$n_b$</strong> </p>
-<p>$$SNR{dB} = 6.02n_B + 1.76 dB$$</p>
-<blockquote>
-<p>显然分得越细，量化误差越小，信噪比越高</p>
-</blockquote>
-<p>在实际生活中，模拟信号对振幅的贡献是不均匀的，即振幅变化时快时慢。振幅变化一般在低频中比在高频中发生更加频繁。因此使用 <strong>非均匀量化</strong> 更好，即$\Delta$的值是不固定的，接近低振幅时较大，而接近高振幅时较小。</p>
-<h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><h3 id="delta调制"><a href="#delta调制" class="headerlink" title="delta调制"></a>delta调制</h3>
   
   
     
-    <div class='footer'>
-      
-      
-      
-        <div class='copyright'>
-          <blockquote>
-            
-              
-                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
-
-              
-            
-              
-                <p>本文永久链接是：<a href=http://yoursite.com/2021/03/24/Major/communication_and_networking/communication_and_networking/>http://yoursite.com/2021/03/24/Major/communication_and_networking/communication_and_networking/</a></p>
-              
-            
-          </blockquote>
-        </div>
-      
-      
-    </div>
+    <h2 class="article-title" >
+      <a href="/2000/01/01/Major/OS/OS_course/">
+        操作系统笔记
+      </a>
+    </h2>
   
-  
-    
-
-
-  <div class='article-meta' id="bottom">
-    <div class='new-meta-box'>
-      
-        
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-14T21:20:39+08:00">
-  <a class='notlink'>
-    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Apr 14, 2021</p>
-  </a>
-</div>
-
-        
-      
-        
-          
-  
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/network/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>network</p></a></div>
-
-
-        
-      
-        
-          
-  <div class="new-meta-item share -mob-share-list">
-  <div class="-mob-share-list share-body">
+  <div class='md'>
     
       
-    
-      
-    
-  </div>
-</div>
-
-
-
-        
-      
-    </div>
-  </div>
-
-
-  
-  
-
-  
-    <div class="prev-next">
-      
-        <a class='prev' href='/2021/04/13/universe/qemu/qemu_softmmu/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>QEMU的内存模拟</p>
-          <p class='content'>QEMU softmmu虚拟机(Guest)内存模拟的首要任务是将虚拟机虚拟地址(GVA)转换成实际存储的宿主机(Host)的物理地址(HPA)。
-虚拟机提供了虚拟的硬件环境，GVA到到虚拟机物...</p>
-        </a>
-      
-      
-        <a class='next' href='/2021/03/23/Major/OS/OS_course/'>
-          <p class='title'>操作系统笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>进程管理
+        进程管理
 并发proc特点
 执行顺序不确定
 todo
@@ -971,83 +510,179 @@ proc标识
 
 
 现场信息
-re...</p>
-        </a>
+reg信息
+堆栈指针
+等
+
+
+控制信息
+proc状态
+调度信息
+DS信息
+数据结构：如父指针
+
+
+队列信息
+pcb地址，如运行队列
+
+
+位置信息
+内存位置
+
+
+通信信息
+消息队列
+
+
+等
+
+
+
+proc基...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2000-01-01</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2000/01/01/Major/OS/OS_course/'>
+            Read More
+          </a>
+        </div>
       
     </div>
   
-</article>
 
-
-  
-
-  <article class="post white-box reveal shadow" id="comments">
-    <p ct><i class='fas fa-comments'></i> 评论</p>
-    
-    <div id="valine_container" class="valine_thread">
-  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
 </div>
 
-  </article>
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2000/01/01/Major/communication_and_networking/communication_and_networking/">
+        communication and networking笔记
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        TODO第二章数据和信号模拟与数字
+模拟数据：连续状态的信息
+数字数据：离散状态的信息
 
 
+复合信号
+
+单一正弦波在数据通信中没有作用，我们需要发送复合信号，复合信号由许多简单正弦波组成
+基础频率或第一谐波：频率与复合信号一样的正弦波
+第N谐波：频率是基础频率的N倍
 
 
+带宽：复合信号的带宽是信号最高频率和最低频率的差值
 
-  <script>
-  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    // 文章章节标题不能为 “MathJax” ，否则会报错。
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
+数字信号：
+
+一个有L个电平的信号可以表示$log_2L$个位
 
 
+...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2000-01-01</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2000/01/01/Major/communication_and_networking/communication_and_networking/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
 
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2000/01/01/universe/operate/shell_script_tips/">
+        shell脚本杂技
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        double dash --单独使用double dash --一般用于表示命令行选项(command line options)的结尾，之后不再接收选项，只能接收位置参数(positional parameters)
+如一下命令会查找-v而不让它作为命令行的选项
+1grep -- -v &lt;file&gt;
+
+文件描述符与文件控制
+文件描述符
+https://zhuanlan.zhih...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2000-01-01</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2000/01/01/universe/operate/shell_script_tips/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+    
+  </section>
+  
+    
+  
+
+
+	
 </div>
 <aside class='l_side'>
   
@@ -1055,28 +690,103 @@ re...</p>
     
     
 
+<section class="widget blogger shadow desktop mobile">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box rectangle' href='/about/'>
+          <img no-lazy src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/doge.JPG'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">Ring's Blog</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="mailto:travisturing403@gmail.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://github.com/66RING"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="/"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
 
+  
 
-  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+  
+    
+    
+
+  
+
+  
+    
+    
+  
+
+  <section class="widget tagcloud shadow desktop mobile">
     
   <header>
     
-      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
     
   </header>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模拟与数字"><span class="toc-text">模拟与数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数字信号的传输"><span class="toc-text">数字信号的传输</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基带传输"><span class="toc-text">基带传输</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#宽带传输"><span class="toc-text">宽带传输</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传输减损"><span class="toc-text">传输减损</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据速率限制"><span class="toc-text">数据速率限制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无噪声通道：奈奎斯特比特率"><span class="toc-text">无噪声通道：奈奎斯特比特率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#噪声通道：香农容量定理"><span class="toc-text">噪声通道：香农容量定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两者结合"><span class="toc-text">两者结合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能"><span class="toc-text">性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线路编码：数字信号到数组信号转换"><span class="toc-text">线路编码：数字信号到数组信号转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基线偏移"><span class="toc-text">基线偏移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线路编码方案"><span class="toc-text">线路编码方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#不归零-NRZ"><span class="toc-text">不归零(NRZ)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#单极编码"><span class="toc-text">单极编码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#极性编码"><span class="toc-text">极性编码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#极性不归零"><span class="toc-text">极性不归零</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#归零编码-RZ"><span class="toc-text">归零编码(RZ)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#双相编码：曼彻斯特编码和差分曼彻斯特编码"><span class="toc-text">双相编码：曼彻斯特编码和差分曼彻斯特编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#双极性方案：多电平二进制"><span class="toc-text">双极性方案：多电平二进制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多电平方案-todo：-redo"><span class="toc-text">多电平方案 todo： redo</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2B1Q方案"><span class="toc-text">2B1Q方案</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8B6T方案"><span class="toc-text">8B6T方案</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4D-PAM5方案"><span class="toc-text">4D-PAM5方案</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#多线路传输：MLT-3"><span class="toc-text">多线路传输：MLT-3</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#块编码"><span class="toc-text">块编码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4B-5B方案：4个二元变5个二元"><span class="toc-text">4B&#x2F;5B方案：4个二元变5个二元</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8B-10B方案"><span class="toc-text">8B&#x2F;10B方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扰动"><span class="toc-text">扰动</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#B8ZS：8零置换的双极编码方案"><span class="toc-text">B8ZS：8零置换的双极编码方案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HDB3"><span class="toc-text">HDB3</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模拟信号到数字信号转换"><span class="toc-text">模拟信号到数字信号转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#脉冲码调制-PCM"><span class="toc-text">脉冲码调制(PCM)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#采样"><span class="toc-text">采样</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#量化"><span class="toc-text">量化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编码"><span class="toc-text">编码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#delta调制"><span class="toc-text">delta调制</span></a></li></ol></li></ol>
+      <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/OS/" style="font-size: 15px; color: #929292">OS</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 15px; color: #929292">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 15px; color: #929292">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c-c/" style="font-size: 19px; color: #777">c/c++</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 17px; color: #858585">database</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16px; color: #8b8b8b">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 15px; color: #929292">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 15px; color: #929292">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/gcc/" style="font-size: 14px; color: #999">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 20px; color: #707070">go</a> <a href="/tags/gui/" style="font-size: 15px; color: #929292">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 17px; color: #858585">java</a> <a href="/tags/javascript/" style="font-size: 16px; color: #8b8b8b">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 23px; color: #5c5c5c">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lua/" style="font-size: 15px; color: #929292">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 15px; color: #929292">mm</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 18px; color: #7e7e7e">network</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 21px; color: #696969">operate</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 17px; color: #858585">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 20px; color: #707070">python</a> <a href="/tags/qemu/" style="font-size: 15px; color: #929292">qemu</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 14px; color: #999">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 15px; color: #929292">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tech/" style="font-size: 20px; color: #707070">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 14px; color: #999">tips</a> <a href="/tags/tool/" style="font-size: 16px; color: #8b8b8b">tool</a> <a href="/tags/tools/" style="font-size: 22px; color: #636363">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/typescript/" style="font-size: 15px; color: #929292">typescript</a> <a href="/tags/vim/" style="font-size: 16px; color: #8b8b8b">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/web/" style="font-size: 18px; color: #7e7e7e">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 15px; color: #929292">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15px; color: #929292">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
     </div>
   </section>
 
 
   
 
+  
+
 
 </aside>
-
 
 
 		  
@@ -1085,14 +795,14 @@ re...</p>
 
 <script>
   window.pdata={}
-  pdata.ispage=true;
-  pdata.postTitle="communication and networking笔记";
+  pdata.ispage=false;
+  pdata.postTitle="";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.add("show");
+  l_header.classList.remove("show");
   
 </script>
 

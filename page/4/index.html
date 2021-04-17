@@ -467,217 +467,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
-      <a href="/2020/11/15/universe/linux/cron/">
-        cron程序
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        cron表达式cron程序有如下五个字段：
-12分  时  日  月  星期    [年]* * * * *  &lt;shell script&gt;
-
-语法如下
-
-*，表示每一
-* 1 * 3 *表示每年三月每天1点的每一分钟执行
-
-
-,，表示并列
-1,3表示1和3都执行
-
-
--，表示连续
-1-5表示1-5这个区间执行
-
-
-/，表示整除时执行
-*/2表示0 2 4...时执行
-n/2左边...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-11-15</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/11/15/universe/linux/cron/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/11/15/universe/linux/curl/">
-        curl基本使用
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        等读完curl(如果有时间)，就改成curl all in one
-curl是一个http请求工具
-
-curl [options...] &lt;url&gt;
-queryString
--s | --silent，不显示进度条
--o | --output，指定请求结果输出到的文件
--H | --header，设置请求头
--d | --data，设置请求携带的数据
--X | --request...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-11-15</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/11/15/universe/linux/curl/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/11/11/universe/tech_tips/a_basic_middleware/">
-        制作一个简易的中间件架构
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        为何需要中间件我们不应该把业务逻辑和非业务逻辑揉在一起。非业务逻辑如打印日志、计时等。因为如果我们需要一个新的日志系统，而我们打印日志的逻辑杂揉在每个handler中，那我们就得修改每个handler，费时费力且不明智。
-中间件就是一种剥离非业务逻辑的方法。
-原理我们可以使用函数闭包来轻松实现剥离业务逻辑和非业务逻辑。
-假设我们的业务就是以各种姿势处理字符串然后打印。如处理成===str==...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-11-11</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/11/11/universe/tech_tips/a_basic_middleware/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/10/26/universe/c/cpp_stl/">
-        cpp常用stl
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        函数sort
-&lt;algorithm&gt;，头文件中
-sort(begin, end, compare)
-传入表示开始结束的随机访问迭代器
-第三个参数compare可选，是一个具有两个参数的bool值函数，默认用&lt;比较，从小到大
-
-
-
-Queue优先队列priority_queue模板有三个参数，第一个参数是储存对象的类型，第二个参数是存储元素的底层容器，第三个参数是一个决定元素...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-10-26</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/10/26/universe/c/cpp_stl/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
       <a href="/2020/10/20/Major/OS/Computer_System_A_Programmer's_Perspective/">
         深入理解计算机系统脑图
       </a>
@@ -964,6 +753,190 @@ When executing the map command, Vim will replace &lt;SID&gt; with the special ke
       
         <div>
           <a class='readmore' href='/2020/09/16/universe/vim/advanced_vim_programming/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/09/03/universe/tech_tips/RPC/">
+        RPC intro
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        RPC (Remote Procedure Call)RPC，远程过程调用，是一个计算机通信协议。
+相对的就是本地过程调用，即一个程序中调用它的子程序，可以直接通过地址访问。而RPC的远程，就是跨进程访问的意思。
+该协议允许运行于一台计算机的程序调用另一个地址空间(通常是开放网络中的一台计算机)的子程序。程序员就像调用本地程序一样，无需额外地为这个交互作用编程。
+RPC是一种Client/S...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-09-03</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/09/03/universe/tech_tips/RPC/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/08/20/universe/js_ts/this_and_arrow_function/">
+        This和箭头函数
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        ThisThis用于访问当前方法所属的对象，取决于调用的对象如：
+12345678910111213141516let obj = &#123;    a: 12,    fn()&#123;        console.log(this)    &#125;&#125;// 或者形如let obj = &#123;    a: 12,&#125;obj.fn = function()&#...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-08-20</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/08/20/universe/js_ts/this_and_arrow_function/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/08/20/universe/tech_tips/what_is_dll/">
+        什么是dll
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        什么是DLLDLL(Dynamic Link Library)，动态链接库，linux下是.so文件，win下是.dll文件。
+之所以需要库，是因为可以进行代码解耦和代码重用，由库文件对外提供服务，如exe调用dll。还有一个作用就是在不希望别人看到源码但需要使用我们的功能时隐藏源码。
+
+静态库
+win下是.lib文件，linux下是.a文件
+它作为程序的一个模块，在链接期间被合并到程序中
+...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-08-20</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/08/20/universe/tech_tips/what_is_dll/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/08/17/universe/go/golang_mem_alignment/">
+        Golang内存对齐
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        Golang内存对齐Cpu要想读取数据，需要通过 地址总线 把地址传输给内存。内存准备好数据输出到 数据总线 ，交给CPU。
+每根地址总线能表示一位，8根地址总线就能表示8位二进制数，即256个地址。因为表示不了更大的地址，所以就用不了更大的内存。
+每次操作一字节太慢，那就加宽数据总线，要想一次操作一字节就至少需要32位数据总线。8字节就64位。这里每次操作的字节数就是所谓的  机器字长 。...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-08-17</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/08/17/universe/go/golang_mem_alignment/'>
             Read More
           </a>
         </div>

@@ -466,69 +466,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
-      <a href="/2020/11/21/universe/linux/TODO:schedule/">
-        linux进程调度机制
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        
-看爆！https://zorrozou.github.io/
-
-前置
-进程分类
-实时进程(runtime)
-跟用户交互需要及时相应
-
-
-普通进行
-不需要那么及时，如编码解码等
-
-
-对于不同类型的进程应该采用不同的调度方法，实时进程序需要及时响应
-
-
-上下文切换
-发生进程调度时，保存当前进程的信息后(如程序计数器，变量，寄存器等context)才能加载另一个进程。这个过程就是上下文切换
-
-
-...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-11-21</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/11/21/universe/linux/TODO:schedule/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
       <a href="/2020/11/21/universe/web/ajax_intro/">
         JQuery, fetch, axios
       </a>
@@ -983,6 +920,58 @@ string.gmatch(s, pattern)
       
         <div>
           <a class='readmore' href='/2020/10/05/universe/database/sql_base_usage/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/10/03/universe/web/promise_async_and_wait/">
+        Promise, async和wait的简单记录
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        为什么需要promise有时候需要向函数中传入回调函数(异步操作结束后执行)，这么一来可能就会有多重函数嵌套的情况。这样的问题很明显：
+
+耦合度高
+解耦要传函数指针
+安全考虑还需判断参数类型，可读性差
+如果传送匿名参数，可读性更差
+
+
+
+Promise写法12345678910111213141516function callRing(success) &#123;    return ne...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-10-03</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/10/03/universe/web/promise_async_and_wait/'>
             Read More
           </a>
         </div>

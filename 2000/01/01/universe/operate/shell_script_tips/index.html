@@ -22,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>universe/linux/IPC/TODO - Ring&#39;s Blog</title>
+  <title>shell脚本杂技 - Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="operate,shell">
   
 
   
@@ -459,7 +461,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title">
-        universe/linux/IPC/TODO
+        shell脚本杂技
       </h1>
       <div class='new-meta-box'>
         
@@ -483,7 +485,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Dec 5, 2020</p>
+    <p>发布于：Jan 1, 2000</p>
   </a>
 </div>
 
@@ -494,7 +496,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="universe/linux/IPC/TODO" data-path="/2020/12/05/universe/linux/IPC/TODO/">
+      <div id="lc-pv" data-title="shell脚本杂技" data-path="/2000/01/01/universe/operate/shell_script_tips/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -512,13 +514,21 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h3 id="进程间通信的方式"><a href="#进程间通信的方式" class="headerlink" title="进程间通信的方式"></a>进程间通信的方式</h3><ul>
-<li><input disabled="" type="checkbox"> 消息队列</li>
-<li><input disabled="" type="checkbox"> 共享内存</li>
-<li><input checked="" disabled="" type="checkbox"> 管道</li>
-<li><input disabled="" type="checkbox"> socket</li>
-<li><input disabled="" type="checkbox"> signal</li>
+  <h2 id="double-dash"><a href="#double-dash" class="headerlink" title="double dash --"></a>double dash <code>--</code></h2><p>单独使用double dash <code>--</code>一般用于表示命令行选项(command line options)的结尾，之后不再接收选项，只能接收位置参数(positional parameters)</p>
+<p>如一下命令会查找<code>-v</code>而不让它作为命令行的选项</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -- -v &lt;file&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件描述符与文件控制"><a href="#文件描述符与文件控制" class="headerlink" title="文件描述符与文件控制"></a>文件描述符与文件控制</h2><ul>
+<li>文件描述符<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/109053744" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/109053744</a></li>
 </ul>
+</li>
+</ul>
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><ul>
+<li><code>set --</code></li>
+<li>…</li>
+</ul>
+<p><a href="https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html" target="_blank" rel="noopener">https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html</a></p>
 
   
   
@@ -536,7 +546,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2020/12/05/universe/linux/IPC/TODO/>http://yoursite.com/2020/12/05/universe/linux/IPC/TODO/</a></p>
+                <p>本文永久链接是：<a href=http://yoursite.com/2000/01/01/universe/operate/shell_script_tips/>http://yoursite.com/2000/01/01/universe/operate/shell_script_tips/</a></p>
               
             
           </blockquote>
@@ -553,10 +563,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-12-05T15:40:00+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-16T21:06:36+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Dec 5, 2020</p>
+    <p>更新于：Apr 16, 2021</p>
   </a>
 </div>
 
@@ -564,6 +574,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         
           
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/operate/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>operate</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/shell/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>shell</p></a></div>
+
 
         
       
@@ -593,17 +606,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2020/12/07/universe/linux/project_like/insert_CASIO_into_linux_kernel/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>如何向linux内核插入新的调度器[todo]</p>
-          <p class='content'>如何向linux内核插入新的调度方法这里演示以下如下向linux内核中插入一个线程的调度器：CASIO(源码) 
-TODO rebuild 注意 现代版本的linux内核(4.18)中调度器的入...</p>
+        <a class='prev' href='/2000/01/01/Major/communication_and_networking/communication_and_networking/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>communication and networking笔记</p>
+          <p class='content'>TODO第二章数据和信号模拟与数字
+模拟数据：连续状态的信息
+数字数据：离散状态的信息
+
+
+复合信号
+
+单一正弦波在数据通信中没有作用，我们需要发送复合信号，复合信号由许多简单正弦波组成
+基础频...</p>
         </a>
       
-      
-        <a class='next' href='/2020/12/05/universe/tech_tips/IO_multiplexing_intro/'>
-          <p class='title'>IO多路复用select、poll、epoll介绍<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>IO多路复用在高并发环境(如网络服务器)中同时处理多个请求的能力就显得尤为重要。很多人可能第一印象就会想到多线程，但是多线程需要进行很多的上下文切换，连接很多时上下文切换的代价就很高。因此采用单...</p>
-        </a>
       
     </div>
   
@@ -623,6 +638,59 @@ TODO rebuild 注意 现代版本的linux内核(4.18)中调度器的入...</p>
 
 
 
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
 
 
 
@@ -645,7 +713,7 @@ TODO rebuild 注意 现代版本的linux内核(4.18)中调度器的入...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程间通信的方式"><span class="toc-text">进程间通信的方式</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#double-dash"><span class="toc-text">double dash --</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件描述符与文件控制"><span class="toc-text">文件描述符与文件控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set"><span class="toc-text">set</span></a></li></ol>
     </div>
   </section>
 
@@ -664,7 +732,7 @@ TODO rebuild 注意 现代版本的linux内核(4.18)中调度器的入...</p>
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="universe/linux/IPC/TODO";
+  pdata.postTitle="shell脚本杂技";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 

@@ -5,6 +5,8 @@
   <!-- SEO相关 -->
   
     
+      <meta name="robots" content="noindex,follow">
+    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -22,9 +24,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>shell脚本杂技 - Ring&#39;s Blog</title>
-  
-    <meta name="keywords" content="operate,shell">
+  <title>Archive: 2000/1 - Ring&#39;s Blog</title>
   
 
   
@@ -104,7 +104,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur " style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -375,7 +375,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper post dock' style="display: none;">
+        <div id="half" class='cover-wrapper  dock' style="display: ;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
           
@@ -451,242 +451,238 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 
 <div class='l_main'>
-  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
-  
-
-
-  
-  <div class="article-meta" id="top">
+	
+		
+  <section class="post-list">
     
-    
-    
-      <h1 class="title">
-        shell脚本杂技
-      </h1>
-      <div class='new-meta-box'>
-        
-          
-            
-<div class='new-meta-item author'>
-  <a class='author' href="/" rel="nofollow">
-    <img no-lazy src="">
-    <p>请设置文章作者</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Apr 13, 2021</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-  <div class="new-meta-item browse leancloud">
-    <a class='notlink'>
       
-      <div id="lc-pv" data-title="shell脚本杂技" data-path="/2021/04/13/universe/operate/shell_script_tips/">
-        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
-        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
-        次浏览
-      </div>
-    </a>
+        
+          
+        
+          
+        
+          
+        
+      
+    
+    
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2000/01/01/Major/OS/OS_course/">
+        操作系统笔记
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        进程管理
+并发proc特点
+执行顺序不确定
+todo
+
+
+进程定义
+todo
+
+
+进程组成
+程序段
+数据段
+PCB
+
+
+
+PCB信息
+标识
+proc标识
+父标识
+用户标识
+等
+
+
+现场信息
+reg信息
+堆栈指针
+等
+
+
+控制信息
+proc状态
+调度信息
+DS信息
+数据结构：如父指针
+
+
+队列信息
+pcb地址，如运行队列
+
+
+位置信息
+内存位置
+
+
+通信信息
+消息队列
+
+
+等
+
+
+
+proc基...
+      
+    
   </div>
-
-
-          
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2000-01-01</time>
         
       </div>
-    
-  </div>
-
-
-  
-  
-  <h2 id="double-dash"><a href="#double-dash" class="headerlink" title="double dash --"></a>double dash <code>--</code></h2><p>单独使用double dash <code>--</code>一般用于表示命令行选项(command line options)的结尾，之后不再接收选项，只能接收位置参数(positional parameters)</p>
-<p>如一下命令会查找<code>-v</code>而不让它作为命令行的选项</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -- -v &lt;file&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="文件描述符与文件控制"><a href="#文件描述符与文件控制" class="headerlink" title="文件描述符与文件控制"></a>文件描述符与文件控制</h2><ul>
-<li>文件描述符<ul>
-<li><a href="https://zhuanlan.zhihu.com/p/109053744" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/109053744</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><ul>
-<li><code>set --</code></li>
-<li>…</li>
-</ul>
-<p><a href="https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html" target="_blank" rel="noopener">https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html</a></p>
-
-  
-  
-    
-    <div class='footer'>
       
-      
-      
-        <div class='copyright'>
-          <blockquote>
-            
-              
-                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
-
-              
-            
-              
-                <p>本文永久链接是：<a href=http://yoursite.com/2021/04/13/universe/operate/shell_script_tips/>http://yoursite.com/2021/04/13/universe/operate/shell_script_tips/</a></p>
-              
-            
-          </blockquote>
+        <div>
+          <a class='readmore' href='/2000/01/01/Major/OS/OS_course/'>
+            Read More
+          </a>
         </div>
       
-      
     </div>
   
-  
-    
 
-
-  <div class='article-meta' id="bottom">
-    <div class='new-meta-box'>
-      
-        
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-13T17:42:57+08:00">
-  <a class='notlink'>
-    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Apr 13, 2021</p>
-  </a>
 </div>
 
+          </div>
         
       
         
-          
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/operate/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>operate</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/shell/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>shell</p></a></div>
-
-
-        
-      
-        
-          
-  <div class="new-meta-item share -mob-share-list">
-  <div class="-mob-share-list share-body">
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2000/01/01/Major/communication_and_networking/communication_and_networking/">
+        communication and networking笔记
+      </a>
+    </h2>
+  
+  <div class='md'>
     
       
-    
+        TODO第二章数据和信号模拟与数字
+模拟数据：连续状态的信息
+数字数据：离散状态的信息
+
+
+复合信号
+
+单一正弦波在数据通信中没有作用，我们需要发送复合信号，复合信号由许多简单正弦波组成
+基础频率或第一谐波：频率与复合信号一样的正弦波
+第N谐波：频率是基础频率的N倍
+
+
+带宽：复合信号的带宽是信号最高频率和最低频率的差值
+
+数字信号：
+
+一个有L个电平的信号可以表示$log_2L$个位
+
+
+...
       
     
   </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2000-01-01</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2000/01/01/Major/communication_and_networking/communication_and_networking/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
 </div>
 
-
-
+          </div>
         
       
-    </div>
-  </div>
-
-
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
   
   
-
   
-    <div class="prev-next">
-      
-      
-        <a class='next' href='/2021/04/13/universe/qemu/qemu_softmmu/'>
-          <p class='title'>QEMU的内存模拟<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>QEMU softmmu虚拟机(Guest)内存模拟的首要任务是将虚拟机虚拟地址(GVA)转换成实际存储的宿主机(Host)的物理地址(HPA)。
-虚拟机提供了虚拟的硬件环境，GVA到到虚拟机物...</p>
-        </a>
-      
-    </div>
   
-</article>
-
-
-  
-
-  <article class="post white-box reveal shadow" id="comments">
-    <p ct><i class='fas fa-comments'></i> 评论</p>
     
-    <div id="valine_container" class="valine_thread">
-  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+    <h2 class="article-title" >
+      <a href="/2000/01/01/universe/operate/shell_script_tips/">
+        shell脚本杂技
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        double dash --单独使用double dash --一般用于表示命令行选项(command line options)的结尾，之后不再接收选项，只能接收位置参数(positional parameters)
+如一下命令会查找-v而不让它作为命令行的选项
+1grep -- -v &lt;file&gt;
+
+文件描述符与文件控制
+文件描述符
+https://zhuanlan.zhih...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2000-01-01</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2000/01/01/universe/operate/shell_script_tips/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
 </div>
 
-  </article>
+          </div>
+        
+      
+    
+  </section>
+  
+    
+  
 
 
-
-
-
-  <script>
-  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    // 文章章节标题不能为 “MathJax” ，否则会报错。
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-
-
+	
 </div>
 <aside class='l_side'>
   
@@ -694,28 +690,103 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
 
+<section class="widget blogger shadow desktop mobile">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box rectangle' href='/about/'>
+          <img no-lazy src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/doge.JPG'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">Ring's Blog</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="mailto:travisturing403@gmail.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://github.com/66RING"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="/"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
 
+  
 
-  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+  
+    
+    
+
+  
+
+  
+    
+    
+  
+
+  <section class="widget tagcloud shadow desktop mobile">
     
   <header>
     
-      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
     
   </header>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#double-dash"><span class="toc-text">double dash --</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件描述符与文件控制"><span class="toc-text">文件描述符与文件控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set"><span class="toc-text">set</span></a></li></ol>
+      <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/OS/" style="font-size: 15px; color: #929292">OS</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 15px; color: #929292">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 15px; color: #929292">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c-c/" style="font-size: 19px; color: #777">c/c++</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 17px; color: #858585">database</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16px; color: #8b8b8b">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 15px; color: #929292">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 15px; color: #929292">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/gcc/" style="font-size: 14px; color: #999">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 20px; color: #707070">go</a> <a href="/tags/gui/" style="font-size: 15px; color: #929292">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 17px; color: #858585">java</a> <a href="/tags/javascript/" style="font-size: 16px; color: #8b8b8b">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 23px; color: #5c5c5c">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lua/" style="font-size: 15px; color: #929292">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 15px; color: #929292">mm</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 18px; color: #7e7e7e">network</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 21px; color: #696969">operate</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 17px; color: #858585">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 20px; color: #707070">python</a> <a href="/tags/qemu/" style="font-size: 15px; color: #929292">qemu</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 14px; color: #999">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 15px; color: #929292">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tech/" style="font-size: 20px; color: #707070">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 14px; color: #999">tips</a> <a href="/tags/tool/" style="font-size: 16px; color: #8b8b8b">tool</a> <a href="/tags/tools/" style="font-size: 22px; color: #636363">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/typescript/" style="font-size: 15px; color: #929292">typescript</a> <a href="/tags/vim/" style="font-size: 16px; color: #8b8b8b">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/web/" style="font-size: 18px; color: #7e7e7e">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 15px; color: #929292">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 15px; color: #929292">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
     </div>
   </section>
 
 
   
 
+  
+
 
 </aside>
-
 
 
 		  
@@ -724,14 +795,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <script>
   window.pdata={}
-  pdata.ispage=true;
-  pdata.postTitle="shell脚本杂技";
+  pdata.ispage=false;
+  pdata.postTitle="";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.add("show");
+  l_header.classList.remove("show");
   
 </script>
 

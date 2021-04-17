@@ -467,146 +467,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
-      <a href="/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/">
-        execv中的缓存管理分析
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        page cache与缓存管理直接从磁盘访问文件会很慢，可以利用空闲的内存来缓存一些磁盘文件的内容，这部分用作缓存磁盘文件的内存就叫做page cache。
-1 execv中的调用page cache的流程执行read()系统调用后，首先会查看page cache里有没有目标文件的内容，如果有(cache hit)，直接读取;如果没有(cache miss)再从磁盘上读取，放入page ca...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-01-19</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/01/18/universe/linux/MM/slab/">
-        slab分配器
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        slab分配器slab分配器的两个功能：
-
-1 减少内部碎片
-2 作为高速缓存，存储内核中经常被分配并释放的对象
-
-
-Jeff Bonwick 发现对内核中普通对象进行初始化所需的时间超过了对其进行分配和释放所需的时间。因此他的结论是不应该将内存释放回一个全局的内存池，而是将内存保持为针对特定目而初始化的状态
-
-当需要时内核会在直接从slab分配器的高速缓存中获取一个已经初始化了的对象，用完...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-01-18</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/01/18/universe/linux/MM/slab/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/01/18/universe/linux/project_like/about_mmap/">
-        execv中地址地址映射流程分析
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        1 execv函数地址映射流程分析1.1 execv如何填充新进程的页表execv()中会调用bprm_mm_init函数准备一个linux_binprm结构体，该结构体用于描述新进程的各种信息，最后由search_binary_handler找到对应文件格式的处理程序加载执行load_binary。
-其中bprm_mm_init会执行如下流程：
-123456789101112bprm_mm...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-01-18</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/01/18/universe/linux/project_like/about_mmap/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
       <a href="/2021/01/17/universe/operate/docker_the_underlying_technology/">
         Docker底层原理
       </a>
@@ -837,56 +697,6 @@ linux进程调度机制...
   
     
     <h2 class="article-title" >
-      <a href="/2020/12/05/universe/linux/IPC/TODO/">
-        universe/linux/IPC/TODO
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        进程间通信的方式
- 消息队列
- 共享内存
- 管道
- socket
- signal
-
-
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-12-05</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/12/05/universe/linux/IPC/TODO/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
       <a href="/2020/12/05/universe/tech_tips/IO_multiplexing_intro/">
         IO多路复用select、poll、epoll介绍
       </a>
@@ -912,6 +722,193 @@ sel...
       
         <div>
           <a class='readmore' href='/2020/12/05/universe/tech_tips/IO_multiplexing_intro/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/12/05/universe/linux/FS/filesystem/">
+        linux文件系统
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        文件系统原理为了高效组织、管理和使用磁盘上的数据，需要独立的文件系统。
+文件系统的组成通常磁盘上的数据是要与内存交互的(内存映射)，而内存一个页的大小是4KB，所以磁盘一般按照4KB进行划分。一个划分就称为一个block。
+一个文件本质上是一些字节的集合，这些字节就是文件的 user data，同时引出以下概念
+
+meta data，文件本身数据外的控制信息，如访问权限、大小、创建时间等
+可...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-12-05</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/12/05/universe/linux/FS/filesystem/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/12/05/universe/qemu/open_risc_qemu/">
+        使用qemu启动基于open risc的虚拟机
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        使用qemu启动虚拟机安装qemu可能需要的依赖
+1autoconf automake autotools-dev curl libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev git
+
+下载q...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-12-05</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/12/05/universe/qemu/open_risc_qemu/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/12/01/universe/web/https/">
+        What Is Https
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        What is HttpsCryptography
+Symmetric encryptionThe classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.+3 is PSK(pre shared key)
+But how to let the receiver know what the PS...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-12-01</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/12/01/universe/web/https/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/11/29/universe/linux/project_like/customize_a_kernel/">
+        如何配置linux内核
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        如何配置linux内核linux内核提供许多自定义的选项
+因此你可以根据自己喜好定制的编译linux内核。这里以在centos8中编译centos8的内核为例。
+准备内核源码
+官方文档
+
+centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在https://vault.centos.org/下载对应的内核rpm包(内核源码版本一定要和系统内核版本一...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-11-29</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/11/29/universe/linux/project_like/customize_a_kernel/'>
             Read More
           </a>
         </div>
