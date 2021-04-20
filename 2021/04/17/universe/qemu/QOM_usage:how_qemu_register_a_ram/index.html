@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>QOM使用：qemu如何注册使用一个MemoryRegion类的 - Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="qemu,qom">
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/eye.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Mens et Manus</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>首页</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>档归</p>
+            </a>
+          
+            <a href="https://github.com/66RING"
+              
+              
+              id="https:githubcom66RING">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        QOM使用：qemu如何注册使用一个MemoryRegion类的
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>请设置文章作者</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Apr 17, 2021</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="QOM使用：qemu如何注册使用一个MemoryRegion类的" data-path="/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="openrisc中ram对象的生成过程"><a href="#openrisc中ram对象的生成过程" class="headerlink" title="openrisc中ram对象的生成过程"></a>openrisc中ram对象的生成过程</h1><p>QEMU利用QOM来对对象进行抽象，用它来对各种资源进程抽象、管理(创建、配置、销毁)。即QEMU内部实现面向对象机制的方法。</p>
+<p>QOM机制有如下三个部分：</p>
+<ul>
+<li>类型注册，涉及函数有<code>type_init</code>、<code>register_module_init</code>、<code>type_register</code><ul>
+<li>生成<code>TypeImpl</code>，通过<code>TypeImpl</code>就可以知道如何初始化一个类</li>
+<li>相当于告诉qemu这个类如何定义，如:<ul>
+<li>类名是什么：<code>.name</code></li>
+<li>类实例化调用什么函数：<code>.instance_init</code></li>
+<li>类自己的特有方法、对父类如何继承等：<code>.class_init</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>类型的初始化<code>type_initialize</code><ul>
+<li>类型定义告诉了QEMU怎么初始化类，类型初始化就根据定义的内容把类创建出来</li>
+</ul>
+</li>
+<li>对象的初始化<ul>
+<li>通过上面创建好的类来实例化对象</li>
+</ul>
+</li>
+</ul>
+<p>MemoryRegion也是一个QOM对象，在<code>./softmmu/memory.c</code>进行了类型注册：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">static const TypeInfo memory_region_info &#x3D; &#123;</span><br><span class="line">    .parent             &#x3D; TYPE_OBJECT,</span><br><span class="line">    .name               &#x3D; TYPE_MEMORY_REGION,</span><br><span class="line">    .class_size         &#x3D; sizeof(MemoryRegionClass),</span><br><span class="line">    .instance_size      &#x3D; sizeof(MemoryRegion),</span><br><span class="line">    .instance_init      &#x3D; memory_region_initfn,</span><br><span class="line">    .instance_finalize  &#x3D; memory_region_finalize,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">type_register_static(&amp;memory_region_info);</span><br></pre></td></tr></table></figure>
+
+<p>其中类名<code>TYPE_MEMORY_REGION</code>展开为<code>qemu:memory-region</code>，每个MemoryRegion类的实例通过<code>memory_region_initfn</code>构造，通过<code>memory_region_finalize</code>销毁。通过以上信息QEMU就能知道如何创建MemoryRegion类，以及MemoryRegion类实例该如何生成。</p>
+<p>MemoryRegion可以分为如下几类</p>
+<ul>
+<li>根级MemoryRegion<ul>
+<li>没有自己的内存，用于管理subregion，如<code>system_memory</code></li>
+<li>通过<code>memory_region_init</code>初始化</li>
+</ul>
+</li>
+<li><strong>实体MemoryRegion</strong><ul>
+<li><strong>有具体的内存</strong>，从QEMU进程地址空间分配内存</li>
+<li>通过<code>memory_region_init_ram</code>初始化，实际由<code>qemu_ram_alloc</code>分配实际内存。如RAM、ROM、ROM device等</li>
+</ul>
+</li>
+<li>别名MemoryRegion<ul>
+<li>表示实体mr的不同分段，没有自己的内存，是实体mr的一部分</li>
+<li>通过<code>memory_region_init_alias</code>初始化</li>
+<li>通过<code>alias</code>成员 <strong>指向实体MemoryRegion</strong> ，<code>alias_offset</code>表示该别名mr在实体内存中的偏移量</li>
+</ul>
+</li>
+</ul>
+<p>ram作为根级MemoryRegion，也是MemoryRegion类的一个实例，通过<code>memory_region_init_ram</code>创建和初始化。</p>
+<p>openrisc中对其ram的构造方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 函数原型</span><br><span class="line">void memory_region_init_ram(MemoryRegion *mr, struct Object *owner, const char *name, uint64_t size, Error **errp)</span><br><span class="line"></span><br><span class="line">memory_region_init_ram(ram, NULL, &quot;openrisc.ram&quot;, ram_size, &amp;error_fatal);</span><br></pre></td></tr></table></figure>
+
+<p>可见对象名将要设置为<code>openrisc.ram</code>，<code>memory_region_init_ram</code>的调用关系为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">memory_region_init_ram()</span><br><span class="line">    memory_region_init_ram_nomigrate()</span><br><span class="line">        memory_region_init_ram_shared_nomigrate()</span><br><span class="line">            memory_region_init(mr, owner, name, size);</span><br></pre></td></tr></table></figure>
+
+<p><code>memory_region_init_ram</code>其底层也是调用<code>memory_region_init</code>做通用MemoryRegion的初始化，只不过在上层，如<code>memory_region_init_ram_shared_nomigrate()</code>中会针对ram做一些定制的操作。</p>
+<p><code>memory_region_init()</code>主要有两部</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">memory_region_init</span><span class="params">(MemoryRegion *mr,</span></span></span><br><span class="line"><span class="function"><span class="params">                        Object *owner,</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">const</span> <span class="keyword">char</span> *name,</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">uint64_t</span> <span class="built_in">size</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    object_initialize(mr, <span class="keyword">sizeof</span>(*mr), TYPE_MEMORY_REGION);</span><br><span class="line">    memory_region_do_init(mr, owner, name, <span class="built_in">size</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>object_initialize(mr, sizeof(*mr), TYPE_MEMORY_REGION);</code><ul>
+<li>为ram生成MemoryRegion类对象/实例</li>
+</ul>
+</li>
+<li><code>memory_region_do_init(mr, owner, name, size);</code><ul>
+<li>对实例化后的MemoryRegion对象进行初始化</li>
+</ul>
+</li>
+</ul>
+<h2 id="object-initialize"><a href="#object-initialize" class="headerlink" title="object_initialize"></a>object_initialize</h2><p><code>object_initialize()</code>会通过<code>object_initialize_with_type()</code>根据传入的typename符串找到类的描述，从而初始化一个QOM对象。</p>
+<p>这里typename为<code>TYPE_MEMORY_REGION</code>宏，展开为<code>qemu:memory-region</code>，也就是MemoryRegion类注册的类名。通过类名找到了MemoryRegion类，用于做MemoryRegion类的实例化。这里是对<code>openrisc.ram</code>实例化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">object_initialize</span><span class="params">(<span class="keyword">void</span> *data, <span class="keyword">size_t</span> <span class="built_in">size</span>, <span class="keyword">const</span> <span class="keyword">char</span> *<span class="keyword">typename</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    TypeImpl *type = type_get_by_name(<span class="keyword">typename</span>);    <span class="comment">// 根据类名通过hash表找到对应的TypeImpl结构体，QOM用TypeImpl来描述一个类的信息</span></span><br><span class="line">    <span class="comment">// 注册了但未必初始化了，故后面还有确保初始化了的操作</span></span><br><span class="line">    ...</span><br><span class="line">    object_initialize_with_type(data, <span class="built_in">size</span>, type);  <span class="comment">// 根据类描述结构(TypeImpl)初始化对象</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>object_initialize_with_type()</code>内容如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">object_initialize_with_type</span><span class="params">(Object *obj, <span class="keyword">size_t</span> <span class="built_in">size</span>, TypeImpl *type)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    type_initialize(type); <span class="comment">// 确保类已经初始化过了，如果已经初始化则跳过</span></span><br><span class="line"></span><br><span class="line">    g_assert(type-&gt;instance_size &gt;= <span class="keyword">sizeof</span>(Object));</span><br><span class="line">    g_assert(type-&gt;abstract == <span class="literal">false</span>);</span><br><span class="line">    g_assert(<span class="built_in">size</span> &gt;= type-&gt;instance_size);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">memset</span>(obj, <span class="number">0</span>, type-&gt;instance_size); <span class="comment">// 卡号四初始化，这里传入obj是mr</span></span><br><span class="line">    obj-&gt;<span class="class"><span class="keyword">class</span> = <span class="title">type</span>-&gt;<span class="title">class</span>;</span></span><br><span class="line">    object_ref(obj);            <span class="comment">// 增加基类引用计数</span></span><br><span class="line">    object_class_property_init_all(obj);</span><br><span class="line">    <span class="comment">// 为该对象生成property域，其属性就可以通过hash表获取</span></span><br><span class="line">    obj-&gt;properties = g_hash_table_new_full(g_str_hash, g_str_equal,</span><br><span class="line">                                            <span class="literal">NULL</span>, object_property_free);</span><br><span class="line">    object_init_with_type(obj, type);       <span class="comment">// 调用自身的初始化函数和递归调用所有父类的初始化函数</span></span><br><span class="line">    object_post_init_with_type(obj, type);  <span class="comment">// 调用TypeImpl的instance_post_init回调函数，完成对象初始化之后的工作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>object_init_with_type</code>会调用自身的实例化函数并递归地调用父类的实例化函数。对于<code>MemoryRegion</code>类的对象，其实例化函数为<code>memory_region_initfn()</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">memory_region_initfn</span><span class="params">(Object *obj)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    MemoryRegion *mr = MEMORY_REGION(obj);</span><br><span class="line">    ObjectProperty *op;</span><br><span class="line"></span><br><span class="line">    mr-&gt;ops = &amp;unassigned_mem_ops;</span><br><span class="line">    mr-&gt;enabled = <span class="literal">true</span>;</span><br><span class="line">    mr-&gt;romd_mode = <span class="literal">true</span>;</span><br><span class="line">    mr-&gt;destructor = memory_region_destructor_none;</span><br><span class="line">    QTAILQ_INIT(&amp;mr-&gt;subregions);</span><br><span class="line">    QTAILQ_INIT(&amp;mr-&gt;coalesced);</span><br><span class="line"></span><br><span class="line">    op = object_property_add(OBJECT(mr), <span class="string">"container"</span>,</span><br><span class="line">                             <span class="string">"link&lt;"</span> TYPE_MEMORY_REGION <span class="string">"&gt;"</span>,</span><br><span class="line">                             memory_region_get_container,</span><br><span class="line">                             <span class="literal">NULL</span>, <span class="comment">/* memory_region_set_container */</span></span><br><span class="line">                             <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    op-&gt;resolve = memory_region_resolve_container;</span><br><span class="line"></span><br><span class="line">    object_property_add_uint64_ptr(OBJECT(mr), <span class="string">"addr"</span>,</span><br><span class="line">                                   &amp;mr-&gt;addr, OBJ_PROP_FLAG_READ);</span><br><span class="line">    object_property_add(OBJECT(mr), <span class="string">"priority"</span>, <span class="string">"uint32"</span>,</span><br><span class="line">                        memory_region_get_priority,</span><br><span class="line">                        <span class="literal">NULL</span>, <span class="comment">/* memory_region_set_priority */</span></span><br><span class="line">                        <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    object_property_add(OBJECT(mr), <span class="string">"size"</span>, <span class="string">"uint64"</span>,</span><br><span class="line">                        memory_region_get_size,</span><br><span class="line">                        <span class="literal">NULL</span>, <span class="comment">/* memory_region_set_size, */</span></span><br><span class="line">                        <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>memory_region_initfn</code>会给该MemoryRegion对象做如下基本设置：</p>
+<ul>
+<li>赋值默认操作函数<code>unassigned_mem_ops</code></li>
+<li>添加link类型的container属性<ul>
+<li>每个mr都可以是其他mr的container</li>
+<li>link属性表示一种连接关系，表示一种设备引用另一种设备</li>
+</ul>
+</li>
+<li>添加priority属性</li>
+<li>添加size属性</li>
+</ul>
+<h2 id="memory-region-do-init"><a href="#memory-region-do-init" class="headerlink" title="memory_region_do_init"></a>memory_region_do_init</h2><p>通过上面的步骤就生成了一个MemoryRegion实例，通过<code>memory_region_do_init</code>再对该MemoryRegion实例进程初始化(本例是是openrisc.ram的初始化，以下就称为openrisc.ram对象或openrisc.ram实例)</p>
+<p><code>memory_region_do_init</code>对实例初始化，如设置名称、设置owner执行父对象、添加属性等：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">memory_region_do_init</span><span class="params">(MemoryRegion *mr,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  Object *owner,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  <span class="keyword">const</span> <span class="keyword">char</span> *name,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  <span class="keyword">uint64_t</span> <span class="built_in">size</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    mr-&gt;<span class="built_in">size</span> = int128_make64(<span class="built_in">size</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">size</span> == UINT64_MAX) &#123;</span><br><span class="line">        mr-&gt;<span class="built_in">size</span> = int128_2_64();</span><br><span class="line">    &#125;</span><br><span class="line">    mr-&gt;name = g_strdup(name);</span><br><span class="line">    mr-&gt;owner = owner;</span><br><span class="line">    mr-&gt;ram_block = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (name) &#123;</span><br><span class="line">        <span class="keyword">char</span> *escaped_name = memory_region_escape_name(name);   <span class="comment">// 去转意??</span></span><br><span class="line">        <span class="keyword">char</span> *name_array = g_strdup_printf(<span class="string">"%s[*]"</span>, escaped_name);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!owner) &#123;</span><br><span class="line">            owner = container_get(qdev_get_machine(), <span class="string">"/unattached"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        object_property_add_child(owner, name_array, OBJECT(mr));</span><br><span class="line">        object_unref(OBJECT(mr));</span><br><span class="line">        g_free(name_array);</span><br><span class="line">        g_free(escaped_name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>openrisc.ram的初始化过程传入的owner为NULL，这样就会分配一个叫”/unattached”的Object作为其owner，然后将openrisc.ram实例作为owner的child属性：</p>
+<p>然后通过qemu monitor查看qom信息:<code>info qom-tree</code>。就会发现openrisc.ram对象是<code>unattached</code>对象的一个child属性</p>
+<p><img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/Notes/universe/qemu/openrisc_qom_tree.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/Notes/universe/qemu/openrisc_qom_tree.png" srcset="data:image/png;base64,666" alt="openrisc_qom_tree"></p>
+<h1 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h1><h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><h3 id="类注册"><a href="#类注册" class="headerlink" title="类注册"></a>类注册</h3><p>使用TypeInfo结构来描述一个类，其中一些个重要成员如下：</p>
+<ul>
+<li><code>parent</code>，父类名</li>
+<li><code>name</code>，该类型的类名</li>
+<li><code>class_size</code>，该类的大小</li>
+<li><code>class_init</code>，该类的初始化函数</li>
+<li><code>instance_size</code>，该类的实例对象的大小</li>
+<li><code>instance_init</code>，该类的实例的实例化函数</li>
+<li><code>instance_finalize</code>，该类实例的销毁函数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">struct TypeInfo</span><br><span class="line">&#123;</span><br><span class="line">    const char *name;</span><br><span class="line">    const char *parent;</span><br><span class="line"></span><br><span class="line">    size_t instance_size;</span><br><span class="line">    size_t instance_align;</span><br><span class="line">    void (*instance_init)(Object *obj);</span><br><span class="line">    void (*instance_post_init)(Object *obj);</span><br><span class="line">    void (*instance_finalize)(Object *obj);</span><br><span class="line"></span><br><span class="line">    bool abstract;</span><br><span class="line">    size_t class_size;</span><br><span class="line"></span><br><span class="line">    void (*class_init)(ObjectClass *klass, void *data);</span><br><span class="line">    void (*class_base_init)(ObjectClass *klass, void *data);</span><br><span class="line">    void *class_data;</span><br><span class="line"></span><br><span class="line">    InterfaceInfo *interfaces;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>定义好一个类后需要使用<code>type_register_static(YOUR_TYPEINFO);</code>将类注册到全局hash表，用于根据类名构造类和类实例。</p>
+<p><code>type_register_static</code>可以将类信息注册，但一般不直接调用或者用到时在调用。而是使用<code>type_init(YOUR_REGISTER)</code>让所有类注册在main之前完成。<code>type_init</code>是个宏，其又是<code>module_init</code>宏，<code>module_init</code>宏如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> module_init(function, type)                                         \</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __attribute__((constructor)) do_qemu_init_ #<span class="meta"># function(void)    \</span></span><br><span class="line">&#123;                                                                           \</span><br><span class="line">    register_module_init(function, type);                                   \</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>module_init</code>宏通过添加编译器属性<code>__attribute__((constructor))</code>保证注册函数会在<code>main</code>函数前调用。</p>
+<p>类似的宏还有<code>block_init</code>、<code>opts_init</code>、<code>trace_init</code>等</p>
+<h3 id="类初始化"><a href="#类初始化" class="headerlink" title="类初始化"></a>类初始化</h3><p>通过定义<code>TypeInfo</code>和注册，仅仅是告诉了qemu要怎么构造类，要生成类的实例还要调用<code>type_initialize</code>将类创建出来。即类的初始化通过<code>type_initialize</code>完成。</p>
+<p>其先判断<code>ti-&gt;class</code>如果非空说明类已经初始化过了。因此使用<code>object_initialize_with_type</code>其实是类对象的一种懒加载方法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">object_initialize_with_type</span><span class="params">(Object *obj, <span class="keyword">size_t</span> <span class="built_in">size</span>, TypeImpl *type)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    type_initialize(type);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其如果是第一次执行则会进入<code>type_initialize</code>，发现</p>
+<p>不过大部份类初始化在创建虚拟机时就通过下面步骤初始化好了。所以<code>object_initialize_with_type</code>的<code>type_initialize</code>更多还是在保证类确实已经创建了。没有创建再调用创建。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">qemu_init</span><br><span class="line">    select_machine</span><br><span class="line">        object_class_get_list</span><br><span class="line">            object_class_foreach</span><br><span class="line">                g_hash_table_foreach</span><br><span class="line">                    object_class_foreach_tramp</span><br><span class="line">                        type_initialize</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="通过类实例化一个对象"><a href="#通过类实例化一个对象" class="headerlink" title="通过类实例化一个对象"></a>通过类实例化一个对象</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">object_initialize</span><span class="params">(<span class="keyword">void</span> *data, <span class="keyword">size_t</span> <span class="built_in">size</span>, <span class="keyword">const</span> <span class="keyword">char</span> *<span class="keyword">typename</span>)</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>data用于接受要实例化的对象<ul>
+<li>如<code>mr</code></li>
+</ul>
+</li>
+<li>size表示该实例的大小<ul>
+<li>如<code>sizeof(*mr)</code></li>
+</ul>
+</li>
+<li>typename表示类名</li>
+</ul>
+<p>其内部有的核心调用为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">|- TypeImpl *type = type_get_by_name(<span class="keyword">typename</span>);</span><br><span class="line">|- object_initialize_with_type(type)</span><br><span class="line">    |- ...</span><br><span class="line">    |- type_initialize(type);</span><br><span class="line">    |- obj-&gt;<span class="class"><span class="keyword">class</span> = <span class="title">type</span>-&gt;<span class="title">class</span>;</span></span><br><span class="line">    |- object_class_property_init_all(obj);</span><br><span class="line">    |- obj-&gt;properties = g_hash_table_new_full(g_str_hash, g_str_equal,</span><br><span class="line">    |-                                         <span class="literal">NULL</span>, object_property_free);</span><br><span class="line">    |- ...</span><br><span class="line">    |- object_init_with_type(obj, type);</span><br><span class="line">    |- object_post_init_with_type(obj, type);</span><br></pre></td></tr></table></figure>
+
+<p><code>object_initialize</code>会根据类名找到对应的类，然后通过<code>object_initialize_with_type</code>实例化，其中实例化的核心是<code>object_init_with_type(obj, type)</code>。它会根据类的实例化函数<code>instance_init</code>将对象实例化，并递归的实例化父类。</p>
+<p>而<code>object_post_init_with_type</code>是处理对象实例化后的一些通过，会根据类的<code>instance_post_init</code>函数完成。</p>
+<h3 id="初始化对象细节"><a href="#初始化对象细节" class="headerlink" title="初始化对象细节"></a>初始化对象细节</h3><p>像MemoryRegion类，其对象除了基础的实例化还有一些细节需要初始化。这就要为什么<code>memory_region_init()</code>是这样的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">memory_region_init</span><span class="params">(MemoryRegion *mr,</span></span></span><br><span class="line"><span class="function"><span class="params">                        Object *owner,</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">const</span> <span class="keyword">char</span> *name,</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">uint64_t</span> <span class="built_in">size</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    object_initialize(mr, <span class="keyword">sizeof</span>(*mr), TYPE_MEMORY_REGION);</span><br><span class="line">    memory_region_do_init(mr, owner, name, <span class="built_in">size</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模仿MemoryRegion对象的构建方法，用户可以对自己的对象构造方法进一步封装分别实例化对象和补充细节。对应于<code>memory_region_init</code>中的的<code>object_initialize</code>和<code>memory_region_do_init</code></p>
+<p>以MemoryRegion对象为例，其<code>memory_region_do_init</code>为MemoryRegion对象增加了<code>owner</code>、<code>name</code>域，还将对象本身添加到了父对象的child属性中。</p>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>为了对对象进行管理，每种类型的对象都增加了 <strong>属性</strong>。类属性在<code>ObjectClass</code>(所有QOM对象的父类)的<code>properties</code>域中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ObjectProperty</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> *name;     <span class="comment">// 属性名</span></span><br><span class="line">    <span class="keyword">char</span> *type;     <span class="comment">// 属性类型名，bool、link或更复杂的类型</span></span><br><span class="line">    <span class="keyword">char</span> *description;  <span class="comment">// 表述</span></span><br><span class="line">    ObjectPropertyAccessor *<span class="built_in">get</span>;  <span class="comment">// 操作属性的一系列回调函数</span></span><br><span class="line">    ObjectPropertyAccessor *<span class="built_in">set</span>;</span><br><span class="line">    ObjectPropertyResolve *resolve;</span><br><span class="line">    ObjectPropertyRelease *<span class="built_in">release</span>;</span><br><span class="line">    ObjectPropertyInit *init;</span><br><span class="line">    <span class="keyword">void</span> *opaque;       <span class="comment">// 指向一个具体的属性，如ObjectProperty、LinkProperty、BoolProperty等</span></span><br><span class="line">    QObject *defval;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>每种具体的属性都有一个结构体描述它。如<code>LinkProperty</code>结构体表示link类型的属性，<code>StringProperty</code>表示字符串类型的属性，<code>BoolProperty</code>表示bool类型的属性。</p>
+<p><code>LinkProperty</code>属性有个<code>Object **targetp</code>成员，用于连接两个对象</p>
+<p>属性添加通过<code>object_property_add</code>实现，其是对<code>object_property_try_add</code>的封装，<code>object_property_try_add</code>多一个参数<code>errp</code>用于保存错误代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ObjectProperty *</span><br><span class="line">object_property_try_add(Object *obj, <span class="keyword">const</span> <span class="keyword">char</span> *name, <span class="keyword">const</span> <span class="keyword">char</span> *type,</span><br><span class="line">                        ObjectPropertyAccessor *<span class="built_in">get</span>,</span><br><span class="line">                        ObjectPropertyAccessor *<span class="built_in">set</span>,</span><br><span class="line">                        ObjectPropertyRelease *<span class="built_in">release</span>,</span><br><span class="line">                        <span class="keyword">void</span> *opaque, Error **errp)</span><br></pre></td></tr></table></figure>
+
+<p>其作用就是给下面些个域赋值。</p>
+<ul>
+<li><code>obj</code>表示要添加属性的对象</li>
+<li><code>name</code>表示要属性名</li>
+<li><code>type</code>表示属性类型名<ul>
+<li>通常格式为<code>namespace&lt;sub-namespace&gt;</code>，推荐用<code>-</code>连接词</li>
+</ul>
+</li>
+<li><code>get</code>表示读属性用到方法</li>
+<li><code>set</code>表示写属性用到的方法</li>
+<li><code>release</code>表示将属性从对象中移除时调用的方法</li>
+<li><code>opaque</code>表示属性一个具体的属性对象</li>
+</ul>
+<p><code>object_property_add_link</code>和<code>object_property_add_child</code>仅是对<code>object_property_add</code>封装以实现具体细节。</p>
+<p>如<code>object_property_add_link</code>会创建一个<code>LinkProperty</code>对象传入<code>object_property_add</code>，然后让属性的<code>opaque</code>域指向该<code>LinkProperty</code>对象。而<code>object_property_add_child</code>则直接将qom对象传入。</p>
+<h3 id="设备间通过属性交互"><a href="#设备间通过属性交互" class="headerlink" title="设备间通过属性交互"></a>设备间通过属性交互</h3><ul>
+<li>link/child属性<ul>
+<li>link属性表示一种连接关系，表示一种设备引用另一种设备</li>
+<li>child属性表示对象之间的从属关系。对象的child属性执行子对象</li>
+</ul>
+</li>
+</ul>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://yoursite.com/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/>http://yoursite.com/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-19T22:52:41+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：Apr 19, 2021</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/qemu/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>qemu</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/qom/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>qom</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/04/13/universe/qemu/qemu_softmmu/'>
+          <p class='title'>QEMU的内存模拟<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>QEMU softmmu虚拟机(Guest)内存模拟的首要任务是将虚拟机虚拟地址(GVA)转换成实际存储的宿主机(Host)的物理地址(HPA)。
+虚拟机提供了虚拟的硬件环境，GVA到到虚拟机物...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#object-initialize"><span class="toc-text">object_initialize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#memory-region-do-init"><span class="toc-text">memory_region_do_init</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口"><span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类注册"><span class="toc-text">类注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类初始化"><span class="toc-text">类初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过类实例化一个对象"><span class="toc-text">通过类实例化一个对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化对象细节"><span class="toc-text">初始化对象细节</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性"><span class="toc-text">属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设备间通过属性交互"><span class="toc-text">设备间通过属性交互</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="QOM使用：qemu如何注册使用一个MemoryRegion类的";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":null,"appKey":null,"meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>

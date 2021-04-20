@@ -622,7 +622,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>数据速率相当于一辆车的载货能力，信号速率相当于公路上行驶的车辆数目，由于宽带有限，信号速率低一点，数据速率应该高一点。</p>
 <p><strong>信号元素计算公式</strong></p>
 <p>$$S = c \times N \times \frac1r (baud)$$</p>
-<p>其中S表示信号元素数，c表示具体情况的情形因子，N表示数据速率，r表示比率</p>
+<p>其中S表示信号元素数，c表示具体情况的情形因子(一般情形为1/2)，N表示数据速率，r表示比率</p>
 <blockquote>
 <p><strong>例</strong>：</p>
 <p>最小带宽可以由上式子得出： $B_{min} = c \times N \times \frac1r (baud)$</p>
@@ -645,7 +645,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h5 id="单极编码"><a href="#单极编码" class="headerlink" title="单极编码"></a>单极编码</h5><p>所有信号电平只在时间轴的一边，要么大于等于0，要么小于等于0</p>
 <h5 id="极性编码"><a href="#极性编码" class="headerlink" title="极性编码"></a>极性编码</h5><p>信号电平可以在时间中的两边</p>
 <h5 id="极性不归零"><a href="#极性不归零" class="headerlink" title="极性不归零"></a>极性不归零</h5><ul>
-<li>NRZ-L(NRZ电平编码)：电平决定位值</li>
+<li>NRZ-L(NRZ电平编码)：电平决定位值，一般0正1负</li>
 <li>NRZ-I(NRZ反向编码)：没有跳变位值是0，有跳变位值是1</li>
 <li>基线偏移问题<ul>
 <li>NRZ-L：全0或全1时，存在基线偏移问题，存在DC问题</li>
@@ -678,8 +678,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>前半电平保持一个水平，后半电平变为另一个水平，位中间是跳变的，但是没有0位</li>
 </ul>
 </li>
-<li><strong>差分曼彻斯特编码</strong> ：RZ+NRZ-I<ul>
-<li>位值开始时确定一个值。如果下一位0，位中<strong>跳变后不跳回</strong>；如果下一位是1，位中<strong>跳变后跳回</strong>原位。</li>
+<li><strong>差分曼彻斯特编码</strong> ：<strong>RZ+NRZ-I</strong><ul>
+<li>中间总是跳变，<strong>位值由位开始的值决定</strong>，<strong>下一位</strong>0则位值反相(即沿着开始时的线先反相，然后再中间跳变)，下一位1位值则位值不反相 todo</li>
 </ul>
 </li>
 <li>分析<ul>
@@ -1037,10 +1037,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-16T10:45:43+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-04-18T21:34:03+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Apr 16, 2021</p>
+    <p>更新于：Apr 18, 2021</p>
   </a>
 </div>
 
