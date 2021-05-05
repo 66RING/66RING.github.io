@@ -528,6 +528,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 </ul>
+<p>结论：</p>
+<p>fork时将父进程的虚拟空间复制给子进程一份，但此时父子进程使用的是同一块物理空间。当对这块共享地址读写时，才为子进程生成一块独立的不同于父进程的物理空间，称为写时复制(copy on write, cow)。当然cow后子进程虚拟空间不变与fork时父进程的虚拟空间相同，正文段，数据段，堆，栈这四个部分内容相同(即变量地址、函数地址等与父进程相同)。也因此父子进程存在 <strong>地址相同但值不同</strong> 的情况，因为用户看到的是进程的虚地址。</p>
 <h3 id="fork-vfork-clone的区别与联系"><a href="#fork-vfork-clone的区别与联系" class="headerlink" title="fork, vfork, clone的区别与联系"></a>fork, vfork, clone的区别与联系</h3><ul>
 <li>fork<ul>
 <li>fork创造的子进程是父进程的<strong>完整副本</strong>，复制了父亲进程的资源，包括内存的内容<code>task_struct</code>内容</li>
@@ -546,6 +548,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h3 id="写时复制-copy-on-write-COW"><a href="#写时复制-copy-on-write-COW" class="headerlink" title="写时复制(copy on write, COW)"></a>写时复制(copy on write, COW)</h3><p>当子进程改变了变量时，才会通过写时复制的方法为涉及的页表建立新的副本。即当子进程或则进程尝试写一个共享的页帧时就产生一个异常(<code>page_fault</code>, <code>int14</code>)中断，此时CPU会执行相应的异常处理函数<code>do_wp_page()</code>。</p>
 <p><code>do_wp_page()</code>会对这块导致写入异常中断的物理页面进行取消共享操作，为写进程复制一新的物理页面，使父进程和子进程各自拥有一块内容相同的物理页面。最后，从异常处理函数中返回时，CPU就会重新执行刚才导致异常的写入操作指令，使进程继续执行下去。</p>
+<p>需要注意的是，每个进程有自己独立的虚拟地址，复制后子进程段、变量的地址空间(虚地址空间)和父进程是一样的，但是映射到的物理空间不同，所以存在 <strong>地址相同但值不同</strong> 的情况。因为用户看到的是进程的虚地址。</p>
 <h3 id="fork函数的执行过程"><a href="#fork函数的执行过程" class="headerlink" title="fork函数的执行过程"></a>fork函数的执行过程</h3><ul>
 <li>触发<code>sys_clone</code>系统调用</li>
 <li>执行<code>do_fork()</code><ul>
@@ -604,10 +607,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-01-26T10:32:07+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-05-03T15:54:32+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Jan 26, 2021</p>
+    <p>更新于：May 3, 2021</p>
   </a>
 </div>
 
