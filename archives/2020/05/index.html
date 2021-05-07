@@ -856,9 +856,12 @@ CPU对外部器件的控制是通过控制总线来进行的。有多少...
         信号量通信semaphore.h信号量创建和初始化sem_init1int sem_init(sem_t *sem, int pshared, unsigned int value);
 
 
+sem，初始化的信号量
+
 pshared参数：
+
 pshared为0，表示信号量在线程间共享，放置在所有线程可见的位置，如全局变量
-pshared非为0，表示信号量在进程间共享，放置在所有进程可见的位置，如使用sem_open、sh...
+pshared非为0，表示信号量在进程间共享，放置在所有进程可见的位置，...
       
     
   </div>

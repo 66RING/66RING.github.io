@@ -517,7 +517,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <h1 id="信号量通信"><a href="#信号量通信" class="headerlink" title="信号量通信"></a>信号量通信</h1><h2 id="semaphore-h"><a href="#semaphore-h" class="headerlink" title="semaphore.h"></a>semaphore.h</h2><h3 id="信号量创建和初始化sem-init"><a href="#信号量创建和初始化sem-init" class="headerlink" title="信号量创建和初始化sem_init"></a>信号量创建和初始化sem_init</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sem_init</span><span class="params">(<span class="keyword">sem_t</span> *sem, <span class="keyword">int</span> pshared, <span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>pshared参数：<ul>
+<li><p><code>sem</code>，初始化的信号量</p>
+</li>
+<li><p>pshared参数：</p>
+<ul>
 <li>pshared为0，表示信号量在线程间共享，放置在<strong>所有线程可见</strong>的位置，如全局变量</li>
 <li>pshared非为0，表示信号量在进程间共享，放置在<strong>所有进程可见</strong>的位置，如使用<code>sem_open</code>、<code>shm_open</code>、<code>mmap</code>等访问共享内存<ul>
 <li>因为通过<code>fork()</code>创建的子进程会继承父进程的虚拟地址，但是cow会让其有独立不同于父进程的物理空间，导致地址相同但值不同</li>
@@ -525,8 +528,85 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </li>
 </ul>
 </li>
+<li><p><code>value</code>信号量初始值</p>
+</li>
+<li><p>成功返回0，失败返回1</p>
+</li>
+<li><p><code>int sem_post(sem_t *sem);</code></p>
+<ul>
+<li>信号量值加1</li>
 </ul>
-<h2 id="sys-sem-h"><a href="#sys-sem-h" class="headerlink" title="sys/sem.h"></a>sys/sem.h</h2><h2 id="pipe"><a href="#pipe" class="headerlink" title="pipe"></a>pipe</h2><h2 id="fifo"><a href="#fifo" class="headerlink" title="fifo"></a>fifo</h2><h2 id="execv"><a href="#execv" class="headerlink" title="execv"></a>execv</h2><p>argv末尾要有NULL</p>
+</li>
+<li><p><code>int sem_wait(sem_t *sem);</code></p>
+<ul>
+<li>信号量值减1</li>
+</ul>
+</li>
+<li><p><code>int sem_destroy(sem_t *sem);</code></p>
+<ul>
+<li>信号量销毁</li>
+</ul>
+</li>
+</ul>
+<p><strong>非亲缘关系使用</strong>：<code>sem_open</code>通过信号量名打开</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">sem_t</span> *<span class="title">sem_open</span> <span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *__name, <span class="keyword">int</span> __oflag, ...)</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>__oflag</code>设置打开方式，<code>fcntl.h</code>中定义了很多常用方式<ul>
+<li><code>O_CREAT</code>，如果不存在，则创建</li>
+<li><code>O_RDONLY</code>，只读模式 </li>
+<li><code>O_WRONLY</code>，只写模式 </li>
+<li><code>O_RDWR</code>，读写模式</li>
+<li><code>O_APPEND</code>，末尾追加</li>
+<li><code>O_EXCL</code>，如果已存在，则返回 -1，并且修改errno的值</li>
+<li><code>O_TRUNC</code>，如果文件存在，并且以只写/读写方式打开，则清空文件全部内容 </li>
+<li><code>O_NOCTTY</code>，如果路径名指向终端设备，不要把这个设备用作控制终端。</li>
+<li><code>O_NONBLOCK</code>，如果路径名指向FIFO/块文件/字符文件，则把文件的打开和后继I/O设置为非阻塞模式</li>
+<li><code>O_DSYNC</code>，等待物理 I/O 结束后再 write。在不影响读取新写入的数据的前提下，不等待文件属性更新。 </li>
+<li><code>O_RSYNC</code>，read 等待所有写入同一区域的写操作完成后再进行</li>
+<li><code>O_SYNC</code>，等待物理 I/O 结束后再 write，包括更新文件属性的 I/O</li>
+</ul>
+</li>
+</ul>
+<h2 id="sys-sem-h"><a href="#sys-sem-h" class="headerlink" title="sys/sem.h"></a>sys/sem.h</h2><p>另一种使用信号量的方式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">semget</span><span class="params">(<span class="keyword">key_t</span> key, <span class="keyword">int</span> nsems, <span class="keyword">int</span> semflg)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>成功返回信号量标识符，否则返回-1</p>
+<ul>
+<li><code>key</code>，表示该<strong>信号量集</strong>的整数</li>
+<li><code>nsems</code>，创建的信号量的数目</li>
+<li><code>semflg</code>，标记位，设置权限等，如<code>IPC_PRIVATE</code>表示进程私有</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">semctl</span><span class="params">(<span class="keyword">int</span> semid, <span class="keyword">int</span> semnum, <span class="keyword">int</span> cmd, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>操作和控制信号量</p>
+<ul>
+<li><code>semid</code>，semget返回的信号量标识符</li>
+<li><code>semnum</code>，所操作信号在信号量集中的编号</li>
+<li><code>cmd</code>，操作方法<ul>
+<li><code>SETVAL</code>设置信号量值</li>
+</ul>
+</li>
+<li>最后参数与cmd参数有关，传入如下共用体执行具体操作</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> semun&#123;</span><br><span class="line">    <span class="keyword">int</span> val;                        <span class="comment">//cmd为SETVAL时，用于指定信号量值</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">semid_ds</span> *<span class="title">buf</span>;</span>            <span class="comment">//cmd为IPC_STAT时或IPC_SET时生效</span></span><br><span class="line">    <span class="keyword">unsigned</span> short *<span class="built_in">array</span>;            <span class="comment">//cmd为GETALL或SETALL时生效</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">seminfo</span> *_<span class="title">buf</span>;</span>            <span class="comment">//cmd为IPC_INFO时生效</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">semop</span><span class="params">(<span class="keyword">int</span> semid, struct sembuf *sops, <span class="keyword">unsigned</span> nsops)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>使用信号量，对信号量的值操作</p>
+<ul>
+<li><code>semid</code>，<code>semget</code>返回的信号量标识符</li>
+<li><code>spos</code>，操作方法数组，对信号量集的信号量操作集合</li>
+<li><code>nsops</code>，sops数组的长度</li>
+</ul>
+<p>sembuf结构如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sembuf</span>&#123;</span></span><br><span class="line">  short sem_num;     <span class="comment">//信号量在信号量集中的编号</span></span><br><span class="line">  short sem_op;      <span class="comment">//操作方法，-1表示P操作，1表示V操作</span></span><br><span class="line">  short sem_flag;    <span class="comment">//标志位，通常SEM_UNDO让进程退出自动释放信号量</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
 
   
   
@@ -561,10 +641,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-05-05T20:03:57+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-05-07T22:28:10+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：May 5, 2021</p>
+    <p>更新于：May 7, 2021</p>
   </a>
 </div>
 
@@ -713,7 +793,7 @@ Basi...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#semaphore-h"><span class="toc-text">semaphore.h</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#信号量创建和初始化sem-init"><span class="toc-text">信号量创建和初始化sem_init</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sys-sem-h"><span class="toc-text">sys&#x2F;sem.h</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pipe"><span class="toc-text">pipe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fifo"><span class="toc-text">fifo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#execv"><span class="toc-text">execv</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#semaphore-h"><span class="toc-text">semaphore.h</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#信号量创建和初始化sem-init"><span class="toc-text">信号量创建和初始化sem_init</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sys-sem-h"><span class="toc-text">sys&#x2F;sem.h</span></a></li></ol>
     </div>
   </section>
 

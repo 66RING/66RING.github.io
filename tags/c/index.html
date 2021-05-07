@@ -628,9 +628,12 @@ qemu的初始化时根据具体的模块类型，执行该类型的所有模块�
         信号量通信semaphore.h信号量创建和初始化sem_init1int sem_init(sem_t *sem, int pshared, unsigned int value);
 
 
+sem，初始化的信号量
+
 pshared参数：
+
 pshared为0，表示信号量在线程间共享，放置在所有线程可见的位置，如全局变量
-pshared非为0，表示信号量在进程间共享，放置在所有进程可见的位置，如使用sem_open、sh...
+pshared非为0，表示信号量在进程间共享，放置在所有进程可见的位置，...
       
     
   </div>
