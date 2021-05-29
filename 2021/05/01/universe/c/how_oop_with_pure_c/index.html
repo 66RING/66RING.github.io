@@ -514,7 +514,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h2 id="继承与多态"><a href="#继承与多态" class="headerlink" title="继承与多态"></a>继承与多态</h2><p><strong>c语言结构体能保证第一个成员永远都是位于起始地址</strong>。而由于内存对齐使得其他紧邻的成员地址未必连续。</p>
+  <h2 id="继承与多态"><a href="#继承与多态" class="headerlink" title="继承与多态"></a>继承与多态</h2><p><strong>c语言结构体能保证第一个成员永远都是位于起始地址</strong>。而由于内存对齐，其他紧邻的成员地址未必连续。</p>
 <p><strong>父类总是结构体的第一个成员</strong> ，这样在强制类型转换截取相应大小时得到的总是一个完整的结构体。如</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">father</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">char</span>* name;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">son</span>&#123;</span></span><br><span class="line">    father parent;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">char</span>* name;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -565,10 +565,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-05-08T20:05:08+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-05-25T22:25:39+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：May 8, 2021</p>
+    <p>更新于：May 25, 2021</p>
   </a>
 </div>
 
