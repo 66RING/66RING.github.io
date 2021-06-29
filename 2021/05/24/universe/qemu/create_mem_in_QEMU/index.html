@@ -22,9 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>shell脚本杂技 - Ring&#39;s Blog</title>
+  <title>qemu架构中创建内存的方法 - Ring&#39;s Blog</title>
   
-    <meta name="keywords" content="operate,shell">
+    <meta name="keywords" content="qemu">
   
 
   
@@ -461,7 +461,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title">
-        shell脚本杂技
+        qemu架构中创建内存的方法
       </h1>
       <div class='new-meta-box'>
         
@@ -485,7 +485,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Jan 1, 2000</p>
+    <p>发布于：May 24, 2021</p>
   </a>
 </div>
 
@@ -496,7 +496,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="shell脚本杂技" data-path="/2000/01/01/universe/operate/shell_script_tips/">
+      <div id="lc-pv" data-title="qemu架构中创建内存的方法" data-path="/2021/05/24/universe/qemu/create_mem_in_QEMU/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -514,25 +514,84 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h2 id="double-dash"><a href="#double-dash" class="headerlink" title="double dash --"></a>double dash <code>--</code></h2><p>单独使用double dash <code>--</code>一般用于表示命令行选项(command line options)的结尾，之后不再接收选项，只能接收位置参数(positional parameters)</p>
-<p>如一下命令会查找<code>-v</code>而不让它作为命令行的选项</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -- -v &lt;file&gt;</span><br></pre></td></tr></table></figure>
+  <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>一种类型的虚拟机有其特定的初始化函数以完成虚拟机内存初始化等操作。调用哪个初始化函数在构建虚拟机类时指定：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> TypeInfo my_machine_info = &#123;</span><br><span class="line">    ...</span><br><span class="line">    .class_init    = my_machine_class_init,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">my_machine_registor</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    type_register_static(&amp;my_machine_info);</span><br><span class="line">&#125;</span><br><span class="line">type_init(my_machine_registor);</span><br></pre></td></tr></table></figure>
 
-<h2 id="文件描述符与文件控制"><a href="#文件描述符与文件控制" class="headerlink" title="文件描述符与文件控制"></a>文件描述符与文件控制</h2><ul>
-<li>文件描述符<ul>
-<li><a href="https://zhuanlan.zhihu.com/p/109053744" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/109053744</a></li>
+<p>其中<code>my_machine_class_init</code>是自定义的机器类的构造方法，用于初始化虚拟机类的各种信息，其中就包括指定虚拟机初始化主函数，如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">my_machine_class_init</span><span class="params">(ObjectClass *oc, <span class="keyword">void</span> *data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    MachineClass *mc = MACHINE_CLASS(oc);</span><br><span class="line">    mc-&gt;init = my_machine_init;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>MACHINE_CLASS(oc)</code>宏将<code>ObjectClass</code>类型强制转换成<code>MachineClass mc</code>对象，然后让<code>mc-&gt;init</code>赋值为自定义的虚拟机初始化主函数<code>my_machine_init</code>。这样qemu框架在创建虚拟机时就能使用我们指定的方法了。</p>
+<p>通过上面的过程我们知道，令<code>mc-&gt;init = my_machine_init</code>后qemu就会执行我们定义的虚拟机初始化函数<code>my_machine_init</code>。虚拟机初始化包括虚拟机内存的创建，因此我们要在<code>my_machine_init</code>函数中完成内存初始化部分操作。</p>
+<p>我要独立设计内存创建方法则要在<code>my_machine_init</code>函数中完成内存初始化部分的操作。如初始化ram、rom等</p>
+<p>虚拟机初始化函数会接受一个<code>MachineState *machine</code>作为参数，其中包括虚拟机的基本信息，这些信息由qemu解析命令行参数获得，其中就包含管理虚拟机ram的MemoryRegion<code>machine-&gt;ram</code>和ram大小的信息<code>machine-&gt;ram_size</code>等。</p>
+<p>下面将分别介绍x86、arm和powerpc架构虚拟机创建内存的方法。</p>
+<h1 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h1><p>x86机器为了实现向后兼容，需要用一个MemoryRegion代表低地址空间的内存，用另一个MemoryRegion代表地址空间的内存。将代表低地址空间的mr称为<code>ram_below_4g</code>，代表高地址空间的mr称为<code>ram_above_4g</code>。虽然名称上是以4g为分界点，但实际中是以3g为分界点，即分配给虚拟机的内存大于3g就需要创建<code>ram_above_4g</code>了。</p>
+<p>通过<code>machine-&gt;ram_size</code>可知道为虚拟机分配了多少内存，如果<code>ram_size</code>大于4g，就需要创建一个mr(<code>ram_above_4g</code>)来管理高内存地址空间。因此我们的内存初始化需要进行如下操作：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">my_machine_init</span><span class="params">(MachineState *machine)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">ram_addr_t</span> lowmem = <span class="number">0xc0000000</span>; <span class="comment">/* 3G */</span></span><br><span class="line">	<span class="keyword">if</span> (machine-&gt;ram_size &gt; lowmem) &#123;</span><br><span class="line">        above_4g_mem_size = machine-&gt;ram_size - lowmem;</span><br><span class="line">        below_4g_mem_size = lowmem;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        above_4g_mem_size = <span class="number">0</span>;</span><br><span class="line">        below_4g_mem_size = machine-&gt;ram_size;</span><br><span class="line">    &#125;</span><br><span class="line">	...</span><br><span class="line">	MemoryRegion *ram_below_4g = g_malloc(<span class="keyword">sizeof</span>(*ram_below_4g));</span><br><span class="line">	memory_region_init_alias(ram_below_4g, <span class="literal">NULL</span>, <span class="string">"ram-below-4g"</span>, machine-&gt;ram, <span class="comment">// 创建一个表示低内存地址空间的mr</span></span><br><span class="line">							 <span class="number">0</span>, below_4g_mem_size);</span><br><span class="line">	memory_region_add_subregion(system_memory, <span class="number">0</span>, ram_below_4g);</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">if</span> (machine-&gt;ram_size &gt; lowmem) &#123;</span><br><span class="line"></span><br><span class="line">		MemoryRegion *ram_above_4g = g_malloc(<span class="keyword">sizeof</span>(*ram_above_4g));</span><br><span class="line">		memory_region_init_alias(ram_above_4g, <span class="literal">NULL</span>, <span class="string">"ram-above-4g"</span>,  <span class="comment">// 创建一个表示高内存地址空间的mr</span></span><br><span class="line">								 machine-&gt;ram,</span><br><span class="line">								 below_4g_mem_size,</span><br><span class="line">								 above_4g_mem_size);</span><br><span class="line">		memory_region_add_subregion(system_memory, <span class="number">0x100000000</span>ULL, ram_above_4g);</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">	x86_bios_rom_init(machine, <span class="string">"bios.bin"</span>, rom_memory, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先根据<code>machine-&gt;ram_size</code>提供的内存信息进行预处理。如果分配给虚拟机的内存大于规定的阀值<code>lowmem</code>(3G)，那么就要创建代表高地址的mr<code>ram_above_4g</code>，其大小就是低3G以外的部分<code>above_4g_mem_size = machine-&gt;ram_size - lowmem</code></p>
+<p>如果给虚拟机的内存低于阀值3G则仅创建代表低地址空间的mr，其大小<code>below_4g_mem_size = machine-&gt;ram_size</code>，见如下代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ram_addr_t</span> lowmem = <span class="number">0xc0000000</span>; <span class="comment">/* 3G */</span></span><br><span class="line"><span class="keyword">if</span> (machine-&gt;ram_size &gt; lowmem) &#123;</span><br><span class="line">	above_4g_mem_size = machine-&gt;ram_size - lowmem;</span><br><span class="line">	below_4g_mem_size = lowmem;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	above_4g_mem_size = <span class="number">0</span>;</span><br><span class="line">	below_4g_mem_size = machine-&gt;ram_size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>无论是创建代表高地址mr还是创建代表低地址的mr，都要通过<code>memory_region_init_alias()</code>将其创建为<code>machine-&gt;ram</code>的别名。表示其管理<code>machine-&gt;ram</code>的一部分。</p>
+<p>然后通过<code>memory_region_add_subregion()</code>接口函数指定高地址、低地址两部分mr在地址空间中的起始位置。</p>
+<p><code>memory_region_add_subregion()</code>的第一个参数为被加入到的MemoryRegion，第二个参数为待加入的mr在被加入mr中的位置，第三个参数为待加入的mr</p>
+<p>代表低地址mr的起始位置为系统内存空间(<code>system_memory</code>)的0。代表高地址mr的起始位置为<code>system_memory</code>中的4G。实际代码示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MemoryRegion *ram_below_4g &#x3D; g_malloc(sizeof(*ram_below_4g));</span><br><span class="line">memory_region_init_alias(ram_below_4g, NULL, &quot;ram-below-4g&quot;, machine-&gt;ram, &#x2F;&#x2F; 创建一个表示低4g内存空间的mr</span><br><span class="line">						 0, below_4g_mem_size);</span><br><span class="line">memory_region_add_subregion(system_memory, 0, ram_below_4g);</span><br></pre></td></tr></table></figure>
+
+<p>如果虚拟机的内存大于4g，则还会创意一个管理高4g空间的MemoryRegion结构<code>ram_above_4g</code>，其同样是<code>machine-&gt;ram</code>的一个别名，其地址空间从4G开始。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (machine-&gt;ram_size &gt; lowmem) &#123;</span><br><span class="line"></span><br><span class="line">	MemoryRegion *ram_above_4g = g_malloc(<span class="keyword">sizeof</span>(*ram_above_4g));</span><br><span class="line">	memory_region_init_alias(ram_above_4g, <span class="literal">NULL</span>, <span class="string">"ram-above-4g"</span>,  <span class="comment">// 创建一个表示高4g内存空间的mr</span></span><br><span class="line">							 machine-&gt;ram,</span><br><span class="line">							 below_4g_mem_size,</span><br><span class="line">							 above_4g_mem_size);</span><br><span class="line">	memory_region_add_subregion(system_memory, <span class="number">0x100000000</span>ULL, ram_above_4g);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后可以通过<code>x86_bios_rom_init(machine, &quot;bios.bin&quot;, rom_memory, true)</code>函数接口创建<code>bios_rom</code>，其原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x86_bios_rom_init</span><span class="params">(MachineState *ms, <span class="keyword">const</span> <span class="keyword">char</span> *default_firmware,</span></span></span><br><span class="line"><span class="function"><span class="params">                       MemoryRegion *rom_memory, <span class="keyword">bool</span> isapc_ram_fw)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>第一个参数为<code>machine</code>，第二个参数为默认设备名，第三个参数为用于管理的MemoryRegion，第四个参数为标记</p>
+<h1 id="arm"><a href="#arm" class="headerlink" title="arm"></a>arm</h1><p>arm架构虚拟机的内存创建同理，都是要在虚拟机初始化主函数中完成，设自定义的虚拟机初始化函数为<code>my_machine_init</code>，则<code>my_machine_init</code>大致应包含如下内容：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">my_machine_init</span><span class="params">(MachineState *machine)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    VirtMachineState *vms = VIRT_MACHINE(machine);</span><br><span class="line">	<span class="keyword">if</span> (!vms-&gt;memmap) &#123;</span><br><span class="line">        virt_set_memmap(vms);</span><br><span class="line">    &#125;</span><br><span class="line">	...</span><br><span class="line">	memory_region_add_subregion(sysmem, vms-&gt;memmap[VIRT_MEM].base,</span><br><span class="line">							machine-&gt;ram);</span><br><span class="line">	...</span><br><span class="line">    create_gic(vms);</span><br><span class="line">	...</span><br><span class="line">	create_pcie(vms);</span><br><span class="line">	...</span><br><span class="line">	virt_flash_fdt(vms, sysmem, secure_sysmem ?: sysmem);</span><br><span class="line">	...</span><br><span class="line">    fdt_add_pmu_nodes(vms);</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>arm架构通过<code>vms</code>结构管理虚拟机的信息，其中就包括内存地址划分方法。通过<code>virt_set_memmap(vms)</code>接口函数就能完成vms结构的初始化工作。其中主要会赋值<code>vms-&gt;memmap</code>，这是一个字典结构，每一项都包含内存空间的起始地址和大小。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> MemMapEntry base_memmap[] = &#123;</span><br><span class="line">    <span class="comment">/* Space up to 0x8000000 is reserved for a boot ROM */</span></span><br><span class="line">    [VIRT_FLASH] =              &#123;          <span class="number">0</span>, <span class="number">0x08000000</span> &#125;,</span><br><span class="line">    [VIRT_CPUPERIPHS] =         &#123; <span class="number">0x08000000</span>, <span class="number">0x00020000</span> &#125;,</span><br><span class="line">    <span class="comment">/* GIC distributor and CPU interfaces sit inside the CPU peripheral space */</span></span><br><span class="line">    [VIRT_GIC_DIST] =           &#123; <span class="number">0x08000000</span>, <span class="number">0x00010000</span> &#125;,</span><br><span class="line">    [VIRT_GIC_CPU] =            &#123; <span class="number">0x08010000</span>, <span class="number">0x00010000</span> &#125;,</span><br><span class="line">    [VIRT_GIC_V2M] =            &#123; <span class="number">0x08020000</span>, <span class="number">0x00001000</span> &#125;,</span><br><span class="line">    [VIRT_GIC_HYP] =            &#123; <span class="number">0x08030000</span>, <span class="number">0x00010000</span> &#125;,</span><br><span class="line">    [VIRT_GIC_VCPU] =           &#123; <span class="number">0x08040000</span>, <span class="number">0x00010000</span> &#125;,</span><br><span class="line">    <span class="comment">/* The space in between here is reserved for GICv3 CPU/vCPU/HYP */</span></span><br><span class="line">    [VIRT_GIC_ITS] =            &#123; <span class="number">0x08080000</span>, <span class="number">0x00020000</span> &#125;,</span><br><span class="line">    <span class="comment">/* This redistributor space allows up to 2*64kB*123 CPUs */</span></span><br><span class="line">    [VIRT_GIC_REDIST] =         &#123; <span class="number">0x080A0000</span>, <span class="number">0x00F60000</span> &#125;,</span><br><span class="line">    [VIRT_UART] =               &#123; <span class="number">0x09000000</span>, <span class="number">0x00001000</span> &#125;,</span><br><span class="line">    [VIRT_RTC] =                &#123; <span class="number">0x09010000</span>, <span class="number">0x00001000</span> &#125;,</span><br><span class="line">    [VIRT_FW_CFG] =             &#123; <span class="number">0x09020000</span>, <span class="number">0x00000018</span> &#125;,</span><br><span class="line">    [VIRT_GPIO] =               &#123; <span class="number">0x09030000</span>, <span class="number">0x00001000</span> &#125;,</span><br><span class="line">    [VIRT_SECURE_UART] =        &#123; <span class="number">0x09040000</span>, <span class="number">0x00001000</span> &#125;,</span><br><span class="line">    [VIRT_SMMU] =               &#123; <span class="number">0x09050000</span>, <span class="number">0x00020000</span> &#125;,</span><br><span class="line">    [VIRT_PCDIMM_ACPI] =        &#123; <span class="number">0x09070000</span>, MEMORY_HOTPLUG_IO_LEN &#125;,</span><br><span class="line">    [VIRT_ACPI_GED] =           &#123; <span class="number">0x09080000</span>, ACPI_GED_EVT_SEL_LEN &#125;,</span><br><span class="line">    [VIRT_NVDIMM_ACPI] =        &#123; <span class="number">0x09090000</span>, NVDIMM_ACPI_IO_LEN&#125;,</span><br><span class="line">    [VIRT_PVTIME] =             &#123; <span class="number">0x090a0000</span>, <span class="number">0x00010000</span> &#125;,</span><br><span class="line">    [VIRT_SECURE_GPIO] =        &#123; <span class="number">0x090b0000</span>, <span class="number">0x00001000</span> &#125;,</span><br><span class="line">    [VIRT_MMIO] =               &#123; <span class="number">0x0a000000</span>, <span class="number">0x00000200</span> &#125;,</span><br><span class="line">    <span class="comment">/* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */</span></span><br><span class="line">    [VIRT_PLATFORM_BUS] =       &#123; <span class="number">0x0c000000</span>, <span class="number">0x02000000</span> &#125;,</span><br><span class="line">    [VIRT_SECURE_MEM] =         &#123; <span class="number">0x0e000000</span>, <span class="number">0x01000000</span> &#125;,</span><br><span class="line">    [VIRT_PCIE_MMIO] =          &#123; <span class="number">0x10000000</span>, <span class="number">0x2eff0000</span> &#125;,</span><br><span class="line">    [VIRT_PCIE_PIO] =           &#123; <span class="number">0x3eff0000</span>, <span class="number">0x00010000</span> &#125;,</span><br><span class="line">    [VIRT_PCIE_ECAM] =          &#123; <span class="number">0x3f000000</span>, <span class="number">0x01000000</span> &#125;,</span><br><span class="line">    <span class="comment">/* Actual RAM size depends on initial RAM and device memory settings */</span></span><br><span class="line">    [VIRT_MEM] =                &#123; GiB, LEGACY_RAMLIMIT_BYTES &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>因此首先要调用<code>virt_set_memmap(vms)</code>初始化<code>vms</code>，使其获得各部分地址空间信息。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">VirtMachineState *vms = VIRT_MACHINE(machine);</span><br><span class="line"><span class="keyword">if</span> (!vms-&gt;memmap) &#123;</span><br><span class="line">	virt_set_memmap(vms);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后通过<code>vms</code>结构就能方便初始化各部分地址空间。如当要为虚拟机添加内存时可以通过<code>memory_region_add_subregion()</code>将代表虚拟机内存的MemoryRegion<code>machine-&gt;ram</code>添加到系统内存地址空间的<code>vms-&gt;memmap[VIRT_MEM].base</code>处</p>
+<p>当要创建gic设备时可以通过<code>create_gic(vms)</code>函数，传入vms结构完成。</p>
+<p>同理要创建pcie设备时也要传入<code>vms</code>结构，通过调用<code>create_pcie(vms)</code>完成。</p>
+<p>其他设备内存空间的创建方法大同小异，都需要vms结构，只是有的可能会需要一些外参数。</p>
+<p>如果要自定义地址空间布局则可以通过创建类似的<code>MemMapEntry</code>结构实现</p>
+<h1 id="powerpc"><a href="#powerpc" class="headerlink" title="powerpc"></a>powerpc</h1><p>以<code>g3beige</code>为例，<code>g3beige</code>类型的虚拟机的初始化函数为<code>ppc_heathrow_init</code>，其内存初始化部分主要如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">ppc_heathrow_init</span><span class="params">(MachineState *machine)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="comment">/* allocate RAM */</span></span><br><span class="line">    <span class="keyword">if</span> (ram_size &gt; <span class="number">2047</span> * MiB) &#123;</span><br><span class="line">        error_report(<span class="string">"Too much memory for this machine: %"</span> PRId64 <span class="string">" MB, "</span></span><br><span class="line">                     <span class="string">"maximum 2047 MB"</span>, ram_size / MiB);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	memory_region_add_subregion(get_system_memory(), <span class="number">0</span>, machine-&gt;ram);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* allocate and load firmware ROM */</span></span><br><span class="line">    memory_region_init_rom(bios, <span class="literal">NULL</span>, <span class="string">"ppc_heathrow.bios"</span>, PROM_SIZE,</span><br><span class="line">                           &amp;error_fatal);</span><br><span class="line">    memory_region_add_subregion(get_system_memory(), PROM_BASE, bios);</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先<code>g3beige</code>会限制内存的大小，如果内存大于2047MB则会报错退出</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (ram_size &gt; <span class="number">2047</span> * MiB) &#123;</span><br><span class="line">	error_report(<span class="string">"Too much memory for this machine: %"</span> PRId64 <span class="string">" MB, "</span></span><br><span class="line">				 <span class="string">"maximum 2047 MB"</span>, ram_size / MiB);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后让ram<code>machine-&gt;ram</code>从地址空间0开始：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory_region_add_subregion(get_system_memory(), <span class="number">0</span>, machine-&gt;ram);</span><br></pre></td></tr></table></figure>
+
+<p>根据宏<code>PROM_SIZE</code>(4MB)创建对应大小的rom作为bios</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory_region_init_rom(bios, <span class="literal">NULL</span>, <span class="string">"ppc_heathrow.bios"</span>, PROM_SIZE, &amp;error_fatal);</span><br></pre></td></tr></table></figure>
+
+<p>然后根据宏<code>PROM_BASE</code>(0xffc00000)，设置其起始地址</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory_region_add_subregion(get_system_memory(), PROM_BASE, bios);</span><br></pre></td></tr></table></figure>
+
+<h2 id="mac99"><a href="#mac99" class="headerlink" title="mac99"></a>mac99</h2><p>再看mac99类型虚拟机的初始化方法，其初始化主函数为<code>ppc_core99_init</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">ppc_core99_init</span><span class="params">(MachineState *machine)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="comment">/* allocate RAM */</span></span><br><span class="line">    memory_region_add_subregion(get_system_memory(), <span class="number">0</span>, machine-&gt;ram);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* allocate and load firmware ROM */</span></span><br><span class="line">    memory_region_init_rom(bios, <span class="literal">NULL</span>, <span class="string">"ppc_core99.bios"</span>, PROM_SIZE,</span><br><span class="line">                           &amp;error_fatal);</span><br><span class="line">    memory_region_add_subregion(get_system_memory(), PROM_BASE, bios);</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同<code>g3beige</code>类型的虚拟机，其也是直接将ram分配到地址0，将<code>PROM_SIZE</code>大小的bios rom分配到地址<code>PROM_BASE</code>。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>不同类型虚拟机的地址空间布局有所不同，内存空间的划分笔者认为主要有两部分，划分ram和划分rom。但不论是ram还是rom其划分方法是一样的：</p>
+<ul>
+<li>确定管理这块空间的MemoryRegion结构的大小，之后通过<code>memory_region_init_</code>系列函数初始化，初始化的mr管理ram则用<code>memory_region_init_ram</code>，初始化的mr管理rom则用<code>memory_region_init_rom</code>初始化</li>
+<li>确定改MemoryRegion结构在地址空间的起始位置，之后通过<code>memory_region_add_subregion</code>加到对应的空间</li>
 </ul>
-</li>
-</ul>
-<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><ul>
-<li><code>set -- [args]</code><ul>
-<li>如果无args，重置命位置参数</li>
-<li>如果有args，置命位置参数为args</li>
-</ul>
-</li>
-<li>…</li>
-</ul>
-<p><a href="https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html" target="_blank" rel="noopener">https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html</a></p>
+<p>如mac99类型中rom的大小为<code>PROM_SIZE</code>，就通过下面方式初始化其对应的MemoryRegion</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory_region_init_rom(bios, <span class="literal">NULL</span>, <span class="string">"ppc_core99.bios"</span>, PROM_SIZE, &amp;error_fatal);</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数的待初始化的MemoryRegion，第二个参数为该mr的owner，第三个参数为该mr的名称，第四个参数为该mr的大小，最后一个参数用于记录报错信息</p>
+<p>rom在地址空间的位置为<code>PROM_BASE</code>，则通过下面方法添加到对应地址空间</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory_region_add_subregion(get_system_memory(), PROM_BASE, bios);</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数为被加入到的MemoryRegion，第二个参数为待加入的mr在被加入mr中的位置，第三个参数为待加入的mr</p>
 
   
   
@@ -550,7 +609,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2000/01/01/universe/operate/shell_script_tips/>http://yoursite.com/2000/01/01/universe/operate/shell_script_tips/</a></p>
+                <p>本文永久链接是：<a href=http://yoursite.com/2021/05/24/universe/qemu/create_mem_in_QEMU/>http://yoursite.com/2021/05/24/universe/qemu/create_mem_in_QEMU/</a></p>
               
             
           </blockquote>
@@ -567,7 +626,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-23T20:11:11+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-06-23T19:58:18+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：Jun 23, 2021</p>
@@ -579,7 +638,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/operate/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>operate</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/shell/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>shell</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/qemu/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>qemu</p></a></div>
 
 
         
@@ -610,19 +669,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2000/01/01/Major/communication_and_networking/communication_and_networking/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>communication and networking笔记</p>
-          <p class='content'>TODO第二章数据和信号模拟与数字
-模拟数据：连续状态的信息
-数字数据：离散状态的信息
-
-
-复合信号
-
-单一正弦波在数据通信中没有作用，我们需要发送复合信号，复合信号由许多简单正弦波组成
-基础频...</p>
-        </a>
       
+        <a class='next' href='/2021/05/01/universe/c/how_oop_with_pure_c/'>
+          <p class='title'>如何使用纯c实现面向对象<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>继承与多态c语言结构体能保证第一个成员永远都是位于起始地址。而由于内存对齐，其他紧邻的成员地址未必连续。
+父类总是结构体的第一个成员 ，这样在强制类型转换截取相应大小时得到的总是一个完整的结构体...</p>
+        </a>
       
     </div>
   
@@ -717,7 +769,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#double-dash"><span class="toc-text">double dash --</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件描述符与文件控制"><span class="toc-text">文件描述符与文件控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set"><span class="toc-text">set</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#mac99"><span class="toc-text">mac99</span></a></li></ol>
     </div>
   </section>
 
@@ -736,7 +788,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="shell脚本杂技";
+  pdata.postTitle="qemu架构中创建内存的方法";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
