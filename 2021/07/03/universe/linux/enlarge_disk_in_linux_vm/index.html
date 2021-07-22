@@ -22,9 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>如何使用纯c实现面向对象 - Ring&#39;s Blog</title>
+  <title>扩展linux虚拟机磁盘空间的方法 - Ring&#39;s Blog</title>
   
-    <meta name="keywords" content="c,oop">
+    <meta name="keywords" content="linux">
   
 
   
@@ -461,7 +461,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title">
-        如何使用纯c实现面向对象
+        扩展linux虚拟机磁盘空间的方法
       </h1>
       <div class='new-meta-box'>
         
@@ -485,7 +485,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：May 1, 2021</p>
+    <p>发布于：Jul 3, 2021</p>
   </a>
 </div>
 
@@ -496,7 +496,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="如何使用纯c实现面向对象" data-path="/2021/05/01/universe/c/how_oop_with_pure_c/">
+      <div id="lc-pv" data-title="扩展linux虚拟机磁盘空间的方法" data-path="/2021/07/03/universe/linux/enlarge_disk_in_linux_vm/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -514,23 +514,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h2 id="继承与多态"><a href="#继承与多态" class="headerlink" title="继承与多态"></a>继承与多态</h2><p><strong>c语言结构体能保证第一个成员永远都是位于起始地址</strong>。而由于内存对齐(一种类型的起始地址必须是该类型长度的整数倍)，其他紧邻的成员地址未必连续。</p>
-<p><strong>父类总是结构体的第一个成员</strong> ，这样在强制类型转换截取相应大小时得到的总是一个完整的结构体。如</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">father</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">char</span>* name;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">son</span>&#123;</span></span><br><span class="line">    father parent;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">char</span>* name;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+  <h2 id="增加容量"><a href="#增加容量" class="headerlink" title="增加容量"></a>增加容量</h2><p>如qemu/kvm虚拟机可以使用<code>qemu-img resize &lt;file&gt; &lt;size&gt;</code>修改容量</p>
+<h2 id="配置分区"><a href="#配置分区" class="headerlink" title="配置分区"></a>配置分区</h2><p>修改介质容量后，在虚拟机中会发现介质的大小改变，但分区的大小没变，这时就需要修改分区信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fdisk &#x2F;dev&#x2F;sda &#x2F;&#x2F; 你的存储盘，可以用lsblk查看</span><br><span class="line"></span><br><span class="line">d 删除旧分区</span><br><span class="line">n 新建分区</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
 
-<p>安全转换：<code>son-&gt;father-&gt;son</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> 0 ┌──────────┐</span><br><span class="line">   │          │</span><br><span class="line">   │ father   │                  0 ┌──────────┐</span><br><span class="line">   │          │ cast to father     │          │</span><br><span class="line">10 ├──────────┤ ───────────────►   │ father   │</span><br><span class="line">   │          │    [0,10]          │          │</span><br><span class="line">   │ son      │                 10 └──────────┘</span><br><span class="line">   │          │                    \          \</span><br><span class="line">20 └──────────┘                    \ son      \</span><br><span class="line">                                20 \----------\</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                                 0 ┌──────────┐</span><br><span class="line"> 0 ┌──────────┐                    │          │</span><br><span class="line">   │          │                    │ father   │</span><br><span class="line">   │ father   │  cast to son       │          │</span><br><span class="line">   │          │ ──────────────► 10 ├──────────┤</span><br><span class="line">10 └──────────┘    [0,20]          │          │</span><br><span class="line">   \          \                    │ son      │</span><br><span class="line">   \ son      \                    │          │</span><br><span class="line">20 \----------\                 20 └──────────┘</span><br></pre></td></tr></table></figure>
 
-<p>不安全转换<code>father-&gt;son</code>或转换成无继承关系的类型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">                                  0 ┌──────────┐</span><br><span class="line">  0 ┌──────────┐                    │          │</span><br><span class="line">    │          │                    │ father   │</span><br><span class="line">    │ father   │  cast to son       │          │</span><br><span class="line">    │          │ ──────────────► 10 ├──────────┤</span><br><span class="line"> 10 └──────────┘    [0,20]          │          │</span><br><span class="line">                                    │ ?????    │</span><br><span class="line">                                    │          │</span><br><span class="line">                                 20 └──────────┘</span><br><span class="line"></span><br><span class="line"> 0 ┌──────────┐</span><br><span class="line">   │          │</span><br><span class="line">   │ father   │                  0 ┌──────────┐</span><br><span class="line">   │          │ cast to mother     │          │</span><br><span class="line">10 ├──────────┤ ───────────────►   │ ??????   │</span><br><span class="line">   │          │    [0,15]          │          │</span><br><span class="line">   │ son      │                 15 └──────────┘</span><br><span class="line">   │          │ </span><br><span class="line">20 └──────────┘</span><br></pre></td></tr></table></figure>
 
-<p>如果不计后果的类型转换，如将会得到一块不合法的空间，访问将导致segment fault。所以正如多数oop语言都有这么一个概念：子类是父类，但父类不是子类。</p>
-<p>纯c中没有安全转换这方面的检测。所以实现多态最基本要做是就是实现一种机制来判断和管理安全的类型转换。</p>
-<p>这就需要使用额外的结构来管理类了。</p>
-<h2 id="类管理"><a href="#类管理" class="headerlink" title="类管理"></a>类管理</h2><p>可以使用特殊结构对类进行描述，如：描述其父类名称，构造函数，析构函数等信息</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">father_class</span>&#123;</span></span><br><span class="line">    .name = <span class="string">"father"</span></span><br><span class="line">    .parent = <span class="string">"base"</span>,</span><br><span class="line">    .instance_init = *func,</span><br><span class="line">    ....</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">son_class</span>&#123;</span></span><br><span class="line">    .name = <span class="string">"son"</span>,</span><br><span class="line">    .parent = <span class="string">"father"</span>,</span><br><span class="line">    .instance_init = *func,</span><br><span class="line">    ....</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>可以使用哈希表保存这些类描述信息，当son类对象要转换时就可以通过哈希表找到对应描述，来判断父类，从而保证安全类型转换。也可以通过哈希表，在类对象需要构造时找到对应的构造方法等等。</p>
 
   
   
@@ -548,7 +538,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2021/05/01/universe/c/how_oop_with_pure_c/>http://yoursite.com/2021/05/01/universe/c/how_oop_with_pure_c/</a></p>
+                <p>本文永久链接是：<a href=http://yoursite.com/2021/07/03/universe/linux/enlarge_disk_in_linux_vm/>http://yoursite.com/2021/07/03/universe/linux/enlarge_disk_in_linux_vm/</a></p>
               
             
           </blockquote>
@@ -565,10 +555,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-01T16:50:50+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-03T19:05:52+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Jul 1, 2021</p>
+    <p>更新于：Jul 3, 2021</p>
   </a>
 </div>
 
@@ -577,7 +567,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/c/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>c</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/oop/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>oop</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/linux/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>linux</p></a></div>
 
 
         
@@ -608,18 +598,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/05/24/universe/qemu/create_mem_in_QEMU/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>qemu架构中创建内存的方法</p>
+      
+        <a class='next' href='/2021/05/24/universe/qemu/create_mem_in_QEMU/'>
+          <p class='title'>qemu架构中创建内存的方法<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>引言一种类型的虚拟机有其特定的初始化函数以完成虚拟机内存初始化等操作。调用哪个初始化函数在构建虚拟机类时指定：
 12345678910static const TypeInfo my_machi...</p>
-        </a>
-      
-      
-        <a class='next' href='/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/'>
-          <p class='title'>QOM使用：qemu如何注册使用一个MemoryRegion类的<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>openrisc中ram对象的生成过程QEMU利用QOM来对对象进行抽象，用它来对各种资源进程抽象、管理(创建、配置、销毁)。即QEMU内部实现面向对象机制的方法。
-QOM机制有如下三个部分：
-...</p>
         </a>
       
     </div>
@@ -715,7 +698,7 @@ QOM机制有如下三个部分：
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#继承与多态"><span class="toc-text">继承与多态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类管理"><span class="toc-text">类管理</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#增加容量"><span class="toc-text">增加容量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置分区"><span class="toc-text">配置分区</span></a></li></ol>
     </div>
   </section>
 
@@ -734,7 +717,7 @@ QOM机制有如下三个部分：
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="如何使用纯c实现面向对象";
+  pdata.postTitle="扩展linux虚拟机磁盘空间的方法";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 

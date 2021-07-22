@@ -492,6 +492,56 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
+      <a href="/2021/07/03/universe/linux/enlarge_disk_in_linux_vm/">
+        扩展linux虚拟机磁盘空间的方法
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        增加容量如qemu/kvm虚拟机可以使用qemu-img resize &lt;file&gt; &lt;size&gt;修改容量
+配置分区修改介质容量后，在虚拟机中会发现介质的大小改变，但分区的大小没变，这时就需要修改分区信息。
+12345fdisk &#x2F;dev&#x2F;sda &#x2F;&#x2F; 你的存储盘，可以用lsblk查看d 删除旧分区n 新建分区w
+
+
+
+
+
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-07-03</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/07/03/universe/linux/enlarge_disk_in_linux_vm/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
       <a href="/2021/03/03/universe/linux/FS/journaled_file_system/">
         日志型文件系统
       </a>
@@ -902,50 +952,6 @@ Jeff Bonwick 发现对内核中普通对象进行初始化所需的时间超过�
       
         <div>
           <a class='readmore' href='/2021/01/15/universe/linux/project_like/process_destory/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/01/14/universe/linux/process_of_exec/">
-        execv的执行过程
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        execv执行过程可执行程序的表示elf文件格式Linux下标准的可执行文件格式是ELF(Executable and Linking Format)，是一种对象文件的格式，用于定义不同类型的对象文件(Object files)中都放了什么东西、以及都以什么样的格式去放这些东西。
-但是linux也支持其他不同的可执行程序格式, 各个可执行程序的执行方式不尽相同, 因此linux内核每种被注册...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-01-14</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/01/14/universe/linux/process_of_exec/'>
             Read More
           </a>
         </div>

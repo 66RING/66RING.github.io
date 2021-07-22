@@ -669,9 +669,61 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
         
+          
+        
       
     
     
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/07/03/universe/linux/enlarge_disk_in_linux_vm/">
+        扩展linux虚拟机磁盘空间的方法
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        增加容量如qemu/kvm虚拟机可以使用qemu-img resize &lt;file&gt; &lt;size&gt;修改容量
+配置分区修改介质容量后，在虚拟机中会发现介质的大小改变，但分区的大小没变，这时就需要修改分区信息。
+12345fdisk &#x2F;dev&#x2F;sda &#x2F;&#x2F; 你的存储盘，可以用lsblk查看d 删除旧分区n 新建分区w
+
+
+
+
+
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-07-03</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/07/03/universe/linux/enlarge_disk_in_linux_vm/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -734,9 +786,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class='md'>
     
       
-        继承与多态c语言结构体能保证第一个成员永远都是位于起始地址。而由于内存对齐，其他紧邻的成员地址未必连续。
+        继承与多态c语言结构体能保证第一个成员永远都是位于起始地址。而由于内存对齐(一种类型的起始地址必须是该类型长度的整数倍)，其他紧邻的成员地址未必连续。
 父类总是结构体的第一个成员 ，这样在强制类型转换截取相应大小时得到的总是一个完整的结构体。如
-1234567891011struct father&#123;    int age;    char* name;    ...&#125;;struct son&#123;    fath...
+1234567891011struct father&#123;    int age;    char* name;    ...&#125;;s...
       
     
   </div>
@@ -1079,51 +1131,6 @@ qemu的初始化时根据具体的模块类型，执行该类型的所有模块�
       
         <div>
           <a class='readmore' href='/2021/01/29/universe/linux/transaction_intro/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/01/27/universe/linux/project_like/about_RUP/">
-        RUP简介以及常用模型
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        RUP有时候用户需求难以捉摸，甚至连用户自己都理不清，RUP就提供了一系列模板方便我们快速地获取用户的需求。用户只需要像填写表格一样把公式化的内容填上，再套用对应的模板，建立一系列模型，就能快速地系统地开发。
-为此RUP还定义了一些术语来通用的建模和描述业务。
-1.1 什么叫迭代增量式iteration incrementation开发将整个开发工作组织成一系列小的项目，被称为一系列迭代。根...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-01-27</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/01/27/universe/linux/project_like/about_RUP/'>
             Read More
           </a>
         </div>

@@ -467,6 +467,68 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
+      <a href="/2020/06/10/universe/att_vs_Intel_assembly_language/">
+        AT&T与Intel汇编语言的比较
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        GCC采用的是AT&amp;T的汇编格式，也叫GAS(Gnu Assembler)格式;微软采用Intel的汇编格式
+寄存器命名
+ATT的汇编格式中，寄存器名前要加上”%”前缀
+Inter格式中不用
+
+操作数的顺序
+ATT目标操作数在源操作数的右边
+Intel目标操作数在源操作数的左边
+正好相反
+
+
+
+
+AT&amp;T
+Intel
+
+
+
+movl %eax, %abx
+mov ebx,ea...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-06-10</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/06/10/universe/att_vs_Intel_assembly_language/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
       <a href="/2020/06/07/Major/circuit/">
         电路
       </a>
@@ -899,56 +961,6 @@ pshared非为0，表示信号量在进程间共享，放置在所有进程可见
       
         <div>
           <a class='readmore' href='/2020/05/03/universe/c/c_semaphore/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/05/01/universe/vim/vimscript_backup/">
-        learn vimscript the hard way
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Remenber to use :h &lt;arg&gt; for help
-Ref: https://learnvimscriptthehardway.stevelosh.com/
-BasicEcho
-:echo &quot;hello&quot;
-:echom &quot;hello&quot;
-
-区别在于echom会将消息放入消息队列中:messages
-Setting option...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-05-01</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/05/01/universe/vim/vimscript_backup/'>
             Read More
           </a>
         </div>

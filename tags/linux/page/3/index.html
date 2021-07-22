@@ -468,6 +468,60 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
+      <a href="/2020/07/13/universe/linux/linux_kernel/">
+        深入理解linux内核
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        庖丁解牛linux内核堆栈寄存器
+esp, 堆栈指针
+ebp，基址指针
+
+利用堆栈实现函数的调用和返回
+cs:eip总是指向下一条指令的地址，在跳转时cs:eip的值会根据程序需要被修改
+call将当前cs:eip的值压入栈顶，cs:eip指向被调用函数的入口
+ret从栈顶弹出原来保存在这里的cs:eip的值，放入cs:eip中
+
+函数调用框架
+调用者:call func
+call把call...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-07-13</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/07/13/universe/linux/linux_kernel/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
       <a href="/2020/05/29/universe/Emacs_in_action/">
         emacs快速入门
       </a>

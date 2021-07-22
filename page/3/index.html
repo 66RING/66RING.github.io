@@ -467,6 +467,52 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
+      <a href="/2020/12/05/universe/tech_tips/IO_multiplexing_intro/">
+        IO多路复用select、poll、epoll介绍
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        IO多路复用在高并发环境(如网络服务器)中同时处理多个请求的能力就显得尤为重要。很多人可能第一印象就会想到多线程，但是多线程需要进行很多的上下文切换，连接很多时上下文切换的代价就很高。因此采用单线程，但是单线程如何处理并发请求呢？
+得益于DMA，多数据到来时直接内存访问，不会丢失数据，因此可以有后序内容
+以写一个网络服务器为例。每个网络连接在都是以文件描述符(以下简称fd)的形式存在
+sel...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-12-05</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/12/05/universe/tech_tips/IO_multiplexing_intro/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
       <a href="/2020/12/05/universe/qemu/open_risc_qemu/">
         使用qemu启动基于open risc的虚拟机
       </a>
@@ -906,55 +952,6 @@ JQuery12345678910...
       
         <div>
           <a class='readmore' href='/2020/11/21/universe/web/ajax_intro/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/11/15/universe/c/how_cpp_overload/">
-        重载是如何实现的
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        
-overload可直译为重载，它是指我们可以定义一些名称相同的方法，通过定义不同的输入参数来区分这些方法，然后再调用时就会根据不同的参数样式，来选择合适的方法执行。
-–百度百科
-
-原理重载本质上就是编译器根据原函数名和参数类型对原函数名进行改编，以区分接受不同参数的同名函数。
-看下面一段cpp代码：
-1234567891011// a.cppvoid func(int a)&#123;&#...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-11-15</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/11/15/universe/c/how_cpp_overload/'>
             Read More
           </a>
         </div>
