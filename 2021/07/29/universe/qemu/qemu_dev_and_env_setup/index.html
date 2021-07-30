@@ -22,9 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>扩展linux虚拟机磁盘空间的方法 - Ring&#39;s Blog</title>
+  <title>QEMU虚拟机开发与环境配置 - Ring&#39;s Blog</title>
   
-    <meta name="keywords" content="linux">
+    <meta name="keywords" content="qemu">
   
 
   
@@ -461,7 +461,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title">
-        扩展linux虚拟机磁盘空间的方法
+        QEMU虚拟机开发与环境配置
       </h1>
       <div class='new-meta-box'>
         
@@ -485,7 +485,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Jul 3, 2021</p>
+    <p>发布于：Jul 29, 2021</p>
   </a>
 </div>
 
@@ -496,7 +496,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="扩展linux虚拟机磁盘空间的方法" data-path="/2021/07/03/universe/linux/enlarge_disk_in_linux_vm/">
+      <div id="lc-pv" data-title="QEMU虚拟机开发与环境配置" data-path="/2021/07/29/universe/qemu/qemu_dev_and_env_setup/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -514,13 +514,98 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h2 id="增加容量"><a href="#增加容量" class="headerlink" title="增加容量"></a>增加容量</h2><p>如qemu/kvm虚拟机可以使用<code>qemu-img resize &lt;file&gt; &lt;size&gt;</code>修改容量</p>
-<h2 id="配置分区"><a href="#配置分区" class="headerlink" title="配置分区"></a>配置分区</h2><p>修改介质容量后，在虚拟机中会发现介质的大小改变，但分区的大小没变，这时就需要修改分区信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fdisk &#x2F;dev&#x2F;sda &#x2F;&#x2F; 你的存储盘，可以用lsblk查看</span><br><span class="line"></span><br><span class="line">d 删除旧分区</span><br><span class="line">n 新建分区</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
+  <h1 id="QEMU虚拟机开发与环境配置"><a href="#QEMU虚拟机开发与环境配置" class="headerlink" title="QEMU虚拟机开发与环境配置"></a>QEMU虚拟机开发与环境配置</h1><p>QEMU虚拟机开发与环境配置大体分为以下三个步骤：</p>
+<ul>
+<li>qemu虚拟机开发</li>
+<li>准备虚拟机运行所需环境</li>
+<li>qemu运行参数配置</li>
+</ul>
+<h2 id="虚拟机开发"><a href="#虚拟机开发" class="headerlink" title="虚拟机开发"></a>虚拟机开发</h2><p>虚拟机开发可以从最简单的图灵机模型开始，创建内存、创建CPU，再在此基础上添加需要的设备。需要注意的是图灵机模型不包括屏幕回显功能（毕竟有输出才方便debug嘛），所以含有CPU，内存，serial设备的机器才是人类能够交互的<strong>最小虚拟机模型</strong>。</p>
+<p>之后就能根据内核启动的输出信息在虚拟机中补充相应的设备来不完虚拟机了。具体详情以及踩坑可以参考<a href="https://github.com/66RING/Notes/blob/master/universe/qemu/powerpc_sim.md" target="_blank" rel="noopener">这篇文章</a>。如注册CPU reset事件、加载内核、配置设备树等。</p>
+<h2 id="准备虚拟机所需环境"><a href="#准备虚拟机所需环境" class="headerlink" title="准备虚拟机所需环境"></a>准备虚拟机所需环境</h2><p>准备虚拟机所需环境包括：</p>
+<ul>
+<li>虚拟机</li>
+<li>适当的linux镜像</li>
+<li>根文件系统</li>
+</ul>
+<h3 id="创建适当的linux镜像"><a href="#创建适当的linux镜像" class="headerlink" title="创建适当的linux镜像"></a>创建适当的linux镜像</h3><p>为何说要创建适当的镜像？因为linux内核支持很多设备，为了不让内核过于庞大linux将各种功能模块化，用户可以根据需要选择是否编译到内核中。如linux对ext文件系统、jffs2文件系统、flash驱动、ramfs等的支持都是可选的。用于可以用<code>make menuconfig</code>进入配置界面进行选择。</p>
+<p>这里提供一种配置思路：</p>
+<ul>
+<li><ol>
+<li><code>make defconfig</code>加载默认配置<ul>
+<li>linux提供了多种默认配置，可以在<code>arch/TARGET/configs</code>目录中查看<ul>
+<li>TARGET指代目标指令集架构</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>使用<code>make menuconfig</code>在默认配置的基础上根据需求进一步修改</li>
+</ol>
+</li>
+</ul>
+<p>如我要创建一个简单的PowerPC e500的虚拟机，查看文档发现linux为e500提供的默认配置文件叫<code>corenet</code>，在<code>linux/arch/powerpc/configs/</code>目录下果然有个相关的配置<code>corenet_base.config</code>。所以通过<code>make</code>加载配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make corenet_base.config</span><br></pre></td></tr></table></figure>
 
+<p>之后进行进一步配置，查阅文档发现，要制作qemu能够运行的e500镜像，需要打开e500支持的内核选项：</p>
+<p>使用<code>make menuconfig</code>进入配置界面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
 
+<p>勾选<code>QEMU generic e500 platform</code>选项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Platform support -&gt; </span><br><span class="line">	Freescale Book-E Machine -&gt; </span><br><span class="line">		QEMU generic e500 platform</span><br></pre></td></tr></table></figure>
 
+<p>我打算使用initrd简单的启动镜像，所有还有开启initrd的支持，勾选：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">General setup -&gt;</span><br><span class="line">	Initial RAM filesystem and RAM disk (initramfs&#x2F;initrd) support</span><br></pre></td></tr></table></figure>
 
+<p>保存退出编译镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>编译生成的镜像文件一般生成在linux源码根目录和<code>linux/arch/TARGET/boot</code>目录。常见镜像的有：</p>
+<ul>
+<li>vmlinux，未压缩的内核ELF文件</li>
+<li>vmlinuz，vmlinux的压缩文件</li>
+<li>zImage，vmlinuz经过gzip压缩后的文件</li>
+</ul>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>Linux提供了e500mc核心的支持，在<code>processor support -&gt; e500mc support</code>处，开启后只能运行使用了e500mc核心的虚拟机，e500不行。</p>
+<h3 id="创建根文件系统"><a href="#创建根文件系统" class="headerlink" title="创建根文件系统"></a>创建根文件系统</h3><p>这里使用busybox创建根文件系统。busybox提供了一些基本的命令行工具，如mount、sh等。利用busybox提供的工具可以完成linux文件系统的挂载。</p>
+<p>下载buxybox源码：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://busybox.net/downloads/busybox-1.33.1.tar.bz2</span><br></pre></td></tr></table></figure>
+
+<p>解压并设置</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> busybox</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
+
+<p>勾选：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Setting -&gt;</span><br><span class="line">	Build static binary (no shared libs)</span><br></pre></td></tr></table></figure>
+
+<p>编译安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make ARCH&#x3D;powerpc CROSS_COMPILE&#x3D;powerpc-linux-gnu-</span><br><span class="line"></span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>由于我要为powerpc架构的linux准备根文件系统，所有架构指定为powerpc，即<code>ARCH=powerpc</code>，工具链使用事先准备好的工具<code>CROSS_COMPILE=powerpc-linux-gun-</code>。在<code>make install</code>默认将间编译生成的文件放置在<code>_install</code>文件夹。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls ./_install</span><br><span class="line">bin  linuxrc  sbin  usr</span><br></pre></td></tr></table></figure>
+
+<p>通过initrd启动内核的方式还需要一个init程序，init程序负责完整文件系统的挂载等的工作，但这里是最小化实现只做sh的打开。init程序如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"###############################"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"######### Hello World #########"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"###############################"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> /bin/sh</span><br></pre></td></tr></table></figure>
+
+<p>init程序只打开了shell，如果要挂载完整linux文件系统，可以在进入shell后手动完成，也可以写在init脚本中进行自动化。</p>
+<p>最后，使用initrd启动需要将根文件系统通过cpio打包，进入<code>_install</code>文件夹：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> _install</span><br><span class="line">$ ls</span><br><span class="line">bin  linuxrc  sbin  usr  init</span><br></pre></td></tr></table></figure>
+
+<p>使用如下命令进行打包：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -print0 | cpio --null -ov --format=newc | gzip -9 &gt; initrd.gz</span><br></pre></td></tr></table></figure>
+
+<p>至此根文件系统准备完成。</p>
+<h2 id="qemu运行参数配置"><a href="#qemu运行参数配置" class="headerlink" title="qemu运行参数配置"></a>qemu运行参数配置</h2><p>假设通过第一章我们创建了一个名叫p2020的虚拟机，编译安装qemu后得到<code>qemu-system-ppc</code>二进制文件。通过第二章，我们又获得了linux镜像<code>vmlinux</code>和根文件系统的initrd文件<code>initrd.gz</code>。于是我们可以通过如下命令启动虚拟机：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-ppc  \</span><br><span class="line">  -M p2020 \</span><br><span class="line">  -m <span class="number">512</span>M \</span><br><span class="line">  -initrd ./initrd.gz \</span><br><span class="line">  -kernel ./vmlinux \</span><br><span class="line">  -append <span class="string">"rdinit=/init"</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-M p2020</code>指定我们运行的虚拟机为p2020</li>
+<li><code>-m 512M</code>为虚拟机提供512M内存</li>
+<li><code>-initrd ./initrd.gz</code>指定使用的initrd文件</li>
+<li><code>-kernel ./vmlinux</code>指定使用的镜像文件</li>
+<li><code>-append</code>添加内核启动参数，这里<code>rdinit=/init</code>告诉内核使用的init程序的位置。这步可以省略，因为内核默认会搜索根目录、<code>sbin</code>、<code>bin</code>目录下名为<code>init</code>的文件作为init程序</li>
+</ul>
 
   
   
@@ -538,7 +623,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2021/07/03/universe/linux/enlarge_disk_in_linux_vm/>http://yoursite.com/2021/07/03/universe/linux/enlarge_disk_in_linux_vm/</a></p>
+                <p>本文永久链接是：<a href=http://yoursite.com/2021/07/29/universe/qemu/qemu_dev_and_env_setup/>http://yoursite.com/2021/07/29/universe/qemu/qemu_dev_and_env_setup/</a></p>
               
             
           </blockquote>
@@ -555,10 +640,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-03T19:05:52+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-29T11:33:59+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Jul 3, 2021</p>
+    <p>更新于：Jul 29, 2021</p>
   </a>
 </div>
 
@@ -567,7 +652,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/linux/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>linux</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/qemu/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>qemu</p></a></div>
 
 
         
@@ -598,17 +683,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/07/24/universe/qemu/powerpc_sim/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>PowerPC虚拟机模拟的开发方法</p>
-          <p class='content'>模拟方法概述先创建一个最小化的开发板，其应该具有基本的io、屏幕回显能力。之后根据镜像加载、启动过程中的报错信息，对这个最小化开发板进行修补：添加设备、修改设备树等。直至内核成功启动。
-创建虚拟...</p>
+        <a class='prev' href='/2021/07/29/universe/linux/extend_partition_and_data_migrate_in_linux/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Linux中分区扩容与磁盘数据迁移</p>
+          <p class='content'>分区扩容注意，这种方法只能用于最后一个分区的扩容 
+使用lsblk查看现有分区情况，如：
+12345$ lsblkvda    253:0    0    12G  0 disk├─vda1 2...</p>
         </a>
       
       
-        <a class='next' href='/2021/05/24/universe/qemu/create_mem_in_QEMU/'>
-          <p class='title'>qemu架构中创建内存的方法<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>引言一种类型的虚拟机有其特定的初始化函数以完成虚拟机内存初始化等操作。调用哪个初始化函数在构建虚拟机类时指定：
-12345678910static const TypeInfo my_machi...</p>
+        <a class='next' href='/2021/07/24/universe/qemu/powerpc_sim/'>
+          <p class='title'>PowerPC虚拟机模拟的开发方法<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>模拟方法概述先创建一个最小化的开发板，其应该具有基本的io、屏幕回显能力。之后根据镜像加载、启动过程中的报错信息，对这个最小化开发板进行修补：添加设备、修改设备树等。直至内核成功启动。
+创建虚拟...</p>
         </a>
       
     </div>
@@ -704,7 +790,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#增加容量"><span class="toc-text">增加容量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置分区"><span class="toc-text">配置分区</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟机开发"><span class="toc-text">虚拟机开发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备虚拟机所需环境"><span class="toc-text">准备虚拟机所需环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建适当的linux镜像"><span class="toc-text">创建适当的linux镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建根文件系统"><span class="toc-text">创建根文件系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qemu运行参数配置"><span class="toc-text">qemu运行参数配置</span></a></li></ol>
     </div>
   </section>
 
@@ -723,7 +809,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="扩展linux虚拟机磁盘空间的方法";
+  pdata.postTitle="QEMU虚拟机开发与环境配置";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
