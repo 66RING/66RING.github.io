@@ -529,6 +529,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>根文件系统</li>
 </ul>
 <h3 id="创建适当的linux镜像"><a href="#创建适当的linux镜像" class="headerlink" title="创建适当的linux镜像"></a>创建适当的linux镜像</h3><p>为何说要创建适当的镜像？因为linux内核支持很多设备，为了不让内核过于庞大linux将各种功能模块化，用户可以根据需要选择是否编译到内核中。如linux对ext文件系统、jffs2文件系统、flash驱动、ramfs等的支持都是可选的。用于可以用<code>make menuconfig</code>进入配置界面进行选择。</p>
+<p>总结一下就是：根据具体的硬件，勾选相应的linux内核选项，使linux提供软件支持。具体硬件与linux内核选项的对应关系通过查阅官方文档获悉。如硬件使用powerpc架构e500核心的系列cpu，则勾选linux内核选择中<code>Processor support --&gt; Processor Type --&gt; Freescale 85xx</code>。</p>
+<p>linux预置了多种平台的支持Platform support，这些平台即包括硬件的Freescale系列开发板<code>Platform support --&gt; Freescale Book-E Machine Type --&gt; Freescale xxxx</code>，也包括软件的qemu虚拟机开发板<code>Platform support --&gt; Freescale Book-E Machine Type --&gt; qemu generic e500 platform</code>。所以使用Freescale 85xx选项让linux提供了基本的支持后，可以进一步选择linux预置的平台支持，或仅勾选需要的组件，甚至在linux源码中添加自定义内容。</p>
 <p>这里提供一种配置思路：</p>
 <ul>
 <li><ol>
@@ -582,7 +584,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>编译安装</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make ARCH&#x3D;powerpc CROSS_COMPILE&#x3D;powerpc-linux-gnu-</span><br><span class="line"></span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
 
-<p>由于我要为powerpc架构的linux准备根文件系统，所有架构指定为powerpc，即<code>ARCH=powerpc</code>，工具链使用事先准备好的工具<code>CROSS_COMPILE=powerpc-linux-gun-</code>。在<code>make install</code>默认将间编译生成的文件放置在<code>_install</code>文件夹。</p>
+<p>由于我要为powerpc架构的linux准备根文件系统，所有架构指定为powerpc，即<code>ARCH=powerpc</code>，工具链使用事先准备好的交叉编译工具<code>CROSS_COMPILE=powerpc-linux-gnu-</code>，交叉工具安装配置见第二章。在<code>make install</code>默认将间编译生成的文件放置在<code>_install</code>文件夹。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls ./_install</span><br><span class="line">bin  linuxrc  sbin  usr</span><br></pre></td></tr></table></figure>
 
 <p>通过initrd启动内核的方式还需要一个init程序，init程序负责完整文件系统的挂载等的工作，但这里是最小化实现只做sh的打开。init程序如下：</p>
@@ -605,6 +607,56 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li><code>-initrd ./initrd.gz</code>指定使用的initrd文件</li>
 <li><code>-kernel ./vmlinux</code>指定使用的镜像文件</li>
 <li><code>-append</code>添加内核启动参数，这里<code>rdinit=/init</code>告诉内核使用的init程序的位置。这步可以省略，因为内核默认会搜索根目录、<code>sbin</code>、<code>bin</code>目录下名为<code>init</code>的文件作为init程序</li>
+</ul>
+<h1 id="交叉工具的安装与配置"><a href="#交叉工具的安装与配置" class="headerlink" title="交叉工具的安装与配置"></a>交叉工具的安装与配置</h1><p>编译交叉工具是个费时费力的过程，好在很多厂商为我们提供了编译好的交叉工具我们可以直接使用。常见的交叉工具”供应商”有：</p>
+<ul>
+<li><a href="http://www.denx.de/wiki/DULG/ELDK" target="_blank" rel="noopener">DENX ELDK</a></li>
+<li><a href="http://toolchains.bootlin.com/" target="_blank" rel="noopener">Bootlin</a></li>
+<li><a href="https://musl.cc/#binaries" target="_blank" rel="noopener">musl.cc</a></li>
+<li><a href="https://wiki.linaro.org/WorkingGroups/ToolChain" target="_blank" rel="noopener">Linaro (ARM)</a></li>
+</ul>
+<h2 id="DENX提供的工具链安装"><a href="#DENX提供的工具链安装" class="headerlink" title="DENX提供的工具链安装"></a>DENX提供的工具链安装</h2><p>这里我们首选DENX ELDK家的交叉工具进行安装，原因是：</p>
+<ul>
+<li><ol>
+<li>DENX提供的工具链版本较低，如gcc是4.3版本的。而我们要编译的是内核版本较低的linux，在使用高版本工具链时编译报错</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>DENX是一家专注嵌入式实时操作系统的大公司，著名的uboot就是他们开发的</li>
+</ol>
+</li>
+</ul>
+<p>首先去DENX官网下载对应工具：<a href="https://ftp.denx.de/pub/eldk/" target="_blank" rel="noopener">The Embedded Linux Development Kit (ELDK)</a>。这里eldk使用的版本是5.6，需要powerpc架构的工具链，所以下载<a href="https://ftp.denx.de/pub/eldk/5.6/iso/eldk-5.6-powerpc.iso" target="_blank" rel="noopener">eldk-5.6-powerpc.iso</a>的镜像。</p>
+<p>以下是工具链安装过程：</p>
+<p>挂载<code>eldk-5.6-powerpc.iso</code>，这里挂载到<code>/mnt</code>目录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mount /path/to/eldk-5.6-powerpc.iso /mnt</span><br><span class="line">$ <span class="built_in">cd</span> /mnt</span><br></pre></td></tr></table></figure>
+
+<p>执行安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./install.sh -d /path/to/install_dir -s toolchain-xenomai-qte -r qte-xenomai-sdk powerpc</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-d</code>指定工具链的安装目录。如果不指定，默认安装到<code>/opt/eldk</code></li>
+<li><code>-s</code>表示SDK使用的镜像源</li>
+<li><code>-r</code>表示目标使用的RFS镜像源</li>
+<li>最后一个参数表示安装的目标指令集架构，这里是<code>powerpc</code></li>
+</ul>
+<p>更多参数详情查看<code>./install -h</code></p>
+<p>工具链就安装到了<code>/path/to/install_dir</code>目录了，使用时将需要的二进制文件添加到环境变量即可，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH&#x3D;$PATH:&#x2F;path&#x2F;to&#x2F;install_dir&#x2F;powerpc&#x2F;sysroots&#x2F;i686-eldk-linux&#x2F;usr&#x2F;bin:&#x2F;path&#x2F;to&#x2F;install_dir&#x2F;powerpc&#x2F;sysroots&#x2F;i686-eldk-linux&#x2F;usr&#x2F;bin&#x2F;powerpc-linux:&#x2F;path&#x2F;to&#x2F;install_dir&#x2F;powerpc&#x2F;sysroots&#x2F;powerpc-linux&#x2F;usr&#x2F;bin&#x2F;powerpc-linux</span><br></pre></td></tr></table></figure>
+
+<p>正确安装工具链并配置好环境变量后可以打印工具来版本信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powerpc-linux-gcc -v</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="musl-cc提供的工具链安装"><a href="#musl-cc提供的工具链安装" class="headerlink" title="musl.cc提供的工具链安装"></a>musl.cc提供的工具链安装</h2><ul>
+<li>下载需要的<a href="https://musl.cc/#binaries" target="_blank" rel="noopener">工具链</a></li>
+<li>解压缩</li>
+<li>添加环境变量</li>
+</ul>
+<h2 id="Bootlin提供的工具链安装"><a href="#Bootlin提供的工具链安装" class="headerlink" title="Bootlin提供的工具链安装"></a>Bootlin提供的工具链安装</h2><ul>
+<li>下载需要的<a href="https://toolchains.bootlin.com/" target="_blank" rel="noopener">工具链</a></li>
+<li>解压缩</li>
+<li>添加环境变量</li>
 </ul>
 
   
@@ -640,10 +692,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-29T11:33:59+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-31T11:05:42+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Jul 29, 2021</p>
+    <p>更新于：Jul 31, 2021</p>
   </a>
 </div>
 
@@ -790,7 +842,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟机开发"><span class="toc-text">虚拟机开发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备虚拟机所需环境"><span class="toc-text">准备虚拟机所需环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建适当的linux镜像"><span class="toc-text">创建适当的linux镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建根文件系统"><span class="toc-text">创建根文件系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qemu运行参数配置"><span class="toc-text">qemu运行参数配置</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟机开发"><span class="toc-text">虚拟机开发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备虚拟机所需环境"><span class="toc-text">准备虚拟机所需环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建适当的linux镜像"><span class="toc-text">创建适当的linux镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建根文件系统"><span class="toc-text">创建根文件系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qemu运行参数配置"><span class="toc-text">qemu运行参数配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DENX提供的工具链安装"><span class="toc-text">DENX提供的工具链安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#musl-cc提供的工具链安装"><span class="toc-text">musl.cc提供的工具链安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bootlin提供的工具链安装"><span class="toc-text">Bootlin提供的工具链安装</span></a></li></ol>
     </div>
   </section>
 
