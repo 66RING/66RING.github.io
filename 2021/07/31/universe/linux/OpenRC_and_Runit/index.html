@@ -521,12 +521,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p><code>rc-status</code>用于查看service的状态，如果遇到service的状态为<code>clash</code>，则需要手动<code>stop</code>和<code>start</code>。而当处于无法<code>stop</code>也无法<code>start</code>的情况时<code>zap</code>就起作用了，执行<code>rc-service &lt;service&gt; zap</code>在重启service即可修复。</p>
 <p>OpenRC的配置文件位于<code>/etc/rc.conf</code>，详细阅读会发现很多有用功能，如<code>rc_logger</code>和<code>rc_parallel</code>。需要小心<code>rc_parallel</code>让服务并行启动的同时存在死锁的风险。</p>
 <p>每个service都可以有它独立的配置文件，<code>/etc/conf.d</code>目录维护了每个脚本的配置文件，可以在其中为每个脚本设置单独的变量。</p>
-<h2 id="Runit使用逻辑"><a href="#Runit使用逻辑" class="headerlink" title="Runit使用逻辑"></a>Runit使用逻辑</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Add service </span><br><span class="line">ln -s &#x2F;etc&#x2F;runit&#x2F;sv&#x2F;&lt;service&gt; &#x2F;run&#x2F;runit&#x2F;service</span><br><span class="line">&lt;start&#x2F;stop&#x2F;restart&gt;</span><br><span class="line">sv &lt;start&#x2F;stop&#x2F;restart&gt; &lt;service&gt;</span><br></pre></td></tr></table></figure>
-
-<p>TODO</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;runit&#x2F;runsvdir&#x2F;* - Runlevels</span><br><span class="line"></span><br><span class="line">&#x2F;etc&#x2F;runit&#x2F;runsvdir&#x2F;current</span><br><span class="line"></span><br><span class="line">&#x2F;run&#x2F;runit&#x2F;service -&gt; &#x2F;etc&#x2F;runit&#x2F;runsvdir&#x2F;current</span><br></pre></td></tr></table></figure>
-
-<p><code>/etc/runit/sv/*</code>文件夹中保存了所有可用service，每个service以文件夹的形式呈现，文件夹中不同名称的程序表示不同接口。</p>
+<h2 id="Runit使用逻辑"><a href="#Runit使用逻辑" class="headerlink" title="Runit使用逻辑"></a>Runit使用逻辑</h2><p>类似OpenRC，Runit的模式也是”在一个文件夹为何service,链接到特定文件夹启动service”。<code>/etc/runit/sv/*</code>文件夹中保存了Runit所有可用service，每个service以文件夹的形式呈现，文件夹中不同名称的程序表示不同接口。</p>
 <p>启动一个service：创建一个软链接。一般使用runit的linux发行版将启动的服务链接到<code>/var/service</code>或<code>/service</code>，但在Artix Linux中需要链接到<code>/run/runit/service</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s &#x2F;etc&#x2F;runit&#x2F;sv&#x2F;service_name &#x2F;run&#x2F;runit&#x2F;service</span><br></pre></td></tr></table></figure>
 
@@ -593,10 +588,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-01T10:29:40+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-12T10:46:57+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Aug 1, 2021</p>
+    <p>更新于：Aug 12, 2021</p>
   </a>
 </div>
 
