@@ -457,30 +457,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
   <section class="post-list">
     
-      
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      
-    
     
       
         
@@ -492,16 +468,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
-      <a href="/2021/08/31/universe/qemu/qemu_device_communication/">
-        QEMU总线模拟与设备通信
+      <a href="/2020/12/05/universe/qemu/open_risc_qemu/">
+        使用qemu启动基于open risc的虚拟机
       </a>
     </h2>
   
   <div class='md'>
     
       
-        Preface现实世界中设备之间通过总线互联/通信，其中sysbus一般负责与cpu直接相连的设备与cpu的通信，外围设备则会通过各种类型的总线(如pci总线)间接地与cpu通信。本文主要讨论QEMU中是如何对总线进行模拟来实现设备间通信。
-QEMU中实现了BusState和SysBusDevice等BUS类来表示总线类型的继承关系，将设备强制转换成DeviceState结构后使用Devic...
+        使用qemu启动虚拟机安装qemu可能需要的依赖
+1autoconf automake autotools-dev curl libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev git
+
+下载q...
       
     
   </div>
@@ -509,422 +487,12 @@ QEMU中实现了BusState和SysBusDevice等BUS类来表示总线类型的继承�
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2021-08-31</time>
+        <time>2020-12-05</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2021/08/31/universe/qemu/qemu_device_communication/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/08/21/universe/qemu/qemu_monitor_model/">
-        qemu monitor的工作模型
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        前言gdb调试程序会阻塞被调试程序运行，gdb走一步，程序才能走一步，形如：
-1234gdbprocgdbproc
-
-那qemu的monitor中使用HMP/QMP与虚拟机交互交互会不会导致qemu挂起呢？monitor和qemu交互是同步还是异步？如果是同步那qemu是如何挂起的
-monitor等待命令输入时不会阻塞qemu进行，不像gdb那样等待命令时阻塞被调试程序运行。只是在输入命令敲...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-08-21</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/08/21/universe/qemu/qemu_monitor_model/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/08/21/universe/qemu/qemu_gdbserver_internal/">
-        qemu gdbserver internal
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Prefacegdb设置断点的原理是使用ptrace系统调用建立gdb与目标程序的调试关系，gdb因此能够控制目标程序并先行对信号进行处理。因此设置断点的原理是：在断点处插入int 3触发软中断，gdb先行受到该软中断发出的SIGTRAP信号，从而转入gdb命令行，被调试程序停止。
-利用gdb远程连接到和qemu中的gdbserver可以调试linux内核的执行过程。那qemu内的gdbse...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-08-21</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/08/21/universe/qemu/qemu_gdbserver_internal/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/08/14/universe/qemu/even2rw/">
-        qemu如何由事件循环找到真正要操作的目标设备
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        从eventfd联系到fd的流程非阻塞事件循环中，通过修改eventfd来通知qemu有事情需要qemu处理，如调用读写回调函数等。已知eventfd仅做通知的作用，qemu事件循环能够监听到eventfd的改变然后做相应处理。但是qemu如何由eventfd找到真正要进行处理的对象呢(如由磁盘读写关联的eventfd找到磁盘的fd进行读写)？本文将以virtio的磁盘读写为例，介绍从eve...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-08-14</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/08/14/universe/qemu/even2rw/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/07/29/universe/qemu/qemu_dev_and_env_setup/">
-        QEMU虚拟机开发与环境配置
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        QEMU虚拟机开发与环境配置QEMU虚拟机开发与环境配置大体分为以下三个步骤：
-
-qemu虚拟机开发
-准备虚拟机运行所需环境
-qemu运行参数配置
-
-虚拟机开发虚拟机开发可以从最简单的图灵机模型开始，创建内存、创建CPU，再在此基础上添加需要的设备。需要注意的是图灵机模型不包括屏幕回显功能（毕竟有输出才方便debug嘛），所以含有CPU，内存，serial设备的机器才是人类能够交互的最小虚拟...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-07-29</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/07/29/universe/qemu/qemu_dev_and_env_setup/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/07/24/universe/qemu/powerpc_sim/">
-        PowerPC虚拟机模拟的开发方法
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        模拟方法概述先创建一个最小化的开发板，其应该具有基本的io、屏幕回显能力。之后根据镜像加载、启动过程中的报错信息，对这个最小化开发板进行修补：添加设备、修改设备树等。直至内核成功启动。
-创建虚拟机可以分为如下5个阶段，伪码描述如下：
-1234567static void my_machine_init(MachineState *machine)&#123;	create_cpu();	cr...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-07-24</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/07/24/universe/qemu/powerpc_sim/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/05/24/universe/qemu/create_mem_in_QEMU/">
-        qemu架构中创建内存的方法
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        引言一种类型的虚拟机有其特定的初始化函数以完成虚拟机内存初始化等操作。调用哪个初始化函数在构建虚拟机类时指定：
-12345678910static const TypeInfo my_machine_info = &#123;    ...    .class_init    = my_machine_class_init,&#125;;static void my_machine_regi...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-05-24</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/05/24/universe/qemu/create_mem_in_QEMU/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/">
-        QOM使用：qemu如何注册使用一个MemoryRegion类的
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        openrisc中ram对象的生成过程QEMU利用QOM来对对象进行抽象，用它来对各种资源进程抽象、管理(创建、配置、销毁)。即QEMU内部实现面向对象机制的方法。
-QOM机制有如下三个部分：
-
-类型注册，涉及函数有type_init、register_module_init、type_register
-生成TypeImpl，通过TypeImpl就可以知道如何初始化一个类
-相当于告诉qemu...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-17</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/13/universe/qemu/qemu_softmmu/">
-        QEMU的内存模拟
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        QEMU softmmu虚拟机(Guest)内存模拟的首要任务是将虚拟机虚拟地址(GVA)转换成实际存储的宿主机(Host)的物理地址(HPA)。
-虚拟机提供了虚拟的硬件环境，GVA到到虚拟机物理地址(GPA)的过程可以由Guest OS完成，而QEMU要做的就是提供一个GPA到HPA的转换的实现。
-123456789101112131415             GVA         ...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-13</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/13/universe/qemu/qemu_softmmu/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/12/universe/qemu/qemu_initial_framework/">
-        qemu中的初始化技术
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        qemu的初始化框架qemu启动需要初始化很多内容，为了方便维护和添加初始化函数，qemu有它自己的一种实现方式。
-qemu的初始化时根据具体的模块类型，执行该类型的所有模块的初始化。有如下类型：
-1234567891011typedef enum &#123;    MODULE_INIT_MIGRATION,    MODULE_INIT_BLOCK,    MODULE_INIT_OP...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-12</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/12/universe/qemu/qemu_initial_framework/'>
+          <a class='readmore' href='/2020/12/05/universe/qemu/open_risc_qemu/'>
             Read More
           </a>
         </div>
@@ -944,15 +512,15 @@ qemu的初始化时根据具体的模块类型，执行该类型的所有模块�
       <br>
       <div class="prev-next">
         
-        <p class="current">
-          1 / 2
-        </p>
-        
-          <a class="next" rel="next" href="/tags/qemu/page/2/">
-            <section class="post next white-box shadow">
-              &nbsp;Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i>
+          <a class="prev" rel="prev" href="/tags/qemu/">
+            <section class="post prev white-box shadow" >
+              <i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous&nbsp;
             </section>
           </a>
+        
+        <p class="current">
+          2 / 2
+        </p>
         
       </div>
     

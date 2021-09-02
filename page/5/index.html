@@ -467,6 +467,52 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
+      <a href="/2020/11/11/universe/tech_tips/a_basic_middleware/">
+        制作一个简易的中间件架构
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        为何需要中间件我们不应该把业务逻辑和非业务逻辑揉在一起。非业务逻辑如打印日志、计时等。因为如果我们需要一个新的日志系统，而我们打印日志的逻辑杂揉在每个handler中，那我们就得修改每个handler，费时费力且不明智。
+中间件就是一种剥离非业务逻辑的方法。
+原理我们可以使用函数闭包来轻松实现剥离业务逻辑和非业务逻辑。
+假设我们的业务就是以各种姿势处理字符串然后打印。如处理成===str==...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-11-11</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/11/11/universe/tech_tips/a_basic_middleware/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
       <a href="/2020/10/26/universe/c/cpp_stl/">
         cpp常用stl
       </a>
@@ -894,55 +940,6 @@ RPC是一种Client/S...
       
         <div>
           <a class='readmore' href='/2020/08/20/universe/js_ts/this_and_arrow_function/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/08/20/universe/tech_tips/what_is_dll/">
-        什么是dll
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        什么是DLLDLL(Dynamic Link Library)，动态链接库，linux下是.so文件，win下是.dll文件。
-之所以需要库，是因为可以进行代码解耦和代码重用，由库文件对外提供服务，如exe调用dll。还有一个作用就是在不希望别人看到源码但需要使用我们的功能时隐藏源码。
-
-静态库
-win下是.lib文件，linux下是.a文件
-它作为程序的一个模块，在链接期间被合并到程序中
-...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-08-20</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/08/20/universe/tech_tips/what_is_dll/'>
             Read More
           </a>
         </div>

@@ -466,6 +466,54 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
+      <a href="/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/">
+        QOM使用：qemu如何注册使用一个MemoryRegion类的
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        openrisc中ram对象的生成过程QEMU利用QOM来对对象进行抽象，用它来对各种资源进程抽象、管理(创建、配置、销毁)。即QEMU内部实现面向对象机制的方法。
+QOM机制有如下三个部分：
+
+类型注册，涉及函数有type_init、register_module_init、type_register
+生成TypeImpl，通过TypeImpl就可以知道如何初始化一个类
+相当于告诉qemu...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-04-17</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
       <a href="/2021/04/13/universe/qemu/qemu_softmmu/">
         QEMU的内存模拟
       </a>
@@ -870,57 +918,6 @@ Worst fit
       
         <div>
           <a class='readmore' href='/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/01/18/universe/linux/MM/slab/">
-        slab分配器
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        slab分配器slab分配器的两个功能：
-
-1 减少内部碎片
-2 作为高速缓存，存储内核中经常被分配并释放的对象
-
-
-Jeff Bonwick 发现对内核中普通对象进行初始化所需的时间超过了对其进行分配和释放所需的时间。因此他的结论是不应该将内存释放回一个全局的内存池，而是将内存保持为针对特定目而初始化的状态
-
-当需要时内核会在直接从slab分配器的高速缓存中获取一个已经初始化了的对象，用完...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-01-18</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/01/18/universe/linux/MM/slab/'>
             Read More
           </a>
         </div>

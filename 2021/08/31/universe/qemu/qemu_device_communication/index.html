@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -24,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>Tag: qemu - Ring&#39;s Blog</title>
+  <title>QEMU总线模拟与设备通信 - Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="qemu">
   
 
   
@@ -375,7 +375,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper  dock' style="display: none;">
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
           
@@ -450,517 +450,302 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
-
 <div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
   
-    
-      
-  <section class="post-list">
-    
-      
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      
+
+
+  
+  <div class="article-meta" id="top">
     
     
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
     
-    <h2 class="article-title" >
-      <a href="/2021/08/31/universe/qemu/qemu_device_communication/">
+      <h1 class="title">
         QEMU总线模拟与设备通信
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Preface现实世界中设备之间通过总线互联/通信，其中sysbus一般负责与cpu直接相连的设备与cpu的通信，外围设备则会通过各种类型的总线(如pci总线)间接地与cpu通信。本文主要讨论QEMU中是如何对总线进行模拟来实现设备间通信。
-QEMU中实现了BusState和SysBusDevice等BUS类来表示总线类型的继承关系，将设备强制转换成DeviceState结构后使用Devic...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
+      </h1>
+      <div class='new-meta-box'>
         
-        <time>2021-08-31</time>
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>请设置文章作者</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Aug 31, 2021</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="QEMU总线模拟与设备通信" data-path="/2021/08/31/universe/qemu/qemu_device_communication/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
         
       </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>现实世界中设备之间通过总线互联/通信，其中sysbus一般负责与cpu直接相连的设备与cpu的通信，外围设备则会通过各种类型的总线(如pci总线)间接地与cpu通信。本文主要讨论QEMU中是如何对总线进行模拟来实现设备间通信。</p>
+<p>QEMU中实现了<code>BusState</code>和<code>SysBusDevice</code>等BUS类来表示总线类型的继承关系，将设备强制转换成<code>DeviceState</code>结构后使用<code>DeviceState</code>结构的<code>parent_bus</code>和<code>child_bus</code>成员配合上bus相关类型转换的宏(如<code>BUS()</code>, <code>PCI_BUS()</code>)即可获得所连接的bus，从而可以联系到连接在总线的其他设备(见实例1)。但并不是所有通信都会用的这些结构，还可以使用设备结构体中的记录的成员直接通信(如中断传递，见实例2和3)。</p>
+<p>下面通过三个实例来说明QEMU设备间通信的方式。</p>
+<h1 id="通信方式"><a href="#通信方式" class="headerlink" title="通信方式"></a>通信方式</h1><p>QEMU中有多种方式实现设备与设备的互联，可以通过结构体中的成员互联、可以通过类的继承关系互联也可以通过QOM的property机制进行互联，从而模拟现实中设备通过总线进行互联和通信。</p>
+<h2 id="实例1：使用DeviceState中的层次关系"><a href="#实例1：使用DeviceState中的层次关系" class="headerlink" title="实例1：使用DeviceState中的层次关系"></a>实例1：使用DeviceState中的层次关系</h2><p>所有设备都是<code>DeviceState</code>的子类，<code>DeviceState</code>中又记录连接上级的<code>parent_bus</code>和连接下级的<code>child_bus</code>。设备的初始化一般通过<code>sysbus_realize_and_unref()- &gt; qdev_realize_and_unref -&gt; qdev_realize -&gt; qdev_set_parent_bus</code>完成。<code>qdev_set_parent_bus</code>中就会为<code>DeviceState</code>的<code>parent_bus</code>成员赋值。<code>sysbus_realize_and_unref()</code>的情况就是<code>dev-&gt;parent_bus = sysbus_get_default()</code>让<code>parent_bus</code>指向系统总线。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct DeviceState &#123;</span><br><span class="line">    &#x2F;* ... *&#x2F;</span><br><span class="line">    BusState *parent_bus;</span><br><span class="line">    QLIST_HEAD(, NamedGPIOList) gpios;</span><br><span class="line">    QLIST_HEAD(, BusState) child_bus;</span><br><span class="line">    &#x2F;* ... *&#x2F;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>因此一种类型的设备可以通过类型转换成<code>DeviceState</code>，再利用<code>DeviceState</code>联系到上级或下级设备。</p>
+<p>这里以PCI设备向上设备(南桥芯片piix3)传递中断信号为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gdb	 \</span><br><span class="line">  -ex &quot;b piix3_set_irq&quot; \</span><br><span class="line">  --args \</span><br><span class="line">qemu-system-x86_64 \</span><br><span class="line">  -machine kernel-irqchip&#x3D;off \</span><br><span class="line">  -m 8G \</span><br><span class="line">  -kernel .&#x2F;vmlinux \</span><br></pre></td></tr></table></figure>
+
+<p>核心调用流程如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pci_change_irq_level -&gt; pci_bus_change_irq_level -&gt; piix3_set_irq</span><br></pre></td></tr></table></figure>
+
+<p>首先在<code>pci_change_irq_level</code>中通过<code>pci_get_bus(pci_dev)</code>获取父PCI总线。<code>pci_get_bus()</code>展开为<code>PCI_BUS(qdev_get_parent_bus(DEVICE(dev)))</code>，本质上就是返回了<code>DeviceState</code>的<code>parent_bus</code>成员。又因为<code>TYPE_PCI</code>继承了<code>TYPE_BUS</code>从而可以通过<code>PCI_BUS</code>宏进行类型转换成对应的PCI总线，进而联系到对应的PCI设备</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">static const TypeInfo pci_bus_info &#x3D; &#123;</span><br><span class="line">    .name &#x3D; TYPE_PCI_BUS,</span><br><span class="line">    .parent &#x3D; TYPE_BUS,</span><br><span class="line">    &#x2F;* ... *&#x2F;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static void pci_change_irq_level(PCIDevice *pci_dev, int irq_num, int change)</span><br><span class="line">&#123;</span><br><span class="line">    PCIBus *bus;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        bus &#x3D; pci_get_bus(pci_dev); 	&#x2F;&#x2F; &lt;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; get bus</span><br><span class="line">        irq_num &#x3D; bus-&gt;map_irq(pci_dev, irq_num);</span><br><span class="line">        if (bus-&gt;set_irq)</span><br><span class="line">            break;</span><br><span class="line">        pci_dev &#x3D; bus-&gt;parent_dev;</span><br><span class="line">    &#125;</span><br><span class="line">    pci_bus_change_irq_level(bus, irq_num, change);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pci_bus_change_irq_level()&#123;</span><br><span class="line">	bus-&gt;set_irq(bus-&gt;irq_opaque, irq_num, bus-&gt;irq_count[irq_num] !&#x3D; 0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/os_proj/qemu_device_communication/pci_to_piix.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/os_proj/qemu_device_communication/pci_to_piix.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+
+<h2 id="实例2：设备结构体自己维护bus成员"><a href="#实例2：设备结构体自己维护bus成员" class="headerlink" title="实例2：设备结构体自己维护bus成员"></a>实例2：设备结构体自己维护bus成员</h2><p>像<code>PCIHost</code>这样的总线设备其本身的创建就是为了模拟PCI总线(或者说PCI总线控制器)，所以其结构中要记录维护的bus信息，以<code>PCIHostState</code>为例，其<code>bus</code>成员就是对连接其他PCI设备的关键。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">struct PCIHostState &#123;</span><br><span class="line">    SysBusDevice busdev;</span><br><span class="line"></span><br><span class="line">    MemoryRegion conf_mem;</span><br><span class="line">    MemoryRegion data_mem;</span><br><span class="line">    MemoryRegion mmcfg;</span><br><span class="line">    uint32_t config_reg;</span><br><span class="line">    bool mig_enabled;</span><br><span class="line">    PCIBus *bus; 			&#x2F;&#x2F; &lt;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">    QLIST_ENTRY(PCIHostState) next;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>cpu执行指令，翻译得到PCIHost设备绑定的<code>MemoryRegion</code>，触发设备的模拟/读写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory_region_write_accessor -&gt; pci_host_data_write</span><br></pre></td></tr></table></figure>
+
+<p>这里将<code>MemoryRegion</code>绑定的PCIHost<code>opaque</code>传入，再通过<code>PCIHostState</code>的<code>bus</code>成员和<code>addr</code>信息联系其他设备，进行下一步操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">static void pci_host_data_write(void *opaque, hwaddr addr,</span><br><span class="line">                                uint64_t val, unsigned len)</span><br><span class="line">&#123;</span><br><span class="line">    PCIHostState *s &#x3D; opaque;</span><br><span class="line"></span><br><span class="line">    if (s-&gt;config_reg &amp; (1u &lt;&lt; 31))</span><br><span class="line">        pci_data_write(s-&gt;bus, s-&gt;config_reg | (addr &amp; 3), val, len);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void pci_data_write(PCIBus *s, uint32_t addr, uint32_t val, unsigned len)</span><br><span class="line">&#123;</span><br><span class="line">    PCIDevice *pci_dev &#x3D; pci_dev_find_by_addr(s, addr); 			&#x2F;&#x2F; &lt;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 找到目标设备</span><br><span class="line">    uint32_t config_addr &#x3D; addr &amp; (PCI_CONFIG_SPACE_SIZE - 1);</span><br><span class="line"></span><br><span class="line">    if (!pci_dev) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    pci_host_config_write_common(pci_dev, config_addr, PCI_CONFIG_SPACE_SIZE,</span><br><span class="line">                                 val, len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据<code>addr</code>找到目标PCI设备后在调用目标设备回调函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pci_host_config_write_common(pci_dev, ...) -&gt; pci_dev-&gt;config_write()</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="实例3：使用property建立连接"><a href="#实例3：使用property建立连接" class="headerlink" title="实例3：使用property建立连接"></a>实例3：使用property建立连接</h2><p>使用QOM除了使用继承和维护结构体成员的方式在设备间建立联系外，还可以通过<code>property</code>建立设备间的联系。这种方式主要应用在设备初始化时为结构体成员赋值，因为简单地说property是每个设备维护的哈希表，运行时再查表显然会极大影响效率。</p>
+<p>以<code>openpic</code>中断控制器与<code>PowerPC e500</code>cpu连接的建立为例(对应现实中的sysbus互联)。</p>
+<p>首先<code>qdev_new(TYPE_OPENPIC)</code>创建一个openpic设备，在其实例化函数<code>openpic_realize</code>中使用<code>sysbus_init_irq -&gt; qdev_init_gpio_out_named -&gt; object_property_add_link</code>创建了”sysbus-irq”属性，相当于对外暴露了中断线：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">static void openpic_realize(DeviceState *dev, Error **errp)</span><br><span class="line">&#123;</span><br><span class="line">    OpenPICState *opp &#x3D; OPENPIC(dev);</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">	for (i &#x3D; 0; i &lt; opp-&gt;nb_cpus; i++) &#123;</span><br><span class="line">        opp-&gt;dst[i].irqs &#x3D; g_new0(qemu_irq, OPENPIC_OUTPUT_NB);</span><br><span class="line">        for (j &#x3D; 0; j &lt; OPENPIC_OUTPUT_NB; j++) &#123;</span><br><span class="line">            sysbus_init_irq(d, &amp;opp-&gt;dst[i].irqs[j]);</span><br><span class="line">        &#125;</span><br><span class="line">		&#x2F;* ... *&#x2F;</span><br><span class="line">    &#125;</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>openpic使用<code>OpenPICState-&gt;dst[i].irqs</code>维护连接到cpu的中断线。<code>object_property_add_link</code>创建了一个”sysbus-irq”到<code>OpenPICState-&gt;dst[i].irqs</code>指针的键值对。之后在cpu初始化的过程中调用<code>sysbus_connect_irq -&gt; qdev_connect_gpio_out_named -&gt; ... -&gt; object_set_link_property</code>通过”sysbus-irq”找到pic的irq指针，从而实现”将cpu的中断线赋值给openpic的irq指针，连接pic到cpu的连接”。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">struct OpenPICState &#123;</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">    IRQDest dst[MAX_CPU];</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef struct IRQDest &#123;</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">    qemu_irq *irqs;</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">&#125; IRQDest;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; connect</span><br><span class="line">static void object_set_link_property(Object *obj, Visitor *v,</span><br><span class="line">                                     const char *name, void *opaque,</span><br><span class="line">                                     Error **errp)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">    Object **targetp &#x3D; object_link_get_targetp(obj, prop); 	  &#x2F;&#x2F; 获取property中保存的irq执行</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">	new_target &#x3D; object_resolve_link(obj, name, path, errp);  &#x2F;&#x2F; 获取传入的cpu中断线qemu_irq</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">    *targetp &#x3D; new_target; 									  &#x2F;&#x2F; irq指针指向cpu中断线qemu_irq</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样当openpic需要与cpu联系时可以通过调用<code>opp-&gt;dst[i]-&gt;irqs-&gt;handler()</code>实现。</p>
+<h1 id="中断传递"><a href="#中断传递" class="headerlink" title="中断传递"></a>中断传递</h1><p>现实中，中断会通过总线层层传递。下面通过QEMU中一个中断传递的例子体会设备通信(或中断传递)的过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gdb	 \</span><br><span class="line">  -ex &quot;b serial_update_irq&quot; \</span><br><span class="line">  --args \</span><br><span class="line">qemu-system-x86_64 \</span><br><span class="line">  -machine kernel-irqchip&#x3D;off \</span><br><span class="line">  -m 8G \</span><br><span class="line">  -kernel .&#x2F;vmlinux \</span><br></pre></td></tr></table></figure>
+
+<p>首先cpu执行一条制定，通过<code>memory_region_write_accessor()</code>翻译到<code>MemoryRegion</code>，从而找到与其绑定的设备<code>serial-mm</code>。</p>
+<p>由于<code>serial-mm</code>设备的<code>SerialState</code>结构的<code>irq</code>成员记录了所连接的中断线信息，而<code>irq</code>成员对应的<code>IRQState</code>结构的<code>opaque</code>成员又记录了所连接到的设备，所以之后调用<code>serial_update_irq</code>中断就会一层一层的在设备结构体间传递，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct IRQState &#123;</span><br><span class="line">    Object parent_obj;</span><br><span class="line">    qemu_irq_handler handler;</span><br><span class="line">    void *opaque;</span><br><span class="line">    int n;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Dev1.irq.opaque -&gt; Dev2 -&gt; Dev2.irq.opaque -&gt; Dev3 -&gt; Dev3.irq.handler();</span><br></pre></td></tr></table></figure>
+
+<p>这里serial设备的传递过程大体如下：</p>
+<ul>
+<li><ol>
+<li>serial设备根据它的<code>irq</code>成员传递到<code>GSI</code>设备。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><code>irq-&gt;handler</code>进入<code>GSI</code>设备后继续调用<code>qemu_set_irq</code>传递，这次是传递<code>GSI</code>设备的<code>irq</code></li>
+</ol>
+</li>
+<li><ol start="3">
+<li>从<code>GSI</code>的irq进入到<code>pic_set_irq()</code></li>
+</ol>
+</li>
+<li><ol start="4">
+<li>pic继续同样的方法传递，知道传递到cpu，修改标记位，cpu循环退出，从而模拟一次中断</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">static void serial_update_irq(SerialState *s)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">	qemu_irq_raise(s-&gt;irq);</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">qemu_irq_raise() -&gt; qemu_set_irq()</span><br><span class="line"></span><br><span class="line">void qemu_set_irq(qemu_irq irq, int level)</span><br><span class="line">&#123;</span><br><span class="line">    irq-&gt;handler(irq-&gt;opaque, irq-&gt;n, level);  		&#x2F;&#x2F; gsi_handler</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void gsi_handler(void *opaque, int n, int level)</span><br><span class="line">&#123;</span><br><span class="line">    GSIState *s &#x3D; opaque;</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">    qemu_set_irq(s-&gt;ioapic_irq[n], level);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">qemu_irq_raise() -&gt; qemu_set_irq()</span><br><span class="line"></span><br><span class="line">static void pic_set_irq(void *opaque, int irq, int level)</span><br><span class="line">&#123;</span><br><span class="line">	PICCommonState *s &#x3D; opaque;</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">	pic_update_irq(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pic_update_irq -&gt; qemu_irq_raise -&gt; pic_irq_request</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/os_proj/qemu_device_communication/int_deliver.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/os_proj/qemu_device_communication/int_deliver.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+
+  
+  
+    
+    <div class='footer'>
       
-        <div>
-          <a class='readmore' href='/2021/08/31/universe/qemu/qemu_device_communication/'>
-            Read More
-          </a>
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://yoursite.com/2021/08/31/universe/qemu/qemu_device_communication/>http://yoursite.com/2021/08/31/universe/qemu/qemu_device_communication/</a></p>
+              
+            
+          </blockquote>
         </div>
+      
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-31T18:54:14+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：Aug 31, 2021</p>
+  </a>
 </div>
 
-          </div>
         
       
         
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
+          
   
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/08/21/universe/qemu/qemu_monitor_model/">
-        qemu monitor的工作模型
-      </a>
-    </h2>
-  
-  <div class='md'>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/qemu/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>qemu</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
       
-        前言gdb调试程序会阻塞被调试程序运行，gdb走一步，程序才能走一步，形如：
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/08/21/universe/qemu/qemu_monitor_model/'>
+          <p class='title'>qemu monitor的工作模型<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>前言gdb调试程序会阻塞被调试程序运行，gdb走一步，程序才能走一步，形如：
 1234gdbprocgdbproc
 
-那qemu的monitor中使用HMP/QMP与虚拟机交互交互会不会导致qemu挂起呢？monitor和qemu交互是同步还是异步？如果是同步那qemu是如何挂起的
-monitor等待命令输入时不会阻塞qemu进行，不像gdb那样等待命令时阻塞被调试程序运行。只是在输入命令敲...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-08-21</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/08/21/universe/qemu/qemu_monitor_model/'>
-            Read More
-          </a>
-        </div>
+那qemu的monitor中使用HMP/QMP与虚拟机交互交互会不会导致qe...</p>
+        </a>
       
     </div>
   
+</article>
 
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
 </div>
 
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/08/21/universe/qemu/qemu_gdbserver_internal/">
-        qemu gdbserver internal
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Prefacegdb设置断点的原理是使用ptrace系统调用建立gdb与目标程序的调试关系，gdb因此能够控制目标程序并先行对信号进行处理。因此设置断点的原理是：在断点处插入int 3触发软中断，gdb先行受到该软中断发出的SIGTRAP信号，从而转入gdb命令行，被调试程序停止。
-利用gdb远程连接到和qemu中的gdbserver可以调试linux内核的执行过程。那qemu内的gdbse...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-08-21</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/08/21/universe/qemu/qemu_gdbserver_internal/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/08/14/universe/qemu/even2rw/">
-        qemu如何由事件循环找到真正要操作的目标设备
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        从eventfd联系到fd的流程非阻塞事件循环中，通过修改eventfd来通知qemu有事情需要qemu处理，如调用读写回调函数等。已知eventfd仅做通知的作用，qemu事件循环能够监听到eventfd的改变然后做相应处理。但是qemu如何由eventfd找到真正要进行处理的对象呢(如由磁盘读写关联的eventfd找到磁盘的fd进行读写)？本文将以virtio的磁盘读写为例，介绍从eve...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-08-14</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/08/14/universe/qemu/even2rw/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/07/29/universe/qemu/qemu_dev_and_env_setup/">
-        QEMU虚拟机开发与环境配置
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        QEMU虚拟机开发与环境配置QEMU虚拟机开发与环境配置大体分为以下三个步骤：
-
-qemu虚拟机开发
-准备虚拟机运行所需环境
-qemu运行参数配置
-
-虚拟机开发虚拟机开发可以从最简单的图灵机模型开始，创建内存、创建CPU，再在此基础上添加需要的设备。需要注意的是图灵机模型不包括屏幕回显功能（毕竟有输出才方便debug嘛），所以含有CPU，内存，serial设备的机器才是人类能够交互的最小虚拟...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-07-29</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/07/29/universe/qemu/qemu_dev_and_env_setup/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/07/24/universe/qemu/powerpc_sim/">
-        PowerPC虚拟机模拟的开发方法
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        模拟方法概述先创建一个最小化的开发板，其应该具有基本的io、屏幕回显能力。之后根据镜像加载、启动过程中的报错信息，对这个最小化开发板进行修补：添加设备、修改设备树等。直至内核成功启动。
-创建虚拟机可以分为如下5个阶段，伪码描述如下：
-1234567static void my_machine_init(MachineState *machine)&#123;	create_cpu();	cr...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-07-24</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/07/24/universe/qemu/powerpc_sim/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/05/24/universe/qemu/create_mem_in_QEMU/">
-        qemu架构中创建内存的方法
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        引言一种类型的虚拟机有其特定的初始化函数以完成虚拟机内存初始化等操作。调用哪个初始化函数在构建虚拟机类时指定：
-12345678910static const TypeInfo my_machine_info = &#123;    ...    .class_init    = my_machine_class_init,&#125;;static void my_machine_regi...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-05-24</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/05/24/universe/qemu/create_mem_in_QEMU/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/">
-        QOM使用：qemu如何注册使用一个MemoryRegion类的
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        openrisc中ram对象的生成过程QEMU利用QOM来对对象进行抽象，用它来对各种资源进程抽象、管理(创建、配置、销毁)。即QEMU内部实现面向对象机制的方法。
-QOM机制有如下三个部分：
-
-类型注册，涉及函数有type_init、register_module_init、type_register
-生成TypeImpl，通过TypeImpl就可以知道如何初始化一个类
-相当于告诉qemu...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-17</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/13/universe/qemu/qemu_softmmu/">
-        QEMU的内存模拟
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        QEMU softmmu虚拟机(Guest)内存模拟的首要任务是将虚拟机虚拟地址(GVA)转换成实际存储的宿主机(Host)的物理地址(HPA)。
-虚拟机提供了虚拟的硬件环境，GVA到到虚拟机物理地址(GPA)的过程可以由Guest OS完成，而QEMU要做的就是提供一个GPA到HPA的转换的实现。
-123456789101112131415             GVA         ...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-13</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/13/universe/qemu/qemu_softmmu/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/12/universe/qemu/qemu_initial_framework/">
-        qemu中的初始化技术
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        qemu的初始化框架qemu启动需要初始化很多内容，为了方便维护和添加初始化函数，qemu有它自己的一种实现方式。
-qemu的初始化时根据具体的模块类型，执行该类型的所有模块的初始化。有如下类型：
-1234567891011typedef enum &#123;    MODULE_INIT_MIGRATION,    MODULE_INIT_BLOCK,    MODULE_INIT_OP...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-12</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/12/universe/qemu/qemu_initial_framework/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-    
-  </section>
-  
-    
-      <br>
-      <div class="prev-next">
-        
-        <p class="current">
-          1 / 2
-        </p>
-        
-          <a class="next" rel="next" href="/tags/qemu/page/2/">
-            <section class="post next white-box shadow">
-              &nbsp;Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i>
-            </section>
-          </a>
-        
-      </div>
-    
-  
+  </article>
 
 
-    
-  
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
 </div>
 <aside class='l_side'>
   
@@ -968,103 +753,28 @@ qemu的初始化时根据具体的模块类型，执行该类型的所有模块�
     
     
 
-<section class="widget blogger shadow desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box rectangle' href='/about/'>
-          <img no-lazy src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/the_dark_side_of_the_moon_tranp.png'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-        
-        
-          <p><span id="jinrishici-sentence">Ring's Blog</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/atom.xml"
-              class="social fas fa-rss flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:travisturing403@gmail.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/66RING"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="/"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
 
-  
 
-  
-    
-    
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow desktop mobile">
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/IPC/" style="font-size: 14px; color: #999">IPC</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/OS/" style="font-size: 14.91px; color: #939393">OS</a> <a href="/tags/PowerPC/" style="font-size: 14px; color: #999">PowerPC</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 14.91px; color: #939393">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 14.91px; color: #939393">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c/" style="font-size: 16.73px; color: #868686">c</a> <a href="/tags/c-c/" style="font-size: 18.55px; color: #7a7a7a">c/c++</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 16.73px; color: #868686">database</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 15.82px; color: #8d8d8d">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 14.91px; color: #939393">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 14.91px; color: #939393">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/gcc/" style="font-size: 14.91px; color: #939393">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/gdbserver/" style="font-size: 14px; color: #999">gdbserver</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 19.45px; color: #747474">go</a> <a href="/tags/gui/" style="font-size: 14.91px; color: #939393">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/init/" style="font-size: 14px; color: #999">init</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 16.73px; color: #868686">java</a> <a href="/tags/javascript/" style="font-size: 15.82px; color: #8d8d8d">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 23.09px; color: #5b5b5b">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lua/" style="font-size: 14.91px; color: #939393">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 14.91px; color: #939393">mm</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.64px; color: #808080">network</a> <a href="/tags/oop/" style="font-size: 14px; color: #999">oop</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 20.36px; color: #6e6e6e">operate</a> <a href="/tags/os/" style="font-size: 15.82px; color: #8d8d8d">os</a> <a href="/tags/pipe/" style="font-size: 14px; color: #999">pipe</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 16.73px; color: #868686">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 19.45px; color: #747474">python</a> <a href="/tags/qemu/" style="font-size: 21.27px; color: #686868">qemu</a> <a href="/tags/qom/" style="font-size: 14px; color: #999">qom</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/semaphore/" style="font-size: 14px; color: #999">semaphore</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 14px; color: #999">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tech/" style="font-size: 19.45px; color: #747474">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 14.91px; color: #939393">tips</a> <a href="/tags/tool/" style="font-size: 15.82px; color: #8d8d8d">tool</a> <a href="/tags/tools/" style="font-size: 22.18px; color: #616161">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/traps/" style="font-size: 14px; color: #999">traps</a> <a href="/tags/typescript/" style="font-size: 14.91px; color: #939393">typescript</a> <a href="/tags/vim/" style="font-size: 15.82px; color: #8d8d8d">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/virtio/" style="font-size: 14px; color: #999">virtio</a> <a href="/tags/web/" style="font-size: 17.64px; color: #808080">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 14.91px; color: #939393">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14.91px; color: #939393">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#实例1：使用DeviceState中的层次关系"><span class="toc-text">实例1：使用DeviceState中的层次关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例2：设备结构体自己维护bus成员"><span class="toc-text">实例2：设备结构体自己维护bus成员</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例3：使用property建立连接"><span class="toc-text">实例3：使用property建立连接</span></a></li></ol>
     </div>
   </section>
 
 
   
 
-  
-
 
 </aside>
+
 
 
 		  
@@ -1073,8 +783,8 @@ qemu的初始化时根据具体的模块类型，执行该类型的所有模块�
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="QEMU总线模拟与设备通信";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 

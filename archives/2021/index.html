@@ -490,6 +490,50 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
+      <a href="/2021/08/31/universe/qemu/qemu_device_communication/">
+        QEMU总线模拟与设备通信
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        Preface现实世界中设备之间通过总线互联/通信，其中sysbus一般负责与cpu直接相连的设备与cpu的通信，外围设备则会通过各种类型的总线(如pci总线)间接地与cpu通信。本文主要讨论QEMU中是如何对总线进行模拟来实现设备间通信。
+QEMU中实现了BusState和SysBusDevice等BUS类来表示总线类型的继承关系，将设备强制转换成DeviceState结构后使用Devic...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-08-31</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/08/31/universe/qemu/qemu_device_communication/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
       <a href="/2021/08/21/universe/qemu/qemu_monitor_model/">
         qemu monitor的工作模型
       </a>
@@ -877,54 +921,6 @@ qemu运行参数配置
       
         <div>
           <a class='readmore' href='/2021/05/01/universe/c/how_oop_with_pure_c/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/">
-        QOM使用：qemu如何注册使用一个MemoryRegion类的
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        openrisc中ram对象的生成过程QEMU利用QOM来对对象进行抽象，用它来对各种资源进程抽象、管理(创建、配置、销毁)。即QEMU内部实现面向对象机制的方法。
-QOM机制有如下三个部分：
-
-类型注册，涉及函数有type_init、register_module_init、type_register
-生成TypeImpl，通过TypeImpl就可以知道如何初始化一个类
-相当于告诉qemu...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-17</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/'>
             Read More
           </a>
         </div>

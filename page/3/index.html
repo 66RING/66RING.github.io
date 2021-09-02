@@ -467,6 +467,57 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
+      <a href="/2021/01/18/universe/linux/MM/slab/">
+        slab分配器
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        slab分配器slab分配器的两个功能：
+
+1 减少内部碎片
+2 作为高速缓存，存储内核中经常被分配并释放的对象
+
+
+Jeff Bonwick 发现对内核中普通对象进行初始化所需的时间超过了对其进行分配和释放所需的时间。因此他的结论是不应该将内存释放回一个全局的内存池，而是将内存保持为针对特定目而初始化的状态
+
+当需要时内核会在直接从slab分配器的高速缓存中获取一个已经初始化了的对象，用完...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-01-18</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/01/18/universe/linux/MM/slab/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
       <a href="/2021/01/18/universe/linux/project_like/about_mmap/">
         execv中地址地址映射流程分析
       </a>
@@ -861,51 +912,6 @@ meta data，文件本身数据外的控制信息，如访问权限、大小、�
       
         <div>
           <a class='readmore' href='/2020/12/05/universe/linux/FS/filesystem/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/12/01/universe/web/https/">
-        What Is Https
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        What is HttpsCryptography
-Symmetric encryptionThe classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.+3 is PSK(pre shared key)
-But how to let the receiver know what the PS...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-12-01</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/12/01/universe/web/https/'>
             Read More
           </a>
         </div>
