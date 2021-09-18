@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>QEMU总线模拟 - 66Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="qemu">
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/the_dark_side_of_the_moon_tranp.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Mens et Manus</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>首页</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>档归</p>
+            </a>
+          
+            <a href="https://github.com/66RING"
+              
+              
+              id="https:githubcom66RING">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        QEMU总线模拟
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>请设置文章作者</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Sep 10, 2021</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="QEMU总线模拟" data-path="/2021/09/10/universe/qemu/qemu_bus_simulate/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>设备之间通过总线互联通信，如果将所有设备都挂在到sysbus(即所谓的内部总线：连接cpu、内存、pic总线控制器等设备的总线)将会增加主板的布线难度，而且cpu并不需要实时与外围设备通信。因此没必要每个设备都直接与cpu连接。</p>
+<p>现代cpu通过sysbus直接连接一个控制芯片，这个控制芯片再管理外围设备。控制芯片将数据汇总后再与cpu通信。</p>
+<p>这个过程对应到QEMU中的就是：</p>
+<ul>
+<li>cpu通过sysbus找到pcihost</li>
+<li>pcihost通过pcibus找到pci设备完成cpu的指令</li>
+</ul>
+<p>本文主要说明QEMU的怎么模拟实现这个过程的</p>
+<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>PCI设备有如下三种不同内存：</p>
+<ul>
+<li>MMIO</li>
+<li>PCI IO space</li>
+<li>PCI configuration space</li>
+</ul>
+<p>其中pci configuration space 是用来配置pci设备的，其中也包含了关于pci设备的特定信息。而config空间中的BAR: Base address register可以用来确定设备需要使用的内存或I/O空间的大小，也可以用来存放设备寄存器的地址。</p>
+<p>与pci设备通信，先会通过pcihost找到对应的pci设备，修改其config空间、传递指令信息。之后会调用<code>pci_update_mappings</code>更新pci设备的内存映射，因为可能接下来就要通过mmio/pio与pci设备通信了。如: gdb追踪<code>pci_host_config_write</code>、<code>pci_host_data_write</code>、<code>pci_update_mappings</code>的执行。</p>
+<p>会发现<code>pci_host_config_write</code>传递指令信息保存到<code>config_reg</code>，<code>pci_host_data_write</code>根据<code>config_reg</code>修改config空间，之后会调用<code>pci_update_mappings</code>。<code>pci_update_mappings</code>会根据修改的config空间的信息更新内存映射。</p>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_and_update_mapping.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_and_update_mapping.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<p>下文将对其进行详细说明</p>
+<h1 id="模拟方法"><a href="#模拟方法" class="headerlink" title="模拟方法"></a>模拟方法</h1><p>pcihost模拟是主要功能是：根据cpu的指令找到pci设备，然后”转发”指令给pci设备</p>
+<p>pcibus模拟的主要功能是：维护pci设备信息，为pcihost索引目标设备提供依据</p>
+<p>pci设备模拟的主要功能是：维护自己的config空间和操作对应的回调函数，设备的内存空间映射将会根据config空间的内容完成</p>
+<h2 id="pcihost"><a href="#pcihost" class="headerlink" title="pcihost"></a>pcihost</h2><h3 id="控制流程"><a href="#控制流程" class="headerlink" title="控制流程"></a>控制流程</h3><h4 id="CONFIG-ADDRESS"><a href="#CONFIG-ADDRESS" class="headerlink" title="CONFIG_ADDRESS"></a>CONFIG_ADDRESS</h4><p>以i440fx北桥芯片这个pcihost为例，他使用两个pio来接收，cpu的指令信息。CF8h处的地址空间称为<em>CONFIG_ADDRESS</em>，CFCh处的地址空间称为<em>CONFIG_DATA</em>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">i440fx_pcihost_realize</span><span class="params">(DeviceState *dev, Error **errp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PCIHostState *s = PCI_HOST_BRIDGE(dev);</span><br><span class="line">    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);</span><br><span class="line"></span><br><span class="line">    sysbus_add_io(sbd, <span class="number">0xcf8</span>, &amp;s-&gt;conf_mem);</span><br><span class="line">    sysbus_init_ioports(sbd, <span class="number">0xcf8</span>, <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">    sysbus_add_io(sbd, <span class="number">0xcfc</span>, &amp;s-&gt;data_mem);</span><br><span class="line">    sysbus_init_ioports(sbd, <span class="number">0xcfc</span>, <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* register i440fx 0xcf8 port as coalesced pio */</span></span><br><span class="line">    memory_region_set_flush_coalesced(&amp;s-&gt;data_mem);</span><br><span class="line">    memory_region_add_coalescing(&amp;s-&gt;conf_mem, <span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当对CH8h端口写时，pcihost会将数据用锁存器(latch)保存起来。当对CH8h端口读时，pcihost就会返回<em>CONFIG_ADDRESS*中的数据。pci规范文档中说明如下(约在32页, *3.2.2.3.2. Software Generation of Configuration Transactions</em>)：</p>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_address.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_address.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<p>qemu中的模拟如下，qemu中用<code>s-&gt;config_reg</code>做锁存器，向对<code>CONFIG_ADDRESS</code>写入的数据。读时就直接返回<code>s-&gt;config_reg</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">pci_host_config_write</span><span class="params">(<span class="keyword">void</span> *opaque, hwaddr addr,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  <span class="keyword">uint64_t</span> val, <span class="keyword">unsigned</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PCIHostState *s = opaque;</span><br><span class="line"></span><br><span class="line">    PCI_DPRINTF(<span class="string">"%s addr "</span> TARGET_FMT_plx <span class="string">" len %d val %"</span>PRIx64<span class="string">"\n"</span>,</span><br><span class="line">                __func__, addr, len, val);</span><br><span class="line">    <span class="keyword">if</span> (addr != <span class="number">0</span> || len != <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    s-&gt;config_reg = val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">uint64_t</span> <span class="title">pci_host_config_read</span><span class="params">(<span class="keyword">void</span> *opaque, hwaddr addr,</span></span></span><br><span class="line"><span class="function"><span class="params">                                     <span class="keyword">unsigned</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PCIHostState *s = opaque;</span><br><span class="line">    <span class="keyword">uint32_t</span> val = s-&gt;config_reg;</span><br><span class="line"></span><br><span class="line">    PCI_DPRINTF(<span class="string">"%s addr "</span> TARGET_FMT_plx <span class="string">" len %d val %"</span>PRIx32<span class="string">"\n"</span>,</span><br><span class="line">                __func__, addr, len, val);</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="CONFIG-DATA"><a href="#CONFIG-DATA" class="headerlink" title="CONFIG_DATA"></a>CONFIG_DATA</h4><p>从上图中也可以看到各个字节的含义，<em>CONFIG_DATA</em>相关的操作会围绕<em>CONFIG_ADDRESS</em>中的内容进行。</p>
+<p>当对<em>CONFIG_DATA</em>写时，首先会检查<em>CONFIG_ADDRESS</em>的第31bit来使能<em>CONFIG_DATA</em>。如果使能了<em>CONFIG_DATA</em>相关的操作才会继续执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">static void pci_host_data_write(void *opaque, hwaddr addr,</span><br><span class="line">                                uint64_t val, unsigned len)</span><br><span class="line">&#123;</span><br><span class="line">    PCIHostState *s &#x3D; opaque;</span><br><span class="line"></span><br><span class="line">    if (s-&gt;config_reg &amp; (1u &lt;&lt; 31))</span><br><span class="line">        pci_data_write(s-&gt;bus, s-&gt;config_reg | (addr &amp; 3), val, len);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static uint64_t pci_host_data_read(void *opaque,</span><br><span class="line">                                   hwaddr addr, unsigned len)</span><br><span class="line">&#123;</span><br><span class="line">    PCIHostState *s &#x3D; opaque;</span><br><span class="line"></span><br><span class="line">    if (!(s-&gt;config_reg &amp; (1U &lt;&lt; 31))) &#123;</span><br><span class="line">        return 0xffffffff;</span><br><span class="line">    &#125;</span><br><span class="line">    return pci_data_read(s-&gt;bus, s-&gt;config_reg | (addr &amp; 3), len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>pcihost首先会根据总线号来判断目标设备的挂载在当前总线上(Type 0)还是子总线上(Type 1)。为简单起见这里只讨论Type 0。</p>
+<p>找到总线后pcihost会解析出设备号找到pci设备然后执行<strong>configuration transaction</strong>(后文会说明configuration transaction)。(约在pci规范文档的33页, <em>3.2.2.3.2. Software Generation of Configuration Transactions</em>)</p>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_data.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_data.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<p>对应到qemu中代码如下：<code>pci_dev_find_by_addr</code>先根据总线号找到设备，<code>pci_host_config_write_common</code>发起configuration transactin。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pci_data_write</span><span class="params">(PCIBus *s, <span class="keyword">uint32_t</span> addr, <span class="keyword">uint32_t</span> val, <span class="keyword">unsigned</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PCIDevice *pci_dev = pci_dev_find_by_addr(s, addr);</span><br><span class="line">    <span class="keyword">uint32_t</span> config_addr = addr &amp; (PCI_CONFIG_SPACE_SIZE - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!pci_dev) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    pci_host_config_write_common(pci_dev, config_addr, PCI_CONFIG_SPACE_SIZE,</span><br><span class="line">                                 val, len);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pci_host_config_write_common</span><span class="params">(PCIDevice *pci_dev, <span class="keyword">uint32_t</span> addr,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  <span class="keyword">uint32_t</span> limit, <span class="keyword">uint32_t</span> val, <span class="keyword">uint32_t</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pci_adjust_config_limit(pci_get_bus(pci_dev), &amp;limit);</span><br><span class="line">    <span class="keyword">if</span> (limit &lt;= addr) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    assert(len &lt;= <span class="number">4</span>);</span><br><span class="line">    <span class="comment">/* non-zero functions are only exposed when function 0 is present,</span></span><br><span class="line"><span class="comment">     * allowing direct removal of unexposed functions.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (pci_dev-&gt;qdev.hotplugged &amp;&amp; !pci_get_function_0(pci_dev)) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    trace_pci_cfg_write(pci_dev-&gt;name, PCI_SLOT(pci_dev-&gt;devfn),</span><br><span class="line">                        PCI_FUNC(pci_dev-&gt;devfn), addr, val);</span><br><span class="line">    pci_dev-&gt;config_write(pci_dev, addr, val, MIN(len, limit - addr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编码说明"><a href="#编码说明" class="headerlink" title="编码说明"></a>编码说明</h4><p>在pci规范<em>3.2.2 Addressing</em>章节中(约28页)定义了各个字段的编码与含义，如做pio时用会根据pio的编码规范解码，做mmio是用mmio的解码方式。这里仅对一部分进行说明：</p>
+<h5 id="Configuration-Space-Decoding"><a href="#Configuration-Space-Decoding" class="headerlink" title="Configuration Space Decoding"></a>Configuration Space Decoding</h5><p>对于<em>CONFIG_ADDRESS</em>中的字段:</p>
+<ul>
+<li>funtion number: 选择多功能设备中的功能</li>
+<li>register number: 选择目标设备config空间中的寄存器<ul>
+<li>我用寄存器(register)代表config空间中各个字段的内容</li>
+</ul>
+</li>
+</ul>
+<h3 id="configuration-transaction"><a href="#configuration-transaction" class="headerlink" title="configuration transaction"></a>configuration transaction</h3><p>在pci规范结尾的<em>Glossary</em>中，说明了configuration transaction是一种用来初始化系统和配置系统的bus transaction。</p>
+<blockquote>
+<p>configuration transaction: Bus transaction used for system initialization and configuration via the configuration address space.</p>
+</blockquote>
+<h3 id="bus-transaction"><a href="#bus-transaction" class="headerlink" title="bus transaction"></a>bus transaction</h3><p>在实际pci总线硬件电路中，为了完成一次读写(read/write transaction)，一次transaction包含一个地址解析过程和多个数据解析过程，如先给出地址信号再给出数据信号，等待ready信号，然后再数据传输写回。具体细节可以看pci规范<em>3.3 Bus Transactions</em>。</p>
+<p>但在虚拟机看来pcibus一次transaction就是一次访存。在下面的例子函数会证明这点。</p>
+<p>??以下多为猜测:??</p>
+<p>在configuration transaction章节中我们介绍了configuration transaction是用来配置和初始化系统的。所以我们对pci通信的流程做如下抽象：</p>
+<ul>
+<li><ol>
+<li>cpu指令先传递到pcihost解析</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>pcihost根据<em>CONFIG_ADDRESS</em>，找到目标设备，并配置config空间，发起<code>configuration transactions</code>执行修改<ul>
+<li>配置config空间可以包括：(1)控制设备、(2)为设备准备io空间等</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>bus transaction再根据<code>configuration transactions</code>后config空间的内容进行操作</li>
+</ol>
+</li>
+</ul>
+<p>下面我们通过一个函数深刻理解这点，并将给出<code>(1)、(2)等</code>内容的对应关系</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pci_default_write_config</span><span class="params">(PCIDevice *d, <span class="keyword">uint32_t</span> addr, <span class="keyword">uint32_t</span> val_in, <span class="keyword">int</span> l)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, was_irq_disabled = pci_irq_disabled(d);</span><br><span class="line">    <span class="keyword">uint32_t</span> val = val_in;</span><br><span class="line"></span><br><span class="line">    assert(addr + l &lt;= pci_config_size(d));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; l; val &gt;&gt;= <span class="number">8</span>, ++i) &#123;</span><br><span class="line">        <span class="keyword">uint8_t</span> wmask = d-&gt;wmask[addr + i];</span><br><span class="line">        <span class="keyword">uint8_t</span> w1cmask = d-&gt;w1cmask[addr + i];</span><br><span class="line">        assert(!(wmask &amp; w1cmask));</span><br><span class="line">        d-&gt;<span class="built_in">config</span>[addr + i] = (d-&gt;<span class="built_in">config</span>[addr + i] &amp; ~wmask) | (val &amp; wmask);</span><br><span class="line">        d-&gt;<span class="built_in">config</span>[addr + i] &amp;= ~(val &amp; w1cmask); <span class="comment">/* W1C: Write 1 to Clear */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (ranges_overlap(addr, l, PCI_BASE_ADDRESS_0, <span class="number">24</span>) ||</span><br><span class="line">        ranges_overlap(addr, l, PCI_ROM_ADDRESS, <span class="number">4</span>) ||</span><br><span class="line">        ranges_overlap(addr, l, PCI_ROM_ADDRESS1, <span class="number">4</span>) ||</span><br><span class="line">        range_covers_byte(addr, l, PCI_COMMAND))</span><br><span class="line">        pci_update_mappings(d);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (range_covers_byte(addr, l, PCI_COMMAND)) &#123;</span><br><span class="line">        pci_update_irq_disabled(d, was_irq_disabled);</span><br><span class="line">        memory_region_set_enabled(&amp;d-&gt;bus_master_enable_region,</span><br><span class="line">                                  pci_get_word(d-&gt;<span class="built_in">config</span> + PCI_COMMAND)</span><br><span class="line">                                    &amp; PCI_COMMAND_MASTER);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    msi_write_config(d, addr, val_in, l);</span><br><span class="line">    msix_write_config(d, addr, val_in, l);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可见应函数中的<code>d-&gt;config[addr + i] =</code>和<code>msi_write_config</code>等对应：(1)控制设备。函数中的<code>pci_update_mappings</code>对应：(2)为设备准备io空间。准备了io空间后就可以直接通过qemu总线模拟的地址翻译找到目标设备做模拟了(见最后一章：实例说明BAR的作用)。</p>
+<p>在下面的调用栈中可以看到，pcihost调用执行了<code>pci_data_write</code>，即触发<code>CONFIG_DATA</code>相关事件。然后在<code>pci_data_write -&gt; pci_host_config_write_common</code>中调用回调函数发起<code>configuration transaction</code>: <code>pci_dev-&gt;config_write() -&gt; pci_default_write_config</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pci_host_config_write_common</span><span class="params">(PCIDevice *pci_dev, <span class="keyword">uint32_t</span> addr,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  <span class="keyword">uint32_t</span> limit, <span class="keyword">uint32_t</span> val, <span class="keyword">uint32_t</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pci_adjust_config_limit(pci_get_bus(pci_dev), &amp;limit);</span><br><span class="line">    <span class="keyword">if</span> (limit &lt;= addr) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    assert(len &lt;= <span class="number">4</span>);</span><br><span class="line">    <span class="comment">/* non-zero functions are only exposed when function 0 is present,</span></span><br><span class="line"><span class="comment">     * allowing direct removal of unexposed functions.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (pci_dev-&gt;qdev.hotplugged &amp;&amp; !pci_get_function_0(pci_dev)) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    trace_pci_cfg_write(pci_dev-&gt;name, PCI_SLOT(pci_dev-&gt;devfn),</span><br><span class="line">                        PCI_FUNC(pci_dev-&gt;devfn), addr, val);</span><br><span class="line">    pci_dev-&gt;config_write(pci_dev, addr, val, MIN(len, limit - addr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_and_update_mapping.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_and_update_mapping.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<h2 id="pcibus"><a href="#pcibus" class="headerlink" title="pcibus"></a>pcibus</h2><p>为了pcihost能完成根据bus number查找总线、根据device number查找设备、根据function number调用设备功能等操作，qemu中通过<code>PCIBus</code>的层级结构模拟了多条总线的情况，通过<code>PCIBus</code>的<code>PCIDevice *devices[PCI_SLOT_MAX * PCI_FUNC_MAX]</code>成员模拟了挂载的设备。通过device number和function number共同索引(一共8bit，对应规范中device number和function number两个register)，每个成员对应一个function。</p>
+<p>通过pcihost中的<code>pci_dev_find_by_addr</code>函数可见，解析了<code>CONFIG_ADDRESS</code>的内容得到总线号和设备功能号<code>devfn</code>，然后返回对应功能。这是对PCIBus对挂载设备的模拟。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> PCIDevice *<span class="title">pci_dev_find_by_addr</span><span class="params">(PCIBus *bus, <span class="keyword">uint32_t</span> addr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">uint8_t</span> bus_num = addr &gt;&gt; <span class="number">16</span>;</span><br><span class="line">    <span class="keyword">uint8_t</span> devfn = addr &gt;&gt; <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> pci_find_device(bus, bus_num, devfn);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">PCIDevice *<span class="title">pci_find_device</span><span class="params">(PCIBus *bus, <span class="keyword">int</span> bus_num, <span class="keyword">uint8_t</span> devfn)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    bus = pci_find_bus_nr(bus, bus_num);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!bus)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bus-&gt;devices[devfn];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再看<code>pci_find_bus_nr</code>，看看PCIBus是如何模拟多总线的情况的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> PCIBus *<span class="title">pci_find_bus_nr</span><span class="params">(PCIBus *bus, <span class="keyword">int</span> bus_num)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">/* Consider all bus numbers in range for the host pci bridge. */</span></span><br><span class="line">    <span class="keyword">if</span> (!pci_bus_is_root(bus) &amp;&amp;</span><br><span class="line">        !pci_secondary_bus_in_range(bus-&gt;parent_dev, bus_num)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">/* try child bus */</span></span><br><span class="line">    <span class="keyword">for</span> (; bus; bus = sec) &#123;</span><br><span class="line">        QLIST_FOREACH(sec, &amp;bus-&gt;child, sibling) &#123;</span><br><span class="line">            <span class="keyword">if</span> (pci_bus_num(sec) == bus_num) &#123;</span><br><span class="line">                <span class="keyword">return</span> sec;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/* PXB buses assumed to be children of bus 0 */</span></span><br><span class="line">            <span class="keyword">if</span> (pci_bus_is_root(sec)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (pci_root_bus_in_range(sec, bus_num)) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (pci_secondary_bus_in_range(sec-&gt;parent_dev, bus_num)) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>PCIBus</code>结构体用<code>child</code>链表表示了所有子总线，这样就模拟了总线的层次结构。通过比较总线号，最终返回目标总线。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PCIBus</span> &#123;</span></span><br><span class="line">	...</span><br><span class="line">    QLIST_HEAD(, PCIBus) child; <span class="comment">/* this will be replaced by qdev later */</span></span><br><span class="line">    QLIST_ENTRY(PCIBus) sibling;<span class="comment">/* this will be replaced by qdev later */</span></span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="pcidevice"><a href="#pcidevice" class="headerlink" title="pcidevice"></a>pcidevice</h2><p>每个pci设备都有自己的config空间，config空间可以用来记录设备的信息，也可以用来控制设备执行各种功能，(详见pci规范文档*6.1. Configuration Space Organization<br>*)。</p>
+<p>在qemu中，config空间就是<code>PCIDevice</code>结构体中的<code>uint8_t *config;</code>成员模拟的，在初始化是就会申请这段空间(pci设备的config空间为256byte, pcie设备的config空间为4kb)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> PCIDevice *<span class="title">do_pci_register_device</span><span class="params">(PCIDevice *pci_dev,</span></span></span><br><span class="line"><span class="function"><span class="params">                                         <span class="keyword">const</span> <span class="keyword">char</span> *name, <span class="keyword">int</span> devfn,</span></span></span><br><span class="line"><span class="function"><span class="params">                                         Error **errp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PCIConfigReadFunc *config_read = pc-&gt;config_read;</span><br><span class="line">    PCIConfigWriteFunc *config_write = pc-&gt;config_write;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">	memory_region_init(&amp;pci_dev-&gt;bus_master_container_region, OBJECT(pci_dev),</span><br><span class="line">                       <span class="string">"bus master container"</span>, UINT64_MAX);</span><br><span class="line">    address_space_init(&amp;pci_dev-&gt;bus_master_as,</span><br><span class="line">                       &amp;pci_dev-&gt;bus_master_container_region, pci_dev-&gt;name);</span><br><span class="line"></span><br><span class="line">    pci_config_alloc(pci_dev);</span><br><span class="line"></span><br><span class="line">    pci_config_set_vendor_id(pci_dev-&gt;<span class="built_in">config</span>, pc-&gt;vendor_id);</span><br><span class="line">    pci_config_set_device_id(pci_dev-&gt;<span class="built_in">config</span>, pc-&gt;device_id);</span><br><span class="line">    pci_config_set_revision(pci_dev-&gt;<span class="built_in">config</span>, pc-&gt;revision);</span><br><span class="line">    pci_config_set_class(pci_dev-&gt;<span class="built_in">config</span>, pc-&gt;class_id);</span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">	bus-&gt;devices[devfn] = pci_dev;</span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<p>之后对config空间的操作，包括pcihost与pci设备通信和读写设备状态都会通过<code>uint8_t *config</code>完成。如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">pci_config_set_vendor_id</span><span class="params">(<span class="keyword">uint8_t</span> *pci_config, <span class="keyword">uint16_t</span> val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pci_set_word(&amp;pci_config[PCI_VENDOR_ID], val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pci_default_write_config</span><span class="params">(PCIDevice *d, <span class="keyword">uint32_t</span> addr, <span class="keyword">uint32_t</span> val_in, <span class="keyword">int</span> l)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; l; val &gt;&gt;= <span class="number">8</span>, ++i) &#123;</span><br><span class="line">        <span class="keyword">uint8_t</span> wmask = d-&gt;wmask[addr + i];</span><br><span class="line">        <span class="keyword">uint8_t</span> w1cmask = d-&gt;w1cmask[addr + i];</span><br><span class="line">        assert(!(wmask &amp; w1cmask));</span><br><span class="line">        d-&gt;<span class="built_in">config</span>[addr + i] = (d-&gt;<span class="built_in">config</span>[addr + i] &amp; ~wmask) | (val &amp; wmask);</span><br><span class="line">        d-&gt;<span class="built_in">config</span>[addr + i] &amp;= ~(val &amp; w1cmask); <span class="comment">/* W1C: Write 1 to Clear */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (ranges_overlap(addr, l, PCI_BASE_ADDRESS_0, <span class="number">24</span>) ||</span><br><span class="line">        ranges_overlap(addr, l, PCI_ROM_ADDRESS, <span class="number">4</span>) ||</span><br><span class="line">        ranges_overlap(addr, l, PCI_ROM_ADDRESS1, <span class="number">4</span>) ||</span><br><span class="line">        range_covers_byte(addr, l, PCI_COMMAND))</span><br><span class="line">        pci_update_mappings(d);</span><br><span class="line">	...</span><br><span class="line">    msi_write_config(d, addr, val_in, l);</span><br><span class="line">    msix_write_config(d, addr, val_in, l);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h1><p>QEMU中对sysbus的模拟就是将设备与MemoryRegion绑定，cpu执行指令，经过翻译后能够找到对应的MemoryRegion从而找到相应的设备。这里就是cpu找到pcihost的过程。</p>
+<p>pcihost模拟是主要功能是：根据cpu的指令找到pci设备，然后”转发”指令给pci设备</p>
+<p>pcibus模拟的主要功能是：维护pci设备信息，为pcihost索引目标设备提供依据</p>
+<p>pci设备模拟的主要功能是：维护自己的config空间和操作所需的回调函数，设备的内存空间映射将会根据config空间的内容完成</p>
+<p>QEMU中的总线模拟将有pcibus模拟和pci设备模拟共同完成：pcibus提供设备的连接关系、pci设备提供config空间的信息</p>
+<h2 id="读写设备config空间"><a href="#读写设备config空间" class="headerlink" title="读写设备config空间"></a>读写设备config空间</h2><p>读写config空间可以分为两个阶段:</p>
+<ul>
+<li>指令传输</li>
+<li>指令执行</li>
+</ul>
+<p>gdb调试的表现为：总是会先调用<code>pci_host_config_write</code>为<code>s-&gt;config_reg</code>赋值，然后会调用data read/write解析刚才传入的<code>s-&gt;config_reg</code></p>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_reg.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_reg.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+
+<h3 id="指令传输"><a href="#指令传输" class="headerlink" title="指令传输"></a>指令传输</h3><p>指令传输阶段的任务是将cpu的命令保存到<code>config_reg</code>中，方便在指令执行阶段根据pci协议规范解析命令。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">pci_host_config_write</span><span class="params">(<span class="keyword">void</span> *opaque, hwaddr addr,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  <span class="keyword">uint64_t</span> val, <span class="keyword">unsigned</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PCIHostState *s = opaque;</span><br><span class="line"></span><br><span class="line">    PCI_DPRINTF(<span class="string">"%s addr "</span> TARGET_FMT_plx <span class="string">" len %d val %"</span>PRIx64<span class="string">"\n"</span>,</span><br><span class="line">                __func__, addr, len, val);</span><br><span class="line">    <span class="keyword">if</span> (addr != <span class="number">0</span> || len != <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    s-&gt;config_reg = val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可见将指令(<code>val</code>)赋值给了PCIHost的config寄存器<code>config_reg</code>。</p>
+<h3 id="指令执行"><a href="#指令执行" class="headerlink" title="指令执行"></a>指令执行</h3><p>指令执行阶段会解析<code>config_reg</code>中保存的指令。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">memory_region_write_accessor -&gt; pci_host_data_write -&gt; pci_data_write</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">pci_host_data_write</span><span class="params">(<span class="keyword">void</span> *opaque, hwaddr addr,</span></span></span><br><span class="line"><span class="function"><span class="params">                                <span class="keyword">uint64_t</span> val, <span class="keyword">unsigned</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PCIHostState *s = opaque;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (s-&gt;config_reg &amp; (<span class="number">1u</span> &lt;&lt; <span class="number">31</span>))</span><br><span class="line">        pci_data_write(s-&gt;bus, s-&gt;config_reg | (addr &amp; <span class="number">3</span>), val, len);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pci_data_write</span><span class="params">(PCIBus *s, <span class="keyword">uint32_t</span> addr, <span class="keyword">uint32_t</span> val, <span class="keyword">unsigned</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PCIDevice *pci_dev = pci_dev_find_by_addr(s, addr);</span><br><span class="line">    <span class="keyword">uint32_t</span> config_addr = addr &amp; (PCI_CONFIG_SPACE_SIZE - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!pci_dev) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    pci_host_config_write_common(pci_dev, config_addr, PCI_CONFIG_SPACE_SIZE,</span><br><span class="line">                                 val, len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先是在<code>pci_dev_find_by_addr</code>中利用<code>config_reg</code>找到的目标pci设备，根据注释中指出的pci规范进行解析，从而能够找到目标设备。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * PCI address</span></span><br><span class="line"><span class="comment"> * bit 16 - 24: bus number</span></span><br><span class="line"><span class="comment"> * bit  8 - 15: devfun number</span></span><br><span class="line"><span class="comment"> * bit  0 -  7: offset in configuration space of a given pci device</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* the helper function to get a PCIDevice* for a given pci address */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> PCIDevice *<span class="title">pci_dev_find_by_addr</span><span class="params">(PCIBus *bus, <span class="keyword">uint32_t</span> addr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">uint8_t</span> bus_num = addr &gt;&gt; <span class="number">16</span>;</span><br><span class="line">    <span class="keyword">uint8_t</span> devfn = addr &gt;&gt; <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> pci_find_device(bus, bus_num, devfn);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">PCIDevice *<span class="title">pci_find_device</span><span class="params">(PCIBus *bus, <span class="keyword">int</span> bus_num, <span class="keyword">uint8_t</span> devfn)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    bus = pci_find_bus_nr(bus, bus_num);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!bus)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bus-&gt;devices[devfn];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>找到目标设备后在<code>pci_host_config_write_common</code>中利用<code>config_reg</code>找到目标设备config空间：</p>
+<p>先是取出要操作的地址(即操作目标设备config空间的那个字段)。然后对该空间进行读写<code>pci_host_config_write_common</code>，其中会根据PCI设备类型执行相应回调函数完成操作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint32_t</span> config_addr = addr &amp; (PCI_CONFIG_SPACE_SIZE - <span class="number">1</span>); 	<span class="comment">// addr &amp; 0x11</span></span><br><span class="line"></span><br><span class="line">pci_host_config_write_common(pci_dev, config_addr, PCI_CONFIG_SPACE_SIZE,</span><br><span class="line">                                 val, len);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="读写设备内存空间"><a href="#读写设备内存空间" class="headerlink" title="读写设备内存空间"></a>读写设备内存空间</h2><p>为了能够寻址到pci设备，会在设备config空间中记录该设备内存映射相关的信息。这就是config空间中的BAR(Base Address Register)的功能。</p>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<p>如图所示，BAR(Base Address Register)是PCIconfig空间中从0x10到0x24的6个register，用来定义PCI需要的配置空间大小以及<strong>配置PCI设备占用的地址空间</strong>。</p>
+<p>BAR根据mmio和pio有两种不同的布局，其中bit0用于指示是内存是mmio还是pio，详见下图：</p>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/bar_layout.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/bar_layout.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<p>每个PCI设备在BAR中描述自己需要占用多少地址空间，bios会通过pci枚举探测pci设备，然后读取其BAR进行合理的地址空间分配。这个过程读应QEMU中虚拟机reset阶段执行的<code>pci_update_mappings</code>，后文将会说明这点。</p>
+<p>pci设备的BAR设置可以使用<code>pci_register_bar</code>完成，其中<code>io_regions</code>数组表示设备的BARs，数组中的每一项表示BARs中的一个寄存器，<code>pci_register_bar</code>完成一项BAR的设置(<code>pci_dev-&gt;io_regions[region_num]</code>)。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pci_register_bar</span><span class="params">(PCIDevice *pci_dev, <span class="keyword">int</span> region_num,</span></span></span><br><span class="line"><span class="function"><span class="params">                      <span class="keyword">uint8_t</span> type, MemoryRegion *memory)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PCIIORegion *r;</span><br><span class="line">    <span class="keyword">uint32_t</span> addr; <span class="comment">/* offset in pci config space */</span></span><br><span class="line">    <span class="keyword">uint64_t</span> wmask;</span><br><span class="line">    <span class="keyword">pcibus_t</span> <span class="built_in">size</span> = memory_region_size(memory);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line"></span><br><span class="line">    r = &amp;pci_dev-&gt;io_regions[region_num];</span><br><span class="line">    r-&gt;addr = PCI_BAR_UNMAPPED;</span><br><span class="line">    r-&gt;<span class="built_in">size</span> = <span class="built_in">size</span>;</span><br><span class="line">    r-&gt;type = type;</span><br><span class="line">    r-&gt;memory = memory;</span><br><span class="line">    r-&gt;address_space = type &amp; PCI_BASE_ADDRESS_SPACE_IO</span><br><span class="line">                        ? pci_dev-&gt;bus-&gt;address_space_io</span><br><span class="line">                        : pci_dev-&gt;bus-&gt;address_space_mem;</span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以e1000网卡设备为例，其实例化函数<code>pci_e1000_realize</code>中设置了BAR0和BAR1，并在BAR中记录地址与MR绑定，最后虚拟机reset阶段统一将所有设备的所以BAR映射到内存中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pci_register_bar(pci_dev, <span class="number">0</span>, PCI_BASE_ADDRESS_SPACE_MEMORY, &amp;d-&gt;mmio);</span><br><span class="line">pci_register_bar(pci_dev, <span class="number">1</span>, PCI_BASE_ADDRESS_SPACE_IO, &amp;d-&gt;io);</span><br></pre></td></tr></table></figure>
+
+<p><code>pci_register_bar</code>仅是设置了BAR的的内容，真正根据BAR信息完成pci设备内存映射的是<code>pci_update_mappings</code>。</p>
+<p>虚拟设备创建完成后进入虚拟机reset阶段<code>qemu_system_reset</code>，这个阶段会遍历所有的pci设备和所有的<code>io_regions</code>然后调用<code>pci_update_mappings</code>，根据之前<code>pci_register_bar</code>中设置的<code>addr</code>和对应的<code>memory</code>，为各个pci设备映射内存空间。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">pci_update_mappings</span><span class="params">(PCIDevice *d)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">...</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; PCI_NUM_REGIONS; i++) &#123;</span><br><span class="line">        r = &amp;d-&gt;io_regions[i];</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* this region isn't registered */</span></span><br><span class="line">        <span class="keyword">if</span> (!r-&gt;<span class="built_in">size</span>)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//get the address info stored in specific bar</span></span><br><span class="line">        new_addr = pci_bar_address(d, i, r-&gt;type, r-&gt;<span class="built_in">size</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* This bar isn't changed */</span></span><br><span class="line">        <span class="keyword">if</span> (new_addr == r-&gt;addr)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* now do the real mapping */</span></span><br><span class="line">        <span class="keyword">if</span> (r-&gt;addr != PCI_BAR_UNMAPPED) &#123;</span><br><span class="line">            memory_region_del_subregion(r-&gt;address_space, r-&gt;memory);</span><br><span class="line">        &#125;</span><br><span class="line">        r-&gt;addr = new_addr;</span><br><span class="line">        <span class="keyword">if</span> (r-&gt;addr != PCI_BAR_UNMAPPED) &#123;</span><br><span class="line">            memory_region_add_subregion_overlap(r-&gt;address_space,</span><br><span class="line">                                                r-&gt;addr, r-&gt;memory, <span class="number">1</span>);</span><br><span class="line">        &#125;                                       </span><br><span class="line">    &#125;   </span><br><span class="line">    pci_update_vga(d);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>TODO<br>映射完成后就能通过mmio和pio的方式访问pci设备了??</p>
+<p>Q??，映射后就是不是就直接访存了?如cpu直接访存mm，copy数据到VGA的mmio就能显示到屏幕了?</p>
+<p>Q?? config space和设备读写的关系如何?该了config空间的某一点后就能能够命令设备读写?那这个过程是怎样的??</p>
+<h2 id="基础设施"><a href="#基础设施" class="headerlink" title="基础设施"></a>基础设施</h2><p>这里的基础设施指的是PCI相关结构体和API。如pcihost要找到pci设备需要哪些结构，pci设备config空间该如何维护等。</p>
+<p>pcibus维护一个pci设备列表<code>PCIDevice bus-&gt;devices[256]</code>记录挂在pci总线上的设备，pcihost可以根据pcibus协议解析cpu传入的addr获得pci设备的索引，从而找到目标pci设备。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PCIBus</span> &#123;</span></span><br><span class="line">    BusState qbus;</span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">    PCIDevice *devices[PCI_SLOT_MAX * PCI_FUNC_MAX];</span><br><span class="line">    PCIDevice *parent_dev;</span><br><span class="line">    MemoryRegion *address_space_mem;</span><br><span class="line">    MemoryRegion *address_space_io;</span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>pci设备的config空间由pci设备自己维护(PCIDevice结构的<code>uint8_t *config</code>成员)。设备实例化时会初始化这段空间(<code>uint8_t *config</code>，256byte的config空间)，并挂载上总线<code>bus-&gt;devices[devfn] = pci_dev</code>。之后的设备内存空间映射和config空间读写都依赖于<code>*config</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PCIDevice</span> &#123;</span></span><br><span class="line">    DeviceState qdev;</span><br><span class="line">    <span class="keyword">bool</span> partially_hotplugged;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* PCI config space */</span></span><br><span class="line">    <span class="keyword">uint8_t</span> *<span class="built_in">config</span>;</span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<p>pci协议规范规定了config空间中各个bit的含义，在<code>hw/pci/pci.c</code>中提供了许多API、<code>pci_regs.h</code>中定义了许多config空间相关的宏，方便我们对config空间进行操作。如<code>pci_config_set_vendor_id</code>API可以完成config空间vendor id段的填写：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">pci_config_set_vendor_id(<span class="keyword">uint8_t</span> *pci_config, <span class="keyword">uint16_t</span> val)</span><br><span class="line">&#123;</span><br><span class="line">    pci_set_word(&amp;pci_config[PCI_VENDOR_ID], val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>do_pci_register_device</code>可以方便的配置一个PCI设备。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,</span><br><span class="line">                                         const char *name, int devfn,</span><br><span class="line">                                         Error **errp)</span><br><span class="line">&#123;</span><br><span class="line">    PCIConfigReadFunc *config_read &#x3D; pc-&gt;config_read;</span><br><span class="line">    PCIConfigWriteFunc *config_write &#x3D; pc-&gt;config_write;</span><br><span class="line"></span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">	memory_region_init(&amp;pci_dev-&gt;bus_master_container_region, OBJECT(pci_dev),</span><br><span class="line">                       &quot;bus master container&quot;, UINT64_MAX);</span><br><span class="line">    address_space_init(&amp;pci_dev-&gt;bus_master_as,</span><br><span class="line">                       &amp;pci_dev-&gt;bus_master_container_region, pci_dev-&gt;name);</span><br><span class="line"></span><br><span class="line">    pci_config_alloc(pci_dev);</span><br><span class="line"></span><br><span class="line">    pci_config_set_vendor_id(pci_dev-&gt;config, pc-&gt;vendor_id);</span><br><span class="line">    pci_config_set_device_id(pci_dev-&gt;config, pc-&gt;device_id);</span><br><span class="line">    pci_config_set_revision(pci_dev-&gt;config, pc-&gt;revision);</span><br><span class="line">    pci_config_set_class(pci_dev-&gt;config, pc-&gt;class_id);</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">	bus-&gt;devices[devfn] &#x3D; pci_dev;</span><br><span class="line">	&#x2F;* ... *&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="实例说明BAR的作用"><a href="#实例说明BAR的作用" class="headerlink" title="实例说明BAR的作用"></a>实例说明BAR的作用</h1><p>BAR主要是用了知道如何为pci设备做内存映射的，如mmio等操作就需要知道那段内存空间是给哪个设备做mmio的。下面通过e1000网卡设备来说明BAR在pci总线模拟流程的作用。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">gdb	 \</span><br><span class="line">  -ex <span class="string">"b e1000_mmio_setup"</span> \</span><br><span class="line">  -ex <span class="string">"b e1000_mmio_read"</span> \</span><br><span class="line">  -ex <span class="string">"b e1000_mmio_write"</span> \</span><br><span class="line">  -ex <span class="string">"b e1000_io_write"</span> \</span><br><span class="line">  -ex <span class="string">"b e1000_io_read"</span> \</span><br><span class="line">  -ex <span class="string">"b pci_register_bar"</span> \</span><br><span class="line">  -ex <span class="string">"b pci_update_mappings"</span> \</span><br><span class="line">  --args \</span><br><span class="line">qemu-system-x86_64 \</span><br><span class="line">  -machine kernel-irqchip=off \</span><br><span class="line">  -m 8G \</span><br><span class="line">  -nic tap,model=e1000 \</span><br><span class="line">  ./ubuntu14.qcow</span><br></pre></td></tr></table></figure>
+
+<p>首先在<code>e1000_mmio_setup</code>中e1000设备会准备他的mmio和pio空间，此时并没有映射被虚拟机内存空间，仅是初始化了MemoryRegion结构体。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span></span><br><span class="line">e1000_mmio_setup(E1000State *d)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">    memory_region_init_io(&amp;d-&gt;mmio, OBJECT(d), &amp;e1000_mmio_ops, d,</span><br><span class="line">                          <span class="string">"e1000-mmio"</span>, PNPMMIO_SIZE);</span><br><span class="line">    memory_region_init_io(&amp;d-&gt;io, OBJECT(d), &amp;e1000_io_ops, d, <span class="string">"e1000-io"</span>, IOPORT_SIZE);</span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其mmio和io对应的MemoryRegion为：</p>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/mmio_io.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/mmio_io.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<p>接下里在设备具现化的过程中调用<code>pci_register_bar</code>，会用这些MR配置BAR，为之后的内存映射提供依据：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pci_register_bar</span><span class="params">(PCIDevice *pci_dev, <span class="keyword">int</span> region_num,</span></span></span><br><span class="line"><span class="function"><span class="params">                      <span class="keyword">uint8_t</span> type, MemoryRegion *memory)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">    r = &amp;pci_dev-&gt;io_regions[region_num];</span><br><span class="line">    r-&gt;addr = PCI_BAR_UNMAPPED;</span><br><span class="line">    r-&gt;<span class="built_in">size</span> = <span class="built_in">size</span>;</span><br><span class="line">    r-&gt;type = type;</span><br><span class="line">    r-&gt;memory = memory;</span><br><span class="line">    r-&gt;address_space = type &amp; PCI_BASE_ADDRESS_SPACE_IO</span><br><span class="line">                        ? pci_get_bus(pci_dev)-&gt;address_space_io</span><br><span class="line">                        : pci_get_bus(pci_dev)-&gt;address_space_mem;</span><br><span class="line">	<span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/register_bar.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/register_bar.png" srcset="data:image/png;base64,666" alt="" width="1005">
+
+<p>最后，会有几种时机真正的为pci设备映射内存空间，这里列出两种(其他情况有待补充):</p>
+<ul>
+<li>一种是虚拟设备创建完毕，虚拟机进入reset阶段，遍历所有pci设备调用<code>pci_update_mappings</code>为pci设备映射内存</li>
+<li>另一种是在修改config空间、通知要内存映射后才建立内存映射</li>
+</ul>
+<p>这里e1000设备是第二种情况，在<code>e1000_write_config</code>修改config空间后才建立内存映射</p>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/map_mmio.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/map_mmio.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/map_io.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/map_io.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<p>可以看到将<code>e1000_mmio_setup</code>中创建的<code>(MemoryRegion* 0x555557793250)d-&gt;mmio</code>(<strong>xxxx3250</strong>)和<code>d-&gt;io</code>(<strong>xxxx3340</strong>)映射到了内存空间，之后便能通过该MR进行mmio操作。</p>
+<p>最后直接就能直接通过mmio访问设备(内存翻译)：</p>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/IO.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/IO.png" srcset="data:image/png;base64,666" alt="" width="100%">
+
+<p><strong>值得注意的是</strong>并不是所有设备都会通过<code>pci_update_mappings</code>完成内存映射，如VGA在初始化MemoryRegion的时候就直接<code>add_subregion</code>完成了映射(也许是因为VGA地址空间固定吧)。然后再调用<code>pci_register_bar</code>方便后续接收config空间的指令：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">pci_std_vga_realize</span><span class="params">(PCIDevice *dev, Error **errp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vga_common_init(s, OBJECT(dev));</span><br><span class="line">    vga_init(s, OBJECT(dev), pci_address_space(dev), pci_address_space_io(dev), <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">    pci_register_bar(&amp;d-&gt;dev, <span class="number">0</span>, PCI_BASE_ADDRESS_MEM_PREFETCH, &amp;s-&gt;vram);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* mmio bar for vga register access */</span></span><br><span class="line">    <span class="keyword">if</span> (d-&gt;flags &amp; (<span class="number">1</span> &lt;&lt; PCI_VGA_FLAG_ENABLE_MMIO)) &#123;</span><br><span class="line">        memory_region_init_io(&amp;d-&gt;mmio, OBJECT(dev), &amp;unassigned_io_ops, <span class="literal">NULL</span>,</span><br><span class="line">                              <span class="string">"vga.mmio"</span>, PCI_VGA_MMIO_SIZE);</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">        pci_std_vga_mmio_region_init(s, OBJECT(dev), &amp;d-&gt;mmio, d-&gt;mrs,</span><br><span class="line">                                     qext, edid);</span><br><span class="line"></span><br><span class="line">        pci_register_bar(&amp;d-&gt;dev, <span class="number">2</span>, PCI_BASE_ADDRESS_SPACE_MEMORY, &amp;d-&gt;mmio);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vga_init</span><span class="params">(VGACommonState *s, Object *obj, MemoryRegion *address_space,</span></span></span><br><span class="line"><span class="function"><span class="params">              MemoryRegion *address_space_io, <span class="keyword">bool</span> init_vga_ports)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    vga_io_memory = vga_init_io(s, obj, &amp;vga_ports, &amp;vbe_ports);</span><br><span class="line">    memory_region_add_subregion_overlap(address_space,</span><br><span class="line">                                        <span class="number">0x000a0000</span>, vga_io_memory,</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> pci_std_vga_mmio_region_init(VGACommonState *s,</span><br><span class="line">                                  Object *owner,</span><br><span class="line">                                  MemoryRegion *parent,</span><br><span class="line">                                  MemoryRegion *subs,</span><br><span class="line">                                  <span class="keyword">bool</span> qext, <span class="keyword">bool</span> edid)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    memory_region_init_io(&amp;subs[<span class="number">0</span>], owner, &amp;pci_vga_ioport_ops, s,</span><br><span class="line">                          <span class="string">"vga ioports remapped"</span>, PCI_VGA_IOPORT_SIZE);</span><br><span class="line">    memory_region_add_subregion(parent, PCI_VGA_IOPORT_OFFSET,</span><br><span class="line">                                &amp;subs[<span class="number">0</span>]);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可见在<code>vga_init</code>和<code>pci_std_vga_mmio_region_init</code>中初始化MR后就直接做了内存映射，然后再调用<code>pci_register_bar</code>配置BAR空间。</p>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://yoursite.com/2021/09/10/universe/qemu/qemu_bus_simulate/>http://yoursite.com/2021/09/10/universe/qemu/qemu_bus_simulate/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/qemu/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>qemu</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/09/05/universe/linux/garbage_collector/'>
+          <p class='title'>垃圾回收机制原理与实现<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>前言
+动态内存分配在堆上进行
+堆用free list管理空闲块
+堆的每次动态分配内存是从它现有的free list中取出一块(或块中的一部分，这取决于管理free list的策略)
+堆的free...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pcihost"><span class="toc-text">pcihost</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#控制流程"><span class="toc-text">控制流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CONFIG-ADDRESS"><span class="toc-text">CONFIG_ADDRESS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CONFIG-DATA"><span class="toc-text">CONFIG_DATA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编码说明"><span class="toc-text">编码说明</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Configuration-Space-Decoding"><span class="toc-text">Configuration Space Decoding</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#configuration-transaction"><span class="toc-text">configuration transaction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bus-transaction"><span class="toc-text">bus transaction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pcibus"><span class="toc-text">pcibus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pcidevice"><span class="toc-text">pcidevice</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读写设备config空间"><span class="toc-text">读写设备config空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指令传输"><span class="toc-text">指令传输</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指令执行"><span class="toc-text">指令执行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读写设备内存空间"><span class="toc-text">读写设备内存空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础设施"><span class="toc-text">基础设施</span></a></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="QEMU总线模拟";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":null,"appKey":null,"meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>
