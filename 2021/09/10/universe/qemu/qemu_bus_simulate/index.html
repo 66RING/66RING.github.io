@@ -537,7 +537,118 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h1 id="模拟方法"><a href="#模拟方法" class="headerlink" title="模拟方法"></a>模拟方法</h1><p>pcihost模拟是主要功能是：根据cpu的指令找到pci设备，然后”转发”指令给pci设备</p>
 <p>pcibus模拟的主要功能是：维护pci设备信息，为pcihost索引目标设备提供依据</p>
 <p>pci设备模拟的主要功能是：维护自己的config空间和操作对应的回调函数，设备的内存空间映射将会根据config空间的内容完成</p>
-<h2 id="pcihost"><a href="#pcihost" class="headerlink" title="pcihost"></a>pcihost</h2><h3 id="控制流程"><a href="#控制流程" class="headerlink" title="控制流程"></a>控制流程</h3><h4 id="CONFIG-ADDRESS"><a href="#CONFIG-ADDRESS" class="headerlink" title="CONFIG_ADDRESS"></a>CONFIG_ADDRESS</h4><p>以i440fx北桥芯片这个pcihost为例，他使用两个pio来接收，cpu的指令信息。CF8h处的地址空间称为<em>CONFIG_ADDRESS</em>，CFCh处的地址空间称为<em>CONFIG_DATA</em>。</p>
+<p>要了解pci总线模拟应该搞清楚以下问题：</p>
+<ul>
+<li>如何给设备编号：初始化程序扫描总线上每个插槽并编号<ul>
+<li>对应规范文档: <ul>
+<li>设备编号：pci-pci-bridge specifiation: 13.2. Device Number and Slot Number Assignment Rules，约138页</li>
+</ul>
+</li>
+<li>对应qemu: <code>qemu/hw/pci/pci.c:do_pci_register_device</code>，当指定<code>devfn=-1</code>时自动扫描可用设备号</li>
+</ul>
+</li>
+<li>cpu如何知道设备编号：初始化时初始化程序从<code>IRQ Routing Table</code>获取设备号信息<ul>
+<li>对应规范文档: <ul>
+<li>设备号信息初始化：pci-pci-bridge specifiation: 13.6. Run-Time Algorithm for Determining Chassis and Slot Number。约145页</li>
+</ul>
+</li>
+<li>对应qemu: TODO，没有找到，可能是操作系统中完成的？</li>
+</ul>
+</li>
+<li>pcihost如何找到pci设备<ul>
+<li>对应规范文档: <ul>
+<li>3.2.2.3.2. Software Generation of Configuration Transactions。约33页</li>
+</ul>
+</li>
+<li>对应本文章节: <ul>
+<li><a href="#pcibus">pcibus</a></li>
+</ul>
+</li>
+<li>对应qemu: <ul>
+<li><code>qemu/hw/pci/pci_host.c:pci_dev_find_by_addr()</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>pci总线规范中几个比较重要的协议内容<ul>
+<li>对应规范文档:<ul>
+<li>config space的编码规范：Figure 6-1，约191页</li>
+<li>设备控制：6.2.2. Device Control，约193页</li>
+<li>设备状态控制：6.2.3. Device Status，约196页</li>
+<li>BAR寄存器：6.2.5. Base Addresses，约201页</li>
+</ul>
+</li>
+<li>对应本文章节:<ul>
+<li>设备控制(对应Figure 6-1的command register)和状态控制(对应Figure 6-1的status register)等：<a href="#bus-transaction">bus transaction</a>中举例的接口根据addr参数读写各个寄存器</li>
+<li>BAR寄存器功能：<a href="#设备IO空间">设备IO空间</a></li>
+</ul>
+</li>
+<li>对应qemu:<ul>
+<li>设备控制和状态控制等：<code>qemu/pci/pci.c:pci_default_write_config</code>，根据addr参数修改对应寄存器内容</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如何给设备分配IO空间<ul>
+<li>对应规范文档:<ul>
+<li>BAR寄存器：6.2.5. Base Addresses，约201页</li>
+</ul>
+</li>
+<li>对应本文章节:<ul>
+<li><a href="#设备IO空间">设备IO空间</a></li>
+</ul>
+</li>
+<li>对应qemu:<ul>
+<li>设备BAR：<code>qemu/pci/pci.c:pci_register_bar</code></li>
+<li>根据BAR进程内存空间映射：<code>qemu/pci/pci.c:pci_update_mappings</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>cpu与pci设备通信的流程：中途经过什么设备，做了什么操作，如何读写设备等<ul>
+<li>对应规范文档:<ul>
+<li>整体流程概述：3.2.2.3.2. Software Generation of Configuration Transactions。约33页</li>
+</ul>
+</li>
+<li>对应本文章节:<ul>
+<li>中途做了什么操作：<a href="#控制流程">控制流程</a></li>
+<li>如何读写设备：<a href="#bus-transaction">bus transaction</a></li>
+</ul>
+</li>
+<li>对应qemu: <ul>
+<li>修改config空间的接口：<code>qemu/pci/pci.c:pci_default_write_config</code></li>
+<li><code>CONFIG_ADDRESS</code>阶段：<code>qemu/pci/pci_host.c:pci_host_config_read</code>，<code>qemu/pci/pci_host.c:pci_host_config_write</code></li>
+<li><code>CONFIG_DATA</code>阶段：<code>qemu/pci/pci_host.c:pci_host_data_read</code>，<code>qemu/pci/pci_host.c:pci_host_data_write</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="pcihost"><a href="#pcihost" class="headerlink" title="pcihost"></a>pcihost</h2><h3 id="控制流程"><a href="#控制流程" class="headerlink" title="控制流程"></a>控制流程</h3><p>pcihost对pci设备控制流程可以分为两阶段</p>
+<ul>
+<li><code>CONFIG_ADDRESS</code><ul>
+<li>cpu访问<code>CONFIG_ADDRESS</code>对应的端口时触发，将命令保存到pcihost的config寄存器中</li>
+</ul>
+</li>
+<li><code>CONFIG_DATA</code><ul>
+<li>cpu访问<code>CONFIG_DATA</code>对应的端口时触发，根据config寄存器中内容进行相应的操作</li>
+</ul>
+</li>
+</ul>
+<h4 id="CONFIG-ADDRESS"><a href="#CONFIG-ADDRESS" class="headerlink" title="CONFIG_ADDRESS"></a>CONFIG_ADDRESS</h4><p>以i440fx北桥芯片这个pcihost为例，他使用两个pio来接收，cpu的指令信息。CF8h处的地址空间称为<em>CONFIG_ADDRESS</em>，CFCh处的地址空间称为<em>CONFIG_DATA</em>。</p>
+<p>参考<a href="https://wiki.qemu.org/images/b/bb/29054901.pdf" target="_blank" rel="noopener">i440fx规范文档</a>，其pci相关的核心内容如下：</p>
+<ul>
+<li>i440fx设备的IO端口：3.1. I/O Mapped Registers，约17页<ul>
+<li>主要内容：<code>CONFIG_ADDRESS</code>寄存器在CF8h端口，<code>CONFIG_DATA</code>寄存器在CFCh端口</li>
+<li>对应qemu的模拟：<code>qemu/hw/pci-host/i440fx.c:i440fx_pcihost_realize</code></li>
+</ul>
+</li>
+<li>pci config空间与各寄存器的功能：3.2. PCI Configuration Space Mapped Registers<ul>
+<li>主要内容：说明了config空格各个字段的内容，访问config空间的格式(TYPE0和TYPE1)</li>
+<li>对应qemu的模拟：<code>qemu/hw/pci-host/i440fx.c:pci_host_conf_le_ops</code>和<code>qemu/hw/pci-host/i440fx.c:pci_host_data_le_ops</code></li>
+</ul>
+</li>
+</ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">i440fx_pcihost_realize</span><span class="params">(DeviceState *dev, Error **errp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PCIHostState *s = PCI_HOST_BRIDGE(dev);</span><br><span class="line">    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);</span><br><span class="line"></span><br><span class="line">    sysbus_add_io(sbd, <span class="number">0xcf8</span>, &amp;s-&gt;conf_mem);</span><br><span class="line">    sysbus_init_ioports(sbd, <span class="number">0xcf8</span>, <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">    sysbus_add_io(sbd, <span class="number">0xcfc</span>, &amp;s-&gt;data_mem);</span><br><span class="line">    sysbus_init_ioports(sbd, <span class="number">0xcfc</span>, <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* register i440fx 0xcf8 port as coalesced pio */</span></span><br><span class="line">    memory_region_set_flush_coalesced(&amp;s-&gt;data_mem);</span><br><span class="line">    memory_region_add_coalescing(&amp;s-&gt;conf_mem, <span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>当对CH8h端口写时，pcihost会将数据用锁存器(latch)保存起来。当对CH8h端口读时，pcihost就会返回<em>CONFIG_ADDRESS*中的数据。pci规范文档中说明如下(约在32页, *3.2.2.3.2. Software Generation of Configuration Transactions</em>)：</p>
@@ -628,8 +739,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>QEMU中的总线模拟将有pcibus模拟和pci设备模拟共同完成：pcibus提供设备的连接关系、pci设备提供config空间的信息</p>
 <h2 id="读写设备config空间"><a href="#读写设备config空间" class="headerlink" title="读写设备config空间"></a>读写设备config空间</h2><p>读写config空间可以分为两个阶段:</p>
 <ul>
-<li>指令传输</li>
-<li>指令执行</li>
+<li><code>CONFIG_ADDRESS</code>，指令传输</li>
+<li><code>CONFIG_DATA</code>，指令执行</li>
 </ul>
 <p>gdb调试的表现为：总是会先调用<code>pci_host_config_write</code>为<code>s-&gt;config_reg</code>赋值，然后会调用data read/write解析刚才传入的<code>s-&gt;config_reg</code></p>
 <img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_reg.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_reg.png" srcset="data:image/png;base64,666" alt="" width="100%">
@@ -650,7 +761,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint32_t</span> config_addr = addr &amp; (PCI_CONFIG_SPACE_SIZE - <span class="number">1</span>); 	<span class="comment">// addr &amp; 0x11</span></span><br><span class="line"></span><br><span class="line">pci_host_config_write_common(pci_dev, config_addr, PCI_CONFIG_SPACE_SIZE,</span><br><span class="line">                                 val, len);</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="读写设备内存空间"><a href="#读写设备内存空间" class="headerlink" title="读写设备内存空间"></a>读写设备内存空间</h2><p>为了能够寻址到pci设备，会在设备config空间中记录该设备内存映射相关的信息。这就是config空间中的BAR(Base Address Register)的功能。</p>
+<h2 id="设备IO空间"><a href="#设备IO空间" class="headerlink" title="设备IO空间"></a>设备IO空间</h2><p>为了能为pci设备分配IO空间，会在设备config空间中记录该设备内存映射相关的信息。这就是config空间中的BAR(Base Address Register)的功能。</p>
 <img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" srcset="data:image/png;base64,666" alt="" width="100%">
 
 <p>如图所示，BAR(Base Address Register)是PCIconfig空间中从0x10到0x24的6个register，用来定义PCI需要的配置空间大小以及<strong>配置PCI设备占用的地址空间</strong>。</p>
@@ -786,6 +897,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
+        <a class='prev' href='/2021/10/04/universe/qemu/qemu_pcie_simulate/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>qemu中对pcie的模拟</p>
+          <p class='content'>Overviewpcie对pci的功能进行了扩展，同步保留的对pci总线规范的兼容。这里仅对以下几点进行说明：
+
+root complex
+root complex是个抽象的概念，并不是某个具体...</p>
+        </a>
+      
       
         <a class='next' href='/2021/09/05/universe/linux/garbage_collector/'>
           <p class='title'>垃圾回收机制原理与实现<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
@@ -889,7 +1008,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pcihost"><span class="toc-text">pcihost</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#控制流程"><span class="toc-text">控制流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CONFIG-ADDRESS"><span class="toc-text">CONFIG_ADDRESS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CONFIG-DATA"><span class="toc-text">CONFIG_DATA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编码说明"><span class="toc-text">编码说明</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Configuration-Space-Decoding"><span class="toc-text">Configuration Space Decoding</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#configuration-transaction"><span class="toc-text">configuration transaction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bus-transaction"><span class="toc-text">bus transaction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pcibus"><span class="toc-text">pcibus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pcidevice"><span class="toc-text">pcidevice</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读写设备config空间"><span class="toc-text">读写设备config空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指令传输"><span class="toc-text">指令传输</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指令执行"><span class="toc-text">指令执行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读写设备内存空间"><span class="toc-text">读写设备内存空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础设施"><span class="toc-text">基础设施</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pcihost"><span class="toc-text">pcihost</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#控制流程"><span class="toc-text">控制流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CONFIG-ADDRESS"><span class="toc-text">CONFIG_ADDRESS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CONFIG-DATA"><span class="toc-text">CONFIG_DATA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编码说明"><span class="toc-text">编码说明</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Configuration-Space-Decoding"><span class="toc-text">Configuration Space Decoding</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#configuration-transaction"><span class="toc-text">configuration transaction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bus-transaction"><span class="toc-text">bus transaction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pcibus"><span class="toc-text">pcibus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pcidevice"><span class="toc-text">pcidevice</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读写设备config空间"><span class="toc-text">读写设备config空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指令传输"><span class="toc-text">指令传输</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指令执行"><span class="toc-text">指令执行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设备IO空间"><span class="toc-text">设备IO空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础设施"><span class="toc-text">基础设施</span></a></li></ol>
     </div>
   </section>
 
