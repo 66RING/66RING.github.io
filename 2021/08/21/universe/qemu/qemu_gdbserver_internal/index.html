@@ -650,18 +650,21 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/08/21/universe/qemu/qemu_monitor_model/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>qemu monitor的工作模型</p>
+        <a class='prev' href='/2021/08/22/universe/qemu/qemu_why_mr_tree/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>关于qemu使用树状MemoryRegion的分析</p>
+          <p class='content'>树状结构的MemoryRegion这章关注的重点是：设计树状结构MR的目的。包括中间节点，叶子节点是什么，父子关系代表什么，以及为何这么设计。
+首先说明结论：
+
+非叶子节点都是container...</p>
+        </a>
+      
+      
+        <a class='next' href='/2021/08/21/universe/qemu/qemu_monitor_model/'>
+          <p class='title'>qemu monitor的工作模型<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>前言gdb调试程序会阻塞被调试程序运行，gdb走一步，程序才能走一步，形如：
 1234gdbprocgdbproc
 
 那qemu的monitor中使用HMP/QMP与虚拟机交互交互会不会导致qe...</p>
-        </a>
-      
-      
-        <a class='next' href='/2021/08/14/universe/qemu/even2rw/'>
-          <p class='title'>qemu如何由事件循环找到真正要操作的目标设备<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>从eventfd联系到fd的流程非阻塞事件循环中，通过修改eventfd来通知qemu有事情需要qemu处理，如调用读写回调函数等。已知eventfd仅做通知的作用，qemu事件循环能够监听到e...</p>
         </a>
       
     </div>

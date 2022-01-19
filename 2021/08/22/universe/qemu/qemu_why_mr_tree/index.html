@@ -674,12 +674,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         </a>
       
       
-        <a class='next' href='/2021/08/21/universe/qemu/qemu_monitor_model/'>
-          <p class='title'>qemu monitor的工作模型<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>前言gdb调试程序会阻塞被调试程序运行，gdb走一步，程序才能走一步，形如：
-1234gdbprocgdbproc
-
-那qemu的monitor中使用HMP/QMP与虚拟机交互交互会不会导致qe...</p>
+        <a class='next' href='/2021/08/21/universe/qemu/qemu_gdbserver_internal/'>
+          <p class='title'>qemu gdbserver internal<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Prefacegdb设置断点的原理是使用ptrace系统调用建立gdb与目标程序的调试关系，gdb因此能够控制目标程序并先行对信号进行处理。因此设置断点的原理是：在断点处插入int 3触发软中断...</p>
         </a>
       
     </div>
