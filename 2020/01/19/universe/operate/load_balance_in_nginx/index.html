@@ -514,33 +514,30 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>一个网页为了应对高并发的情景，常常会使用多台后台服务器还处理用户的响应，这种增加节点个数的扩展方式就称为”水平扩展”。而及时后台使用了成百上千太服务器，用户可以不需要跟每个服务器沟通的系统，不需要知道每个服务器的ip地址。这是正是因为在用户与服务器之间存在一个代理(proxy)，代理用户跟服务器通信。代理服务器中记录和保存了后台服务器的信息，怎么跟后台服务器通信、跟哪个后台服务器通信由代理节点说了算。代理节点将用户请求均匀和分发到各个服务器，这样就避免了请求集中到同一个服务器中造成服务器过载，这个过程就称为”负载均衡”。</p>
-<h1 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h1><p>所谓代理服务，本质上就是通过软件自动化地提供某种功能，运行这种软件的节点就是代理服务器，或称为”负载均衡器”。市面上由很多提供代理服务的程序，其中nginx就是一种，这里将介绍如何配置安装nginx提供负载均衡服务。</p>
+  <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>一个网页为了应对高并发的情景，常常会使用多台后台服务器还处理用户的响应，这种增加节点个数的扩展方式就称为”水平扩展”。而即使后台使用了成百上千台服务器，用户可以不需要跟每个服务器沟通的细节，不需要知道每个服务器的ip地址。这是正是因为在用户与服务器之间存在一个代理(proxy)，代理用户跟服务器通信。代理服务器中记录和保存了后台服务器的信息，怎么跟后台服务器通信、跟哪个后台服务器通信由代理节点说了算。代理节点将用户请求均匀和分发到各个服务器，这样就能避免请求集中到同一个服务器中造成服务器过载，这个过程就称为”负载均衡”。</p>
+<p>基于成本和安全的考虑，后台服务器集群间通信常常使用内网，在外网的用户想要访问到处于内网的服务器需要经过代理服务器，因此代理服务器往往需要两个网卡分别负责外网通信和内网通信。而代理服务器转发从外网到内网的请求常常被称为”反向代理”。</p>
+<h1 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h1><p>所谓代理服务，本质上也是通过软件自动化地监听端口然后转发，运行这种软件的节点就是代理服务器，或称为”负载均衡器”。市面上由很多提供代理服务的程序，其中nginx就是一种，这里将介绍如何配置安装nginx提供负载均衡服务。</p>
 <h2 id="nginx安装"><a href="#nginx安装" class="headerlink" title="nginx安装"></a>nginx安装</h2><p>在linux环境中(ubuntu)，可以通过<code>apt install</code>命令安装nginx。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install nginx</span><br></pre></td></tr></table></figure>
 
 <p>可以通过<code>systemclt start nignx</code>命令启动nginx代理，也可以在命令行中输入<code>nginx</code>临时启动。默认情况下，nginx启动会会代理本机的80端口，通过浏览器访问<code>localhost:80</code>可以看到nginx的欢迎页面，说明nginx启动成功。</p>
 <p>之后通过修改<code>/etc/nginx/nginx.conf</code>配置文件配置启动不同的负载均衡策略。</p>
-<h2 id="nginx中的负载均衡策略"><a href="#nginx中的负载均衡策略" class="headerlink" title="nginx中的负载均衡策略"></a>nginx中的负载均衡策略</h2><p>nginx支持多种负载均衡策略，用户可以根据具体场景配置使用不同的负载均衡策略。常见的由如下几种负载均衡策略。</p>
+<h2 id="nginx中的负载均衡策略"><a href="#nginx中的负载均衡策略" class="headerlink" title="nginx中的负载均衡策略"></a>nginx中的负载均衡策略</h2><p>nginx支持多种负载均衡策略，用户可以根据具体场景配置使用不同的负载均衡策略。常见的有如下几种负载均衡策略。</p>
 <ol>
 <li>轮询<ul>
-<li>简单地一个接一个轮向服务器分发请求</li>
+<li>简单地一个接一个轮流向服务器分发请求。一个一个轮流的方式，”公平”是符合直觉的</li>
 </ul>
 </li>
 <li>固定权重<ul>
-<li>根据一定概率(权重)向服务器分发请求</li>
+<li>根据一定概率(权重)向服务器分发请求。因为有可能有的服务器性能强悍，那他承担更多负担似乎也是合理的</li>
 </ul>
 </li>
 <li>IP哈希<ul>
-<li>根据请求方的IP哈希值向服务器分发请求，加上请求来自世界各地，对IP哈希就能均匀地将IP分配到各个服务器</li>
+<li>根据请求方的IP哈希值向服务器分发请求。好的哈希可以输入均匀地分发出去，那么考虑请求来自世界各地，对IP哈希就能均匀地将IP分配到各个服务器，也是一种公平的方案</li>
 </ul>
 </li>
 <li>最短响应时间优先<ul>
-<li>服务器的响应时间可以反应服务器的忙碌程度，因此也是分配的依据</li>
-</ul>
-</li>
-<li>URL哈希<ul>
-<li>某些应用(URL)的功能可能是比较繁重的，对于这部分的URL可以分配到性能更强劲的服务器</li>
+<li>服务器的响应时间可以反应服务器的忙碌程度。和固定权重不同，权重需要运维人员手动计算和调整，是不太方便的，因此通过监听响应时间，也可以作为分配的依据</li>
 </ul>
 </li>
 </ol>
@@ -598,6 +595,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <p>可以看到所有的响应都来自同一个服务器，因为请求都是从本机发出的，使用的是相同的IP，具有相同的哈希值，分配到相同的服务器。这是符号预期的。可以启动虚拟机来进行进一步的测试。虚拟机中输入如下命令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl &lt;目标url&gt;</span><br><span class="line">这里的目标url是192.168.1.103</span><br><span class="line"></span><br><span class="line">$ curl 192.168.1.103</span><br><span class="line">Response from server2</span><br><span class="line">$ curl 192.168.1.103</span><br><span class="line">Response from server2</span><br><span class="line">$ curl 192.168.1.103</span><br><span class="line">Response from server2</span><br></pre></td></tr></table></figure>
+
 
 <p>可以看到，对于来自不同ip的请求分配给了另一个服务器处理，并对于这个IP都由该服务器处理。符合对IP哈希策略的预期</p>
 

@@ -630,12 +630,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/08/21/universe/qemu/qemu_monitor_model/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>qemu monitor的工作模型</p>
-          <p class='content'>前言gdb调试程序会阻塞被调试程序运行，gdb走一步，程序才能走一步，形如：
-1234gdbprocgdbproc
+        <a class='prev' href='/2021/08/15/universe/qemu/qemu_open_disk/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>qemu磁盘文件打开过程</p>
+          <p class='content'>磁盘文件打开过程通过gdb追踪openat系统调用得知，raw格式文件会使用raw_open_common()函数打开，调用栈如下：
 
-那qemu的monitor中使用HMP/QMP与虚拟机交互交互会不会导致qe...</p>
+
+通过分析源码得到qemu打开磁盘文件的过程：QEMU使用...</p>
         </a>
       
       

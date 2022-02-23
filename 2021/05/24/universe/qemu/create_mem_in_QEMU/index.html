@@ -661,8 +661,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class='prev' href='/2021/07/24/universe/qemu/powerpc_sim/'>
           <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>PowerPC虚拟机模拟的开发方法</p>
-          <p class='content'>模拟方法概述先创建一个最小化的开发板，其应该具有基本的io、屏幕回显能力。之后根据镜像加载、启动过程中的报错信息，对这个最小化开发板进行修补：添加设备、修改设备树等。直至内核成功启动。
-创建虚拟...</p>
+          <p class='content'>模拟方法概述创建虚拟机可以分为如下5个阶段，伪码描述如下：
+1234567static void my_machine_init(MachineState *machine)&#123;	cre...</p>
         </a>
       
       
