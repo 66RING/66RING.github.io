@@ -514,7 +514,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>很多人讨厌systemd，说systemd违背了UNIX哲学，是个big thing do big thing。这里不讨论systemd的功过，而是通过介绍OpenRC和Runit两个init程序来体会什么叫小而精, KISS。</p>
+  <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>很多人讨厌systemd，说systemd违背了UNIX哲学的”do one thing and do it well”。这里不讨论systemd的功过，而是通过介绍OpenRC和Runit两个init程序来体会什么叫小而精, KISS。</p>
 <h2 id="OpenRC使用逻辑"><a href="#OpenRC使用逻辑" class="headerlink" title="OpenRC使用逻辑"></a>OpenRC使用逻辑</h2><p>OpenRC在<code>/etc/init.d</code>维护每个service的控制脚本，可以通过<code>/etc/init.d/&lt;service&gt; &lt;start|stop|restart|zap&gt;</code>的方式控制服务开启、关闭、重启。也可以使用<code>rc-service &lt;service&gt; &lt;start|stop|restart|zap&gt;</code>进行控制。</p>
 <p>OpenRC中的不同的runlevel表示计算机启动到关机的不同阶段，由<code>/etc/runlevel</code>目录管理，常用的default阶段就是系统初始化后进入到多multi-user阶段的阶段。将service放置在runlevel对应的目录中，则表示这个service会在这个runlevel启动。</p>
 <p><code>rc-update</code>用于管理runlevel，命令格式为<code>rc-update &lt;add|delete&gt; &lt;service&gt; &lt;runlevel&gt;</code>，可以方便的将service移入移出runlevel。</p>
