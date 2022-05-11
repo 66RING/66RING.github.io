@@ -514,7 +514,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h3><ul>
+  <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>如何像c里面使用<code>*p</code>，然后<code>p++</code>这样的方式遍历呢？使用迭代器，迭代器相当于返回了一个指针，当然它更抽象功能更多。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator it = a.begin();</span><br><span class="line">it++;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *it;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> *p = a;</span><br><span class="line">p++;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *p ;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h3><ul>
 <li><code>&lt;algorithm&gt;</code>，头文件中</li>
 <li><code>sort(begin, end, compare)</code><ul>
 <li>传入表示开始结束的<strong>随机访问</strong>迭代器</li>
@@ -715,7 +721,7 @@ gcc -O[g|1|2] &lt;file&gt;优...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#函数"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sort"><span class="toc-text">sort</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Queue"><span class="toc-text">Queue</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#优先队列"><span class="toc-text">优先队列</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#迭代器"><span class="toc-text">迭代器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sort"><span class="toc-text">sort</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Queue"><span class="toc-text">Queue</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#优先队列"><span class="toc-text">优先队列</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -1097,7 +1103,7 @@ var loadCSS = function( href, before, media, attributes ){
       path = defaultPath || decodeURI(window.location.pathname);
     }
     var valine = new Valine();
-    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":null,"appKey":null,"meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"EKmusUsvxKTWym4LJnmkk1eU-gzGzoHsz","appKey":"sdWXsEnYQvIqRVoEPSMsLCr6","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
       el: '#valine_container',
       path: path,
       placeholder: pagePlaceholder,

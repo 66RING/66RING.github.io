@@ -467,27 +467,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
-      <a href="/2020/11/21/universe/web/ajax_intro/">
-        JQuery, fetch, axios
+      <a href="/2021/01/13/universe/linux/project_like/trace_flow/">
+        使用systemtap实现进程的跟踪
       </a>
     </h2>
   
   <div class='md'>
     
       
-        Ajax简介Ajax本质就是用来进行异步的请求提交，那是怎么个异步法？
+        使用systemtap实现进程的跟踪systemtap安装systemtap安装分为两个部分，一个是安装systemtap本身;另一个是安装对应的内核信息包(Kernel Information Packages)，否则systemtap将无法深入内核探测。
+以下以在centos中安装为例。
 
-同步
-跳转或新开一个页面
-
-
-异步
-页面局部变动，异步请求然后更新局部页面，而不更新整个页面
-
-
-
-早期进行异步请求是通过XMLHttpRequest(xhr)，但是这种方法代码非常长，冗余严重。后来JQuery出现$.ajax，对xhr进行封装，又有了后来的fetch和axios。
-JQuery12345678910...
+安装systemtap
+使用对应的包管理工具安装，如centos中yum install syst...
       
     
   </div>
@@ -495,12 +487,12 @@ JQuery12345678910...
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-11-21</time>
+        <time>2021-01-13</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/11/21/universe/web/ajax_intro/'>
+          <a class='readmore' href='/2021/01/13/universe/linux/project_like/trace_flow/'>
             Read More
           </a>
         </div>
@@ -522,21 +514,17 @@ JQuery12345678910...
   
     
     <h2 class="article-title" >
-      <a href="/2020/11/15/universe/c/how_cpp_overload/">
-        重载是如何实现的
+      <a href="/2020/12/07/universe/linux/project_like/insert_CASIO_into_linux_kernel/">
+        如何向linux内核插入新的调度器[todo]
       </a>
     </h2>
   
   <div class='md'>
     
       
-        
-overload可直译为重载，它是指我们可以定义一些名称相同的方法，通过定义不同的输入参数来区分这些方法，然后再调用时就会根据不同的参数样式，来选择合适的方法执行。
-–百度百科
-
-原理重载本质上就是编译器根据原函数名和参数类型对原函数名进行改编，以区分接受不同参数的同名函数。
-看下面一段cpp代码：
-1234567891011// a.cppvoid func(int a)&#123;&#...
+        如何向linux内核插入新的调度方法这里演示以下如下向linux内核中插入一个线程的调度器：CASIO(源码) 
+TODO rebuild 注意 现代版本的linux内核(4.18)中调度器的入口不再是./kernel/sched.c，而是在core.c，而调度类分离成rt.c，idle.c，fair.c，stop_task.c，deadline.c，对应5个调度器类
+linux进程调度机制...
       
     
   </div>
@@ -544,12 +532,12 @@ overload可直译为重载，它是指我们可以定义一些名称相同的方
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-11-15</time>
+        <time>2020-12-07</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/11/15/universe/c/how_cpp_overload/'>
+          <a class='readmore' href='/2020/12/07/universe/linux/project_like/insert_CASIO_into_linux_kernel/'>
             Read More
           </a>
         </div>
@@ -571,24 +559,18 @@ overload可直译为重载，它是指我们可以定义一些名称相同的方
   
     
     <h2 class="article-title" >
-      <a href="/2020/11/15/universe/linux/curl/">
-        curl基本使用
+      <a href="/2020/12/05/universe/qemu/open_risc_qemu/">
+        使用qemu启动基于open risc的虚拟机
       </a>
     </h2>
   
   <div class='md'>
     
       
-        等读完curl(如果有时间)，就改成curl all in one
-curl是一个http请求工具
+        使用qemu启动虚拟机安装qemu可能需要的依赖
+1autoconf automake autotools-dev curl libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev git
 
-curl [options...] &lt;url&gt;
-queryString
--s | --silent，不显示进度条
--o | --output，指定请求结果输出到的文件
--H | --header，设置请求头
--d | --data，设置请求携带的数据
--X | --request...
+下载q...
       
     
   </div>
@@ -596,12 +578,12 @@ queryString
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-11-15</time>
+        <time>2020-12-05</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/11/15/universe/linux/curl/'>
+          <a class='readmore' href='/2020/12/05/universe/qemu/open_risc_qemu/'>
             Read More
           </a>
         </div>
@@ -623,34 +605,18 @@ queryString
   
     
     <h2 class="article-title" >
-      <a href="/2020/11/15/universe/linux/cron/">
-        cron程序
+      <a href="/2020/12/05/universe/tech_tips/IO_multiplexing_intro/">
+        IO多路复用select、poll、epoll介绍
       </a>
     </h2>
   
   <div class='md'>
     
       
-        cron表达式cron程序有如下五个字段：
-12分  时  日  月  星期    [年]* * * * *  &lt;shell script&gt;
-
-语法如下
-
-*，表示每一
-* 1 * 3 *表示每年三月每天1点的每一分钟执行
-
-
-,，表示并列
-1,3表示1和3都执行
-
-
--，表示连续
-1-5表示1-5这个区间执行
-
-
-/，表示整除时执行
-*/2表示0 2 4...时执行
-n/2左边...
+        IO多路复用在高并发环境(如网络服务器)中同时处理多个请求的能力就显得尤为重要。很多人可能第一印象就会想到多线程，但是多线程需要进行很多的上下文切换，连接很多时上下文切换的代价就很高。因此采用单线程，但是单线程如何处理并发请求呢？
+得益于DMA，多数据到来时直接内存访问，不会丢失数据，因此可以有后序内容
+以写一个网络服务器为例。每个网络连接在都是以文件描述符(以下简称fd)的形式存在
+sel...
       
     
   </div>
@@ -658,12 +624,12 @@ n/2左边...
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-11-15</time>
+        <time>2020-12-05</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/11/15/universe/linux/cron/'>
+          <a class='readmore' href='/2020/12/05/universe/tech_tips/IO_multiplexing_intro/'>
             Read More
           </a>
         </div>
@@ -685,18 +651,20 @@ n/2左边...
   
     
     <h2 class="article-title" >
-      <a href="/2020/11/11/universe/tech_tips/a_basic_middleware/">
-        制作一个简易的中间件架构
+      <a href="/2020/12/05/universe/linux/FS/filesystem/">
+        linux文件系统
       </a>
     </h2>
   
   <div class='md'>
     
       
-        为何需要中间件我们不应该把业务逻辑和非业务逻辑揉在一起。非业务逻辑如打印日志、计时等。因为如果我们需要一个新的日志系统，而我们打印日志的逻辑杂揉在每个handler中，那我们就得修改每个handler，费时费力且不明智。
-中间件就是一种剥离非业务逻辑的方法。
-原理我们可以使用函数闭包来轻松实现剥离业务逻辑和非业务逻辑。
-假设我们的业务就是以各种姿势处理字符串然后打印。如处理成===str==...
+        文件系统原理为了高效组织、管理和使用磁盘上的数据，需要独立的文件系统。
+文件系统的组成通常磁盘上的数据是要与内存交互的(内存映射)，而内存一个页的大小是4KB，所以磁盘一般按照4KB进行划分。一个划分就称为一个block。
+一个文件本质上是一些字节的集合，这些字节就是文件的 user data，同时引出以下概念
+
+meta data，文件本身数据外的控制信息，如访问权限、大小、创建时间等
+可...
       
     
   </div>
@@ -704,12 +672,12 @@ n/2左边...
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-11-11</time>
+        <time>2020-12-05</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/11/11/universe/tech_tips/a_basic_middleware/'>
+          <a class='readmore' href='/2020/12/05/universe/linux/FS/filesystem/'>
             Read More
           </a>
         </div>
@@ -731,23 +699,17 @@ n/2左边...
   
     
     <h2 class="article-title" >
-      <a href="/2020/10/26/universe/c/cpp_stl/">
-        cpp常用stl
+      <a href="/2020/12/01/universe/web/https/">
+        What Is Https
       </a>
     </h2>
   
   <div class='md'>
     
       
-        函数sort
-&lt;algorithm&gt;，头文件中
-sort(begin, end, compare)
-传入表示开始结束的随机访问迭代器
-第三个参数compare可选，是一个具有两个参数的bool值函数，默认用&lt;比较，从小到大
-
-
-
-Queue优先队列priority_queue模板有三个参数，第一个参数是储存对象的类型，第二个参数是存储元素的底层容器，第三个参数是一个决定元素...
+        What is HttpsCryptography
+Symmetric encryptionThe classic style is: $abc \overset{+3}{\underset{-3}{\longleftrightarrow}} def$.+3 is PSK(pre shared key)
+But how to let the receiver know what the PS...
       
     
   </div>
@@ -755,12 +717,12 @@ Queue优先队列priority_queue模板有三个参数，第一个参数是储存�
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-10-26</time>
+        <time>2020-12-01</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/10/26/universe/c/cpp_stl/'>
+          <a class='readmore' href='/2020/12/01/universe/web/https/'>
             Read More
           </a>
         </div>
@@ -782,42 +744,20 @@ Queue优先队列priority_queue模板有三个参数，第一个参数是储存�
   
     
     <h2 class="article-title" >
-      <a href="/2020/10/20/Major/OS/Computer_System_A_Programmer's_Perspective/">
-        深入理解计算机系统脑图
+      <a href="/2020/11/29/universe/linux/project_like/customize_a_kernel/">
+        如何配置linux内核
       </a>
     </h2>
   
   <div class='md'>
     
       
-        PART1: 计算机系统漫游
-组成设备
+        如何配置linux内核linux内核提供许多自定义的选项
+因此你可以根据自己喜好定制的编译linux内核。这里以在centos8中编译centos8的内核为例。
+准备内核源码
+官方文档
 
-PART3: 程序的机器级表示
-一个可执行程序
-编译过程
-预处理
-编译
-汇编
-连接
-
-
-编译细节
-gcc -O[g|1|2] &lt;file&gt;优化等级
-编译器优化可能会调整代码次序，源代码会严重变形，导致并发时不满足顺序一致性内存模型
-
-
-
-
-数据格式
-字节，字，双字，四字
-数据类型的汇编代码表示
-b, w, l, q 
-
-
-
-
-操作数指示符...
+centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在https://vault.centos.org/下载对应的内核rpm包(内核源码版本一定要和系统内核版本一...
       
     
   </div>
@@ -825,12 +765,12 @@ b, w, l, q
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-10-20</time>
+        <time>2020-11-29</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/10/20/Major/OS/Computer_System_A_Programmer's_Perspective/'>
+          <a class='readmore' href='/2020/11/29/universe/linux/project_like/customize_a_kernel/'>
             Read More
           </a>
         </div>
@@ -852,19 +792,33 @@ b, w, l, q
   
     
     <h2 class="article-title" >
-      <a href="/2020/10/06/universe/lua/lua_stl/">
-        Lua标准库工具
+      <a href="/2020/11/23/universe/linux/iptables/">
+        iptables使用
       </a>
     </h2>
   
   <div class='md'>
     
       
-        base_G_G是lua中的一个全局变量，其中保存了lua语言中几乎所有的全局函数和变量
-如果全局变量(或函数)存在的话，可以使用_G[&quot;VAR&quot;]获取到全局变量。但不能获取到局部变量。可以通过_G[&quot;VAR&quot;]=local_var将局部变量转变为全局变量
-string
-string.gmatch(s, pattern)
-返回一个迭代器函数，每次调用这...
+        
+对网络上一些数据包通过表的形式进行限定或修改
+
+三种表
+Mangle
+一般在操作系统级别操作，这里讨论
+
+
+filter，过滤器
+对进出的数据包进行过滤
+
+
+nat，网络地址转换
+转换目的地址和目的端口，以及源地址源端口，做数据包转发
+如修改进入机器数据包的目的地址，使其转发到其他机器
+
+
+
+iptables以链的形式组织配置规则, iptables -t &lt;table&gt; -L...
       
     
   </div>
@@ -872,12 +826,12 @@ string.gmatch(s, pattern)
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-10-06</time>
+        <time>2020-11-23</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/10/06/universe/lua/lua_stl/'>
+          <a class='readmore' href='/2020/11/23/universe/linux/iptables/'>
             Read More
           </a>
         </div>
@@ -899,15 +853,16 @@ string.gmatch(s, pattern)
   
     
     <h2 class="article-title" >
-      <a href="/2020/10/05/universe/database/sql_base_usage/">
-        SQL基本语句
+      <a href="/2020/11/22/universe/operate/docekr_multi_container/">
+        docker多容器项目
       </a>
     </h2>
   
   <div class='md'>
     
       
-        建表123456CREATE TABLE `tbl_file`(    `id` INT(11) NOT NULL AUTO_INCREMENT,    PRIMARY KEY(`id`),    UNIQUE KEY `idx_user_file` (`user_name`, `file_sha1`),    KEY `idx_status` (`status`)) ENGINE=Inno...
+        docker容器交互docker会通过一块虚拟的docker网卡为容器分配ip地址，即这些容器将在一个网段中，可以直接通过ip进行访问进行交互。但这里存在一个问题，我们需要手动登录一台机器查看ip，然后再另一台机器中访问，这在实际开发中是不可行的。
+更方便的交互方式是使用--link &lt;name|id&gt;[:&lt;alias&gt;]，这样就可以通过,如curl &lt;alia...
       
     
   </div>
@@ -915,12 +870,12 @@ string.gmatch(s, pattern)
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-10-05</time>
+        <time>2020-11-22</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/10/05/universe/database/sql_base_usage/'>
+          <a class='readmore' href='/2020/11/22/universe/operate/docekr_multi_container/'>
             Read More
           </a>
         </div>
@@ -942,24 +897,22 @@ string.gmatch(s, pattern)
   
     
     <h2 class="article-title" >
-      <a href="/2020/10/03/universe/web/promise_async_and_wait/">
-        Promise, async和wait的简单记录
+      <a href="/2020/11/22/universe/operate/CI_CD_intro/">
+        CI/CD简介
       </a>
     </h2>
   
   <div class='md'>
     
       
-        为什么需要promise有时候需要向函数中传入回调函数(异步操作结束后执行)，这么一来可能就会有多重函数嵌套的情况。这样的问题很明显：
+        什么是CI/CDCI/CD：持续集成和持续交互。代码提交到代码仓库后自动触发一些自动化的流程。CI/CD的工具就是干这用的。
 
-耦合度高
-解耦要传函数指针
-安全考虑还需判断参数类型，可读性差
-如果传送匿名参数，可读性更差
+什么是DevOps
+DevOps是一种思想方法论，涵盖开发、测试、运维的整个过程。强调通过自动化的方法管理软件变更，软件集成
 
 
 
-Promise写法12345678910111213141516function callRing(success) &#123;    return ne...
+1234plan    --&gt; code    --&gt; build  --&gt; test         Dev  ^...
       
     
   </div>
@@ -967,12 +920,12 @@ Promise写法12345678910111213141516function callRing(success) &#123;    return 
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-10-03</time>
+        <time>2020-11-22</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/10/03/universe/web/promise_async_and_wait/'>
+          <a class='readmore' href='/2020/11/22/universe/operate/CI_CD_intro/'>
             Read More
           </a>
         </div>
@@ -999,7 +952,7 @@ Promise写法12345678910111213141516function callRing(success) &#123;    return 
           </a>
         
         <p class="current">
-          6 / 13
+          6 / 15
         </p>
         
           <a class="next" rel="next" href="/page/7/">
@@ -1106,7 +1059,7 @@ Promise写法12345678910111213141516function callRing(success) &#123;    return 
 
 
     <div class='content'>
-      <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/DDIA/" style="font-size: 14px; color: #999">DDIA</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/IPC/" style="font-size: 14px; color: #999">IPC</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/OS/" style="font-size: 14.91px; color: #939393">OS</a> <a href="/tags/PowerPC/" style="font-size: 14px; color: #999">PowerPC</a> <a href="/tags/QOM/" style="font-size: 14px; color: #999">QOM</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 14.91px; color: #939393">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 14.91px; color: #939393">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c/" style="font-size: 16.73px; color: #868686">c</a> <a href="/tags/c-c/" style="font-size: 18.55px; color: #7a7a7a">c/c++</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 16.73px; color: #868686">database</a> <a href="/tags/distributed/" style="font-size: 15.82px; color: #8d8d8d">distributed</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 15.82px; color: #8d8d8d">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 14.91px; color: #939393">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 14.91px; color: #939393">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/gc/" style="font-size: 14px; color: #999">gc</a> <a href="/tags/gcc/" style="font-size: 14.91px; color: #939393">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/gdbserver/" style="font-size: 14px; color: #999">gdbserver</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 19.45px; color: #747474">go</a> <a href="/tags/gui/" style="font-size: 14.91px; color: #939393">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/init/" style="font-size: 14px; color: #999">init</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 16.73px; color: #868686">java</a> <a href="/tags/javascript/" style="font-size: 15.82px; color: #8d8d8d">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.18px; color: #616161">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lua/" style="font-size: 14.91px; color: #939393">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 14.91px; color: #939393">mm</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.64px; color: #808080">network</a> <a href="/tags/nginx/" style="font-size: 14px; color: #999">nginx</a> <a href="/tags/oop/" style="font-size: 14px; color: #999">oop</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 20.36px; color: #6e6e6e">operate</a> <a href="/tags/os/" style="font-size: 16.73px; color: #868686">os</a> <a href="/tags/papers/" style="font-size: 14.91px; color: #939393">papers</a> <a href="/tags/pcie/" style="font-size: 14px; color: #999">pcie</a> <a href="/tags/pipe/" style="font-size: 14px; color: #999">pipe</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 16.73px; color: #868686">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 19.45px; color: #747474">python</a> <a href="/tags/qemu/" style="font-size: 23.09px; color: #5b5b5b">qemu</a> <a href="/tags/qom/" style="font-size: 14px; color: #999">qom</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/reading-note/" style="font-size: 14px; color: #999">reading note</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/semaphore/" style="font-size: 14px; color: #999">semaphore</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 15.82px; color: #8d8d8d">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tech/" style="font-size: 20.36px; color: #6e6e6e">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 15.82px; color: #8d8d8d">tips</a> <a href="/tags/tool/" style="font-size: 15.82px; color: #8d8d8d">tool</a> <a href="/tags/tools/" style="font-size: 21.27px; color: #686868">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/traps/" style="font-size: 14px; color: #999">traps</a> <a href="/tags/typescript/" style="font-size: 14.91px; color: #939393">typescript</a> <a href="/tags/vim/" style="font-size: 15.82px; color: #8d8d8d">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/virtio/" style="font-size: 14px; color: #999">virtio</a> <a href="/tags/web/" style="font-size: 17.64px; color: #808080">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 14.91px; color: #939393">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14.91px; color: #939393">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
+      <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/DDIA/" style="font-size: 14px; color: #999">DDIA</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/IPC/" style="font-size: 14px; color: #999">IPC</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/OS/" style="font-size: 14.91px; color: #939393">OS</a> <a href="/tags/PowerPC/" style="font-size: 14px; color: #999">PowerPC</a> <a href="/tags/QOM/" style="font-size: 14px; color: #999">QOM</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 14.91px; color: #939393">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 15.82px; color: #8d8d8d">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c/" style="font-size: 16.73px; color: #868686">c</a> <a href="/tags/c-c/" style="font-size: 18.55px; color: #7a7a7a">c/c++</a> <a href="/tags/cloud/" style="font-size: 14px; color: #999">cloud</a> <a href="/tags/coherence/" style="font-size: 14px; color: #999">coherence</a> <a href="/tags/compiler/" style="font-size: 14px; color: #999">compiler</a> <a href="/tags/cpp/" style="font-size: 14px; color: #999">cpp</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 17.64px; color: #808080">database</a> <a href="/tags/distributed/" style="font-size: 15.82px; color: #8d8d8d">distributed</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 15.82px; color: #8d8d8d">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 14.91px; color: #939393">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 14.91px; color: #939393">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/gc/" style="font-size: 14px; color: #999">gc</a> <a href="/tags/gcc/" style="font-size: 14.91px; color: #939393">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/gdbserver/" style="font-size: 14px; color: #999">gdbserver</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 19.45px; color: #747474">go</a> <a href="/tags/gui/" style="font-size: 14.91px; color: #939393">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/init/" style="font-size: 14px; color: #999">init</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 16.73px; color: #868686">java</a> <a href="/tags/javascript/" style="font-size: 15.82px; color: #8d8d8d">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.18px; color: #616161">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lua/" style="font-size: 14.91px; color: #939393">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 14.91px; color: #939393">mm</a> <a href="/tags/mmap/" style="font-size: 14px; color: #999">mmap</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.64px; color: #808080">network</a> <a href="/tags/nginx/" style="font-size: 14px; color: #999">nginx</a> <a href="/tags/oop/" style="font-size: 14px; color: #999">oop</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 20.36px; color: #6e6e6e">operate</a> <a href="/tags/os/" style="font-size: 20.36px; color: #6e6e6e">os</a> <a href="/tags/papers/" style="font-size: 17.64px; color: #808080">papers</a> <a href="/tags/pcie/" style="font-size: 14px; color: #999">pcie</a> <a href="/tags/pipe/" style="font-size: 14px; color: #999">pipe</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 16.73px; color: #868686">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 19.45px; color: #747474">python</a> <a href="/tags/qemu/" style="font-size: 23.09px; color: #5b5b5b">qemu</a> <a href="/tags/qom/" style="font-size: 14px; color: #999">qom</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/reading-note/" style="font-size: 14.91px; color: #939393">reading note</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/rust/" style="font-size: 14.91px; color: #939393">rust</a> <a href="/tags/semaphore/" style="font-size: 14px; color: #999">semaphore</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 15.82px; color: #8d8d8d">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 14px; color: #999">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tech/" style="font-size: 20.36px; color: #6e6e6e">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 15.82px; color: #8d8d8d">tips</a> <a href="/tags/tool/" style="font-size: 15.82px; color: #8d8d8d">tool</a> <a href="/tags/tools/" style="font-size: 21.27px; color: #686868">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/traps/" style="font-size: 14px; color: #999">traps</a> <a href="/tags/typescript/" style="font-size: 14.91px; color: #939393">typescript</a> <a href="/tags/underlaying/" style="font-size: 14px; color: #999">underlaying</a> <a href="/tags/vim/" style="font-size: 15.82px; color: #8d8d8d">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/virtio/" style="font-size: 14px; color: #999">virtio</a> <a href="/tags/virtualization/" style="font-size: 14px; color: #999">virtualization</a> <a href="/tags/web/" style="font-size: 17.64px; color: #808080">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 14.91px; color: #939393">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14.91px; color: #939393">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
     </div>
   </section>
 
@@ -1490,7 +1443,7 @@ var loadCSS = function( href, before, media, attributes ){
       path = defaultPath || decodeURI(window.location.pathname);
     }
     var valine = new Valine();
-    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":null,"appKey":null,"meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"EKmusUsvxKTWym4LJnmkk1eU-gzGzoHsz","appKey":"sdWXsEnYQvIqRVoEPSMsLCr6","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
       el: '#valine_container',
       path: path,
       placeholder: pagePlaceholder,

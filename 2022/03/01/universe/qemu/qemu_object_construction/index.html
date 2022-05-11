@@ -622,6 +622,15 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
+        <a class='prev' href='/2022/03/30/universe/tech_tips/zero_copy/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>零拷贝</p>
+          <p class='content'>Preface用户态拿到硬件数据再发送需要几步？
+
+首先硬件是归操作系统管理的，所以要想获取到硬件数据得先进入内核态
+其次内核态和用户态的地址空间是隔离的，所以需要内核态和用户态直接的数据拷贝
+...</p>
+        </a>
+      
       
         <a class='next' href='/2022/02/27/universe/tech_tips/how_to_move_a_proc_to_bg/'>
           <p class='title'>如何让已经运行的程序到后台运行<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
@@ -1111,7 +1120,7 @@ var loadCSS = function( href, before, media, attributes ){
       path = defaultPath || decodeURI(window.location.pathname);
     }
     var valine = new Valine();
-    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":null,"appKey":null,"meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"EKmusUsvxKTWym4LJnmkk1eU-gzGzoHsz","appKey":"sdWXsEnYQvIqRVoEPSMsLCr6","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
       el: '#valine_container',
       path: path,
       placeholder: pagePlaceholder,

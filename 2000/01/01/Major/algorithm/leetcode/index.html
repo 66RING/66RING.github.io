@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>leetcode算法笔记 - 66Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="algorithm">
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/the_dark_side_of_the_moon_tranp.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Mens et Manus</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>首页</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>档归</p>
+            </a>
+          
+            <a href="https://github.com/66RING"
+              
+              
+              id="https:githubcom66RING">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        leetcode算法笔记
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>请设置文章作者</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Jan 1, 2000</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="leetcode算法笔记" data-path="/2000/01/01/Major/algorithm/leetcode/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>TODO learn 贪心 剪枝 dp 的思想和trade off</p>
+<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><h2 id="贪心法"><a href="#贪心法" class="headerlink" title="贪心法"></a>贪心法</h2><h3 id="无重叠区间"><a href="#无重叠区间" class="headerlink" title="无重叠区间"></a>无重叠区间</h3><p><a href="https://leetcode-cn.com/problems/non-overlapping-intervals/" target="_blank" rel="noopener">leetcode</a></p>
+<p>思考会议预约，区间<code>(start, end)</code>分别表示会议开始时间和会议结束时间。<strong>贪心：会议越早结束，留给后面分配的时间越多</strong>。</p>
+<ul>
+<li>所以<strong>根据结束时间(右值)排序</strong></li>
+</ul>
+<p>如果情况如下, 那我不能删除R0，因为你R1占用更多时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(R0  )</span><br><span class="line">	(R1    )</span><br><span class="line"></span><br><span class="line">等价</span><br><span class="line"></span><br><span class="line">	(R1    )</span><br><span class="line">(R0  )</span><br></pre></td></tr></table></figure>
+
+<p>如果情况如下，那不重叠区间可以++，更新结束时间为R1的结束。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(R0  )</span><br><span class="line">		(R1    )</span><br></pre></td></tr></table></figure>
+
+<h3 id="452-用最少数量的箭引爆气球"><a href="#452-用最少数量的箭引爆气球" class="headerlink" title="452. 用最少数量的箭引爆气球"></a>452. 用最少数量的箭引爆气球</h3><p>TODO redo</p>
+<p><a href="https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p>算法同<a href="#无重叠区间">无重叠区间</a>。思考<strong>有多少交集</strong>，贪心：从首区间开始<strong>交集越多越好</strong>，没有交集的下一个区间称为新的首区间。</p>
+<h3 id="最长递增子序列"><a href="#最长递增子序列" class="headerlink" title="最长递增子序列"></a>最长递增子序列</h3><p><a href="https://leetcode-cn.com/problems/longest-increasing-subsequence/" target="_blank" rel="noopener">300.最长递增子序列</a></p>
+<p>TODO</p>
+<h3 id="406-根据身高重建队列"><a href="#406-根据身高重建队列" class="headerlink" title="406. 根据身高重建队列"></a>406. 根据身高重建队列</h3><p><a href="https://leetcode-cn.com/problems/queue-reconstruction-by-height/" target="_blank" rel="noopener">leetcode</a></p>
+<ul>
+<li>当按照身高排序时，然后插入。因为按身高从高到低排序，那么后插入的身高一定比前面出现的身高都低，那么它插入时就可以根据”它前有多少人”自由选择位置，因为都比它高。后面插入的也不会它，因为后面插入的一定比它矮</li>
+<li>如果存在相同身高，那么”前面比他高”的人数”小”的先选择插入，因为”前面比他高”的值大的一定插入在后面，不会应该前面插入的值</li>
+</ul>
+<h3 id="121-买卖股票的最佳时机"><a href="#121-买卖股票的最佳时机" class="headerlink" title="121. 买卖股票的最佳时机"></a>121. 买卖股票的最佳时机</h3><p>TODO 怎么说呢</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> minprice = INT_MAX;</span><br><span class="line">	<span class="keyword">int</span> size = prices.size();</span><br><span class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;size; i++) &#123;</span><br><span class="line">		res = max(res, prices[i] - minprice);</span><br><span class="line">		minprice = min(prices[i], minprice);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="122-买卖股票的最佳时机-II"><a href="#122-买卖股票的最佳时机-II" class="headerlink" title="122. 买卖股票的最佳时机 II"></a>122. 买卖股票的最佳时机 II</h3><p>贪心：<strong>能涨一点算一点</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int maxProfit(vector&lt;int&gt;&amp; prices) &#123;   </span><br><span class="line">	int ans &#x3D; 0;</span><br><span class="line">	int n &#x3D; prices.size();</span><br><span class="line">	for (int i &#x3D; 1; i &lt; n; ++i) &#123;</span><br><span class="line">		ans +&#x3D; max(0, prices[i] - prices[i - 1]);</span><br><span class="line">	&#125;</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><h3 id="69-x-的平方根"><a href="#69-x-的平方根" class="headerlink" title="69. x 的平方根"></a>69. x 的平方根</h3><p><a href="https://leetcode-cn.com/problems/sqrtx/description/" target="_blank" rel="noopener">leetcode</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> l = <span class="number">0</span>, r = x, ans = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">while</span> (l &lt;= r) &#123;</span><br><span class="line">		<span class="keyword">int</span> mid = l + (r - l) / <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span> ((<span class="keyword">long</span> <span class="keyword">long</span>)mid * mid &lt;= x) &#123;</span><br><span class="line">			ans = mid;</span><br><span class="line">			l = mid + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			r = mid - <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="744-寻找比目标字母大的最小字母"><a href="#744-寻找比目标字母大的最小字母" class="headerlink" title="744. 寻找比目标字母大的最小字母"></a>744. 寻找比目标字母大的最小字母</h3><p><a href="https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p>TODO ??</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">nextGreatestLetter</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; letters, <span class="keyword">char</span> target)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> l=<span class="number">0</span>, h = letters.size();</span><br><span class="line">	<span class="keyword">int</span> mid;</span><br><span class="line">	<span class="keyword">int</span> size = letters.size();</span><br><span class="line">	<span class="keyword">while</span>(l &lt; h) &#123;</span><br><span class="line">		mid = (l+h)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(letters[mid] &gt; target) &#123;</span><br><span class="line">			h = mid;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (letters[mid] &lt;= target) &#123;</span><br><span class="line">			l = mid+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> letters[l % size];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="540-有序数组中的单一元素"><a href="#540-有序数组中的单一元素" class="headerlink" title="540. 有序数组中的单一元素"></a>540. 有序数组中的单一元素</h3><p><a href="https://leetcode-cn.com/problems/single-element-in-a-sorted-array/description/" target="_blank" rel="noopener">leetcode</a></p>
+<ul>
+<li><strong>数组长度必是奇数</strong></li>
+<li>如果偶数下标等于偶数下标+1处的值，光棍在右边。否则在左边，移动偶数下标位</li>
+<li>如何结束，如何状态转移??</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">singleNonDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> l=<span class="number">0</span>, h = nums.size()<span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> mid;</span><br><span class="line">	<span class="keyword">while</span>(l &lt; h) &#123;</span><br><span class="line">		mid = (l+h)/<span class="number">2</span>;</span><br><span class="line">		mid -= mid&amp;<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(nums[mid] != nums[mid+<span class="number">1</span>]) &#123;</span><br><span class="line">			h = mid;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			l = mid+<span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> nums[l];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="153-寻找旋转排序数组中的最小值"><a href="#153-寻找旋转排序数组中的最小值" class="headerlink" title="153. 寻找旋转排序数组中的最小值"></a>153. 寻找旋转排序数组中的最小值</h3><p><a href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/" target="_blank" rel="noopener">leetcode</a></p>
+<h3 id="34-在排序数组中查找元素的第一个和最后一个位置"><a href="#34-在排序数组中查找元素的第一个和最后一个位置" class="headerlink" title="34. 在排序数组中查找元素的第一个和最后一个位置"></a>34. 在排序数组中查找元素的第一个和最后一个位置</h3><p><a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/" target="_blank" rel="noopener">leetcode</a></p>
+<p><strong>COOL</strong></p>
+<ul>
+<li>根据结束位置和开始位置判断转移, e.g.<ul>
+<li><code>while(l &lt; r)</code>结束时必有<code>l == r</code></li>
+<li><code>nums[mid] &lt; target</code>中间位置和中间位置左边一定不是开始位置，<code>l = mid + 1</code></li>
+<li><code>nums[mid] == target</code>中间位置左边一定不是结束位置，<code>l = mid</code></li>
+<li>分析三个分支不丢人(<code>&gt; &lt; ==</code>)，更容易分析，然后再合并优化</li>
+<li>因为存在<code>l=mid</code>，求结束位置的<strong>求mid要上取整</strong>: <code>mid = (r+l+1)/2</code></li>
+<li>可以额外判断越界</li>
+</ul>
+</li>
+</ul>
+<h2 id="分治"><a href="#分治" class="headerlink" title="分治"></a>分治</h2><h3 id="241-为运算表达式设计优先级"><a href="#241-为运算表达式设计优先级" class="headerlink" title="241. 为运算表达式设计优先级"></a>241. 为运算表达式设计优先级</h3><p><a href="https://leetcode-cn.com/problems/different-ways-to-add-parentheses/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p>TODO redo <strong>COOL</strong></p>
+<h3 id="95-不同的二叉搜索树-II"><a href="#95-不同的二叉搜索树-II" class="headerlink" title="95. 不同的二叉搜索树 II"></a>95. 不同的二叉搜索树 II</h3><p><a href="https://leetcode-cn.com/problems/unique-binary-search-trees-ii/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p>TODO redo <strong>COOL</strong></p>
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><h3 id="无重叠区间-1"><a href="#无重叠区间-1" class="headerlink" title="无重叠区间"></a>无重叠区间</h3><p><a href="https://leetcode-cn.com/problems/non-overlapping-intervals/" target="_blank" rel="noopener">leetcode</a></p>
+<p>TODO</p>
+<h3 id="最长递增子序列-1"><a href="#最长递增子序列-1" class="headerlink" title="最长递增子序列"></a>最长递增子序列</h3><p><a href="https://leetcode-cn.com/problems/longest-increasing-subsequence/" target="_blank" rel="noopener">300.最长递增子序列</a></p>
+<p><code>dp[i]</code>表示<code>[:i]</code>的最长递增子序列。如果<code>nums[j] &gt; nums[i]</code>，i为<code>[0,j)</code>说明<code>dp[j]</code>至少可以是<code>dp[i]+1</code>。</p>
+<ul>
+<li><code>for i in 0..j; dp[j] = max(dp[j], dp[i]+1)</code><ul>
+<li>当j前的nums[i]比nums[j]小时，dp[j]可能增加</li>
+</ul>
+</li>
+</ul>
+<h3 id="70-爬楼梯"><a href="#70-爬楼梯" class="headerlink" title="70. 爬楼梯"></a>70. 爬楼梯</h3><p><a href="https://leetcode-cn.com/problems/climbing-stairs/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p>TODO redo</p>
+<h3 id="198-打家劫舍"><a href="#198-打家劫舍" class="headerlink" title="198. 打家劫舍"></a>198. 打家劫舍</h3><p>TODO redo</p>
+<p><a href="https://leetcode-cn.com/problems/house-robber/description/" target="_blank" rel="noopener">leetcode</a></p>
+<h3 id="213-打家劫舍-II"><a href="#213-打家劫舍-II" class="headerlink" title="213. 打家劫舍 II"></a>213. 打家劫舍 II</h3><p>TODO redo</p>
+<p><a href="https://leetcode-cn.com/problems/house-robber-ii/description/" target="_blank" rel="noopener">leetcode</a></p>
+<h3 id="64-最小路径和"><a href="#64-最小路径和" class="headerlink" title="64. 最小路径和"></a>64. 最小路径和</h3><p>求左上到右下的最短路径</p>
+<p><a href="https://leetcode-cn.com/problems/minimum-path-sum/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p>从终点到起点dp。e.g.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 2 3</span><br><span class="line">4 5 6</span><br><span class="line">按6-&gt;1是顺序dp</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>因为只可以向右或向下走，思路就是保证dp的时候下方和右方都已知最小。</li>
+<li>最后dp可以优化成一维数组</li>
+<li>tips: 先把边缘初始化了，剩下的遍历方便点</li>
+</ul>
+<h3 id="62-不同路径"><a href="#62-不同路径" class="headerlink" title="62. 不同路径"></a>62. 不同路径</h3><p>左上到右下的不同路径数，只能向右和向下走</p>
+<p><a href="https://leetcode-cn.com/problems/unique-paths/description/" target="_blank" rel="noopener">leetcode</a></p>
+<ul>
+<li>类似64. 最小路径和</li>
+<li>tips: 先把边缘初始化了，剩下的遍历方便点</li>
+</ul>
+<h3 id="303-区域和检索-数组不可变"><a href="#303-区域和检索-数组不可变" class="headerlink" title="303. 区域和检索 - 数组不可变"></a>303. 区域和检索 - 数组不可变</h3><p><a href="https://leetcode-cn.com/problems/range-sum-query-immutable/description/" target="_blank" rel="noopener">leetcode</a></p>
+<ul>
+<li>前缀和相减</li>
+<li>tips因为是左闭右闭的，可以后移1个，申请<code>n+1</code>个单元</li>
+</ul>
+<h3 id="413-等差数列划分"><a href="#413-等差数列划分" class="headerlink" title="413. 等差数列划分"></a>413. 等差数列划分</h3><p><a href="https://leetcode-cn.com/problems/arithmetic-slices/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p>TODO redo</p>
+<h3 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h3><p><a href="https://www.acwing.com/problem/content/2/" target="_blank" rel="noopener">acwing</a></p>
+<h3 id="322-零钱兑换"><a href="#322-零钱兑换" class="headerlink" title="322. 零钱兑换"></a>322. 零钱兑换</h3><p><a href="https://leetcode-cn.com/problems/coin-change/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p><strong>COOL</strong> TODO redo</p>
+<ul>
+<li>dp</li>
+</ul>
+<p><code>dp[i]</code>表示能够凑够i所需的最少硬币数，枚举硬币类型<code>coins[j]</code>，如果用了<code>coins[j]</code>面值的硬币，那么这种情况的硬币数应该为<code>dp[i-coins[j]] + 1</code></p>
+<h3 id="518-零钱兑换-II"><a href="#518-零钱兑换-II" class="headerlink" title="518. 零钱兑换 II"></a>518. 零钱兑换 II</h3><p><a href="https://leetcode-cn.com/problems/coin-change-2/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p>求能凑出amount的组合数</p>
+<h3 id="more-dp"><a href="#more-dp" class="headerlink" title="more dp"></a>more dp</h3><p><a href="https://github.com/CyC2018/CS-Notes/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3%20-%20%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.md#1-%E7%88%AC%E6%A5%BC%E6%A2%AF" target="_blank" rel="noopener">https://github.com/CyC2018/CS-Notes/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3%20-%20%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.md#1-%E7%88%AC%E6%A5%BC%E6%A2%AF</a></p>
+<h3 id="dp思想"><a href="#dp思想" class="headerlink" title="dp思想"></a>dp思想</h3><ol>
+<li>子问题最优解</li>
+</ol>
+<h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><ul>
+<li>dfs, 递归</li>
+<li>bfs, queue</li>
+</ul>
+<h3 id="1091-二进制矩阵中的最短路径"><a href="#1091-二进制矩阵中的最短路径" class="headerlink" title="1091. 二进制矩阵中的最短路径"></a>1091. 二进制矩阵中的最短路径</h3><p><a href="https://leetcode-cn.com/problems/shortest-path-in-binary-matrix/" target="_blank" rel="noopener">leetcode</a></p>
+<p>DFS vs BFS</p>
+<ul>
+<li>单可能 -&gt; DFS, 因为多可能时大量回溯</li>
+<li>多可能 -&gt; BFS</li>
+</ul>
+<p>相当于用BFS从起点不断外扩的过程，都把queue走完(边界外扩)。外层循环的次数就是最短路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">e.g</span><br><span class="line"></span><br><span class="line">0 1 x x</span><br><span class="line">1 1 x x</span><br><span class="line">x x x x</span><br><span class="line">x x x x</span><br><span class="line"></span><br><span class="line">0 1 2 x</span><br><span class="line">1 1 2 x</span><br><span class="line">2 2 2 x</span><br><span class="line">x x x x</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意是可以斜着走的</strong></p>
+<h3 id="279-完全平方数"><a href="#279-完全平方数" class="headerlink" title="279. 完全平方数"></a>279. 完全平方数</h3><p><a href="https://leetcode-cn.com/problems/perfect-squares/description/" target="_blank" rel="noopener">leetcode</a></p>
+<blockquote>
+<p>给你一个整数 n ，返回 和为 n 的完全平方数的最少数量 。</p>
+</blockquote>
+<p>TODO redo</p>
+<ul>
+<li>dp<ul>
+<li><code>dp[i]</code>表示组成i使用的完全数的最少数量</li>
+<li>局部最优到整体最优：从小到大算，<code>dp[i-j*j]</code>最少已知了，那用上<code>j*j</code>这个数的话数量就是<code>dp[i-j*j]+1</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="695-岛屿的最大面积"><a href="#695-岛屿的最大面积" class="headerlink" title="695. 岛屿的最大面积"></a>695. 岛屿的最大面积</h3><p><a href="https://leetcode-cn.com/problems/max-area-of-island/description/" target="_blank" rel="noopener">leetcode</a></p>
+<ul>
+<li>bfs/dfs</li>
+</ul>
+<h3 id="200-岛屿数量"><a href="#200-岛屿数量" class="headerlink" title="200. 岛屿数量"></a>200. 岛屿数量</h3><p><a href="https://leetcode-cn.com/problems/number-of-islands/" target="_blank" rel="noopener">leetcode</a></p>
+<ul>
+<li>同上dfs/bfs<ul>
+<li>dfs, 递归</li>
+<li>bfs, queue</li>
+</ul>
+</li>
+<li>可以复用grid做visited</li>
+</ul>
+<h3 id="130-被围绕的区域"><a href="#130-被围绕的区域" class="headerlink" title="130. 被围绕的区域"></a>130. 被围绕的区域</h3><p><a href="https://leetcode-cn.com/problems/surrounded-regions/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p><strong>COOL</strong>：不被包围则必定直接或间接地与边界相连。从边界<code>O</code>点dfs/bfs，标记与直接间接相连的点。再整个遍历填充。</p>
+<p>遍历四周的tips</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[i, 0]</span><br><span class="line">[i, m-1]</span><br><span class="line">|	|</span><br><span class="line">V	V</span><br><span class="line"></span><br><span class="line">[0,   i]</span><br><span class="line">[m-1, i]</span><br><span class="line">-&gt;</span><br><span class="line"></span><br><span class="line">-&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h3><ul>
+<li>dfs</li>
+<li>常用于解决<strong>排列组合</strong>问题</li>
+<li>dfs不立即返回，注意元素的标记问题</li>
+</ul>
+<h3 id="17-电话号码的字母组合"><a href="#17-电话号码的字母组合" class="headerlink" title="17. 电话号码的字母组合"></a>17. 电话号码的字母组合</h3><p><a href="https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/description/" target="_blank" rel="noopener">leetcode</a></p>
+<p>dfs，尝试一个字母后回溯，再试下一个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for(char x: phoneMap.at(digits[index])) &#123;</span><br><span class="line">	combination.push_back(x);</span><br><span class="line">	backtrack(combinations, phoneMap, digits, index+1, combination);</span><br><span class="line">	combination.pop_back();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="93-复原-IP-地址"><a href="#93-复原-IP-地址" class="headerlink" title="93. 复原 IP 地址"></a>93. 复原 IP 地址</h3><p><a href="https://leetcode-cn.com/problems/restore-ip-addresses/description/" target="_blank" rel="noopener">leetcode</a></p>
+<ul>
+<li><code>str.substr(start, len)</code>截取字串</li>
+<li>string可以用<code>+=</code>，<code>substr()</code>和<code>pop_back()</code>增删</li>
+<li>模板<code>(combination, &amp;combinations)</code>, combination表示当前状态，combinations用于接收完成的combinations，递归，然后回溯<ul>
+<li>combination用引用和不用引用根据实际情况定</li>
+</ul>
+</li>
+</ul>
+<h3 id="257-二叉树的所有路径"><a href="#257-二叉树的所有路径" class="headerlink" title="257. 二叉树的所有路径"></a>257. 二叉树的所有路径</h3><p><a href="https://leetcode-cn.com/problems/binary-tree-paths/description/" target="_blank" rel="noopener">leetcode</a></p>
+<ul>
+<li>combination不用引用，这样函数返回时就不用考虑回溯问题</li>
+</ul>
+<h3 id="37-解数独"><a href="#37-解数独" class="headerlink" title="37. 解数独"></a>37. 解数独</h3><p>TODO hard</p>
+<p><a href="https://leetcode-cn.com/problems/sudoku-solver/description/" target="_blank" rel="noopener">leetcode</a></p>
+<h3 id="15-N-皇后"><a href="#15-N-皇后" class="headerlink" title="15. N 皇后"></a>15. N 皇后</h3><p>TODO hard</p>
+<p><a href="https://leetcode-cn.com/problems/n-queens/description/" target="_blank" rel="noopener">leetcode</a></p>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://yoursite.com/2000/01/01/Major/algorithm/leetcode/>http://yoursite.com/2000/01/01/Major/algorithm/leetcode/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/algorithm/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>algorithm</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2000/01/01/Major/OS/embeded_OS/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>嵌入式系统课程笔记</p>
+          <p class='content'>自主可控嵌入式系统课程提纲第一课
+嵌入式系统的定义；
+应应用为中心、计算机技术为基础，软硬件可裁剪，适应应用系统对功能、可靠性、成本、体积、功耗等严格要求的专用计算机系统
+
+
+嵌入式系统和通用计...</p>
+        </a>
+      
+      
+        <a class='next' href='/2000/01/01/universe/rust/learn_rust_in_c/'>
+          <p class='title'>用C的方式理解rust<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Preface作为一个母语是c程序员，初见rust时很多改变是比较模糊的，c中的指针等在rust中似乎变得更加抽象难以理解了。所以打算用类比的方式，让c程序员更好的理解rust。
+mut和&am...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#贪心法"><span class="toc-text">贪心法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无重叠区间"><span class="toc-text">无重叠区间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#452-用最少数量的箭引爆气球"><span class="toc-text">452. 用最少数量的箭引爆气球</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长递增子序列"><span class="toc-text">最长递增子序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#406-根据身高重建队列"><span class="toc-text">406. 根据身高重建队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#121-买卖股票的最佳时机"><span class="toc-text">121. 买卖股票的最佳时机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#122-买卖股票的最佳时机-II"><span class="toc-text">122. 买卖股票的最佳时机 II</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二分查找"><span class="toc-text">二分查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#69-x-的平方根"><span class="toc-text">69. x 的平方根</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#744-寻找比目标字母大的最小字母"><span class="toc-text">744. 寻找比目标字母大的最小字母</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#540-有序数组中的单一元素"><span class="toc-text">540. 有序数组中的单一元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#153-寻找旋转排序数组中的最小值"><span class="toc-text">153. 寻找旋转排序数组中的最小值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#34-在排序数组中查找元素的第一个和最后一个位置"><span class="toc-text">34. 在排序数组中查找元素的第一个和最后一个位置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分治"><span class="toc-text">分治</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#241-为运算表达式设计优先级"><span class="toc-text">241. 为运算表达式设计优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#95-不同的二叉搜索树-II"><span class="toc-text">95. 不同的二叉搜索树 II</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态规划"><span class="toc-text">动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无重叠区间-1"><span class="toc-text">无重叠区间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长递增子序列-1"><span class="toc-text">最长递增子序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#70-爬楼梯"><span class="toc-text">70. 爬楼梯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#198-打家劫舍"><span class="toc-text">198. 打家劫舍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#213-打家劫舍-II"><span class="toc-text">213. 打家劫舍 II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#64-最小路径和"><span class="toc-text">64. 最小路径和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#62-不同路径"><span class="toc-text">62. 不同路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#303-区域和检索-数组不可变"><span class="toc-text">303. 区域和检索 - 数组不可变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#413-等差数列划分"><span class="toc-text">413. 等差数列划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背包问题"><span class="toc-text">背包问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#322-零钱兑换"><span class="toc-text">322. 零钱兑换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#518-零钱兑换-II"><span class="toc-text">518. 零钱兑换 II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more-dp"><span class="toc-text">more dp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dp思想"><span class="toc-text">dp思想</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索"><span class="toc-text">搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1091-二进制矩阵中的最短路径"><span class="toc-text">1091. 二进制矩阵中的最短路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#279-完全平方数"><span class="toc-text">279. 完全平方数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#695-岛屿的最大面积"><span class="toc-text">695. 岛屿的最大面积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#200-岛屿数量"><span class="toc-text">200. 岛屿数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#130-被围绕的区域"><span class="toc-text">130. 被围绕的区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯"><span class="toc-text">回溯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-电话号码的字母组合"><span class="toc-text">17. 电话号码的字母组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#93-复原-IP-地址"><span class="toc-text">93. 复原 IP 地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#257-二叉树的所有路径"><span class="toc-text">257. 二叉树的所有路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#37-解数独"><span class="toc-text">37. 解数独</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-N-皇后"><span class="toc-text">15. N 皇后</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="leetcode算法笔记";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"EKmusUsvxKTWym4LJnmkk1eU-gzGzoHsz","appKey":"sdWXsEnYQvIqRVoEPSMsLCr6","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>
