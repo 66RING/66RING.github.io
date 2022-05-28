@@ -520,7 +520,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>所谓no-scalable lock就是，并发程序为了实现一致性，需要使用锁对共享资源进行互斥访问。如果使用的是一个no-scalable的锁，那么就会观察到随着cpu核心数量的上升，并发程序的性能并不能得到有效的提高，甚至会有所下降。</p>
 <p>要理解这个问题的根源需要我们深入了解CPU内部缓存一致性的细节。这就是为什么高性能计算需要对硬件熟悉，而不仅仅是进程数的堆砌。</p>
 <p>本文将会介绍no scalable产生的原因，并介绍一种Mscalable的锁MCS LOCK(MCS是三个发明者的首字母)</p>
-<h1 id="no-scalable-lock"><a href="#no-scalable-lock" class="headerlink" title="no scalable lock"></a>no scalable lock</h1><p>如何判断一个锁是不是no scalable的锁，其中一个简单是办法是：如果这个锁是通过访问同一资源来实现互斥的，或者说<strong>是single cache line</strong>，那么该锁就是no scalable的。这个结论的原理是CPU的<a href="https://raw.githubusercontent.com/66RING/Notes/master/universe/os/MSI_coherence_protocol.md" target="_blank" rel="noopener">缓存一致性协议</a>。</p>
+<h1 id="no-scalable-lock"><a href="#no-scalable-lock" class="headerlink" title="no scalable lock"></a>no scalable lock</h1><p>如何判断一个锁是不是no scalable的锁，其中一个简单是办法是：如果这个锁是通过访问同一资源来实现互斥的，或者说<strong>是single cache line</strong>，那么该锁就是no scalable的。这个结论的原理是CPU的<a href="https://github.com/66RING/Notes/tree/master/universe/os/MSI_coherence_protocol.md" target="_blank" rel="noopener">缓存一致性协议</a>。</p>
 <p>缓存一致性协议带来的问题简单来说就是：CPU间为了达成缓存一致性，需要引入额外的”通信复杂度”，从而每条指令的执行周期(cycle)就增加了。并且随着CPU(core)的增加，这个通信的开销也会增加，那么并发程序带来的优势就没有了。</p>
 <h2 id="可扩展性断崖"><a href="#可扩展性断崖" class="headerlink" title="可扩展性断崖"></a>可扩展性断崖</h2><p>对应这个问题的一个直观理解是：核越多，需要的交互越多，对single cache line的竞争就越激烈</p>
 <p>下面通过阿姆达尔定律(Amdahl’s law)分析这点</p>

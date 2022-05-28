@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>MIT6.824 lab 3A 记录与bug总结 - 66Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="distributed,MIT">
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/the_dark_side_of_the_moon_tranp.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Mens et Manus</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>首页</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>档归</p>
+            </a>
+          
+            <a href="https://github.com/66RING"
+              
+              
+              id="https:githubcom66RING">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        MIT6.824 lab 3A 记录与bug总结
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>请设置文章作者</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：May 13, 2022</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="MIT6.824 lab 3A 记录与bug总结" data-path="/2022/05/13/universe/cources_notes/mit6.824/mit_6.824_lab3a/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="MIT6-824-lab-3A-记录与bug总结"><a href="#MIT6-824-lab-3A-记录与bug总结" class="headerlink" title="MIT6.824 lab 3A 记录与bug总结"></a>MIT6.824 lab 3A 记录与bug总结</h1><p>debug真的很搞心态，不过对理解很有帮助(我觉得，当然看别经验贴可能效率会更高)。anyway如果一次都没跌倒过，我也许永远都注意不到这些bug呢</p>
+<p>所以这里 <strong>严重剧透警告</strong>， <strong>严重剧透警告</strong> ， <strong>严重剧透警告</strong> </p>
+<p>欢迎批评指正，欢迎讨论补充，欢迎分享自己遇到的corner case</p>
+<h2 id="3A"><a href="#3A" class="headerlink" title="3A"></a>3A</h2><h3 id="fuck-the-lab"><a href="#fuck-the-lab" class="headerlink" title="fuck the lab"></a>fuck the lab</h3><ol>
+<li>出问题时不要害怕再次重头阅读你写的代码(log看半天看不出来)</li>
+<li>理解测试很有必要<ul>
+<li><code>p1, p2 := make_partition()</code>制造网络分区，然后把当前leader放到minority(p2)中</li>
+</ul>
+</li>
+<li>乱序无处不在</li>
+</ol>
+<h3 id="bug记录"><a href="#bug记录" class="headerlink" title="bug记录"></a>bug记录</h3><ol>
+<li>小心一切脱离了raft mock序列的问题</li>
+<li>小心一切二次加工raft mock序列的问题</li>
+<li>TODO: summary</li>
+</ol>
+<h4 id="过滤重复请求"><a href="#过滤重复请求" class="headerlink" title="过滤重复请求"></a>过滤重复请求</h4><blockquote>
+<ol>
+<li>在kv的applyer中过滤</li>
+<li>优化：在接收client请求时可以可以过滤，用于加速<strong>但是比较tricky</strong></li>
+</ol>
+</blockquote>
+<p>首先说明一下我的实现的大概流程：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CommandHandler</span><span class="params">()</span></span> &#123;</span><br><span class="line">	kv.rf.Start()</span><br><span class="line">	&lt;- kv.watchCh</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span> <span class="title">applyer</span><span class="params">()</span></span> &#123;</span><br><span class="line">	msg &lt;- kv.rf.applyCh</span><br><span class="line">	execute(msg)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>CommandHandler</code>负责接收客户端的请求，然后通过<code>Start()</code>交给raft</li>
+<li><code>applyer</code>接收到raft层的commit后应用到状态机</li>
+</ul>
+<p>考虑client重复请求的问题，以下是我的经历：</p>
+<ol>
+<li>仅在<code>CommandHandler</code>中，<code>Start()</code>调用前，根据client携带的seqNum判断重复请求，然后过滤<ul>
+<li>为什么我要先在<code>CommandHandler</code>中判？因为我觉得，如果在<code>applyer</code>中判，那么raft日志中就会有很多重复的日志，因为没经过过滤直接<code>Start()</code></li>
+</ul>
+</li>
+<li>仅在<code>applyer</code>执行(<code>execute</code>)前判断<ul>
+<li>为什么这时我把<code>CommandHandler</code>中的判断删了？因为我觉得两头判引入复杂性</li>
+</ul>
+</li>
+<li>在<code>CommandHandler</code>和<code>applyer</code>中都判断重复<ul>
+<li>减少raft日志压缩的频率，并过滤重复请求</li>
+</ul>
+</li>
+</ol>
+<p>以下是结论：</p>
+<ol>
+<li>首先第一个方案是不对的，考虑等待commit超时的情况<ul>
+<li>首先为了防止网络失败的情况，等待commit失败了就应该将记录的”lastApplied”信息回滚</li>
+<li>这个回滚就出现大问题了，<strong>因为command可能已经在log里了，只是还没执行到</strong> ，这样也回滚后相同的命令将可以再次进入raft log导致重复请求</li>
+</ul>
+</li>
+<li>第二个方案呢就会在raft log中记录大量重复情况，在apply时才过滤<ul>
+<li>问题就raft log大量重复，触发日志压缩频率高，</li>
+</ul>
+</li>
+<li>在<code>CommandHandler</code>和<code>applyer</code>中都判断重复<ul>
+<li><code>CommandHandler</code>中的过滤减少raft log中的重复</li>
+<li><code>applyer</code>中个过滤方式重复应用到状态机</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>论文中类似”滑动窗口”的解决方案</p>
+</blockquote>
+<ul>
+<li>为什么必须使用滑动窗口? 主要是考虑一个client可以同时发送多个请求的情况<ul>
+<li>首先mit6.824中是不用担心的，因为已经说明一个client一次只会发送一个请求</li>
+<li>发送多个请求时需要考虑乱序和rpc fail，如果不把历史回复缓存(滑动窗口)，那么在rpc fail时和乱序时，seqNum递增，低seqNum就会被高seqNum覆盖，从而导致低seqNum的请求永远得不到执行</li>
+</ul>
+</li>
+</ul>
+<h4 id="正确使用监听用的channel"><a href="#正确使用监听用的channel" class="headerlink" title="正确使用监听用的channel"></a>正确使用监听用的channel</h4><blockquote>
+<p>使用map封装chan，让写者可以监听chan的关闭</p>
+</blockquote>
+<p>kvserver层需要一种机制来监听raft层的apply事件，然后应用到kv状态机。ok基于这个目的很容易想到在go中可以使用channel来方便的实现。不过这可能存在一个问题：<strong>写者如何判断chan是否关闭</strong>。</p>
+<p>一般来说规定chan写者是负责关闭的，但是因为我们的kvserver是要超时重试的，所以在channel的另一端会超时然后关闭channel，这就导致已关闭的channel写的问题。</p>
+<p>所以可以使用一个<code>map</code>来封装chan，关闭chan的时候从map删除，写时判断map中是否存在。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bug</span></span><br><span class="line">watchCh[idx] &lt;- res</span><br><span class="line"></span><br><span class="line"><span class="comment">// fix</span></span><br><span class="line"><span class="keyword">if</span> ch, ok := watchCh[idx]; ok &#123;</span><br><span class="line">	ch &lt;- res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="非线性一致性bug-用log的Index做索引存在的问题"><a href="#非线性一致性bug-用log的Index做索引存在的问题" class="headerlink" title="非线性一致性bug: 用log的Index做索引存在的问题"></a>非线性一致性bug: 用log的Index做索引存在的问题</h4><blockquote>
+<p>怎么索引watchCh: 使用uuid</p>
+</blockquote>
+<p>我的bug就出在我用了<code>Start()</code>返回的index做索引：<code>index, _ , _ := kv.rv.Start()</code>。这会出现什么问题？因index在节点间是可能出现冲突的，最终会和leader一致。所以设想两个leader, <code>L1</code>, <code>L2</code>，我们的节点<code>cur</code>发给<code>L1</code>，但是发生了网络分区<code>L1</code>其实已经不是leader了。而如果此时<code>L2</code>的index和<code>L1</code>的一致，最后<code>L1</code>一定会被覆盖，并且<strong>错误的以为该index是客户端等待index</strong>从而导致不一致的情况发生。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; (1)</span><br><span class="line">&#x2F;&#x2F; 开始 1是leader</span><br><span class="line">1,2,3,4,5: log1 | log2 |</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; (2)</span><br><span class="line">&#x2F;&#x2F; 分区 1不知道自己已经不是leader了</span><br><span class="line">1,5	 : log1 | log2 |</span><br><span class="line">2,3,4: log1 | log2 |</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; (3)</span><br><span class="line">&#x2F;&#x2F; client1 向1发，不会得到大多数节点同意，重试</span><br><span class="line">&#x2F;&#x2F; 2当选</span><br><span class="line">&#x2F;&#x2F; client2 向2发，得到大多数节点同意，广播，节点复制</span><br><span class="line">1,5	 : log1 | log2 | log_new1(index3)</span><br><span class="line">2,3,4: log1 | log2 | log_new2(index3)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; (4)</span><br><span class="line">&#x2F;&#x2F; 网络恢复，节点1被节点2日志覆盖</span><br><span class="line">&#x2F;&#x2F; 但是该index3不是client1真正期望的</span><br><span class="line">1,5	 : log1 | log2 | log_new2(index3)</span><br><span class="line">2,3,4: log1 | log2 | log_new2(index3)</span><br></pre></td></tr></table></figure>
+
+<p>TODO 全局uuid办法</p>
+<p>我其实也没有解决这个问题，使用一个大随机数做uuid然后索引。</p>
+<h4 id="注意Decode一个type-interface的问题"><a href="#注意Decode一个type-interface的问题" class="headerlink" title="注意Decode一个type interface的问题"></a>注意Decode一个<code>type interface</code>的问题</h4><blockquote>
+<p>golang不熟悉：type interface内存模型，具体含义</p>
+</blockquote>
+<p>因为我的实现中，kv数据库是一个interface，以方便扩展:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> KvDb <span class="keyword">interface</span> &#123;</span><br><span class="line">	Get(key <span class="keyword">string</span>) (<span class="keyword">string</span>, Err)</span><br><span class="line">	Put(key <span class="keyword">string</span>, value <span class="keyword">string</span>) Err</span><br><span class="line">	Append(key <span class="keyword">string</span>, value <span class="keyword">string</span>) Err</span><br><span class="line">	DB() *<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> KVServer <span class="keyword">struct</span> &#123;</span><br><span class="line">	database KvDb</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这时decode就会出现<strong>golang菜鸟问题</strong>，如我是这么decode的：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> database KvDb</span><br><span class="line"><span class="keyword">if</span> err := d.Decode(&amp;database); err == <span class="literal">nil</span> &#123;</span><br><span class="line">	kv.database = database</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类型匹配了，也没有报错。不过这么是解码不出来任何东西的。</p>
+<p>改成下面这样就可以了:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> database BasicDB</span><br><span class="line"><span class="keyword">if</span> err := d.Decode(&amp;database); err == <span class="literal">nil</span> &#123;</span><br><span class="line">	kv.database = &amp;database</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>TODO 学习golang的<code>type interface{}</code>，学习其内存模型</strong></p>
+<h4 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h4><blockquote>
+<p>kv层锁后不要再尝试对raft层加锁</p>
+<p>本质原因是并发导致的AB,BA型锁</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CommandHandler</span><span class="params">()</span></span> &#123;</span><br><span class="line">	kv.mu.Lock()</span><br><span class="line">		(<span class="number">1</span>)</span><br><span class="line">		kv.rf.mu.Lock()</span><br><span class="line">		kv.rf.mu.Unock()</span><br><span class="line">	kv.mu.Unock()</span><br><span class="line">	Start()</span><br><span class="line">	...</span><br><span class="line">	&lt;-watchCh</span><br><span class="line">	...</span><br><span class="line">	(<span class="number">2</span>)</span><br><span class="line">	kv.mu.Lock()</span><br><span class="line">	kv.mu.Unock()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">kv.applyer() &#123;</span><br><span class="line">	kv.mu.Lock()</span><br><span class="line">	(<span class="number">3</span>)</span><br><span class="line">	&lt;- applyCh</span><br><span class="line">	kv.mu.Unock()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rf.applyer() &#123;</span><br><span class="line">	kv.rf.mu.Lock()</span><br><span class="line">	(<span class="number">4</span>)</span><br><span class="line">	applyCh &lt;-</span><br><span class="line">	kv.rf.mu.Unock()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>死锁是这样子的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1)      (4) 			  (3) 			 (1)</span><br><span class="line">---&gt;  rf.lock  ---&gt;  kv.applyCh  ---&gt; kv.lock</span><br></pre></td></tr></table></figure>
+
+<p>所以我的答案是: 别把rf锁嵌套在kv锁内。</p>
+<h4 id="测试超时问题"><a href="#测试超时问题" class="headerlink" title="测试超时问题"></a>测试超时问题</h4><h5 id="GET的处理"><a href="#GET的处理" class="headerlink" title="GET的处理"></a>GET的处理</h5><blockquote>
+<p>get不存在时直接返回空字符串和OK</p>
+</blockquote>
+<p>我在get不存在的key的时候的处理有大问题，导致client一直重试，然后测试超时。</p>
+<p>因为实验文档说在get不存在的key时返回空字符串<code>&quot;&quot;</code>，我是返回了，但是还返回了一个NoKey错误。然后client端<code>for reply.Err != Ok{重试}</code>，这就导致了超时</p>
+<h5 id="watchCh阻塞问题"><a href="#watchCh阻塞问题" class="headerlink" title="watchCh阻塞问题"></a>watchCh阻塞问题</h5><blockquote>
+<p>watchCh待缓冲，因为读者可能跑路了</p>
+</blockquote>
+<p><code>watchCh</code>要待1个缓冲。因为读者在监听时是不可能加锁的，所以就就可能不再监听后写者立刻写导致阻塞。即<code>(1)</code>后立刻调度到<code>(2)</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="keyword">select</span> &#123;</span><br><span class="line">	<span class="keyword">case</span> res := &lt;- ch:</span><br><span class="line">		value, err = res.Value, res.Err</span><br><span class="line">	<span class="keyword">case</span> &lt;- time.After(ExecuteTimeout):</span><br><span class="line">		value, err = <span class="string">""</span>, ErrTimeout</span><br><span class="line">	&#125;</span><br><span class="line">	(<span class="number">1</span>)</span><br><span class="line">	kv.mu.Lock()</span><br><span class="line">	<span class="built_in">delete</span>(kv.watcher, index)</span><br><span class="line">	kv.mu.Unlock()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">applyer() &#123;</span><br><span class="line">	kv.mu.Lock()</span><br><span class="line">	<span class="keyword">if</span> ch, ok := kv.watcher[op.WatchChId]; ok &#123;</span><br><span class="line">		(<span class="number">2</span>)</span><br><span class="line">		ch &lt;- res</span><br><span class="line">	&#125;</span><br><span class="line">	kv.mu.Unlock()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>watchCh</code>要待1个缓冲。因为读者在监听时是不可能加锁的，所以就就可能不再监听后写者立刻写导致阻塞。即<code>(1)</code>后立刻调度到<code>(2)</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="keyword">select</span> &#123;</span><br><span class="line">	<span class="keyword">case</span> res := &lt;- ch:</span><br><span class="line">		value, err = res.Value, res.Err</span><br><span class="line">	<span class="keyword">case</span> &lt;- time.After(ExecuteTimeout):</span><br><span class="line">		value, err = <span class="string">""</span>, ErrTimeout</span><br><span class="line">	&#125;</span><br><span class="line">	(<span class="number">1</span>)</span><br><span class="line">	kv.mu.Lock()</span><br><span class="line">	<span class="built_in">delete</span>(kv.watcher, index)</span><br><span class="line">	kv.mu.Unlock()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">applyer() &#123;</span><br><span class="line">	kv.mu.Lock()</span><br><span class="line">	<span class="keyword">if</span> ch, ok := kv.watcher[op.WatchChId]; ok &#123;</span><br><span class="line">		(<span class="number">2</span>)</span><br><span class="line">		ch &lt;- res</span><br><span class="line">	&#125;</span><br><span class="line">	kv.mu.Unlock()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Test-completion-after-heal-3A"><a href="#Test-completion-after-heal-3A" class="headerlink" title="Test: completion after heal (3A)"></a>Test: completion after heal (3A)</h4><blockquote>
+<p>RPC fail 和 WrongLeader都要换一个leader重试</p>
+</blockquote>
+<p>RPC fail和WrongLeader都换leader，因为RPC fail说明该节点大概率也挂了，而且该”少数派的leader”并不会知道自己已经不是leader(因为仍能收到心跳)，如果不换leader重新尝试，并且网络恢复不及时那么该请求会一种超时。</p>
+<h4 id="为什么必须保存上一次的响应"><a href="#为什么必须保存上一次的响应" class="headerlink" title="为什么必须保存上一次的响应"></a>为什么必须保存上一次的响应</h4><blockquote>
+<p>基本思想类似TCP滑动窗口，buffer的本质</p>
+<p>防乱序，有backup</p>
+</blockquote>
+<p><code>responseTracker</code>不单单是为了”加速”，还防止了RPC fail。因为要过滤重复请求，client端要携带一些标识的信息，server根据这些信息判断重复。RPC fail时就可能出现server觉得这个client的已经接收到结果了发了个重复的请求，而实际的client是并没有收到结果所以重发请求。所以就会server不断以为是重复请求拒绝，client不断收不到结果。</p>
+<h4 id="TestSpeed"><a href="#TestSpeed" class="headerlink" title="TestSpeed"></a>TestSpeed</h4><p>关闭数据竞争检测功能</p>
+<h2 id="3B"><a href="#3B" class="headerlink" title="3B"></a>3B</h2><p><a href="https://github.com/66RING/Notes/tree/master/universe/cources_notes/mit6.824/mit_6.824_lab3b.md" target="_blank" rel="noopener">MIT6.824 lab 3B 记录与bug总结</a></p>
+<h2 id="Gross"><a href="#Gross" class="headerlink" title="Gross"></a>Gross</h2><ul>
+<li><code>CommandHandler</code>处理client请求的入口函数，等待apply后返回结果</li>
+<li><code>watchCh</code>, applyer用于通知<code>CommandHandler</code>apply情况的channel</li>
+<li><code>tracker</code>, <code>responseTracker</code>, <code>session</code>, <code>sessonTracker</code><ul>
+<li>都是论文中说的用于记录”上一次response”的结构</li>
+</ul>
+</li>
+<li><code>seqNum</code>, 客户端发送请求时携带的用于标识次序的id，单调递增</li>
+</ul>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://yoursite.com/2022/05/13/universe/cources_notes/mit6.824/mit_6.824_lab3a/>http://yoursite.com/2022/05/13/universe/cources_notes/mit6.824/mit_6.824_lab3a/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/distributed/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>distributed</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/MIT/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>MIT</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2022/05/17/universe/cources_notes/mit6.824/mit_6.824_lab3b/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>MIT6.824 lab 3B 记录与bug总结</p>
+          <p class='content'>MIT6.824 lab 3B bug总结记录
+到目前lab3为止，可以导致状态变更的，有潜在是不一致风险的事件有：状态变更，日志追加，日志恢复
+这些事件在我看来是类似操作系统中”中断”的存在，...</p>
+        </a>
+      
+      
+        <a class='next' href='/2022/05/10/universe/paper_reading/Are_You_Sure_You_Want_to_Use_MMAP_in_Your_Database_Management_System/'>
+          <p class='title'>Are You Sure You Want to Use MMAP in Your Database Management System?论文笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>TODO review
+Are You Sure You Want to Use MMAP in Your Database Management System?论文笔记Abstract
+我要重...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#3A"><span class="toc-text">3A</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fuck-the-lab"><span class="toc-text">fuck the lab</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bug记录"><span class="toc-text">bug记录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#过滤重复请求"><span class="toc-text">过滤重复请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#正确使用监听用的channel"><span class="toc-text">正确使用监听用的channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#非线性一致性bug-用log的Index做索引存在的问题"><span class="toc-text">非线性一致性bug: 用log的Index做索引存在的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意Decode一个type-interface的问题"><span class="toc-text">注意Decode一个type interface的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#死锁"><span class="toc-text">死锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#测试超时问题"><span class="toc-text">测试超时问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#GET的处理"><span class="toc-text">GET的处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#watchCh阻塞问题"><span class="toc-text">watchCh阻塞问题</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Test-completion-after-heal-3A"><span class="toc-text">Test: completion after heal (3A)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么必须保存上一次的响应"><span class="toc-text">为什么必须保存上一次的响应</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TestSpeed"><span class="toc-text">TestSpeed</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3B"><span class="toc-text">3B</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gross"><span class="toc-text">Gross</span></a></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="MIT6.824 lab 3A 记录与bug总结";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"EKmusUsvxKTWym4LJnmkk1eU-gzGzoHsz","appKey":"sdWXsEnYQvIqRVoEPSMsLCr6","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>

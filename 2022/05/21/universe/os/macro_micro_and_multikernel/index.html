@@ -22,9 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>lex词法分析工具使用 - 66Ring&#39;s Blog</title>
+  <title>宏内核, 微内核, 多内核 - 66Ring&#39;s Blog</title>
   
-    <meta name="keywords" content="compiler">
+    <meta name="keywords" content="system,os">
   
 
   
@@ -461,7 +461,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title">
-        lex词法分析工具使用
+        宏内核, 微内核, 多内核
       </h1>
       <div class='new-meta-box'>
         
@@ -485,7 +485,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：May 3, 2022</p>
+    <p>发布于：May 21, 2022</p>
   </a>
 </div>
 
@@ -496,7 +496,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="lex词法分析工具使用" data-path="/2022/05/03/universe/usage/lex_usage/">
+      <div id="lc-pv" data-title="宏内核, 微内核, 多内核" data-path="/2022/05/21/universe/os/macro_micro_and_multikernel/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -514,37 +514,94 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>使用lex工具做词法分析，不需要手撸状态机。</p>
-<h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><h2 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h2><ul>
-<li><code>flex &lt;file.l&gt;</code>默认生成lex.yy.c文件</li>
-<li><code>gcc -lfl lex.yy.c</code></li>
+  <h1 id="宏内核架构"><a href="#宏内核架构" class="headerlink" title="宏内核架构"></a>宏内核架构</h1><blockquote>
+<p>linux</p>
+</blockquote>
+<p>整个单分两层：内核与应用。</p>
+<p>CPU负责提供权限模式，高权限就是内核模式。</p>
+<p>所有内核功能实现在一起：文件系统, 内存管理, 设备驱动, 进程调度等。拥有最高权限</p>
+<p>结构性缺陷：</p>
+<ul>
+<li>安全性可靠性<ul>
+<li>模块间没有很强的隔离，<strong>单点错误</strong></li>
+<li>如频繁更新的驱动，他的bug就可能影响到其他模块</li>
 </ul>
-<h2 id="lex源程序"><a href="#lex源程序" class="headerlink" title="lex源程序"></a>lex源程序</h2><p>三段式:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">%&#123;</span><br><span class="line">	辅助性C声明</span><br><span class="line">%&#125;</span><br><span class="line"></span><br><span class="line">辅助定义正规式</span><br><span class="line">&lt;名&gt; &lt;正规式&gt;</span><br><span class="line"></span><br><span class="line">%%</span><br><span class="line">&lt;规则&gt; &lt;事件&gt;		# 一行一个，可以&#123;后换行</span><br><span class="line">&lt;规则&gt; &lt;事件&gt;</span><br><span class="line">&lt;规则&gt; &lt;事件&gt;</span><br><span class="line">%%</span><br><span class="line"></span><br><span class="line">C代码</span><br></pre></td></tr></table></figure>
-
+</li>
+<li>实时性支持不足<ul>
+<li>系统太复杂，无法做出最坏分析</li>
+</ul>
+</li>
+<li>过于庞大阻碍创新<ul>
+<li>2800行代码</li>
+</ul>
+</li>
+</ul>
+<h1 id="微内核架构"><a href="#微内核架构" class="headerlink" title="微内核架构"></a>微内核架构</h1><p>内核变小，<strong>功能放到用户态</strong> 作为应用运行(称为Server)。使用IPC机制协作</p>
+<p><strong>内核还剩什么?</strong></p>
+<ul>
+<li>Mach为例，参考人家是怎么抽象的<ul>
+<li>任务和线程管理：对CPU抽象</li>
+<li>调度接口，用户自定义调度策略</li>
+<li>进程间通信IPC</li>
+<li>内存对象管理：内存资源抽象</li>
+<li>系统调用重定向： <strong>用户态拦截和处理系统调用</strong><ul>
+<li>实现二进制翻译，跟踪，调试等</li>
+</ul>
+</li>
+<li>设备支持(利用IPC实现)</li>
+<li>用户态多进程<ul>
+<li>类似用户态线程库，可以多个映射到一个内核线程</li>
+</ul>
+</li>
+<li>分布式支持<ul>
+<li>任务和资源映射到集群不同节点</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>QNX</p>
+<ul>
+<li>Quick Unix</li>
+</ul>
+</li>
+<li><p>Google Fuchsia</p>
+<ul>
+<li><strong>Zircon微内核</strong></li>
+</ul>
+</li>
+<li><p>MINIX</p>
+</li>
+<li><p>性能差了点，隔离性强</p>
+<ul>
+<li><strong>IPC性能差</strong></li>
+</ul>
+</li>
+<li><p>生态和兼容性问题</p>
+</li>
+</ul>
+<h1 id="混合内核架构"><a href="#混合内核架构" class="headerlink" title="混合内核架构"></a>混合内核架构</h1><blockquote>
+<p>混合，tradeoff</p>
+</blockquote>
+<p>需要性能的地方又放回内核，就不那么隔离了。(举个例子：既然说linux内核中大部分的bug都是来自驱动更新，那么驱动放在用户态咯。当然驱动也有需要性能的地方)</p>
+<h1 id="多内核Multikernel"><a href="#多内核Multikernel" class="headerlink" title="多内核Multikernel"></a>多内核Multikernel</h1><p>传统OS是一个整体，依赖一个统一的全局内存。但是， <strong>随着CPU核心数的增多，硬件提供缓存一致性成本增加</strong> 。</p>
+<p><strong>再考虑其他抽象的核</strong> : GPU加速器，AI加速器，智能网卡等自己本身就有一个”CPU”</p>
+<p>Multikernel的设计</p>
+<ul>
+<li>每个core运行一个小内核</li>
+<li>OS整体是一个分布式系统</li>
+<li>多个内核之上封装</li>
+</ul>
+<p>e.g. Barrelfish操作系统</p>
+<h1 id="不断创新"><a href="#不断创新" class="headerlink" title="不断创新"></a>不断创新</h1><p>架构还能不断创建，以下简易可以少走弯路：</p>
 <ol>
-<li>“辅助定义和规则事件段的内容就会自动转换成响应的C代码插在中间”</li>
-<li>规则中可以使用上面的辅助定义，事件可以使用第一段的C声明</li>
+<li>尽可能实现一些标准：如POSIX</li>
+<li>避免棘手的API：如fork</li>
+<li>避免不可扩展的POSIX API</li>
+<li>等</li>
 </ol>
-<p>e.g. 可以看到用到辅助定义的地方都”{}”括起来了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">%&#123;</span><br><span class="line">#define ID 0</span><br><span class="line">#define NUMBER 1</span><br><span class="line">%&#125;</span><br><span class="line"></span><br><span class="line">char [a-zA-Z]</span><br><span class="line">digit [0-9]</span><br><span class="line">digits &#123;digit&#125;+</span><br><span class="line">optional_fraction (&quot;.&quot;&#123;digits&#125;)?</span><br><span class="line">optional_exponent (E[+-]?&#123;digits&#125;)?</span><br><span class="line"></span><br><span class="line">%%</span><br><span class="line">&#123;char&#125;(&#123;char&#125;|&#123;digit&#125;)* &#123;</span><br><span class="line">		printf(&quot;recognize token %s, len %d\n&quot;, yytext, yyleng);</span><br><span class="line">		return ID;</span><br><span class="line">	&#125;</span><br><span class="line">&#123;digits&#125;&#123;optional_fraction&#125;&#123;optional_exponent&#125; &#123;</span><br><span class="line">		printf(&quot;recognize number %s, len %d\n&quot;, yytext, yyleng);</span><br><span class="line">		return NUMBER;</span><br><span class="line">	&#125;</span><br><span class="line">%%</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	printf(&quot;type: %d&quot;, yylex());</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><ol>
-<li>lex大小写不敏感</li>
-<li>先定义的规则先匹配</li>
-<li>内置的变量<ul>
-<li><code>yytext</code>表示当前匹配到的内容</li>
-<li><code>yyleng</code>表示当前匹配到的内容的长度</li>
-<li><code>yylex()</code>，即主函数，扫描输入，匹配规则，如果规则中有return则返回</li>
-</ul>
-</li>
-<li><strong>使用辅助定义正规式时要用{}</strong></li>
-<li><strong>“”</strong>中的内容匹配字面量，类似转意<ul>
-<li>如要匹配<code>.</code>的情况</li>
-</ul>
-</li>
-<li>可以在规则最后添加一个<code>.*</code>规则作为未定义行为，因为lex最长最先匹配的规则可能会导致字串被匹配到，如<code>create&quot;abc</code>会把create匹配，但其实这应该是undifine的</li>
-</ol>
+<p><strong>设备间异构性和设备间通信异构性</strong></p>
 
   
   
@@ -562,7 +619,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2022/05/03/universe/usage/lex_usage/>http://yoursite.com/2022/05/03/universe/usage/lex_usage/</a></p>
+                <p>本文永久链接是：<a href=http://yoursite.com/2022/05/21/universe/os/macro_micro_and_multikernel/>http://yoursite.com/2022/05/21/universe/os/macro_micro_and_multikernel/</a></p>
               
             
           </blockquote>
@@ -581,7 +638,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/compiler/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>compiler</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/system/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>system</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/os/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>os</p></a></div>
 
 
         
@@ -612,26 +669,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2022/05/07/universe/paper_reading/a_fork_in_the_road/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>A fork() in the road论文笔记</p>
-          <p class='content'>Abstract
-fork()对于现代程序员来说是一个糟糕的抽象
-别再使用fork()了，可以使用更现代的posix_spawn()
-是时代的错误，与现代系统格格不入
+        <a class='prev' href='/2022/05/26/universe/cources_notes/mit6.824/mit_6.824_lab2/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>MIT6.824 lab 2 记录与bug总结</p>
+          <p class='content'>MIT6.824 lab 2 记录与bug总结两个主要问题：乱序RPC和”Figure 8问题”(小论文Figure 8, 大论文Figure 3.7)
 
-
-不是线程安全的
-不可扩...</p>
+两阶段写中间有gap，你以为的原子也许...</p>
         </a>
       
       
-        <a class='next' href='/2022/04/30/universe/reading_notes/the_catherdeal_and_the_bazaar/'>
-          <p class='title'>大教堂与集市读书笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>Abstract
-如果一个人跟你聊开源，说他不懂这本书，那你大可以断定他是个外行人
-
-
-传统软件开发模式像艰难而缓慢的大教堂建造工程，严密，封闭，集中式管理。而集市在创新，生产力和Bug控制上要...</p>
+        <a class='next' href='/2022/05/19/universe/os/RWLock_and_RCU/'>
+          <p class='title'>读写锁与RCU<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>读写锁实现本质上仍是通过写锁来互斥，只是读锁减小的锁影响的范围，读锁仅用于保证reader++的安全。
+可以看到虽然看起来读者”不互斥”，但是内部读者还是存在锁竞争的。所以引入RCU
+12345...</p>
         </a>
       
     </div>
@@ -727,7 +777,7 @@ fork()对于现代程序员来说是一个糟糕的抽象
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#编译运行"><span class="toc-text">编译运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lex源程序"><span class="toc-text">lex源程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tips"><span class="toc-text">tips</span></a></li></ol>
+        
     </div>
   </section>
 
@@ -746,7 +796,7 @@ fork()对于现代程序员来说是一个糟糕的抽象
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="lex词法分析工具使用";
+  pdata.postTitle="宏内核, 微内核, 多内核";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 

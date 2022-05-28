@@ -555,7 +555,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| CPU1 | CPU2 | CPU3 |</span><br><span class="line">| I    | S    | S    |</span><br></pre></td></tr></table></figure>
 
 <h2 id="缓存一致性带来的问题"><a href="#缓存一致性带来的问题" class="headerlink" title="缓存一致性带来的问题"></a>缓存一致性带来的问题</h2><p>可以看到，引入缓存一致性导致了通信成本的提高，如果CPU数量再多点，那么”查表”将不是一件非常简单是事。本来一个cycle可以执行完成的操作需要”遍历所有”才能继续。</p>
-<p>所以会发现随着CPU(core)的增加，并发程序的性能反而下降的现象。这就是<a href="https://raw.githubusercontent.com/66RING/Notes/master/universe/os/noscalable_lock_and_solution.md" target="_blank" rel="noopener">no-scalable问题</a>。</p>
+<p>所以会发现随着CPU(core)的增加，并发程序的性能反而下降的现象。这就是<a href="https://github.com/66RING/Notes/tree/master/universe/os/noscalable_lock_and_solution.md" target="_blank" rel="noopener">no-scalable问题</a>。</p>
 <p>导致这个问题的原因就是<strong>single cache line</strong></p>
 
   
