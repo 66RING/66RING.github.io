@@ -685,23 +685,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>但在虚拟机看来pcibus一次transaction就是一次访存。在下面的例子函数会证明这点。</p>
 <p>??以下多为猜测:??</p>
 <p>在configuration transaction章节中我们介绍了configuration transaction是用来配置和初始化系统的。所以我们对pci通信的流程做如下抽象：</p>
-<ul>
-<li><ol>
+<ol>
 <li>cpu指令先传递到pcihost解析</li>
-</ol>
-</li>
-<li><ol start="2">
 <li>pcihost根据<em>CONFIG_ADDRESS</em>，找到目标设备，并配置config空间，发起<code>configuration transactions</code>执行修改<ul>
 <li>配置config空间可以包括：(1)控制设备、(2)为设备准备io空间等</li>
 </ul>
 </li>
-</ol>
-</li>
-<li><ol start="3">
 <li>bus transaction再根据<code>configuration transactions</code>后config空间的内容进行操作</li>
 </ol>
-</li>
-</ul>
 <p>下面我们通过一个函数深刻理解这点，并将给出<code>(1)、(2)等</code>内容的对应关系</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pci_default_write_config</span><span class="params">(PCIDevice *d, <span class="keyword">uint32_t</span> addr, <span class="keyword">uint32_t</span> val_in, <span class="keyword">int</span> l)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, was_irq_disabled = pci_irq_disabled(d);</span><br><span class="line">    <span class="keyword">uint32_t</span> val = val_in;</span><br><span class="line"></span><br><span class="line">    assert(addr + l &lt;= pci_config_size(d));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; l; val &gt;&gt;= <span class="number">8</span>, ++i) &#123;</span><br><span class="line">        <span class="keyword">uint8_t</span> wmask = d-&gt;wmask[addr + i];</span><br><span class="line">        <span class="keyword">uint8_t</span> w1cmask = d-&gt;w1cmask[addr + i];</span><br><span class="line">        assert(!(wmask &amp; w1cmask));</span><br><span class="line">        d-&gt;<span class="built_in">config</span>[addr + i] = (d-&gt;<span class="built_in">config</span>[addr + i] &amp; ~wmask) | (val &amp; wmask);</span><br><span class="line">        d-&gt;<span class="built_in">config</span>[addr + i] &amp;= ~(val &amp; w1cmask); <span class="comment">/* W1C: Write 1 to Clear */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (ranges_overlap(addr, l, PCI_BASE_ADDRESS_0, <span class="number">24</span>) ||</span><br><span class="line">        ranges_overlap(addr, l, PCI_ROM_ADDRESS, <span class="number">4</span>) ||</span><br><span class="line">        ranges_overlap(addr, l, PCI_ROM_ADDRESS1, <span class="number">4</span>) ||</span><br><span class="line">        range_covers_byte(addr, l, PCI_COMMAND))</span><br><span class="line">        pci_update_mappings(d);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (range_covers_byte(addr, l, PCI_COMMAND)) &#123;</span><br><span class="line">        pci_update_irq_disabled(d, was_irq_disabled);</span><br><span class="line">        memory_region_set_enabled(&amp;d-&gt;bus_master_enable_region,</span><br><span class="line">                                  pci_get_word(d-&gt;<span class="built_in">config</span> + PCI_COMMAND)</span><br><span class="line">                                    &amp; PCI_COMMAND_MASTER);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    msi_write_config(d, addr, val_in, l);</span><br><span class="line">    msix_write_config(d, addr, val_in, l);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
