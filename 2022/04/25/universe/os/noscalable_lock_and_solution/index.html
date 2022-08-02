@@ -516,6 +516,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   <h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><ul>
 <li>有共享就得考虑哪里有瓶颈</li>
+<li>no-scalable问题的本质就是”即共享又私下算账, 最后还要那私账说事”</li>
 </ul>
 <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>所谓no-scalable lock就是，并发程序为了实现一致性，需要使用锁对共享资源进行互斥访问。如果使用的是一个no-scalable的锁，那么就会观察到随着cpu核心数量的上升，并发程序的性能并不能得到有效的提高，甚至会有所下降。</p>
 <p>要理解这个问题的根源需要我们深入了解CPU内部缓存一致性的细节。这就是为什么高性能计算需要对硬件熟悉，而不仅仅是进程数的堆砌。</p>
@@ -576,7 +577,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2022/04/25/universe/os/noscalable_lock_and_solution/>http://yoursite.com/2022/04/25/universe/os/noscalable_lock_and_solution/</a></p>
+                <p>本文永久链接是：<a href=http://github.com/66ring/2022/04/25/universe/os/noscalable_lock_and_solution/>http://github.com/66ring/2022/04/25/universe/os/noscalable_lock_and_solution/</a></p>
               
             
           </blockquote>
@@ -1273,7 +1274,7 @@ function setSearchService() {
       // 请求 PV 并自增
       var pvCtn = document.querySelector('#lc-sv');
       if (pvCtn || enableIncr) {
-        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+        var pvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-sv', 'Visits').then((record) => {
           incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-sv #number');
           if (eles.length > 0) {
@@ -1291,7 +1292,7 @@ function setSearchService() {
       // 请求 UV 并自增
       var uvCtn = document.querySelector('#lc-uv');
       if (uvCtn || enableIncr) {
-        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+        var uvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-uv', 'Visitors').then((record) => {
           var vuv = this.validUV();
           vuv && incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-uv #number');
@@ -1313,7 +1314,7 @@ function setSearchService() {
         for (i = 0; i < allPV.length; i++) {
           let pv = allPV[i];
           let title = pv.getAttribute('data-title');
-          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          var url = 'http://github.com/66ring' + pv.getAttribute('data-path');
           if (url) {
             var viewGetter = this.getRecord(Counter, url, title).then((record) => {
               // 是当前页面就自增

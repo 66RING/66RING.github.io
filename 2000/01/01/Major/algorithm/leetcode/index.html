@@ -515,7 +515,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   
   <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>TODO learn 贪心 剪枝 dp 的思想和trade off</p>
-<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><h2 id="贪心法"><a href="#贪心法" class="headerlink" title="贪心法"></a>贪心法</h2><h3 id="无重叠区间"><a href="#无重叠区间" class="headerlink" title="无重叠区间"></a>无重叠区间</h3><p><a href="https://leetcode-cn.com/problems/non-overlapping-intervals/" target="_blank" rel="noopener">leetcode</a></p>
+<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><h3 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h3><p>有序数组中找两数和为目标数</p>
+<p>双指针, 小了移左, 大了移右</p>
+<h3 id="两数平方和"><a href="#两数平方和" class="headerlink" title="两数平方和"></a>两数平方和</h3><p>给c，判断存在a, b有, <code>f = a*a + b*b = c</code></p>
+<p>双指针, f小了移左, f大了移右</p>
+<h3 id="最长子序列"><a href="#最长子序列" class="headerlink" title="最长子序列"></a>最长子序列</h3><p>遍历src，尝试匹配dst</p>
+<h2 id="贪心法"><a href="#贪心法" class="headerlink" title="贪心法"></a>贪心法</h2><h3 id="无重叠区间"><a href="#无重叠区间" class="headerlink" title="无重叠区间"></a>无重叠区间</h3><p><a href="https://leetcode-cn.com/problems/non-overlapping-intervals/" target="_blank" rel="noopener">leetcode</a></p>
 <p>思考会议预约，区间<code>(start, end)</code>分别表示会议开始时间和会议结束时间。<strong>贪心：会议越早结束，留给后面分配的时间越多</strong>。</p>
 <ul>
 <li>所以<strong>根据结束时间(右值)排序</strong></li>
@@ -541,6 +546,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <h3 id="122-买卖股票的最佳时机-II"><a href="#122-买卖股票的最佳时机-II" class="headerlink" title="122. 买卖股票的最佳时机 II"></a>122. 买卖股票的最佳时机 II</h3><p>贪心：<strong>能涨一点算一点</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int maxProfit(vector&lt;int&gt;&amp; prices) &#123;   </span><br><span class="line">	int ans &#x3D; 0;</span><br><span class="line">	int n &#x3D; prices.size();</span><br><span class="line">	for (int i &#x3D; 1; i &lt; n; ++i) &#123;</span><br><span class="line">		ans +&#x3D; max(0, prices[i] - prices[i - 1]);</span><br><span class="line">	&#125;</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="53-最大子数组和"><a href="#53-最大子数组和" class="headerlink" title="53. 最大子数组和"></a>53. 最大子数组和</h3><p>如果<code>nums[i]</code>比<code>nums[i]+prefix</code>大, 那prefix从<code>nums[i]</code>重新开始</p>
+<h3 id="763-划分字母区间"><a href="#763-划分字母区间" class="headerlink" title="763. 划分字母区间"></a>763. 划分字母区间</h3><p>遍历字符串, 找每个字符能出现的最右端。一直找最右不断更新, 当<code>i == end</code>时区域结束</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="built_in">size</span>; i++) &#123;</span><br><span class="line">	<span class="built_in">map</span>[s[i]-<span class="string">'a'</span>] = i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><h3 id="69-x-的平方根"><a href="#69-x-的平方根" class="headerlink" title="69. x 的平方根"></a>69. x 的平方根</h3><p><a href="https://leetcode-cn.com/problems/sqrtx/description/" target="_blank" rel="noopener">leetcode</a></p>
@@ -577,7 +587,57 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>TODO redo <strong>COOL</strong></p>
 <h3 id="95-不同的二叉搜索树-II"><a href="#95-不同的二叉搜索树-II" class="headerlink" title="95. 不同的二叉搜索树 II"></a>95. 不同的二叉搜索树 II</h3><p><a href="https://leetcode-cn.com/problems/unique-binary-search-trees-ii/description/" target="_blank" rel="noopener">leetcode</a></p>
 <p>TODO redo <strong>COOL</strong></p>
-<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><h3 id="无重叠区间-1"><a href="#无重叠区间-1" class="headerlink" title="无重叠区间"></a>无重叠区间</h3><p><a href="https://leetcode-cn.com/problems/non-overlapping-intervals/" target="_blank" rel="noopener">leetcode</a></p>
+<h2 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h2><h3 id="优秀的拆分"><a href="#优秀的拆分" class="headerlink" title="优秀的拆分"></a>优秀的拆分</h3><p><a href="https://www.acwing.com/problem/content/description/2769/" target="_blank" rel="noopener">acwing</a></p>
+<p>把一个数转换成若干个2的正整数次幂的和。无法表示输出-1</p>
+<p>e.g. $6 = 2^2 + 2$ 输出4 2</p>
+<p>思路: </p>
+<ol>
+<li>奇数全 - 1</li>
+<li>转换成二进制表示6 = 110, 使用<code>&gt;&gt;</code></li>
+</ol>
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p>动态规划的本质就是枚举找最优</p>
+<ul>
+<li>确定base case</li>
+<li>确定状态(转移)<ul>
+<li>数学归纳</li>
+</ul>
+</li>
+<li>确定选择</li>
+<li>定义dp</li>
+</ul>
+<ol>
+<li>暴力地</li>
+<li>带”备忘录”的</li>
+</ol>
+<h3 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a>最长公共子序列</h3><p>求text1和text2中的最长公共子序列, e.g. aceb, aqb =&gt; ab</p>
+<ul>
+<li>状态表示: <code>dp[i][j]</code>表示<code>text1[:i]</code>和<code>text2[:j]</code>中的最长公共子序列</li>
+<li>属性: “last” + 1</li>
+<li>状态划分: <ul>
+<li>当<code>text1[i] == text2[j]</code>时<code>dp[i][j] = dp[i-1][j-1]</code>，即匹配了</li>
+<li>当<code>text1[i] != text2[j]</code>时<code>dp[i][j] = max(dp[i-1][j], dp[i][j-1])</code>跳过j或跳过i，继承最大</li>
+</ul>
+</li>
+</ul>
+<h3 id="最长回文子串"><a href="#最长回文子串" class="headerlink" title="最长回文子串"></a>最长回文子串</h3><p>一个回文串, 他的<code>[i+1, j-1]</code>字串也一定是是回文串。因此, 从长度1开始枚举所有长度的字串, 如果”last”是回文且<code>str[i]=str[j]</code>则字串范围++</p>
+<ul>
+<li>状态表示: <code>dp[i][j]</code>表示<code>str[i:j]</code>是不是回文串</li>
+<li>属性: 继承last</li>
+<li>状态划分:<ul>
+<li>枚举所有长度L = 1..n, j = i+L</li>
+<li>如果<code>str[i] == str[j] &amp;&amp; dp[i+1][j-1] == true</code>, 则<code>dp[i][j]=true</code></li>
+<li>否则false</li>
+</ul>
+</li>
+<li>特判: 字符自己的回文串<code>dp[i][i] == 1</code></li>
+</ul>
+<h3 id="最大正方形"><a href="#最大正方形" class="headerlink" title="最大正方形"></a>最大正方形</h3><p>给定一个0 1的矩阵, 找出有1构成的最大正方形的面积。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">状态表示: dp[i][j] 以i, j为右下角的最大正方形的边长</span><br><span class="line">属性: &quot;last&quot; + 1</span><br><span class="line">集合划分: 从左, 从上, 从左上</span><br><span class="line">	dp[i][j] &#x3D; min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1</span><br><span class="line">	任何一条正方形边都可能是短板</span><br><span class="line">特例i &#x3D;&#x3D; 0 || j &#x3D;&#x3D; 0时没有&quot;last&quot;, 如果matrix[i][j] &#x3D; &#39;1&#39;直接dp &#x3D; 1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1 1 1 1 0</span><br><span class="line">1 1 1 0 0</span><br><span class="line">1 1 x 1 0</span><br><span class="line">1 1 0 1 0</span><br><span class="line">0 0 0 0 0</span><br><span class="line"></span><br><span class="line">假设x处做dp, 可以把哪个区域想想成</span><br><span class="line">1  | 1     1</span><br><span class="line">   |        </span><br><span class="line">---+----    </span><br><span class="line">1  | 1 |   1</span><br><span class="line">   |---------</span><br><span class="line">       |    </span><br><span class="line">1    1 |   x</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="二维压缩到一维防覆盖的办法"><a href="#二维压缩到一维防覆盖的办法" class="headerlink" title="二维压缩到一维防覆盖的办法"></a>二维压缩到一维防覆盖的办法</h3><h3 id="无重叠区间-1"><a href="#无重叠区间-1" class="headerlink" title="无重叠区间"></a>无重叠区间</h3><p><a href="https://leetcode-cn.com/problems/non-overlapping-intervals/" target="_blank" rel="noopener">leetcode</a></p>
 <p>TODO</p>
 <h3 id="最长递增子序列-1"><a href="#最长递增子序列-1" class="headerlink" title="最长递增子序列"></a>最长递增子序列</h3><p><a href="https://leetcode-cn.com/problems/longest-increasing-subsequence/" target="_blank" rel="noopener">300.最长递增子序列</a></p>
 <p><code>dp[i]</code>表示<code>[:i]</code>的最长递增子序列。如果<code>nums[j] &gt; nums[i]</code>，i为<code>[0,j)</code>说明<code>dp[j]</code>至少可以是<code>dp[i]+1</code>。</p>
@@ -701,6 +761,15 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p><a href="https://leetcode-cn.com/problems/sudoku-solver/description/" target="_blank" rel="noopener">leetcode</a></p>
 <h3 id="15-N-皇后"><a href="#15-N-皇后" class="headerlink" title="15. N 皇后"></a>15. N 皇后</h3><p>TODO hard</p>
 <p><a href="https://leetcode-cn.com/problems/n-queens/description/" target="_blank" rel="noopener">leetcode</a></p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="链表拷贝"><a href="#链表拷贝" class="headerlink" title="链表拷贝"></a>链表拷贝</h3><p>一个链表, 有一个next指针指向他的后继节点, 有一个ptr指针指向链上任意节点。请设计一个对该链表深度拷贝的算法。</p>
+<ol>
+<li>多次扫描, 拷贝。难点在于<strong>如何开始找到随机指针对应的节点</strong></li>
+<li>先让原链表A的next待拷贝的A’, 同理BCD。得到AA’BB’CC’DD’<ul>
+<li>这样我们就能快速找到随机指针对应的节点, 从而完成复制, <code>dst-&gt;ptr = src-&gt;ptr-&gt;next;</code></li>
+</ul>
+</li>
+<li>最后恢复原链表即可</li>
+</ol>
 
   
   
@@ -718,7 +787,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2000/01/01/Major/algorithm/leetcode/>http://yoursite.com/2000/01/01/Major/algorithm/leetcode/</a></p>
+                <p>本文永久链接是：<a href=http://github.com/66ring/2000/01/01/Major/algorithm/leetcode/>http://github.com/66ring/2000/01/01/Major/algorithm/leetcode/</a></p>
               
             
           </blockquote>
@@ -878,7 +947,7 @@ mut和&am...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#贪心法"><span class="toc-text">贪心法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无重叠区间"><span class="toc-text">无重叠区间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#452-用最少数量的箭引爆气球"><span class="toc-text">452. 用最少数量的箭引爆气球</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长递增子序列"><span class="toc-text">最长递增子序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#406-根据身高重建队列"><span class="toc-text">406. 根据身高重建队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#121-买卖股票的最佳时机"><span class="toc-text">121. 买卖股票的最佳时机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#122-买卖股票的最佳时机-II"><span class="toc-text">122. 买卖股票的最佳时机 II</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二分查找"><span class="toc-text">二分查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#69-x-的平方根"><span class="toc-text">69. x 的平方根</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#744-寻找比目标字母大的最小字母"><span class="toc-text">744. 寻找比目标字母大的最小字母</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#540-有序数组中的单一元素"><span class="toc-text">540. 有序数组中的单一元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#153-寻找旋转排序数组中的最小值"><span class="toc-text">153. 寻找旋转排序数组中的最小值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#34-在排序数组中查找元素的第一个和最后一个位置"><span class="toc-text">34. 在排序数组中查找元素的第一个和最后一个位置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分治"><span class="toc-text">分治</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#241-为运算表达式设计优先级"><span class="toc-text">241. 为运算表达式设计优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#95-不同的二叉搜索树-II"><span class="toc-text">95. 不同的二叉搜索树 II</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态规划"><span class="toc-text">动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无重叠区间-1"><span class="toc-text">无重叠区间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长递增子序列-1"><span class="toc-text">最长递增子序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#70-爬楼梯"><span class="toc-text">70. 爬楼梯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#198-打家劫舍"><span class="toc-text">198. 打家劫舍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#213-打家劫舍-II"><span class="toc-text">213. 打家劫舍 II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#64-最小路径和"><span class="toc-text">64. 最小路径和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#62-不同路径"><span class="toc-text">62. 不同路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#303-区域和检索-数组不可变"><span class="toc-text">303. 区域和检索 - 数组不可变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#413-等差数列划分"><span class="toc-text">413. 等差数列划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背包问题"><span class="toc-text">背包问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#322-零钱兑换"><span class="toc-text">322. 零钱兑换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#518-零钱兑换-II"><span class="toc-text">518. 零钱兑换 II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#309-最佳买卖股票时机含冷冻期"><span class="toc-text">309. 最佳买卖股票时机含冷冻期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more-dp"><span class="toc-text">more dp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dp思想"><span class="toc-text">dp思想</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索"><span class="toc-text">搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1091-二进制矩阵中的最短路径"><span class="toc-text">1091. 二进制矩阵中的最短路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#279-完全平方数"><span class="toc-text">279. 完全平方数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#695-岛屿的最大面积"><span class="toc-text">695. 岛屿的最大面积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#200-岛屿数量"><span class="toc-text">200. 岛屿数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#130-被围绕的区域"><span class="toc-text">130. 被围绕的区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯"><span class="toc-text">回溯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-电话号码的字母组合"><span class="toc-text">17. 电话号码的字母组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#93-复原-IP-地址"><span class="toc-text">93. 复原 IP 地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#257-二叉树的所有路径"><span class="toc-text">257. 二叉树的所有路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#37-解数独"><span class="toc-text">37. 解数独</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-N-皇后"><span class="toc-text">15. N 皇后</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#双指针"><span class="toc-text">双指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#两数之和"><span class="toc-text">两数之和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两数平方和"><span class="toc-text">两数平方和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长子序列"><span class="toc-text">最长子序列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#贪心法"><span class="toc-text">贪心法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无重叠区间"><span class="toc-text">无重叠区间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#452-用最少数量的箭引爆气球"><span class="toc-text">452. 用最少数量的箭引爆气球</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长递增子序列"><span class="toc-text">最长递增子序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#406-根据身高重建队列"><span class="toc-text">406. 根据身高重建队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#121-买卖股票的最佳时机"><span class="toc-text">121. 买卖股票的最佳时机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#122-买卖股票的最佳时机-II"><span class="toc-text">122. 买卖股票的最佳时机 II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#53-最大子数组和"><span class="toc-text">53. 最大子数组和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#763-划分字母区间"><span class="toc-text">763. 划分字母区间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二分查找"><span class="toc-text">二分查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#69-x-的平方根"><span class="toc-text">69. x 的平方根</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#744-寻找比目标字母大的最小字母"><span class="toc-text">744. 寻找比目标字母大的最小字母</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#540-有序数组中的单一元素"><span class="toc-text">540. 有序数组中的单一元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#153-寻找旋转排序数组中的最小值"><span class="toc-text">153. 寻找旋转排序数组中的最小值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#34-在排序数组中查找元素的第一个和最后一个位置"><span class="toc-text">34. 在排序数组中查找元素的第一个和最后一个位置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分治"><span class="toc-text">分治</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#241-为运算表达式设计优先级"><span class="toc-text">241. 为运算表达式设计优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#95-不同的二叉搜索树-II"><span class="toc-text">95. 不同的二叉搜索树 II</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数学"><span class="toc-text">数学</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#优秀的拆分"><span class="toc-text">优秀的拆分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态规划"><span class="toc-text">动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#最长公共子序列"><span class="toc-text">最长公共子序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长回文子串"><span class="toc-text">最长回文子串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最大正方形"><span class="toc-text">最大正方形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二维压缩到一维防覆盖的办法"><span class="toc-text">二维压缩到一维防覆盖的办法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无重叠区间-1"><span class="toc-text">无重叠区间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长递增子序列-1"><span class="toc-text">最长递增子序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#70-爬楼梯"><span class="toc-text">70. 爬楼梯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#198-打家劫舍"><span class="toc-text">198. 打家劫舍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#213-打家劫舍-II"><span class="toc-text">213. 打家劫舍 II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#64-最小路径和"><span class="toc-text">64. 最小路径和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#62-不同路径"><span class="toc-text">62. 不同路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#303-区域和检索-数组不可变"><span class="toc-text">303. 区域和检索 - 数组不可变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#413-等差数列划分"><span class="toc-text">413. 等差数列划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背包问题"><span class="toc-text">背包问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#322-零钱兑换"><span class="toc-text">322. 零钱兑换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#518-零钱兑换-II"><span class="toc-text">518. 零钱兑换 II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#309-最佳买卖股票时机含冷冻期"><span class="toc-text">309. 最佳买卖股票时机含冷冻期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more-dp"><span class="toc-text">more dp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dp思想"><span class="toc-text">dp思想</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索"><span class="toc-text">搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1091-二进制矩阵中的最短路径"><span class="toc-text">1091. 二进制矩阵中的最短路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#279-完全平方数"><span class="toc-text">279. 完全平方数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#695-岛屿的最大面积"><span class="toc-text">695. 岛屿的最大面积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#200-岛屿数量"><span class="toc-text">200. 岛屿数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#130-被围绕的区域"><span class="toc-text">130. 被围绕的区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯"><span class="toc-text">回溯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-电话号码的字母组合"><span class="toc-text">17. 电话号码的字母组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#93-复原-IP-地址"><span class="toc-text">93. 复原 IP 地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#257-二叉树的所有路径"><span class="toc-text">257. 二叉树的所有路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#37-解数独"><span class="toc-text">37. 解数独</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-N-皇后"><span class="toc-text">15. N 皇后</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据结构"><span class="toc-text">数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#链表拷贝"><span class="toc-text">链表拷贝</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -1412,7 +1481,7 @@ function setSearchService() {
       // 请求 PV 并自增
       var pvCtn = document.querySelector('#lc-sv');
       if (pvCtn || enableIncr) {
-        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+        var pvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-sv', 'Visits').then((record) => {
           incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-sv #number');
           if (eles.length > 0) {
@@ -1430,7 +1499,7 @@ function setSearchService() {
       // 请求 UV 并自增
       var uvCtn = document.querySelector('#lc-uv');
       if (uvCtn || enableIncr) {
-        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+        var uvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-uv', 'Visitors').then((record) => {
           var vuv = this.validUV();
           vuv && incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-uv #number');
@@ -1452,7 +1521,7 @@ function setSearchService() {
         for (i = 0; i < allPV.length; i++) {
           let pv = allPV[i];
           let title = pv.getAttribute('data-title');
-          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          var url = 'http://github.com/66ring' + pv.getAttribute('data-path');
           if (url) {
             var viewGetter = this.getRecord(Counter, url, title).then((record) => {
               // 是当前页面就自增

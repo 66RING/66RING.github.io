@@ -574,7 +574,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2022/04/25/universe/os/MSI_coherence_protocol/>http://yoursite.com/2022/04/25/universe/os/MSI_coherence_protocol/</a></p>
+                <p>本文永久链接是：<a href=http://github.com/66ring/2022/04/25/universe/os/MSI_coherence_protocol/>http://github.com/66ring/2022/04/25/universe/os/MSI_coherence_protocol/</a></p>
               
             
           </blockquote>
@@ -638,8 +638,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           <p class='title'>no-scalable lock及其解决方案<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>Summary
 有共享就得考虑哪里有瓶颈
+no-scalable问题的本质就是”即共享又私下算账, 最后还要那私账说事”
 
-Abstract所谓no-scalable lock就是，并发程序为了实现一致性，需要使用锁对共享资源进行互斥访问。如果使用的是一个no-scalab...</p>
+Abstract所谓no-scalable lock就是，并发程序为了...</p>
         </a>
       
     </div>
@@ -1269,7 +1270,7 @@ function setSearchService() {
       // 请求 PV 并自增
       var pvCtn = document.querySelector('#lc-sv');
       if (pvCtn || enableIncr) {
-        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+        var pvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-sv', 'Visits').then((record) => {
           incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-sv #number');
           if (eles.length > 0) {
@@ -1287,7 +1288,7 @@ function setSearchService() {
       // 请求 UV 并自增
       var uvCtn = document.querySelector('#lc-uv');
       if (uvCtn || enableIncr) {
-        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+        var uvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-uv', 'Visitors').then((record) => {
           var vuv = this.validUV();
           vuv && incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-uv #number');
@@ -1309,7 +1310,7 @@ function setSearchService() {
         for (i = 0; i < allPV.length; i++) {
           let pv = allPV[i];
           let title = pv.getAttribute('data-title');
-          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          var url = 'http://github.com/66ring' + pv.getAttribute('data-path');
           if (url) {
             var viewGetter = this.getRecord(Counter, url, title).then((record) => {
               // 是当前页面就自增

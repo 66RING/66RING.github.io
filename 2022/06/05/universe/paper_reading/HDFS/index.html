@@ -616,7 +616,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2022/06/05/universe/paper_reading/HDFS/>http://yoursite.com/2022/06/05/universe/paper_reading/HDFS/</a></p>
+                <p>本文永久链接是：<a href=http://github.com/66ring/2022/06/05/universe/paper_reading/HDFS/>http://github.com/66ring/2022/06/05/universe/paper_reading/HDFS/</a></p>
               
             
           </blockquote>
@@ -665,6 +665,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
     <div class="prev-next">
+      
+        <a class='prev' href='/2022/06/06/universe/database/cmu15-445_route_map_part1/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>CMU15-445学习笔记</p>
+          <p class='content'>CodingGoogle c++ style guide
+检查丑代码:
+1234make formatmake check-lintmake check-censoredmake check-c...</p>
+        </a>
       
       
         <a class='next' href='/2022/05/26/universe/cources_notes/mit6.824/mit_6.824_lab2/'>
@@ -1301,7 +1308,7 @@ function setSearchService() {
       // 请求 PV 并自增
       var pvCtn = document.querySelector('#lc-sv');
       if (pvCtn || enableIncr) {
-        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+        var pvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-sv', 'Visits').then((record) => {
           incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-sv #number');
           if (eles.length > 0) {
@@ -1319,7 +1326,7 @@ function setSearchService() {
       // 请求 UV 并自增
       var uvCtn = document.querySelector('#lc-uv');
       if (uvCtn || enableIncr) {
-        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+        var uvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-uv', 'Visitors').then((record) => {
           var vuv = this.validUV();
           vuv && incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-uv #number');
@@ -1341,7 +1348,7 @@ function setSearchService() {
         for (i = 0; i < allPV.length; i++) {
           let pv = allPV[i];
           let title = pv.getAttribute('data-title');
-          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          var url = 'http://github.com/66ring' + pv.getAttribute('data-path');
           if (url) {
             var viewGetter = this.getRecord(Counter, url, title).then((record) => {
               // 是当前页面就自增

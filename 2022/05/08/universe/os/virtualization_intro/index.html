@@ -524,6 +524,16 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 <li>要隔离那再建”转换表”</li>
+<li>抽象: 新接口</li>
+<li>虚拟: 旧接口</li>
+<li>用户态也是可以访问硬件的哦，注意操作系统的抽象, 这时在理解”OS是服务提供者”<ul>
+<li>如, mov, 访存等</li>
+<li>扩展可以通过MMIO访问物理内存, 而这段物理内存是和具体物理设备绑定(映射)的<ul>
+<li>“控制寄存器组”</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>黑客能如何破坏你的电脑：<code>fork boom</code>就让你的进程永远无法及时调度。</p>
 <p>就算虚拟机内有1亿个进程，也不会把host os的队列撑爆。因为对于host虚拟机仅对应vCPU个线程，不会把调度队列撑爆。</p>
@@ -558,8 +568,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </li>
 </ul>
 </li>
+<li>敏感指令 != 特权指令<ul>
+<li>所以可能会存在敏感指令不下陷</li>
 </ul>
-<h2 id="几种方式"><a href="#几种方式" class="headerlink" title="几种方式"></a>几种方式</h2><ul>
+</li>
+</ul>
+<h2 id="几种方式"><a href="#几种方式" class="headerlink" title="几种方式"></a>几种方式</h2><p>解决敏感指令不下陷问题:</p>
+<ul>
 <li>解释执行<ul>
 <li>指令调相应函数模拟</li>
 <li>敏感指令不下陷</li>
@@ -568,7 +583,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 <li>二进制翻译<ul>
-<li>批量翻译，<strong>缓存</strong>取已翻译的指令</li>
+<li>批量翻译，<strong>缓存</strong>取已翻译的指令, -&gt; 中断插入粒度大</li>
 <li>读真寄存器 -变为-&gt; 读虚拟机的虚拟出来的寄存器</li>
 <li>不能处理Self-modifying Code<ul>
 <li>JIT, JVM<ul>
@@ -768,14 +783,20 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 </ul>
-<h4 id="中断虚拟化"><a href="#中断虚拟化" class="headerlink" title="中断虚拟化"></a>中断虚拟化</h4><p>本质就是VMM知道VM的完整的状态机，通过修改寄存器(具体见手册)可以注入中断</p>
-<ul>
-<li>触发vm exit的中断虚拟化</li>
-<li>不触发vm exit的中断虚拟化<ul>
-<li>硬件打配合</li>
+<h3 id="中断虚拟化"><a href="#中断虚拟化" class="headerlink" title="中断虚拟化"></a>中断虚拟化</h3><ul>
+<li>中断类型<ul>
+<li>时钟中断</li>
+<li>核间中断</li>
+<li>外部中断</li>
 </ul>
 </li>
 </ul>
+<p>本质就是VMM知道VM的完整的状态机，通过修改寄存器(具体见手册)可以注入中断</p>
+<h4 id="触发vm-exit的中断虚拟化"><a href="#触发vm-exit的中断虚拟化" class="headerlink" title="触发vm exit的中断虚拟化"></a>触发vm exit的中断虚拟化</h4><p>中断控制器(x86的APIC, ARM的GIC)收到中断后会将中断发送到对应的CPU核的CPU Interface中。对于vCPU也存在一个Virtual CPU Interface。VMM从物理中断控制器收到中断后将中断号传入vCPU(如写如中断号到寄存器)。VM Entry时就会检测到中断然后执行中断处理程序。</p>
+<p>本质: “可扩展的虚拟中断 + 不可扩展的物理中断”, 收到物理中断后分配到虚拟中断，然后在插入到虚拟机中。</p>
+<p><strong>如果VM正在运行要怎么插入中断呢?</strong> Virual CPU Interface和Physical CPU Interface都是外部CPU的功能。 所以必然会引入VM Exit以修改GIC。</p>
+<h4 id="不触发vm-exit的中断虚拟化"><a href="#不触发vm-exit的中断虚拟化" class="headerlink" title="不触发vm exit的中断虚拟化"></a>不触发vm exit的中断虚拟化</h4><p>维护一个映射表(Interrupt Translation Table)，用于直接将物理中断映射成虚拟中断。中断到来，查表，插入VM。映射表需要和调度配合已插入正确的vCPU。</p>
+<p>存在的问题: VMM不感知</p>
 
   
   
@@ -793,7 +814,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2022/05/08/universe/os/virtualization_intro/>http://yoursite.com/2022/05/08/universe/os/virtualization_intro/</a></p>
+                <p>本文永久链接是：<a href=http://github.com/66ring/2022/05/08/universe/os/virtualization_intro/>http://github.com/66ring/2022/05/08/universe/os/virtualization_intro/</a></p>
               
             
           </blockquote>
@@ -956,7 +977,7 @@ fork()对于现代程序员来说是一个糟糕的抽象
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#几种方式"><span class="toc-text">几种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本流程"><span class="toc-text">基本流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QEMU-KVM架构"><span class="toc-text">QEMU&#x2F;KVM架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU虚拟化"><span class="toc-text">CPU虚拟化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存虚拟化"><span class="toc-text">内存虚拟化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO虚拟化"><span class="toc-text">IO虚拟化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#设备模拟"><span class="toc-text">设备模拟</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#半虚拟化"><span class="toc-text">半虚拟化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设备直通"><span class="toc-text">设备直通</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#中断虚拟化"><span class="toc-text">中断虚拟化</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#几种方式"><span class="toc-text">几种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本流程"><span class="toc-text">基本流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QEMU-KVM架构"><span class="toc-text">QEMU&#x2F;KVM架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU虚拟化"><span class="toc-text">CPU虚拟化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存虚拟化"><span class="toc-text">内存虚拟化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO虚拟化"><span class="toc-text">IO虚拟化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#设备模拟"><span class="toc-text">设备模拟</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#半虚拟化"><span class="toc-text">半虚拟化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设备直通"><span class="toc-text">设备直通</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中断虚拟化"><span class="toc-text">中断虚拟化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#触发vm-exit的中断虚拟化"><span class="toc-text">触发vm exit的中断虚拟化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不触发vm-exit的中断虚拟化"><span class="toc-text">不触发vm exit的中断虚拟化</span></a></li></ol></li></ol></li></ol>
     </div>
   </section>
 
@@ -1490,7 +1511,7 @@ function setSearchService() {
       // 请求 PV 并自增
       var pvCtn = document.querySelector('#lc-sv');
       if (pvCtn || enableIncr) {
-        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+        var pvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-sv', 'Visits').then((record) => {
           incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-sv #number');
           if (eles.length > 0) {
@@ -1508,7 +1529,7 @@ function setSearchService() {
       // 请求 UV 并自增
       var uvCtn = document.querySelector('#lc-uv');
       if (uvCtn || enableIncr) {
-        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+        var uvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-uv', 'Visitors').then((record) => {
           var vuv = this.validUV();
           vuv && incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-uv #number');
@@ -1530,7 +1551,7 @@ function setSearchService() {
         for (i = 0; i < allPV.length; i++) {
           let pv = allPV[i];
           let title = pv.getAttribute('data-title');
-          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          var url = 'http://github.com/66ring' + pv.getAttribute('data-path');
           if (url) {
             var viewGetter = this.getRecord(Counter, url, title).then((record) => {
               // 是当前页面就自增

@@ -1,0 +1,3033 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>CMU15-445学习笔记 - 66Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="database">
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/the_dark_side_of_the_moon_tranp.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Mens et Manus</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>首页</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>档归</p>
+            </a>
+          
+            <a href="https://github.com/66RING"
+              
+              
+              id="https:githubcom66RING">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        CMU15-445学习笔记
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>请设置文章作者</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Jun 6, 2022</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="CMU15-445学习笔记" data-path="/2022/06/06/universe/database/cmu15-445_route_map_part1/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h1><p>Google c++ style guide</p>
+<p>检查丑代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">make format</span><br><span class="line">make check-lint</span><br><span class="line">make check-censored</span><br><span class="line">make check-clang-tidy</span><br></pre></td></tr></table></figure>
+
+<h1 id="Hybrid-OS"><a href="#Hybrid-OS" class="headerlink" title="Hybrid OS"></a>Hybrid OS</h1><ul>
+<li>操作系统中的启发(可能有用)<ul>
+<li>fs: 分段多级索引</li>
+</ul>
+</li>
+</ul>
+<h1 id="Mind-Map"><a href="#Mind-Map" class="headerlink" title="Mind Map"></a>Mind Map</h1><ul>
+<li>Storage<ul>
+<li>缓存管理策略<ul>
+<li>lru/mru/clock</li>
+</ul>
+</li>
+<li>磁盘文件优化<ul>
+<li>heaps</li>
+<li>linked list</li>
+</ul>
+</li>
+<li>内存布局<ul>
+<li>slotted page</li>
+<li>log-structured</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Hashing<ul>
+<li>静态哈希<ul>
+<li>线性探测，罗宾汉，布谷鸟哈希</li>
+</ul>
+</li>
+<li>动态哈希<ul>
+<li>Extendible Hashing</li>
+<li>Linear Hashing</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Tree Index<ul>
+<li>B+树<ul>
+<li>插入，删除，合并，分裂</li>
+<li>与B树的区别</li>
+<li>锁方案<ul>
+<li>Crabbing/Coupling</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>基数树(Radix Tree)</li>
+</ul>
+</li>
+<li>Sorting<ul>
+<li>外排<ul>
+<li>两路，多路(general)</li>
+</ul>
+</li>
+<li>开销分析，计算</li>
+<li>buffer数的影响</li>
+</ul>
+</li>
+<li>Joins<ul>
+<li>多重循环(Nested Loop)</li>
+<li>基于排序聚合(Sort-Merge)</li>
+<li>基于哈希</li>
+<li>不同开销分析，各自适用情况</li>
+</ul>
+</li>
+<li>Query Processing<ul>
+<li>Processing Model<ul>
+<li>process, thread per work, pool. 优缺点</li>
+</ul>
+</li>
+<li>Parallel Execution<ul>
+<li>Intra vs. Interwork</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="课程笔记"><a href="#课程笔记" class="headerlink" title="课程笔记"></a>课程笔记</h1><h2 id="ch1-history"><a href="#ch1-history" class="headerlink" title="ch1 history"></a>ch1 history</h2><h2 id="ch2-SQL用法"><a href="#ch2-SQL用法" class="headerlink" title="ch2 SQL用法"></a>ch2 SQL用法</h2><ul>
+<li>表的增删改查创等</li>
+<li>having, group by, 子查询，集函数等</li>
+</ul>
+<h2 id="ch3-数据存储1-数据结构"><a href="#ch3-数据存储1-数据结构" class="headerlink" title="ch3 数据存储1: 数据结构"></a>ch3 数据存储1: 数据结构</h2><ul>
+<li>page为单位操作，page除了4KB还可以其他多种方式</li>
+<li>mmap为什么不好，不可控</li>
+<li>如何组织数据存储的方式<ul>
+<li>简单的：”数组”，但是在内部删除增加时存在问题<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">| cnt: 3 |</span><br><span class="line">|--------|</span><br><span class="line">| id1    |</span><br><span class="line">| id2    |</span><br><span class="line">| id3    |</span><br><span class="line"></span><br><span class="line">delete id2</span><br><span class="line">| cnt: 2 |</span><br><span class="line">|--------|</span><br><span class="line">| id1    |</span><br><span class="line">|        |</span><br><span class="line">| id3    |</span><br></pre></td></tr></table></figure></li>
+<li>slot，标记的方式<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">page </span><br><span class="line">|-----------------------|</span><br><span class="line">| slot1 | slot2 | ...-&gt; |</span><br><span class="line">|                       |</span><br><span class="line">|                       |</span><br><span class="line">| &lt;- ...| data2 | data1 |</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ch4-数据存储2-存储模型"><a href="#ch4-数据存储2-存储模型" class="headerlink" title="ch4 数据存储2: 存储模型"></a>ch4 数据存储2: 存储模型</h2><ul>
+<li>关系型，非关系型…</li>
+<li><strong>OLAP</strong><ul>
+<li>case: 指令复杂，很多集函数，子查询，LIKE等运算</li>
+<li>OLAP场景多是读多复杂性高</li>
+<li>列存储结构</li>
+</ul>
+</li>
+<li><strong>OLTP</strong><ul>
+<li>case: 指令简单，一条执行就简单的增删改查等</li>
+<li>OLTP场景多是写多复杂性低</li>
+<li>行存储结构</li>
+</ul>
+</li>
+</ul>
+<p>e.g. 下面是一个OLAP的例子，只涉及到<code>lastLogin</code>这个属性，但是如果数据库只是简单的笛卡尔积，将带来大量的空间浪费。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(U.lastLogin)</span><br><span class="line">	<span class="keyword">EXTRACT</span>(<span class="keyword">month</span> <span class="keyword">FROM</span> U.lastLogin) <span class="keyword">AS</span> <span class="keyword">month</span></span><br><span class="line">	<span class="keyword">FROM</span> useracct <span class="keyword">AS</span> U</span><br><span class="line">	<span class="keyword">WHERE</span> U.hostname <span class="keyword">LIKE</span> <span class="string">'%.gov'</span></span><br><span class="line">	GROUPY <span class="keyword">BY</span> <span class="keyword">EXTRACT</span>(<span class="keyword">month</span> <span class="keyword">FROM</span> U.lastLogin)</span><br></pre></td></tr></table></figure>
+
+<p>所以对于OLAP场景，多使用列存储的结构，即每列都附带上key，列直接通过相同的key联系在一起：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">列存储</span><br><span class="line">id1 |col1|  id1 |col2|  id1 |col3| </span><br><span class="line">id2 |col1|  id2 |col2|  id2 |col3| </span><br><span class="line">id3 |col1|  id3 |col2|  id3 |col3| </span><br><span class="line"></span><br><span class="line">行存储</span><br><span class="line">id1 |col1|col2|col3| </span><br><span class="line">id2 |col1|col2|col3| </span><br><span class="line">id3 |col1|col2|col3|</span><br></pre></td></tr></table></figure>
+
+<p>OLTP，OLAP，HTAP：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">complexity  ^</span><br><span class="line">            |         OLAP</span><br><span class="line">            |    HTAP </span><br><span class="line">            | OLTP</span><br><span class="line">easy        |------------&gt;</span><br><span class="line">             read       write</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>那有没有基于矩阵的存储呢?</p>
+</blockquote>
+<h2 id="ch5-Buffer-pool"><a href="#ch5-Buffer-pool" class="headerlink" title="ch5 Buffer pool"></a>ch5 Buffer pool</h2><p>缓冲池的优化方案</p>
+<ol>
+<li>Multiple Buffer Pools<ul>
+<li>各用各的buffer pool，不相互污染</li>
+</ul>
+</li>
+<li>Pre-Fetching</li>
+<li>Scan sharing</li>
+<li>Buffer Pool Bypass</li>
+</ol>
+<ul>
+<li>Conclusion<ul>
+<li>DBMS内存管理要做得比OS好，毕竟定制</li>
+<li>“通用的不要，我们按需定制”<ul>
+<li>e.g. os page cache, buffer pool bypass</li>
+</ul>
+</li>
+<li>各种方向的策略都是学问<ul>
+<li>淘汰策略</li>
+<li>预取测略</li>
+<li>分配测略</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Multiple-Buffer-Pools"><a href="#Multiple-Buffer-Pools" class="headerlink" title="Multiple Buffer Pools"></a>Multiple Buffer Pools</h3><p>per-database buffer pool和per-page type buffer pool等，想方设法 <strong>让共享资源独立</strong> ，这样可以 <strong>减少锁竞争和增加局部性</strong></p>
+<h3 id="Pre-Fetching"><a href="#Pre-Fetching" class="headerlink" title="Pre-Fetching"></a>Pre-Fetching</h3><p>根据查询策略可以由不用预取方案。如顺序读写，就可以预取顺序后续的页。再如树形结构的扫描，可能需要一些方式来判断哪些页不是叶子节点，从而只预取保存了数据的叶子节点。</p>
+<h3 id="Scan-Sharing"><a href="#Scan-Sharing" class="headerlink" title="Scan Sharing"></a>Scan Sharing</h3><p>假设有Q1, Q2两个扫描。Q1执行到一半然后Q2开始执行，都是对同一个表的扫描。这时 <strong>Q2可以attach到Q1</strong> ，即从Q1的位置开始扫描，最后Q2再自己扫描把前半段补上。这样很明显就容易污染缓冲区。</p>
+<p>不过需要注意<code>LIMIT</code>等的情况，需要额外的处理。</p>
+<h3 id="Buffer-Pool-Bypass"><a href="#Buffer-Pool-Bypass" class="headerlink" title="Buffer Pool Bypass"></a>Buffer Pool Bypass</h3><p>不使用”自动淘汰测略的共用Buffer Pool”， <strong>自己独立申请内存来做buffer</strong> 。如在扫描大型文件时，buffer pool是不够大的，那么一趟下来虽然自动buffer了，但是又被后续扫描覆盖了，从而一次都没hit到。</p>
+<p>又比如我们不希望临时表等文件污染buffer pool。</p>
+<h3 id="越过操作系统的Page-Cache"><a href="#越过操作系统的Page-Cache" class="headerlink" title="越过操作系统的Page Cache"></a>越过操作系统的Page Cache</h3><p>我们知道操作系统会做Page Cache，但是os做的是受到通用性等约束的。我们不希望其他程序污染，或者我们要根据需求实现自己的缓存方案，我们可以使用<code>O_DIRET</code>标记来跳过os的page cache。</p>
+<h3 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h3><ul>
+<li>page用上次访问的timestamp标记，淘汰时取timestamp最老的淘汰<ul>
+<li>所以pages要根据timestamp有序存放(最小堆)</li>
+<li>“为何不用链表?” 出于局部性的考虑?</li>
+</ul>
+</li>
+<li><strong>Clock</strong> 策略：二次机会<ul>
+<li>一个page的循环数组，每个page由ref标记最近是否有使用，一个指针单向遍历</li>
+<li>如果指向的page，ref=1说明最近有使用，ref置0</li>
+<li>如果指向的page，ref=0说明最近没使用或至上次使用已经不用一段时间了，淘汰之</li>
+</ul>
+</li>
+</ul>
+<p>不过这些”传统的LRU”方案都存在”sequential flooding”问题。如在扫描大型文件的时候，你的buffer有限，e.g.:扫到page3时buffer1要淘汰，到page4时之前page1和page2的cache都不复存在。另外，这些cache <strong>往往只读一次就不用了</strong> ，非常污染我们的缓存策略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">buffer  page</span><br><span class="line">1        1</span><br><span class="line">2       2</span><br><span class="line">        3</span><br><span class="line">        4</span><br><span class="line">        5</span><br></pre></td></tr></table></figure>
+
+<p><strong>改进</strong>: </p>
+<ol>
+<li>LRU-K<ul>
+<li>不单记录timestamp，还记录前K个操作对该page的使用频率</li>
+</ul>
+</li>
+<li>Localization<ul>
+<li>每个query到设置缓冲区，最小化缓冲区的污染<ul>
+<li>e.g. small ring buffer for private query</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Priority hint<ul>
+<li>DBMS应该知道页面的内容，所以知道哪些页面的内容比较重要</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>其他优化: Background writing<ul>
+<li>周期性写回脏页，而不是cache满时要换出时再写回<ul>
+<li>需要注意先记录log再写回</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ch6-Hash-Table"><a href="#ch6-Hash-Table" class="headerlink" title="ch6 Hash Table"></a>ch6 Hash Table</h2><ul>
+<li><p>静态</p>
+<ul>
+<li>Linear probe hashing, 线性探测哈希</li>
+<li>Robin hood hashing, 罗宾汉哈希</li>
+<li>Cuckoo hashing, 布谷鸟哈希</li>
+</ul>
+</li>
+<li><p>动态: 扩容的影响尽可能小：resize on demand</p>
+<ul>
+<li>Chained hashing<ul>
+<li>平均距离比线性探测好，但是大量指针就不能利用好局部性了</li>
+</ul>
+</li>
+<li>Extendible hashing<ul>
+<li>本质上是数组的扩张，局部性不错，只是每次翻倍可能会浪费空间</li>
+</ul>
+</li>
+<li>Linear hashing</li>
+</ul>
+</li>
+<li><p>溢出</p>
+<ul>
+<li>溢出策略自定，具体问题具体分析，可以根据avg也可以根据max…</li>
+</ul>
+</li>
+<li><p>Conclusion</p>
+<ul>
+<li>想办法减少线性探测的平均长度(e.g.罗宾汉, 链式)</li>
+<li>哈希表是存储引擎从page中获取data的一种方式，另一种是树</li>
+<li><strong>动态哈希思想</strong>: <ul>
+<li>分裂的影响尽可能小：<strong>resize on demand</strong><ul>
+<li>如Extendible hashing和Linear hashing</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Linear-probe-hashing"><a href="#Linear-probe-hashing" class="headerlink" title="Linear probe hashing"></a>Linear probe hashing</h3><p>当哈希同一个slot时，如果该slot空则使用，否则查找线性下一个，直到找到空slot。</p>
+<p><strong>需要注意删除的情况</strong> ，因为的线性查找下一个，如果直接删除会错误以为key不存在，所以删除元素的方法是逻辑删除：标记删除。</p>
+<blockquote>
+<p>相同key不同value的处理方法</p>
+<ul>
+<li>key-values</li>
+<li>(key-value)s</li>
+</ul>
+</blockquote>
+<h3 id="Robin-hood-hashing"><a href="#Robin-hood-hashing" class="headerlink" title="Robin hood hashing"></a>Robin hood hashing</h3><p>罗宾汉哈希的思想是尽可能降低平均线性探测的时间。</p>
+<ul>
+<li>rick key: (相对poor key)insert的位置距离最优的位置(即哈希立即得到的位置)的距离 近</li>
+<li>poor key: 同理rick key，距离较 远</li>
+</ul>
+<p>所以方法就是：另外维护一个”距离”的项，插入是比对”待插入元素”当前距离和”已插入元素”当前距离，poor key会得到该位置。罗宾汉劫富济贫</p>
+<h3 id="Cuckoo-hashing"><a href="#Cuckoo-hashing" class="headerlink" title="Cuckoo hashing"></a>Cuckoo hashing</h3><blockquote>
+<p>鸠占鹊巢</p>
+</blockquote>
+<p>使用多个哈希表，每个哈希表使用不同的哈希函数。每次插入同时尝试所有哈希函数，如果直接是空位就插入，否则使用另一个哈希函数。如果所有表都已被占用，则淘汰当前占用的元素。最后该被淘汰的元素再用上述方法找到它的位置。</p>
+<p>需要注意的是 <strong>可能会出现死循环</strong> ，所以对哈希表大小的设计有要求，不过查表是O(1)的</p>
+<h3 id="Chained-hashing"><a href="#Chained-hashing" class="headerlink" title="Chained hashing"></a>Chained hashing</h3><p>上面提到的属于静态哈希表，哈希表大小固定，每次哈希表的resize需要所有元素重新哈希。</p>
+<p>动态哈希表一定程度上解决了这个问题，因为是”resize on demand”的</p>
+<p>Chained hashing就是相同的<code>hash(key)</code>放到同一个桶(bucket)中，每个桶是一个page，溢出则分配新桶链到后面即可</p>
+<h3 id="Extendible-hashing"><a href="#Extendible-hashing" class="headerlink" title="Extendible hashing"></a>Extendible hashing</h3><p>“数学原理”：大range分小range</p>
+<ol>
+<li>初始两个大range: <code>0xxx</code>和<code>1xxx</code></li>
+<li>溢出后将一个range细分：如分为了<code>0xxx</code>，<code>10xx</code>和<code>11xx</code>，那么对于原来的大range<code>1xxx</code>就多了一个page来存储</li>
+</ol>
+<p>Extendible hashing比较复杂。具体如下：</p>
+<ul>
+<li>一个global count表示哈希时考虑几bit(其实也就是所有local count的最大值)</li>
+<li>local count表示哈希到该页用了几bit(其实也就是分裂的次数，1开始表示0次)</li>
+<li>如果一个表溢出，则分裂成两个表，这这两个表的local count都是原local count+1</li>
+<li>如果分裂后local count大于global count，则global count++，索引数组 <strong>翻倍</strong></li>
+<li><strong>每次分裂需要重新映射</strong> ，其实也就分裂掉的page要重新映射</li>
+</ul>
+<p>思想的这样子的：一个二进制数翻倍后会得到两个不相关的数，如原来只考虑一位时，<code>1</code>能够索引一个page，翻倍后得到<code>11</code>和<code>10</code>用于索引两个表。分裂对于其它表没有影响，比如<code>0</code>，因为它管理的范围仍是<code>0xxx</code>，那让所有<code>0xxx</code>都索引到该page即可，溢出后再分裂。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">global:1</span><br><span class="line">   ┌─┐        ┌────┐</span><br><span class="line">0xx│ ├───────►│0xxx│local:1</span><br><span class="line">   ├─┤        │0xxx│</span><br><span class="line">1xx│ ├─────┐  └────┘</span><br><span class="line">   └─┘     │</span><br><span class="line">           │  ┌────┐</span><br><span class="line">           └─►│1xxx│local:1</span><br><span class="line">              │1xxx│</span><br><span class="line">              └────┘</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">global:2</span><br><span class="line">   ┌─┐        ┌────┐</span><br><span class="line">00x│ ├─┬─────►│0xxx│local:1</span><br><span class="line">   ├─┤ │      │0xxx│</span><br><span class="line">10x│ ├─┼───┐  └────┘</span><br><span class="line">   ├─┤ │   │</span><br><span class="line">01x│ ├─┘   │  ┌────┐</span><br><span class="line">   ├─┤     └─►│10xx│local:2</span><br><span class="line">11x│ ├───┐    │10xx│</span><br><span class="line">   └─┘   │    └────┘</span><br><span class="line">         │</span><br><span class="line">         │    ┌────┐</span><br><span class="line">         └───►│11xx│local:2</span><br><span class="line">              │11xx│</span><br><span class="line">              └────┘</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Linear-hashing"><a href="#Linear-hashing" class="headerlink" title="Linear hashing"></a>Linear hashing</h3><p><strong>数学原理</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hash1: key % n &#x3D; M</span><br><span class="line">hash2: key % 2n &#x3D; M 或 M + n</span><br></pre></td></tr></table></figure>
+
+<p>所以可以将 <strong>桶M分裂成桶M和桶M+n</strong> 。我们有办法知道哪些桶分裂，哪些桶没分裂，对于没分裂的桶我们使用hash1, 分裂的桶使用hash2。 <strong>这样的resize on demand就解决了直接扩容导致的瞬时大量迁移</strong></p>
+<p>哈希表维护一个指针，用于标识下一个要分裂的桶。 <strong>任意</strong> 桶溢出将导致 <strong>split pointer指向的桶</strong> 分裂，然后指针下移。</p>
+<p><strong>注意</strong> 分裂的是指针指向的桶。</p>
+<p>会需要使用多个哈希函数来寻找key对应的桶。详见后文。</p>
+<p>溢出判断方法可以是：超过容量溢出或超过某AVG溢出。下例假设桶容量5，超过则溢出</p>
+<table>
+<thead>
+<tr>
+<th>split ptr</th>
+<th>桶id</th>
+<th>已存的key</th>
+<th>溢出key</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>=&gt;</td>
+<td>0</td>
+<td>4, 8, 12</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1</td>
+<td>5, 9</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td>7, 11, 15, 19, 23</td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>第一个分裂的桶从0开始</li>
+<li>hash1(key) = key % n</li>
+<li>hash2(key) = key % 2n</li>
+</ul>
+<p>现在 <strong>插入</strong>key=27: </p>
+<ol>
+<li>桶3发生溢出</li>
+<li>指针指向的桶：桶0分裂</li>
+<li>桶0的内容用hash2重新映射</li>
+<li>指针指向下一个桶</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>split ptr</th>
+<th>桶id</th>
+<th>已存的key</th>
+<th>溢出key</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>0</td>
+<td>8</td>
+<td></td>
+</tr>
+<tr>
+<td>=&gt;</td>
+<td>1</td>
+<td>5, 9</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td>7, 11, 15, 19, 23</td>
+<td>27</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td>4, 12</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>查找：</p>
+<ol>
+<li>如果hash1得到的值大于等于split ptr指向的桶id，则所得即为目标桶</li>
+<li>如果hash1得到的值小于split ptr指向的桶id，则使用hash2找到真正的桶<ul>
+<li>因为split ptr之前的桶已经分裂了，而这个分裂是使用hash2重新映射的</li>
+</ul>
+</li>
+<li>当原始桶都分裂过了(即0~3)，则根据那时的大小开始新的hash1，hash2循环</li>
+</ol>
+<p>删除：只有最后的桶为空是才会缩小</p>
+<h2 id="ch7-Table-Indexs-B-tree"><a href="#ch7-Table-Indexs-B-tree" class="headerlink" title="ch7 Table Indexs(B+tree)"></a>ch7 Table Indexs(B+tree)</h2><blockquote>
+<ul>
+<li>table index: 维护一段有序或以某种方式组织的table的子集以提高访问效率</li>
+<li>DBMS要保证table和index是同步的</li>
+<li>B+树可以有大于两个的孩子</li>
+<li>B+树提升读写效率</li>
+</ul>
+</blockquote>
+<p><a href="https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html" target="_blank" rel="noopener">B+树可视化</a></p>
+<ul>
+<li><p>B+树特性</p>
+<ul>
+<li>完全平衡，深度相同</li>
+<li>每个叶子节点是 <strong>half-full</strong>的<ul>
+<li>但是merge的成本很高，有些DBMS会不做merge</li>
+</ul>
+</li>
+<li>如果中间节点有k个key，那它有k+1个孩子</li>
+<li>叶子节点之间使用姐妹指针链接<ul>
+<li>因为DB中常会有顺序select等操作，姐妹指针链接后就 <strong>不用像B树那样频繁回溯的遍历了</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>与B树区别</p>
+<ul>
+<li>B树 <strong>非叶子节点会保存value</strong> 。B+树 <strong>只在叶子节点保存value</strong> ，中间节点只保存key</li>
+<li>所以 <strong>B树遍历需要大量回溯</strong></li>
+<li>B+树矮胖，不过好像访存复杂度和B树一样，都是二分查找。只不过是B+数局部性更优: 包括节点内二分，不用回溯</li>
+</ul>
+</li>
+<li><p>conclusion</p>
+<ul>
+<li>妙不可言，妙不可言</li>
+<li>时间复杂度，空间复杂度， <strong>局部性复杂度</strong></li>
+<li>尽可能利用好一次磁盘连续访问<ul>
+<li>sibling pointer</li>
+<li>node size</li>
+<li>why not B tree(回溯, 连续)</li>
+</ul>
+</li>
+<li>不要忘了局部性<ul>
+<li>why not key pointer</li>
+<li>key value分开存(索引值保存key)</li>
+<li>内部偏移: key map/indirection</li>
+</ul>
+</li>
+<li>有序的特性<ul>
+<li>二分查找</li>
+<li>Interpolation</li>
+<li>前缀压缩</li>
+<li>后缀截断(inner node, 够区分就可以了)</li>
+</ul>
+</li>
+<li>trade off<ul>
+<li>合并</li>
+<li>重建</li>
+<li>热点节点</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">      ┌─┬──┬─┬──┬─┬─────┐</span><br><span class="line">      │ │5 │ │9 │ │     │ Inner Node</span><br><span class="line">      └┬┴──┴┬┴──┴┬┴─────┘</span><br><span class="line">       │    │    │</span><br><span class="line"> ┌─────┘    └──┐ └───────┐</span><br><span class="line"> │&lt;5        &lt;9 │         │&gt;&#x3D;9</span><br><span class="line"> │             │         │</span><br><span class="line"> │             │         │</span><br><span class="line"> ▼             ▼         ▼</span><br><span class="line">┌─┌─┬─┬──────►┌─┬───┬───►┌─┬───┐</span><br><span class="line">│1│3│ │       │6│7  │    │9│13 │ Leaf Node</span><br><span class="line">└─┴─┴─┘◄──────┴─┴───┘◄───┴─┴───┘</span><br><span class="line">        Sibling</span><br><span class="line">        Pointer</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Nodes"><a href="#Nodes" class="headerlink" title="Nodes"></a>Nodes</h3><p>B+树每个节点都是<code>key-value</code>数组( <strong>一个page</strong> )，只是叶子节点和中间节点的value不同。 <strong>不过实际中不会这样简单的一个数组</strong> 。</p>
+<p>常用的是key，value分开存储。key一个数组，value一个数组。<strong>原因如下：</strong></p>
+<ul>
+<li>key/value/key-value的大小是可变的</li>
+<li>扫描/搜索时用不到value，只要key不想value污染cache(我们对cache真的非常小气)</li>
+</ul>
+<h3 id="B-树插入"><a href="#B-树插入" class="headerlink" title="B+树插入"></a>B+树插入</h3><ol>
+<li>找到叶子节点L(key在某个区间)</li>
+<li>插入数据，保证依旧有序<br> a. 如果L空间够大，结束<br> b. 否则L分裂成两个节点<pre><code>i. 将(有序)中位数key拷贝到上层去做所以
+ii. 重新分配被分裂节点的内容</code></pre></li>
+</ol>
+<p>“分裂，重分，中值往上”</p>
+<h3 id="B-树删除"><a href="#B-树删除" class="headerlink" title="B+树删除"></a>B+树删除</h3><ol>
+<li>找到叶子节点L</li>
+<li>移除之<br> a. 如果移除后叶子节点仍是half-full的，结束<br> b. 否则 <strong>从姐妹节点中获取数据</strong> ，调整至half-full<br> c. 如果无法都包含half-full，与姐妹节点合并</li>
+<li>如果发生了合并，需要调整父节点的内容</li>
+<li>合并开销大，也可以考虑使用其他机制，而是不立即合并</li>
+</ol>
+<h3 id="B-树设计"><a href="#B-树设计" class="headerlink" title="B+树设计"></a><strong>B+树设计</strong></h3><h4 id="节点大小"><a href="#节点大小" class="headerlink" title="节点大小"></a>节点大小</h4><p>速度越慢，节点越大。 <strong>IO随机访问慢，那一次尽可能多地读取连续的有效数据(一个node)</strong></p>
+<p>当然具体情况具体分析</p>
+<blockquote>
+<p>What if Persistent Memory?</p>
+</blockquote>
+<h4 id="合并阀值"><a href="#合并阀值" class="headerlink" title="合并阀值"></a>合并阀值</h4><p>合并开销大，许多DBMS在非half-full时也不触发合并。</p>
+<p>可以删除时只做标记，也可以定期重建B+树</p>
+<h4 id="变长key"><a href="#变长key" class="headerlink" title="变长key"></a>变长key</h4><p>对于变长的key该如何保存：</p>
+<ul>
+<li>指针<ul>
+<li>没利用局部性，慢</li>
+</ul>
+</li>
+<li>变长节点<ul>
+<li>节点长度不定，索引值有待考虑</li>
+<li>内存管理，不能利用好page size</li>
+</ul>
+</li>
+<li>Padding<ul>
+<li>padding到最大值，浪费空间</li>
+</ul>
+</li>
+<li><strong>Key Map/Indirection</strong><ul>
+<li><strong>一个节点中</strong> 保存有序key map来索引k-v，key map知道对应数据位置，使用offset索引</li>
+<li><strong>优化</strong> ：因为key map是有序的，所以可以在key map里保存一部分key用来初步过滤(二分查找)，而不是每次通过索引再去查找</li>
+</ul>
+</li>
+</ul>
+<h4 id="重复索引"><a href="#重复索引" class="headerlink" title="重复索引"></a>重复索引</h4><ul>
+<li>保存多次</li>
+<li>一key对多value(key是相同的)</li>
+</ul>
+<h4 id="Intra-Node-Search"><a href="#Intra-Node-Search" class="headerlink" title="Intra-Node Search"></a>Intra-Node Search</h4><ul>
+<li>线性扫描</li>
+<li>二分查找(有序)</li>
+<li><strong>Interpolation</strong></li>
+</ul>
+<p>Interpolation: 我们知道/精心设计key的布局，那么就可以这些内容优化：e.g.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">|---|---|-----|---|---|---|----|</span><br><span class="line">| 4 | 5 | nil | 7 | 8 | 9 | 10 |</span><br><span class="line">|---|---|-----|---|---|---|----|</span><br><span class="line"></span><br><span class="line">要找8，就可以计算出offset &#x3D; 7 - (10-8) &#x3D; 5</span><br></pre></td></tr></table></figure>
+
+<h4 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h4><ul>
+<li>前缀压缩<ul>
+<li>因为是有序存储的，相邻key会比较相似，那么可以只保存一个公共前缀和各个不同后缀</li>
+<li>“靠下的中间节点”</li>
+</ul>
+</li>
+<li>后缀截断<ul>
+<li>中间节点只做索引，所以我们可以只保留足以区分的最小前缀，而去掉中间节点的后缀</li>
+<li>“靠上的中间节点”</li>
+<li>Q: 那怎么找到最小前缀呢?</li>
+</ul>
+</li>
+<li>Bulk Insert<ul>
+<li>建树时不是一个个插入，而是排序后自底向上构建，就不用频繁调整了</li>
+<li>利用这点，有序的叶子节点s是可以直接保存在磁盘的，然后Bulk Insert恢复</li>
+</ul>
+</li>
+<li>Pointer Swizzling<ul>
+<li>说是额外保存一个page id来索引节点来减少查页表，但是id找到指针后还是得查表</li>
+</ul>
+</li>
+<li><strong>Pinned热点节点</strong> ，如根节点/中间节点等经常被用到，那就固定在buffer中</li>
+<li>联合查找索引失效问题<ul>
+<li>所谓联合查找就是找多个属性的组合, e.g <code>(username, email)</code></li>
+<li>因为根据索引b+树建树时可能会(具体实现相关)先根据第一个key排序，然后在相同的key内再排序</li>
+<li>所以<code>(username, email)</code>建立索引，<code>select username</code>索引有效，<code>select email</code>索引失效。公共左前缀原则<ul>
+<li>叶子节点顺序可能是<code>(1, 1) (1, 5) (2, 1) (2, 3)</code>，所以使用后缀是无法利用有序的性质的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ch8-Table-Indexs-II"><a href="#ch8-Table-Indexs-II" class="headerlink" title="ch8 Table Indexs(II)"></a>ch8 Table Indexs(II)</h2><ul>
+<li>更多的技巧<ul>
+<li>部分索引</li>
+<li>Covering index</li>
+</ul>
+</li>
+</ul>
+<h3 id="重复key问题"><a href="#重复key问题" class="headerlink" title="重复key问题"></a>重复key问题</h3><blockquote>
+<p>重复key会导致什么问题?</p>
+</blockquote>
+<ol>
+<li>DBMS自动添加隐藏的<code>record id</code>和<code>key</code>一起作为unique id</li>
+<li>叶子节点”支持溢出”，链表或者某种方式把重复节点保存起来</li>
+</ol>
+<h3 id="hints"><a href="#hints" class="headerlink" title="hints"></a>hints</h3><h4 id="隐式索引"><a href="#隐式索引" class="headerlink" title="隐式索引"></a>隐式索引</h4><p>DBMD会自动为主码和unique的码建立索引</p>
+<h4 id="Partial-Indexes"><a href="#Partial-Indexes" class="headerlink" title="Partial Indexes"></a>Partial Indexes</h4><p>不用对该属性的所有内容做索引。可以只做部分索引 <strong>如只对月份等于1的属性做索引</strong> <code>month = 1</code>。之后搜索时，如果有月份为1的限制就可以使用索引。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index idx_foo on foo where month &#x3D; 1;</span><br></pre></td></tr></table></figure>
+
+<p>降低维护索引的开销。</p>
+<p>小技巧：可以对每年，每月做部分索引。</p>
+<h4 id="Covering-Indexes"><a href="#Covering-Indexes" class="headerlink" title="Covering Indexes"></a>Covering Indexes</h4><p>索引用的key即所求的value，DBMS就不用再根据key去取value了。</p>
+<h4 id="Index-Include-Columns"><a href="#Index-Include-Columns" class="headerlink" title="Index Include Columns"></a>Index Include Columns</h4><p>索引内嵌额外信息(列)，这样索引查表时就可以少掉”查值”操作。道理类似Covering Indexes</p>
+<h4 id="Function-expression-indexes"><a href="#Function-expression-indexes" class="headerlink" title="Function/expression indexes"></a>Function/expression indexes</h4><blockquote>
+<p>an index dose not need to store keys in the some way that they appear in their base table</p>
+</blockquote>
+<p>“多表索引”</p>
+<p>具体DBMS支持不同</p>
+<h3 id="查表问题"><a href="#查表问题" class="headerlink" title="查表问题"></a>查表问题</h3><ul>
+<li>Trie Index</li>
+<li>Radix Tree</li>
+</ul>
+<p>中间节点并不知道所查是否存在，每次都要从根遍历到叶子节点。”This means that you could have (at least) one buffer pool page miss per level in the tree just to find out a key do not exist”. TODO 为何</p>
+<p>所以有如下改进方法：</p>
+<p>一种直观的方法是这样：用多少申请多少</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">┌─┐</span><br><span class="line">│H│</span><br><span class="line">└┬┘</span><br><span class="line"> │</span><br><span class="line"> │</span><br><span class="line">┌▼┌─┐</span><br><span class="line">│i│a│</span><br><span class="line">└─┴┬┘</span><br><span class="line">   │</span><br><span class="line">  ┌▼┐</span><br><span class="line">  │t│</span><br><span class="line">  └─┘</span><br></pre></td></tr></table></figure>
+
+<p>另一种方法可以key span，每层保存所有可能出现的编码。如果key存在则有指针否则无。利用这种span思想的结构就是Radix Tree。</p>
+<p>不过，上述方法存在一些不足之处，就每一层只判断一个字符，从而导致遍历深度问题，所以可以将”公共部分”/“不区分分区”压缩成一个节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">┌─┐            ┌─┐</span><br><span class="line">│H│            │H│</span><br><span class="line">└┬┘            └┬┘</span><br><span class="line"> │              │</span><br><span class="line"> │              │</span><br><span class="line">┌▼┌─┐          ┌▼┌────┐</span><br><span class="line">│i│e│   &#x3D;&#x3D;&gt;    │i│ello│</span><br><span class="line">└─┴┬┘          └─┴────┘</span><br><span class="line">   │</span><br><span class="line">  ┌▼┐</span><br><span class="line">  │l│</span><br><span class="line">  └┬┘</span><br><span class="line">   │</span><br><span class="line">  ┌▼┐</span><br><span class="line">  │l│</span><br><span class="line">  └┬┘</span><br><span class="line">   │</span><br><span class="line">  ┌▼┐</span><br><span class="line">  │o│</span><br><span class="line">  └─┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="关键词搜索问题"><a href="#关键词搜索问题" class="headerlink" title="关键词搜索问题"></a>关键词搜索问题</h3><p>思考下面的情形：你要找一篇文章中”你好”出现的位置/次数。这时索引就不那么好用了，因为索引都是”最右匹配的”，不会查询”子内容”。所以引入 <strong>倒排查找</strong> (Inverted Index，有时也称full-text search index)。</p>
+<p>倒排索引就是建立<code>单词-目标内容</code>的map，直接用单词来索引文章内容。</p>
+<p>上面虽说key的单词的map，但是需要具体情况具体分析，一般存在如下搜索情形：</p>
+<ul>
+<li>Phrase Searchs<ul>
+<li>即简单的搜一个单词，从左到右匹配</li>
+</ul>
+</li>
+<li>Proximity Searchs<ul>
+<li>有范围的查询，如查找两个单词在n个单词之间出现次数</li>
+</ul>
+</li>
+<li>Wildcard Searchs<ul>
+<li>模糊查询，如正则表达式</li>
+</ul>
+</li>
+</ul>
+<p>针对以上情形，需要根据情况做出设计的决策：</p>
+<ul>
+<li>要保存什么<ul>
+<li>如可以保存单词出现的频率，位置或者其他meta-data等</li>
+</ul>
+</li>
+<li>什么时候更新<ul>
+<li>维护一些辅助结构来一部分一部分的更新</li>
+</ul>
+</li>
+</ul>
+<h2 id="ch9-Multi-Threaded-Index-Concurrency-Control"><a href="#ch9-Multi-Threaded-Index-Concurrency-Control" class="headerlink" title="ch9 Multi-Threaded Index Concurrency Control"></a>ch9 Multi-Threaded Index Concurrency Control</h2><blockquote>
+<p>多线程索引并发控制<br>充分cpu多核性能和磁盘io的失速(stall)</p>
+</blockquote>
+<ul>
+<li>conclusion<ul>
+<li>绞尽脑汁减少锁的范围<ul>
+<li>crabbing</li>
+<li>范围实在降低不了了就减低发生的频率</li>
+</ul>
+</li>
+<li>我们发现热点节点root容易称为瓶颈节点，所以会考虑降低互斥在上层发生</li>
+<li>分裂/合并是并发性下降的根源<ul>
+<li>解决分裂：延迟分裂(delay parent update)</li>
+<li>解决合并：延迟合并</li>
+<li>降低不安全发生频率</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>我们应该意识到: 合并和分裂这种不安全的情况是占少数的，或者我们可以让他尽量少发生</strong> ，因为这些情况一旦发送，那就是大面积的锁和互斥。所以就有了如下方案：</p>
+<ul>
+<li>Crabibing：”一步到位leaf锁，如不安全在老实重来”</li>
+<li>DBMS不立即触发 <strong>合并</strong> ，不安全频率再低</li>
+<li><strong>分裂</strong> 时延迟parent的更新</li>
+</ul>
+<blockquote>
+<p>We focused on B+ Tree but the some high-level techniques are applicable to other data structure</p>
+</blockquote>
+<h3 id="locks-和-latches"><a href="#locks-和-latches" class="headerlink" title="locks 和 latches"></a>locks 和 latches</h3><p>我们这里说的lock是 <strong>针对事务</strong> 的，在事务期间持有，必要时要回滚的。latch的 <strong>针对临界区</strong> 的，不需要考虑回滚。</p>
+<table>
+<thead>
+<tr>
+<th>区别项</th>
+<th>locks</th>
+<th>latches</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>separate</td>
+<td>事务间</td>
+<td>线程间</td>
+</tr>
+<tr>
+<td>protect</td>
+<td>数据库内容</td>
+<td>内存数据</td>
+</tr>
+<tr>
+<td>during</td>
+<td>整个事务</td>
+<td>临界区</td>
+</tr>
+<tr>
+<td>deadlock探测</td>
+<td>探测和解锁：超时终止</td>
+<td>避免：编码的约束</td>
+</tr>
+<tr>
+<td>kept in(管理者)</td>
+<td>lock manager</td>
+<td>数据结构</td>
+</tr>
+</tbody></table>
+<p>latch模式：读写锁，即互斥锁和共享锁。</p>
+<h3 id="锁实现的几种方法"><a href="#锁实现的几种方法" class="headerlink" title="锁实现的几种方法"></a>锁实现的几种方法</h3><ol>
+<li>blocking OS mutex, e.g: <code>std::mutex</code><ul>
+<li>not-scalable(core增长没用), 每次加锁解锁大概需要25ns</li>
+</ul>
+</li>
+<li>Test-and-Set Spin<ul>
+<li>非常高效</li>
+<li>not-scalable, <strong>缓存不友好</strong></li>
+<li>自旋锁</li>
+</ul>
+</li>
+<li>Reader-Writer Latch，<strong>读写锁(互斥锁)</strong><ul>
+<li>…</li>
+<li>可以基于spin lock</li>
+<li>需要注意 <strong>使用队列防止饥饿</strong><ul>
+<li>e.g.读锁在缓冲区，写锁发出申请，为了不让它饥饿，它和后面的R/W锁都如fifo队列</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="Hash-Table-Latching"><a href="#Hash-Table-Latching" class="headerlink" title="Hash Table Latching"></a>Hash Table Latching</h3><blockquote>
+<p>“分桶”</p>
+</blockquote>
+<ol>
+<li>不会死锁，因为申请锁的顺序的相同的，没有交叉</li>
+<li>粒度可以是page, slot</li>
+<li>要resize可以对整个表加锁</li>
+</ol>
+<p>方式：</p>
+<ol>
+<li>Page Latch<ul>
+<li>并发性低，但加/解锁开销也低</li>
+</ul>
+</li>
+<li>Slot Latch<ul>
+<li>并发性高，但加/解锁开销也高(更频繁加解锁)</li>
+</ul>
+</li>
+</ol>
+<h3 id="B-Tree-Concurrency-Control"><a href="#B-Tree-Concurrency-Control" class="headerlink" title="B+ Tree Concurrency Control"></a>B+ Tree Concurrency Control</h3><blockquote>
+<p>实现多线程对B+树的操作</p>
+</blockquote>
+<p><strong>问题驱动</strong>：</p>
+<ol>
+<li>同时修改</li>
+<li>split和merge</li>
+</ol>
+<p>基本思想(步骤)：</p>
+<ol>
+<li>parent申请锁</li>
+<li>child申请锁</li>
+<li>如果child(包括一路的中间节点)是 <strong>“安全的”</strong> ，释放parent的锁，否则继续持有<ul>
+<li>安全：不会导致分裂或合并<ul>
+<li>即插入时没满，删除时还half-full</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>总结</p>
+<ul>
+<li><strong>尽可能减少锁的范围</strong></li>
+<li>保证不会涉及到其他节点(split/merge)时(安全)，那么就跟访问单一共享资源是一样的</li>
+<li>assertion: 安全，修改值影响当前节点往下</li>
+<li>“持续持锁，安全解锁”</li>
+</ul>
+<h3 id="Latch-Crabbing-Coupling-Better-Latching-Algo"><a href="#Latch-Crabbing-Coupling-Better-Latching-Algo" class="headerlink" title="Latch Crabbing/Coupling: Better Latching Algo"></a><strong>Latch Crabbing/Coupling: Better Latching Algo</strong></h3><blockquote>
+<p>进一步降低锁的影响范围<br>思想：找到热点/瓶颈，那能不能从该瓶颈下手?</p>
+</blockquote>
+<p>对于前面的策略，每次修改都要对root加互斥锁，此时root就称为了并发性的瓶颈。要是互斥能发生在靠近叶子的地方就好了。</p>
+<p><strong>算法:</strong></p>
+<p>先一路R锁，然后在目标叶子节点W锁，<strong>如果不安全，则解锁然后用之前的方式重来</strong>。</p>
+<p>TODO 第一遍为什么需要R锁</p>
+<ul>
+<li>体会<ul>
+<li><strong>充分考虑到分裂/合并(即不安全的情况)是少数</strong> ，不必为了少数情况每次引入瓶颈</li>
+<li>第二遍会导致第一遍的R锁开销浪费了</li>
+<li>假设仅叶子节点修改<ul>
+<li>中间节点什么时候修改？</li>
+</ul>
+</li>
+<li><strong>有联系上之前说的DBMS可以不会立即触发合并</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="另一种优化-瓶颈-的方向：down-top"><a href="#另一种优化-瓶颈-的方向：down-top" class="headerlink" title="另一种优化(瓶颈)的方向：down-top"></a>另一种优化(瓶颈)的方向：down-top</h3><p>目前所有线程都散top-down顺序加锁的，而又是树状结构，从而导致瓶颈。那么可不可以down-top的顺序加锁，”不先经过热点”?</p>
+<ul>
+<li><strong>利用sibling pointer，加锁方向有了更多可能</strong>。</li>
+<li>加锁方向多了，死锁就要多考虑了<ul>
+<li>避免：申请不到锁要kill然后重试</li>
+</ul>
+</li>
+</ul>
+<p>但是我们定义的latch并不支持死锁检测(或通过判断是否持有锁)，所以只有<strong>通过代码规范来解决死锁问题</strong> : </p>
+<ul>
+<li>能经过sibling pointer的必须是”no-wait”的，如 <strong>拿不锁到就返回失败</strong></li>
+<li>dbms要考虑到获取失败的情况，然后相应处理</li>
+</ul>
+<h3 id="Delayed-Parent-Updates"><a href="#Delayed-Parent-Updates" class="headerlink" title="Delayed Parent Updates"></a>Delayed Parent Updates</h3><blockquote>
+<p>合并/分裂的情况</p>
+</blockquote>
+<p>每次叶子节点溢出我们都要更新：分裂的节点，新申请的节点和parent节点。就是说，因为分裂一会引入”大范围的锁”。</p>
+<p>所以可以使用B-link-Tree(B+树变体)：在发送溢出时不立刻修改parent，而是标记该parent，然后用sibling指针将分裂的新节点插入叶子节点链表。如果下次修改再次访问到该parent的话才做分裂更新parent操作。</p>
+<blockquote>
+<p>之所以可以link，是因为落到leaf后还要探测一下嘛，稍微修改一下探测策略(最多多探测下一个sibling)就可以了</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">               ┌─┬──┬─┬──┬─┬─────┐</span><br><span class="line">               │ │5 │ │9 │ │M(14)│ 下次访问到再合并</span><br><span class="line">               └┬┴──┴┬┴──┴┬┴─────┘</span><br><span class="line">                │    │    │</span><br><span class="line">          ┌─────┘    └──┐ └───────┐</span><br><span class="line">          │&lt;5        &lt;9 │         │&gt;&#x3D;9</span><br><span class="line">          │             │         │</span><br><span class="line">          │             │         │</span><br><span class="line">          ▼             ▼         ▼</span><br><span class="line">         ┌─┬─┬─┬──────►┌─┬───┬───►┌─┬───┐</span><br><span class="line">Leaf Node│1│3│ │       │6│7  │    │9│13 │      ┌─► ...</span><br><span class="line">         └─┴─┴─┘◄──────┴─┴───┘◄───┴─┴───┤      │</span><br><span class="line">                 Sibling                │  ┌──┬┘</span><br><span class="line">                 Pointer                │  │14│</span><br><span class="line">                                        └─►└──┘</span><br></pre></td></tr></table></figure>
+
+<p>严格B+树和实际需求(低不安全频率)的平衡。同理我们可以第三次，第四次再次访问时再合并。</p>
+<blockquote>
+<p>We focused on B+ Tree but the some high-level techniques are applicable to other data structure</p>
+</blockquote>
+<h2 id="ch10-Sorting-Aggregation"><a href="#ch10-Sorting-Aggregation" class="headerlink" title="ch10 Sorting Aggregation"></a>ch10 Sorting Aggregation</h2><p>思考sql的大致流程: 找表，筛项，合并。而这个结果是很可能内存装不下的，所以我们的算法需要考虑外存的使用：<strong>最大化连续访问</strong>，利用外存顺序访问块的特点。</p>
+<p>conclusion</p>
+<ul>
+<li>一个基本思想是：<strong>一次一batch(buffer/page)，尽量连续IO</strong></li>
+<li>buffer数量也可以充分利用，可以：<ul>
+<li>多一份做预取</li>
+<li>多路归并</li>
+</ul>
+</li>
+<li><strong>重新排序优先级甚至乱序io</strong><ul>
+<li>一次一page  vs  每条记录都io</li>
+<li>可以测试一下</li>
+</ul>
+</li>
+<li>额外考虑不能fit in memory的情况</li>
+</ul>
+<blockquote>
+<p>思考下面两种情况，哪个快</p>
+<ol>
+<li>重新内存排序，然后顺序io写回</li>
+<li>index已排序，但是指向的value是乱序的，需要随机io取</li>
+</ol>
+</blockquote>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>排序很有用，如</p>
+<ol>
+<li>sql的集函数</li>
+<li>sql的distinct, group by</li>
+<li>bulk build的b+树</li>
+</ol>
+<h4 id="External-Merge-sort"><a href="#External-Merge-sort" class="headerlink" title="External Merge sort"></a>External Merge sort</h4><p>归并就会想到分治，不过这回我们还要考虑到外存，要利用一次一page/buffer/block的思想。基本步骤：</p>
+<ol>
+<li>Sorting：一block/page/buffer在内存排序，然后将排好的内容<strong>写回一个文件</strong></li>
+<li>Merging: 将这些个小文件合并到一个大文件</li>
+</ol>
+<h4 id="两路归并排序-2-way-externel-merge-sort"><a href="#两路归并排序-2-way-externel-merge-sort" class="headerlink" title="两路归并排序(2-way externel merge sort)"></a>两路归并排序(2-way externel merge sort)</h4><p>每次将2 run合并到一个新run。</p>
+<p>假设一共有B个buffer page:</p>
+<ol>
+<li>pass 0: 每次读到B个page，然后在内存中排序</li>
+<li>pass 1,2,3…: 递归合并2排好序的page到一个新page</li>
+</ol>
+<ul>
+<li>passse数: 1+logN: 1的第一次读入开销</li>
+<li>总IO开销：2N x passes数：2表示读入写回</li>
+</ul>
+<p><strong>两路归并的问题是：</strong> 并不能充分利用B个page，只用了3page。</p>
+<h4 id="Double-Buffering-Optimization"><a href="#Double-Buffering-Optimization" class="headerlink" title="Double Buffering Optimization"></a>Double Buffering Optimization</h4><p>思想：既然两路归并只用了3page，还剩很多可以用，<strong>那就用一些来做预取吧</strong>，从而减少等待IO的时间</p>
+<h4 id="General-External-Merge-Sort"><a href="#General-External-Merge-Sort" class="headerlink" title="General External Merge Sort"></a>General External Merge Sort</h4><p>解设有B的buffer pagers，充分利用所有buffer资源做多路归并</p>
+<ol>
+<li>pass0: 读入所有，在内存中排序，则需要N/B runs(一次读B page)</li>
+<li>pass1,2,3…: 归并B-1 runs，<strong>其中一个page做output</strong></li>
+</ol>
+<ul>
+<li>passes数：1 + $log_{B-1}[N/B]$</li>
+<li>总IO开销：2N x passes数</li>
+</ul>
+<h3 id="利用B-树排序"><a href="#利用B-树排序" class="headerlink" title="利用B+树排序"></a>利用B+树排序</h3><p>如果有现成的B+树，也许可以用来加速排序：使用sibling指针遍历。</p>
+<p>不过要考虑Clustered和Unclustered的B+树情况。</p>
+<blockquote>
+<p>B+树根据index排序<br>Clustered: value是有序存储在一起的<br>Unclustered: value是无序存储的，只是index有序可以指针找到</p>
+</blockquote>
+<ul>
+<li>聚簇情况<ul>
+<li>因为values存储的物理地址是有序的，io是顺序的，所以加速排序是没问题的</li>
+</ul>
+</li>
+<li>非聚簇情况<ul>
+<li>values存储的物理地址是乱序的，<strong>每条记录可能导致读入新页，导致反复污染缓存池，io开销</strong> ，还不如一次一page重排呢</li>
+<li>所以一般不会用非聚簇B+树来加速排序</li>
+</ul>
+</li>
+</ul>
+<h3 id="Aggregations"><a href="#Aggregations" class="headerlink" title="Aggregations"></a>Aggregations</h3><blockquote>
+<p>集函数如何妥善处理</p>
+</blockquote>
+<p>两种聚合方式</p>
+<ul>
+<li>排序</li>
+<li>hash</li>
+</ul>
+<h4 id="Sorting"><a href="#Sorting" class="headerlink" title="Sorting"></a>Sorting</h4><p>开销比hash大的，<strong>我们并不需要有序</strong> ，只需要它的聚合功能。</p>
+<blockquote>
+<p>去掉一些无用的特性，没准就优化了，所以hash yes</p>
+</blockquote>
+<h4 id="External-Hashing-Aggregate"><a href="#External-Hashing-Aggregate" class="headerlink" title="External Hashing Aggregate"></a>External Hashing Aggregate</h4><blockquote>
+<p>distinct: 去重<br>group by: 集函数计算</p>
+</blockquote>
+<ul>
+<li>conclusion<ul>
+<li>考虑buffer有限的情况</li>
+</ul>
+</li>
+</ul>
+<p>一般可以概括为两步：</p>
+<ol>
+<li>Partition: 得到中间结果<ul>
+<li>同样的, 一次一page，尽量连续IO</li>
+<li>page满则写回disk</li>
+<li>B-1 buffer做partition，1 buffer做input</li>
+</ul>
+</li>
+<li>Rehash: 中间结果再distinct, group by, 集函数等得到最终结果<ul>
+<li>再读到内存，哈希分桶保存到<strong>临时哈希表</strong> ，然后计算最终结果(集函数, distinct等)i</li>
+<li>临时哈希表可以保存一些额外信息：如<code>groupKey-(cnt,sum)</code>等</li>
+</ul>
+</li>
+</ol>
+<h2 id="ch11-Join-Algorithms"><a href="#ch11-Join-Algorithms" class="headerlink" title="ch11 Join Algorithms"></a>ch11 Join Algorithms</h2><blockquote>
+<p>如何做连接(join)操作，制造一一对应关系</p>
+</blockquote>
+<p>assertion:</p>
+<ul>
+<li><p>小表叫”outer table”</p>
+</li>
+<li><p>大表叫”inner table”</p>
+</li>
+<li><p><strong>我们总是让小表在左</strong> ，然后用大表去”接”</p>
+<ul>
+<li>后面将会知道为什么: 遍历次数更少</li>
+<li><strong>妙妙妙</strong></li>
+</ul>
+</li>
+<li><p>conclusion</p>
+<ul>
+<li>“原样复制”或Record Id</li>
+<li>一般连接都是等值连接，这等值就意味着也许某种”局部性”</li>
+<li>IO开销分析别忘了可以利用page为单位</li>
+<li><strong>为何outer talbe要小表</strong></li>
+<li>尤其考虑”IO复杂度”</li>
+<li>小心虚拟内存，不可控的随机换入出</li>
+<li>DBMS要存在一定智能需要知道什么情况用什么策略<ul>
+<li>e.g. 知道size小，那直接静态hash，建表探测开销都小</li>
+</ul>
+</li>
+<li>时候sort join: <ul>
+<li>没有唯一标识的数据</li>
+<li>必须排序的情况(order by)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>IO Cost</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Simple Nested Loop</td>
+<td>M + (m x N)</td>
+<td>1.3h</td>
+</tr>
+<tr>
+<td>Block Nested Loop</td>
+<td>M + M x N</td>
+<td>50s</td>
+</tr>
+<tr>
+<td>Index Nested Loop</td>
+<td>M + M x C</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td>Sort-Merge</td>
+<td>M + N + sort</td>
+<td>0.59s</td>
+</tr>
+<tr>
+<td>Hash</td>
+<td>3(M + N)</td>
+<td>0.45</td>
+</tr>
+</tbody></table>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><ul>
+<li>扫描R表的元组r，扫描S表的元组s</li>
+<li>当r和s达成某种条件是连接，输出到新表</li>
+<li>新表的内容可以具体情况具体分析，如基于列存储的情况<ul>
+<li>可以”原样拷贝”<ul>
+<li>好处是不用”指针找具体数据”</li>
+</ul>
+</li>
+<li>也可以只 <strong>记录record id</strong> (相当于指针嘛)<ul>
+<li>新表会更小</li>
+<li>但是查询数据要多一层用record id索引的工作</li>
+<li><strong>常用于基于列存储的情况(column store)</strong></li>
+<li>也叫作 <strong>late materialization</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="IO开销分析assertion"><a href="#IO开销分析assertion" class="headerlink" title="IO开销分析assertion"></a>IO开销分析assertion</h3><p>后面都假设：</p>
+<ul>
+<li>R表有M个page，m个元组(tuple)</li>
+<li>S表有N个page，n个元组(tuple)</li>
+<li>并且我们计算开销只考虑IO开销，忽略部分计算开销<ul>
+<li>所以可以page为单位的IO情况</li>
+</ul>
+</li>
+</ul>
+<h3 id="Nested-Loop"><a href="#Nested-Loop" class="headerlink" title="Nested Loop"></a>Nested Loop</h3><blockquote>
+<p>多重循环</p>
+</blockquote>
+<ul>
+<li>Nested Loop 系算法<ul>
+<li>小表”在外”</li>
+<li>多用buffer</li>
+<li>扫描/索引</li>
+</ul>
+</li>
+</ul>
+<h4 id="Nested-Loop-Join-双循环"><a href="#Nested-Loop-Join-双循环" class="headerlink" title="Nested Loop Join: 双循环"></a>Nested Loop Join: 双循环</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foreach tuple r in R:</span><br><span class="line">	foreach tuple s in S:</span><br><span class="line">		emi, if r and s match</span><br></pre></td></tr></table></figure>
+
+<p>简单的双循环，需要 <strong>注意的是</strong></p>
+<ul>
+<li>“outer”和”inner”</li>
+<li>计算page为单位</li>
+</ul>
+<p>所以总开销是：M + (m x N)</p>
+<p>M是刚开始读入表的开销</p>
+<ul>
+<li>一页多个元组</li>
+<li>R的m个元组都要遍历S的所有N页</li>
+</ul>
+<p><strong>如果outer是大表</strong> : 开销为：N + (n x M)</p>
+<p>显然n的变化率要比M的变化率大。<strong>这就是为什么outer要小表</strong></p>
+<blockquote>
+<p>abs: 循环次数外表定</p>
+<p>外表的一项要和右表的每一个page的内容匹配, 所以左表决定了右表的遍历次数，希望遍历少点</p>
+</blockquote>
+<p>e.g.: M = 1000, m = 100,000, N = 500, n = 40,000, 0.1ms/IO</p>
+<p>Time = (1000 + (100000 x 500)) x 0.1 ms = 1.3h</p>
+<h4 id="Block-Nested-Loop-Join"><a href="#Block-Nested-Loop-Join" class="headerlink" title="Block Nested Loop Join"></a>Block Nested Loop Join</h4><p>别忘了我们可以<strong>一次一page</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foreach block(page) Br in R:</span><br><span class="line">	foreach block(page) Bs in S:</span><br><span class="line">		foreach tuple r in Br:</span><br><span class="line">			foreach tuple s in Bs:</span><br><span class="line">				emi, if r and s match</span><br></pre></td></tr></table></figure>
+
+<p>Cost: M + M x N</p>
+<p>比较直观。</p>
+<p><strong>用上更多的buffer</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foreach B-2 block(page) Br in R:</span><br><span class="line">	foreach block(page) Bs in S:</span><br><span class="line">		foreach tuple r in Br:</span><br><span class="line">			foreach tuple s in Bs:</span><br><span class="line">				emi, if r and s match</span><br></pre></td></tr></table></figure>
+
+<p>结果表用2 Block，一个存R输出，一个存S输出</p>
+<p>Cost: M + (M/(B-2)) x N</p>
+<p>如果B-2 &gt; M，即内存能装下整个表。但一般数据TB, PB级</p>
+<p>Cost: M + N</p>
+<p>双循环出来什么问题? 从头到尾遍历</p>
+<h4 id="Index-Nested-Loop-Join"><a href="#Index-Nested-Loop-Join" class="headerlink" title="Index Nested Loop Join"></a>Index Nested Loop Join</h4><p>用上Index加锁搜索匹配的过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foreach tuple r in R:</span><br><span class="line">	foreach tuple s in Index(ri &#x3D; si):</span><br><span class="line">		emi, if r and s match</span><br></pre></td></tr></table></figure>
+
+<p>如果索引的开销是常数C的话，Cose: M + m x C</p>
+<h3 id="Sort-Merge-Join"><a href="#Sort-Merge-Join" class="headerlink" title="Sort-Merge Join"></a>Sort-Merge Join</h3><ol>
+<li>两表目标key排序<ul>
+<li>之前的外部排序算法</li>
+</ul>
+</li>
+<li>“双游标遍历”，匹配拿出</li>
+</ol>
+<p>有种”只需一次遍历”的感觉，因为有序后，内外表游标只会增或不变。<strong>需要注意回溯的情况</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 	1</span><br><span class="line">-&gt; 2 	2 &lt;&#x3D; lastPosition</span><br><span class="line">2 	2</span><br><span class="line">3	2 &lt;-</span><br></pre></td></tr></table></figure>
+
+<p>两个相同的元素会导致内表游标回溯到”lastPosition”，所以 <strong>在有大量重复key的情况下的不利的</strong></p>
+<p>开销：</p>
+<ul>
+<li>左表排序开销(多buffer外排): 2M x (log M/log B)<ul>
+<li>2M一读一写，每轮M/B次</li>
+</ul>
+</li>
+<li>右表排序开销: 2N x (log N/log B)</li>
+<li>合并开销：M + N 回溯开销约掉了，相当于两个表正好走一遍</li>
+<li>总开销：合并开销 + 排序开销</li>
+</ul>
+<p>再考虑最坏的情况：所有key都是重复的，疯狂回溯。Cost：M x N + (sort cost)</p>
+<h3 id="Hash-Join"><a href="#Hash-Join" class="headerlink" title="Hash Join"></a><strong>Hash Join</strong></h3><p>考虑到我们一般是做等值连接，不妨利用等值这个特性：等值hash结果相同。从而完成聚合操作。聚合完成后<strong>虽然不同key哈希值可能相同，但是查找范围已经减小了，并且我们可多次哈希让范围更小</strong></p>
+<p>整个过程抽象来看就是：建表 + 探测</p>
+<h4 id="Basic-Hash-Join-Algorithm"><a href="#Basic-Hash-Join-Algorithm" class="headerlink" title="Basic Hash Join Algorithm"></a>Basic Hash Join Algorithm</h4><ol>
+<li>建表(Build)<ul>
+<li>根据外表建立哈希表，相当于一个map</li>
+</ul>
+</li>
+<li>探测(Probe)<ul>
+<li>内表再用同样的哈希函数去这个map找，如果匹配就输出</li>
+</ul>
+</li>
+</ol>
+<p>所建哈希表的内容具体而定，不过用于判断匹配的key是必须的，当然还可以有一些其他属于，如用来判断”&gt;=”等</p>
+<p>同合并问题，哈希表可以存”原样拷贝”或所以</p>
+<ul>
+<li>Full Tuple<ul>
+<li>不用再查表</li>
+<li>需要大量空间</li>
+</ul>
+</li>
+<li>Tuple Identifier(record id)<ul>
+<li>适用于基于列存储的</li>
+<li>适用于join selectivity低的情况(即不能一层层上去都是rid吧，太多索引了)</li>
+</ul>
+</li>
+</ul>
+<h4 id="布隆过滤器优化探测过程"><a href="#布隆过滤器优化探测过程" class="headerlink" title="布隆过滤器优化探测过程"></a><strong>布隆过滤器优化探测过程</strong></h4><blockquote>
+<p>布隆过滤器常用于判断重复，哈希到bitmap所以空间小，内存友好</p>
+<p>存在一定的误判率，可以使用多个哈希函数，所有哈希值都存在时才说明存在</p>
+<p>可能会误判为存在，但不存在一定不会误判</p>
+</blockquote>
+<p>建表的同时再建一个布隆过滤器:</p>
+<ol>
+<li>探测时<strong>先用布隆过滤器过滤一遍</strong></li>
+<li>如果过滤结果存在，那么是”可能存在”，再用原始方法查表</li>
+<li>如果过滤结果不存在，那一定不存在，可以跳过</li>
+</ol>
+<p>用布隆过滤器之所以能够加速的因为，布隆过滤器的bitmap，能够容纳在内存中，从而降低哈希的IO开销。</p>
+<h4 id="Grace-Hash-Join"><a href="#Grace-Hash-Join" class="headerlink" title="Grace Hash Join"></a>Grace Hash Join</h4><p>上面的情况我们并没有考虑大数据内存不够用的问题，虽然我们的虚拟内存可以表现得”装得下”，但是这背后是<strong>内存管理器大量的随机换入换出</strong></p>
+<p>所以我们要<strong>细分哈希表</strong> ，每次尽可能局部性。</p>
+<p>改：</p>
+<ul>
+<li>建表(Partitioning)<ul>
+<li>两个表都建哈希表，将大表分解成几个分区</li>
+</ul>
+</li>
+<li>探测<ul>
+<li>每次在相应分区找就可以了</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foreach tuple r in bucket(R,i)</span><br><span class="line">	foreach tuple s in bucket(S,i)</span><br><span class="line">		emit, if match(r, s)</span><br></pre></td></tr></table></figure>
+
+<p>“一次一page”，内存就够用了，就不用乱换出了</p>
+<p><strong>如果一次hash还是太大那就再来几次</strong>，不过需要额外机制记录谁哈希了几次的都是什么哈希函数。总之就是一一对应的关系要有。</p>
+<p>IO开销：</p>
+<ul>
+<li>建表: 2(M+N)，两个表都要一读一写</li>
+<li>探测: M + N，一次一page比对</li>
+<li>共3(M+N)</li>
+</ul>
+<h2 id="ch12-Query-Execution"><a href="#ch12-Query-Execution" class="headerlink" title="ch12 Query Execution"></a>ch12 Query Execution</h2><blockquote>
+<p>理论基础就绪，如何编程，什么样的框架？</p>
+</blockquote>
+<ul>
+<li>conclusion<ul>
+<li>again，”局部性”，”隐式局部性”: batch大小与硬件</li>
+<li>一次所有OLTP，一次一batch OLAP</li>
+<li>优化顺序查找：zone map，later</li>
+<li><strong>如何正确使用多索引</strong>: bitmap scan</li>
+<li><strong>非聚簇索引的情况怎么优化</strong> Index Scan选出key后，Page Sorting</li>
+</ul>
+</li>
+</ul>
+<h3 id="Processing-Model"><a href="#Processing-Model" class="headerlink" title="Processing Model"></a>Processing Model</h3><p>Processing Model: 如何获取数据，如何执行query plan，根据不同workload选择</p>
+<ul>
+<li>Iterator Model</li>
+<li>Materialization Model</li>
+<li>Vector / Batch Model</li>
+</ul>
+<h4 id="Iterrator-Model"><a href="#Iterrator-Model" class="headerlink" title="Iterrator Model"></a>Iterrator Model</h4><blockquote>
+<p>也称Volcano Model和Pipeline Model</p>
+</blockquote>
+<blockquote>
+<p>类似迭代器</p>
+</blockquote>
+<ul>
+<li>每个操作都实现一个<code>Next()</code>方法(“抽象的下一步”)</li>
+<li>每次<code>Next()</code>调用<strong>只返回一个元组</strong>或空</li>
+<li>递归(query plan)向下执行，所以一些操作会阻塞知道子操作执行完成(dfs)</li>
+<li>这个方法的输出比较好控制<ul>
+<li>一次就一个目标tuple，不用过多处理</li>
+</ul>
+</li>
+</ul>
+<h4 id="Materialization-Model"><a href="#Materialization-Model" class="headerlink" title="Materialization Model"></a>Materialization Model</h4><p>上面一次返回一个tuple，那这个就是<strong>一次返回所有tuple</strong>，多用点中间文件呗(那么显然接下来会用到一次一page)。</p>
+<p>materialization指的是操作<strong>将结果(所有tuple)materializes成一个结果</strong></p>
+<ul>
+<li>当然DBMS可以设置参数限制输出的大小，防止过多tuple</li>
+<li>输出就可以是所有属性(column)的tuple或执行列的所有tuple</li>
+<li>“大中间文件”</li>
+<li><strong>适用于数据量小的场景</strong>，e.g. OLTP，因为OLTP访问的数据量小，输出所有tuple是ok的</li>
+</ul>
+<h4 id="Vectorization-Model"><a href="#Vectorization-Model" class="headerlink" title="Vectorization Model"></a>Vectorization Model</h4><ul>
+<li><strong>Vectorization指的是cpu的向量指令</strong></li>
+</ul>
+<p>前面要么一次一tuple，要么一次所有tuple，那么有没有折中的方案呢？那就<strong>一次以batch吧</strong></p>
+<p>Vectorization Model中每个操作产生的tuple的可配置的，每次取一batch。<strong>batch的大小可以根据硬件资源设置，page size， cpu cache， 向量指令大小</strong> !!!</p>
+<ul>
+<li>适用于OLAP<ul>
+<li>OLAP数据量大，那就分治，一次一batch</li>
+<li>OLAP一次一batch，执行的query数就比一次一tuple少了</li>
+<li>激发硬件性能(向量指令)，完成”analysis”工作</li>
+</ul>
+</li>
+</ul>
+<h3 id="Access-Methods"><a href="#Access-Methods" class="headerlink" title="Access Methods"></a>Access Methods</h3><p>如何访问具体存储的数据</p>
+<ul>
+<li>Sequential Scan</li>
+<li>Index Scan</li>
+<li><strong>Multi-Index / “Bitmap” Scan</strong></li>
+</ul>
+<h4 id="Sequential-Scan"><a href="#Sequential-Scan" class="headerlink" title="Sequential Scan"></a>Sequential Scan</h4><p>那就是双循环(tuples in pages)遍历呗，维护一个内部游标记录遍历到哪了。</p>
+<p>但是这么简单双循环太不好了，我们可以采用如下优化：</p>
+<ul>
+<li>Zone Maps</li>
+<li>Late Materialization</li>
+<li>Head Clustering</li>
+</ul>
+<h5 id="Zone-Maps"><a href="#Zone-Maps" class="headerlink" title="Zone Maps"></a>Zone Maps</h5><blockquote>
+<p>Map as guide</p>
+</blockquote>
+<p>Zone Maps就是在原始数据的基础上加<strong>维护一些额外的信息</strong>。<strong>如对于一列，可以维护一个zone map，记录该列的最大，最小，平均值等</strong></p>
+<p>DBMS查表时先通过Zone Maps过滤一下。</p>
+<p>适用于OLAP，读多的场景。不适用与OLTP，OLTP频繁写让zone map维护成本高。</p>
+<h5 id="Later-Materialization"><a href="#Later-Materialization" class="headerlink" title="Later Materialization"></a>Later Materialization</h5><blockquote>
+<p>之前说道的，”懒record id”思想</p>
+</blockquote>
+<p>说的是执行的时候不用”每层”都生成临时文件，可以用挑出需要的record id，在最后需要的时候再拿到数据合成。</p>
+<h4 id="Index-Scan"><a href="#Index-Scan" class="headerlink" title="Index Scan"></a>Index Scan</h4><p>同join algorithm里介绍。</p>
+<h4 id="Multi-Index-Scan-Bitmap-Scan"><a href="#Multi-Index-Scan-Bitmap-Scan" class="headerlink" title="Multi-Index Scan / Bitmap Scan"></a><strong>Multi-Index Scan / Bitmap Scan</strong></h4><p>ok，那么现在我们维护了多个index该如何用好这些索引呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">where count &gt; 30 and numbers &gt; 100;</span><br></pre></td></tr></table></figure>
+
+<p>我们为什么会提出这个问题，是因为每个index维护在不同的B+树中，你用一个index选出后，这些数据在第二个index中要怎么用呢？比如我们可以在第一个index中找到后用sibling pointer一下子就扫描出来了。但是选出的数据在第二个index的B+树中可能是非常分散的，每个数据都搜一遍吗？第二个index不就没用了？</p>
+<p><strong>这就是为什么叫Bitmap Scan</strong>，体现了算法的精髓</p>
+<p>我们可以:</p>
+<ul>
+<li>同时<strong>单独使用两个(多个)index</strong></li>
+<li>使用相同的哈希函数，将匹配的record id哈希到一个”selected” bitmap中</li>
+<li><strong>将多个索引得到的bitmap做并/交/差</strong>就得到我们最终需要的数据的record id</li>
+<li>“每个index都可以单独执行”(并发哦)</li>
+</ul>
+<h3 id="Index-Scan-Page-Sorting"><a href="#Index-Scan-Page-Sorting" class="headerlink" title="Index Scan Page Sorting"></a><strong>Index Scan Page Sorting</strong></h3><p>我们再来看看那在非聚簇索引的情况下要怎么做。</p>
+<p>我们说非聚簇所以key虽然是有序的，但是他们对应的value的物理位置(page id)是乱序的。一次有序key的扫描可能的结果是乱序的value访问，频繁切换buffer。所以非常低效。</p>
+<p>那么可以这样</p>
+<ul>
+<li>第一次扫描我们只用key(毕竟索引)，挑出所有需要的key</li>
+<li>然后我们对这些数据，<strong>根据page id排序</strong></li>
+<li>最后在扫描获取结果</li>
+</ul>
+<p>这样就避免了缓存池的污染</p>
+<h3 id="Expression-Evaluation"><a href="#Expression-Evaluation" class="headerlink" title="Expression Evaluation"></a>Expression Evaluation</h3><p>DBMS将<code>wher a = b</code>等操作组织成表达式树的方式来执行。(编译原理，通用，有优先级)</p>
+<p>这么虽然通用，但是墨守陈规很慢，那么我们可以参考”编译优化”，将一些场景优化掉，如<code>where 1 = 1</code>，减少执行次数。</p>
+<h2 id="ch13-Query-Execution-II-Parallel-Execution"><a href="#ch13-Query-Execution-II-Parallel-Execution" class="headerlink" title="ch13 Query Execution II: Parallel Execution"></a>ch13 Query Execution II: Parallel Execution</h2><blockquote>
+<p>如何使用设计并发程序</p>
+<p>为何要并行: 高吞吐量，低延迟，更少的钱做更多的事</p>
+</blockquote>
+<ul>
+<li>conclusion<ul>
+<li>并发与局部性问题<ul>
+<li>污染，设计上小心顾此失彼</li>
+</ul>
+</li>
+<li><strong>并发并不能解决硬盘瓶颈问题</strong><ul>
+<li>甚至污染</li>
+</ul>
+</li>
+<li>thread其实也是某种bypass OS<ul>
+<li>很大定制空间，如定制DBMS调度</li>
+</ul>
+</li>
+<li>Intra, Inter parallelism</li>
+<li><strong>水平扩展 + 垂直扩展</strong>，即所谓的Bushy parallelism<ul>
+<li>水平，subset</li>
+<li>垂直，pipeline</li>
+</ul>
+</li>
+<li><strong>IO parallelism</strong><ul>
+<li>分区(这不是分布式嘛)</li>
+<li>行分列分</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>并发会带来cache污染，buffer污染</p>
+<p><strong>很难做好做对</strong>，需要考虑到方方面面，非常多细节: </p>
+<ul>
+<li>协作开销(并发任务)</li>
+<li>调度方法(DBMS &gt; OS)</li>
+<li>并发问题(污染)</li>
+<li>资源竞争(多核，并发，cycle增加)</li>
+</ul>
+<h3 id="并行-vs-分布式"><a href="#并行-vs-分布式" class="headerlink" title="并行 vs 分布式"></a>并行 vs 分布式</h3><ul>
+<li>并行<ul>
+<li>比较可靠</li>
+<li>物理临近，通信快</li>
+</ul>
+</li>
+<li>分布式<ul>
+<li>比较脆弱</li>
+<li>通信成本高</li>
+</ul>
+</li>
+</ul>
+<h3 id="Process-Model"><a href="#Process-Model" class="headerlink" title="Process Model"></a>Process Model</h3><p>我们DBMS的worker优先级可以给得很高</p>
+<h4 id="Process-Per-Worker"><a href="#Process-Per-Worker" class="headerlink" title="Process Per Worker"></a>Process Per Worker</h4><p>每一个worker都是一个单独的进程。<strong>历史原因</strong>，因为当时还没有标志是多线程(thread)接口，为了可移植性。</p>
+<ul>
+<li>依赖系统的调度</li>
+<li>使用共享内存来通信</li>
+<li>隔离性强: 一个进程crash不会影响其他</li>
+</ul>
+<h4 id="Process-Pool"><a href="#Process-Pool" class="headerlink" title="Process Pool"></a>Process Pool</h4><p>每个任务到来都会从多个可用worker中(进程池)分配一个执行。</p>
+<ul>
+<li>同上</li>
+<li><strong>对cpu缓存不友好</strong><ul>
+<li>污染cache</li>
+</ul>
+</li>
+</ul>
+<p><strong>并发也别忘了局部性</strong>，设计上的顾此失彼。</p>
+<h4 id="Thread-Per-Worker"><a href="#Thread-Per-Worker" class="headerlink" title="Thread Per Worker"></a>Thread Per Worker</h4><p>每个worker都是一个线程</p>
+<ul>
+<li>依赖DBMS调度: <strong>很大定制空间</strong></li>
+<li>可以使用单独的dispatch线程</li>
+<li>单个线程出问题，整个进程遭殃</li>
+</ul>
+<p>优点就是：</p>
+<ul>
+<li><strong>更小上下文切换开销</strong>(icache flush)</li>
+<li>不需要管理共享内存</li>
+</ul>
+<h3 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h3><p>关于调度我们应该考虑什么问题？</p>
+<ul>
+<li>使用正确的worker</li>
+<li><strong>哪个cpu核，几个核</strong></li>
+<li>如何处理输出</li>
+</ul>
+<blockquote>
+<p>thread某种意义上也是bypass OS了，从而可以具体定制</p>
+</blockquote>
+<h3 id="Inter-vs-Intra-Query-Parallelism"><a href="#Inter-vs-Intra-Query-Parallelism" class="headerlink" title="Inter- vs. Intra-Query Parallelism"></a>Inter- vs. Intra-Query Parallelism</h3><ul>
+<li>Inter，表示query间并行<ul>
+<li>提升整体性能</li>
+</ul>
+</li>
+<li>Intra，表示一个execution中，子操作的并行<ul>
+<li>单个执行更快</li>
+</ul>
+</li>
+</ul>
+<h4 id="Inter-Query-Parallelism"><a href="#Inter-Query-Parallelism" class="headerlink" title="Inter-Query Parallelism"></a>Inter-Query Parallelism</h4><blockquote>
+<p>提升整体性能</p>
+</blockquote>
+<p>指令间的并行。</p>
+<p>如果是只读的操作间并行，ok cool，不需要多少通信。</p>
+<p>比较tricky的是”写操作”的并行，hard to do correctly，16章。<strong>最精彩的部分</strong></p>
+<h4 id="Intra-Query-Parallelism"><a href="#Intra-Query-Parallelism" class="headerlink" title="Intra-Query Parallelism"></a>Intra-Query Parallelism</h4><blockquote>
+<p>提升单个指令性能</p>
+</blockquote>
+<p>指令内，子操作间的并行。</p>
+<ul>
+<li>基本模型是生产者消费者模型</li>
+<li>常用套路是：一个中心结构用于沟通并行或创建多个分区独立并行</li>
+</ul>
+<h4 id="Parallel-Grace-Hash-Join"><a href="#Parallel-Grace-Hash-Join" class="headerlink" title="Parallel Grace Hash Join"></a>Parallel Grace Hash Join</h4><p>回忆Graec Hash Join。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">                     bucket</span><br><span class="line">                      │</span><br><span class="line">                 join ▼</span><br><span class="line">┌────┐  ┌───► ┌───┐ ┌───┐◄─────┐  ┌────┐</span><br><span class="line">│    │  │     └───┘ └───┘      │  │    │</span><br><span class="line">│    │  │                      │  │    │</span><br><span class="line">│    │  │     ┌───┐ ┌───┐      │  │    │</span><br><span class="line">│    │ h1 ──► └───┘ └───┘◄─────h1 │    │</span><br><span class="line">│    │  │                      │  │    │</span><br><span class="line">│    │  │     ┌───┐ ┌───┐      │  │    │</span><br><span class="line">└────┘  └───► └───┘ └───┘ ◄────┘  └────┘</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>两个建表操作可以并行</li>
+<li>桶的join之间可以并行</li>
+</ul>
+<h3 id="Exchange-Operator"><a href="#Exchange-Operator" class="headerlink" title="Exchange Operator"></a>Exchange Operator</h3><blockquote>
+<p>“抽象”</p>
+</blockquote>
+<ul>
+<li>Type1 Gather: 合并<ul>
+<li>合并workers产生的结果</li>
+</ul>
+</li>
+<li>Type2 Repartition: 分类<ul>
+<li>多个input分类</li>
+<li>“mapreduce”</li>
+</ul>
+</li>
+<li>Type3 Distribute: 分发<ul>
+<li>一个input分发给多个worker</li>
+</ul>
+</li>
+</ul>
+<p><strong>一个Intra-Operator Parallelism的例子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">           ┌──────────┐</span><br><span class="line">           │ exchange │</span><br><span class="line">           └──────────┘</span><br><span class="line">           ▲   ▲   ▲   ▲</span><br><span class="line">           │   │   │   │</span><br><span class="line">           σ   σ   σ   σ  </span><br><span class="line">          ┌─┐ ┌─┐ ┌─┐ ┌─┐</span><br><span class="line">          │ │ │ │ │ │ │ │</span><br><span class="line">          └─┘ └─┘ └─┘ └─┘</span><br><span class="line">           ▲   ▲   ▲   ▲</span><br><span class="line">           │   │   └┐  │</span><br><span class="line">           └───┼──┐ │  │</span><br><span class="line">               │  │ │  │</span><br><span class="line">            ┌──┘  │ │  │</span><br><span class="line">            │     │ │  │</span><br><span class="line">          ┌─┴─────┴─┴──┤</span><br><span class="line">attibutes:│            │</span><br><span class="line">          └────────────┘</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Intra-Operator-Parallelism"><a href="#Intra-Operator-Parallelism" class="headerlink" title="Intra-Operator Parallelism"></a>Intra-Operator Parallelism</h3><ul>
+<li>水平扩展<ul>
+<li>将一个操作分成多份，作用到不同subset中</li>
+<li>即不同子集间可以并行</li>
+</ul>
+</li>
+<li>垂直扩展<ul>
+<li>流水线</li>
+</ul>
+</li>
+</ul>
+<p>水平扩展加速了一个操作的执行，不过仍存在一个操作要等待上一个操作执行完成，所以又考虑垂直扩展，流水线。</p>
+<p>TODO 总结流水线思想</p>
+<ul>
+<li>尽量让每一个worker都别停下来</li>
+</ul>
+<p><strong>exchange抽象</strong> : DBMS引入一个exchange操作来”协调”(合并，分类，分发)，类似于一个假的<code>Next()</code>下图也解释了为什么叫”水平”和”垂直”</p>
+<h3 id="Bushy-Parallelism"><a href="#Bushy-Parallelism" class="headerlink" title="Bushy Parallelism"></a>Bushy Parallelism</h3><p>水平扩展，垂直扩展相结合。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">     π</span><br><span class="line">     ▲</span><br><span class="line">     │</span><br><span class="line">┌─►  ⋈   ◄─┐</span><br><span class="line">│   join   │</span><br><span class="line">σ          σ</span><br><span class="line">A          B</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>我们在”select”(<code>σ</code>)的时候可以使用intra parallelism，加速选出操作</li>
+<li>然后join的地方建哈比表aggregate，可以一个bucket一个worker来并行</li>
+</ul>
+<h3 id="IO-Parallelism"><a href="#IO-Parallelism" class="headerlink" title="IO Parallelism"></a>IO Parallelism</h3><p>并发虽好，但是硬盘问题仍然是一个大挑战。并发并不能解决硬盘瓶颈问题，甚至还会污染缓存。</p>
+<h4 id="Multi-Disk-Parallelism"><a href="#Multi-Disk-Parallelism" class="headerlink" title="Multi-Disk Parallelism"></a>Multi-Disk Parallelism</h4><ul>
+<li>如可以将文件保存到多个Disk中，各个disk的IO相互相互独立</li>
+<li>可以<strong>根据实际情况使用不同的RAID</strong></li>
+</ul>
+<h4 id="Database-Partitioning"><a href="#Database-Partitioning" class="headerlink" title="Database Partitioning"></a>Database Partitioning</h4><ul>
+<li>基于”MAP”: DBMS应该可以指定数据库使用的磁盘<ul>
+<li>buffer pool manager里修改一下page的映射就可以了</li>
+</ul>
+</li>
+<li>也可以基于文件系统<ul>
+<li>根据不同目录划分</li>
+<li>“mount”</li>
+</ul>
+</li>
+</ul>
+<p>其中的一个难点的”日志文件”的共享问题。其实已经有点分布式的味道了。</p>
+<h3 id="分区方法"><a href="#分区方法" class="headerlink" title="分区方法"></a>分区方法</h3><p>可以使用逻辑分区来划分不同的物理。这样来实现对应用透明。</p>
+<p>但是DBMS应该也要有点感知力。如在分布式数据库中，DBMS应该可以就近执行。</p>
+<ul>
+<li>Vertical Partitioning<ul>
+<li>一个表的属性可以分开存储</li>
+<li>所以每个独立的存储都需要存储”行信息”</li>
+<li>适用于<strong>根据列优化的情景</strong></li>
+</ul>
+</li>
+<li>Horizontal Partitioning<ul>
+<li>基于某种<strong>“根据行聚类”</strong>的方法，如哈希，range，predicate(谓词)</li>
+</ul>
+</li>
+</ul>
+<h2 id="贯穿始终"><a href="#贯穿始终" class="headerlink" title="贯穿始终"></a>贯穿始终</h2><ul>
+<li>what if 用上所有能用的buffer会怎样</li>
+<li>管好size尺度，别让有机会乱换出</li>
+</ul>
+<h2 id="秒不可言"><a href="#秒不可言" class="headerlink" title="秒不可言"></a>秒不可言</h2><ul>
+<li>Crabbing</li>
+<li>先布隆过滤器预判</li>
+<li>一次一page<ul>
+<li>一次一个 no，一次所有no, 一次一page yes</li>
+</ul>
+</li>
+<li>thread不也是某种bypass吗</li>
+</ul>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://github.com/66ring/2022/06/06/universe/database/cmu15-445_route_map_part1/>http://github.com/66ring/2022/06/06/universe/database/cmu15-445_route_map_part1/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/database/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>database</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2022/06/26/universe/paper_reading/a_glance_at_persistent_memory/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Persistent Memory软硬件结合方向的调研</p>
+          <p class='content'>abstraction基于新硬件的存储系统性能优化
+已经进行了哪些研究
+有哪些创新性方法取得了哪些结果为什么对这个方向感兴趣
+
+通过这段时间对实验室工作的调研和论文阅读我大概知道了实验室的战略方...</p>
+        </a>
+      
+      
+        <a class='next' href='/2022/06/05/universe/paper_reading/HDFS/'>
+          <p class='title'>The Hapdoop Distributed File System<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>The Hapdoop Distributed File System论文笔记三类分布式存储系统的区别有三类存储系统：块存储系统, 对象存储系统, 文件存储系统。块存储面向的用户是软件系统，文件...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ch1-history"><span class="toc-text">ch1 history</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch2-SQL用法"><span class="toc-text">ch2 SQL用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch3-数据存储1-数据结构"><span class="toc-text">ch3 数据存储1: 数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch4-数据存储2-存储模型"><span class="toc-text">ch4 数据存储2: 存储模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch5-Buffer-pool"><span class="toc-text">ch5 Buffer pool</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Multiple-Buffer-Pools"><span class="toc-text">Multiple Buffer Pools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pre-Fetching"><span class="toc-text">Pre-Fetching</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scan-Sharing"><span class="toc-text">Scan Sharing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer-Pool-Bypass"><span class="toc-text">Buffer Pool Bypass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#越过操作系统的Page-Cache"><span class="toc-text">越过操作系统的Page Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LRU"><span class="toc-text">LRU</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch6-Hash-Table"><span class="toc-text">ch6 Hash Table</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-probe-hashing"><span class="toc-text">Linear probe hashing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Robin-hood-hashing"><span class="toc-text">Robin hood hashing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cuckoo-hashing"><span class="toc-text">Cuckoo hashing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Chained-hashing"><span class="toc-text">Chained hashing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Extendible-hashing"><span class="toc-text">Extendible hashing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-hashing"><span class="toc-text">Linear hashing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch7-Table-Indexs-B-tree"><span class="toc-text">ch7 Table Indexs(B+tree)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nodes"><span class="toc-text">Nodes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树插入"><span class="toc-text">B+树插入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树删除"><span class="toc-text">B+树删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树设计"><span class="toc-text">B+树设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#节点大小"><span class="toc-text">节点大小</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合并阀值"><span class="toc-text">合并阀值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#变长key"><span class="toc-text">变长key</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重复索引"><span class="toc-text">重复索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Intra-Node-Search"><span class="toc-text">Intra-Node Search</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他优化"><span class="toc-text">其他优化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch8-Table-Indexs-II"><span class="toc-text">ch8 Table Indexs(II)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#重复key问题"><span class="toc-text">重复key问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hints"><span class="toc-text">hints</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#隐式索引"><span class="toc-text">隐式索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Partial-Indexes"><span class="toc-text">Partial Indexes</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Covering-Indexes"><span class="toc-text">Covering Indexes</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Index-Include-Columns"><span class="toc-text">Index Include Columns</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Function-expression-indexes"><span class="toc-text">Function&#x2F;expression indexes</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查表问题"><span class="toc-text">查表问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关键词搜索问题"><span class="toc-text">关键词搜索问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch9-Multi-Threaded-Index-Concurrency-Control"><span class="toc-text">ch9 Multi-Threaded Index Concurrency Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#locks-和-latches"><span class="toc-text">locks 和 latches</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#锁实现的几种方法"><span class="toc-text">锁实现的几种方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash-Table-Latching"><span class="toc-text">Hash Table Latching</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Tree-Concurrency-Control"><span class="toc-text">B+ Tree Concurrency Control</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Latch-Crabbing-Coupling-Better-Latching-Algo"><span class="toc-text">Latch Crabbing&#x2F;Coupling: Better Latching Algo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#另一种优化-瓶颈-的方向：down-top"><span class="toc-text">另一种优化(瓶颈)的方向：down-top</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Delayed-Parent-Updates"><span class="toc-text">Delayed Parent Updates</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch10-Sorting-Aggregation"><span class="toc-text">ch10 Sorting Aggregation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#排序"><span class="toc-text">排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#External-Merge-sort"><span class="toc-text">External Merge sort</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#两路归并排序-2-way-externel-merge-sort"><span class="toc-text">两路归并排序(2-way externel merge sort)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Double-Buffering-Optimization"><span class="toc-text">Double Buffering Optimization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#General-External-Merge-Sort"><span class="toc-text">General External Merge Sort</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用B-树排序"><span class="toc-text">利用B+树排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Aggregations"><span class="toc-text">Aggregations</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Sorting"><span class="toc-text">Sorting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#External-Hashing-Aggregate"><span class="toc-text">External Hashing Aggregate</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch11-Join-Algorithms"><span class="toc-text">ch11 Join Algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本操作"><span class="toc-text">基本操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO开销分析assertion"><span class="toc-text">IO开销分析assertion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nested-Loop"><span class="toc-text">Nested Loop</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Nested-Loop-Join-双循环"><span class="toc-text">Nested Loop Join: 双循环</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Block-Nested-Loop-Join"><span class="toc-text">Block Nested Loop Join</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Index-Nested-Loop-Join"><span class="toc-text">Index Nested Loop Join</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sort-Merge-Join"><span class="toc-text">Sort-Merge Join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash-Join"><span class="toc-text">Hash Join</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Hash-Join-Algorithm"><span class="toc-text">Basic Hash Join Algorithm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#布隆过滤器优化探测过程"><span class="toc-text">布隆过滤器优化探测过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Grace-Hash-Join"><span class="toc-text">Grace Hash Join</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch12-Query-Execution"><span class="toc-text">ch12 Query Execution</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Processing-Model"><span class="toc-text">Processing Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Iterrator-Model"><span class="toc-text">Iterrator Model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Materialization-Model"><span class="toc-text">Materialization Model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vectorization-Model"><span class="toc-text">Vectorization Model</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Access-Methods"><span class="toc-text">Access Methods</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Sequential-Scan"><span class="toc-text">Sequential Scan</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Zone-Maps"><span class="toc-text">Zone Maps</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Later-Materialization"><span class="toc-text">Later Materialization</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Index-Scan"><span class="toc-text">Index Scan</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multi-Index-Scan-Bitmap-Scan"><span class="toc-text">Multi-Index Scan &#x2F; Bitmap Scan</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Index-Scan-Page-Sorting"><span class="toc-text">Index Scan Page Sorting</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Expression-Evaluation"><span class="toc-text">Expression Evaluation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch13-Query-Execution-II-Parallel-Execution"><span class="toc-text">ch13 Query Execution II: Parallel Execution</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#并行-vs-分布式"><span class="toc-text">并行 vs 分布式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Process-Model"><span class="toc-text">Process Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Process-Per-Worker"><span class="toc-text">Process Per Worker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Process-Pool"><span class="toc-text">Process Pool</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thread-Per-Worker"><span class="toc-text">Thread Per Worker</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调度"><span class="toc-text">调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Inter-vs-Intra-Query-Parallelism"><span class="toc-text">Inter- vs. Intra-Query Parallelism</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Inter-Query-Parallelism"><span class="toc-text">Inter-Query Parallelism</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Intra-Query-Parallelism"><span class="toc-text">Intra-Query Parallelism</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Parallel-Grace-Hash-Join"><span class="toc-text">Parallel Grace Hash Join</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exchange-Operator"><span class="toc-text">Exchange Operator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Intra-Operator-Parallelism"><span class="toc-text">Intra-Operator Parallelism</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bushy-Parallelism"><span class="toc-text">Bushy Parallelism</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO-Parallelism"><span class="toc-text">IO Parallelism</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Multi-Disk-Parallelism"><span class="toc-text">Multi-Disk Parallelism</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Database-Partitioning"><span class="toc-text">Database Partitioning</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分区方法"><span class="toc-text">分区方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#贯穿始终"><span class="toc-text">贯穿始终</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#秒不可言"><span class="toc-text">秒不可言</span></a></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="CMU15-445学习笔记";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"EKmusUsvxKTWym4LJnmkk1eU-gzGzoHsz","appKey":"sdWXsEnYQvIqRVoEPSMsLCr6","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://github.com/66ring' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>

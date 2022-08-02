@@ -605,7 +605,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2000/01/01/universe/rust/rust_cheat_sheet/>http://yoursite.com/2000/01/01/universe/rust/rust_cheat_sheet/</a></p>
+                <p>本文永久链接是：<a href=http://github.com/66ring/2000/01/01/universe/rust/rust_cheat_sheet/>http://github.com/66ring/2000/01/01/universe/rust/rust_cheat_sheet/</a></p>
               
             
           </blockquote>
@@ -661,6 +661,17 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 mut和&am...</p>
         </a>
       
+      
+        <a class='next' href='/2000/01/01/Major/algorithm/acwing/'>
+          <p class='title'>acwing算法<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>AbstractPrefaceOverview求质数
+质除法
+i &lt;= x/i
+
+
+
+12345678bool is_prime(int x) &#123;	if (x &lt; 2) r...</p>
+        </a>
       
     </div>
   
@@ -1289,7 +1300,7 @@ function setSearchService() {
       // 请求 PV 并自增
       var pvCtn = document.querySelector('#lc-sv');
       if (pvCtn || enableIncr) {
-        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+        var pvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-sv', 'Visits').then((record) => {
           incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-sv #number');
           if (eles.length > 0) {
@@ -1307,7 +1318,7 @@ function setSearchService() {
       // 请求 UV 并自增
       var uvCtn = document.querySelector('#lc-uv');
       if (uvCtn || enableIncr) {
-        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+        var uvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-uv', 'Visitors').then((record) => {
           var vuv = this.validUV();
           vuv && incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-uv #number');
@@ -1329,7 +1340,7 @@ function setSearchService() {
         for (i = 0; i < allPV.length; i++) {
           let pv = allPV[i];
           let title = pv.getAttribute('data-title');
-          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          var url = 'http://github.com/66ring' + pv.getAttribute('data-path');
           if (url) {
             var viewGetter = this.getRecord(Counter, url, title).then((record) => {
               // 是当前页面就自增

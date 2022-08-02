@@ -1004,7 +1004,7 @@ iii. 进入异常中断时保留现场，返回时恢复</code></pre> c. TODO �
               
             
               
-                <p>本文永久链接是：<a href=http://yoursite.com/2000/01/01/Major/OS/embeded_OS/>http://yoursite.com/2000/01/01/Major/OS/embeded_OS/</a></p>
+                <p>本文永久链接是：<a href=http://github.com/66ring/2000/01/01/Major/OS/embeded_OS/>http://github.com/66ring/2000/01/01/Major/OS/embeded_OS/</a></p>
               
             
           </blockquote>
@@ -1060,8 +1060,9 @@ iii. 进入异常中断时保留现场，返回时恢复</code></pre> c. TODO �
         <a class='next' href='/2000/01/01/Major/algorithm/leetcode/'>
           <p class='title'>leetcode算法笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>AbstractTODO learn 贪心 剪枝 dp 的思想和trade off
-PrefaceOverview贪心法无重叠区间leetcode
-思考会议预约，区间(start, end)分别...</p>
+PrefaceOverview双指针两数之和有序数组中找两数和为目标数
+双指针, 小了移左, 大了移右
+两数平...</p>
         </a>
       
     </div>
@@ -1691,7 +1692,7 @@ function setSearchService() {
       // 请求 PV 并自增
       var pvCtn = document.querySelector('#lc-sv');
       if (pvCtn || enableIncr) {
-        var pvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-sv', 'Visits').then((record) => {
+        var pvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-sv', 'Visits').then((record) => {
           incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-sv #number');
           if (eles.length > 0) {
@@ -1709,7 +1710,7 @@ function setSearchService() {
       // 请求 UV 并自增
       var uvCtn = document.querySelector('#lc-uv');
       if (uvCtn || enableIncr) {
-        var uvGetter = this.getRecord(Counter, 'http://yoursite.com' + '/#lc-uv', 'Visitors').then((record) => {
+        var uvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-uv', 'Visitors').then((record) => {
           var vuv = this.validUV();
           vuv && incrArr.push(this.buildIncrement(record.objectId))
           var eles = document.querySelectorAll('#lc-uv #number');
@@ -1731,7 +1732,7 @@ function setSearchService() {
         for (i = 0; i < allPV.length; i++) {
           let pv = allPV[i];
           let title = pv.getAttribute('data-title');
-          var url = 'http://yoursite.com' + pv.getAttribute('data-path');
+          var url = 'http://github.com/66ring' + pv.getAttribute('data-path');
           if (url) {
             var viewGetter = this.getRecord(Counter, url, title).then((record) => {
               // 是当前页面就自增
