@@ -514,7 +514,84 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><h3 id="求质数"><a href="#求质数" class="headerlink" title="求质数"></a>求质数</h3><ul>
+  <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><h1 id="Algo"><a href="#Algo" class="headerlink" title="Algo"></a>Algo</h1><h2 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h2><ul>
+<li>区间问题<ul>
+<li>套路: <ol>
+<li>左端点排序或右端点排序</li>
+</ol>
+</li>
+<li>证明套路: ans &lt;= cnt + ans &gt;= cnt =&gt; cnt = ans得整算法正确性</li>
+</ul>
+</li>
+<li>区间分组问题<ul>
+<li>套路: <ol>
+<li>左端点排序或右端点排序</li>
+<li>可以使用最小堆等数据结构, 用一个”代表者”代替整个组, 就不用维护整个map</li>
+</ol>
+</li>
+<li>证明套路: ans &lt;= cnt + ans &gt;= cnt =&gt; cnt = ans得整算法正确性</li>
+</ul>
+</li>
+</ul>
+<h2 id="搜索与图论"><a href="#搜索与图论" class="headerlink" title="搜索与图论"></a>搜索与图论</h2><ul>
+<li>最短路径问题<ul>
+<li>单源<ul>
+<li>不存在负权边<ul>
+<li>朴素dijkstra O(n**2)</li>
+<li>堆优化dijkstra O(m*logn)</li>
+</ul>
+</li>
+<li>存在负权边<ul>
+<li>bellman-ford O(mn)</li>
+<li>spfa 一般O(m), 最坏O(mn)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多源<ul>
+<li>floyd算法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="图的邻接表表示"><a href="#图的邻接表表示" class="headerlink" title="图的邻接表表示"></a>图的邻接表表示</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加a-&gt;b的链接表, 权值为c</span></span><br><span class="line"><span class="comment">// 这里用数组模拟, idx就相当于内存位置</span></span><br><span class="line"><span class="comment">// h[]是整个"结构体"的如何, 存放编号到内存地址(idx)的映射</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">  e[idx] = b; <span class="comment">// 添加新节点</span></span><br><span class="line">  w[idx] = c; <span class="comment">// 添加节点权值</span></span><br><span class="line">  ne[idx] = h[a]; <span class="comment">// 头插链边</span></span><br><span class="line">  h[a] = idx++;  <span class="comment">// 更新头节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="bellman-ford"><a href="#bellman-ford" class="headerlink" title="bellman-ford"></a>bellman-ford</h3><p>可以处理有负权边的最短路问题</p>
+<ul>
+<li>algo: 单源负权边最短路问题, 多次遍历所有边即可。<ul>
+<li>TODO: 待证明</li>
+</ul>
+</li>
+<li>更新只用上一次的结果, 防止使用修改的后的进行计算</li>
+<li>三角不等式</li>
+<li>之所以可以解决负边问题是因为循环次数有限</li>
+</ul>
+<h3 id="spfa算法"><a href="#spfa算法" class="headerlink" title="spfa算法"></a>spfa算法</h3><ul>
+<li>同样是解决存在负权边的最短路径问题。</li>
+<li>是对bellman-ford的优化, bellman不假思索遍历所有, 但实际上如果dist没变那依赖它跳转的后续就不会改变<ul>
+<li>所以只需要在dist缩小时才将它加入队列</li>
+</ul>
+</li>
+</ul>
+<p>举个例子, bellman-ford算法伪代码如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> 所有点k(每个点都可能称为中介跳转):</span><br><span class="line">	<span class="keyword">for</span> 所有点i(枚举所有起点, 使用中介点k relax):</span><br><span class="line">		relax(dist)</span><br></pre></td></tr></table></figure>
+
+<p>spfa伪代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">exist[<span class="number">1</span>] = <span class="literal">true</span>; 	<span class="comment">// 是否存在队列中</span></span><br><span class="line"><span class="keyword">for</span> 所有有在队列q中的点k: 	<span class="comment">// 使用一个队列保存dist缩小后的点</span></span><br><span class="line">	exist[k] = <span class="literal">false</span>; 	<span class="comment">// 清除记录, 后续必要时会重新添加</span></span><br><span class="line">	<span class="keyword">for</span> 所有k的邻接点i(枚举所有起点, 使用中介点k relax):</span><br><span class="line">		<span class="keyword">if</span> 更新:</span><br><span class="line">			<span class="keyword">if</span> !exist[j] q &lt;- j; <span class="comment">// 如果已经在组列中就不如</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="spfa判断负环"><a href="#spfa判断负环" class="headerlink" title="spfa判断负环"></a>spfa判断负环</h4><p>原理: </p>
+<ol>
+<li>n个点不存在环的话只有n-1条边, 所以如果<code>cnt[x] &gt;= n</code>则说明存在环路。<code>cnt[x]</code>表示走到x所需的边数。<code>cnt[x] = cnt[prev(x)] + 1</code>, 一次走一步加一边。</li>
+<li>因为负环会让路径变小, 所以会被检测到</li>
+</ol>
+<h3 id="Floyd"><a href="#Floyd" class="headerlink" title="Floyd"></a>Floyd</h3><p>解决多源最短路径问题</p>
+<p>使用三重循环, 最外层是中间点k的枚举。</p>
+<h3 id="朴素Prim"><a href="#朴素Prim" class="headerlink" title="朴素Prim"></a>朴素Prim</h3><p>求最小生成树问题。关键在于怎么求点到<strong>集合</strong>的距离, 可以通过边的两个端点判断。</p>
+<p>TODO: <a href="https://www.acwing.com/video/287/" target="_blank" rel="noopener">https://www.acwing.com/video/287/</a></p>
+<h1 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h1><h3 id="求质数"><a href="#求质数" class="headerlink" title="求质数"></a>求质数</h3><ul>
 <li>质除法<ul>
 <li><code>i &lt;= x/i</code></li>
 </ul>
@@ -705,7 +782,7 @@ tips引用与借用的区别创建引用的行为称为借用(borrowing)
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#求质数"><span class="toc-text">求质数</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#贪心"><span class="toc-text">贪心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索与图论"><span class="toc-text">搜索与图论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#图的邻接表表示"><span class="toc-text">图的邻接表表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bellman-ford"><span class="toc-text">bellman-ford</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spfa算法"><span class="toc-text">spfa算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#spfa判断负环"><span class="toc-text">spfa判断负环</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Floyd"><span class="toc-text">Floyd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#朴素Prim"><span class="toc-text">朴素Prim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求质数"><span class="toc-text">求质数</span></a></li></ol></li></ol>
     </div>
   </section>
 

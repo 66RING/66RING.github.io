@@ -552,7 +552,30 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 </ul>
-<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>rust引入了很多现代的抽象来消除Undefine Behavior，如<code>Result</code>, <code>Option</code>。而这些抽象可能需要很多重复的繁琐的”分支处理”，如：</p>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><blockquote>
+<p><a href="https://blog.burntsushi.net/rust-error-handling/" target="_blank" rel="noopener">https://blog.burntsushi.net/rust-error-handling/</a></p>
+</blockquote>
+<ul>
+<li><code>unwrap</code>取出Some/OK(e)等否则panic<ul>
+<li><code>map(self, F)</code>返回None或F处理后的Option: <code>Some(F(T))</code><ul>
+<li><code>and_then(self, F)</code>的区别, map总是rewraped with Some, 而<code>and_then</code>可以任意类型</li>
+</ul>
+</li>
+<li><code>unwrap_or(T, default)</code>, 取出Some或None时返回default</li>
+</ul>
+</li>
+<li>Result: richer version of Option</li>
+<li>Multiple error type<ul>
+<li>类型转换: <code>ok_or()</code>Option转Result</li>
+<li>TODO: Box</li>
+</ul>
+</li>
+<li><code>try</code>和<code>?</code>宏<ul>
+<li>如果错误返回错误(即返回), 常用<code>?</code></li>
+</ul>
+</li>
+</ul>
+<p>rust引入了很多现代的抽象来消除Undefine Behavior，如<code>Result</code>, <code>Option</code>。而这些抽象可能需要很多重复的繁琐的”分支处理”，如：</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">match</span> result &#123;</span><br><span class="line">	<span class="literal">Ok</span>(o) =&gt; o,</span><br><span class="line">	<span class="literal">Err</span>(e) =&gt; panic(<span class="string">"&#123;:?&#125;"</span>, e),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>于是Rust由引入了一些方便程序员的函数。上面的代码就得到了简化</p>
@@ -569,6 +592,24 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>一个函数可能返回多种错误类型，这样它的返回值可以使用<code>Box&lt;dyn Error&gt;</code>，即实现了该trait的对象，或者能实现<code>from</code>转换掉</li>
 </ul>
 <p>因为<code>?</code>的存在，必定会返回一个result，所以<strong>原本无返回的函数还要返回<code>OK(())</code></strong></p>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p><a href="https://course.rs/basic/converse.html" target="_blank" rel="noopener">https://course.rs/basic/converse.html</a></p>
+<ul>
+<li>自动类型推导的过程</li>
+<li><code>mem::transmute&lt;T, U&gt;(T) -&gt; U</code></li>
+<li><code>mem::transmute_copy&lt;T, U&gt;(T) -&gt; U</code>, 甚至没有大小检测</li>
+</ul>
+<h2 id="Rc"><a href="#Rc" class="headerlink" title="Rc"></a>Rc</h2><p>多所有权的场景, 如树, 图</p>
+<ul>
+<li><code>Rc::clone(&amp;a)</code>增加引用计数(浅拷贝)</li>
+<li><code>a.clone()</code>, (深拷贝)</li>
+<li><code>Rc::strong_count(&amp;a)</code>获取强引用计数<ul>
+<li><code>Rc::weak_count(&amp;a)</code>获取弱引用计数</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">List</span></span> &#123;</span><br><span class="line">	Cons(<span class="built_in">i32</span>, Rc&lt;List&gt;),</span><br><span class="line">	Nil,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 用Rc::new()包裹一下</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">	<span class="keyword">let</span> a = Rc::new(Cons(<span class="number">5</span>, Rc::new(Nil)));</span><br><span class="line">	<span class="keyword">let</span> b = Cons(<span class="number">4</span>, Rc::clone(&amp;a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 <h2 id="RefCell"><a href="#RefCell" class="headerlink" title="RefCell"></a>RefCell</h2><blockquote>
 <p>不可变引用一个改变数据之：内部可变性</p>
 </blockquote>
@@ -588,6 +629,44 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </li>
 </ul>
 <p>运行时违反借用规则将panic</p>
+<ul>
+<li>Rc + RefCell<ul>
+<li><strong>多所有权内部可变场景</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> value = Rc::new(RefCell::new(<span class="number">5</span>));</span><br><span class="line"><span class="comment">// 1. 用*自动解引用Rc</span></span><br><span class="line"><span class="comment">// 2. 用borrow_mut获取RefCell的内部可变引用</span></span><br><span class="line">*value.borrow_mut() += <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Cell<T>, 通过复制来实现内部可变</li>
+</ul>
+<h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><blockquote>
+<p>use std::collections::HashMap;</p>
+</blockquote>
+<p>妙用<code>entry(key).or_insert(value)</code></p>
+<p>增</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.insert(k, v);</span><br></pre></td></tr></table></figure>
+
+<p>删</p>
+<p>改, <code>or_insert</code>很精髓</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// map[k]++</span></span><br><span class="line"><span class="keyword">let</span> count = map.entry(key).or_insert(<span class="number">0</span>);</span><br><span class="line">*count += <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 覆盖</span></span><br><span class="line">map.insert(k, v);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不覆盖</span></span><br><span class="line">map.entry(key).or_insert(value);</span><br></pre></td></tr></table></figure>
+
+<p>查</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (k, v) <span class="keyword">in</span> &amp;map &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">map.get(&amp;key);</span><br></pre></td></tr></table></figure>
+
+<h2 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h2><ul>
+<li>合并两个iter, 成一个元素为pair的iter, 如<code>[(iter1.1, iter2.1), (iter1.2, iter2.2), ...]</code><ul>
+<li><strong>不够一个pair将称为None</strong></li>
+</ul>
+</li>
+<li>格式: <code>iter = iter1.iter().zip(iter2.iter())</code></li>
+<li>可以使用map再将pair变为其他元素<code>map(|(&amp;a, &amp;b)| vec![a, b])</code></li>
+</ul>
+<h2 id="Send-Sync"><a href="#Send-Sync" class="headerlink" title="Send + Sync"></a>Send + Sync</h2><ul>
+<li>实现<code>Send</code>的类型可以线程间安全<strong>传递所有权</strong></li>
+<li>实现<code>Sync</code>的类型可以线程间安全<strong>共享(引用)</strong></li>
+<li>手动实现<code>Send + Sync</code>不安全, 好在大多数类型实现了</li>
+</ul>
 
   
   
@@ -658,19 +737,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <a class='prev' href='/2000/01/01/universe/rust/learn_rust_in_c/'>
           <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>用C的方式理解rust</p>
           <p class='content'>Preface作为一个母语是c程序员，初见rust时很多改变是比较模糊的，c中的指针等在rust中似乎变得更加抽象难以理解了。所以打算用类比的方式，让c程序员更好的理解rust。
-mut和&am...</p>
+1234567...</p>
         </a>
       
       
         <a class='next' href='/2000/01/01/Major/algorithm/acwing/'>
           <p class='title'>acwing算法<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>AbstractPrefaceOverview求质数
-质除法
-i &lt;= x/i
+          <p class='content'>AbstractPrefaceAlgo贪心
+区间问题
+套路: 
+左端点排序或右端点排序
 
 
-
-12345678bool is_prime(int x) &#123;	if (x &lt; 2) r...</p>
+证明套路: ans &lt;= cnt + ans &gt;= cnt =&gt; cnt = ans...</p>
         </a>
       
     </div>
@@ -766,7 +845,7 @@ i &lt;= x/i
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引用与借用的区别"><span class="toc-text">引用与借用的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#裸指针和引用的相互转换"><span class="toc-text">裸指针和引用的相互转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rust中打印变量地址"><span class="toc-text">rust中打印变量地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#声明式宏"><span class="toc-text">声明式宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#错误处理"><span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RefCell"><span class="toc-text">RefCell</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引用与借用的区别"><span class="toc-text">引用与借用的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#裸指针和引用的相互转换"><span class="toc-text">裸指针和引用的相互转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rust中打印变量地址"><span class="toc-text">rust中打印变量地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#声明式宏"><span class="toc-text">声明式宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#错误处理"><span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换"><span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rc"><span class="toc-text">Rc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RefCell"><span class="toc-text">RefCell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HashMap"><span class="toc-text">HashMap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip"><span class="toc-text">zip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Send-Sync"><span class="toc-text">Send + Sync</span></a></li></ol>
     </div>
   </section>
 
