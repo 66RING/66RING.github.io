@@ -649,7 +649,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <p>删</p>
 <p>改, <code>or_insert</code>很精髓</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// map[k]++</span></span><br><span class="line"><span class="keyword">let</span> count = map.entry(key).or_insert(<span class="number">0</span>);</span><br><span class="line">*count += <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 覆盖</span></span><br><span class="line">map.insert(k, v);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不覆盖</span></span><br><span class="line">map.entry(key).or_insert(value);</span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// map[k]++</span></span><br><span class="line"><span class="comment">// 指针法: 注意解引用和or_insert()消耗掉entry</span></span><br><span class="line"><span class="keyword">let</span> count = map.entry(key).or_insert(<span class="number">0</span>);</span><br><span class="line">*count += <span class="number">1</span>;</span><br><span class="line"><span class="comment">// API法</span></span><br><span class="line">map.entry(key).and_modify(|counter| *counter += <span class="number">1</span>).or_insert(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// get_mut法</span></span><br><span class="line"><span class="keyword">let</span> count = h.get_mut(&amp;key).unwrap();</span><br><span class="line">*count += <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 覆盖</span></span><br><span class="line">map.insert(k, v);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不覆盖</span></span><br><span class="line">map.entry(key).or_insert(value);</span><br></pre></td></tr></table></figure>
 
 <p>查</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (k, v) <span class="keyword">in</span> &amp;map &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">map.get(&amp;key);</span><br></pre></td></tr></table></figure>
@@ -667,6 +667,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>实现<code>Sync</code>的类型可以线程间安全<strong>共享(引用)</strong></li>
 <li>手动实现<code>Send + Sync</code>不安全, 好在大多数类型实现了</li>
 </ul>
+<h2 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h2><p>元组一个个<code>.</code>太麻烦了, 直接解包。可以使用<code>@</code>运算符</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">t</span></span>(tuple: (<span class="built_in">i32</span>, <span class="built_in">i32</span>, <span class="built_in">i32</span>)) &#123;</span><br><span class="line">    <span class="keyword">match</span> tuple &#123;</span><br><span class="line">        (r @ <span class="number">0</span>..=<span class="number">255</span>, g @ <span class="number">0</span>..=<span class="number">255</span>, b @ <span class="number">0</span>..=<span class="number">255</span>) &#123;</span><br><span class="line">            todo!()</span><br><span class="line">        &#125;</span><br><span class="line">        _ =&gt; todo!()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 
   
   
@@ -734,10 +741,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2000/01/01/universe/rust/learn_rust_in_c/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>用C的方式理解rust</p>
-          <p class='content'>Preface作为一个母语是c程序员，初见rust时很多改变是比较模糊的，c中的指针等在rust中似乎变得更加抽象难以理解了。所以打算用类比的方式，让c程序员更好的理解rust。
-1234567...</p>
+        <a class='prev' href='/2000/01/01/universe/reading_notes/the_catherdeal_and_the_bazaar/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>大教堂与集市读书笔记</p>
+          <p class='content'>Abstract
+如果一个人跟你聊开源，说他不懂这本书，那你大可以断定他是个外行人
+
+
+传统软件开发模式像艰难而缓慢的大教堂建造工程，严密，封闭，集中式管理。而集市在创新，生产力和Bug控制上要...</p>
         </a>
       
       
@@ -845,7 +855,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引用与借用的区别"><span class="toc-text">引用与借用的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#裸指针和引用的相互转换"><span class="toc-text">裸指针和引用的相互转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rust中打印变量地址"><span class="toc-text">rust中打印变量地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#声明式宏"><span class="toc-text">声明式宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#错误处理"><span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换"><span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rc"><span class="toc-text">Rc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RefCell"><span class="toc-text">RefCell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HashMap"><span class="toc-text">HashMap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip"><span class="toc-text">zip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Send-Sync"><span class="toc-text">Send + Sync</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引用与借用的区别"><span class="toc-text">引用与借用的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#裸指针和引用的相互转换"><span class="toc-text">裸指针和引用的相互转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rust中打印变量地址"><span class="toc-text">rust中打印变量地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#声明式宏"><span class="toc-text">声明式宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#错误处理"><span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换"><span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rc"><span class="toc-text">Rc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RefCell"><span class="toc-text">RefCell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HashMap"><span class="toc-text">HashMap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip"><span class="toc-text">zip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Send-Sync"><span class="toc-text">Send + Sync</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tuple"><span class="toc-text">tuple</span></a></li></ol>
     </div>
   </section>
 

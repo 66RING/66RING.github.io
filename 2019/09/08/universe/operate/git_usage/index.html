@@ -537,9 +537,17 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="添加修改并追踪"><a href="#添加修改并追踪" class="headerlink" title="添加修改并追踪"></a>添加修改并追踪</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add FILE</span><br><span class="line">git add .  // 添加所有</span><br></pre></td></tr></table></figure>
 
 
-<h3 id="退回"><a href="#退回" class="headerlink" title="退回"></a>退回</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git reset</span><br><span class="line">git reset --hard HEAD^ 退回到上一个版本</span><br><span class="line">git reset --hard HEAD~n 退回到上n个版本</span><br><span class="line">git reset --hard sjaieral 退回某个版本</span><br></pre></td></tr></table></figure>
+<h3 id="退回"><a href="#退回" class="headerlink" title="退回"></a>退回</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># cheat sheet</span></span></span><br><span class="line">git reset</span><br><span class="line">git reset --hard HEAD^ 退回到上一个版本</span><br><span class="line">git reset --hard HEAD~n 退回到上n个版本</span><br><span class="line">git reset --hard sjaieral 退回某个版本</span><br></pre></td></tr></table></figure>
 
-
+<ul>
+<li><code>git add</code>后会将磁盘内容添加到暂存区<ul>
+<li><code>git reset &lt;file/commit&gt;</code> <strong>撤销暂存区的修改, 本地磁盘内容保留</strong></li>
+</ul>
+</li>
+<li><code>git checkout &lt;file/commit&gt;</code> <strong>撤销本地磁盘的修改</strong></li>
+<li><code>git reset --hard &lt;commit&gt;</code> <strong>撤销暂存区同时修改本地磁盘</strong></li>
+<li><code>git revert &lt;commit&gt;</code> ++变–, <strong>并形成新的commit</strong></li>
+</ul>
 <h3 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "NAME"</span><br><span class="line">git config --global user.email "EMAIL"</span><br><span class="line">...等等</span><br></pre></td></tr></table></figure>
 
 
