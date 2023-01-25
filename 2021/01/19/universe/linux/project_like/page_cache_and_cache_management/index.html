@@ -613,22 +613,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/01/19/universe/linux/MM/TODO:buddy_system/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Buddy系统的原理及实现</p>
-          <p class='content'>Buddy系统的原理及实现在介绍buddy系统前先做个铺垫：空闲链表和内存池。
-空闲列表内存中的空闲内存块以列表的形式组织起来，称为free list。需要内存分配时扫描列表的空闲内存块，从空闲...</p>
+        <a class='prev' href='/2021/01/27/universe/linux/project_like/about_RUP/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>RUP简介以及常用模型</p>
+          <p class='content'>RUP有时候用户需求难以捉摸，甚至连用户自己都理不清，RUP就提供了一系列模板方便我们快速地获取用户的需求。用户只需要像填写表格一样把公式化的内容填上，再套用对应的模板，建立一系列模型，就能快速...</p>
         </a>
       
       
-        <a class='next' href='/2021/01/18/universe/linux/MM/slab/'>
-          <p class='title'>slab分配器<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>slab分配器slab分配器的两个功能：
+        <a class='next' href='/2021/01/19/universe/linux/MM/buddy_system/'>
+          <p class='title'>Buddy系统的原理及实现<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Buddy系统的原理及实现通过”二分查找”的方式快速找到所需大小的内存空间。对于大内存的分配是比较快的。
+基本要素:
 
-1 减少内部碎片
-2 作为高速缓存，存储内核中经常被分配并释放的对象
-
-
-Jeff Bonwick 发现对内核中普通对象进行初始化所需的时间超过了对其...</p>
+多级freelist用于索引: e.g. 有大小为32, 64, 128…...</p>
         </a>
       
     </div>

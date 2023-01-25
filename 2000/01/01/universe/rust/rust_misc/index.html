@@ -522,6 +522,24 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </li>
 <li><code>mem::forget()</code></li>
 </ul>
+<h2 id="小工具"><a href="#小工具" class="headerlink" title="小工具"></a>小工具</h2><h3 id="火焰图"><a href="#火焰图" class="headerlink" title="火焰图"></a>火焰图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cargo install flamegraph</span><br><span class="line">$ cargo framegraph</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="查看asm"><a href="#查看asm" class="headerlink" title="查看asm"></a>查看asm</h3><p>输出rust和对应汇编代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cargo install cargo-asm</span><br><span class="line">$ cargo asm --rust path::to::a::function</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Cell-vs-RefCell-vs-Cell"><a href="#Cell-vs-RefCell-vs-Cell" class="headerlink" title="Cell vs RefCell vs Cell"></a>Cell vs RefCell vs Cell</h2><ul>
+<li>都可以在没有所有权, 没有可变引用的情况下(即进有不可变引用)做内部可变</li>
+<li>但不是都能通过不可变引用<code>&amp;T</code>拿到内部数据的<code>&amp;mut</code><ul>
+<li>Cell, RefCell都没有办法在{不获取所有权/非可变引用}的情况下获取到&amp;mut的<ul>
+<li>而很多情况我们只能拿到不可变引用且拿不到所有权: 如静态变量</li>
+<li>而UnsafeCell可以通过get()获取到裸指针然后转换成&amp;mut</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
   
   
@@ -601,6 +619,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 人多了, 需要的沟通成本也多(IPC)...</p>
         </a>
       
+      
+        <a class='next' href='/2000/01/01/universe/c/cpp_cheat_sheet/'>
+          <p class='title'>CPP cheat sheet<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>小抄移动构造使用右值引用创建移动构造器。然后传入右值: std::move(lvalue)或者直接匿名变量
+1234567891011121314class A &#123;    A(A &a...</p>
+        </a>
       
     </div>
   
@@ -695,7 +719,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#小工具"><span class="toc-text">小工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#火焰图"><span class="toc-text">火焰图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看asm"><span class="toc-text">查看asm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cell-vs-RefCell-vs-Cell"><span class="toc-text">Cell vs RefCell vs Cell</span></a></li></ol>
     </div>
   </section>
 

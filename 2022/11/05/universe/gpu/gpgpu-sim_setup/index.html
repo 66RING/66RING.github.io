@@ -542,13 +542,21 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --config gcc</span><br><span class="line">sudo update-alternatives --config g++</span><br></pre></td></tr></table></figure>
 
 <p>此时gcc和g++的默认版本应该是5: <code>gcc -v</code></p>
-<h2 id="安装CUDA"><a href="#安装CUDA" class="headerlink" title="安装CUDA"></a>安装CUDA</h2><p>下载CUDA安装包</p>
+<h3 id="高版本ubuntu装gcc5"><a href="#高版本ubuntu装gcc5" class="headerlink" title="高版本ubuntu装gcc5"></a>高版本ubuntu装gcc5</h3><ol>
+<li>加软件源<code>vim /etc/apt/sources.list</code> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">deb http:&#x2F;&#x2F;dk.archive.ubuntu.com&#x2F;ubuntu&#x2F; xenial main</span><br><span class="line">deb http:&#x2F;&#x2F;dk.archive.ubuntu.com&#x2F;ubuntu&#x2F; xenial universe</span><br></pre></td></tr></table></figure></li>
+<li>包管理器更新数据<code>sudo apt update</code></li>
+<li>安装<code>sudo apt install gcc-5 g++-5</code></li>
+<li>根据上述步骤调整主次</li>
+</ol>
+<h2 id="安装CUDA和驱动"><a href="#安装CUDA和驱动" class="headerlink" title="安装CUDA和驱动"></a>安装CUDA和驱动</h2><p><a href="https://developer.nvidia.com/cuda-toolkit-archive?spm=a2c4g.14484438.10004.1" target="_blank" rel="noopener">官网下载安装程序</a></p>
+<p>下载CUDA安装包</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://developer.download.nvidia.com/compute/cuda/11.1.0/local_installers/cuda_11.1.0_455.23.05_linux.run</span><br></pre></td></tr></table></figure>
 
-<p>执行安装</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x cuda_11.1.0_455.23.05_linux.run</span><br><span class="line">sudo ./cuda_11.1.0_455.23.05_linux.run</span><br></pre></td></tr></table></figure>
+<p>执行安装, 记得参数指定安装驱动和其他工具</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x cuda_11.1.0_455.23.05_linux.run</span><br><span class="line">sudo ./cuda_11.1.0_455.23.05_linux.run --silent --verbose --driver --toolkit --samples</span><br></pre></td></tr></table></figure>
 
 <p>键入<code>accept</code>后, 仅选择安装<code>Toolkit</code>即可。之后cuda会安装到<code>/usr/local/cuda</code>。不同版本cuda的安装路径不同, 可以使用<code>sudo find / -name &quot;nvcc&quot;</code>命令查找一下。</p>
+<p><a href="https://help.aliyun.com/apsara/enterprise/v_3_13_0_20201215/ecs/enterprise-user-guide/install-the-cuda-and-gpu-drivers-for-a-linux-instance.html" target="_blank" rel="noopener">ref</a></p>
 <h2 id="安装GPGPU-sim"><a href="#安装GPGPU-sim" class="headerlink" title="安装GPGPU-sim"></a>安装GPGPU-sim</h2><p>下载GPGPU-sim源代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;gpgpu-sim&#x2F;gpgpu-sim_distribution</span><br><span class="line">cd gpgpu-sim_distribution</span><br></pre></td></tr></table></figure>
 
@@ -581,7 +589,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>gcc-5.5编译行✅</li>
 </ul>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li>目前gpgpu-sim 4.0没有支持部分功能, 如<code>cudaMallocManaged</code></li>
+<li>目前gpgpu-sim 4.0没有支持<code>cudaMallocManaged</code></li>
 </ul>
 
   
@@ -754,7 +762,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装依赖-安装gcc5"><span class="toc-text">安装依赖, 安装gcc5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装CUDA"><span class="toc-text">安装CUDA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装GPGPU-sim"><span class="toc-text">安装GPGPU-sim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试程序"><span class="toc-text">测试程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#坑"><span class="toc-text">坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装依赖-安装gcc5"><span class="toc-text">安装依赖, 安装gcc5</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#高版本ubuntu装gcc5"><span class="toc-text">高版本ubuntu装gcc5</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装CUDA和驱动"><span class="toc-text">安装CUDA和驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装GPGPU-sim"><span class="toc-text">安装GPGPU-sim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试程序"><span class="toc-text">测试程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#坑"><span class="toc-text">坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li></ol>
     </div>
   </section>
 

@@ -467,6 +467,441 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
+      <a href="/2021/08/21/universe/qemu/qemu_monitor_model/">
+        qemu monitor的工作模型
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        前言gdb调试程序会阻塞被调试程序运行，gdb走一步，程序才能走一步，形如：
+1234gdbprocgdbproc
+
+那qemu的monitor中使用HMP/QMP与虚拟机交互交互会不会导致qemu挂起呢？monitor和qemu交互是同步还是异步？如果是同步那qemu是如何挂起的
+monitor等待命令输入时不会阻塞qemu进行，不像gdb那样等待命令时阻塞被调试程序运行。只是在输入命令敲...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-08-21</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/08/21/universe/qemu/qemu_monitor_model/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/08/15/universe/qemu/qemu_open_disk/">
+        qemu磁盘文件打开过程
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        磁盘文件打开过程通过gdb追踪openat系统调用得知，raw格式文件会使用raw_open_common()函数打开，调用栈如下：
+
+
+通过分析源码得到qemu打开磁盘文件的过程：QEMU使用一个BlockDriverState结构体来管理块设备驱动信息，其中就包括了操作和数据。块设备创建的关键就在于初始化BlockDriverState结构体。
+1234567struct BlockDr...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-08-15</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/08/15/universe/qemu/qemu_open_disk/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/08/14/universe/qemu/even2rw/">
+        qemu如何由事件循环找到真正要操作的目标设备
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        从eventfd联系到fd的流程非阻塞事件循环中，通过修改eventfd来通知qemu有事情需要qemu处理，如调用读写回调函数等。已知eventfd仅做通知的作用，qemu事件循环能够监听到eventfd的改变然后做相应处理。但是qemu如何由eventfd找到真正要进行处理的对象呢(如由磁盘读写关联的eventfd找到磁盘的fd进行读写)？本文将以virtio的磁盘读写为例，介绍从eve...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-08-14</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/08/14/universe/qemu/even2rw/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/07/31/universe/linux/OpenRC_and_Runit/">
+        OpenRC和Runit
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        前言很多人讨厌systemd，说systemd违背了UNIX哲学的”do one thing and do it well”。这里不讨论systemd的功过，而是通过介绍OpenRC和Runit两个init程序来体会什么叫小而精, KISS。
+OpenRC使用逻辑OpenRC在/etc/init.d维护每个service的控制脚本，可以通过/etc/init.d/&lt;service&gt...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-07-31</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/07/31/universe/linux/OpenRC_and_Runit/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/07/29/universe/linux/extend_partition_and_data_migrate_in_linux/">
+        Linux中分区扩容与磁盘数据迁移
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        分区扩容注意，这种方法只能用于最后一个分区的扩容 
+使用lsblk查看现有分区情况，如：
+12345$ lsblkvda    253:0    0    12G  0 disk├─vda1 253:1    0     1K  0 part├─vda2 253:2    0     2G  0 part [SWAP]└─vda3 253:3    0     8G  0 part /
+
+使...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-07-29</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/07/29/universe/linux/extend_partition_and_data_migrate_in_linux/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/07/29/universe/qemu/qemu_dev_and_env_setup/">
+        QEMU虚拟机开发与环境配置
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        QEMU虚拟机开发与环境配置QEMU虚拟机开发与环境配置大体分为以下三个步骤：
+
+qemu虚拟机开发
+准备虚拟机运行所需环境
+qemu运行参数配置
+
+虚拟机开发虚拟机开发可以从最简单的图灵机模型开始，创建内存、创建CPU，再在此基础上添加需要的设备。需要注意的是图灵机模型不包括屏幕回显功能（毕竟有输出才方便debug嘛），所以含有CPU，内存，serial设备的机器才是人类能够交互的最小虚拟...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-07-29</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/07/29/universe/qemu/qemu_dev_and_env_setup/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/07/24/universe/qemu/powerpc_sim/">
+        PowerPC虚拟机模拟的开发方法
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        模拟方法概述创建虚拟机可以分为如下5个阶段，伪码描述如下：
+1234567static void my_machine_init(MachineState *machine)&#123;	create_cpu	create_mem	create_dev	load_kernel	create_device_tree&#125;
+
+create_cpu阶段主要负责cpu创建的内容，包括cpu对象...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-07-24</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/07/24/universe/qemu/powerpc_sim/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/06/06/universe/c/c_tips/">
+        C中一些容易疏忽的问题
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        C中一些容易疏忽的问题
+数组作为形参时退化为指针，即sizeof(arg) = 8，不再是原先数组的大小
+可以使用引用(CPP中)，f(int (&amp;arg)[])
+
+
+
+字符串定义方式的问题char* a和char a[]类型不同，导致的结果不同：
+
+extern char *a认为存储单元是地址的值
+extern char a[]认为存在单元是数组元素，但是用的时候a是地址
+
+12...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-06-06</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/06/06/universe/c/c_tips/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2021/05/27/universe/usage/imagic_magic/">
+        Imagic Magic Cheat sheet
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        
+查看图片信息
+identify
+
+
+格式转换：自动识别扩展名
+convert in.&lt;any&gt; out.&lt;any&gt;
+
+
+压缩-quality
+convert -quality 85 &lt;src&gt; &lt;dst&gt;
+
+
+修改大小-resize &lt;width&gt;x&lt;hight&gt;[!]
+!表示不改变原比例
+宽或高省略一个时，另一个根据...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-05-27</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2021/05/27/universe/usage/imagic_magic/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
       <a href="/2021/05/24/universe/qemu/create_mem_in_QEMU/">
         qemu架构中创建内存的方法
       </a>
@@ -502,424 +937,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/05/22/universe/usage/cmake_in_action/">
-        Modern Cmake
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        basic TODO: rename
-笔记内容来源
-
-经典三行
-12345cmake_minimum_required(VERSION 3.9)project(answer)# TODO: add_executable(answer main.cpp answer.cpp)
-
-使用
-123cmake -B build      # 生成构建目录，-B 指定生成的构建系统代码放在 build ...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-05-22</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/05/22/universe/usage/cmake_in_action/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/05/01/universe/c/how_oop_with_pure_c/">
-        如何使用纯c实现面向对象
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        继承与多态c语言结构体能保证第一个成员永远都是位于起始地址。而由于内存对齐(一种类型的起始地址必须是该类型长度的整数倍)，其他紧邻的成员地址未必连续。
-父类总是结构体的第一个成员 ，这样在强制类型转换截取相应大小时得到的总是一个完整的结构体。如
-1234567891011struct father&#123;    int age;    char* name;    ...&#125;;s...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-05-01</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/05/01/universe/c/how_oop_with_pure_c/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/21/universe/os/os_tips/">
-        OS中一些反直觉的tips
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        AbstractPrefaceOverviewfork and print
-fork复制资源
-print内有缓冲区
-
-case 1如下程序会打印多少-: 
-123456789101112#include&lt;stdio.h&gt;#include&lt;sys/types.h&gt;#include&lt;unistd.h&gt;int main() &#123;	int i;	for(i...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-21</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/21/universe/os/os_tips/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/">
-        QOM使用：qemu如何注册使用一个MemoryRegion类的
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        openrisc中ram对象的生成过程QEMU利用QOM来对对象进行抽象，用它来对各种资源进程抽象、管理(创建、配置、销毁)。即QEMU内部实现面向对象机制的方法。
-QOM机制有如下三个部分：
-
-类型注册，涉及函数有type_init、register_module_init、type_register
-生成TypeImpl，通过TypeImpl就可以知道如何初始化一个类
-相当于告诉qemu...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-17</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/17/universe/qemu/QOM_usage:how_qemu_register_a_ram/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/13/universe/qemu/qemu_softmmu/">
-        QEMU的内存模拟
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        QEMU softmmu虚拟机(Guest)内存模拟的首要任务是将虚拟机虚拟地址(GVA)转换成实际存储的宿主机(Host)的物理地址(HPA)。
-虚拟机提供了虚拟的硬件环境，GVA到到虚拟机物理地址(GPA)的过程可以由Guest OS完成，而QEMU要做的就是提供一个GPA到HPA的转换的实现。
-123456789101112131415             GVA         ...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-13</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/13/universe/qemu/qemu_softmmu/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/04/12/universe/qemu/qemu_initial_framework/">
-        qemu中的初始化技术
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        qemu的初始化框架qemu启动需要初始化很多内容，为了方便维护和添加初始化函数，qemu有它自己的一种实现方式。
-qemu的初始化时根据具体的模块类型，执行该类型的所有模块的初始化。有如下类型：
-1234567891011typedef enum &#123;    MODULE_INIT_MIGRATION,    MODULE_INIT_BLOCK,    MODULE_INIT_OP...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-04-12</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/04/12/universe/qemu/qemu_initial_framework/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/03/03/universe/linux/FS/journaled_file_system/">
-        日志型文件系统
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        日志型文件系统试想这么一个场景，磁盘正在写data block或data bitmaps或inodes时发生了crash，要如何保证数据的一致性呢？这时使用 日志journaling 就是一个很好的解决方案。
-原理在真正更新磁盘数据前，会先往磁盘写入一些信息，这些信息用于描述接下来的任务，这种方式被称为 write-ahead loggind。
-当发生crash时就可以通过记录的信息回溯cr...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-03-03</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/03/03/universe/linux/FS/journaled_file_system/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/02/09/universe/linux/MM/memory_management/">
-        Linux中的内存管理
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        为何需要逻辑地址由于系统中的物理内存是随分配不断在变化的，有时候这个程序使用，有时候那个程序在使用。如果不使用逻辑地址直接使用物理地址，那当前进程操作的地址被占用，则不能使用内存。通过将连续的逻辑地址映射成不连续的物理地址，程序将只用关系的连续的逻辑地址，而物理地址再通过一些方法找到并映射过去就行了。
-考虑一种简单的映射方法：
-如果简单的使用&lt;物理地址起始地址，大小&gt;实现：程序A...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-02-09</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/02/09/universe/linux/MM/memory_management/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/01/30/universe/linux/ftrace_usage/">
-        使用ftrace追踪内核函数调用
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        1 初探ftrace遇到的问题1.1 搞清楚ftrace是否标记出中断函数根据官网的描述，funcgraph-irqs选项，用于表明是否追踪中断。因此关闭后就不会记录中断信息。
-123funcgraph-irqs    When disabled, functions that happen inside an interrupt will not be traced.
-
-
-1.2 搞清楚为...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-01-30</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/01/30/universe/linux/ftrace_usage/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -934,7 +951,7 @@ qemu的初始化时根据具体的模块类型，执行该类型的所有模块�
           </a>
         
         <p class="current">
-          6 / 17
+          6 / 20
         </p>
         
           <a class="next" rel="next" href="/page/7/">
@@ -1041,7 +1058,7 @@ qemu的初始化时根据具体的模块类型，执行该类型的所有模块�
 
 
     <div class='content'>
-      <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/DDIA/" style="font-size: 14px; color: #999">DDIA</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/IPC/" style="font-size: 14px; color: #999">IPC</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/MIT/" style="font-size: 15.54px; color: #8f8f8f">MIT</a> <a href="/tags/OS/" style="font-size: 14.77px; color: #949494">OS</a> <a href="/tags/PowerPC/" style="font-size: 14px; color: #999">PowerPC</a> <a href="/tags/QOM/" style="font-size: 14px; color: #999">QOM</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 14.77px; color: #949494">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algorithm/" style="font-size: 17.08px; color: #848484">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c/" style="font-size: 17.08px; color: #848484">c</a> <a href="/tags/c-c/" style="font-size: 17.85px; color: #7f7f7f">c/c++</a> <a href="/tags/cheat-sheet/" style="font-size: 14px; color: #999">cheat sheet</a> <a href="/tags/cloud/" style="font-size: 14px; color: #999">cloud</a> <a href="/tags/cmake/" style="font-size: 14px; color: #999">cmake</a> <a href="/tags/coherence/" style="font-size: 14px; color: #999">coherence</a> <a href="/tags/compiler/" style="font-size: 14px; color: #999">compiler</a> <a href="/tags/cpp/" style="font-size: 14.77px; color: #949494">cpp</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/database/" style="font-size: 18.62px; color: #7a7a7a">database</a> <a href="/tags/distributed/" style="font-size: 18.62px; color: #7a7a7a">distributed</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 15.54px; color: #8f8f8f">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 14.77px; color: #949494">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 14.77px; color: #949494">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/gc/" style="font-size: 14px; color: #999">gc</a> <a href="/tags/gcc/" style="font-size: 14.77px; color: #949494">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/gdbserver/" style="font-size: 14px; color: #999">gdbserver</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 18.62px; color: #7a7a7a">go</a> <a href="/tags/gpgpu/" style="font-size: 14px; color: #999">gpgpu</a> <a href="/tags/gpu/" style="font-size: 14px; color: #999">gpu</a> <a href="/tags/gui/" style="font-size: 14.77px; color: #949494">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/init/" style="font-size: 14px; color: #999">init</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 16.31px; color: #898989">java</a> <a href="/tags/javascript/" style="font-size: 15.54px; color: #8f8f8f">javascript</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.46px; color: #5f5f5f">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lsm-tree/" style="font-size: 14px; color: #999">lsm tree</a> <a href="/tags/lua/" style="font-size: 14.77px; color: #949494">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mm/" style="font-size: 14.77px; color: #949494">mm</a> <a href="/tags/mmap/" style="font-size: 14px; color: #999">mmap</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.08px; color: #848484">network</a> <a href="/tags/nginx/" style="font-size: 14px; color: #999">nginx</a> <a href="/tags/oop/" style="font-size: 14px; color: #999">oop</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 19.38px; color: #747474">operate</a> <a href="/tags/os/" style="font-size: 20.92px; color: #6a6a6a">os</a> <a href="/tags/paper/" style="font-size: 14px; color: #999">paper</a> <a href="/tags/papers/" style="font-size: 18.62px; color: #7a7a7a">papers</a> <a href="/tags/pcie/" style="font-size: 14px; color: #999">pcie</a> <a href="/tags/pipe/" style="font-size: 14px; color: #999">pipe</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/project/" style="font-size: 16.31px; color: #898989">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 18.62px; color: #7a7a7a">python</a> <a href="/tags/qemu/" style="font-size: 23.23px; color: #5a5a5a">qemu</a> <a href="/tags/qom/" style="font-size: 14px; color: #999">qom</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/reading-note/" style="font-size: 15.54px; color: #8f8f8f">reading note</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/rust/" style="font-size: 17.08px; color: #848484">rust</a> <a href="/tags/semaphore/" style="font-size: 14px; color: #999">semaphore</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 15.54px; color: #8f8f8f">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 14.77px; color: #949494">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tags/" style="font-size: 14px; color: #999">tags</a> <a href="/tags/tech/" style="font-size: 20.15px; color: #6f6f6f">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 15.54px; color: #8f8f8f">tips</a> <a href="/tags/tool/" style="font-size: 15.54px; color: #8f8f8f">tool</a> <a href="/tags/tools/" style="font-size: 21.69px; color: #656565">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/trap/" style="font-size: 14px; color: #999">trap</a> <a href="/tags/traps/" style="font-size: 14px; color: #999">traps</a> <a href="/tags/typescript/" style="font-size: 14.77px; color: #949494">typescript</a> <a href="/tags/underlaying/" style="font-size: 14px; color: #999">underlaying</a> <a href="/tags/usage/" style="font-size: 14px; color: #999">usage</a> <a href="/tags/vim/" style="font-size: 15.54px; color: #8f8f8f">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/virtio/" style="font-size: 14px; color: #999">virtio</a> <a href="/tags/virtualization/" style="font-size: 14px; color: #999">virtualization</a> <a href="/tags/web/" style="font-size: 17.08px; color: #848484">web</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 14.77px; color: #949494">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14.77px; color: #949494">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
+      <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/DDIA/" style="font-size: 14px; color: #999">DDIA</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/IPC/" style="font-size: 14px; color: #999">IPC</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/MIT/" style="font-size: 15.67px; color: #8e8e8e">MIT</a> <a href="/tags/OS/" style="font-size: 22.33px; color: #606060">OS</a> <a href="/tags/PowerPC/" style="font-size: 14px; color: #999">PowerPC</a> <a href="/tags/QOM/" style="font-size: 14px; color: #999">QOM</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 14.83px; color: #939393">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algo/" style="font-size: 14.83px; color: #939393">algo</a> <a href="/tags/algorithm/" style="font-size: 17.33px; color: #828282">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c/" style="font-size: 17.33px; color: #828282">c</a> <a href="/tags/c-c/" style="font-size: 18.17px; color: #7d7d7d">c/c++</a> <a href="/tags/cheat-sheet/" style="font-size: 14.83px; color: #939393">cheat sheet</a> <a href="/tags/cloud/" style="font-size: 14px; color: #999">cloud</a> <a href="/tags/cmake/" style="font-size: 14px; color: #999">cmake</a> <a href="/tags/coherence/" style="font-size: 14px; color: #999">coherence</a> <a href="/tags/compiler/" style="font-size: 14px; color: #999">compiler</a> <a href="/tags/cpp/" style="font-size: 16.5px; color: #888">cpp</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/cuda/" style="font-size: 14px; color: #999">cuda</a> <a href="/tags/database/" style="font-size: 19.83px; color: #717171">database</a> <a href="/tags/distributed/" style="font-size: 19px; color: #777">distributed</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16.5px; color: #888">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 14.83px; color: #939393">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 14.83px; color: #939393">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/functional-programming/" style="font-size: 14px; color: #999">functional programming</a> <a href="/tags/gc/" style="font-size: 14px; color: #999">gc</a> <a href="/tags/gcc/" style="font-size: 14.83px; color: #939393">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/gdbserver/" style="font-size: 14px; color: #999">gdbserver</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 19px; color: #777">go</a> <a href="/tags/gpgpu/" style="font-size: 14px; color: #999">gpgpu</a> <a href="/tags/gpu/" style="font-size: 14.83px; color: #939393">gpu</a> <a href="/tags/gui/" style="font-size: 14.83px; color: #939393">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/init/" style="font-size: 14px; color: #999">init</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 16.5px; color: #888">java</a> <a href="/tags/javascript/" style="font-size: 15.67px; color: #8e8e8e">javascript</a> <a href="/tags/julia/" style="font-size: 14px; color: #999">julia</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.33px; color: #606060">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lsm-tree/" style="font-size: 14px; color: #999">lsm tree</a> <a href="/tags/lua/" style="font-size: 14.83px; color: #939393">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mis/" style="font-size: 14px; color: #999">mis</a> <a href="/tags/misc/" style="font-size: 18.17px; color: #7d7d7d">misc</a> <a href="/tags/mm/" style="font-size: 14.83px; color: #939393">mm</a> <a href="/tags/mmap/" style="font-size: 14px; color: #999">mmap</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.33px; color: #828282">network</a> <a href="/tags/nginx/" style="font-size: 14px; color: #999">nginx</a> <a href="/tags/oop/" style="font-size: 14px; color: #999">oop</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 19.83px; color: #717171">operate</a> <a href="/tags/os/" style="font-size: 21.5px; color: #666">os</a> <a href="/tags/paper/" style="font-size: 14px; color: #999">paper</a> <a href="/tags/papers/" style="font-size: 19px; color: #777">papers</a> <a href="/tags/pcie/" style="font-size: 14px; color: #999">pcie</a> <a href="/tags/pipe/" style="font-size: 14px; color: #999">pipe</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/programing-language/" style="font-size: 14px; color: #999">programing language</a> <a href="/tags/project/" style="font-size: 16.5px; color: #888">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 19px; color: #777">python</a> <a href="/tags/qemu/" style="font-size: 23.17px; color: #5b5b5b">qemu</a> <a href="/tags/qom/" style="font-size: 14px; color: #999">qom</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/reading-note/" style="font-size: 15.67px; color: #8e8e8e">reading note</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/rust/" style="font-size: 17.33px; color: #828282">rust</a> <a href="/tags/semaphore/" style="font-size: 14px; color: #999">semaphore</a> <a href="/tags/serverless/" style="font-size: 14px; color: #999">serverless</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 15.67px; color: #8e8e8e">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 14.83px; color: #939393">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tags/" style="font-size: 14px; color: #999">tags</a> <a href="/tags/tech/" style="font-size: 20.67px; color: #6c6c6c">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 15.67px; color: #8e8e8e">tips</a> <a href="/tags/tool/" style="font-size: 15.67px; color: #8e8e8e">tool</a> <a href="/tags/tools/" style="font-size: 22.33px; color: #606060">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/trap/" style="font-size: 14px; color: #999">trap</a> <a href="/tags/traps/" style="font-size: 14px; color: #999">traps</a> <a href="/tags/typescript/" style="font-size: 14.83px; color: #939393">typescript</a> <a href="/tags/underlaying/" style="font-size: 14px; color: #999">underlaying</a> <a href="/tags/usage/" style="font-size: 14px; color: #999">usage</a> <a href="/tags/vim/" style="font-size: 15.67px; color: #8e8e8e">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/virtio/" style="font-size: 14px; color: #999">virtio</a> <a href="/tags/virtualization/" style="font-size: 14px; color: #999">virtualization</a> <a href="/tags/wasm/" style="font-size: 14px; color: #999">wasm</a> <a href="/tags/web/" style="font-size: 17.33px; color: #828282">web</a> <a href="/tags/wisdom/" style="font-size: 14px; color: #999">wisdom</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 14.83px; color: #939393">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14.83px; color: #939393">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
     </div>
   </section>
 

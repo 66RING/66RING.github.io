@@ -1,0 +1,2734 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>CMU15-445学习笔记(下) - 66Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="database">
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/the_dark_side_of_the_moon_tranp.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Mens et Manus</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>首页</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>档归</p>
+            </a>
+          
+            <a href="https://github.com/66RING"
+              
+              
+              id="https:githubcom66RING">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        CMU15-445学习笔记(下)
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>请设置文章作者</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Jun 26, 2022</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="CMU15-445学习笔记(下)" data-path="/2022/06/26/universe/cources_notes/cmu15445/cmu15-445_route_map_part2/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="课程笔记"><a href="#课程笔记" class="headerlink" title="课程笔记"></a>课程笔记</h1><h2 id="ch14-Query-Planning-Optimization-I"><a href="#ch14-Query-Planning-Optimization-I" class="headerlink" title="ch14 Query Planning Optimization I"></a>ch14 Query Planning Optimization I</h2><blockquote>
+<p>Hardest part of building a DBMS <code>$$$</code>, 人们也开始考虑使用ML做优化</p>
+</blockquote>
+<p>基本思路: </p>
+<ul>
+<li>修改查询语句<ul>
+<li>如规约常量, 如先选择再连接</li>
+</ul>
+</li>
+<li>与具体数据无关, 可以记录些元数据(catalog)用于优化</li>
+<li>灵活cost model</li>
+</ul>
+<p>执行计划的大题框架:</p>
+<ol>
+<li>用户输入</li>
+<li>SQL重写(优化)</li>
+<li>解析</li>
+<li>Binder(与元数据, catalog等), 获得逻辑计划(树)</li>
+<li>优化树</li>
+<li>逻辑计划输入优化器, 优化器根据cost model做计划</li>
+</ol>
+<ul>
+<li><p>优化原理: 关系代数等价性: 如果量关系代数表达数的输出结果的集合相同则等价。</p>
+</li>
+<li><p><strong>Query Rewriting</strong>, 重写关系代数阶段的优化是与具体数据, cost model无关的</p>
+</li>
+<li><p>常用优化方法</p>
+<ul>
+<li>Selections 选择<ul>
+<li>Predicate Pushdown: 尽快做选择， 从而减少数据量。<strong>先选择再连接</strong></li>
+<li>Reorder predicate: 选择性强先执行, <strong>先过滤掉大部分数据</strong></li>
+<li>分写复杂predicate: 细分选择, 方便重排<ul>
+<li>$select_{A and B and C}(R) = select_A(select_B(select_C(R)))$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Projections 映射<ul>
+<li>除了要映射的和连接选择需要的, 其他可以去除减小元组大小</li>
+</ul>
+</li>
+<li>Joins<ul>
+<li>连接是可以交换的全部枚举找最优的方法显然行不通</li>
+<li><strong>维护一些内部统计数据来判断</strong>, 可以手动更新(如SQL中UPDATE STATISTICS)也可以自动更新，可以记录如下信息:<ul>
+<li>N(R): 关系R中的元组数</li>
+<li>V(A,R): 关系R中与属性A不同值的数量(方便先执行嗯区分度高的predicate)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ch15-Query-Planning-Optimization-II"><a href="#ch15-Query-Planning-Optimization-II" class="headerlink" title="ch15 Query Planning Optimization II"></a>ch15 Query Planning Optimization II</h2><p>TODO:</p>
+<h2 id="ch18-Timestamp-Ordering-Concurrency-control"><a href="#ch18-Timestamp-Ordering-Concurrency-control" class="headerlink" title="ch18 Timestamp Ordering Concurrency control"></a>ch18 Timestamp Ordering Concurrency control</h2><blockquote>
+<p>T/O concurrency control</p>
+</blockquote>
+<p>利用时间戳来保证执行是可串行化的: 冲突就重启</p>
+<p>定义: <strong>如果TS(Ti) &lt; TS(Tj)那么DBMS要保证txn执行的调度顺序与串行指定的Ti -&gt; Tj等价</strong></p>
+<ul>
+<li>Basic Timestamp Ordering Protocol</li>
+<li>Optimisic Concurrency Control</li>
+<li>Partition-based Timestamp Ordering</li>
+<li>Isolation Levels (next lecture)</li>
+</ul>
+<h3 id="abs"><a href="#abs" class="headerlink" title="abs"></a>abs</h3><ul>
+<li>有冲突就重启, 反证保证执行顺序(结果)是可串行化</li>
+<li>local copy<ul>
+<li>ST单调增, 保可复读</li>
+<li>“RCU”</li>
+</ul>
+</li>
+<li><strong>Thomas Rule</strong><ul>
+<li>另一种读写锁(共享互斥)的体现</li>
+</ul>
+</li>
+<li>瓶颈的多样的<ul>
+<li>OCC中存在类似RWLock中用于保护reader++的锁</li>
+</ul>
+</li>
+<li>瓶颈 -&gt; 水平分区</li>
+<li>The Phantom Problem</li>
+<li>优化都是出自具体分析的<ul>
+<li>“大数据, 小概率情景”</li>
+<li>热点与分区</li>
+<li>分区时的木桶效应</li>
+</ul>
+</li>
+</ul>
+<h3 id="Basic-TO"><a href="#Basic-TO" class="headerlink" title="Basic TO"></a>Basic TO</h3><blockquote>
+<p>实现无锁的事务并发控制。基本思路就是<strong>有冲突就重启</strong></p>
+<p>TS(i)表示给一个transaction(txn)一个时间戳(timestamp)</p>
+</blockquote>
+<ul>
+<li>不同的”TS”策略, 但都必须的单调递增且唯一的<ul>
+<li>CPU clock</li>
+<li>逻辑clock</li>
+<li>混合模式: 容易实现溢出rollback</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>每个对象X(如读取的A元组)都会打上最近一次读写的时间戳<code>W-TS(X), R-TS(X)</code></p>
+<ul>
+<li><code>W/R-TS(x)</code>是针对元组对象的, <code>TS(Ti)</code>是针对事务的</li>
+<li>如每个对象都会维护一个<code>W/R-TS</code>的表</li>
+</ul>
+</li>
+<li><p><strong>机制</strong></p>
+<ul>
+<li>txn每个操作都会检测时间戳</li>
+<li>如果时间戳大(来自未来, 或者说被别的txn访问过), 那当前txn就终止(abort)和重启(restarting)并更新时间戳</li>
+<li>否则就能继续执行并更新该对象的时间戳为当前txn的时间戳, <strong>然后保存对象X的一个本地拷贝</strong>(以便防止其他读者更新read TS后无法反复读取)<ul>
+<li>有点RCU的感觉</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Thomas rule</strong></p>
+<ul>
+<li><code>TS(Ti) &lt; R-TS(X)</code>则终止重启</li>
+<li><code>TS(Ti) &lt; W-TS(X)</code>则可以<strong>忽视该write，然后继续txn</strong><ol>
+<li><strong>因为有local copy</strong>, 后续读会从local读</li>
+<li>说明已经被人覆盖了, 而在local copy的写操作也跳过了, 所以最后不会冲突</li>
+<li>至于WR, 因为仍然有写规则保护所以Thomas rule好得很</li>
+</ol>
+</li>
+<li>两者结合, =&gt; “读写锁的某种变换”, 某种读写锁背后的深刻哲学</li>
+</ul>
+</li>
+<li><p><strong>Conflict Serializable</strong>: 调度不使用Thomas Rule时</p>
+<ul>
+<li>这种策略允许存在not recoverable的事务</li>
+</ul>
+</li>
+<li><p><strong>recoverable</strong></p>
+<ul>
+<li>如果一个txn依赖的txn(读了修改)都commit了, 那该txn是recoverable的</li>
+<li>不可恢复的情况:<ul>
+<li>txn2的读依赖txn1写, 但是因为txn1的冲突重启了，所以txn2不可恢复</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>basic T/O的问题</p>
+<ul>
+<li>拷贝的local的开销</li>
+<li>一个长的txn非常容易饥饿, 频繁被新的txn conflict abort</li>
+</ul>
+</li>
+<li><p>Observation</p>
+<ul>
+<li><strong>短</strong>txn发生冲突的<strong>概率是小</strong>的，这种情况重试的开销是比加锁的开销画得来</li>
+</ul>
+</li>
+<li><p>更好的方法: 优化冲突情况</p>
+</li>
+</ul>
+<h3 id="Optimistic-Concurrency-Control-OCC"><a href="#Optimistic-Concurrency-Control-OCC" class="headerlink" title="Optimistic Concurrency Control(OCC)"></a>Optimistic Concurrency Control(OCC)</h3><ul>
+<li>独立workspace(local copy)</li>
+<li>比对write set判断冲突</li>
+<li>然后install global</li>
+<li>类似<strong>RCU</strong>的思想</li>
+</ul>
+<p>所以有如下三阶段</p>
+<blockquote>
+<p>使用TS来判断RW, WW冲突</p>
+</blockquote>
+<ol>
+<li>read phase<ol>
+<li>read + write tracing read/write set of txn</li>
+<li>local copy, 以保证后续可读</li>
+</ol>
+</li>
+<li><a href="#validation">validation phase</a><ul>
+<li>在临界区内判断global view of set <strong>还是要加锁的</strong></li>
+<li>将成为瓶颈</li>
+</ul>
+</li>
+<li>write phase 写回</li>
+</ol>
+<blockquote>
+<p>有点RCU + timestamp的感觉</p>
+</blockquote>
+<h4 id="Conflict-interset-类型"><a href="#Conflict-interset-类型" class="headerlink" title="Conflict(interset)类型"></a>Conflict(interset)类型</h4><ul>
+<li>backword: 和已提交(older)的冲突</li>
+<li>forword: 和未提交(younger)的冲突</li>
+<li>总之, 冲突判断要统一一个方向</li>
+</ul>
+<p>后面章节都是forword validation分析。</p>
+<p><strong>这就导致了我们无法知道对未来会不会有影响, 所以会保守abort</strong>。e.g.</p>
+<blockquote>
+<p>妙啊: 如何抽象backword和forword的底层思想?</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">T1 			T2</span><br><span class="line">- READ - </span><br><span class="line"></span><br><span class="line">R(A)</span><br><span class="line">W(A)</span><br><span class="line">          - READ -</span><br><span class="line">- VALI -   R(A)</span><br><span class="line">          - VALI -</span><br><span class="line">          - WRITE -</span><br></pre></td></tr></table></figure>
+
+<p>T1的validation阶段无法通过因为与T2有forword的冲突</p>
+<h4 id="validation"><a href="#validation" class="headerlink" title="validation"></a>validation</h4><ol>
+<li>全无交集</li>
+<li>WR无交集WriteSet(Ti) and ReadSet(Tj) = nil</li>
+<li>WW无交集WriteSet(Ti) and WriteSet(Tj) = nil</li>
+</ol>
+<h4 id="开销分析"><a href="#开销分析" class="headerlink" title="开销分析"></a>开销分析</h4><ul>
+<li>observation<ul>
+<li>适用于低冲突概率的场景</li>
+<li>只读</li>
+</ul>
+</li>
+</ul>
+<p>大数据 + 无偏斜 =&gt; 小概率冲突 =&gt; 但是validation的加锁也就浪费了</p>
+<ul>
+<li>拷贝开销</li>
+<li>验证和写回阶段将成为瓶颈<ul>
+<li>why: 因为是串行执行的 =&gt; 需要加锁</li>
+</ul>
+</li>
+<li>abort的开销比加锁大, 因为txn做完后才abort</li>
+<li><strong>瓶颈</strong><ul>
+<li>提交时要检测conflict, 需要加锁, <strong>即使冲突率小</strong></li>
+<li>特别是在高并发情况下</li>
+</ul>
+</li>
+</ul>
+<p>那就引入分区！</p>
+<h3 id="Partition-Basic-T-O"><a href="#Partition-Basic-T-O" class="headerlink" title="Partition Basic T/O"></a>Partition Basic T/O</h3><p>abs分区的底层思想抽象: 哈希分桶, 共享与可扩展问题</p>
+<blockquote>
+<p>分布式系统的基本套路: <strong>分区, 复制</strong></p>
+</blockquote>
+<p>将数据分隔成若干无交集的子集，称为”horizontal partitions”, 即shards</p>
+<p>conflict只检测当前分区的</p>
+<ul>
+<li>机制与条件<ul>
+<li>per partition queue</li>
+<li>lowest timestamp优先</li>
+<li>所需partition都获得锁后txn开始</li>
+</ul>
+</li>
+<li>RW无锁就abort + restart(wasteful)</li>
+</ul>
+<h4 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h4><ul>
+<li>快的条件<ul>
+<li>DBMS在txn执行前知道txn需要的分区</li>
+<li>大多数txn只用到一个分区</li>
+</ul>
+</li>
+</ul>
+<p>问题在于<strong>涉及到多分区txn</strong></p>
+<ul>
+<li>需要为获得所有锁而abort restart<ul>
+<li><strong>木桶效应</strong>, 一个热点分区会拖慢整个txn</li>
+</ul>
+</li>
+</ul>
+<h4 id="dynamic-databases"><a href="#dynamic-databases" class="headerlink" title="dynamic databases"></a>dynamic databases</h4><p>我们目前只考虑的读和更新。删除, 插入, 更新s的情况更复杂</p>
+<ul>
+<li><strong>The Phantom Problem</strong>: 你只可以在存在的tuple上加锁<ul>
+<li>Conflict Serializable只在对象集合大小固定的情况下保证</li>
+</ul>
+</li>
+<li>可以使用”predicate locking”: 对语句加锁。但是<strong>开销非常大</strong></li>
+<li>可以使用”index locking”, 搜索都要经过index的嘛</li>
+<li>或者”repeating scan” =&gt; “反复检查”</li>
+</ul>
+<h3 id="Isolation-levels"><a href="#Isolation-levels" class="headerlink" title="Isolation levels"></a>Isolation levels</h3><blockquote>
+<p>we may want to use a weaker level of consistancy to improve scalability</p>
+</blockquote>
+<ul>
+<li>Isolation level: txn暴露的程度<ul>
+<li>将未提交的txn暴露能够获得更高并行性。不过可能代理如下隐患</li>
+<li>Dirty reads(脏读)</li>
+<li>Unrepeatable reads</li>
+<li>Phantom reads(幻读)</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Dirty Read</th>
+<th>Unrepeatable Read</th>
+<th>Phantom</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SERIALIZABLE</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>REPEATABLE READ</td>
+<td>No</td>
+<td>No</td>
+<td>Maybe</td>
+</tr>
+<tr>
+<td>READ COMMITTED</td>
+<td>No</td>
+<td>Maybe</td>
+<td>Maybe</td>
+</tr>
+<tr>
+<td>READ UNCOMMITTED</td>
+<td>Maybe</td>
+<td>Maybe</td>
+<td>Maybe</td>
+</tr>
+</tbody></table>
+<ul>
+<li>SERIALIZABLE, all locks -&gt; index lock -&gt; 严格2PL</li>
+<li>REPEATABLE READ, 同上, 但不需要index lock</li>
+<li>READ COMMITTED, 同上, 但S lock(read lock)会立即释放</li>
+<li>READ UNCOMMITTED, 同上, 但允许dirty read(没有S lock保护)</li>
+</ul>
+<p>现代DBMS可以通过hint的方式来对具体数据做优化，如hint哪种隔离级别，hint数据库是否只读。</p>
+<h2 id="ch19-Multi-Version-Concurrency-Control"><a href="#ch19-Multi-Version-Concurrency-Control" class="headerlink" title="ch19 Multi-Version Concurrency Control"></a>ch19 Multi-Version Concurrency Control</h2><blockquote>
+<p>并不是并发控制协议, <strong>与并发控制协议是独立的</strong></p>
+<p>并发控制”协议”, 群体意识的涌现</p>
+</blockquote>
+<h3 id="abs-1"><a href="#abs-1" class="headerlink" title="abs"></a>abs</h3><ul>
+<li>version chain</li>
+<li>version storgage<ul>
+<li>插slot的, 记全表的, 记delta的</li>
+</ul>
+</li>
+<li>ordering<ul>
+<li>o2n, 要遍历但可以gc缩短链长</li>
+<li>n2o, 不用遍历但频繁修改index(导致聚簇问题)</li>
+</ul>
+</li>
+<li>GC</li>
+</ul>
+<h3 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h3><ul>
+<li>MVCC的对一个逻辑对象的多个物理版本的管理。</li>
+<li>当<strong>txn写</strong>一个对象(如tuple), DBMS就对该对象新建一个版本, 然后end上一个版本</li>
+<li>让<strong>txn读</strong>一个对象时, 读txn开始以来最新的一个version</li>
+</ul>
+<p><strong>写者不阻塞读者, 读者不阻塞写者</strong></p>
+<ul>
+<li><p>因为读者会会从某个snapshot(version)读, 不用锁, 使用TS来判断可见性</p>
+</li>
+<li><p>类似COW, 写操作更新最新的快照, 读操作读取旧版本快照</p>
+</li>
+<li><p>用于解决<strong>脏读和不可重复读问题</strong>: 问题的本质是读到了未提交修改</p>
+<ul>
+<li>MVCC: 读取只能读已提交修改</li>
+</ul>
+</li>
+<li><p>使用timestamp维护可见性</p>
+</li>
+<li><p>mvcc支持时间倒流(time-travel)</p>
+</li>
+<li><p>example</p>
+<ul>
+<li>write -&gt; new version</li>
+<li>一个version的开始是另一个version的结束TS</li>
+<li>read会从对应TS的version中读, 需要是txn所在TS时段</li>
+</ul>
+</li>
+</ul>
+<h3 id="MVCC-Design-Decisions"><a href="#MVCC-Design-Decisions" class="headerlink" title="MVCC Design Decisions"></a>MVCC Design Decisions</h3><p>需要考虑的因素</p>
+<ul>
+<li>并发控制<ul>
+<li>之前的各种并发控制协议</li>
+</ul>
+<ul>
+<li>2PL</li>
+<li>Timestamp Ordering</li>
+<li>OCC:</li>
+</ul>
+</li>
+<li>版本管理</li>
+<li>垃圾回收</li>
+<li>index管理</li>
+</ul>
+<h4 id="Version-storage"><a href="#Version-storage" class="headerlink" title="Version storage"></a>Version storage</h4><ul>
+<li>每个tuple维护一个version链表(<strong>version chain</strong>), 找任意version</li>
+<li>Indexes总是指向”表头”</li>
+<li>方法<ol>
+<li>Append-Only Storage: new version插在同一表</li>
+<li>Time-Travel Storage: 旧version拷出, 新version保留</li>
+<li>Delta Storege: 只拷出所修改的, 类是log一步一步记录</li>
+</ol>
+</li>
+</ul>
+<h5 id="Append-only-Storage"><a href="#Append-only-Storage" class="headerlink" title="Append only Storage"></a>Append only Storage</h5><ol>
+<li>find slot(version是固定大小的)</li>
+<li>insert</li>
+<li>update pointer</li>
+</ol>
+<ul>
+<li>Ordering排序<ul>
+<li>O2N(Oldest to Newest)<ul>
+<li>只需要插入表尾</li>
+<li>但是每次查询都要遍历</li>
+</ul>
+</li>
+<li><strong>N2O</strong>(Newest to Oldest)<ul>
+<li>差表头, 需要更新Index指向最新version</li>
+<li>查询不需要遍历(直接拿到最新)</li>
+</ul>
+</li>
+<li>“链表算法”</li>
+</ul>
+</li>
+</ul>
+<h5 id="Time-travel-Storage"><a href="#Time-travel-Storage" class="headerlink" title="Time travel Storage"></a>Time travel Storage</h5><ul>
+<li>拷贝整个tuple</li>
+<li>新version在main table</li>
+<li>旧version拷贝出去, 使用指针串联所有</li>
+</ul>
+<h5 id="Delta-Storage"><a href="#Delta-Storage" class="headerlink" title="Delta Storage"></a>Delta Storage</h5><blockquote>
+<p>Andy: “best option”</p>
+</blockquote>
+<p>与Time Travel Storage的区别: 只拷贝修改的属性，而不像Time travel拷贝整个tuple</p>
+<p>类似通过日志回溯。返回指定版本就顺着指针走恢复就行了。比如先改了A1, 再改了A2。那恢复就是改回A2, 再改回A1</p>
+<h4 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h4><ul>
+<li>回收过期version: 不被任何txn可见</li>
+<li>设计考虑<ul>
+<li>每个对象都有version, 怎么找是个问题</li>
+<li>如何判断是过期</li>
+</ul>
+</li>
+</ul>
+<h5 id="Tuple-level-gc"><a href="#Tuple-level-gc" class="headerlink" title="Tuple-level gc"></a>Tuple-level gc</h5><p>直接扫描所有tuple, 有如下两种方法</p>
+<ul>
+<li>background vacuuming<ul>
+<li>后台gc线程, 周期触发gc</li>
+<li>通过TS判断</li>
+<li>优化: 只检查dirty bitmap</li>
+</ul>
+</li>
+<li>Cooperative Cleaning<ul>
+<li>遍历version chain时<strong>顺便清</strong></li>
+<li>需要O2N有序</li>
+</ul>
+</li>
+</ul>
+<h5 id="Transaction-level-GC"><a href="#Transaction-level-GC" class="headerlink" title="Transaction level GC"></a>Transaction level GC</h5><ul>
+<li>每个txn维护一个read/write set, 从而能够找到tuple</li>
+<li>当version不被任何txn可见时(set.find()=nil)清理</li>
+</ul>
+<h4 id="Index-Management"><a href="#Index-Management" class="headerlink" title="Index Management"></a>Index Management</h4><blockquote>
+<p>pkey = primary key</p>
+</blockquote>
+<p>主键的Index将指向version链头</p>
+<ul>
+<li>Index修改的频率与tuple更新的频率(新version的频率)相关</li>
+<li>修改主键的值 = DELETE + INSERT(重新b+树平衡)</li>
+</ul>
+<blockquote>
+<p>多索引, 多chain如何处理</p>
+</blockquote>
+<ul>
+<li><strong>secondary indexes</strong><ul>
+<li>Logical Pointers<ul>
+<li>需要额外引入一层抽象(逻辑到物理)</li>
+<li>好处是上层Index不用修改</li>
+</ul>
+</li>
+<li>Physical Poointers<ul>
+<li>直接修改物理指针</li>
+<li>e.g. 都是同一个version chain的reference</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ch20-Logging-schemes"><a href="#ch20-Logging-schemes" class="headerlink" title="ch20 Logging schemes"></a>ch20 Logging schemes</h2><ul>
+<li><p>Failure classification</p>
+</li>
+<li><p>Buffer pool policies</p>
+</li>
+<li><p>Shadow pages</p>
+</li>
+<li><p>Write-ahead log</p>
+</li>
+<li><p>Logging Schemes</p>
+</li>
+<li><p>Checkpoints</p>
+</li>
+<li><p>日志全(commit) =&gt; redo</p>
+</li>
+<li><p>日志不全 =&gt; undo</p>
+</li>
+<li><p>abs</p>
+<ul>
+<li>具体问题具体分析, 偏大概率的运行性能 vs 偏小概率的恢复性能</li>
+<li>shadow page: “btrfs + 一节一page + cow策略”</li>
+<li>多个buffer轮流用, 一个进IO就用另一个</li>
+<li>WAL写数据写回时机比较微妙<ul>
+<li>有日志了可以不写回, 重播就好。就是恢复时间会变长</li>
+</ul>
+</li>
+<li>steal + force抽象<ul>
+<li>真的非常抽象, 比如log也是一种单独管理数据的方式，即所谓steal</li>
+</ul>
+</li>
+<li>TODO: 两段写如何</li>
+</ul>
+</li>
+</ul>
+<p>“好像似乎都是要两段写才能保证安全, 无论分布式的还是，FS, DS的。那是否可以仅用分布式的log就行了，而不用DB本地的??distributed oranted db”</p>
+<h3 id="Failure-Classification"><a href="#Failure-Classification" class="headerlink" title="Failure Classification"></a>Failure Classification</h3><blockquote>
+<p>type: 易失介质的crash, 非易失介质的crash</p>
+<p>action: crash前的措施, crash后的行动</p>
+<p>理解crash才能保证ACID</p>
+</blockquote>
+<ul>
+<li>Txn Failures<ul>
+<li>Logical Errors<ul>
+<li>如除0等</li>
+</ul>
+</li>
+<li>Internal State Errors<ul>
+<li>如死锁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>System Failures<ul>
+<li>软件: bug等</li>
+<li>硬件: 断电</li>
+</ul>
+</li>
+<li>Storage Media Failures(无解, 只能备份)<ul>
+<li>checksum检测</li>
+</ul>
+</li>
+</ul>
+<h4 id="Undo-vs-Redo"><a href="#Undo-vs-Redo" class="headerlink" title="Undo vs Redo"></a>Undo vs Redo</h4><ul>
+<li>Undo<ul>
+<li>撤回一个 <strong>未完成的txn</strong></li>
+</ul>
+</li>
+<li>Redo<ul>
+<li>重放一个<strong>已提交的txn</strong> (记日志但没写回完成)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Buffer-Pool-Management"><a href="#Buffer-Pool-Management" class="headerlink" title="Buffer Pool Management"></a>Buffer Pool Management</h3><p>思考一个问题, 我们是怎么写入磁盘文件的? 至少不是Random Access地写吧? What if mmap? 但它底层也不是Random Access地写。所以, 如果全部(page)Dirty写回? 那没提交的修改呢?</p>
+<ul>
+<li>Steal Policy: 是否运行未提交的txn能”覆盖”已提交的object<ul>
+<li>Steal: 可以, No-Steal: 不可以</li>
+<li>一个txn能从其他txn的buffer pool里”偷”内容?</li>
+<li>不能偷就指只会写回自己的部分, copy out</li>
+</ul>
+</li>
+<li>Force Policy: 是否txn的影响在提交前就会生效?<ul>
+<li>Force: yes, No-Force: no</li>
+<li>commit前要先写回或不用</li>
+</ul>
+</li>
+<li>steal|no strea + force|no force, 就有多种组合设计</li>
+</ul>
+<p>思考我们平时编程是如何写回的，在看看下面的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A&#x3D;3, B&#x3D;5</span><br><span class="line">T1: begin</span><br><span class="line">T1: A&#x3D;5</span><br><span class="line">T2: begin</span><br><span class="line">T2: B &#x3D; 7</span><br><span class="line">T2: commit</span><br><span class="line">A&#x3D;5, B&#x3D;7</span><br></pre></td></tr></table></figure>
+
+<p>此时T2已提交, T1没提交。怎么写回呢? 平时编程的写回都是”一次一line”之类的, 很难精准跳过A。所以我们会copy out一份单独的T2的修改，然后写回。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">T2写回</span><br><span class="line">A&#x3D;3, B&#x3D;7</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="No-Steal-Force"><a href="#No-Steal-Force" class="headerlink" title="No-Steal + Force"></a>No-Steal + Force</h4><p>“只写门前雪, commit前写回”</p>
+<ul>
+<li><p>问题: 写回安全? 如一共写4页但只写回了2页</p>
+</li>
+<li><p>好处</p>
+<ul>
+<li>不需要undo, 因为txn并没有写回到磁盘</li>
+<li>不需要redo? <strong>如写到别处</strong>, 假设原子写回</li>
+</ul>
+</li>
+</ul>
+<h3 id="Shadow-Paging"><a href="#Shadow-Paging" class="headerlink" title="Shadow Paging"></a>Shadow Paging</h3><blockquote>
+<p>一种No Steal + Force Policy</p>
+</blockquote>
+<ul>
+<li><p>维护数据库的两份拷贝: Master和Shadow</p>
+<ul>
+<li>Master: 只保留已提交的修改</li>
+<li>Shadow: 未提交的txn的修改</li>
+</ul>
+</li>
+<li><p>步骤</p>
+<ol>
+<li>先在Shadow page中修改</li>
+<li>提交后 <strong>shadow master轮替</strong>, 将shadow切换成master, 原master切换做shadow</li>
+</ol>
+</li>
+<li><p><strong>“btrfs + COW的设计”</strong></p>
+</li>
+<li><p>一个master tree一个shadow tree</p>
+<ol>
+<li>shadow中修改</li>
+<li>shadow中COW(master read-only)写到别处</li>
+<li>root指针原子切换, master shadow轮替</li>
+</ol>
+</li>
+<li><p>root切换后所有修改一定是持久化了的</p>
+</li>
+<li><p>分析</p>
+<ul>
+<li>回滚和恢复的方便的<ul>
+<li>不需要redo, 没有提交的是写在的别处, 要用覆盖掉就好</li>
+<li>undo: 只需要删除shadow pages重新COW即可</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>大量拷贝开销</li>
+<li>数据碎片话(写道别处)</li>
+<li>需要垃圾收集(写一般没写完的)</li>
+<li><strong>只支持一次一write</strong>(COW)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Shadow Page 需要随机访问磁盘(COW), 不好利用磁盘的性质</p>
+</li>
+</ul>
+<h3 id="Write-Ahead-Logging-WAL"><a href="#Write-Ahead-Logging-WAL" class="headerlink" title="Write-Ahead Logging(WAL)"></a>Write-Ahead Logging(WAL)</h3><blockquote>
+<p>Steal + No-Force</p>
+</blockquote>
+<p>日志文件记录txn所做的修改, 从而可以读取到memory然后重播/倒放。</p>
+<p>log的优势: 少, 因为flush往往是flush一page的, 而且steal的策略也说明会flush到其他。而WAL可以累加日志到一page后在批量写回。</p>
+<ol>
+<li>先内存中日志再内存中修改</li>
+<li>先写回日志再写回修改</li>
+</ol>
+<h4 id="WAL-Protocol"><a href="#WAL-Protocol" class="headerlink" title="WAL Protocol"></a>WAL Protocol</h4><ul>
+<li><p>日志将记录一些信息, 如txn id, obj id, before, after</p>
+<ul>
+<li>e.g. <code>T1, A, before=3, after=4</code></li>
+</ul>
+</li>
+<li><p>多个txn一个log buffer</p>
+<ul>
+<li>因为我们log buffer里记录的txn id, undo/redo时可以识别到</li>
+</ul>
+</li>
+<li><p><strong>多个buffer轮流用, 一个flush中另一个就启动</strong></p>
+</li>
+<li><p>无论是记buffer还是写回, 都是log优先</p>
+</li>
+<li><p>日志写回时机</p>
+<ul>
+<li>txn commit</li>
+<li>txn group commit, 多利用点批处理</li>
+<li>buffer满时</li>
+</ul>
+</li>
+<li><p>数据写回时机</p>
+<ul>
+<li>可以的日志写完后</li>
+<li><strong>也可以不是</strong>, 因为我们有日志了, 随时可以重播恢复</li>
+</ul>
+</li>
+</ul>
+<h3 id="Buffer-Pool-Policies"><a href="#Buffer-Pool-Policies" class="headerlink" title="Buffer Pool Policies"></a>Buffer Pool Policies</h3><blockquote>
+<p>因为错误恢复是小概率事件, 几乎所以DBMS都No-Force + Steal</p>
+</blockquote>
+<p><strong>tradeoff</strong>: 重播还是搬家</p>
+<ul>
+<li>runtime performance<ul>
+<li>no-forece + steal: 最快<ul>
+<li>本质就是单独管理dirty page(log)</li>
+</ul>
+</li>
+<li>forece + no-steal: 最慢<ul>
+<li>如shadow page, 就需要flush所有page</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>recovery performance<ul>
+<li>no-forece + steal: 最慢<ul>
+<li>要从单独的dirty page中一个一个恢复: 重播日志</li>
+</ul>
+</li>
+<li>forece + no-steal: 最快<ul>
+<li>直接page找回, 然后设成master</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>所以大多数DBMS关注runtime性能, 因为failure是少数情况</strong></li>
+</ul>
+<p>TODO: <strong>abs: 本质</strong></p>
+<h3 id="怎么记日志-Logging-Schemes"><a href="#怎么记日志-Logging-Schemes" class="headerlink" title="怎么记日志(Logging Schemes)"></a>怎么记日志(Logging Schemes)</h3><ul>
+<li>Physical<ul>
+<li>写回量大，但易恢复</li>
+<li>object为单位</li>
+<li>e.g. <code>diff</code></li>
+</ul>
+</li>
+<li>Logical<ul>
+<li>写回量小, 但难恢复, 需要一步步重播。需要特别找出已经commit的修改</li>
+<li>e.g. 逻辑的operation的记录</li>
+</ul>
+</li>
+<li>Hybird<ul>
+<li><strong>log是page的log</strong></li>
+<li>e.g. before: page1, after: page1’</li>
+</ul>
+</li>
+</ul>
+<h3 id="checkpoint"><a href="#checkpoint" class="headerlink" title="checkpoint"></a>checkpoint</h3><blockquote>
+<p>日志压缩</p>
+<p>next lecture</p>
+</blockquote>
+<ol>
+<li>WAL总不能无限增长吧</li>
+<li>如果每次恢复都从”创世log”开始重播那也太久了</li>
+</ol>
+<p>所以需要定期将数据写回, 然后缩短log</p>
+<ul>
+<li><p>WAL写入<code>&lt;CHECKPOINT&gt;</code></p>
+</li>
+<li><p>写回所有已提交的数据(需要额外查找哪些数据符合要求)</p>
+</li>
+<li><p>checkpoint前已提交的log就忽略</p>
+</li>
+<li><p>crash发生时，根据WAL中checkpoint的记录</p>
+<ul>
+<li>commit的redo, 没commit的undo</li>
+</ul>
+</li>
+<li><p>难点</p>
+<ul>
+<li>checkpoint时会stall所有txns</li>
+<li>找未提交需要时间</li>
+<li>checkpoint的频率<ul>
+<li>太短影响数据库性能</li>
+<li>太长重播又太久</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ch21-Crash-Recovery"><a href="#ch21-Crash-Recovery" class="headerlink" title="ch21 Crash Recovery"></a>ch21 Crash Recovery</h2><blockquote>
+<p>Actions after a failure</p>
+<p>DBMS差不多都是这种模式</p>
+</blockquote>
+<ul>
+<li><strong>ARIES</strong> abs<ul>
+<li>WAL<ul>
+<li>先log再写回</li>
+<li>steal + no-force</li>
+<li>重播历史: 回到crash前的一个稳定态</li>
+<li>修改撤销: 撤销不应重播的操作</li>
+</ul>
+</li>
+<li><strong>Fuzzy Checkpoint</strong><ul>
+<li>ATT, DPT, 事后再补完checkpoint</li>
+<li>甚至checkpoint过程不主动记录ATT, DPT, 恢复阶段再扫描分析</li>
+</ul>
+</li>
+<li><strong>CLR</strong>: 不单要保证正常操作的ACID, 还要保证恢复操作的ACID</li>
+<li>LSN: 维护日志的”时序信息”, 从而时光倒流<ul>
+<li>prevLSN链表</li>
+</ul>
+</li>
+<li>同款(raft)日志压缩技术<ul>
+<li>flushed, rec, page</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Log-Sequence-Number-LSN"><a href="#Log-Sequence-Number-LSN" class="headerlink" title="Log Sequence Number(LSN)"></a>Log Sequence Number(LSN)</h3><p>log的metadata需要扩充, 引入LSN以<strong>记录历史信息</strong>。</p>
+<blockquote>
+<p>上一节课中只记录的txn id, obj id, before, after等</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Where</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>flushedLSN</td>
+<td>Mem</td>
+<td>Last LSN in log on disk</td>
+</tr>
+<tr>
+<td>pageLSN</td>
+<td>page x</td>
+<td>Newest update to page x</td>
+</tr>
+<tr>
+<td>recLSN(record)</td>
+<td>page x</td>
+<td>Oldest update to page x, since its last flush</td>
+</tr>
+<tr>
+<td>lastLSN</td>
+<td>txn i</td>
+<td>Latest record of txn T i</td>
+</tr>
+<tr>
+<td>MasterRecord</td>
+<td>Disk</td>
+<td>LSN of latest checkpoint</td>
+</tr>
+</tbody></table>
+<ul>
+<li>写日志<ul>
+<li>per page pageLSN: 记录page x修改的最新”时间”</li>
+<li>flushedLSN: 已经写回的, stable的日志序号</li>
+<li>写回: page写回前需先写回日志, 即从flushedLSN一直写到pageLSNx, 使得pageLSNx &lt;= flushedLSN</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flushedLSN | recLSN | pageLSN |</span><br><span class="line">旧         				新</span><br><span class="line">从recLSN 写到 pageLSN从而实现log的增量写回</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>就是类似raft log中的用于trim和stable等的定位的机制</p>
+</blockquote>
+<ul>
+<li>事务提交<ul>
+<li>提交成功后记录一个”TXN-END”日志, 该日志不需要立刻写回</li>
+<li>提交后我们就可以对内存中的<strong>日志进行压缩(trim)</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="Transaction-abort"><a href="#Transaction-abort" class="headerlink" title="Transaction abort"></a>Transaction abort</h3><blockquote>
+<p>ARIES对一个txn的<strong>undo</strong>, 如何undo</p>
+</blockquote>
+<ul>
+<li>新增metadata<ul>
+<li>prevLSN: 事务的前一个LSN(“index”链表)</li>
+<li><strong>“链表” step by step undo</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">012|nil T4</span><br><span class="line">013|012 T4</span><br><span class="line">014|nil T1</span><br><span class="line">015|013 T4</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>显然, 新log的prevLSN就是插入前的pageLSN</p>
+</blockquote>
+<h4 id="Compensation-Log-Records"><a href="#Compensation-Log-Records" class="headerlink" title="Compensation Log Records"></a>Compensation Log Records</h4><blockquote>
+<p>CLR: 撤回上一步操作的描述。描述撤回操作本身的一种日志</p>
+</blockquote>
+<p><strong>CLR也作为一种操作记录到日志中</strong>, 保证恢复操作本身的ACID</p>
+<ul>
+<li>新增metadata<ul>
+<li>undoNext: 下一步要undo的日志的LSN</li>
+</ul>
+</li>
+</ul>
+<p>“粒度细分到每个操作, 利用lazy, 一方面提升并行性, 另一方面防止crash, 需要额外metadata”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LSN prevLSN Tid Type  UndoNext</span><br><span class="line">001 nil 	T1  Begin nil</span><br><span class="line">002 001 	T1  updte nil</span><br><span class="line">...</span><br><span class="line">011 002 	T1  abort nil</span><br><span class="line">...</span><br><span class="line">026 nil 	T1  CLR-2 001 		即使在这里强制断电, 仍可以恢复, undoNext</span><br></pre></td></tr></table></figure>
+
+<p>“不单要保证正常操作的ACID, 还要保证恢复操作的ACID”</p>
+<h4 id="Abort-Algorithm"><a href="#Abort-Algorithm" class="headerlink" title="Abort Algorithm"></a>Abort Algorithm</h4><p>总结以下abort的步骤</p>
+<ol>
+<li>写入一个Abort日志</li>
+<li>一步一步撤回<br> a. 先记撤回日志: CLR<br> b. 再撤回修改</li>
+<li>最后记录”TXN-END”日志</li>
+</ol>
+<blockquote>
+<p>CLR类型的日志不需要undo</p>
+</blockquote>
+<h3 id="Non-Fuzzy-Checkpoint"><a href="#Non-Fuzzy-Checkpoint" class="headerlink" title="Non-Fuzzy Checkpoint"></a>Non-Fuzzy Checkpoint</h3><p>我们说checkpoint的对某一稳定状态的快照, 而为了快照操作的ACID, 我们可能会”一把大锁保平安”, 而这效率的不高的, 所谓”Non-Fuzzy Checkpoint”</p>
+<ul>
+<li>Not-Fuzzy Checkpoint的影响<ul>
+<li>阻塞所有新事务</li>
+<li>等待所有正在执行的事务完成</li>
+<li>写回磁盘</li>
+</ul>
+</li>
+</ul>
+<h3 id="Slightly-better-checkpoints"><a href="#Slightly-better-checkpoints" class="headerlink" title="Slightly better checkpoints"></a>Slightly better checkpoints</h3><ul>
+<li><p>Slightly better checkpoints</p>
+<ul>
+<li>“读写锁”<ul>
+<li>阻塞会修改的事务</li>
+<li>阻塞要读对正在修改的事务</li>
+</ul>
+</li>
+<li>内部需要维护<strong>ATT和DPT</strong></li>
+</ul>
+</li>
+<li><p>ATT(Active Transaction Table)</p>
+<ul>
+<li>checkpoint开始时哪些事务正在执行</li>
+<li>每个事务一个ATT项: 对事务的持续追踪<ul>
+<li>txnId</li>
+<li>status: 事务的模式<ul>
+<li>R for running, C for committing, U for Candidate for undo</li>
+</ul>
+</li>
+<li>lastLSN: 链表</li>
+</ul>
+</li>
+<li>事务提交则移除对应ATT项</li>
+</ul>
+</li>
+<li><p>DPT(Dirty Page Table)</p>
+<ul>
+<li>追踪未提交事务的dirty page</li>
+<li>一个dirty page一的DPT项<ul>
+<li>recLSN: 记录第一的造成page dirty的LSN</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>基本思路<ul>
+<li>checkpoint开始时记录ATT和DPT</li>
+<li>checkpoint结束时就可以根据ATT和DPT做undo或commit</li>
+</ul>
+</li>
+</ul>
+<p>checkpoint开始时时仍然需要stall来记录ATT和DPT</p>
+<h3 id="Fuzzy-Checkpoint"><a href="#Fuzzy-Checkpoint" class="headerlink" title="Fuzzy Checkpoint"></a>Fuzzy Checkpoint</h3><p>允许active txn在写回进行时继续执行</p>
+<ul>
+<li>新增metadata<ul>
+<li>CHECKPOINT-BEGIN: 标记checkpoint的开始</li>
+<li>CHECKPOINT-END: 记录checkpoint过程中的ATT和DPT</li>
+<li>相当于动态记录ATT和DPT最后写回或恢复</li>
+</ul>
+</li>
+<li>checkpoint完成后, 更新MasterRecord为该checkpoint-begin</li>
+</ul>
+<h3 id="ARIES-Recovery-Phase"><a href="#ARIES-Recovery-Phase" class="headerlink" title="ARIES - Recovery Phase"></a>ARIES - Recovery Phase</h3><p>crash后Recovery的过程</p>
+<ul>
+<li><p>Analysis</p>
+<ul>
+<li>从WAL中找到上一个checkpoint记录(通过MasterRecord)的ATT和DPT</li>
+</ul>
+</li>
+<li><p>Redo</p>
+<ul>
+<li>重播所有找到的操作, 达到真正的checkpoint状态</li>
+</ul>
+</li>
+<li><p>Undo</p>
+<ul>
+<li>撤回所有提交前失败的操作</li>
+</ul>
+</li>
+<li><p>如果DBMS在Analysis阶段又crash怎么办?</p>
+<ul>
+<li>什么都不做, 重试, 毕竟是收集ATT和DPT</li>
+</ul>
+</li>
+<li><p>如果DBMS在Redo阶段又crash怎么办?</p>
+<ul>
+<li>什么都不做, 重试, 毕竟redo也是某种程度的正常processing</li>
+</ul>
+</li>
+<li><p>DBMS如何提高Redo的效率?</p>
+<ul>
+<li>假设不会再crash, 然后在后台异步写回</li>
+</ul>
+</li>
+<li><p>DBMS如何提高Undo的效率?</p>
+<ul>
+<li>懒写回: COW, 新txn访问到时写回</li>
+<li>重写app以避免长事务</li>
+</ul>
+</li>
+</ul>
+<h4 id="Analysis-Phase"><a href="#Analysis-Phase" class="headerlink" title="Analysis Phase"></a>Analysis Phase</h4><ul>
+<li>从上一个checkpoint-begin(MasterRecord)开始扫描: 找出ATT和DPT<ul>
+<li>遇到TXN-END则将对应txn移除出ATT</li>
+<li>遇到commit就将txn加入ATT并标记COMMIT(补完善后)</li>
+<li>其他记录就将txn加入ATT然后标记UNDO</li>
+</ul>
+</li>
+<li>对于更新操作<ul>
+<li>如果page P不在DPT则, 将P加入DPT, 然后让recLSN=LSN</li>
+</ul>
+</li>
+<li>Analysis阶段结束<ul>
+<li>ATT就告知了哪些txn失败了</li>
+<li>DPT就告知了哪些page没有写回</li>
+</ul>
+</li>
+</ul>
+<h4 id="Redo-Phase"><a href="#Redo-Phase" class="headerlink" title="Redo Phase"></a>Redo Phase</h4><ul>
+<li>重播历史, 包括abort和CLR<ul>
+<li>当然可以做一些优化减少读写, 如写覆盖</li>
+</ul>
+</li>
+<li>从DPT中最小的recLSN开始扫描, 所有记录都redo, <strong>除非:</strong><ul>
+<li>影响的page不在DPT</li>
+<li>或影响的page在DPT但LSN比recLSN小(已经写回过)</li>
+</ul>
+</li>
+<li>随着redo进度更新pageLSN</li>
+<li>redo结束记录TXN-END日志, 将所有Commit状态的txn移除出ATT</li>
+</ul>
+<h4 id="Undo-Phase"><a href="#Undo-Phase" class="headerlink" title="Undo Phase"></a>Undo Phase</h4><ul>
+<li>撤回未完成提交的txn<ul>
+<li>ATT中所有Undo状态的txn</li>
+</ul>
+</li>
+<li>使用lastLSN + UndoNext反向索引</li>
+<li>同样的, 操作记录CLR日志</li>
+</ul>
+<h2 id="ch22-Introduction-to-Distributed-DB"><a href="#ch22-Introduction-to-Distributed-DB" class="headerlink" title="ch22 Introduction to Distributed DB"></a>ch22 Introduction to Distributed DB</h2><ul>
+<li>abs<ul>
+<li>一致性哈希</li>
+<li>“share等级”</li>
+</ul>
+</li>
+</ul>
+<h3 id="System-Architecture"><a href="#System-Architecture" class="headerlink" title="System Architecture"></a>System Architecture</h3><blockquote>
+<p>对外要透明, 所以节点需要一点智能, 本地不存在时自动代找</p>
+</blockquote>
+<p>如何共享资源, 怎么收发</p>
+<ul>
+<li>Share Everything<ul>
+<li>单机</li>
+</ul>
+</li>
+<li>Share Memory<ul>
+<li>CPU通过网络共享内存</li>
+<li>每个CPU看到的Mem都相同</li>
+</ul>
+</li>
+<li>Share Disk<ul>
+<li>“Mem as L1 cache”</li>
+<li>每个实例有自己的Mem, 但是看到的Disk是相同的</li>
+<li>因为有私有Mem, 需要 <strong>“内存一致性协议”</strong></li>
+<li>对外透明, 自动代找</li>
+</ul>
+</li>
+<li>Share Nothing<ul>
+<li>每个实例都有自己的CPU, Mem, Disk</li>
+<li>难扩容, 难一致, 难高效</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>用户无需知道背后集群备份和分区的情况, 感觉就行操作单机节点</p>
+</blockquote>
+<ul>
+<li>一致性与可扩展性问题<ul>
+<li>partition<ul>
+<li>what if 多节点数据访问</li>
+<li>what if 新增节点/分区</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Design-Issues"><a href="#Design-Issues" class="headerlink" title="Design Issues"></a>Design Issues</h3><blockquote>
+<p>CAP</p>
+</blockquote>
+<ul>
+<li><p>需要考虑</p>
+<ul>
+<li>如何找数据</li>
+<li>如何在分布式的数据中执行查找</li>
+<li>如何保证正确性</li>
+</ul>
+</li>
+<li><p>同构节点</p>
+<ul>
+<li>每个集群中的节点任务都是相同的</li>
+<li>故障转移比较简单(任何都可替代)</li>
+</ul>
+</li>
+<li><p>异构节点</p>
+<ul>
+<li>节点会有自己独立的任务</li>
+<li>甚至可以引入虚拟节点充分异构</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>MongoDB的例子: “数据, 逻辑分离”<ol>
+<li>client向Router(mongos)发送命令(get)</li>
+<li>router向Config Server查询数据分区位置</li>
+<li>router获得到位置信息后执行, 返回</li>
+</ol>
+</li>
+</ul>
+<h3 id="Partition-Schemes"><a href="#Partition-Schemes" class="headerlink" title="Partition Schemes"></a>Partition Schemes</h3><blockquote>
+<p>AKA sharding</p>
+</blockquote>
+<p>数据可以划分到各种资源中: 磁盘, 节点, 处理器… DBMS收集各个分区的碎片, 整合成一个结果</p>
+<ul>
+<li><p>Native Table分区</p>
+<ul>
+<li>一个节点一个表</li>
+</ul>
+</li>
+<li><p>水平分区: 对元组s划分</p>
+<ul>
+<li>对rows的分区<ul>
+<li>对某个key进行hash</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>垂直分区</p>
+<ul>
+<li>column by column</li>
+</ul>
+</li>
+<li><p>问题</p>
+<ul>
+<li>新增节点, rehash, 移动问题, </li>
+<li><strong>一致性哈希</strong></li>
+</ul>
+</li>
+<li><p>逻辑分区</p>
+<ul>
+<li>节点间可能是共享存储的, 但是是Mem私有的</li>
+<li>每个节点负责的任务不同</li>
+</ul>
+</li>
+<li><p>物理分区</p>
+<ul>
+<li>每个节点都有完整的一套Mem, Disk</li>
+</ul>
+</li>
+<li><p>分区, 索引, locality</p>
+</li>
+</ul>
+<h3 id="Distributed-Concurrency-Control"><a href="#Distributed-Concurrency-Control" class="headerlink" title="Distributed Concurrency Control"></a>Distributed Concurrency Control</h3><p>多事务多分区的并行执行。</p>
+<p>难点在于: 备份, 通信, 故障转移, 时钟偏移</p>
+<p>e.g. 2PL, 因为时钟的问题, 可能就会导致死锁</p>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://github.com/66ring/2022/06/26/universe/cources_notes/cmu15445/cmu15-445_route_map_part2/>http://github.com/66ring/2022/06/26/universe/cources_notes/cmu15445/cmu15-445_route_map_part2/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/database/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>database</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2022/06/26/universe/paper_reading/a_glance_at_persistent_memory/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Persistent Memory软硬件结合方向的调研</p>
+          <p class='content'>abstraction基于新硬件的存储系统性能优化
+已经进行了哪些研究
+有哪些创新性方法取得了哪些结果为什么对这个方向感兴趣
+
+通过这段时间对实验室工作的调研和论文阅读我大概知道了实验室的战略方...</p>
+        </a>
+      
+      
+        <a class='next' href='/2022/06/06/universe/cources_notes/cmu15445/cmu15-445_route_map_part1/'>
+          <p class='title'>CMU15-445学习笔记(上)<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>CodingGoogle c++ style guide
+检查丑代码:
+1234make formatmake check-lintmake check-censoredmake check-c...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ch14-Query-Planning-Optimization-I"><span class="toc-text">ch14 Query Planning Optimization I</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch15-Query-Planning-Optimization-II"><span class="toc-text">ch15 Query Planning Optimization II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch18-Timestamp-Ordering-Concurrency-control"><span class="toc-text">ch18 Timestamp Ordering Concurrency control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#abs"><span class="toc-text">abs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-TO"><span class="toc-text">Basic TO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimistic-Concurrency-Control-OCC"><span class="toc-text">Optimistic Concurrency Control(OCC)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Conflict-interset-类型"><span class="toc-text">Conflict(interset)类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#validation"><span class="toc-text">validation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开销分析"><span class="toc-text">开销分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Partition-Basic-T-O"><span class="toc-text">Partition Basic T&#x2F;O</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#性能问题"><span class="toc-text">性能问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dynamic-databases"><span class="toc-text">dynamic databases</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Isolation-levels"><span class="toc-text">Isolation levels</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch19-Multi-Version-Concurrency-Control"><span class="toc-text">ch19 Multi-Version Concurrency Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#abs-1"><span class="toc-text">abs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MVCC"><span class="toc-text">MVCC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MVCC-Design-Decisions"><span class="toc-text">MVCC Design Decisions</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Version-storage"><span class="toc-text">Version storage</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Append-only-Storage"><span class="toc-text">Append only Storage</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Time-travel-Storage"><span class="toc-text">Time travel Storage</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Delta-Storage"><span class="toc-text">Delta Storage</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收"><span class="toc-text">垃圾回收</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Tuple-level-gc"><span class="toc-text">Tuple-level gc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Transaction-level-GC"><span class="toc-text">Transaction level GC</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Index-Management"><span class="toc-text">Index Management</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch20-Logging-schemes"><span class="toc-text">ch20 Logging schemes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Failure-Classification"><span class="toc-text">Failure Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Undo-vs-Redo"><span class="toc-text">Undo vs Redo</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer-Pool-Management"><span class="toc-text">Buffer Pool Management</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#No-Steal-Force"><span class="toc-text">No-Steal + Force</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shadow-Paging"><span class="toc-text">Shadow Paging</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Write-Ahead-Logging-WAL"><span class="toc-text">Write-Ahead Logging(WAL)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#WAL-Protocol"><span class="toc-text">WAL Protocol</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer-Pool-Policies"><span class="toc-text">Buffer Pool Policies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎么记日志-Logging-Schemes"><span class="toc-text">怎么记日志(Logging Schemes)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#checkpoint"><span class="toc-text">checkpoint</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch21-Crash-Recovery"><span class="toc-text">ch21 Crash Recovery</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Log-Sequence-Number-LSN"><span class="toc-text">Log Sequence Number(LSN)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transaction-abort"><span class="toc-text">Transaction abort</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Compensation-Log-Records"><span class="toc-text">Compensation Log Records</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Abort-Algorithm"><span class="toc-text">Abort Algorithm</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Non-Fuzzy-Checkpoint"><span class="toc-text">Non-Fuzzy Checkpoint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Slightly-better-checkpoints"><span class="toc-text">Slightly better checkpoints</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fuzzy-Checkpoint"><span class="toc-text">Fuzzy Checkpoint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ARIES-Recovery-Phase"><span class="toc-text">ARIES - Recovery Phase</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Analysis-Phase"><span class="toc-text">Analysis Phase</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redo-Phase"><span class="toc-text">Redo Phase</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Undo-Phase"><span class="toc-text">Undo Phase</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ch22-Introduction-to-Distributed-DB"><span class="toc-text">ch22 Introduction to Distributed DB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#System-Architecture"><span class="toc-text">System Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Design-Issues"><span class="toc-text">Design Issues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Partition-Schemes"><span class="toc-text">Partition Schemes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Distributed-Concurrency-Control"><span class="toc-text">Distributed Concurrency Control</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="CMU15-445学习笔记(下)";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"EKmusUsvxKTWym4LJnmkk1eU-gzGzoHsz","appKey":"sdWXsEnYQvIqRVoEPSMsLCr6","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://github.com/66ring' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>

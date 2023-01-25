@@ -539,15 +539,15 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 <li>内核最后将buffer中的数据传输到设备<ul>
-<li>第死次拷贝(DMA)</li>
+<li>第四次拷贝(DMA)</li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
-<p>可以看到需要四次拷贝操作，四次状态切换(user -&gt; kernel, kernel -&gt; user)</p>
+<p>可以看到需要四次拷贝操作，四次状态切换(user -&gt; kernel x2, kernel -&gt; user x2)</p>
 <h1 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h1><p>如果我将接收数据的那个内核buffer映射到用户空间，那就不用用户态和内核态之间的拷贝了。</p>
-<p>最后只需要”读buffer”到”写buffer”的拷贝和DMA拷贝</p>
+<p>最后只需要”读buffer”到”写buffer”(socket缓冲区)的拷贝和DMA拷贝</p>
 <h1 id="sendfile"><a href="#sendfile" class="headerlink" title="sendfile"></a>sendfile</h1><p>假设我们有个场景：读取磁盘文件，然后直接发送给网卡。</p>
 <p>那么我们可以用一个智能的api: <code>sendfile</code>告诉内核向网卡发送文件，那么内核知道所有所需信息后就可以<strong>全程在内核态执行</strong></p>
 <p>此时需要一次cpu拷贝(“读buffer”到”写buffer”)和两次DMA拷贝。那么我们可不可以直接从”读buffer”写到设备呢？yes we can</p>

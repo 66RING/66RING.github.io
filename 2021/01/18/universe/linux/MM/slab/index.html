@@ -516,7 +516,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   <h2 id="slab分配器"><a href="#slab分配器" class="headerlink" title="slab分配器"></a>slab分配器</h2><p>slab分配器的两个功能：</p>
 <ul>
-<li>1 减少内部碎片</li>
+<li>1 减少内部碎片: 小结构占用一个page不划算<ul>
+<li>一般名为<code>kmalloc-xxx</code>, e.g. <code>kmalloc-4096</code>, 这些是通用型slab</li>
+</ul>
+</li>
 <li>2 作为高速缓存，存储内核中经常被分配并释放的对象</li>
 </ul>
 <blockquote>
@@ -626,10 +629,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/01/19/universe/linux/project_like/page_cache_and_cache_management/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>execv中的缓存管理分析</p>
-          <p class='content'>page cache与缓存管理直接从磁盘访问文件会很慢，可以利用空闲的内存来缓存一些磁盘文件的内容，这部分用作缓存磁盘文件的内存就叫做page cache。
-1 execv中的调用page ca...</p>
+        <a class='prev' href='/2021/01/19/universe/linux/MM/buddy_system/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Buddy系统的原理及实现</p>
+          <p class='content'>Buddy系统的原理及实现通过”二分查找”的方式快速找到所需大小的内存空间。对于大内存的分配是比较快的。
+基本要素:
+
+多级freelist用于索引: e.g. 有大小为32, 64, 128…...</p>
         </a>
       
       
