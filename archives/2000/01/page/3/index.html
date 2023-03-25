@@ -466,16 +466,24 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
-      <a href="/2000/01/01/universe/cources_notes/6.s081/lab_lazy/">
-        MIT6.S081 lazy allocate lab
+      <a href="/2000/01/01/universe/misc/cryptocurrency/">
+        加密货币流水帐
       </a>
     </h2>
   
   <div class='md'>
     
       
-        lazy page allocationxv6使用sbrk系统调用申请内存。sbrk系统调用申请到内存后映射到用户空间中。当在申请大量内存时会带来很大的耗时，而且程序往往会预先申请暂时不用的内存。使用lazy allocate以提高效率，sbrk可以只标记以申请的虚拟地址但立刻申请物理页，当真正使用到该物理页时，产生缺页中断，然后真正分配物理内存，初始化为0, 映射。
-Eliminate a...
+        加密货币流水帐
+技术是好技术就是有点庞氏骗局
+产生了大量泡沫需要一个好的use case来创造价值来cover调这些泡沫
+智能合约: ETH率先提出, 带来了点希望, 日子有盼头了
+智能合约就是人们可以在区块链上运行自己的函数
+
+
+但是人们用智能合约来干嘛?, 造更多币…
+有了智能合约人们就可以很快速的创建自己的币, 而不用创建自己的区块链系统(因为智能合约就是基于区块链的)
+tokens:...
       
     
   </div>
@@ -488,7 +496,7 @@ Eliminate a...
       </div>
       
         <div>
-          <a class='readmore' href='/2000/01/01/universe/cources_notes/6.s081/lab_lazy/'>
+          <a class='readmore' href='/2000/01/01/universe/misc/cryptocurrency/'>
             Read More
           </a>
         </div>
@@ -510,16 +518,20 @@ Eliminate a...
   
     
     <h2 class="article-title" >
-      <a href="/2000/01/01/universe/cources_notes/6.s081/lab_cow/">
-        MIT6.S081 cow lab
+      <a href="/2000/01/01/universe/tools/address_sanitizer/">
+        AddressSanitizer(ASan)使用
       </a>
     </h2>
   
   <div class='md'>
     
       
-        Copy on Write虚拟内存可以通过修改标记位来让内存地址由不同含义，如通过标记PTE为只读或invalid可以触发page fault。lazy allocation和这个lab的COW都是例子。
-fork会拷贝父进程的所有内容，但是这往往是浪费的，因为如果fork后立马exec执行新程序这fork花费那么大代价拷贝就浪费了。COW就是当子进程和父进程fork时先共享相同内存，当由写...
+        AddressSanitizermemory debuging in c.
+编译编译
+12# 需要安装address sanitizer库gcc &lt;filename&gt; -g3 -fsanitize&#x3D;address
+
+cmake中的编译(把flag加上)
+12set(CMAKE_C_FLAGS,&quot;$&#123;CMAKE_C_FLAGS&#125; -fsani...
       
     
   </div>
@@ -532,7 +544,7 @@ fork会拷贝父进程的所有内容，但是这往往是浪费的，因为如�
       </div>
       
         <div>
-          <a class='readmore' href='/2000/01/01/universe/cources_notes/6.s081/lab_cow/'>
+          <a class='readmore' href='/2000/01/01/universe/tools/address_sanitizer/'>
             Read More
           </a>
         </div>
@@ -554,19 +566,21 @@ fork会拷贝父进程的所有内容，但是这往往是浪费的，因为如�
   
     
     <h2 class="article-title" >
-      <a href="/2000/01/01/universe/cources_notes/6.s081/lab_fs/">
-        MIT6.S081 fs lab
+      <a href="/2000/01/01/universe/tools/shell_script_tips/">
+        shell脚本杂技
       </a>
     </h2>
   
   <div class='md'>
     
       
-        File system添加对大文件和符号链接的支持。可查阅参考书Chapter 8
-Large files修改xv6支持的最大文件(目前是268block(即BSIZE，BSIZE=1024byte))。
-之所以由这样的限制是因为xv6的inode用的12个直接块和1个”singly-indirect”块。所以总的有12+256 = 268block
+        double dash --单独使用double dash --一般用于表示命令行选项(command line options)的结尾，之后不再接收选项，只能接收位置参数(positional parameters)
+如一下命令会查找-v而不让它作为命令行的选项
+1grep -- -v &lt;file&gt;
 
-每个块号是uint(8B)，那么一个b...
+文件描述符与文件控制
+文件描述符
+https://zhuanlan.zhih...
       
     
   </div>
@@ -579,7 +593,7 @@ Large files修改xv6支持的最大文件(目前是268block(即BSIZE，BSIZE=102
       </div>
       
         <div>
-          <a class='readmore' href='/2000/01/01/universe/cources_notes/6.s081/lab_fs/'>
+          <a class='readmore' href='/2000/01/01/universe/tools/shell_script_tips/'>
             Read More
           </a>
         </div>
@@ -601,20 +615,29 @@ Large files修改xv6支持的最大文件(目前是268block(即BSIZE，BSIZE=102
   
     
     <h2 class="article-title" >
-      <a href="/2000/01/01/universe/cources_notes/6.s081/lab_lock/">
-        MIT6.S081 lock lab
+      <a href="/2000/01/01/annual/2022/">
+        2023能直面恐惧吗
       </a>
     </h2>
   
   <div class='md'>
     
       
-        Locks重新设计代码，提高并行度，降低锁竞争。降低锁的竞争会涉及数据结构和锁策略的改变。
-提升xv6内存分配和块缓存的并行度。
+        [TOC]
+2023能直面恐惧吗?这是一篇充满戾气的年总
+这是一篇充满戾气的年总
+这是一篇充满戾气的年总
+66RING的第一次年总了, 要直面恐惧了, 我打算年总的内容是: 
 
-Section 3.5: “Code: Physical memory allocator”Section 8.1 through 8.3: “Overview”, “Buffer cache layer”, and “Code: Buffer cache”
+回顾, 流水, 展望, 精神状态
+不针对具体人
+不啰嗦狡辩
 
-...
+为什么要写年总了非常羡慕别人的年终总结, 自己也很想写但是发现我”不敢”
+
+不够优秀不敢写总结
+不好意思让别人看我这么烂的文笔
+不敢让别人知道我一路走来如...
       
     
   </div>
@@ -627,320 +650,7 @@ Section 3.5: “Code: Physical memory allocator”Section 8.1 through 8.3: “Ov
       </div>
       
         <div>
-          <a class='readmore' href='/2000/01/01/universe/cources_notes/6.s081/lab_lock/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2000/01/01/universe/cources_notes/6.s081/lab_mmap/">
-        MIT6.S081 mmap lab
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        mmapmmap和munmap系统调用让程序可以更详细地控制他们的地址空间。
-如 可以让内存在进程间共享，可以将文件映射到进程的地址空间，可以用于实现用户态缺页策略(如lecture中讨论的垃圾回收算法)
-这个lab你将要实现的mmap和munmap重点关注于文件到内存的映射。
-可以查看man 2 mmap获得细节。mmap有多种调用方式，但这个lab只要求实现一部分功能。
-12void *...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2000-01-01</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2000/01/01/universe/cources_notes/6.s081/lab_mmap/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2000/01/01/universe/cources_notes/6.s081/lab_page_tables/">
-        MIT6.S081 page table lab
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        page tables学习page table，然后够魔改使能够实现用户空间到内核空间的复制。
-
-kern/memlayout.h内存布局
-kern/vm.c虚拟内存相关代码
-kernel/kalloc.c动态分配物理内存
-
-print a page table实现vmprint(pagetable_t pt)打印页表的内容。在exec.c:exec()的return argc;前插入if(...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2000-01-01</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2000/01/01/universe/cources_notes/6.s081/lab_page_tables/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2000/01/01/universe/cources_notes/6.s081/lab_net/">
-        MIT6.S081 network lab
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        networking编写一个xv6设备驱动程序，驱动网卡
-Background
-参考书Chapter5 中断和设备驱动
-
-你会使用一个叫作e1000的网络设备来处理网络通信。qemu虚拟化e1000，e1000就相当于现实中真正链接网络的网卡设备。
-xv6的ip地址为10.0.2.15。qemu会让宿主机(the computer running qemu)的ip地址为10.0.2.2。qe...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2000-01-01</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2000/01/01/universe/cources_notes/6.s081/lab_net/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2000/01/01/universe/cources_notes/6.s081/lab_system_call/">
-        MIT6.S081 syscall lab
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        system calls
-user space
-user.h
-usys.pl
-
-
-kernel space
-syscall.h
-syscall.c
-
-
-process related
-proc.h
-proc.c
-
-
-
-trace实现trace，以便后续实验调试
-trace系统调用
-
-一个int参数, “mask”
-trace(1 &lt;&lt; SYS_fork)
-
-
-对tracing的系...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2000-01-01</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2000/01/01/universe/cources_notes/6.s081/lab_system_call/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2000/01/01/universe/cources_notes/6.s081/lab_traps/">
-        MIT6.S081 traps lab
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Trapsriscv assembly通过make fs.img的可以生成call.c对应的汇编代码辅助阅读和学习。如根据需求修改call.c然后时候make fs.img生成call.asm，就可以查看对应汇编内容。
-回答以下问题
-
-哪些寄存器用来保存函数?
-a0~a2
-
-
-汇编代码如何执行函数调用的?
-f和g函数分别在哪调用?
-编译优化成了li    a1,12
-
-
-
-
-函数printf...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2000-01-01</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2000/01/01/universe/cources_notes/6.s081/lab_traps/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2000/01/01/universe/cources_notes/6.s081/lab_thread/">
-        MIT6.S081 thread lab
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Multithreading熟悉多线程，实现用户空间线程间切换，使用多线程编程，实现barrier。
-Uthread: switching between threads实现一种用户空间的上下文切换机制。
-修改user/uthread.c和user/unthread_switch.S和在makefile中添加uthread程序。uthread.c中包含了测试和框架，还需要实现线程创建和线程切...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2000-01-01</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2000/01/01/universe/cources_notes/6.s081/lab_thread/'>
+          <a class='readmore' href='/2000/01/01/annual/2022/'>
             Read More
           </a>
         </div>
@@ -967,14 +677,8 @@ Uthread: switching between threads实现一种用户空间的上下文切换机�
           </a>
         
         <p class="current">
-          3 / 4
+          3 / 3
         </p>
-        
-          <a class="next" rel="next" href="/archives/2000/01/page/4/">
-            <section class="post next white-box shadow">
-              &nbsp;Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i>
-            </section>
-          </a>
         
       </div>
     
@@ -1075,7 +779,7 @@ Uthread: switching between threads实现一种用户空间的上下文切换机�
 
 
     <div class='content'>
-      <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/DDIA/" style="font-size: 14px; color: #999">DDIA</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/IPC/" style="font-size: 14px; color: #999">IPC</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/MIT/" style="font-size: 15.67px; color: #8e8e8e">MIT</a> <a href="/tags/OS/" style="font-size: 22.33px; color: #606060">OS</a> <a href="/tags/PowerPC/" style="font-size: 14px; color: #999">PowerPC</a> <a href="/tags/QOM/" style="font-size: 14px; color: #999">QOM</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 14.83px; color: #939393">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algo/" style="font-size: 14.83px; color: #939393">algo</a> <a href="/tags/algorithm/" style="font-size: 17.33px; color: #828282">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c/" style="font-size: 17.33px; color: #828282">c</a> <a href="/tags/c-c/" style="font-size: 18.17px; color: #7d7d7d">c/c++</a> <a href="/tags/cheat-sheet/" style="font-size: 14.83px; color: #939393">cheat sheet</a> <a href="/tags/cloud/" style="font-size: 14px; color: #999">cloud</a> <a href="/tags/cmake/" style="font-size: 14px; color: #999">cmake</a> <a href="/tags/coherence/" style="font-size: 14px; color: #999">coherence</a> <a href="/tags/compiler/" style="font-size: 14px; color: #999">compiler</a> <a href="/tags/cpp/" style="font-size: 16.5px; color: #888">cpp</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/cuda/" style="font-size: 14px; color: #999">cuda</a> <a href="/tags/database/" style="font-size: 19.83px; color: #717171">database</a> <a href="/tags/distributed/" style="font-size: 19px; color: #777">distributed</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16.5px; color: #888">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 14.83px; color: #939393">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 14.83px; color: #939393">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/functional-programming/" style="font-size: 14px; color: #999">functional programming</a> <a href="/tags/gc/" style="font-size: 14px; color: #999">gc</a> <a href="/tags/gcc/" style="font-size: 14.83px; color: #939393">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/gdbserver/" style="font-size: 14px; color: #999">gdbserver</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 19px; color: #777">go</a> <a href="/tags/gpgpu/" style="font-size: 14px; color: #999">gpgpu</a> <a href="/tags/gpu/" style="font-size: 14.83px; color: #939393">gpu</a> <a href="/tags/gui/" style="font-size: 14.83px; color: #939393">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/init/" style="font-size: 14px; color: #999">init</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 16.5px; color: #888">java</a> <a href="/tags/javascript/" style="font-size: 15.67px; color: #8e8e8e">javascript</a> <a href="/tags/julia/" style="font-size: 14px; color: #999">julia</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.33px; color: #606060">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lsm-tree/" style="font-size: 14px; color: #999">lsm tree</a> <a href="/tags/lua/" style="font-size: 14.83px; color: #939393">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mis/" style="font-size: 14px; color: #999">mis</a> <a href="/tags/misc/" style="font-size: 18.17px; color: #7d7d7d">misc</a> <a href="/tags/mm/" style="font-size: 14.83px; color: #939393">mm</a> <a href="/tags/mmap/" style="font-size: 14px; color: #999">mmap</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.33px; color: #828282">network</a> <a href="/tags/nginx/" style="font-size: 14px; color: #999">nginx</a> <a href="/tags/oop/" style="font-size: 14px; color: #999">oop</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 19.83px; color: #717171">operate</a> <a href="/tags/os/" style="font-size: 21.5px; color: #666">os</a> <a href="/tags/paper/" style="font-size: 14px; color: #999">paper</a> <a href="/tags/papers/" style="font-size: 19px; color: #777">papers</a> <a href="/tags/pcie/" style="font-size: 14px; color: #999">pcie</a> <a href="/tags/pipe/" style="font-size: 14px; color: #999">pipe</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/programing-language/" style="font-size: 14px; color: #999">programing language</a> <a href="/tags/project/" style="font-size: 16.5px; color: #888">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 19px; color: #777">python</a> <a href="/tags/qemu/" style="font-size: 23.17px; color: #5b5b5b">qemu</a> <a href="/tags/qom/" style="font-size: 14px; color: #999">qom</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/reading-note/" style="font-size: 15.67px; color: #8e8e8e">reading note</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/rust/" style="font-size: 17.33px; color: #828282">rust</a> <a href="/tags/semaphore/" style="font-size: 14px; color: #999">semaphore</a> <a href="/tags/serverless/" style="font-size: 14px; color: #999">serverless</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 15.67px; color: #8e8e8e">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 14.83px; color: #939393">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tags/" style="font-size: 14px; color: #999">tags</a> <a href="/tags/tech/" style="font-size: 20.67px; color: #6c6c6c">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 15.67px; color: #8e8e8e">tips</a> <a href="/tags/tool/" style="font-size: 15.67px; color: #8e8e8e">tool</a> <a href="/tags/tools/" style="font-size: 22.33px; color: #606060">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/trap/" style="font-size: 14px; color: #999">trap</a> <a href="/tags/traps/" style="font-size: 14px; color: #999">traps</a> <a href="/tags/typescript/" style="font-size: 14.83px; color: #939393">typescript</a> <a href="/tags/underlaying/" style="font-size: 14px; color: #999">underlaying</a> <a href="/tags/usage/" style="font-size: 14px; color: #999">usage</a> <a href="/tags/vim/" style="font-size: 15.67px; color: #8e8e8e">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/virtio/" style="font-size: 14px; color: #999">virtio</a> <a href="/tags/virtualization/" style="font-size: 14px; color: #999">virtualization</a> <a href="/tags/wasm/" style="font-size: 14px; color: #999">wasm</a> <a href="/tags/web/" style="font-size: 17.33px; color: #828282">web</a> <a href="/tags/wisdom/" style="font-size: 14px; color: #999">wisdom</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 14.83px; color: #939393">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14.83px; color: #939393">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
+      <a href="/tags/2022/" style="font-size: 14px; color: #999">2022</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/DDIA/" style="font-size: 14px; color: #999">DDIA</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/IPC/" style="font-size: 14px; color: #999">IPC</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/MIT/" style="font-size: 15.67px; color: #8e8e8e">MIT</a> <a href="/tags/OS/" style="font-size: 22.33px; color: #606060">OS</a> <a href="/tags/PowerPC/" style="font-size: 14px; color: #999">PowerPC</a> <a href="/tags/QOM/" style="font-size: 14px; color: #999">QOM</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 14.83px; color: #939393">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algo/" style="font-size: 14.83px; color: #939393">algo</a> <a href="/tags/algorithm/" style="font-size: 17.33px; color: #828282">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/annual/" style="font-size: 14px; color: #999">annual</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c/" style="font-size: 17.33px; color: #828282">c</a> <a href="/tags/c-c/" style="font-size: 18.17px; color: #7d7d7d">c/c++</a> <a href="/tags/cheat-sheet/" style="font-size: 14.83px; color: #939393">cheat sheet</a> <a href="/tags/cloud/" style="font-size: 14px; color: #999">cloud</a> <a href="/tags/cmake/" style="font-size: 14px; color: #999">cmake</a> <a href="/tags/coherence/" style="font-size: 14px; color: #999">coherence</a> <a href="/tags/compiler/" style="font-size: 14px; color: #999">compiler</a> <a href="/tags/cpp/" style="font-size: 16.5px; color: #888">cpp</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/cuda/" style="font-size: 14px; color: #999">cuda</a> <a href="/tags/database/" style="font-size: 19.83px; color: #717171">database</a> <a href="/tags/distributed/" style="font-size: 19px; color: #777">distributed</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16.5px; color: #888">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 14.83px; color: #939393">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 14.83px; color: #939393">filesystem</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/functional-programming/" style="font-size: 14px; color: #999">functional programming</a> <a href="/tags/gc/" style="font-size: 14px; color: #999">gc</a> <a href="/tags/gcc/" style="font-size: 14.83px; color: #939393">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/gdbserver/" style="font-size: 14px; color: #999">gdbserver</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 19px; color: #777">go</a> <a href="/tags/gpgpu/" style="font-size: 14px; color: #999">gpgpu</a> <a href="/tags/gpu/" style="font-size: 14.83px; color: #939393">gpu</a> <a href="/tags/gui/" style="font-size: 14.83px; color: #939393">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/init/" style="font-size: 14px; color: #999">init</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 16.5px; color: #888">java</a> <a href="/tags/javascript/" style="font-size: 15.67px; color: #8e8e8e">javascript</a> <a href="/tags/julia/" style="font-size: 14px; color: #999">julia</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 22.33px; color: #606060">kernel</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/lsm-tree/" style="font-size: 14px; color: #999">lsm tree</a> <a href="/tags/lua/" style="font-size: 14.83px; color: #939393">lua</a> <a href="/tags/machine-learning/" style="font-size: 14px; color: #999">machine learning</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mis/" style="font-size: 14px; color: #999">mis</a> <a href="/tags/misc/" style="font-size: 18.17px; color: #7d7d7d">misc</a> <a href="/tags/mm/" style="font-size: 14.83px; color: #939393">mm</a> <a href="/tags/mmap/" style="font-size: 14px; color: #999">mmap</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 17.33px; color: #828282">network</a> <a href="/tags/nginx/" style="font-size: 14px; color: #999">nginx</a> <a href="/tags/oop/" style="font-size: 14px; color: #999">oop</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 19.83px; color: #717171">operate</a> <a href="/tags/os/" style="font-size: 21.5px; color: #666">os</a> <a href="/tags/paper/" style="font-size: 14px; color: #999">paper</a> <a href="/tags/papers/" style="font-size: 19px; color: #777">papers</a> <a href="/tags/pcie/" style="font-size: 14px; color: #999">pcie</a> <a href="/tags/pipe/" style="font-size: 14px; color: #999">pipe</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/programing-language/" style="font-size: 14px; color: #999">programing language</a> <a href="/tags/project/" style="font-size: 16.5px; color: #888">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 19px; color: #777">python</a> <a href="/tags/qemu/" style="font-size: 23.17px; color: #5b5b5b">qemu</a> <a href="/tags/qom/" style="font-size: 14px; color: #999">qom</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/reading-note/" style="font-size: 15.67px; color: #8e8e8e">reading note</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/rust/" style="font-size: 17.33px; color: #828282">rust</a> <a href="/tags/semaphore/" style="font-size: 14px; color: #999">semaphore</a> <a href="/tags/serverless/" style="font-size: 14px; color: #999">serverless</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 15.67px; color: #8e8e8e">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 14.83px; color: #939393">system</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tags/" style="font-size: 14px; color: #999">tags</a> <a href="/tags/tech/" style="font-size: 20.67px; color: #6c6c6c">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 15.67px; color: #8e8e8e">tips</a> <a href="/tags/tool/" style="font-size: 15.67px; color: #8e8e8e">tool</a> <a href="/tags/tools/" style="font-size: 22.33px; color: #606060">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/trap/" style="font-size: 14px; color: #999">trap</a> <a href="/tags/traps/" style="font-size: 14px; color: #999">traps</a> <a href="/tags/typescript/" style="font-size: 14.83px; color: #939393">typescript</a> <a href="/tags/underlaying/" style="font-size: 14px; color: #999">underlaying</a> <a href="/tags/usage/" style="font-size: 14px; color: #999">usage</a> <a href="/tags/vim/" style="font-size: 15.67px; color: #8e8e8e">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/virtio/" style="font-size: 14px; color: #999">virtio</a> <a href="/tags/virtualization/" style="font-size: 14px; color: #999">virtualization</a> <a href="/tags/wasm/" style="font-size: 14px; color: #999">wasm</a> <a href="/tags/web/" style="font-size: 17.33px; color: #828282">web</a> <a href="/tags/wisdom/" style="font-size: 14px; color: #999">wisdom</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 14.83px; color: #939393">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14.83px; color: #939393">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
     </div>
   </section>
 

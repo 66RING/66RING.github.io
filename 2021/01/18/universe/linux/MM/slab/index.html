@@ -631,10 +631,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class='prev' href='/2021/01/19/universe/linux/MM/buddy_system/'>
           <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Buddy系统的原理及实现</p>
-          <p class='content'>Buddy系统的原理及实现通过”二分查找”的方式快速找到所需大小的内存空间。对于大内存的分配是比较快的。
-基本要素:
+          <p class='content'>Buddy系统的原理及实现
+本质上就是一个多级链表, 然后使用伙伴系统这种特殊的”索引方式”开快速分配和查找所需内存
 
-多级freelist用于索引: e.g. 有大小为32, 64, 128…...</p>
+通过”二分查找”的方式快速找到所需大小的内存空间。对于大内存的分配是比较快...</p>
         </a>
       
       

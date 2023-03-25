@@ -514,7 +514,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="Buddy系统的原理及实现"><a href="#Buddy系统的原理及实现" class="headerlink" title="Buddy系统的原理及实现"></a>Buddy系统的原理及实现</h1><p>通过”二分查找”的方式快速找到所需大小的内存空间。对于大内存的分配是比较快的。</p>
+  <h1 id="Buddy系统的原理及实现"><a href="#Buddy系统的原理及实现" class="headerlink" title="Buddy系统的原理及实现"></a>Buddy系统的原理及实现</h1><blockquote>
+<p>本质上就是一个多级链表, 然后使用伙伴系统这种特殊的”索引方式”开快速分配和查找所需内存</p>
+</blockquote>
+<p>通过”二分查找”的方式快速找到所需大小的内存空间。对于大内存的分配是比较快的。</p>
 <p>基本要素:</p>
 <ol>
 <li>多级freelist用于索引: e.g. 有大小为32, 64, 128…的freelist</li>
@@ -566,6 +569,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>因为伙伴系统这种内存对齐的机制，链表上的节点的地址可以通过链表类型计算出来，从而可以方便的从旧链表中删除，然后插入新链表。e.g. 释放一个地址1280, 大小为128</p>
 <p>根据伙伴系统的内存布局, 通过下面这种方式就可以计算出链表节点的位置。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Node* ptr &#x3D; ROUNDDOWN128(pa);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q &amp; A"></a>Q &amp; A</h2><ul>
+<li>什么时候需要连续的物理内存?<ul>
+<li>设备看到的是物理内存, DMA。内核需要访问物理内存来与设备通信, 这样一来有些传输就需要用到大块的连续物理内存</li>
+</ul>
+</li>
+<li>连续物理内存不是通过页表解决吗? 为什么还要修改分配器<ul>
+<li>是通过页表解决, 但是要通过页表解决前得要先有物理内存来分配啊。就比如说页表映射的0～9的PA, 那你下一步映射要找到10~19才行，所以需要一种能够快速查找的分配器</li>
+</ul>
+</li>
+</ul>
 
   
   
@@ -744,7 +759,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#空闲列表"><span class="toc-text">空闲列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存池"><span class="toc-text">内存池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#释放与合并"><span class="toc-text">释放与合并</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#空闲列表"><span class="toc-text">空闲列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存池"><span class="toc-text">内存池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#释放与合并"><span class="toc-text">释放与合并</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q-amp-A"><span class="toc-text">Q &amp; A</span></a></li></ol>
     </div>
   </section>
 
