@@ -514,7 +514,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="小抄"><a href="#小抄" class="headerlink" title="小抄"></a>小抄</h1><h2 id="移动构造"><a href="#移动构造" class="headerlink" title="移动构造"></a>移动构造</h2><p>使用右值引用创建移动构造器。然后传入右值: <code>std::move(lvalue)</code>或者直接匿名变量</p>
+  <h1 id="小抄"><a href="#小抄" class="headerlink" title="小抄"></a>小抄</h1><blockquote>
+<p>stack</p>
+</blockquote>
+<h2 id="妙用structure-bind"><a href="#妙用structure-bind" class="headerlink" title="妙用structure bind"></a>妙用structure bind</h2><ul>
+<li>case 1: 使用pair等时用<code>p.first</code>, <code>p.second</code>有很差的可读性。可以使用<code>auto [name, age]</code></li>
+<li>case 2: 除了pair, 结构体也可以使用bind。绑定的顺序和结构体成员顺序有关</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span> &#123;</span></span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Person <span class="title">get_person</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> [name, age] = get_person();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>case 3: 当有多个输出参数时<code>func(int n, int&amp; out1, int&amp; out2)</code>，可以利用bind的方法放回一个结构体然后分解</li>
+</ul>
+<h2 id="移动构造"><a href="#移动构造" class="headerlink" title="移动构造"></a>移动构造</h2><p>使用右值引用创建移动构造器。然后传入右值: <code>std::move(lvalue)</code>或者直接匿名变量</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    A(A &amp;&amp;a) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"move\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    vecotr&lt;A&gt; v;</span><br><span class="line">    <span class="comment">// 使用匿名遍历</span></span><br><span class="line">    v.push_back(A());</span><br><span class="line">    A a;</span><br><span class="line">    <span class="comment">// 使用move</span></span><br><span class="line">    v.push_back(<span class="built_in">std</span>::move(a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><blockquote>
@@ -742,7 +754,7 @@ cpp单例模式static标记, 返回引用。static标记后构造函数就只会
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#移动构造"><span class="toc-text">移动构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#智能指针"><span class="toc-text">智能指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换"><span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#push-back-和-emplace-back的区别"><span class="toc-text">push_back 和 emplace_back的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多线程和锁"><span class="toc-text">多线程和锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件流"><span class="toc-text">文件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#misc"><span class="toc-text">misc</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#妙用structure-bind"><span class="toc-text">妙用structure bind</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动构造"><span class="toc-text">移动构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#智能指针"><span class="toc-text">智能指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换"><span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#push-back-和-emplace-back的区别"><span class="toc-text">push_back 和 emplace_back的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多线程和锁"><span class="toc-text">多线程和锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件流"><span class="toc-text">文件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#misc"><span class="toc-text">misc</span></a></li></ol>
     </div>
   </section>
 
