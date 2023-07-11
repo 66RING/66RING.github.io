@@ -527,6 +527,20 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h2 id="explicit"><a href="#explicit" class="headerlink" title="explicit"></a>explicit</h2><p>对一个构造函数进行<code>explicit</code>修饰, 可以防止隐式调用一个参数的构造函数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  A(<span class="keyword">int</span> x);</span><br><span class="line">  <span class="comment">// explicit A(int x);</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">doSomething(<span class="number">28</span>);  <span class="comment">// 产生了隐式临时对象</span></span><br><span class="line">doSomething(A(<span class="number">28</span>));  <span class="comment">// 产生了显示临时对象</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="enum-class-T"><a href="#enum-class-T" class="headerlink" title="enum class: T"></a>enum class: T</h2><p>旧enum存在许多问题:</p>
+<ol>
+<li>隐式转换成整型</li>
+<li>无法自定义类型</li>
+<li>存在作用域问题, 可以直接通过enum的成员名访问成员</li>
+<li>取决于编译</li>
+</ol>
+<p><code>enum class Name {}</code>语法解决了旧<code>enum</code>的问题</p>
+<ol>
+<li>不再隐式转换, 可以手动强转</li>
+<li>指定底层数据类型: <code>enum class Name: T {}</code></li>
+<li>作用域访问成员需要使用域运算符</li>
+</ol>
+
   
   
     
@@ -705,7 +719,7 @@ case 2:...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp单例模式"><span class="toc-text">cpp单例模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#constexpr标注"><span class="toc-text">constexpr标注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#explicit"><span class="toc-text">explicit</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp单例模式"><span class="toc-text">cpp单例模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#constexpr标注"><span class="toc-text">constexpr标注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#explicit"><span class="toc-text">explicit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#enum-class-T"><span class="toc-text">enum class: T</span></a></li></ol>
     </div>
   </section>
 
