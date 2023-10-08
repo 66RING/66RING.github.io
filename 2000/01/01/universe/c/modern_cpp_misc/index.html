@@ -540,6 +540,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>指定底层数据类型: <code>enum class Name: T {}</code></li>
 <li>作用域访问成员需要使用域运算符</li>
 </ol>
+<h2 id="X-Macro"><a href="#X-Macro" class="headerlink" title="X Macro"></a>X Macro</h2><blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/521073931" target="_blank" rel="noopener">知乎教程</a></p>
+</blockquote>
+<p>使用宏技巧自动生成模式, 如定义变量, switch case等模式</p>
+<ol>
+<li>小范围内定义宏, 然后释放(undef)</li>
+<li>本质就是利用宏函数的一些功能来实现诸如字符串拼接, 转字面值, 转”值”等操作, 如<ul>
+<li><code>#define X_MACRO(x) x,</code>, 原样输出并添加一个都好</li>
+<li><code>#define X_MACRO(x) #x</code>, 输出字符串字面值”x”</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> XMACROS_TABLE(f) \</span></span><br><span class="line">	f(trace) \</span><br><span class="line">    f(debug) \</span><br><span class="line">    f(info) \</span><br><span class="line">    f(critical) \</span><br><span class="line">    f(warn) \</span><br><span class="line">    f(error) \</span><br><span class="line">    f(fatal)</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> <span class="class"><span class="keyword">class</span> <span class="title">log_level</span> :</span> <span class="built_in">std</span>::<span class="keyword">uint8_t</span> &#123;</span><br><span class="line"><span class="comment">// X Macro原样返回name, 快速完成定义</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _FUNCTION(name) name,</span></span><br><span class="line">    XMACROS_TABLE(_FUNCTION)</span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> _FUNCTION</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">log_level_name</span><span class="params">(log_level lev)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (lev) &#123;</span><br><span class="line"><span class="comment">// X Macro批量生成 case log_level::name: return #name</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _FUNCTION(name) case log_level::name: return #name;</span></span><br><span class="line">    XMACROS_TABLE(_FUNCTION)</span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> _FUNCTION</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"unknown"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
   
   
@@ -719,7 +732,7 @@ case 2:...</p>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp单例模式"><span class="toc-text">cpp单例模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#constexpr标注"><span class="toc-text">constexpr标注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#explicit"><span class="toc-text">explicit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#enum-class-T"><span class="toc-text">enum class: T</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp单例模式"><span class="toc-text">cpp单例模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#constexpr标注"><span class="toc-text">constexpr标注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#explicit"><span class="toc-text">explicit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#enum-class-T"><span class="toc-text">enum class: T</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#X-Macro"><span class="toc-text">X Macro</span></a></li></ol>
     </div>
   </section>
 

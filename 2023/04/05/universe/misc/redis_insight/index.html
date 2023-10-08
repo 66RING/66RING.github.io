@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>Redis赏析 - 66Ring&#39;s Blog</title>
+  
+    <meta name="keywords" content="misc">
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a href="https://www.baidu.com/s?wd=启用JavaScript" target="_blank" rel="noopener"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://raw.githubusercontent.com/66RING/66RING/master/.github/images/the_dark_side_of_the_moon_tranp.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box header toggle-mode-btn">
+                  <i class='fas fa-moon fa-fw'></i>Dark Mode
+                </a>
+              <li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div class='cover-bg lazyload placeholder' data-bg="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Mens et Manus</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>首页</p>
+            </a>
+          
+            <a href="/faqs/"
+              
+              
+              id="faqs">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>帮助</p>
+            </a>
+          
+            <a href="/examples/"
+              
+              
+              id="examples">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>示例</p>
+            </a>
+          
+            <a href="/contributors/"
+              
+              
+              id="contributors">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>社区</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>档归</p>
+            </a>
+          
+            <a href="https://github.com/66RING"
+              
+              
+              id="https:githubcom66RING">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        Redis赏析
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>请设置文章作者</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Apr 5, 2023</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="Redis赏析" data-path="/2023/04/05/universe/misc/redis_insight/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>主要记录Redis整体架构及其巧妙的设计。</p>
+<ul>
+<li><p>主要结构体</p>
+<ul>
+<li>sds(simple dynamic string)</li>
+<li>dict</li>
+<li>set: TODO zset</li>
+<li>list</li>
+<li>其他: zmalloc TODO:</li>
+</ul>
+</li>
+<li><p>主要lib(抽象)</p>
+<ul>
+<li>redis object</li>
+<li>ae</li>
+</ul>
+</li>
+<li><p>主要亮点</p>
+<ul>
+<li>epoll实现的异步库</li>
+<li>渐进式rehash</li>
+<li>流式read, write</li>
+<li>redis</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="sds"><a href="#sds" class="headerlink" title="sds"></a>sds</h2><blockquote>
+<p>SDS(Simle Dynamic String), 特点二进制安全，动态扩容。</p>
+</blockquote>
+<p>redis要对<code>char*</code>字符串进行改进。感觉有几点原因：1. 要通过网络传输的数据往往需要记录他们的传输长度信息。2. 传统的<code>char*</code>以<code>\0</code>标识结尾，但对于其他非string类型的数据, <code>\0</code>可能是一个有效数据，所以需要使用其他字段标识结尾，即所谓二进制安全。</p>
+<p>主要就是额外申请一段空间作为header用于记录元数据，然后根据”协议”只有sds的api会操作这个header，header对用户完全透明。内存布局如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">| sds header | data | \0 |</span><br></pre></td></tr></table></figure>
+
+<p>申请空间是连带header的空间一并申请, 但只用于sds库内部的操作, “协议”规定的如此的内存布局，就可以通过<code>ptr-sizeof(struct sdshdr)</code>来获取完成的header结构方便后面操作。为了兼容<code>char*</code>还会多申请一byte的空间储存<code>\0</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> *sds;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从不使用sdshdr</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span></span><br><span class="line">    <span class="keyword">long</span> len;  <span class="comment">// 字符串实际长度</span></span><br><span class="line">    <span class="keyword">long</span> <span class="built_in">free</span>; <span class="comment">// buf剩余可用空间</span></span><br><span class="line">    <span class="keyword">char</span> buf[]; <span class="comment">// 大小0</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>所谓动态扩容其实就是根据元数据判断容量的情况自动申请新的空间, 然后返回新指针。</p>
+<p>总结一下就有这些好处/八股/为什么不用c原本的字符串</p>
+<ol>
+<li>精妙的内存布局设计<code>buf[]</code>不占空间，但能指示一块连续的内存</li>
+<li>O(1)的长度获取</li>
+<li>二进制安全, 不用依赖<code>\0</code>判断结束，但是为了兼容性也会自动添加<code>\0</code></li>
+<li>预分配，自动扩容等策略保证实时性能</li>
+</ol>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><h3 id="双向list"><a href="#双向list" class="headerlink" title="双向list"></a>双向list</h3><p>处理基本的双向链表操作意外还考虑了对象模型和迭代器。</p>
+<p>所谓对象模型就是如何让”面向过程的C语言”做更多面向对象的事。答案就是struct怎么规划。思路其实也很简单，value直接存储为<code>void*</code>, 因为使用者一定知道自己存的是什么，再自行做类型转换即可。然后为了应付<code>void*</code>存储复杂结构的情况，<code>struct list</code>中还会存储一些回调函数来复制。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">list</span> &#123;</span></span><br><span class="line">    listNode *head;</span><br><span class="line">    listNode *tail;</span><br><span class="line">    <span class="keyword">void</span> *(*dup)(<span class="keyword">void</span> *ptr);</span><br><span class="line">    <span class="keyword">void</span> (*<span class="built_in">free</span>)(<span class="keyword">void</span> *ptr);</span><br><span class="line">    <span class="keyword">int</span> (*match)(<span class="keyword">void</span> *ptr, <span class="keyword">void</span> *key);</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len;</span><br><span class="line">&#125; <span class="built_in">list</span>;</span><br></pre></td></tr></table></figure>
+
+<p>迭代器抽象本质就是1. 另起炉灶，不影响原变量。2. 对外暴露统一的接口，即迭代器接口。</p>
+<h3 id="TODO-其他list-ziplist"><a href="#TODO-其他list-ziplist" class="headerlink" title="TODO: 其他list? ziplist?"></a>TODO: 其他list? ziplist?</h3><h2 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h2><blockquote>
+<p>渐进式rehash和”懒”超时检测</p>
+</blockquote>
+<p>哈希表的扩容操作是开销的比较大的，而redis又是单线程, 所以要想办法妥善处理：渐进式rehash。</p>
+<p>redis的dict实现使用的是拉链法, 所以渐进式rehash也比较简单。保留两个哈希表，一个新表一个旧表，使用<code>rehashidx</code>记录rehash到哪个桶了，如果哈希到的桶小于rehashidx就操作新表，否则就操作旧表。当所有迁移完毕就可以新旧互换开始新一轮了。解决单线程问题的核心思路就是rehash一点(默认迁移一个桶)，处理正事一点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> &#123;</span></span><br><span class="line">    <span class="keyword">void</span> *key;</span><br><span class="line">	<span class="keyword">union</span> &#123;</span><br><span class="line">	  <span class="keyword">void</span>* val;</span><br><span class="line">	  <span class="keyword">uint64_t</span> u64;</span><br><span class="line">	  <span class="keyword">int64_t</span> s64;</span><br><span class="line">	&#125; v;;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; dictEntry;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictht</span> &#123;</span></span><br><span class="line">  dictEntry **table;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="built_in">size</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> sizemask;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> used;</span><br><span class="line">&#125; dictht;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dict</span> &#123;</span></span><br><span class="line">    dictType *type;</span><br><span class="line">    <span class="keyword">void</span> *privdata;</span><br><span class="line">    dictht ht[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> rehashidx; <span class="comment">/* rehashing not in progress if rehashidx == -1 */</span></span><br><span class="line">    <span class="keyword">int</span> iterators; <span class="comment">/* number of iterators currently running */</span></span><br><span class="line">&#125; dict;</span><br></pre></td></tr></table></figure>
+
+<p>不过细节是魔鬼, 双表还有很多操作需要多加注意, 比如查找和删除是两个表都要查找。</p>
+<p>至于过期的实现，也采用懒处理的方法。因为哈希表记录了过期的时间，当访问到元素时在判断是否过期，如果过期就删除即可。</p>
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><p>set即dict</p>
+<h2 id="Redis-Object"><a href="#Redis-Object" class="headerlink" title="Redis Object"></a>Redis Object</h2><blockquote>
+<p>redis object share everything</p>
+</blockquote>
+<p>使用ref count做gc, 数据拷贝传递的是底层的redis object指针。</p>
+<p>但是最后发现使用这种share everything的方式会导致大量的指针使用, 最终导致<strong>指针跳来跳去影响cpu cache</strong>, 从而降低性能。e.g. 你的访问数据会有如下调用:</p>
+<h2 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h2><h2 id="ae库"><a href="#ae库" class="headerlink" title="ae库"></a>ae库</h2><h1 id="手写Redis"><a href="#手写Redis" class="headerlink" title="手写Redis"></a>手写Redis</h1><blockquote>
+<p>软件架构(整体) + 数据结构(细节)</p>
+</blockquote>
+<ul>
+<li>tips<ul>
+<li>先看原始版本, e.g. v1.0, 不必第一个commit, 一个大版本整体性会更强</li>
+<li>⭐如何学习codebase: 基本概念, 流程(会用), 核心数据结构</li>
+</ul>
+</li>
+</ul>
+<p>redis结构, v1.0</p>
+<ul>
+<li><p>事件库(ae)</p>
+<ul>
+<li>⭐, 可以学来做自己的server</li>
+</ul>
+</li>
+<li><p>网络库</p>
+</li>
+<li><p>内存库</p>
+</li>
+<li><p>数据结构: sds, 双向链表, dict</p>
+</li>
+<li><p>utils</p>
+</li>
+<li><p><strong>整体亮点</strong></p>
+<ul>
+<li>全异步, ae库</li>
+<li>渐进式rehash</li>
+<li>流式read, write</li>
+<li>redis object share everything, 但是败给了cpu cache</li>
+</ul>
+</li>
+</ul>
+<h2 id="redis核心概念"><a href="#redis核心概念" class="headerlink" title="redis核心概念"></a>redis核心概念</h2><blockquote>
+<p>redis.c</p>
+</blockquote>
+<ul>
+<li>server核心<ul>
+<li>fd: 网络句柄</li>
+<li>db: 多db(简化: 单db)</li>
+<li>clients: 链接的client</li>
+<li>eventloop: 事件循环</li>
+</ul>
+</li>
+<li>client核心<ul>
+<li>fd</li>
+<li>db</li>
+<li>query: string buffer</li>
+<li>reply: 一系列redis object</li>
+</ul>
+</li>
+<li>redis DB<ul>
+<li>本质就是哈希表, kv数据库: dict, map, etc…</li>
+<li>expires map: 记录过期时间</li>
+<li><del>db id</del></li>
+</ul>
+</li>
+<li>redis object ⭐<ul>
+<li>ptr: <code>void *</code></li>
+<li>type: 指向类型</li>
+<li>refcount: 内存管理</li>
+</ul>
+</li>
+<li>核心流程<ol>
+<li>启动流程</li>
+<li>请求处理流程: 怎么接收, 处理, 返回</li>
+</ol>
+</li>
+</ul>
+<h2 id="redis核心流程"><a href="#redis核心流程" class="headerlink" title="redis核心流程"></a>redis核心流程</h2><blockquote>
+<p>main()</p>
+</blockquote>
+<ul>
+<li>abs(本章亮点)<ul>
+<li>main</li>
+<li>事件注册的逻辑</li>
+<li>epoll核心流程: 一批来一批去</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>初始化<ul>
+<li>初始化server</li>
+<li>监听端口</li>
+<li>kv数据库</li>
+</ul>
+</li>
+<li>主循环</li>
+<li>ae事件注册<ul>
+<li>“accept event”</li>
+<li>“client query event”</li>
+<li>“write reply event”</li>
+</ul>
+</li>
+<li>启动主循环</li>
+</ol>
+<ul>
+<li>首先main注册事件监听端口: <code>acceptHandler</code>。一个链接产生一个配套fd, 那就可以依此创建一个client对象</li>
+<li>client对象处理: 非阻塞, 绑db等属性, <strong>注册事件</strong></li>
+<li>readQueryFromClient<ol>
+<li>read fd</li>
+<li>处理请求processCommand, 如果是多个请求就again</li>
+</ol>
+</li>
+<li>处理请求<ol>
+<li>lookup cmd: get, set… 查一个cmd table: type, 处理方法, 参数个数等<ul>
+<li>getCommand: </li>
+</ul>
+</li>
+<li>执行命令</li>
+<li>⭐写返回: addReply<ul>
+<li>注册一个事件监听可写: sendReplyToClient</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>写回复sendReplyToClient<ul>
+<li>write, 然后删除事件</li>
+</ul>
+</li>
+</ul>
+<p>main注册accept事件(监听端口)。链接建立时(client到来), 为client的fd也注册事件监听, read event(readQueryFromClient)。client请求到来就调用命名处理。处理完毕后要返回给客户端, 调用一个write事件监听可写, 然后返回给客户端sendReplyToClient。</p>
+<h3 id="ae库-1"><a href="#ae库-1" class="headerlink" title="ae库"></a>ae库</h3><blockquote>
+<p>就绪 -&gt; 执行回调函数: <strong>事件循环</strong></p>
+</blockquote>
+<ul>
+<li><p>两种event的抽象</p>
+<ul>
+<li>⭐file event: everything is file. e.g. fd</li>
+<li>time event</li>
+</ul>
+</li>
+<li><p>event loop</p>
+<ul>
+<li>通过链表方式组织所有event</li>
+</ul>
+</li>
+<li><p>API</p>
+<ul>
+<li><code>aeEventCreate</code>: 创event, 头插链表</li>
+<li><code>aeMain</code>: while !eventloop-&gt;stop</li>
+</ul>
+</li>
+<li><p>主要流程</p>
+<ul>
+<li>wait返回所有就绪的epoll</li>
+<li>procee处理这些epoll</li>
+</ul>
+</li>
+<li><p>result</p>
+<ul>
+<li>epoll API, TODO: 整理<ul>
+<li>一个epollfd管理内部若干fd</li>
+<li>epoll超时时间刚好又做计时器</li>
+</ul>
+</li>
+<li>没等到file event就执行time event</li>
+</ul>
+</li>
+</ul>
+<p>TODO: 重新整理</p>
+<h2 id="redis核心数据结构"><a href="#redis核心数据结构" class="headerlink" title="redis核心数据结构"></a>redis核心数据结构</h2><blockquote>
+<p>dict, string, redisObj, <strong>多多考虑单线程下重操作要怎么妥善处理</strong></p>
+</blockquote>
+<ul>
+<li>abs(本章亮点)<ul>
+<li>懒删除: expire</li>
+<li>⭐渐进式rehash(因为要照顾单线程的): 本质就是rehash一下, 执行kv一下</li>
+<li>redis object: share everything</li>
+<li><strong>最后redis object弃用</strong>: 指针跳来跳去影响cache命中</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>sds: redis的string库<ul>
+<li>TODO: 细节</li>
+</ul>
+</li>
+<li>dict: kind of map<ul>
+<li>⭐rehash: 怎么扩容又不影响吞吐时延<ul>
+<li>redis 2.6才有渐进式rehash</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>redis object<ul>
+<li>机制</li>
+<li>命令的生命周期: ref count, 怎么共享</li>
+</ul>
+</li>
+</ul>
+<h3 id="dict-1"><a href="#dict-1" class="headerlink" title="dict"></a>dict</h3><ul>
+<li><p>dictType: 哈希函数, keyCompare方法</p>
+</li>
+<li><p>hashtable(<code>ht</code>): 简单的链式hash</p>
+<ul>
+<li><strong>2.0中有两个</strong>: 为了rehash</li>
+</ul>
+</li>
+<li><p>expire: 过期的实现</p>
+<ul>
+<li>⭐单线程中是怎么干的⭐: 毕竟不可能放着主任务不管吧</li>
+<li>答案是用的时候再检查过期, 懒删除<ul>
+<li><code>lookupKeyRead</code> -&gt; <code>expireIfNeed</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>⭐rehash</strong>: 单线程场景下怎么妥善安排扩容</p>
+<ul>
+<li>如添加一条记录<code>dictAddRow</code>: 如果正在进行rehash则走rehash的方法, 否则直接诶添加</li>
+<li><code>dictRehash</code>: 一边rehash(默认走1步: 一个链表上的kv)一边操作kv: rehash一下, 操作kv一下尔<ol>
+<li>如果元表rehash完成了就free, 然后换表</li>
+<li>使用rehashidx记录rehash到哪个桶了, 加一层while跳过本身就是空的桶</li>
+<li>迁移该桶rehash + 置空, 更新新表旧表大小</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>e.g.: 创建一个dictType</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dictType dbDictType = &#123;</span><br><span class="line">    dictSdsHash,                <span class="comment">/* hash function */</span></span><br><span class="line">    <span class="literal">NULL</span>,                       <span class="comment">/* key dup */</span></span><br><span class="line">    <span class="literal">NULL</span>,                       <span class="comment">/* val dup */</span></span><br><span class="line">    dictSdsKeyCompare,          <span class="comment">/* key compare */</span></span><br><span class="line">    dictSdsDestructor,          <span class="comment">/* key destructor */</span></span><br><span class="line">    dictRedisObjectDestructor   <span class="comment">/* val destructor */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Redis-Object-1"><a href="#Redis-Object-1" class="headerlink" title="Redis Object"></a>Redis Object</h3><blockquote>
+<p>redis object的存在可以减少拷贝的次数。命令行到来产生数据, 数据拷贝到dict中。查询时又要从dict中拷贝数据返回。通过所有数据都存储成robj可以大幅减少拷贝(但后面不用了)</p>
+</blockquote>
+<ul>
+<li>ref count做gc<ul>
+<li>count = 0时释放</li>
+<li>缺点: 循环依赖会泄露, 但redis的场景不存在这个问题</li>
+</ul>
+</li>
+<li>命令处理时就生成robj, 存储到<code>redisClient-&gt;argv</code></li>
+<li>以set为例<ol>
+<li>processComand -&gt; robj</li>
+<li>dictAdd robj存储</li>
+<li>incrRefCount robj引用计数++</li>
+<li>resetClient: 释放robj, 引用计数–</li>
+<li>至此先加再减, 又回到了原来的dict中的一份</li>
+</ol>
+</li>
+</ul>
+<p>但是最后发现使用这种share everything的方式会导致大量的指针使用, 最终导致<strong>指针跳来跳去影响cpu cache</strong>, 从而降低性能。e.g. 你的访问数据会有如下调用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">key -&gt; key_obj -&gt; hash table -&gt; robj -&gt; sds_string</span><br><span class="line">&#96;</span><br></pre></td></tr></table></figure>
+
+<p>所以最后就直接存储具体数据了</p>
+<h3 id="sds-1"><a href="#sds-1" class="headerlink" title="sds"></a>sds</h3><blockquote>
+<p>simple dynamic string</p>
+</blockquote>
+<ul>
+<li>abs<ul>
+<li>内存布局</li>
+<li>动态扩容</li>
+<li>sdsnew</li>
+</ul>
+</li>
+</ul>
+<p>sds直接操纵内存布局, 其内存布局如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">| sds header | data | \0 |</span><br></pre></td></tr></table></figure>
+
+<p>对应结构就是下面这样, sds使用sdshdr申请空间, 返回时只返回指向buf部分的指针。需要访问header时再向前找: <code>s-sizeof(struct sdshdr)</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> *sds;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从不使用sdshdr</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span></span><br><span class="line">    <span class="keyword">long</span> len;  <span class="comment">// 字符串实际长度</span></span><br><span class="line">    <span class="keyword">long</span> <span class="built_in">free</span>; <span class="comment">// buf剩余可用空间</span></span><br><span class="line">    <span class="keyword">char</span> buf[]; <span class="comment">// 大小0</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>虽然有sdshdr这个结构但是从不直接使用, 因为我们要连续空间那么buf是个有实际大小的指针就说不过去。那么它如何实现动态扩容? 其实就是自动数据迁移后返回返回新指针(v1.0)。因为在1.0版本中还没有动态添加等操作, 只有cpy等操作遇到容量不够时自动分配，然后也是返回新指针。</p>
+<ul>
+<li>好处/八股/为什么不用c的字符串<ol>
+<li>O(1)的长度获取</li>
+<li>二进制安全, 因为用的len字段表达互长度, 而不是<code>\0</code></li>
+<li>防止了缓冲区溢出, sds API自动扩容<ul>
+<li>扩容逻辑, 小空间时(e.g. 小于1MB)直接翻倍, 大空间时每次加1MB</li>
+</ul>
+</li>
+<li>预分配</li>
+</ol>
+</li>
+</ul>
+<p>TODO:</p>
+<h3 id="zset"><a href="#zset" class="headerlink" title="zset"></a>zset</h3><p>TODO:</p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><ul>
+<li>基本数据结构: string, dict, zset, set, list</li>
+<li>要在golang中使用系统调用</li>
+</ul>
+<ul>
+<li>ae库</li>
+<li>net库: 因为golang中的net库太高层了, 我们自己封装系统调用</li>
+<li>epoll<ul>
+<li>设置一定的超时时间, 因为有time event要处理的</li>
+<li>每次收集一批file event和time event然后做process</li>
+</ul>
+</li>
+</ul>
+<p>… TODO</p>
+<h2 id="redis协议"><a href="#redis协议" class="headerlink" title="redis协议"></a>redis协议</h2><ul>
+<li><p>RESP</p>
+<ul>
+<li>数据流式读取过程</li>
+</ul>
+</li>
+<li><p>以QueryFromClient为例</p>
+</li>
+<li><p>abs(本节亮点)</p>
+<ul>
+<li>TODO</li>
+<li>⭐流式read, write怎么处理⭐</li>
+</ul>
+</li>
+</ul>
+<h3 id="RESP协议"><a href="#RESP协议" class="headerlink" title="RESP协议"></a>RESP协议</h3><blockquote>
+<p>格式: 首字母 + 内容 + 换行\r\n(CRLF)</p>
+</blockquote>
+<p>首字母有如下几种(redis2.6)</p>
+<ul>
+<li><code>+</code>, 简单string</li>
+<li><code>-</code>, 错误</li>
+<li><code>:</code>, 整数, 如返回数字的情况</li>
+<li><code>$</code>, 复杂string(string内可能还有换行)<ul>
+<li>e.g. <code>$6\r\nsome string\r\n</code>, <code>$</code>后跟string长度用\r\n表示长度结束</li>
+</ul>
+</li>
+<li><code>*</code>, 数组, 星号后接数组长度, 之后每个元素用\r\n隔开<ul>
+<li>e.g. <code>*2\r\n$3\r\nabc\r\n$3\r\nbar\r\n</code></li>
+</ul>
+</li>
+</ul>
+<p>⭐难点在于流式处理, 如read一个长度3的数组, 但是只read了一半</p>
+<p>TODO: queryBuf怎么处理。queryBuf动态增长, 新数据写到queryLen之后</p>
+<p>processBuf</p>
+<p>回复同理, 我们不能进行阻塞式地写, 所以会将reply保存到client中的一个list中, 可写时再用回调写回(SendReplyToClient)。那么问题就来说我们一次可以write的byte的可能有限，需要处理流式write。</p>
+<h2 id="dict实现"><a href="#dict实现" class="headerlink" title="dict实现"></a>dict实现</h2><h2 id="最小化"><a href="#最小化" class="headerlink" title="最小化"></a>最小化</h2><ul>
+<li>cmdTable<ul>
+<li>get</li>
+<li>set</li>
+<li>expire</li>
+</ul>
+</li>
+</ul>
+<p>测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ telnet &lt;ip&gt; &lt;port&gt;</span><br><span class="line">set k1 v1</span><br><span class="line">set k2 v2</span><br><span class="line">expire k1 8</span><br><span class="line">get k1</span><br><span class="line">get k2</span><br><span class="line">...</span><br><span class="line">get k1</span><br><span class="line">get k2</span><br></pre></td></tr></table></figure>
+
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><ul>
+<li>支持redis官方client<ul>
+<li>auth命令: 认证</li>
+<li>command命令:  询问server支持什么命令</li>
+</ul>
+</li>
+<li>godis client⭐, redis client设计也很好</li>
+<li>其他数据结构</li>
+<li>持久化, 主存</li>
+<li>cluster</li>
+</ul>
+<h2 id="个人项目上的应用"><a href="#个人项目上的应用" class="headerlink" title="个人项目上的应用"></a>个人项目上的应用</h2><p>二进制数据的传输 = header + data</p>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://github.com/66ring/2023/04/05/universe/misc/redis_insight/>http://github.com/66ring/2023/04/05/universe/misc/redis_insight/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/misc/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>misc</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2023/04/14/universe/ml/large_model_training_optmization/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>大模型训练优化</p>
+          <p class='content'>大模型训练优化大模型现状处理大模型的主要办法是数据切分，然后做数据并行, 模型并行和张量并行。原理略
+总结一下数据并行和模型并行存在的资源利用率问题：
+
+数据并行
+多个GPU上需要存储相同的模型...</p>
+        </a>
+      
+      
+        <a class='next' href='/2023/03/25/universe/os/lock_cheat_sheet/'>
+          <p class='title'>锁锁速查<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Cheat sheet
+枚举各种情况
+
+
+普通自旋锁
+缓存与不可扩展
+
+
+MCS锁（排队锁）
+可扩展但开销更高
+
+
+QSpinLock
+spinlock + MCS lock
+
+
+以上都没考虑n...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#sds"><span class="toc-text">sds</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list"><span class="toc-text">list</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#双向list"><span class="toc-text">双向list</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TODO-其他list-ziplist"><span class="toc-text">TODO: 其他list? ziplist?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dict"><span class="toc-text">dict</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set"><span class="toc-text">set</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-Object"><span class="toc-text">Redis Object</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Server"><span class="toc-text">Server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ae库"><span class="toc-text">ae库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis核心概念"><span class="toc-text">redis核心概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis核心流程"><span class="toc-text">redis核心流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ae库-1"><span class="toc-text">ae库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis核心数据结构"><span class="toc-text">redis核心数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dict-1"><span class="toc-text">dict</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-Object-1"><span class="toc-text">Redis Object</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sds-1"><span class="toc-text">sds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zset"><span class="toc-text">zset</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#code"><span class="toc-text">code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis协议"><span class="toc-text">redis协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RESP协议"><span class="toc-text">RESP协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dict实现"><span class="toc-text">dict实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最小化"><span class="toc-text">最小化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展"><span class="toc-text">扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#个人项目上的应用"><span class="toc-text">个人项目上的应用</span></a></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="Redis赏析";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        Use
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.0" target="_blank" class="codename">Volantis</a>
+        as theme
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"EKmusUsvxKTWym4LJnmkk1eU-gzGzoHsz","appKey":"sdWXsEnYQvIqRVoEPSMsLCr6","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://github.com/66ring' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://github.com/66ring' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+function bindToggleButton() {
+	var btn=$("#wrapper .toggle-mode-btn");
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	$("#wrapper .toggle-mode-btn").unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#l_cover",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>
