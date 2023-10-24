@@ -530,6 +530,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>快速求补码: 右起第一个1往左, 按位取反</li>
 <li><code>n &amp; n-1</code>的效果: 最右边的1变0, 因为<code>-1</code>的效果, 并且可以知道这个被消灭的1的右边都是0</li>
 <li><code>N &gt;&gt; 1</code>在二叉树中相当于N/2向下取整, 以用来找当前节点的父节点</li>
+<li>补码的负等于对该数取补, <code>-x = (~x + 1)</code></li>
+<li><code>x | (~x + 1)</code>从低位1开始, 往高位全部置1</li>
 </ol>
 <ul>
 <li>xor的性质<ul>
@@ -537,6 +539,17 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 </ul>
+<h2 id="CSAPP-lab1-datalab-tips"><a href="#CSAPP-lab1-datalab-tips" class="headerlink" title="CSAPP lab1: datalab tips"></a>CSAPP lab1: datalab tips</h2><ol>
+<li>int负数 = 按位取反末位加一: <code>-x = (~x + 1)</code><ul>
+<li>减一个数等价于加上这个数的取负</li>
+</ul>
+</li>
+<li>对于一些限制使用的操作, 可以通过变换得到<ul>
+<li>e.g. <code>a | b</code> = <code>~(~a &amp; ~b)</code>, 或者对于bool, <code>a | b = !(!a &amp; !b)</code></li>
+</ul>
+</li>
+<li>判断相等<code>!(x^x)</code> ,两个相等的数异或得0, 再用<code>!</code>运算符转换成bool</li>
+</ol>
 
   
   
@@ -724,7 +737,7 @@ spinlock + MCS lock
 
 
     <div class='content'>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSAPP-lab1-datalab-tips"><span class="toc-text">CSAPP lab1: datalab tips</span></a></li></ol>
     </div>
   </section>
 

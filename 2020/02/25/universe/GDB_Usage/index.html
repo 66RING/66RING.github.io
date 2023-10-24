@@ -610,7 +610,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>System will no generate a core file by default. Because typically core files are very big. You can use <code>ulimit</code> command to set unset the limit.</li>
 </ul>
 </li>
+<li>自定义脚本</li>
 </ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">define print_list</span><br><span class="line"><span class="built_in">set</span> $<span class="built_in">list</span>=$arg0</span><br><span class="line"><span class="keyword">while</span>($<span class="built_in">list</span>)</span><br><span class="line"><span class="built_in">printf</span> <span class="string">"%d\n"</span>,$<span class="built_in">list</span>-&gt;val</span><br><span class="line"><span class="built_in">set</span> $<span class="built_in">list</span>=$<span class="built_in">list</span>-&gt;next</span><br><span class="line">end</span><br><span class="line"><span class="built_in">printf</span> <span class="string">"\n"</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+
 
   
   
