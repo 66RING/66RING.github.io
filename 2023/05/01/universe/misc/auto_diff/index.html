@@ -22,9 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>分词器 - 66Ring&#39;s Blog</title>
+  <title>自动微分简记 - 66Ring&#39;s Blog</title>
   
-    <meta name="keywords" content="tags">
+    <meta name="keywords" content="misc">
   
 
   
@@ -461,7 +461,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title">
-        分词器
+        自动微分简记
       </h1>
       <div class='new-meta-box'>
         
@@ -485,7 +485,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Oct 8, 2023</p>
+    <p>发布于：May 1, 2023</p>
   </a>
 </div>
 
@@ -496,7 +496,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="分词器" data-path="/2023/10/08/universe/ml/about_tokenizer/">
+      <div id="lc-pv" data-title="自动微分简记" data-path="/2023/05/01/universe/misc/auto_diff/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -514,27 +514,65 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="分词器Tokenizer"><a href="#分词器Tokenizer" class="headerlink" title="分词器Tokenizer"></a>分词器Tokenizer</h1><blockquote>
-<p>分词: 单词序列 =分词器=&gt; 数字序列</p>
+  <h1 id="自动微分"><a href="#自动微分" class="headerlink" title="自动微分"></a>自动微分</h1><blockquote>
+<p><a href="https://www.bilibili.com/video/BV1zD4y117bL/?spm_id_from=pageDriver&amp;vd_source=fa5227c06f0a0c9f870b406f10be1d31" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1zD4y117bL/?spm_id_from=pageDriver&amp;vd_source=fa5227c06f0a0c9f870b406f10be1d31</a></p>
 </blockquote>
+<p>automatic differentiation in Machine Learning: a Survey</p>
 <ul>
-<li><p>怎么分词</p>
+<li><p>两种模式</p>
 <ul>
-<li>单词分词(word base)</li>
-<li>单字分词(char base)</li>
-<li>子词分词(e.g. byte pair encoding)</li>
-<li>BPE分词法(byte pair encoding)</li>
-<li>以及文本中出现了一些用于分词的符号…</li>
+<li>前向</li>
+<li>后向</li>
+<li>都用雅各比矩阵表示</li>
 </ul>
 </li>
-<li><p>encode, decode</p>
+<li><p>自动微分:</p>
+<ul>
+<li>有限的基本运算是知道的, 对应的倒数也是知道的</li>
+<li>那就可以自动根据链式法则求出微分</li>
+</ul>
 </li>
 </ul>
-<p><a href="https://zhuanlan.zhihu.com/p/620508648" target="_blank" rel="noopener">大模型中的分词器</a></p>
-<h1 id="Embedding"><a href="#Embedding" class="headerlink" title="Embedding"></a>Embedding</h1><blockquote>
-<p>embedding就是特征? 特征越多维度越高</p>
+<p>e.g. </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(x1, x2) = ln(x1) + x1x2 - sin(x2)</span><br></pre></td></tr></table></figure>
+
+<p>变为DAG有向无环图(编译原理), 方便表示</p>
+<p>缺点: 存储中间变量</p>
+<h2 id="正向自动微分"><a href="#正向自动微分" class="headerlink" title="正向自动微分"></a>正向自动微分</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(x1, x2) = ln(x1) + x1x2 - sin(x2)</span><br></pre></td></tr></table></figure>
+
+<p>的表达式可以变成如下操作顺序, 编译原理</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">v-<span class="number">1</span> = x1 = <span class="number">2</span></span><br><span class="line">v0  = x2 = <span class="number">5</span></span><br><span class="line">-----------</span><br><span class="line">v1 = ln(v-<span class="number">1</span>)  = ln(<span class="number">2</span>)</span><br><span class="line">v2 = v-<span class="number">1</span> * v0 = <span class="number">2</span>*<span class="number">5</span></span><br><span class="line">v3 = sin(v0)  = sin(<span class="number">5</span>)</span><br><span class="line">v4 = v1 + v2  = <span class="number">0.693</span> = <span class="number">10</span></span><br><span class="line">v5 = v4 - v3  = <span class="number">10.693</span> + <span class="number">0.959</span></span><br><span class="line">-----------</span><br><span class="line">y = v5 = <span class="number">11.652</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 然后逐项对输入求导</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="反向自动微分"><a href="#反向自动微分" class="headerlink" title="反向自动微分"></a>反向自动微分</h2><blockquote>
+<p>和手动求导的过程类似</p>
 </blockquote>
-<p>one-hot抽出(look up)来的就是QKV?! 那embedding和权重矩阵的关系是什么?</p>
+<p>反向就是直接用输出y求输入x的倒数, 然后链式法则展开</p>
+<h2 id="雅各比矩阵"><a href="#雅各比矩阵" class="headerlink" title="雅各比矩阵"></a>雅各比矩阵</h2><p>y关于x的梯度表示成一个矩阵</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dy1&#x2F;dx1, dy1&#x2F;dx2, ..., dy1&#x2F;dxn</span><br><span class="line">dy2&#x2F;dx1, dy2&#x2F;dx2, ..., dy2&#x2F;dxn   &#x3D;   J</span><br><span class="line">...</span><br><span class="line">dyn&#x2F;dx1, dyn&#x2F;dx2, ..., dyn&#x2F;dxn</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h1><ul>
+<li>基于表达式</li>
+<li>基于操作符重载<ul>
+<li>重载<code>+=*/</code></li>
+</ul>
+</li>
+<li>基于源码转换AST</li>
+</ul>
+<h2 id="基于表达式"><a href="#基于表达式" class="headerlink" title="基于表达式"></a>基于表达式</h2><p>就是手动实现add, sub, mul, div</p>
+<h2 id="操作符重载"><a href="#操作符重载" class="headerlink" title="操作符重载"></a>操作符重载</h2><p>每个计算都记录成一个<code>Tape</code></p>
+<p>缺点</p>
+<ul>
+<li>额外记录Tape结构</li>
+<li>不方便高阶微分</li>
+<li>分支存在时难以实现</li>
+</ul>
+<h2 id="源码转换AST"><a href="#源码转换AST" class="headerlink" title="源码转换AST"></a>源码转换AST</h2><p>易于分布式</p>
+<h1 id="挑战和未来"><a href="#挑战和未来" class="headerlink" title="挑战和未来"></a>挑战和未来</h1><ul>
+<li>易用性</li>
+<li>可微编程</li>
+</ul>
 
   
   
@@ -552,7 +590,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://github.com/66ring/2023/10/08/universe/ml/about_tokenizer/>http://github.com/66ring/2023/10/08/universe/ml/about_tokenizer/</a></p>
+                <p>本文永久链接是：<a href=http://github.com/66ring/2023/05/01/universe/misc/auto_diff/>http://github.com/66ring/2023/05/01/universe/misc/auto_diff/</a></p>
               
             
           </blockquote>
@@ -571,7 +609,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/tags/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>tags</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/misc/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>misc</p></a></div>
 
 
         
@@ -602,16 +640,23 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-      
-        <a class='next' href='/2023/10/01/universe/database/leveldb/leveldb_read_write/'>
-          <p class='title'>leveldb读写操作笔记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>leveldb读写操作笔记
-https://leveldb-handbook.readthedocs.io/zh/latest/rwopt.html
+        <a class='prev' href='/2023/05/09/universe/misc/how_to_do_gradient_descent_distributedly/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>如何将梯度下降算法变成分布式的梯度下降算法</p>
+          <p class='content'>如何将梯度下降算法变成分布式的梯度下降算法
+Scaling Distributed Machine Learning with the Parameter Server
 
-整体架构
-存内数据结构
-MemTable
+
+scheduler
 ...</p>
+        </a>
+      
+      
+        <a class='next' href='/2023/04/25/universe/misc/hpc_lru/'>
+          <p class='title'>如何实现一个高性能LRU<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>如何实现一个高性能LRU
+本质是分桶降低map锁的影响范围，然后使用单独的一个worker线程逐一处理链表的更新操作。
+
+一个基本的实现就是一个lru链表，然后元素访问的时候移动到链表头，超出容...</p>
         </a>
       
     </div>
@@ -707,7 +752,7 @@ MemTable
 
 
     <div class='content'>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#正向自动微分"><span class="toc-text">正向自动微分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反向自动微分"><span class="toc-text">反向自动微分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#雅各比矩阵"><span class="toc-text">雅各比矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于表达式"><span class="toc-text">基于表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作符重载"><span class="toc-text">操作符重载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码转换AST"><span class="toc-text">源码转换AST</span></a></li></ol>
     </div>
   </section>
 
@@ -726,7 +771,7 @@ MemTable
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="分词器";
+  pdata.postTitle="自动微分简记";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 

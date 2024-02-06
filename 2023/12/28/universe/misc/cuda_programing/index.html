@@ -22,9 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>自动微分简记 - 66Ring&#39;s Blog</title>
+  <title>CUDA编程小记 - 66Ring&#39;s Blog</title>
   
-    <meta name="keywords" content="misc">
+    <meta name="keywords" content="cuda,hpc">
   
 
   
@@ -461,7 +461,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title">
-        自动微分简记
+        CUDA编程小记
       </h1>
       <div class='new-meta-box'>
         
@@ -485,7 +485,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Jan 1, 2000</p>
+    <p>发布于：Dec 28, 2023</p>
   </a>
 </div>
 
@@ -496,7 +496,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="自动微分简记" data-path="/2000/01/01/universe/misc/auto_diff/">
+      <div id="lc-pv" data-title="CUDA编程小记" data-path="/2023/12/28/universe/misc/cuda_programing/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -514,65 +514,55 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="自动微分"><a href="#自动微分" class="headerlink" title="自动微分"></a>自动微分</h1><blockquote>
-<p><a href="https://www.bilibili.com/video/BV1zD4y117bL/?spm_id_from=pageDriver&amp;vd_source=fa5227c06f0a0c9f870b406f10be1d31" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1zD4y117bL/?spm_id_from=pageDriver&amp;vd_source=fa5227c06f0a0c9f870b406f10be1d31</a></p>
+  <h1 id="CUDA编程小记"><a href="#CUDA编程小记" class="headerlink" title="CUDA编程小记"></a>CUDA编程小记</h1><p><a href="https://www.bilibili.com/video/BV1sM4y1x7of" target="_blank" rel="noopener">这个教程</a>的小记/速查</p>
+<h2 id="核函数-kernel"><a href="#核函数-kernel" class="headerlink" title="核函数(kernel)"></a>核函数(kernel)</h2><p>kernel的定义和启动形如，使用<code>__global__</code>修饰的函数就是kernel，由host端启动，在device端运行。如果使用<code>__host__</code>就是就是host端代码，cuda编译器不会编译到gpu上。使用<code>__device__</code>修饰就是设备端代码，只能在设备上运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">__global__ void cuda_kernel(...);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 启动核函数, 通过&lt;&lt;&lt;Dg, Db, Ns, S&gt;&gt;&gt;配置</span><br><span class="line">cuda_kernel&lt;&lt;&lt;grid_size, block_size, Ns, stream&gt;&gt;&gt;(...)</span><br></pre></td></tr></table></figure>
+
+<p>CUDA程序的大体流程</p>
+<ol>
+<li>cudaMalloc申请设备内存</li>
+<li>host到device数据拷贝做初始化</li>
+<li>kernel执行</li>
+<li>GPU程序是<strong>异步执行</strong>的需要使用<code>cudaDeviceSynchronize()</code>等待gpu执行完成</li>
+<li>device到host数据拷贝取回结果</li>
+<li>cudaFree释放设备内存</li>
+</ol>
+<h2 id="线程模型"><a href="#线程模型" class="headerlink" title="线程模型"></a>线程模型</h2><p><img src="https://docs.nvidia.com/cuda/cuda-c-programming-guide/_images/grid-of-thread-blocks.png" class="lazyload" data-srcset="https://docs.nvidia.com/cuda/cuda-c-programming-guide/_images/grid-of-thread-blocks.png" srcset="data:image/png;base64,666" alt="Grid of Thread Blocks"></p>
+<p>一个kernel执行都对应有一个grid配置信息。grid如图所示，grid相当于一个Thread Block的数组，索引使用blockIdx来索引。每个Thread Block又相当于一个Thread的数组，用threadIdx来索引、<strong>用blockDim来表示block的大小(即有多少各thread)</strong>。</p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cuda_kernel&lt;&lt;&lt;grid_size, block_size, Ns, stream&gt;&gt;&gt;(...)</span><br></pre></td></tr></table></figure>
 </blockquote>
-<p>automatic differentiation in Machine Learning: a Survey</p>
-<ul>
-<li><p>两种模式</p>
-<ul>
-<li>前向</li>
-<li>后向</li>
-<li>都用雅各比矩阵表示</li>
-</ul>
-</li>
-<li><p>自动微分:</p>
-<ul>
-<li>有限的基本运算是知道的, 对应的倒数也是知道的</li>
-<li>那就可以自动根据链式法则求出微分</li>
-</ul>
-</li>
-</ul>
-<p>e.g. </p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(x1, x2) = ln(x1) + x1x2 - sin(x2)</span><br></pre></td></tr></table></figure>
+<p>需要注意的是blockIdx和threadIdx都可以是一个三维的信息xyz，而层级顺序是xyz的(即先填满一层x再到下一层)，这在后续索引计算中需要注意。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">如</span><br><span class="line">     x0       x1       x2</span><br><span class="line">y0: (x0, y0) (x1, y0) (x2, y0)</span><br><span class="line">y1: (x0, y1) (x1, y1) (x2, y1)</span><br><span class="line">y2: (x0, y2) (x1, y2) (x2, y2)</span><br></pre></td></tr></table></figure>
 
-<p>变为DAG有向无环图(编译原理), 方便表示</p>
-<p>缺点: 存储中间变量</p>
-<h2 id="正向自动微分"><a href="#正向自动微分" class="headerlink" title="正向自动微分"></a>正向自动微分</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(x1, x2) = ln(x1) + x1x2 - sin(x2)</span><br></pre></td></tr></table></figure>
+<h3 id="索引计算"><a href="#索引计算" class="headerlink" title="索引计算"></a>索引计算</h3><p>知道blockIdx, threadIdx, blockDim的关系后就可以计算索引。所以一个二维是block可以这样计算二维索引。主要思路就先是<code>blockIdx * blockDim</code>得到之前的组有多少个thread, 再加上当前组的<code>threadIdx</code>得到在全局的idx。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int i &#x3D; blockIdx.x * blockDim.x + threadIdx.x;</span><br><span class="line">int j &#x3D; blockIdx.y * blockDim.y + threadIdx.y;</span><br></pre></td></tr></table></figure>
 
-<p>的表达式可以变成如下操作顺序, 编译原理</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">v-<span class="number">1</span> = x1 = <span class="number">2</span></span><br><span class="line">v0  = x2 = <span class="number">5</span></span><br><span class="line">-----------</span><br><span class="line">v1 = ln(v-<span class="number">1</span>)  = ln(<span class="number">2</span>)</span><br><span class="line">v2 = v-<span class="number">1</span> * v0 = <span class="number">2</span>*<span class="number">5</span></span><br><span class="line">v3 = sin(v0)  = sin(<span class="number">5</span>)</span><br><span class="line">v4 = v1 + v2  = <span class="number">0.693</span> = <span class="number">10</span></span><br><span class="line">v5 = v4 - v3  = <span class="number">10.693</span> + <span class="number">0.959</span></span><br><span class="line">-----------</span><br><span class="line">y = v5 = <span class="number">11.652</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 然后逐项对输入求导</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="反向自动微分"><a href="#反向自动微分" class="headerlink" title="反向自动微分"></a>反向自动微分</h2><blockquote>
-<p>和手动求导的过程类似</p>
+<h2 id="nvcc编译流程和GPU算力"><a href="#nvcc编译流程和GPU算力" class="headerlink" title="nvcc编译流程和GPU算力"></a>nvcc编译流程和GPU算力</h2><blockquote>
+<p>ptx, cubin, fat cubin</p>
 </blockquote>
-<p>反向就是直接用输出y求输入x的倒数, 然后链式法则展开</p>
-<h2 id="雅各比矩阵"><a href="#雅各比矩阵" class="headerlink" title="雅各比矩阵"></a>雅各比矩阵</h2><p>y关于x的梯度表示成一个矩阵</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dy1&#x2F;dx1, dy1&#x2F;dx2, ..., dy1&#x2F;dxn</span><br><span class="line">dy2&#x2F;dx1, dy2&#x2F;dx2, ..., dy2&#x2F;dxn   &#x3D;   J</span><br><span class="line">...</span><br><span class="line">dyn&#x2F;dx1, dyn&#x2F;dx2, ..., dyn&#x2F;dxn</span><br></pre></td></tr></table></figure>
+<p>一个cuda程序先会编译成ptx(parallel thread execution)，再由ptx编译成gpu可执行的二进制表示cubin。ptx则相当于二进制生成过程中的中间表示，与GPU硬件无关。这么是为兼容性做的一些设计，如你可以用一个ptx编译多种GPU支持的cubin,即fatbin。</p>
+<h3 id="CUDA兼容性"><a href="#CUDA兼容性" class="headerlink" title="CUDA兼容性"></a>CUDA兼容性</h3><p>兼容性分为两部分计算能力和GPU架构</p>
+<p>指定虚拟架构能力：添加<code>-arch=compute_XY</code>参数进行编译产生对应PTX，X表示计算能力主版本号，Y表示次版本号。<code>-arch=compute_XY</code>编译除了的程序只能在计算的能力大于XY的GPU上运行。</p>
+<p>指定真实架构能力：添加<code>-code=sm_XY</code>指定PTX编程成的目标二进制是怎样的，与GPU硬件相关。需要注意的是<strong>二进制cubin代码在大版本之间是不兼容的</strong>，且真实架构能力必须大于虚拟架构能力。</p>
+<p>编译多GPU兼容的二进制文件fat cubin：使用多个<code>-gencode=arch=compute_XY,code=sm_XY</code>。如<code>-gencode=arch=compute_35,code=sm_35 -gencode=arch=compute_50,code=sm_50</code>。这样会生成一个fatcubin，可执行文件的大小也增加。</p>
+<p>nvcc即时编译：<code>-gencode=arch=compute_XY,code=compute_XY</code>arch和code都用<code>compute_XY</code>，且版本号XY必须相同。</p>
+<h2 id="CUDA调试"><a href="#CUDA调试" class="headerlink" title="CUDA调试"></a>CUDA调试</h2><h3 id="CUDA错误检查"><a href="#CUDA错误检查" class="headerlink" title="CUDA错误检查"></a>CUDA错误检查</h3><p>基本上每个CUDA runtime API都会返回一个<code>cudaError_t</code>错误码，可以使用<code>cudaGetErrorName</code>和<code>cudaGetErrorString</code>获取错误信息。再用上<code>__FILE__</code>和<code>__LINE__</code>可以获取文件名和行号信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#define CUDA_CHECK(code) ErrorCheck(code, __FILE__, __LINE__)</span><br><span class="line"></span><br><span class="line">cudaError_t ErrorCheck(cudaError_t error_code, const char* filename, int lineNumber)</span><br><span class="line">&#123;</span><br><span class="line">    if (error_code !&#x3D; cudaSuccess)</span><br><span class="line">    &#123;</span><br><span class="line">        printf(&quot;CUDA error:\r\ncode&#x3D;%d, name&#x3D;%s, description&#x3D;%s\r\nfile&#x3D;%s, line%d\r\n&quot;,</span><br><span class="line">                error_code, cudaGetErrorName(error_code), cudaGetErrorString(error_code), filename, lineNumber);</span><br><span class="line">        return error_code;</span><br><span class="line">    &#125;</span><br><span class="line">    return error_code;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>kernel运行时错误检查，GPU是异步的CPU没法直接获取CUDA运行过程中的错误，但是发生错误后kernel会停止，使用<code>cudaGetLastError()</code>获取上一次发生的错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">addFromGPU&lt;&lt;&lt;grid, block&gt;&gt;&gt;(fpDevice_A, fpDevice_B, fpDevice_C, iElemCount);    &#x2F;&#x2F; 调用核函数</span><br><span class="line">ErrorCheck(cudaGetLastError(), __FILE__, __LINE__);</span><br><span class="line">ErrorCheck(cudaDeviceSynchronize(), __FILE__, __LINE__);</span><br></pre></td></tr></table></figure>
 
 
-<h1 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h1><ul>
-<li>基于表达式</li>
-<li>基于操作符重载<ul>
-<li>重载<code>+=*/</code></li>
-</ul>
-</li>
-<li>基于源码转换AST</li>
-</ul>
-<h2 id="基于表达式"><a href="#基于表达式" class="headerlink" title="基于表达式"></a>基于表达式</h2><p>就是手动实现add, sub, mul, div</p>
-<h2 id="操作符重载"><a href="#操作符重载" class="headerlink" title="操作符重载"></a>操作符重载</h2><p>每个计算都记录成一个<code>Tape</code></p>
-<p>缺点</p>
-<ul>
-<li>额外记录Tape结构</li>
-<li>不方便高阶微分</li>
-<li>分支存在时难以实现</li>
-</ul>
-<h2 id="源码转换AST"><a href="#源码转换AST" class="headerlink" title="源码转换AST"></a>源码转换AST</h2><p>易于分布式</p>
-<h1 id="挑战和未来"><a href="#挑战和未来" class="headerlink" title="挑战和未来"></a>挑战和未来</h1><ul>
-<li>易用性</li>
-<li>可微编程</li>
-</ul>
+<h3 id="CUDA性能检测"><a href="#CUDA性能检测" class="headerlink" title="CUDA性能检测"></a>CUDA性能检测</h3><p>使用CUDA API记时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cudaEvent_t start, stop;</span><br><span class="line">ErrorCheck(cudaEventCreate(&amp;start), __FILE__, __LINE__);</span><br><span class="line">ErrorCheck(cudaEventCreate(&amp;stop), __FILE__, __LINE__);</span><br><span class="line">ErrorCheck(cudaEventRecord(start), __FILE__, __LINE__);</span><br><span class="line">cudaEventQuery(start);</span><br><span class="line"></span><br><span class="line">&#x2F;************************************************************</span><br><span class="line">需要记时间的代码</span><br><span class="line">************************************************************&#x2F;</span><br><span class="line"></span><br><span class="line">ErrorCheck(cudaEventRecord(stop), __FILE__, __LINE__);</span><br><span class="line">ErrorCheck(cudaEventSynchronize(stop), __FILE__, __LINE__);</span><br><span class="line">float elapsed_time;</span><br><span class="line">ErrorCheck(cudaEventElapsedTime(&amp;elapsed_time, start, stop), __FILE__, __LINE__);</span><br><span class="line">printf(&quot;Time &#x3D; %g ms.\n&quot;, elapsed_time);</span><br><span class="line"></span><br><span class="line">ErrorCheck(cudaEventDestroy(start), __FILE__, __LINE__);</span><br><span class="line">ErrorCheck(cudaEventDestroy(stop), __FILE__, __LINE__);</span><br></pre></td></tr></table></figure>
+
+<p>使用单独的可执行程序<a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html" target="_blank" rel="noopener">nvprof</a>做profiling。简单使用可以直接<code>nvprof ./executable</code></p>
+<h3 id="运行时GPU信息查询"><a href="#运行时GPU信息查询" class="headerlink" title="运行时GPU信息查询"></a>运行时GPU信息查询</h3><p>使用<code>cudaSetDevice</code>设备目标GPU，使用<code>cudaGetDeviceProperties</code>查询目标GPU的信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    int device_id &#x3D; 0;</span><br><span class="line">    ErrorCheck(cudaSetDevice(device_id), __FILE__, __LINE__);</span><br><span class="line"></span><br><span class="line">    cudaDeviceProp prop;</span><br><span class="line">    ErrorCheck(cudaGetDeviceProperties(&amp;prop, device_id), __FILE__, __LINE__);</span><br><span class="line"></span><br><span class="line">    printf(&quot;Device id:                                 %d\n&quot;,</span><br><span class="line">        device_id);</span><br><span class="line">    printf(&quot;Device name:                               %s\n&quot;,</span><br><span class="line">        prop.name);</span><br><span class="line">    printf(&quot;Compute capability:                        %d.%d\n&quot;,</span><br><span class="line">        prop.major, prop.minor);</span><br><span class="line">    printf(&quot;Amount of global memory:                   %g GB\n&quot;,</span><br><span class="line">        prop.totalGlobalMem &#x2F; (1024.0 * 1024 * 1024));</span><br><span class="line">    printf(&quot;Amount of constant memory:                 %g KB\n&quot;,</span><br><span class="line">        prop.totalConstMem  &#x2F; 1024.0);</span><br><span class="line">    printf(&quot;Maximum grid size:                         %d %d %d\n&quot;,</span><br><span class="line">        prop.maxGridSize[0], </span><br><span class="line">        prop.maxGridSize[1], prop.maxGridSize[2]);</span><br><span class="line">    printf(&quot;Maximum block size:                        %d %d %d\n&quot;,</span><br><span class="line">        prop.maxThreadsDim[0], prop.maxThreadsDim[1], </span><br><span class="line">        prop.maxThreadsDim[2]);</span><br><span class="line">    printf(&quot;Number of SMs:                             %d\n&quot;,</span><br><span class="line">        prop.multiProcessorCount);</span><br><span class="line">    printf(&quot;Maximum amount of shared memory per block: %g KB\n&quot;,</span><br><span class="line">        prop.sharedMemPerBlock &#x2F; 1024.0);</span><br><span class="line">    printf(&quot;Maximum amount of shared memory per SM:    %g KB\n&quot;,</span><br><span class="line">        prop.sharedMemPerMultiprocessor &#x2F; 1024.0);</span><br><span class="line">    printf(&quot;Maximum number of registers per block:     %d K\n&quot;,</span><br><span class="line">        prop.regsPerBlock &#x2F; 1024);</span><br><span class="line">    printf(&quot;Maximum number of registers per SM:        %d K\n&quot;,</span><br><span class="line">        prop.regsPerMultiprocessor &#x2F; 1024);</span><br><span class="line">    printf(&quot;Maximum number of threads per block:       %d\n&quot;,</span><br><span class="line">        prop.maxThreadsPerBlock);</span><br><span class="line">    printf(&quot;Maximum number of threads per SM:          %d\n&quot;,</span><br><span class="line">        prop.maxThreadsPerMultiProcessor);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>…</p>
 
   
   
@@ -590,7 +580,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://github.com/66ring/2000/01/01/universe/misc/auto_diff/>http://github.com/66ring/2000/01/01/universe/misc/auto_diff/</a></p>
+                <p>本文永久链接是：<a href=http://github.com/66ring/2023/12/28/universe/misc/cuda_programing/>http://github.com/66ring/2023/12/28/universe/misc/cuda_programing/</a></p>
               
             
           </blockquote>
@@ -609,7 +599,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/misc/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>misc</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/cuda/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>cuda</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/hpc/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>hpc</p></a></div>
 
 
         
@@ -640,28 +630,25 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2000/01/01/annual/2022/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>2023能直面恐惧吗</p>
-          <p class='content'>[TOC]
-2023能直面恐惧吗?这是一篇充满戾气的年总
-这是一篇充满戾气的年总
-这是一篇充满戾气的年总
-66RING的第一次年总了, 要直面恐惧了, 我打算年总的内容是: 
+        <a class='prev' href='/2024/01/27/universe/ml/activation_value/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>神经网络中的激活值</p>
+          <p class='content'>神经网络中的激活值
+什么是激活值
+一层神经网络是数据就是激活值
 
-回顾, 流水, ...</p>
+
+为什么要保存激活值
+因为反向传播过程中需要对函数的参数求偏导, 那么结果就和激活值相关
+如: f(x) = ax, g(x) ...</p>
         </a>
       
       
-        <a class='next' href='/2000/01/01/Major/algorithm/algo_overview/'>
-          <p class='title'>算法速查表<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>算法速查表
-dp, 最短子序列
-dp, 最短编辑距离: 增删改的最小次数
-编辑距离
-
-
-dp + bottom up, 石子合并
-二分, leetcode 1802. 有界数组中指定下标处的最大...</p>
+        <a class='next' href='/2023/11/04/universe/system_design/chat_app_design/'>
+          <p class='title'>聊天应用的系统设计<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>聊天应用的系统设计
+ref
+https://www.youtube.com/watch?v=xyLO8ZAk2KE&amp;ab_channel=ByteMonk
+https://medium....</p>
         </a>
       
     </div>
@@ -757,7 +744,7 @@ dp + bottom up, 石子合并
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#正向自动微分"><span class="toc-text">正向自动微分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反向自动微分"><span class="toc-text">反向自动微分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#雅各比矩阵"><span class="toc-text">雅各比矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于表达式"><span class="toc-text">基于表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作符重载"><span class="toc-text">操作符重载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码转换AST"><span class="toc-text">源码转换AST</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#核函数-kernel"><span class="toc-text">核函数(kernel)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程模型"><span class="toc-text">线程模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#索引计算"><span class="toc-text">索引计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nvcc编译流程和GPU算力"><span class="toc-text">nvcc编译流程和GPU算力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CUDA兼容性"><span class="toc-text">CUDA兼容性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CUDA调试"><span class="toc-text">CUDA调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CUDA错误检查"><span class="toc-text">CUDA错误检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CUDA性能检测"><span class="toc-text">CUDA性能检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行时GPU信息查询"><span class="toc-text">运行时GPU信息查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TODO"><span class="toc-text">TODO</span></a></li></ol>
     </div>
   </section>
 
@@ -776,7 +763,7 @@ dp + bottom up, 石子合并
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="自动微分简记";
+  pdata.postTitle="CUDA编程小记";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
 
