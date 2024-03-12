@@ -514,7 +514,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="手把手实现Ring-Attention"><a href="#手把手实现Ring-Attention" class="headerlink" title="手把手实现Ring Attention"></a>手把手实现Ring Attention</h1><p>官方ring attention是jax实现的，这里用pytorch实现一个ring attention的学习版本。</p>
+  <h1 id="手把手实现Ring-Attention"><a href="#手把手实现Ring-Attention" class="headerlink" title="手把手实现Ring Attention"></a>手把手实现Ring Attention</h1><p><img src="https://pic1.zhimg.com/v2-e788242205e9eda9897029c7e51852f4_1440w.jpg?source=d16d100b" class="lazyload" data-srcset="https://pic1.zhimg.com/v2-e788242205e9eda9897029c7e51852f4_1440w.jpg?source=d16d100b" srcset="data:image/png;base64,666" alt=""></p>
+<p>官方ring attention是jax实现的，这里用pytorch实现一个ring attention的学习版本。</p>
 <p><a href="https://github.com/66RING/ring-attention-pytorch">source code</a></p>
 <p>是ring attention是attention机制的分布式版本。分布式的持有QKV分块从而降低单机的显存消耗。</p>
 <p>主要流程:</p>
@@ -540,7 +541,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>可以看到flash attention内执行了rescale, 因此不能直接使用flash attention来计算ring attention的qkv分块。因此我们可以仿照flash attention重写, 这样我们就可以在p2p的kv send recv结束后再做rescale。</p>
 <p>仿照flash attention就能写出ring attention的伪代码:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ring_attention():</span><br><span class="line">    parallel do q[NUM_BLOCK_M]:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(NUM_BLOCK_N):</span><br><span class="line">            qk = q @ k[i].T</span><br><span class="line">            score = softmax(qk)</span><br><span class="line">            out += score @ v[i]</span><br><span class="line">            step_send_recv_kv()</span><br><span class="line">        rescale(out)</span><br></pre></td></tr></table></figure>
-
 
 
 
