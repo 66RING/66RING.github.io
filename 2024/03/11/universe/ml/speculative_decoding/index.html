@@ -528,13 +528,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>然后将小模式的预测结果拼接为大模型的输入执行一次推理, 因为大模型执行推理的过程中会得到中间token的预测值</li>
 <li>如果小模型的生成的token和大模型生成的token一致则可以取用该token, 当一个token错误时后续的token都不能使用, 即使后续存在正确token</li>
 </ol>
-<p><img src="https://private-user-images.githubusercontent.com/49358576/311633966-cf0c6f62-2bd9-40bf-bbce-18981548c652.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTAxNDU5OTcsIm5iZiI6MTcxMDE0NTY5NywicGF0aCI6Ii80OTM1ODU3Ni8zMTE2MzM5NjYtY2YwYzZmNjItMmJkOS00MGJmLWJiY2UtMTg5ODE1NDhjNjUyLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDAzMTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwMzExVDA4MjgxN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTI5ODVjYmMwNDYyNWY1NWY1NjVhYjBjOGQ4Mjk2ZTFkYTZiM2M4ZDM3YzEyNTcyMzI2OGJlZTAwY2QyMjg2MGImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.AR8BhE-yXQBAkZVtLjK8Nx2_UQkJPFJOO--c_b5T3Aw" class="lazyload" data-srcset="https://private-user-images.githubusercontent.com/49358576/311633966-cf0c6f62-2bd9-40bf-bbce-18981548c652.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTAxNDU5OTcsIm5iZiI6MTcxMDE0NTY5NywicGF0aCI6Ii80OTM1ODU3Ni8zMTE2MzM5NjYtY2YwYzZmNjItMmJkOS00MGJmLWJiY2UtMTg5ODE1NDhjNjUyLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDAzMTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwMzExVDA4MjgxN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTI5ODVjYmMwNDYyNWY1NWY1NjVhYjBjOGQ4Mjk2ZTFkYTZiM2M4ZDM3YzEyNTcyMzI2OGJlZTAwY2QyMjg2MGImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.AR8BhE-yXQBAkZVtLjK8Nx2_UQkJPFJOO--c_b5T3Aw" srcset="data:image/png;base64,666" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/ml/speculative_decoding.png" class="lazyload" data-srcset="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/ml/speculative_decoding.png" srcset="data:image/png;base64,666" alt=""></p>
 <h2 id="加速证明"><a href="#加速证明" class="headerlink" title="加速证明"></a>加速证明</h2><p>以上图为例, 单纯使用大模型推理时生成5个token需要5次推理。而speculative decoding需要5次小模型推理和一次大模型推理。因为小模型的执行要比大模型快, 所以即使speculative decoding执行了一共6次推理, 时间还是划得来的。</p>
-<p>假设小模型一次推理时间为t, 大模型一次推理时间为2t：</p>
+<p>假设小模型一次推理时间为t, 大模型一次推理时间为2t, <strong>如果小模型结果完成正确</strong></p>
 <ul>
 <li>原始推理时间 = 5 x 2t = 10t</li>
 <li>speculative decoding = 5 x t + 1 x 2t = 7t</li>
 </ul>
+<p>当然实际情况是小模型完全正确的概率很低, 所以可以通过调整max token等超参来优化</p>
 <h2 id="正确性证明"><a href="#正确性证明" class="headerlink" title="正确性证明"></a>正确性证明</h2><p>以上图为例, 大模型推理结果为: <code>324, 56, 123, 80, 78 | 289, 9, 16, 42, 20</code>, 其中289为<code>324, 56, 123, 80, 78</code>的推理结果。<code>9</code>为<code>324, 56, 123, 80, 78, 289</code>的推理结果。如果289这个结果正确则9这个结果就可以使用。</p>
 <h2 id="源码实现"><a href="#源码实现" class="headerlink" title="源码实现"></a>源码实现</h2><blockquote>
 <p><a href="https://github.com/huggingface/transformers/blob/4b796978656e461177a83d58ec3c2b06152c63db/src/transformers/generation/utils.py#L4186">transformers assisted_decoding</a></p>
@@ -617,6 +618,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
     <div class="prev-next">
+      
+        <a class='prev' href='/2024/03/18/universe/ml/deepspeed_usage/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Deepspeed多机微调使用和踩坑记录</p>
+          <p class='content'>Deepspeed多机微调使用和踩坑记录官方demoDeepSpeedExamples
+step1_supervised_finetuning
+基本使用NOTE: deepspeed只需要在一个...</p>
+        </a>
       
       
         <a class='next' href='/2024/03/01/universe/ml/ring_attention_impl/'>
