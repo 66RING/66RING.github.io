@@ -514,7 +514,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="DeepSeek-V2架构"><a href="#DeepSeek-V2架构" class="headerlink" title="DeepSeek-V2架构"></a>DeepSeek-V2架构</h1><p><img src="https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/architecture.png" class="lazyload" data-srcset="https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/architecture.png" srcset="data:image/png;base64,666" alt="architecture"></p>
+  <h1 id="DeepSeek-V2架构"><a href="#DeepSeek-V2架构" class="headerlink" title="DeepSeek-V2架构"></a>DeepSeek-V2架构</h1><p><img src="https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/architecture.png?raw=true" class="lazyload" data-srcset="https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/architecture.png?raw=true" srcset="data:image/png;base64,666" alt="architecture"></p>
 <p>简单的说MLA + MoE</p>
 <ol>
 <li>参数嵌入更快: 利用类似lora的技术<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">self.q_a_proj = nn.Linear(</span><br><span class="line">    self.hidden_size, config.q_lora_rank, bias=config.attention_bias</span><br><span class="line">)</span><br><span class="line">self.q_a_layernorm = DeepseekV2RMSNorm(config.q_lora_rank)</span><br><span class="line">self.q_b_proj = nn.Linear(</span><br><span class="line">    config.q_lora_rank, self.num_heads * self.q_head_dim, bias=<span class="literal">False</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># <span class="doctag">NOTE:</span> down -&gt; norm -&gt; up</span></span><br><span class="line">q = self.q_b_proj(self.q_a_layernorm(self.q_a_proj(hidden_states)))</span><br><span class="line">q = q.view(bsz, q_len, self.num_heads, self.q_head_dim).transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure></li>
@@ -529,6 +529,31 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </li>
 </ol>
 <h2 id="MLA-Multi-Head-Latent-Attention"><a href="#MLA-Multi-Head-Latent-Attention" class="headerlink" title="MLA: Multi-Head Latent Attention"></a>MLA: Multi-Head Latent Attention</h2><p>attention算子部分不变, 只不过<code>query_state</code>, <code>key_state</code>如上述的构造方法: 一部分pe, 一部分不pe。</p>
+<ul>
+<li><strong>QA</strong><ul>
+<li>为什么会省kv cache<ul>
+<li>类似MQA, 但kv进一步联合压缩压缩, <code>compressed_kv = self.kv_a_proj_with_mqa(hidden_states)</code>, Figure 3<ul>
+<li>low-rank kv 联合压缩</li>
+</ul>
+</li>
+<li>huggingface的<code>modeling_deepseek.py</code>中的kvcache保存仍然是保存完整的没有压缩过的cache</li>
+<li>所以在推理过程中, 如果保存全量cache则cache占用不变。如果保存压缩的cache则额外up proj的开销</li>
+<li>Answer <strong>就是用计算换空间, 或者说是计算和加载的tradeoff</strong>, 因为随着硬件性能增强mem bound的影响更大, 所以保存压缩过后的cache虽然还需要一点up proj但是比没压过的up proj算得要快, 显存占用(需要加载的数据)也更小, 从而实现平衡</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="精髓"><a href="#精髓" class="headerlink" title="精髓"></a>精髓</h2><blockquote>
+<p>计算和加载的平衡: 降低了加载代价, 稍微提升了计算代价。make sense因为目前(2024年)的带宽速度提升比FLOP提升要慢。</p>
+</blockquote>
+<p>利用联合低秩proj来降低显存, 降低加载代价, 而只稍微提升计算代价</p>
+<ul>
+<li>如果全部不cache, 那可能会是compute bound, 瓶颈在硬件计算单元</li>
+<li>如果全部做cache, 那可能会是memory bound, 瓶颈在从HBM加载</li>
+</ul>
+<p>上面两个极端都不好。所以MLA保存的是压缩过后的cache(虽然开源版代码保存的是全量cache)，压缩过的cache(低秩联合proj了一部分)需要更少的显存(更少的加载)，而解压所需的proj开销也比从0开始proj要低。</p>
+<p>这样，需要的compute稍微提升了，但需要的load更少了，从而实现平衡。tradeoff而不是走极端。</p>
 
   
   
@@ -702,7 +727,7 @@ step1_supervised_finetuning
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MLA-Multi-Head-Latent-Attention"><span class="toc-text">MLA: Multi-Head Latent Attention</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MLA-Multi-Head-Latent-Attention"><span class="toc-text">MLA: Multi-Head Latent Attention</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#精髓"><span class="toc-text">精髓</span></a></li></ol>
     </div>
   </section>
 
