@@ -520,7 +520,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>临时安装, 可以打包成一个pack访问但不会安装到系统</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python setup.py install</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">python setup.py develop</span><br></pre></td></tr></table></figure>
 
-<p>安装到系统</p>
+<p>安装到系统, 使用<code>-e</code>参数保证可编辑，即对源文件修改后直接作用在安装过的pkg中。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -e .</span><br></pre></td></tr></table></figure>
 
 <p>使用:</p>
@@ -593,6 +593,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
     <div class="prev-next">
+      
+        <a class='prev' href='/2024/07/28/universe/ml/build_your_own_dataset/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>构建自己的数据集</p>
+          <p class='content'>Abstract1234567891011121314151617import pandas as pdimport torchfrom pathlib import Pathfrom data...</p>
+        </a>
       
       
         <a class='next' href='/2024/05/31/universe/ml/flash_attn_varlen_batcing_api_usage/'>
