@@ -542,15 +542,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <a class='prev' href='/2024/08/10/universe/gpu/bank_conflict_and_swizzle/'>
           <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>bank confict和冲突消解</p>
           <p class='content'>bank confict和冲突消解
-bank conflict
-4Byte一个bank
-
-
-简单方法
-ldmatrix
-swizzle
-
-GPU为了提升并行度，可以提供了同时访问share me...</p>
+一个conflict的实例: 矩阵转置存储在smem中。 thr0~3读取gmem一行, 存储到smem的一列, 这时同一列的thr就发生列bank conf...</p>
         </a>
       
       

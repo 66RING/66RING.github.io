@@ -591,25 +591,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2024/10/17/universe/film/film_in_action/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>胶片</p>
-          <p class='content'>Cheatsheet
-https://wax8280.github.io/2017/09/22/%E5%85%B3%E4%BA%8E%E5%BA%95%E7%89%87%E7%9A%84%E5%...</p>
+        <a class='prev' href='/2024/10/07/universe/ml/mla_and_rope/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>为什么MLA需要解耦一部分RoPE</p>
+          <p class='content'>为什么MLA需要解耦一部分RoPE
+未拆分出head维度时, 从dim的视角看都是低秩投影
+MHA = [d] = [d] x [g*d_kv], g=1
+GQA = [d] = [d] x [...</p>
         </a>
       
       
         <a class='next' href='/2024/08/10/universe/gpu/bank_conflict_and_swizzle/'>
           <p class='title'>bank confict和冲突消解<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>bank confict和冲突消解
-bank conflict
-4Byte一个bank
-
-
-简单方法
-ldmatrix
-swizzle
-
-GPU为了提升并行度，可以提供了同时访问share me...</p>
+一个conflict的实例: 矩阵转置存储在smem中。 thr0~3读取gmem一行, 存储到smem的一列, 这时同一列的thr就发生列bank conf...</p>
         </a>
       
     </div>

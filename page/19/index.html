@@ -423,23 +423,22 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title" >
-      <a href="/2020/04/14/universe/the_nature_of_code/">
-        用processing模拟自然系统
+      <a href="/2020/10/01/universe/tools/docker_base_usage/">
+        Docker常用命令
       </a>
     </h2>
   
   <div class='md'>
     
       
-        随机游走
-processing中的random()函数生成的随机数是均匀分布的
-可以利用random函数生成非均匀分布的随机数
-创建一个非均匀的数组，用random来随机的取索引
+        Docker常用命令
+docker ps [-a]，查看正在运行的[所有]容器
+docker &lt;start|stop|rm&gt; &lt;ID|NAME&gt;，启动/停止/删除容器
+docker rmi &lt;IMAGES&gt;，删除镜像
 
 
-也可用random来取概率，但是注意数据类型(float和int有区别)
-随机数的正态分布
-(float)generator.nextGaussian()返回一个高斯随机数，nextGaussian返回值的类型...
+docker attach id，进入某个容器，使用exit退出容器时，容器也会停止
+docker exec -it &lt;ID|NA...
       
     
   </div>
@@ -447,12 +446,12 @@ processing中的random()函数生成的随机数是均匀分布的
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-04-14</time>
+        <time>2020-10-01</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/04/14/universe/the_nature_of_code/'>
+          <a class='readmore' href='/2020/10/01/universe/tools/docker_base_usage/'>
             Read More
           </a>
         </div>
@@ -474,18 +473,155 @@ processing中的random()函数生成的随机数是均匀分布的
   
     
     <h2 class="article-title" >
-      <a href="/2020/04/12/universe/database/SQL%E6%B3%A8%E5%85%A5/">
-        SQL注入
+      <a href="/2020/09/16/universe/vim/advanced_vim_programming/">
+        Advanced Vim Programming
       </a>
     </h2>
   
   <div class='md'>
     
       
-        原理利用SQL拼接的安全性，将一些恶意的SQL语句传到服务器中执行。如：
-12345678网页端登录页面：    user: userpassword: ****传入服务器中可能就是SELECT * FROM users WHERE id&#x3D;&#39;user&#39; and password&#x3D;&#39;1234&#39;
+        &lt;SID&gt;
+The string &lt;SID&gt; can be used in a mapping or menu.
+When executing the map command, Vim will replace &lt;SID&gt; with the special key code &lt;SNR&gt;, followed by a number that’s ...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-09-16</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/09/16/universe/vim/advanced_vim_programming/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
 
-如果程序员没有进行过滤，则可能会发生这种情况
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/09/03/universe/tech_tips/RPC/">
+        RPC intro
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        RPC (Remote Procedure Call)RPC，远程过程调用，是一个计算机通信协议。
+相对的就是本地过程调用，即一个程序中调用它的子程序，可以直接通过地址访问。而RPC的远程，就是跨进程访问的意思。
+该协议允许运行于一台计算机的程序调用另一个地址空间(通常是开放网络中的一台计算机)的子程序。程序员就像调用本地程序一样，无需额外地为这个交互作用编程。
+RPC是一种Client/S...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-09-03</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/09/03/universe/tech_tips/RPC/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/08/20/universe/js_ts/this_and_arrow_function/">
+        This和箭头函数
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        ThisThis用于访问当前方法所属的对象，取决于调用的对象如：
+12345678910111213141516let obj = &#123;    a: 12,    fn()&#123;        console.log(this)    &#125;&#125;// 或者形如let obj = &#123;    a: 12,&#125;obj.fn = function()&#...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2020-08-20</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/08/20/universe/js_ts/this_and_arrow_function/'>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow">
+  
+  
+  
+  
+    
+    <h2 class="article-title" >
+      <a href="/2020/08/20/universe/tech_tips/what_is_dll/">
+        什么是dll
+      </a>
+    </h2>
+  
+  <div class='md'>
+    
+      
+        什么是DLLDLL(Dynamic Link Library)，动态链接库，linux下是.so文件，win下是.dll文件。
+之所以需要库，是因为可以进行代码解耦和代码重用，由库文件对外提供服务，如exe调用dll。还有一个作用就是在不希望别人看到源码但需要使用我们的功能时隐藏源码。
+
+静态库
+win下是.lib文件，linux下是.a文件
+它作为程序的一个模块，在链接期间被合并到程序中
 ...
       
     
@@ -494,12 +630,12 @@ processing中的random()函数生成的随机数是均匀分布的
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-04-12</time>
+        <time>2020-08-20</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/04/12/universe/database/SQL%E6%B3%A8%E5%85%A5/'>
+          <a class='readmore' href='/2020/08/20/universe/tech_tips/what_is_dll/'>
             Read More
           </a>
         </div>
@@ -521,28 +657,17 @@ processing中的random()函数生成的随机数是均匀分布的
   
     
     <h2 class="article-title" >
-      <a href="/2020/03/27/universe/tools/multi_node_and_ssh/">
-        配置虚拟机集群及ssh
+      <a href="/2020/08/17/universe/go/golang_mem_alignment/">
+        Golang内存对齐
       </a>
     </h2>
   
   <div class='md'>
     
       
-        配置虚拟机集群我也许没有很多太服务器，但是我可以在本地将他们虚拟出来鸭!只需要几步就能搭建起自己的多节点环境了
-
-创建几个虚拟机
-配置虚拟机网络
-
-创建虚拟机就不多介绍了，直接跳到配置虚拟机网络部分。这里以centos为例
-
-配置虚拟机网络位桥接模式
-原因
-原因
-
-
-
-联网后用dhclient获取一个ip。并修改网络配置文件。如我为网卡ens0p8分配了192.168.123.105，然后修...
+        Golang内存对齐Cpu要想读取数据，需要通过 地址总线 把地址传输给内存。内存准备好数据输出到 数据总线 ，交给CPU。
+每根地址总线能表示一位，8根地址总线就能表示8位二进制数，即256个地址。因为表示不了更大的地址，所以就用不了更大的内存。
+每次操作一字节太慢，那就加宽数据总线，要想一次操作一字节就至少需要32位数据总线。8字节就64位。这里每次操作的字节数就是所谓的  机器字长 。...
       
     
   </div>
@@ -550,12 +675,12 @@ processing中的random()函数生成的随机数是均匀分布的
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-03-27</time>
+        <time>2020-08-17</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/03/27/universe/tools/multi_node_and_ssh/'>
+          <a class='readmore' href='/2020/08/17/universe/go/golang_mem_alignment/'>
             Read More
           </a>
         </div>
@@ -577,30 +702,41 @@ processing中的random()函数生成的随机数是均匀分布的
   
     
     <h2 class="article-title" >
-      <a href="/2020/03/25/Major/computer_network/">
-        自顶向下计算机网络
+      <a href="/2020/08/11/universe/go/gui_programming/gui_programming/">
+        Golang gui 编程笔记
       </a>
     </h2>
   
   <div class='md'>
     
       
-        自顶向下计算机网络基本概念
-ISP: Internet Server Provider
-拓扑：连线的方式
-吞吐量：水管的大小
-流量：网速
-网络大小划分  
-PAN:personal area network
-LAN:局域网
-MAN:城局域网
-WAN:广局域网
-互联网（最大）
+        基本结构
+初始化
+用户设置
+
+创建主窗口
+win := gtk.NewWindow(gtk.WINDOW_TOPLEVEL)
 
 
 
-IP地址IPv4由32个位组成, 通常8个一组如192.168.1.1
-前28个位为网络编号, 后4位为主机编号...
+
+
+设置窗口属性
+win.SetTitle(&quot;gtk go&quot;)
+win.SetSizeRequest(400, 320)
+
+
+
+
+
+创建容器控件(固定布局、任意布局)
+layout := gtk.NewFixed()
+
+
+
+
+
+布局添加到窗口...
       
     
   </div>
@@ -608,12 +744,12 @@ IP地址IPv4由32个位组成, 通常8个一组如192.168.1.1
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-03-25</time>
+        <time>2020-08-11</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/03/25/Major/computer_network/'>
+          <a class='readmore' href='/2020/08/11/universe/go/gui_programming/gui_programming/'>
             Read More
           </a>
         </div>
@@ -635,43 +771,17 @@ IP地址IPv4由32个位组成, 通常8个一组如192.168.1.1
   
     
     <h2 class="article-title" >
-      <a href="/2020/03/18/universe/database/Redis_study_note/">
-        Redis 学习笔记
+      <a href="/2020/08/09/universe/tech_tips/CAS/">
+        CAS简记
       </a>
     </h2>
   
   <div class='md'>
     
       
-        Redis学习笔记基本认识
-Redis 是单线程的, 也就是说在处理不当会导致阻塞
-不要使用长命令, 如: keys *
-
-
-
-特性
-高速
-内存中进行的
-
-
-&lt;++&gt;
-&lt;++&gt;
-&lt;++&gt;
-&lt;++&gt;
-&lt;++&gt;
-&lt;++&gt;
-
-通用命令get
-
-
-command
-desc
-T(n)
-
-
-
-keys [pattern]
-根据通配符...
+        CAS(Compare And Swap)CAS是一种乐观锁。何谓悲观，编译器认为就是如果不严格同步线程调用则一定会产生异常，所以悲观锁会阻塞其他所有线程调用(互斥)。
+但是并不是所有操作都一定会产生异常，如多线程的读操作就不会。
+CAS机制在多线程对共享资源访问时比较共享资源当前的状态(newValue)和发起调用时的状态(oldValue)。如果状态一样则还没其他线程访问，这个线程(sw...
       
     
   </div>
@@ -679,12 +789,12 @@ keys [pattern]
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-03-18</time>
+        <time>2020-08-09</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/03/18/universe/database/Redis_study_note/'>
+          <a class='readmore' href='/2020/08/09/universe/tech_tips/CAS/'>
             Read More
           </a>
         </div>
@@ -706,27 +816,49 @@ keys [pattern]
   
     
     <h2 class="article-title" >
-      <a href="/2020/03/02/universe/js_ts/typescript/">
-        TypeScript
+      <a href="/2020/08/08/universe/web/jwt/">
+        jwt原理
       </a>
     </h2>
   
   <div class='md'>
     
       
-        TypeScript使用typescript是编译型,编译成javascript(解释型).
+        传统的基于token的用户验证
 
-安装
-npm install -g typescript
-
-
-编译
-tsc hello.ts
+用户登录
+服务返回token，并在服务端保存token
 
 
-编写react时以.tsx为后缀
 
-强类型指定类型12345678910111213141516var str:string = "1";var num:number = 1;var bool:boo...
+
+
+用户验证
+用户再次访问时需要携带token，比较数据库中的token
+
+
+
+
+
+Json Web Token
+
+用户登录
+服务返回token，但不保存token
+
+
+
+
+
+用户验证
+用户再次访问时需要携带token，再做token校验
+
+
+
+
+
+jwt实现过程
+
+用户提交用户名和密码，如果登录...
       
     
   </div>
@@ -734,12 +866,12 @@ tsc hello.ts
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-03-02</time>
+        <time>2020-08-08</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/03/02/universe/js_ts/typescript/'>
+          <a class='readmore' href='/2020/08/08/universe/web/jwt/'>
             Read More
           </a>
         </div>
@@ -761,25 +893,29 @@ tsc hello.ts
   
     
     <h2 class="article-title" >
-      <a href="/2020/02/28/universe/python/python_level_up/">
-        Python补完计划
+      <a href="/2020/08/07/universe/c/c_traps_and_pitfails/">
+        C陷阱和缺陷
       </a>
     </h2>
   
   <div class='md'>
     
       
-        python提高GIL(全局解释器锁)保证多线程程序同一时间只有一个线程在执行。多个线程先强锁。
-c语言写的python解释器存在GIL。
-一面试题
+        
+对C陷阱和缺陷一书的记录
 
-描述python GIL的概念，以及它对python多线程的影响。编写一个多线程抓取网页的程序，并阐明多线程抓取程序是否比单线程性能有提升，并解释原因
+(*(void(*)())0)()
 
-参考答案
+tips
+常数 != 指针，要先将常数转换为指针(void(*)())
+函数签名:type NAME(args)()，故除掉NAME部分表示它的类型
 
 
 
-python语言和GIL没有半毛钱关系。仅仅是由于历史原因在Cpytho...
+添加语句缺陷else与最近的if进行配对。如：
+123if(A) foo();if(B) bar();else done();
+
+else会与if(B)配对，你可能会觉很...
       
     
   </div>
@@ -787,229 +923,12 @@ python语言和GIL没有半毛钱关系。仅仅是由于历史原因在Cpytho..
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2020-02-28</time>
+        <time>2020-08-07</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2020/02/28/universe/python/python_level_up/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/02/26/universe/vim/vim_in_action/">
-        vim实用技巧
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Vim实用技巧杂项
-
-
-操作
-描述
-
-
-
-o
-切换高亮中光标所在的端点
-
-
-.
-重复执行上一步操作
-
-
-%
-它代表当前文件中的所有行
-
-
-%
-可以在一组开, 闭括号间跳转
-
-
-m{mark}
-当前位置标记为{mark}以便以后跳转
-
-
-`{mark}
-跳到{mark}标记处
-
-
-qa
-录制宏到寄存器a
-
-
-qA
-往寄存器a中追加操作
-
-
-i/d{
-i for inside, a for ar...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-02-26</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/02/26/universe/vim/vim_in_action/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/02/26/universe/tools/how_to_makefile/">
-        How to makefile
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        How to makefilecheat sheet
-
-
-f
-描述
-
-
-
-$@
-target
-
-
-$^
-所有依赖，
-
-
-$&lt;
-第一个依赖
-
-
-=
-整个makefile后再确定值
-
-
-:=
-那里用哪里展开
-
-
-?=
-如果没定义才赋值
-
-
-$(wildcard PATTERN)
-获取所有匹配的文件
-
-
-$(patsubst P1, P2, list)
-读list,模式P1替换为P2, 使用...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-02-26</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/02/26/universe/tools/how_to_makefile/'>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2020/02/25/universe/GDB_Usage/">
-        GDB usage
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Basic Usage
-Make sure compile file with -g option, which mean turn on debugging with gdb
-like this: gcc -g main.cpp -o main
-
-
-
-Debugging with GDB
-Open file
-here are two way
-gdb &lt;file&gt;
-gdb pat...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2020-02-25</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2020/02/25/universe/GDB_Usage/'>
+          <a class='readmore' href='/2020/08/07/universe/c/c_traps_and_pitfails/'>
             Read More
           </a>
         </div>
@@ -1036,7 +955,7 @@ gdb pat...
           </a>
         
         <p class="current">
-          19 / 25
+          19 / 28
         </p>
         
           <a class="next" rel="next" href="/page/20/">
@@ -1144,7 +1063,7 @@ gdb pat...
 
 
     <div class='content'>
-      <a href="/tags/2022/" style="font-size: 14px; color: #999">2022</a> <a href="/tags/2023/" style="font-size: 14px; color: #999">2023</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/DDIA/" style="font-size: 14px; color: #999">DDIA</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/IPC/" style="font-size: 14px; color: #999">IPC</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/MIT/" style="font-size: 15.43px; color: #8f8f8f">MIT</a> <a href="/tags/OS/" style="font-size: 22.57px; color: #5f5f5f">OS</a> <a href="/tags/PowerPC/" style="font-size: 14px; color: #999">PowerPC</a> <a href="/tags/QOM/" style="font-size: 14px; color: #999">QOM</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 14.71px; color: #949494">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algo/" style="font-size: 14.71px; color: #949494">algo</a> <a href="/tags/algorithm/" style="font-size: 17.57px; color: #818181">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/annual/" style="font-size: 14.71px; color: #949494">annual</a> <a href="/tags/arch/" style="font-size: 14px; color: #999">arch</a> <a href="/tags/architecture/" style="font-size: 14px; color: #999">architecture</a> <a href="/tags/archlinux/" style="font-size: 14px; color: #999">archlinux</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c/" style="font-size: 16.86px; color: #868686">c</a> <a href="/tags/c-c/" style="font-size: 17.57px; color: #818181">c/c++</a> <a href="/tags/cheat-sheet/" style="font-size: 14.71px; color: #949494">cheat sheet</a> <a href="/tags/cloud/" style="font-size: 14px; color: #999">cloud</a> <a href="/tags/cmake/" style="font-size: 14px; color: #999">cmake</a> <a href="/tags/coherence/" style="font-size: 14px; color: #999">coherence</a> <a href="/tags/compiler/" style="font-size: 14px; color: #999">compiler</a> <a href="/tags/cpp/" style="font-size: 16.14px; color: #8a8a8a">cpp</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/cuda/" style="font-size: 16.14px; color: #8a8a8a">cuda</a> <a href="/tags/cutlass/" style="font-size: 14px; color: #999">cutlass</a> <a href="/tags/database/" style="font-size: 20.43px; color: #6d6d6d">database</a> <a href="/tags/db/" style="font-size: 14px; color: #999">db</a> <a href="/tags/debugger/" style="font-size: 14px; color: #999">debugger</a> <a href="/tags/distributed/" style="font-size: 19.71px; color: #727272">distributed</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 16.86px; color: #868686">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 14.71px; color: #949494">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 14.71px; color: #949494">filesystem</a> <a href="/tags/film/" style="font-size: 14px; color: #999">film</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/functional-programming/" style="font-size: 14px; color: #999">functional programming</a> <a href="/tags/gc/" style="font-size: 14px; color: #999">gc</a> <a href="/tags/gcc/" style="font-size: 14.71px; color: #949494">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/gdbserver/" style="font-size: 14px; color: #999">gdbserver</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 18.29px; color: #7c7c7c">go</a> <a href="/tags/gpgpu/" style="font-size: 14px; color: #999">gpgpu</a> <a href="/tags/gpu/" style="font-size: 16.14px; color: #8a8a8a">gpu</a> <a href="/tags/gui/" style="font-size: 14.71px; color: #949494">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/hpac/" style="font-size: 14px; color: #999">hpac</a> <a href="/tags/hpc/" style="font-size: 14.71px; color: #949494">hpc</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/inference/" style="font-size: 14px; color: #999">inference</a> <a href="/tags/init/" style="font-size: 14px; color: #999">init</a> <a href="/tags/interview/" style="font-size: 14.71px; color: #949494">interview</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 16.14px; color: #8a8a8a">java</a> <a href="/tags/javascript/" style="font-size: 15.43px; color: #8f8f8f">javascript</a> <a href="/tags/julia/" style="font-size: 14px; color: #999">julia</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 21.86px; color: #646464">kernel</a> <a href="/tags/leveldb/" style="font-size: 14px; color: #999">leveldb</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/llm/" style="font-size: 14.71px; color: #949494">llm</a> <a href="/tags/lsm-tree/" style="font-size: 14px; color: #999">lsm tree</a> <a href="/tags/lua/" style="font-size: 14.71px; color: #949494">lua</a> <a href="/tags/machine-leanring/" style="font-size: 14px; color: #999">machine leanring</a> <a href="/tags/machine-learning/" style="font-size: 21.86px; color: #646464">machine learning</a> <a href="/tags/machine-learning-system/" style="font-size: 18.29px; color: #7c7c7c">machine learning system</a> <a href="/tags/machine-learnring/" style="font-size: 14px; color: #999">machine learnring</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/marchine-learning/" style="font-size: 14.71px; color: #949494">marchine learning</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mis/" style="font-size: 14px; color: #999">mis</a> <a href="/tags/misc/" style="font-size: 21.14px; color: #686868">misc</a> <a href="/tags/mlsys/" style="font-size: 14px; color: #999">mlsys</a> <a href="/tags/mm/" style="font-size: 14.71px; color: #949494">mm</a> <a href="/tags/mmap/" style="font-size: 14px; color: #999">mmap</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 16.86px; color: #868686">network</a> <a href="/tags/nginx/" style="font-size: 14px; color: #999">nginx</a> <a href="/tags/oop/" style="font-size: 14px; color: #999">oop</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 19px; color: #777">operate</a> <a href="/tags/os/" style="font-size: 21.14px; color: #686868">os</a> <a href="/tags/paper/" style="font-size: 14px; color: #999">paper</a> <a href="/tags/papers/" style="font-size: 18.29px; color: #7c7c7c">papers</a> <a href="/tags/passthrough/" style="font-size: 14px; color: #999">passthrough</a> <a href="/tags/pcie/" style="font-size: 14px; color: #999">pcie</a> <a href="/tags/pipe/" style="font-size: 14px; color: #999">pipe</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/programing-language/" style="font-size: 14px; color: #999">programing language</a> <a href="/tags/project/" style="font-size: 16.14px; color: #8a8a8a">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 19.71px; color: #727272">python</a> <a href="/tags/pytorch/" style="font-size: 14px; color: #999">pytorch</a> <a href="/tags/qemu/" style="font-size: 23.29px; color: #5a5a5a">qemu</a> <a href="/tags/qom/" style="font-size: 14px; color: #999">qom</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/reading-note/" style="font-size: 15.43px; color: #8f8f8f">reading note</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/rust/" style="font-size: 16.86px; color: #868686">rust</a> <a href="/tags/semaphore/" style="font-size: 14px; color: #999">semaphore</a> <a href="/tags/serverless/" style="font-size: 14px; color: #999">serverless</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 15.43px; color: #8f8f8f">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 16.86px; color: #868686">system</a> <a href="/tags/system-design/" style="font-size: 14.71px; color: #949494">system design</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tags/" style="font-size: 14px; color: #999">tags</a> <a href="/tags/tech/" style="font-size: 19.71px; color: #727272">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 15.43px; color: #8f8f8f">tips</a> <a href="/tags/tool/" style="font-size: 16.14px; color: #8a8a8a">tool</a> <a href="/tags/tools/" style="font-size: 21.86px; color: #646464">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/trap/" style="font-size: 14px; color: #999">trap</a> <a href="/tags/traps/" style="font-size: 14px; color: #999">traps</a> <a href="/tags/typescript/" style="font-size: 14.71px; color: #949494">typescript</a> <a href="/tags/underlaying/" style="font-size: 14px; color: #999">underlaying</a> <a href="/tags/usage/" style="font-size: 14px; color: #999">usage</a> <a href="/tags/vim/" style="font-size: 16.14px; color: #8a8a8a">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/virtio/" style="font-size: 14px; color: #999">virtio</a> <a href="/tags/virtualization/" style="font-size: 14px; color: #999">virtualization</a> <a href="/tags/wasm/" style="font-size: 14px; color: #999">wasm</a> <a href="/tags/web/" style="font-size: 16.86px; color: #868686">web</a> <a href="/tags/wisdom/" style="font-size: 14px; color: #999">wisdom</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 14.71px; color: #949494">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14.71px; color: #949494">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
+      <a href="/tags/2022/" style="font-size: 14px; color: #999">2022</a> <a href="/tags/2023/" style="font-size: 14px; color: #999">2023</a> <a href="/tags/2024/" style="font-size: 14px; color: #999">2024</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/CI-CD/" style="font-size: 14px; color: #999">CI/CD</a> <a href="/tags/DDIA/" style="font-size: 14px; color: #999">DDIA</a> <a href="/tags/HPC/" style="font-size: 14px; color: #999">HPC</a> <a href="/tags/IO/" style="font-size: 14px; color: #999">IO</a> <a href="/tags/IPC/" style="font-size: 14px; color: #999">IPC</a> <a href="/tags/MBA/" style="font-size: 14px; color: #999">MBA</a> <a href="/tags/MIT/" style="font-size: 15.25px; color: #919191">MIT</a> <a href="/tags/OS/" style="font-size: 21.5px; color: #666">OS</a> <a href="/tags/PowerPC/" style="font-size: 14px; color: #999">PowerPC</a> <a href="/tags/QOM/" style="font-size: 14px; color: #999">QOM</a> <a href="/tags/RPC/" style="font-size: 14px; color: #999">RPC</a> <a href="/tags/SQL/" style="font-size: 14.63px; color: #959595">SQL</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/ajax/" style="font-size: 14px; color: #999">ajax</a> <a href="/tags/algo/" style="font-size: 14.63px; color: #959595">algo</a> <a href="/tags/algorithm/" style="font-size: 17.75px; color: #808080">algorithm</a> <a href="/tags/annotations/" style="font-size: 14px; color: #999">annotations</a> <a href="/tags/annual/" style="font-size: 15.25px; color: #919191">annual</a> <a href="/tags/arch/" style="font-size: 14px; color: #999">arch</a> <a href="/tags/architecture/" style="font-size: 14px; color: #999">architecture</a> <a href="/tags/archlinux/" style="font-size: 14px; color: #999">archlinux</a> <a href="/tags/backup/" style="font-size: 14px; color: #999">backup</a> <a href="/tags/c/" style="font-size: 16.5px; color: #888">c</a> <a href="/tags/c-c/" style="font-size: 17.13px; color: #848484">c/c++</a> <a href="/tags/cheat-sheet/" style="font-size: 14.63px; color: #959595">cheat sheet</a> <a href="/tags/cloud/" style="font-size: 14px; color: #999">cloud</a> <a href="/tags/cmake/" style="font-size: 14px; color: #999">cmake</a> <a href="/tags/coherence/" style="font-size: 14px; color: #999">coherence</a> <a href="/tags/compiler/" style="font-size: 15.25px; color: #919191">compiler</a> <a href="/tags/cpp/" style="font-size: 16.5px; color: #888">cpp</a> <a href="/tags/cs/" style="font-size: 14px; color: #999">cs</a> <a href="/tags/cuda/" style="font-size: 16.5px; color: #888">cuda</a> <a href="/tags/cute/" style="font-size: 14px; color: #999">cute</a> <a href="/tags/cutlass/" style="font-size: 15.25px; color: #919191">cutlass</a> <a href="/tags/database/" style="font-size: 19.63px; color: #737373">database</a> <a href="/tags/db/" style="font-size: 14px; color: #999">db</a> <a href="/tags/debugger/" style="font-size: 14px; color: #999">debugger</a> <a href="/tags/distributed/" style="font-size: 19px; color: #777">distributed</a> <a href="/tags/dll/" style="font-size: 14px; color: #999">dll</a> <a href="/tags/docker/" style="font-size: 17.13px; color: #848484">docker</a> <a href="/tags/emacs/" style="font-size: 14px; color: #999">emacs</a> <a href="/tags/exec/" style="font-size: 14.63px; color: #959595">exec</a> <a href="/tags/file-system/" style="font-size: 14px; color: #999">file system</a> <a href="/tags/filesystem/" style="font-size: 14.63px; color: #959595">filesystem</a> <a href="/tags/film/" style="font-size: 14px; color: #999">film</a> <a href="/tags/fork/" style="font-size: 14px; color: #999">fork</a> <a href="/tags/ftrace/" style="font-size: 14px; color: #999">ftrace</a> <a href="/tags/functional-programming/" style="font-size: 14px; color: #999">functional programming</a> <a href="/tags/gc/" style="font-size: 14px; color: #999">gc</a> <a href="/tags/gcc/" style="font-size: 14.63px; color: #959595">gcc</a> <a href="/tags/gdb/" style="font-size: 14px; color: #999">gdb</a> <a href="/tags/gdbserver/" style="font-size: 14px; color: #999">gdbserver</a> <a href="/tags/git/" style="font-size: 14px; color: #999">git</a> <a href="/tags/go/" style="font-size: 17.75px; color: #808080">go</a> <a href="/tags/gpgpu/" style="font-size: 14px; color: #999">gpgpu</a> <a href="/tags/gpu/" style="font-size: 22.13px; color: #626262">gpu</a> <a href="/tags/gui/" style="font-size: 14.63px; color: #959595">gui</a> <a href="/tags/hack/" style="font-size: 14px; color: #999">hack</a> <a href="/tags/hacker/" style="font-size: 14px; color: #999">hacker</a> <a href="/tags/hashmap/" style="font-size: 14px; color: #999">hashmap</a> <a href="/tags/hpa/" style="font-size: 14px; color: #999">hpa</a> <a href="/tags/hpac/" style="font-size: 14px; color: #999">hpac</a> <a href="/tags/hpc/" style="font-size: 20.25px; color: #6f6f6f">hpc</a> <a href="/tags/http/" style="font-size: 14px; color: #999">http</a> <a href="/tags/inference/" style="font-size: 14px; color: #999">inference</a> <a href="/tags/init/" style="font-size: 14px; color: #999">init</a> <a href="/tags/interview/" style="font-size: 14.63px; color: #959595">interview</a> <a href="/tags/intro/" style="font-size: 14px; color: #999">intro</a> <a href="/tags/java/" style="font-size: 15.88px; color: #8c8c8c">java</a> <a href="/tags/javascript/" style="font-size: 15.25px; color: #919191">javascript</a> <a href="/tags/julia/" style="font-size: 14px; color: #999">julia</a> <a href="/tags/jwt/" style="font-size: 14px; color: #999">jwt</a> <a href="/tags/kernel/" style="font-size: 20.88px; color: #6a6a6a">kernel</a> <a href="/tags/leveldb/" style="font-size: 14px; color: #999">leveldb</a> <a href="/tags/linux/" style="font-size: 24px; color: #555">linux</a> <a href="/tags/llm/" style="font-size: 17.13px; color: #848484">llm</a> <a href="/tags/lsm-tree/" style="font-size: 14px; color: #999">lsm tree</a> <a href="/tags/lua/" style="font-size: 14.63px; color: #959595">lua</a> <a href="/tags/machine-leanring/" style="font-size: 14px; color: #999">machine leanring</a> <a href="/tags/machine-learning/" style="font-size: 23.38px; color: #595959">machine learning</a> <a href="/tags/machine-learning-system/" style="font-size: 17.75px; color: #808080">machine learning system</a> <a href="/tags/machine-learnring/" style="font-size: 14.63px; color: #959595">machine learnring</a> <a href="/tags/makefile/" style="font-size: 14px; color: #999">makefile</a> <a href="/tags/marchine-learning/" style="font-size: 14px; color: #999">marchine learning</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/maven/" style="font-size: 14px; color: #999">maven</a> <a href="/tags/memory/" style="font-size: 14px; color: #999">memory</a> <a href="/tags/memory-management/" style="font-size: 14px; color: #999">memory management</a> <a href="/tags/middleware/" style="font-size: 14px; color: #999">middleware</a> <a href="/tags/mis/" style="font-size: 14px; color: #999">mis</a> <a href="/tags/misc/" style="font-size: 21.5px; color: #666">misc</a> <a href="/tags/mlsys/" style="font-size: 14px; color: #999">mlsys</a> <a href="/tags/mm/" style="font-size: 14.63px; color: #959595">mm</a> <a href="/tags/mmap/" style="font-size: 14px; color: #999">mmap</a> <a href="/tags/modern-cpp/" style="font-size: 14px; color: #999">modern cpp</a> <a href="/tags/mongoDB/" style="font-size: 14px; color: #999">mongoDB</a> <a href="/tags/nature-of-code/" style="font-size: 14px; color: #999">nature of code</a> <a href="/tags/network/" style="font-size: 16.5px; color: #888">network</a> <a href="/tags/nginx/" style="font-size: 14px; color: #999">nginx</a> <a href="/tags/oop/" style="font-size: 14px; color: #999">oop</a> <a href="/tags/opencv/" style="font-size: 14px; color: #999">opencv</a> <a href="/tags/operate/" style="font-size: 18.38px; color: #7b7b7b">operate</a> <a href="/tags/os/" style="font-size: 20.88px; color: #6a6a6a">os</a> <a href="/tags/paper/" style="font-size: 14px; color: #999">paper</a> <a href="/tags/papers/" style="font-size: 17.75px; color: #808080">papers</a> <a href="/tags/passthrough/" style="font-size: 14px; color: #999">passthrough</a> <a href="/tags/pcie/" style="font-size: 14px; color: #999">pcie</a> <a href="/tags/pipe/" style="font-size: 14px; color: #999">pipe</a> <a href="/tags/pipenv/" style="font-size: 14px; color: #999">pipenv</a> <a href="/tags/processing/" style="font-size: 14px; color: #999">processing</a> <a href="/tags/programing-language/" style="font-size: 14px; color: #999">programing language</a> <a href="/tags/project/" style="font-size: 15.88px; color: #8c8c8c">project</a> <a href="/tags/promise/" style="font-size: 14px; color: #999">promise</a> <a href="/tags/python/" style="font-size: 19.63px; color: #737373">python</a> <a href="/tags/pytorch/" style="font-size: 14.63px; color: #959595">pytorch</a> <a href="/tags/qemu/" style="font-size: 22.75px; color: #5e5e5e">qemu</a> <a href="/tags/qom/" style="font-size: 14px; color: #999">qom</a> <a href="/tags/quant/" style="font-size: 14px; color: #999">quant</a> <a href="/tags/react/" style="font-size: 14px; color: #999">react</a> <a href="/tags/reading-note/" style="font-size: 15.25px; color: #919191">reading note</a> <a href="/tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="/tags/reflection/" style="font-size: 14px; color: #999">reflection</a> <a href="/tags/regex/" style="font-size: 14px; color: #999">regex</a> <a href="/tags/reinforcement-learning/" style="font-size: 14px; color: #999">reinforcement learning</a> <a href="/tags/rust/" style="font-size: 16.5px; color: #888">rust</a> <a href="/tags/semaphore/" style="font-size: 14px; color: #999">semaphore</a> <a href="/tags/serverless/" style="font-size: 14px; color: #999">serverless</a> <a href="/tags/shell/" style="font-size: 14px; color: #999">shell</a> <a href="/tags/softmmu/" style="font-size: 15.25px; color: #919191">softmmu</a> <a href="/tags/spider/" style="font-size: 14px; color: #999">spider</a> <a href="/tags/spring/" style="font-size: 14px; color: #999">spring</a> <a href="/tags/stl/" style="font-size: 14px; color: #999">stl</a> <a href="/tags/system/" style="font-size: 16.5px; color: #888">system</a> <a href="/tags/system-design/" style="font-size: 14.63px; color: #959595">system design</a> <a href="/tags/systemtap/" style="font-size: 14px; color: #999">systemtap</a> <a href="/tags/tags/" style="font-size: 14.63px; color: #959595">tags</a> <a href="/tags/tech/" style="font-size: 19px; color: #777">tech</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #999">tensorflow</a> <a href="/tags/tips/" style="font-size: 15.25px; color: #919191">tips</a> <a href="/tags/tool/" style="font-size: 15.88px; color: #8c8c8c">tool</a> <a href="/tags/tools/" style="font-size: 21.5px; color: #666">tools</a> <a href="/tags/tools-of-life/" style="font-size: 14px; color: #999">tools of life</a> <a href="/tags/trap/" style="font-size: 14px; color: #999">trap</a> <a href="/tags/traps/" style="font-size: 14px; color: #999">traps</a> <a href="/tags/typescript/" style="font-size: 14.63px; color: #959595">typescript</a> <a href="/tags/underlaying/" style="font-size: 14px; color: #999">underlaying</a> <a href="/tags/usage/" style="font-size: 14px; color: #999">usage</a> <a href="/tags/vim/" style="font-size: 15.88px; color: #8c8c8c">vim</a> <a href="/tags/vimscript/" style="font-size: 14px; color: #999">vimscript</a> <a href="/tags/virtio/" style="font-size: 14px; color: #999">virtio</a> <a href="/tags/virtualization/" style="font-size: 14px; color: #999">virtualization</a> <a href="/tags/vllm/" style="font-size: 14px; color: #999">vllm</a> <a href="/tags/wasm/" style="font-size: 14px; color: #999">wasm</a> <a href="/tags/web/" style="font-size: 16.5px; color: #888">web</a> <a href="/tags/wisdom/" style="font-size: 14px; color: #999">wisdom</a> <a href="/tags/yaml/" style="font-size: 14px; color: #999">yaml</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 14px; color: #999">分布式</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 14px; color: #999">汇编</a> <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" style="font-size: 14.63px; color: #959595">汇编语言</a> <a href="/tags/%E7%94%B5%E5%AD%90%E7%AE%A1/" style="font-size: 14px; color: #999">电子管</a> <a href="/tags/%E7%94%B5%E8%B7%AF/" style="font-size: 14px; color: #999">电路</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14.63px; color: #959595">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/" style="font-size: 14px; color: #999">计算机组成</a>
     </div>
   </section>
 

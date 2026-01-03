@@ -470,7 +470,38 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="Mixtral-MoE源码笔记"><a href="#Mixtral-MoE源码笔记" class="headerlink" title="Mixtral MoE源码笔记"></a>Mixtral MoE源码笔记</h1><blockquote>
+  <h1 id="Cheat-Sheet"><a href="#Cheat-Sheet" class="headerlink" title="Cheat Sheet"></a>Cheat Sheet</h1><ul>
+<li>MLP: down(act(gate(x)) * up(x)) # 两个path矩阵乘，再过最后一个线性层<ul>
+<li><code>[B, L, D] -&gt; [B, L, D]</code></li>
+</ul>
+</li>
+<li>每个token都取topk个专家和权重<ul>
+<li><code>[B, L, D] -&gt; [B, L, topk, D]</code></li>
+</ul>
+</li>
+<li>每个专家会处理x个token<ul>
+<li>x的个数可能不同</li>
+</ul>
+</li>
+<li>sorted_tokens, 让属于同一个专家的token在一起<ul>
+<li>提升并行计算效率</li>
+</ul>
+</li>
+<li>for 选专家, 选token处理, 依次append -&gt; [total_num_tokens, D]<ul>
+<li><code>[exper_token_num, D] -&gt; [exper_token_num, D]</code></li>
+</ul>
+</li>
+<li>索引还原: new_x = [B*L, topk, D], 每个token的topk个专家的处理结果<ul>
+<li><code>[B*L, topk, D]</code></li>
+</ul>
+</li>
+<li>按权重加和每个专家的结果: new_x * topk_weights = [B<em>L, topk, D], sum(dim=1) = [B</em>L, D]<ul>
+<li>每个专家的权重<code>[topk, D]</code></li>
+<li>专家加权求和</li>
+</ul>
+</li>
+</ul>
+<h1 id="Mixtral-MoE源码笔记"><a href="#Mixtral-MoE源码笔记" class="headerlink" title="Mixtral MoE源码笔记"></a>Mixtral MoE源码笔记</h1><blockquote>
 <p>transformers/src/transformers/models/mixtral/modeling_mixtral.py</p>
 <p>注意是mixtral不是mistral</p>
 </blockquote>

@@ -470,9 +470,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="神经网络中的激活值"><a href="#神经网络中的激活值" class="headerlink" title="神经网络中的激活值"></a>神经网络中的激活值</h1><ul>
+  <h1 id="神经网络中的激活值"><a href="#神经网络中的激活值" class="headerlink" title="神经网络中的激活值"></a>神经网络中的激活值</h1><blockquote>
+<p>Output = Activation * Weight + Bias</p>
+</blockquote>
+<ul>
 <li>什么是激活值<ul>
-<li>一层神经网络是数据就是激活值</li>
+<li>任意算子的输出结果就是激活值, 因为你需要使用结果(激活值)来求导</li>
 </ul>
 </li>
 <li>为什么要保存激活值<ul>
@@ -560,19 +563,26 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2024/03/01/universe/ml/ring_attention_impl/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>手把手实现Ring Attention</p>
-          <p class='content'>手把手实现Ring Attention
-官方ring attention是jax实现的，这里用pytorch实现一个ring attention的学习版本。
-source code
-是ring ...</p>
+        <a class='prev' href='/2024/02/27/universe/ml/rope/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>RoPE CheatSheet</p>
+          <p class='content'>rope位置编码
+对序列进行重新编码, $E = {f(x_i, i)}^N_{i=1}$。f是一个位置编码函数，接收单个token x和其位置i。
+
+tips
+是对一个向量(hidden st...</p>
         </a>
       
       
-        <a class='next' href='/2023/12/28/universe/misc/cuda_programing/'>
-          <p class='title'>CUDA编程小记<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>CUDA编程小记这个教程的小记/速查
-核函数(kernel)kernel的定义和启动形如，使用__global__修饰的函数就是kernel，由host端启动，在device端运行。如果使用__...</p>
+        <a class='next' href='/2023/12/29/Major/algorithm/bitonic_sort/'>
+          <p class='title'>Bitonic Sort<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Bitonic Sort
+只能用在序列长度是2的幂次
+类似快排递归
+
+
+bitonic序列: 前一半单调递增, 后一半单调递减的序列
+bitonic pair
+任意的连个元素可以通过swap转换...</p>
         </a>
       
     </div>

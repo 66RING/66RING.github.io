@@ -482,6 +482,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <ul>
 <li>case 3: 当有多个输出参数时<code>func(int n, int&amp; out1, int&amp; out2)</code>，可以利用bind的方法放回一个结构体然后分解</li>
 </ul>
+<h2 id="右值引用"><a href="#右值引用" class="headerlink" title="右值引用"></a>右值引用</h2><blockquote>
+<p>所有权语义</p>
+<p>尽可能少复制的情况下把数据存到内存</p>
+</blockquote>
+<ul>
+<li>直接从语言层面理解，就是rust的move</li>
+<li>move后所有权转移, 不应该再使用了 =&gt; 将亡值<ul>
+<li>软约束，继续使用可能会出现未定义行为</li>
+</ul>
+</li>
+<li>右值引用作为参数 =&gt; 该函数将夺取该参数的所有权</li>
+</ul>
 <h2 id="移动构造"><a href="#移动构造" class="headerlink" title="移动构造"></a>移动构造</h2><p>使用右值引用创建移动构造器。然后传入右值: <code>std::move(lvalue)</code>或者直接匿名变量</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    A(A &amp;&amp;a) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"move\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    vecotr&lt;A&gt; v;</span><br><span class="line">    <span class="comment">// 使用匿名遍历</span></span><br><span class="line">    v.push_back(A());</span><br><span class="line">    A a;</span><br><span class="line">    <span class="comment">// 使用move</span></span><br><span class="line">    v.push_back(<span class="built_in">std</span>::move(a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -530,7 +542,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span></span><br><span class="line">    <span class="keyword">long</span> len;</span><br><span class="line">    <span class="keyword">long</span> <span class="built_in">free</span>;</span><br><span class="line">    <span class="keyword">char</span> buf[]; <span class="comment">//不占空间</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
+<h2 id="typename"><a href="#typename" class="headerlink" title="typename"></a>typename</h2><p>为什么叫typename, 因为在模板中, 泛型T可能是类型, 也可能是变量。使用模板时提取出来的是类型还是变量存在二意性，所以需要用typename来明确指出是类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">int</span> arg&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Type</span>&lt;T&gt; &#123;</span></span><br><span class="line">    <span class="keyword">using</span> type = T;</span><br><span class="line">    <span class="keyword">int</span> arg = arg;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(<span class="keyword">typename</span> Type&lt;T&gt;::type a)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p><code>typename Type&lt;T&gt;::type</code>说明<code>Type&lt;T&gt;::type</code>是一个类型，而不是一个变量。</p>
+<p>为什么template中已经用了typename修饰T了后面没能推导出type是类型呢？因为内部type需要具体特化时才能分析到。</p>
 
   
   
@@ -710,7 +726,7 @@ cpp单例模式static标记, 返回引用。static标记后构造函数就只会
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#妙用structure-bind"><span class="toc-text">妙用structure bind</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动构造"><span class="toc-text">移动构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#智能指针"><span class="toc-text">智能指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换"><span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#push-back-和-emplace-back的区别"><span class="toc-text">push_back 和 emplace_back的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多线程和锁"><span class="toc-text">多线程和锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件流"><span class="toc-text">文件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#misc"><span class="toc-text">misc</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#妙用structure-bind"><span class="toc-text">妙用structure bind</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#右值引用"><span class="toc-text">右值引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动构造"><span class="toc-text">移动构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#智能指针"><span class="toc-text">智能指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换"><span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#push-back-和-emplace-back的区别"><span class="toc-text">push_back 和 emplace_back的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多线程和锁"><span class="toc-text">多线程和锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件流"><span class="toc-text">文件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#misc"><span class="toc-text">misc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typename"><span class="toc-text">typename</span></a></li></ol>
     </div>
   </section>
 
