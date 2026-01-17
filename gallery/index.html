@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chaos Gallery</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #fafafa;
+            color: #2c2c2c;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .header { text-align: center; padding: 80px 20px 60px; }
+        .header h1 { font-size: 56px; font-weight: 600; margin-bottom: 10px; }
+        .header p { font-size: 24px; color: #888; }
+        .gallery-container { max-width: 1400px; margin: 0 auto; padding: 0 20px 80px; }
+        .gallery { column-count: 3; column-gap: 16px; }
+        @media (max-width: 1200px) { .gallery { column-count: 2; } }
+        @media (max-width: 768px) { .gallery { column-count: 1; } .header h1 { font-size: 40px; } }
+
+        /* Gallery items with staggered layout */
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 16px;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .gallery-item:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+                /* Staggered effect - horizontal offset for columns */
+        .gallery-item:nth-child(3n+2) {
+            margin-left: 0px;
+            margin-right: -0px;
+        }
+        .gallery-item:nth-child(3n+3) {
+            margin-left: 0px;
+            margin-right: -0px;
+        }
+
+        @media (max-width: 1200px) {
+            /* For 2 columns */
+            .gallery-item:nth-child(3n+2) {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .gallery-item:nth-child(3n+3) {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .gallery-item:nth-child(even) {
+                margin-left: 8px;
+                margin-right: -8px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* For 1 column - no offset */
+            .gallery-item:nth-child(3n+2),
+            .gallery-item:nth-child(3n+3),
+            .gallery-item:nth-child(even) {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
+        .gallery-item img { width: 100%; display: block; transition: transform 0.5s; }
+        .gallery-item:hover img { transform: scale(1.03); }
+
+        /* Lightbox */
+        .lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #0a0a0a; z-index: 1000; }
+        .lightbox.active { display: flex; flex-direction: column; }
+        .lightbox-content { flex: 1; overflow-y: auto; overflow-x: hidden; }
+        .lightbox-close { position: fixed; top: 20px; right: 20px; width: 44px; height: 44px; background: rgba(255,255,255,0.08); border: none; border-radius: 50%; cursor: pointer; z-index: 1001; transition: all 0.2s; }
+        .lightbox-close:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
+        .lightbox-close span { color: rgba(255,255,255,0.9); font-size: 24px; }
+
+        /* Image zoom container */
+        .lightbox-image-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 85vh;
+            padding: 80px 20px 20px;
+            position: relative;
+        }
+        .lightbox-image-wrapper {
+            position: relative;
+            cursor: zoom-in;
+            transition: transform 0.15s ease-out;
+        }
+        .lightbox-image-wrapper.dragging {
+            cursor: grabbing;
+            transition: none;
+        }
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* Zoom controls */
+        .zoom-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 1001;
+        }
+        .zoom-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.85);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .zoom-btn:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
+        .zoom-level {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            min-width: 55px;
+            justify-content: center;
+            font-weight: 500;
+        }
+
+        /* Description area - lighter, more elegant design */
+        .lightbox-description {
+            max-width: 720px;
+            margin: 0 auto 80px;
+            padding: 40px 30px;
+            color: rgba(255,255,255,0.85);
+        }
+        .lightbox-description h2 {
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: rgba(255,255,255,0.95);
+            letter-spacing: -0.3px;
+        }
+        .lightbox-description .meta {
+            font-size: 15px;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Elegant markdown styles */
+        .lightbox-description .content {
+            font-size: 17px;
+            line-height: 1.75;
+            color: rgba(255,255,255,0.8);
+        }
+        .lightbox-description .content h1 {
+            font-size: 28px;
+            font-weight: 500;
+            margin-top: 36px;
+            margin-bottom: 14px;
+            color: rgba(255,255,255,0.95);
+            letter-spacing: -0.3px;
+        }
+        .lightbox-description .content h2 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            color: rgba(255,255,255,0.92);
+            letter-spacing: -0.2px;
+        }
+        .lightbox-description .content h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-top: 28px;
+            margin-bottom: 10px;
+            color: rgba(255,255,255,0.9);
+        }
+        .lightbox-description .content h4 {
+            font-size: 17px;
+            font-weight: 500;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            color: rgba(255,255,255,0.85);
+        }
+        .lightbox-description .content p {
+            margin-bottom: 14px;
+        }
+        .lightbox-description .content strong {
+            font-weight: 600;
+            color: rgba(255,255,255,0.95);
+        }
+        .lightbox-description .content em {
+            font-style: italic;
+            color: rgba(255,255,255,0.7);
+        }
+        .lightbox-description .content code {
+            background: rgba(255,255,255,0.1);
+            color: #e0e0e0;
+            padding: 3px 7px;
+            border-radius: 6px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+            font-size: 0.88em;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .lightbox-description .content pre {
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.9);
+            padding: 18px 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .lightbox-description .content pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            color: inherit;
+            font-size: 0.9em;
+        }
+        .lightbox-description .content blockquote {
+            border-left: 3px solid rgba(255,255,255,0.2);
+            padding: 12px 0 12px 20px;
+            margin: 20px 0;
+            color: rgba(255,255,255,0.65);
+            font-style: italic;
+            background: rgba(255,255,255,0.03);
+            border-radius: 0 8px 8px 0;
+        }
+        .lightbox-description .content ul,
+        .lightbox-description .content ol {
+            margin: 14px 0;
+            padding-left: 20px;
+        }
+        .lightbox-description .content li {
+            margin-bottom: 6px;
+            line-height: 1.65;
+        }
+        .lightbox-description .content ul li {
+            list-style-type: disc;
+        }
+        .lightbox-description .content ol li {
+            list-style-type: decimal;
+        }
+        .lightbox-description .content a {
+            color: #7cb8ff;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .lightbox-description .content a:hover {
+            color: #9ac8ff;
+            border-bottom-color: rgba(124, 184, 255, 0.5);
+        }
+        .lightbox-description .content hr {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin: 32px 0;
+        }
+        .lightbox-description .content img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .lightbox-description .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+        .lightbox-description .content th,
+        .lightbox-description .content td {
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 12px;
+            text-align: left;
+        }
+        .lightbox-description .content th {
+            background: rgba(255,255,255,0.06);
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+        }
+        .lightbox-description .content del {
+            text-decoration: line-through;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Directory separator */
+        .directory-separator {
+            column-span: all;
+            margin: 40px 0 32px;
+            position: relative;
+            text-align: center;
+        }
+        .directory-separator-line {
+            border-top: 1px dashed rgba(0,0,0,0.15);
+            margin: 8px 0;
+        }
+        .directory-label {
+            display: inline-block;
+            background: rgba(0,0,0,0);
+            color: rgba(0,0,0,0.35);
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .lightbox-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.08);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+            transition: all 0.2s;
+        }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.15); transform: translateY(-50%) scale(1.08); }
+        .lightbox-nav.prev { left: 20px; }
+        .lightbox-nav.next { right: 20px; }
+        .lightbox-nav span { color: rgba(255,255,255,0.85); font-size: 20px; }
+
+        @media (max-width: 768px) {
+            .lightbox-description { padding: 30px 20px 60px; }
+            .lightbox-description h2 { font-size: 26px; }
+            .lightbox-description .content { font-size: 16px; }
+            .zoom-controls { bottom: 20px; }
+            .lightbox-image { max-height: 70vh; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <!-- <h1>Fragments of Time</h1> -->
+        <p>Fragments of Time</p>
+    </header>
+    <div class="gallery-container">
+        <div id="gallery" class="gallery"></div>
+    </div>
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()"><span>&times;</span></button>
+        <button class="lightbox-nav prev" onclick="navigateImage(-1)"><span>&#10094;</span></button>
+        <button class="lightbox-nav next" onclick="navigateImage(1)"><span>&#10095;</span></button>
+        <div class="lightbox-content">
+            <div class="lightbox-image-container" id="lightbox-image-container">
+                <div class="lightbox-image-wrapper" id="lightbox-image-wrapper">
+                    <img id="lightbox-img" class="lightbox-image" src="" alt="">
+                </div>
+            </div>
+            <div id="lightbox-description" class="lightbox-description" style="display: none;"></div>
+        </div>
+        <div class="zoom-controls" id="zoom-controls" style="display: none;">
+            <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">−</button>
+            <span class="zoom-level" id="zoom-level">100%</span>
+            <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">+</button>
+            <button class="zoom-btn" onclick="resetZoom()" title="Reset Fit">⟲</button>
+        </div>
+    </div>
+    <script>
+        const photos = [{"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2026/falling.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2026/falling.jpg", "path": "photos/2026/falling.jpg", "directory": "2026", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2026/staring_cat.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2026/staring_cat.jpg", "path": "photos/2026/staring_cat.jpg", "directory": "2026", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2026/playing_cat.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2026/playing_cat.jpg", "path": "photos/2026/playing_cat.jpg", "directory": "2026", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2026/jumping_cat.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2026/jumping_cat.jpg", "path": "photos/2026/jumping_cat.jpg", "directory": "2026", "title": "Happy Cat", "date": "2025-01-12", "location": "Suzhou, China", "camera": "Hasselblad 500CM, SHD400", "lens": "80mm f/2.4", "settings": null, "description": "# Happy Happy Happy"}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2026/金鸡湖.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2026/金鸡湖.jpg", "path": "photos/2026/金鸡湖.jpg", "directory": "2026", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2026/eating_cat.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2026/eating_cat.jpg", "path": "photos/2026/eating_cat.jpg", "directory": "2026", "title": "2X Close", "date": "2025-01-12", "location": "Suzhou, China", "camera": "Hasselblad 500CM, SHD400", "lens": "80mm f/2.4", "settings": null, "description": "# Focus\n\n> 拍得不够好说明你凑得不够近"}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2026/水杉.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2026/水杉.jpg", "path": "photos/2026/水杉.jpg", "directory": "2026", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2026/独墅湖教堂.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2026/独墅湖教堂.jpg", "path": "photos/2026/独墅湖教堂.jpg", "directory": "2026", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/石头.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/石头.jpg", "path": "photos/2025/石头.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/tower_suzhou.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/tower_suzhou.jpg", "path": "photos/2025/tower_suzhou.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/羊.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/羊.jpg", "path": "photos/2025/羊.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/漠日格勒河.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/漠日格勒河.jpg", "path": "photos/2025/漠日格勒河.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/deer_neimenggu.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/deer_neimenggu.jpg", "path": "photos/2025/deer_neimenggu.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/漠河电线杆.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/漠河电线杆.jpg", "path": "photos/2025/漠河电线杆.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/红枫.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/红枫.jpg", "path": "photos/2025/红枫.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/temple_suzhou.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/temple_suzhou.jpg", "path": "photos/2025/temple_suzhou.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/river_neimenggu.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/river_neimenggu.jpg", "path": "photos/2025/river_neimenggu.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/水杉1.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/水杉1.jpg", "path": "photos/2025/水杉1.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}, {"thumbnail": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/.thumbnails/photos/2025/蒙古包.jpg", "full": "https://raw.githubusercontent.com/66RING/66RING/gh-pages/photos/2025/蒙古包.jpg", "path": "photos/2025/蒙古包.jpg", "directory": "2025", "title": null, "date": null, "location": null, "camera": null, "lens": null, "settings": null, "description": null}];
+        let currentIndex = 0;
+
+        // Zoom state
+        let zoomScale = 1;
+        let translateX = 0;
+        let translateY = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let initialPinchDistance = 0;
+
+        function renderGallery() {
+            const gallery = document.getElementById('gallery');
+            if (photos.length === 0) {
+                gallery.innerHTML = '<div style="text-align:center;padding:100px;color:#888;">No photos found</div>';
+                return;
+            }
+
+            let html = '';
+            let lastDir = null;
+
+            photos.forEach((photo, index) => {
+                // Add directory separator when directory changes
+                if (photo.directory && photo.directory !== lastDir) {
+                    html += `
+                        <div class="directory-separator">
+                            <div class="directory-separator-line"></div>
+                            <div class="directory-label">${escapeHtml(photo.directory)}</div>
+                            <div class="directory-separator-line"></div>
+                        </div>
+                    `;
+                }
+                lastDir = photo.directory;
+
+                html += `
+                    <div class="gallery-item" onclick="openLightbox(${index})">
+                        <img src="${photo.thumbnail}" alt="${photo.title || 'Photo'}" loading="lazy">
+                    </div>
+                `;
+            });
+
+            gallery.innerHTML = html;
+        }
+
+        function updateZoomTransform() {
+            const wrapper = document.getElementById('lightbox-image-wrapper');
+            const controls = document.getElementById('zoom-controls');
+            wrapper.style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomScale})`;
+            document.getElementById('zoom-level').textContent = Math.round(zoomScale * 100) + '%';
+            controls.style.display = zoomScale > 1 ? 'flex' : 'none';
+            wrapper.style.cursor = zoomScale > 1 ? 'grab' : 'zoom-in';
+        }
+
+        function zoomIn() {
+            zoomScale = Math.min(zoomScale * 1.3, 5);
+            updateZoomTransform();
+        }
+
+        function zoomOut() {
+            if (zoomScale > 1) {
+                zoomScale = Math.max(zoomScale / 1.3, 1);
+                if (zoomScale === 1) {
+                    translateX = 0;
+                    translateY = 0;
+                }
+                updateZoomTransform();
+            }
+        }
+
+        function resetZoom() {
+            zoomScale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateZoomTransform();
+        }
+
+        function openLightbox(index) {
+            currentIndex = index;
+            const photo = photos[currentIndex];
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxDesc = document.getElementById('lightbox-description');
+
+            resetZoom();
+
+            lightboxImg.src = photo.full;
+
+            if (photo.description) {
+                lightboxDesc.innerHTML = renderDescription(photo);
+                lightboxDesc.style.display = 'block';
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(lightboxDesc, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            } else {
+                lightboxDesc.style.display = 'none';
+            }
+
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function navigateImage(direction) {
+            currentIndex = (currentIndex + direction + photos.length) % photos.length;
+            openLightbox(currentIndex);
+        }
+
+        function renderDescription(photo) {
+            let html = '';
+            if (photo.title) html += `<h2>${escapeHtml(photo.title)}</h2>`;
+            if (photo.date || photo.location || photo.camera) {
+                html += '<div class="meta">';
+                if (photo.date) html += `<span>📅 ${escapeHtml(photo.date)}</span>`;
+                if (photo.location) html += `<span>📍 ${escapeHtml(photo.location)}</span>`;
+                if (photo.camera) html += `<span>📷 ${escapeHtml(photo.camera)}</span>`;
+                html += '</div>';
+            }
+            if (photo.description) html += `<div class="content">${parseMarkdown(photo.description)}</div>`;
+            return html;
+        }
+
+        function parseMarkdown(text) {
+            let html = text;
+
+            // Code blocks
+            html = html.replace(/```(\w*)\n([\s\S]*?)```/g, function(match, lang, code) {
+                return '<pre><code class="language-' + lang + '">' + escapeHtml(code.trim()) + '</code></pre>';
+            });
+
+            // Headers
+            html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+            // Horizontal rule
+            html = html.replace(/^---$/gim, '<hr>');
+
+            // Bold and italic
+            html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+            html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+            html = html.replace(/___(.+?)___/g, '<strong><em>$1</em></strong>');
+            html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+            html = html.replace(/_(.+?)_/g, '<em>$1</em>');
+
+            // Strikethrough
+            html = html.replace(/~~(.+?)~~/g, '<del>$1</del>');
+
+            // Inline code
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+            // Links
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+            // Images
+            html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+
+            // Blockquotes
+            html = html.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
+            html = html.replace(/<\/blockquote>\n<blockquote>/g, '\n');
+
+            // Unordered lists
+            html = html.replace(/^\* (.*$)/gim, '<li>$1</li>');
+            html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+            html = html.replace(/<\/ul>\n<ul>/g, '\n');
+
+            // Ordered lists
+            html = html.replace(/^\d+\. (.*$)/gim, '<oli>$1</oli>');
+            html = html.replace(/(<oli>.*<\/oli>)/s, '<ol>$1</ol>');
+            html = html.replace(/<\/oli>/g, '</li>');
+            html = html.replace(/<oli>/g, '<li>');
+            html = html.replace(/<\/ol>\n<ol>/g, '\n');
+
+            // Paragraphs
+            html = html.replace(/\n\n/g, '</p><p>');
+            html = html.replace(/^(.+)$/gm, '<p>$1</p>');
+
+            // Cleanup
+            html = html.replace(/<p><\/p>/g, '');
+            html = html.replace(/<p>(<h[1-6]|<ul|<ol|<bl|<pr|<hr)/g, '$1');
+            html = html.replace(/(<\/h[1-6]>|<\/ul>|<\/ol>|<\/blockquote>|<\/pre>|<hr)<\/p>/g, '$1');
+
+            return html;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Mouse wheel zoom - only when directly over the image
+        const imageWrapper = document.getElementById('lightbox-image-wrapper');
+        imageWrapper.addEventListener('wheel', function(e) {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            e.preventDefault();
+            e.stopPropagation();
+            if (e.deltaY < 0) {
+                zoomIn();
+            } else {
+                zoomOut();
+            }
+        }, { passive: false });
+
+        // Mouse drag
+        const container = document.getElementById('lightbox-image-container');
+
+        container.addEventListener('mousedown', function(e) {
+            if (zoomScale <= 1) return;
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            imageWrapper.classList.add('dragging');
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            updateZoomTransform();
+        });
+
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+            imageWrapper.classList.remove('dragging');
+        });
+
+        // Touch events
+        let touches = [];
+
+        container.addEventListener('touchstart', function(e) {
+            touches = Array.from(e.touches);
+            if (touches.length === 2) {
+                initialPinchDistance = getDistance(touches[0], touches[1]);
+                e.preventDefault();
+            } else if (touches.length === 1 && zoomScale > 1) {
+                isDragging = true;
+                startX = touches[0].clientX - translateX;
+                startY = touches[0].clientY - translateY;
+            }
+        }, { passive: false });
+
+        container.addEventListener('touchmove', function(e) {
+            touches = Array.from(e.touches);
+
+            if (touches.length === 2) {
+                const currentDistance = getDistance(touches[0], touches[1]);
+                const scale = currentDistance / initialPinchDistance;
+                zoomScale = Math.max(1, Math.min(5, zoomScale * scale));
+                initialPinchDistance = currentDistance;
+                updateZoomTransform();
+                e.preventDefault();
+            } else if (touches.length === 1 && isDragging) {
+                translateX = touches[0].clientX - startX;
+                translateY = touches[0].clientY - startY;
+                updateZoomTransform();
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        container.addEventListener('touchend', function(e) {
+            if (touches.length < 2) {
+                isDragging = false;
+            }
+            touches = Array.from(e.touches);
+        });
+
+        function getDistance(touch1, touch2) {
+            const dx = touch1.clientX - touch2.clientX;
+            const dy = touch1.clientY - touch2.clientY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateImage(-1);
+            if (e.key === 'ArrowRight') navigateImage(1);
+            if (e.key === '+' || e.key === '=') zoomIn();
+            if (e.key === '-' || e.key === '_') zoomOut();
+            if (e.key === '0') resetZoom();
+        });
+
+        renderGallery();
+    </script>
+</body>
+</html>
